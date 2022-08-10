@@ -298,8 +298,8 @@ $(document).ready(function(){
 $(window).load(function(){
 	window.setTimeout(function(){
 		$.toast({
-			heading: 'Welcome',
-			text: 'Login Success!!',
+			heading: 'Selamat datang Zaenury',
+			text: '',
 			position: 'top-right',
 			loaderBg:'#fec107',
 			icon: 'success',
