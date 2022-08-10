@@ -1,4 +1,3 @@
-abcd
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="mobile-only-brand pull-left">
         <div class="nav-header pull-left">
