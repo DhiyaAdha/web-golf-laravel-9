@@ -17,7 +17,9 @@ class UserSeeder extends Seeder
         User::create([
             'email' => 'zaenury5868@gmail.com',
             'name' => 'dhany',
+            'phone'=> '087736202888',
             'password' => Hash::make('tes'),
+            'role_id' => '1',
             // 'status' => 'active',
         ]);
     }
