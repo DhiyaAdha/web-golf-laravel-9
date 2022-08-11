@@ -20,24 +20,19 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->foreignId('role_id');
-
+            $table->foreignId('role_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
-            
-            
+        
             // $table->foreignId('role_id')
             //         ->constrained('roles')
             //         ->onUpdate('cascade')
             //         ->onDelete('cascade');
             // $table->integer('role_id')->unsigned();
-            // $table->foreign('role_id')->reference('id')->on('roles');
-            
-            // $table->foreign('role_id')->references('id')->on('roles');
-            // $table->string('status')->default('active');
+            // $table->foreign('role_id')->reference('id')->on('roles');  
             // $table->foreign('role_id')->constrained();
             // $table->foreign('country_id')->references('id')->on('countries');
-            // $table->foreign('role_id')->references('id')->on('roles');
+            
         });
 
         // Schema::table('users', function($table) {
