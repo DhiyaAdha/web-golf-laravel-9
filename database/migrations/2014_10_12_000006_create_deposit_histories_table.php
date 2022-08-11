@@ -15,13 +15,18 @@ class CreateDepositHistoriesTable extends Migration
     {
         Schema::create('deposit_histories', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('visitor_id');
+            $table->integer('visitor_id')->unsigned();
             $table->integer('balance');
             $table->string('activities');
             $table->enum('payment_type',['deposit', 'cash', 'transfer']);
 
             $table->timestamps();
         });
+
+        Schema::table('deposit_histories', function($table) {
+            $table->foreign('visitor_id')->references('id')->on('visitors');
+        });
+
     }
 
     /**

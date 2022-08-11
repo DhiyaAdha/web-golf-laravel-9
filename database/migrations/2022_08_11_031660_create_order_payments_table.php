@@ -16,8 +16,8 @@ class CreateOrderPaymentsTable extends Migration
         Schema::create('order_payments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('unique_number');
-            $table->integer('pakage_default_id');
-            $table->integer('pakage_additional_id');
+            $table->integer('package_default_id')->unsigned();
+            $table->integer('package_additional_id')->unsigned();
             $table->bigInteger('price');
             $table->enum('payment_type',['cash', 'transfer', 'deposit']);
             $table->integer('payment_status');
@@ -26,6 +26,12 @@ class CreateOrderPaymentsTable extends Migration
 
             $table->timestamps();
             
+        });
+
+        Schema::table('order_payments', function($table) {
+            $table->foreign('package_default_id')->references('id')->on('package_defaults');
+            $table->foreign('package_additional_id')->references('id')->on('package_additionals');
+
         });
     }
 

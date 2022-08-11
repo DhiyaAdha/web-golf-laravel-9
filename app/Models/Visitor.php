@@ -4,8 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Visitor extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+
+    protected $table = "visitors";
+    protected $primarykey = "id";
+    protected $fillable = [
+        'id', 'name', 'gender', 'tipe_member'
+        
+    ];
 }

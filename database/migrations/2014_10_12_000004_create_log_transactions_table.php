@@ -15,11 +15,17 @@ class CreateLogTransactionsTable extends Migration
     {
         Schema::create('log_transactions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('visitor_id');
+            $table->integer('visitor_id')->unsigned();
             $table->string('order');
             $table->string('activities');
             $table->timestamp('created_at');
+            // $table->integer('visitor_id');
         });
+
+        Schema::table('log_transactions', function($table) {
+            $table->foreign('visitor_id')->references('id')->on('visitors');
+        });
+
     }
 
     /**

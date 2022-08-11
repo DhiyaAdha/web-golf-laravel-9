@@ -7,6 +7,8 @@
 			@include('Layouts.Breadcrumb')
 			<!-- /Breadcrumb -->
 		</div>
+
+{{-- statistik atas --}}
 		<!-- Row -->
 		<div class="row">
 			<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
@@ -74,6 +76,8 @@
 			</div>
 		</div>
 		<!-- /Row -->
+
+
 		<!-- Row -->
 		<div class="row">
 				<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
@@ -230,17 +234,29 @@
 									<table class="table table-hover mb-0">
 										<thead>
 											<tr>
-												<th>Campaign</th>
+												{{-- <th>Campaign</th>
 												<th>Client</th>
 												<th>Changes</th>
 												<th>Budget</th>
-												<th>Status</th>
+												<th>Status</th> --}}
+												<th>ID</th>
+												<th>Nama Tamu</th>
+												<th>Tanggal</th>
+												<th>Kategori Tamu</th>
+												<th>Pukul</th>
 											</tr>
 										</thead>
+										
 										<tbody>
+											{{-- analisis-tamu --}}
+											
+											{{-- @foreach ($dtVisitor as $item) --}}
+
 											<tr>
 												<td><span class="txt-dark weight-500">Facebook</span></td>
 												<td>Beavis</td>
+												{{-- <td>{{ $item['name'] }}</td> --}}
+												{{-- <td>{{ $item['name'] }}</td> --}}
 												<td><span class="txt-success"><i class="zmdi zmdi-caret-up mr-10 font-20"></i><span>2.43%</span></span></td>
 												<td>
 													<span class="txt-dark weight-500">$1478</span>
@@ -249,7 +265,10 @@
 													<span class="label label-primary">Active</span>
 												</td>
 											</tr>
-											<tr>
+											{{-- @endforeach --}}
+
+
+											{{-- <tr>
 												<td><span class="txt-dark weight-500">Youtube</span></td>
 												<td>Felix</td>
 												<td><span class="txt-success"><i class="zmdi zmdi-caret-up mr-10 font-20"></i><span>1.43%</span></span></td>
@@ -271,6 +290,7 @@
 													<span class="label label-default">Hold</span>
 												</td>
 											</tr>
+											
 											<tr>
 												<td><span class="txt-dark weight-500">Spotify</span></td>
 												<td>Neosoft</td>
@@ -282,6 +302,8 @@
 													<span class="label label-default">Hold</span>
 												</td>
 											</tr>
+
+											
 											<tr>
 												<td><span class="txt-dark weight-500">Instagram</span></td>
 												<td>Hencework</td>
@@ -292,8 +314,12 @@
 												<td>
 													<span class="label label-primary">Active</span>
 												</td>
-											</tr>
+											</tr> --}}
+											
 										</tbody>
+
+										
+
 									</table>
 								</div>
 							</div>	

@@ -15,12 +15,17 @@ class CreateLogLimitsTable extends Migration
     {
         Schema::create('log_limits', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('visitro_id');
+            $table->integer('visitor_id')->unsigned();
             $table->string('type');
             $table->string('activities');
 
             $table->timestamp('created_at');
         });
+
+        Schema::table('log_limits', function($table) {
+            $table->foreign('visitor_id')->references('id')->on('visitors');
+        });
+
     }
 
     /**

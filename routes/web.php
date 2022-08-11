@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\VisitorController;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -37,3 +38,10 @@ Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth
 Route::get('/Lupa-pasword', [AuthController::class, 'forgot_password'])->middleware('guest');
 
 Route::get('/logout', [AuthController::class, 'logout']);
+
+
+
+// Analisis Tamu
+Route::get('/analisis-tamu', [VisitorController::class, 'index'])->name('analisis-tamu');
+
+Route::get('/datavisitor', [VisitorController::class, 'store'])->name('datavisitor');
