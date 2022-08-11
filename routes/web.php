@@ -21,20 +21,23 @@ use Illuminate\Support\Facades\Password;
 |
 */
 
-// Route::get('/', function () {
-//     if (Auth::user()) {
-//         return redirect('/dashboard');
-//     }    
-//     return view('login');
-// });
+Route::get('/', function () {
+    if (Auth::user()) {
+        return redirect('/dashboard');
+    }    
+    return view('login');
+});
 
     //untuk route login
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
-// Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
+Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
 Route::get('/dashboard', function () {
     return view('Analisis-tamu');
+});
+Route::get('/scan-tamu', function () {
+    return view('Scan-tamu');
 });
 
 Route::get('/Lupa-pasword', [AuthController::class, 'forgot_password'])->middleware('guest');
