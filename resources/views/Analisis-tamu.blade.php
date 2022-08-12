@@ -122,45 +122,42 @@
                             <div class="pull-left">
                                 <h6 class="panel-title txt-dark">Rekap Harian</h6>
                             </div>
-                            <div class="pull-right">
-                                <div class="pull-left inline-block dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false"
-                                        role="button"><i class="zmdi zmdi-more-vert"></i></a>
-                                    <ul class="dropdown-menu bullet dropdown-menu-right" role="menu">
-                                        <li role="presentation"><a href="javascript:void(0)" role="menuitem"><i
-                                                    class="icon wb-reply" aria-hidden="true"></i>option 1</a></li>
-                                        <li role="presentation"><a href="javascript:void(0)" role="menuitem"><i
-                                                    class="icon wb-share" aria-hidden="true"></i>option 2</a></li>
-                                        <li role="presentation"><a href="javascript:void(0)" role="menuitem"><i
-                                                    class="icon wb-trash" aria-hidden="true"></i>option 3</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="panel-wrapper collapse in">
-                            <div class="panel-body">
-                                <div id="ct_chart_5" class="ct-chart ct-perfect-fourth ct-chart-before-pad-zero"
-                                    style="height:10px; width:5px;"></div>
+                            <div class="ct-chart ct-perfect-fourth"></div>
+                            <script>
+                                var data = {
+                                    labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
+                                    series: [
+                                        [75, 105, 80, 60, 70, 100, 30],
+                                        [150, 55, 110, 110, 110, 60, 40]
+                                    ]
+                                };
 
-                                <div class="label-chatrs">
-                                    <div class="inline-block mr-15">
-                                        <span class="clabels inline-block bg-yellow mr-5"></span>
-                                        <span
-                                            class="clabels-text font-12 inline-block txt-dark capitalize-font">Laki-laki</span>
-                                    </div>
-                                    <div class="inline-block mr-15">
-                                        <span class="clabels inline-block bg-green mr-5"></span>
-                                        <span
-                                            class="clabels-text font-12 inline-block txt-dark capitalize-font">Perempuan</span>
-                                    </div>
-                                    <div class="inline-block">
-                                        <span class="clabels inline-block bg-blue mr-5"></span>
-                                        <span
-                                            class="clabels-text font-12 inline-block txt-dark capitalize-font">Unknown</span>
-                                    </div>
-                                </div>
-                            </div>
+                                var options = {
+                                    seriesBarDistance: 15
+                                };
+
+                                var responsiveOptions = [
+                                    ['screen and (min-width: 641px) and (max-width: 1024px)', {
+                                        seriesBarDistance: 10,
+                                        axisX: {
+                                            labelInterpolationFnc: function(value) {
+                                                return value;
+                                            }
+                                        }
+                                    }],
+                                    ['screen and (max-width: 640px)', {
+                                        seriesBarDistance: 5,
+                                        axisX: {
+                                            labelInterpolationFnc: function(value) {
+                                                return value[0];
+                                            }
+                                        }
+                                    }]
+                                ];
+
+                                new Chartist.Bar('.ct-chart', data, options, responsiveOptions);
+                            </script>
+                            <div class="clearfix"></div>
                         </div>
                     </div>
                 </div>
@@ -177,8 +174,7 @@
                         <div class="label-chatrs col-lg-6">
                             {{-- <span class="clabels clabels-lg inline-block bg-green mr-10 pull-left"></span> --}}
                             <span class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"><span
-                                    class="block font-22 weight-500 mb-5"><span
-                                        class="counter-anim">112</span></span><span
+                                    class="block font-22 weight-500 mb-5"><span class="counter-anim">112</span></span><span
                                     class="block txt-grey">Laki-laki</span></span>
                             <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-success"></i>
                             <div class="clearfix"></div>
