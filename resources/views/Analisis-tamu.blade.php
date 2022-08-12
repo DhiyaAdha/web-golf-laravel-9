@@ -19,7 +19,7 @@
 								<div class="container-fluid">
 									<div class="row p-2">
 										<div class="col-xs-6 text-left data-wrap-left">
-											<span class="txt-light block counter"><span class="counter-anim">914,001</span></span>
+											<span class="txt-light block counter"><span class="counter-anim">{{ $visitor_today }}</span></span>
 											<span class="weight-500 uppercase-font txt-light block font-13">Jumlah tamu hari ini</span>
 										</div>
 										<div class="col-xs-6 text-right data-wrap-right">
@@ -40,7 +40,7 @@
 								<div class="container-fluid">
 									<div class="row p-2">
 										<div class="col-xs-6 text-left data-wrap-left">
-											<span class="txt-light block counter"><span class="counter-anim">914,001</span></span>
+											<span class="txt-light block counter"><span class="counter-anim">{{ $visitor_vvip }}</span></span>
 											<span class="weight-500 uppercase-font txt-light block font-13">Total tamu VVIP</span>
 										</div>
 										<div class="col-xs-6 text-right data-wrap-right">
@@ -61,7 +61,7 @@
 								<div class="container-fluid">
 									<div class="row p-2">
 										<div class="col-xs-6 text-left data-wrap-left">
-											<span class="txt-light block counter"><span class="counter-anim">914,001</span></span>
+											<span class="txt-light block counter"><span class="counter-anim">{{ $visitor_vip }}</span></span>
 											<span class="weight-500 uppercase-font txt-light block font-13">Total tamu VIP</span>
 										</div>
 										<div class="col-xs-6 text-right data-wrap-right">
@@ -250,22 +250,27 @@
 										<tbody>
 											{{-- analisis-tamu --}}
 											
-											{{-- @foreach ($dtVisitor as $item) --}}
+											@foreach ($visitor as $item)
 
 											<tr>
-												<td><span class="txt-dark weight-500">Facebook</span></td>
-												<td>Beavis</td>
+												<td><span class="txt-dark weight-500">{{ $item->id }}</span></td>
+												<td>{{ $item->name }}</td>
 												{{-- <td>{{ $item['name'] }}</td> --}}
 												{{-- <td>{{ $item['name'] }}</td> --}}
-												<td><span class="txt-success"><i class="zmdi zmdi-caret-up mr-10 font-20"></i><span>2.43%</span></span></td>
+												<td><span class="txt-success"><i class="zmdi zmdi-caret-up mr-10 font-20"></i><span>{{ date('d F Y', strtotime($item->created_at)) }}</span></span></td>
 												<td>
-													<span class="txt-dark weight-500">$1478</span>
+													@if($item->tipe_member == 'VVIP')
+														<span class="label label-success">VVIP</span>
+													@else
+														<span class="label label-warning">VIP</span>
+													@endif
+													{{-- <span class="txt-dark weight-500">{{ $item->tipe_member }}</span> --}}
 												</td>
 												<td>
-													<span class="label label-primary">Active</span>
+													{{ date('H:i', strtotime($item->created_at)) }}
 												</td>
 											</tr>
-											{{-- @endforeach --}}
+											@endforeach
 
 
 											{{-- <tr>
@@ -332,4 +337,7 @@
 		@include('Layouts.Footer')
 	</div>
 </div>
+<script>
+	var vvip_jan = "{{ $january }}";
+</script>
 <!-- /Main Content -->

@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Visitor;
 
 class AuthController extends Controller {
 
@@ -23,7 +24,26 @@ class AuthController extends Controller {
         }
 
     public function dashboard(){
-            return view('/Analisis-tamu');
+
+            // memanggil data visitor
+            $data['visitor'] = Visitor::all();
+            $data['visitor_today'] = Visitor::whereDate('created_at', now()->format('Y-m-d'))->count();
+            $data['visitor_vip'] = Visitor::where('tipe_member', 'VIP')->count();
+            $data['visitor_vvip'] = Visitor::where('tipe_member', 'VVIP')->count();
+            
+            $data['visitor_vvip_female'] = Visitor::where([
+                                                ['tipe_member', 'VVIP'],
+                                                ['gender', 'perempuan'],
+                                            ])->count();
+            $data['visitor_vvip_male'] = Visitor::where([
+                                                ['tipe_member', 'VVIP'],
+                                                ['gender', 'laki-laki'],
+                                            ])->count();
+                //VIP 
+
+            $data['january'] = Visitor::whereMonth('created_at', '01')->whereYear('created_at', now()->format('Y'))->count();
+            $data['february'] = Visitor::whereMonth('created_at', '02')->whereYear('created_at', now()->format('Y'))->count();
+            return view('/Analisis-tamu', $data);
         }
 
 

@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\VisitorController;
+use App\Models\Visitor;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,13 @@ Route::get('/Lupa-pasword', [AuthController::class, 'forgot_password'])->middlew
 
 Route::get('/logout', [AuthController::class, 'logout']);
 
+
+//seeder
+Route::get('/', function(){
+    $statusmember = Visitor::get(); 
+
+    dd($statusmember);
+});
 
 
 // Analisis Tamu

@@ -179,83 +179,71 @@ $(document).ready(function(){
         }];
 		var dataNew = [{
             period: 'Jan',
-            iphone: 10,
-            ipad: 60,
-            itouch: 20
+            vvip: vvip_jan,
+			vip: 10
         }, 
 		{
             period: 'Feb',
-            iphone: 110,
-            ipad: 100,
-            itouch: 80
+            vvip: 20,
+			vip: 10
         },
 		{
             period: 'March',
-            iphone: 120,
-            ipad: 100,
-            itouch: 80
+            vvip: 20,
+			vip: 10
         },
 		{
             period: 'April',
-            iphone: 110,
-            ipad: 100,
-            itouch: 80
+            vvip: 20,
+			vip: 10
         },
 		{
             period: 'May',
-            iphone: 170,
-            ipad: 100,
-            itouch: 80
+            vvip: 20,
+			vip: 10
         },
 		{
             period: 'June',
-            iphone: 120,
-            ipad: 150,
-            itouch: 80
+            vvip: 20,
+			vip: 10
         },
 		{
             period: 'July',
-            iphone: 120,
-            ipad: 150,
-            itouch: 80
+            vvip: 20,
+			vip: 10
         },
 		{
             period: 'Aug',
-            iphone: 190,
-            ipad: 120,
-            itouch: 80
+            vvip: 20,
+			vip: 10
         },
 		{
             period: 'Sep',
-            iphone: 110,
-            ipad: 120,
-            itouch: 80
+            vvip: 20,
+			vip: 10
         },
 		{
             period: 'Oct',
-            iphone: 10,
-            ipad: 170,
-            itouch: 10
+            vvip: 20,
+			vip: 10
         },
 		{
             period: 'Nov',
-            iphone: 10,
-            ipad: 470,
-            itouch: 10
+            vvip: 20,
+			vip: 10
         },
 		{
             period: 'Dec',
-            iphone: 30,
-            ipad: 170,
-            itouch: 10
+            vvip: 20,
+			vip: 10
         }
 		];
 		var lineChart = Morris.Line({
         element: 'morris_extra_line_chart',
         data: data ,
         xkey: 'period',
-        ykeys: ['iphone', 'ipad', 'itouch'],
-        labels: ['iphone', 'ipad', 'itouch'],
+        ykeys: ['vvip', 'vip'],
+        labels: ['vvip', 'vip'],
         pointSize: 2,
         fillOpacity: 0,
 		lineWidth:2,
