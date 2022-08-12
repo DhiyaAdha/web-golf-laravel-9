@@ -6729,7 +6729,7 @@ ul.inbox-nav li a:hover, ul.inbox-nav li.active a, ul.inbox-nav li a:focus {
 
 .error-head {
   font-size: 112px;
-  font-style: italic;
+  font-style: linier;
   line-height: 112px; }
 
 .error-bg-img {
