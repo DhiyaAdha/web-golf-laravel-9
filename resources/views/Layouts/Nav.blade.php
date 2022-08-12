@@ -2,8 +2,13 @@
     <div class="mobile-only-brand pull-left">
         <div class="nav-header pull-left">
             <div class="logo-wrap">
+<<<<<<< HEAD
                 <a href="/analisis-tamu">
                     <img class="brand-img" src="dist/img/tgcc_icon.svg" alt="brand" />
+=======
+                <a href="/dashboard">
+                    <img class="brand-img mb-10" src="dist/img/tgcc_icon.svg" alt="brand" />
+>>>>>>> yudis
                     <span class="brand-text">TGCC</span>
                 </a>
             </div>
@@ -16,9 +21,16 @@
     </div>
     <div id="mobile_only_nav" class="mobile-only-nav pull-right">
         <ul class="nav navbar-right top-nav pull-right">
+
+
             <li class="dropdown auth-drp">
+<<<<<<< HEAD
                 <a href="#" class="dropdown-toggle pr-0"
                     data-toggle="dropdown"><span>{{ auth()->user()->name }}</span></a>
+=======
+                <a href="#" class="dropdown-toggle pr-0" data-toggle="dropdown"><img src="/dist/img/user1.png"
+                        alt="user_auth" class="user-auth-img img-circle" /><span class="user-online-status"></span></a>
+>>>>>>> yudis
                 <ul class="dropdown-menu user-auth-dropdown" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
                     <li>
                         <a href="/logout"><i class="zmdi zmdi-power"></i><span>Log Out</span></a>
