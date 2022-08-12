@@ -20,7 +20,7 @@
 		
 		
 		<!-- Custom CSS -->
-		<link href="dist/css/style.css" rel="stylesheet" type="text/css">
+		<link href="/dist/css/style.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
 		<!--Preloader-->
@@ -34,7 +34,7 @@
 				<div class="sp-logo-wrap pull-left">
 					
 					<a href="#">
-						<img class="brand-img mr-10" src="dist/img/tgcc.svg" alt="brand"/>
+						<img class="brand-img mr-10" src="/dist/img/tgcc.svg" alt="brand"/>
 					</a>
 				</div>
 				<div class="clearfix"></div>
@@ -74,7 +74,7 @@
 												<input type="hidden" name="token" value="{{ $token }}">
 												<div class="form-group">
 													{{-- <label class="" for="email">Email</label> --}}
-													<input type="text" class="form-control" name="email" placeholder="Enter email address" value="{{ $email ?? old('email') }}" hidden>
+													<input type="hidden" class="form-control" name="email" placeholder="Enter email address" value="{{ $email ?? old('email') }}">
 													<span class="text-danger">
 												</div>
 												<div class="form-group">
@@ -115,9 +115,9 @@
 		<script src="../../vendors/bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js"></script>
 		
 		<!-- Slimscroll JavaScript -->
-		<script src="dist/js/jquery.slimscroll.js"></script>
+		<script src="/dist/js/jquery.slimscroll.js"></script>
 		
 		<!-- Init JavaScript -->
-		<script src="dist/js/init.js"></script>
+		<script src="/dist/js/init.js"></script>
 	</body>
 </html>
