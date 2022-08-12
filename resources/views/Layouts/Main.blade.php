@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
+{{-- Head --}}
 @include('Layouts.Header')
+{{-- /Head --}}
 
 <body>
     <!-- Preloader -->
@@ -10,8 +12,8 @@
     </div>
     <!-- /Preloader -->
     <div class="wrapper theme-1-active pimary-color-red">
-        <!-- Top Menu Items -->
 
+        <!-- Top Menu Items -->
         @include('Layouts.Nav')
         <!-- /Top Menu Items -->
 
@@ -19,10 +21,17 @@
         @include('Layouts.Sidebar')
         <!-- /Left Sidebar Menu -->
 
-    </div>
-    <!-- /#wrapper -->
 
+
+        <!-- Main Content -->
+        @yield('content')
+        <!-- /Main Content -->
+
+    </div>
     {{-- Script --}}
     @include('Layouts.Script')
+    {{-- /Script --}}
+
 </body>
+
 </html>
