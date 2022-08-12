@@ -79,6 +79,8 @@
 
 
 		<!-- Row -->
+
+		{{-- Chart --}}
 		<div class="row">
 				<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
 				<div class="panel panel-default card-view">
@@ -98,19 +100,19 @@
 							<div id="morris_extra_line_chart" class="morris-chart" style="height:293px;"></div>
 							<ul class="flex-stat mt-40">
 								<li>
-									<span class="block">Weekly Users</span>
+									<span class="block">Laki-Laki</span>
 									<span class="block txt-dark weight-500 font-18"><span class="counter-anim">3,24,222</span></span>
 								</li>
 								<li>
-									<span class="block">Monthly Users</span>
+									<span class="block">Perempuan</span>
 									<span class="block txt-dark weight-500 font-18"><span class="counter-anim">1,23,432</span></span>
 								</li>
-								<li>
+								{{-- <li>
 									<span class="block">Trend</span>
 									<span class="block">
 										<i class="zmdi zmdi-trending-up txt-success font-24"></i>
 									</span>
-								</li>
+								</li> --}}
 							</ul>
 						</div>
 					</div>
