@@ -64,11 +64,12 @@
 <div class="fixed-sidebar-left">
     <ul class="nav navbar-nav side-nav nicescroll-bar">
         <li class="navigation-header">
-            <span>Main</span> 
+            <span>{{ auth()->user()->name }}</span>
             <i class="zmdi zmdi-more"></i>
         </li>
         <li>
-            <a class="{{ Request::is('dashboard') ? 'active' : '' }}" href="/dashboard" data-toggle="collapse" data-target="#dashboard_dr">
+            <a class="{{ Request::is('dashboard') ? 'active' : '' }}" href="/dashboard" data-toggle="collapse"
+                data-target="#dashboard_dr">
                 <div class="pull-left">
                     <i class="zmdi zmdi-landscape mr-20"></i>
                     <span class="right-nav-text">Dashboard</span>
@@ -77,7 +78,8 @@
             </a>
         </li>
         <li>
-            <a class="{{ Request::is('scan-tamu') ? 'active' : '' }}" href="/scan-tamu" data-toggle="collapse" data-target="#ecom_dr">
+            <a class="{{ Request::is('scan-tamu') ? 'active' : '' }}" href="/scan-tamu" data-toggle="collapse"
+                data-target="#ecom_dr">
                 <div class="pull-left">
                     <i class="zmdi zmdi-shopping-basket mr-20"></i>
                     <span class="right-nav-text">Scan Tamu</span>
@@ -86,7 +88,8 @@
             </a>
         </li>
         <li>
-            <a class="{{ Request::is('daftar-tamu') ? 'active' : '' }}" href="/daftar-tamu" data-toggle="collapse" data-target="#ecom_dr">
+            <a class="{{ Request::is('daftar-tamu') ? 'active' : '' }}" href="/daftar-tamu" data-toggle="collapse"
+                data-target="#ecom_dr">
                 <div class="pull-left">
                     <i class="fa fa-users mr-20"></i>
                     <span class="right-nav-text">Daftar Tamu</span>
@@ -94,8 +97,11 @@
                 <div class="clearfix"></div>
             </a>
         </li>
+        {{-- hideadmin --}}
+        @if (auth()->user()->id=='3')
         <li>
-            <a class="{{ Request::is('daftar-admin') ? 'active' : '' }}" href="/daftar-admin" data-toggle="collapse" data-target="#ecom_dr">
+            <a class="{{ Request::is('daftar-admin') ? 'active' : '' }}" href="/daftar-admin" data-toggle="collapse"
+                data-target="#ecom_dr">
                 <div class="pull-left">
                     <i class="fa fa-user mr-20"></i>
                     <span class="right-nav-text">Daftar Admin</span>
@@ -103,8 +109,10 @@
                 <div class="clearfix"></div>
             </a>
         </li>
+        @endif
         <li>
-            <a class="{{ Request::is('invoice') ? 'active' : '' }}" href="/invoice" data-toggle="collapse" data-target="#ecom_dr">
+            <a class="{{ Request::is('invoice') ? 'active' : '' }}" href="/invoice" data-toggle="collapse"
+                data-target="#ecom_dr">
                 <div class="pull-left">
                     <i class="fa fa-money mr-20"></i>
                     <span class="right-nav-text">Invoice</span>
@@ -112,9 +120,11 @@
                 <div class="clearfix"></div>
             </a>
         </li>
-        <li><hr class="light-grey-hr mb-10"/></li>
+        <li>
+            <hr class="light-grey-hr mb-10" />
+        </li>
         <li class="navigation-header">
-            <span>component</span> 
+            <span>PRODUK</span>
             <i class="zmdi zmdi-more"></i>
         </li>
         <li>
@@ -123,7 +133,8 @@
                     <i class="zmdi zmdi-smartphone-setup mr-20"></i>
                     <span class="right-nav-text">Paket Bermain</span>
                 </div>
-                <div class="clearfix"></div></a>
+                <div class="clearfix"></div>
+            </a>
         </li>
     </ul>
 </div>

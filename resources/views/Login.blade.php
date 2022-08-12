@@ -33,7 +33,7 @@
 			<header class="sp-header">
 				<div class="sp-logo-wrap pull-left">
 					
-					<a href="Analisis-tamu">
+					<a href="#">
 						<img class="brand-img mr-10" src="dist/img/tgcc.svg" alt="brand"/>
 					</a>
 				</div>
@@ -80,7 +80,7 @@
 												</div>
 												<div class="form-group">
 													<label class="pull-left control-label mb-10" for="password">Password</label>
-													<a class="capitalize-font txt-primary block mb-10 pull-right font-12" href="Lupa-pasword">Lupa Password?</a>
+													<a class="capitalize-font txt-primary block mb-10 pull-right font-12" href="{{ route('Lupa-pasword') }}">Lupa Password?</a>
 													<div class="clearfix"></div>
 													<input type="password" name="password" class="form-control" id="password" placeholder="Masukan Password" required>
 												</div>
