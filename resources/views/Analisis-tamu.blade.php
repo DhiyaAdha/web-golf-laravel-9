@@ -228,7 +228,7 @@
 					</div>
 					<div class="panel-heading">
 						<div class="pull-left">
-							<h6 class="panel-title txt-dark">social campaigns</h6>
+							<h6 class="panel-title txt-dark">Terakhir Tamu Berkunjung</h6>
 						</div>
 						<div class="pull-right">
 							<a href="#" class="pull-left inline-block refresh mr-15">
@@ -274,7 +274,7 @@
 											@foreach ($visitor as $item)
 
 											<tr>
-												<td><span class="txt-dark weight-500">{{ $item->id }}</span></td>
+												<td><span class="txt-dark weight-500">#{{ $item->id }}</span></td>
 												<td>{{ $item->name }}</td>
 												{{-- <td>{{ $item['name'] }}</td> --}}
 												{{-- <td>{{ $item['name'] }}</td> --}}
