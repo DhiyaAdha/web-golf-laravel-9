@@ -28,6 +28,7 @@ class AuthController extends Controller {
             // memanggil data visitor
             $data['visitor'] = Visitor::all();
             $data['visitor_today'] = Visitor::whereDate('created_at', now()->format('Y-m-d'))->count();
+            
             $data['visitor_vip'] = Visitor::where('tipe_member', 'VIP')->count();
             $data['visitor_vvip'] = Visitor::where('tipe_member', 'VVIP')->count();
             
@@ -39,7 +40,17 @@ class AuthController extends Controller {
                                                 ['tipe_member', 'VVIP'],
                                                 ['gender', 'laki-laki'],
                                             ])->count();
-                //VIP 
+            
+            //VIP 
+
+            $data['visitor_vip_female'] = Visitor::where([
+                                                ['tipe_member', 'VIP'],
+                                                ['gender', 'perempuan'],
+                                            ])->count();
+            $data['visitor_vip_male'] = Visitor::where([
+                                                ['tipe_member', 'VIP'],
+                                                ['gender', 'laki-laki'],
+                                            ])->count();
 
             $data['january'] = Visitor::whereMonth('created_at', '01')->whereYear('created_at', now()->format('Y'))->count();
             $data['february'] = Visitor::whereMonth('created_at', '02')->whereYear('created_at', now()->format('Y'))->count();

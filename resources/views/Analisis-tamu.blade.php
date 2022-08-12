@@ -95,17 +95,36 @@
 						</div>
 						<div class="clearfix"></div>
 					</div>
+
+					{{-- Total Charts --}}
+
 					<div class="panel-wrapper collapse in">
 						<div class="panel-body">
 							<div id="morris_extra_line_chart" class="morris-chart" style="height:293px;"></div>
 							<ul class="flex-stat mt-40">
 								<li>
-									<span class="block">Laki-Laki</span>
-									<span class="block txt-dark weight-500 font-18"><span class="counter-anim">3,24,222</span></span>
+									<span class="block">Laki-Laki VVIP</span>
+									<span class="block txt-dark weight-500 font-18"><span class="counter-anim">{{ $visitor_vvip_male }}</span></span>
 								</li>
 								<li>
-									<span class="block">Perempuan</span>
-									<span class="block txt-dark weight-500 font-18"><span class="counter-anim">1,23,432</span></span>
+									<span class="block">Perempuan VVIP</span>
+									<span class="block txt-dark weight-500 font-18"><span class="counter-anim">{{ $visitor_vvip_female }}</span></span>
+								</li>
+								{{-- <li>
+									<span class="block">Trend</span>
+									<span class="block">
+										<i class="zmdi zmdi-trending-up txt-success font-24"></i>
+									</span>
+								</li> --}}
+							</ul>
+							<ul class="flex-stat mt-40">
+								<li>
+									<span class="block">Laki-Laki VIP</span>
+									<span class="block txt-dark weight-500 font-18"><span class="counter-anim">{{ $visitor_vip_male }}</span></span>
+								</li>
+								<li>
+									<span class="block">Perempuan VIP</span>
+									<span class="block txt-dark weight-500 font-18"><span class="counter-anim">{{ $visitor_vip_female }}</span></span>
 								</li>
 								{{-- <li>
 									<span class="block">Trend</span>
