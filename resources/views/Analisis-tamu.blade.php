@@ -15,7 +15,7 @@
                                         <div class="row p-2">
                                             <div class="col-xs-6 text-left data-wrap-left">
                                                 <span class="txt-light block counter"><span
-                                                        class="counter-anim">914,001</span></span>
+                                                        class="counter-anim">{{ $visitor_today }}</span></span>
                                                 <span class="weight-500 uppercase-font txt-light block font-13">Jumlah tamu
                                                     hari ini</span>
                                             </div>
@@ -38,7 +38,7 @@
                                         <div class="row p-2">
                                             <div class="col-xs-6 text-left data-wrap-left">
                                                 <span class="txt-light block counter"><span
-                                                        class="counter-anim">914,001</span></span>
+                                                        class="counter-anim">{{ $visitor_vvip }}</span></span>
                                                 <span class="weight-500 uppercase-font txt-light block font-13">Total tamu
                                                     VVIP</span>
                                             </div>
@@ -61,7 +61,7 @@
                                         <div class="row p-2">
                                             <div class="col-xs-6 text-left data-wrap-left">
                                                 <span class="txt-light block counter"><span
-                                                        class="counter-anim">914,001</span></span>
+                                                        class="counter-anim">{{ $visitor_vip }}</span></span>
                                                 <span class="weight-500 uppercase-font txt-light block font-13">Total tamu
                                                     VIP</span>
                                             </div>
@@ -122,41 +122,9 @@
                             <div class="pull-left">
                                 <h6 class="panel-title txt-dark">Rekap Harian</h6>
                             </div>
-                            <div class="ct-chart ct-perfect-fourth"></div>
-                            <script>
-                                var data = {
-                                    labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
-                                    series: [
-                                        [75, 105, 80, 60, 70, 100, 30],
-                                        [150, 55, 110, 110, 110, 60, 40]
-                                    ]
-                                };
+                            <div class="ct-chart ct-perfect-fourth">
 
-                                var options = {
-                                    seriesBarDistance: 15
-                                };
-
-                                var responsiveOptions = [
-                                    ['screen and (min-width: 641px) and (max-width: 1024px)', {
-                                        seriesBarDistance: 10,
-                                        axisX: {
-                                            labelInterpolationFnc: function(value) {
-                                                return value;
-                                            }
-                                        }
-                                    }],
-                                    ['screen and (max-width: 640px)', {
-                                        seriesBarDistance: 5,
-                                        axisX: {
-                                            labelInterpolationFnc: function(value) {
-                                                return value[0];
-                                            }
-                                        }
-                                    }]
-                                ];
-
-                                new Chartist.Bar('.ct-chart', data, options, responsiveOptions);
-                            </script>
+                            </div>
                             <div class="clearfix"></div>
                         </div>
                     </div>
@@ -174,7 +142,7 @@
                         <div class="label-chatrs col-lg-6">
                             {{-- <span class="clabels clabels-lg inline-block bg-green mr-10 pull-left"></span> --}}
                             <span class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"><span
-                                    class="block font-22 weight-500 mb-5"><span class="counter-anim">112</span></span><span
+                                    class="block font-22 weight-500 mb-5"><span class="counter-anim">{{ $visitor_vvip_male }}</span></span><span
                                     class="block txt-grey">Laki-laki</span></span>
                             <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-success"></i>
                             <div class="clearfix"></div>
@@ -184,7 +152,7 @@
                                 {{-- <span class="clabels clabels-lg inline-block bg-yellow mr-10 pull-left"></span> --}}
                                 <span class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"><span
                                         class="block font-22 weight-500 mb-5"><span
-                                            class="counter-anim">70</span></span><span
+                                            class="counter-anim">{{ $visitor_vvip_female }}</span></span><span
                                         class="block txt-grey">Perempuan</span></span>
                                 <i class="big-rpsn-icon zmdi zmdi-female pull-right txt-warning"></i>
                                 <div class="clearfix"></div>
@@ -203,7 +171,7 @@
                             {{-- <span class="clabels clabels-lg inline-block bg-green mr-10 pull-left"></span> --}}
                             <span class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"><span
                                     class="block font-22 weight-500 mb-5"><span
-                                        class="counter-anim">112</span></span><span
+                                        class="counter-anim">{{ $visitor_vip_male }}</span></span><span
                                     class="block txt-grey">Laki-laki</span></span>
                             <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-success"></i>
                             <div class="clearfix"></div>
@@ -213,7 +181,7 @@
                                 {{-- <span class="clabels clabels-lg inline-block bg-yellow mr-10 pull-left"></span> --}}
                                 <span class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"><span
                                         class="block font-22 weight-500 mb-5"><span
-                                            class="counter-anim">70</span></span><span
+                                            class="counter-anim">{{ $visitor_vip_female }}</span></span><span
                                         class="block txt-grey">Perempuan</span></span>
                                 <i class="big-rpsn-icon zmdi zmdi-female pull-right txt-warning"></i>
                                 <div class="clearfix"></div>
@@ -269,16 +237,28 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                {{-- analisis-tamu --}}
+
+                                                @foreach ($visitor as $item)
                                                 <tr>
-                                                    <td><span class="txt-dark weight-500">#13324</span></td>
-                                                    <td>Yudistira Ramadan Kalimasada</td>
-                                                    <td>15 Januari 2022</td>
+                                                    <td><span class="txt-dark weight-500">##{{ $item->id }}</span></td>
+                                                    <td>Y{{ $item->name }}</td>
+                                                    <td>{{ date('d F Y', strtotime($item->created_at)) }}</td>
                                                     <td>
-                                                        <span class="label label-warning">VVIP</span>
+                                                        @if($item->tipe_member == 'VVIP')
+														<span class="label label-success">VVIP</span>
+													@else
+														<span class="label label-warning">VIP</span>
+													@endif
+													{{-- <span class="txt-dark weight-500">{{ $item->tipe_member }}</span> --}}
+												
                                                     </td>
-                                                    <td>11.32 WIB</td>
+                                                    <td>{{ date('H:i', strtotime($item->created_at)) }}</td>
                                                 </tr>
-                                                <tr>
+
+
+                                                @endforeach
+                                                {{-- <tr>
                                                     <td><span class="txt-dark weight-500">#13324</span></td>
                                                     <td>Dhiyaudin Adha Suhadi</td>
                                                     <td>15 Januari 2022</td>
@@ -313,7 +293,7 @@
                                                         <span class="label label-warning">VVIP</span>
                                                     </td>
                                                     <td>11.32 WIB</td>
-                                                </tr>
+                                                </tr> --}}
 
                                             </tbody>
                                         </table>
@@ -332,4 +312,7 @@
             <!-- /Footer -->
         </div>
     </div>
+        <script>
+            var vvip_jan = "{{ $january }}";
+        </script>
 @endsection

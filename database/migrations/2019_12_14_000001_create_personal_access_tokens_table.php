@@ -18,13 +18,22 @@ class CreatePersonalAccessTokensTable extends Migration
             // $table->morphs('tokenable');
             $table->string('tokenable_type');
             $table->integer('tokenable_id')->unsigned();
-            $table->foreign('tokenable_id')->reference('id')->on('users');
+            
+            // $table->foreign('tokenable_id')->reference('id')->on('users');
+            //persolan accses tidak mau menggunankn relasi yg dibuat
+
             $table->string('name');
             $table->string('token', 64)->unique();
             $table->text('abilities')->nullable();
             $table->timestamp('last_used_at')->nullable();
             $table->timestamps();
         });
+
+       //solusi #1
+       Schema::table('personal_access_tokens', function($table) {
+        $table->foreign('tokenable_id')->references('id')->on('users');
+    });
+
     }
 
     /**

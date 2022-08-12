@@ -33,9 +33,9 @@ Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
-Route::get('/dashboard', function () {
-    return view('Analisis-tamu');
-});
+// Route::get('/dashboard', function () {
+//     return view('Analisis-tamu');
+// });
 Route::get('/scan-tamu', function () {
     return view('Scan-tamu');
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\User;
+use App\Models\Visitor;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,10 +23,49 @@ class AuthController extends Controller {
             return view('/Lupa-pasword');
         }
 
-    public function dashboard(){
-            return view('/Analisis-tamu');
+        public function dashboard(){
+
+            // memanggil data visitor
+            $data['visitor'] = Visitor::all();
+            $data['visitor_today'] = Visitor::whereDate('created_at', now()->format('Y-m-d'))->count();
+
+
+            // $visitorTraffic = PageView::where('created_at', '>=', \Carbon\Carbon::now->subMonth())
+            //             ->groupBy(DB::raw('Date(created_at)'))
+            //             ->orderBy('created_at', 'DESC')->get();
+
+            
+            $data['visitor_vip'] = Visitor::where('tipe_member', 'VIP')->count();
+            $data['visitor_vvip'] = Visitor::where('tipe_member', 'VVIP')->count();
+            
+            $data['visitor_vvip_female'] = Visitor::where([
+                                                ['tipe_member', 'VVIP'],
+                                                ['gender', 'perempuan'],
+                                            ])->count();
+            $data['visitor_vvip_male'] = Visitor::where([
+                                                ['tipe_member', 'VVIP'],
+                                                ['gender', 'laki-laki'],
+                                            ])->count();
+            
+            //VIP 
+
+            $data['visitor_vip_female'] = Visitor::where([
+                                                ['tipe_member', 'VIP'],
+                                                ['gender', 'perempuan'],
+                                            ])->count();
+            $data['visitor_vip_male'] = Visitor::where([
+                                                ['tipe_member', 'VIP'],
+                                                ['gender', 'laki-laki'],
+                                            ])->count();
+
+            $data['january'] = Visitor::whereMonth('created_at', '01')->whereYear('created_at', now()->format('Y'))->count();
+            $data['february'] = Visitor::whereMonth('created_at', '02')->whereYear('created_at', now()->format('Y'))->count();
+            return view('/Analisis-tamu', $data);
         }
 
+
+         
+         
 
     //ini untuk function login
     public function login(Request $request)
