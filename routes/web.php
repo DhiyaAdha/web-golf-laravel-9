@@ -19,7 +19,7 @@ use App\Http\Controllers\ResetPasswordController;
 
 Route::get('/', function () {
     if (Auth::user()) {
-        return redirect('/analisis-tamu');
+        return redirect('/dashboard');
     }    
     return view('login');
     });
@@ -40,7 +40,7 @@ Route::get('/logout', [AuthController::class, 'logout']);
 
 //level admin dan superadmin
 Route::group(['middleware' => ['auth','ceklevel:1,3']], function() {
-Route::get('/analisis-tamu', [AuthController::class, 'dashboard'])->middleware('auth');
+Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
 Route::get('/daftar-admin', [AuthController::class, 'daftar-admin'])->name('daftar-admin');
 });
 

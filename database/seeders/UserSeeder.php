@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
             'email' => 'imasnurdianto@gmail.com',
             'name' => 'imas',
             'password' => Hash::make('tes'),
-            'status' => 'active',
+            // 'status' => 'active',
         ]);
     }
 }

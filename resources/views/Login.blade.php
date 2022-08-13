@@ -15,10 +15,7 @@
 		
 		<!-- vector map CSS -->
 		<link href="../../vendors/bower_components/jasny-bootstrap/dist/css/jasny-bootstrap.min.css" rel="stylesheet" type="text/css"/>
-		
-		
-		
-		
+
 		<!-- Custom CSS -->
 		<link href="dist/css/style.css" rel="stylesheet" type="text/css">
 	</head>
@@ -52,14 +49,13 @@
 								<div class="row">
 									<div class="col-sm-12 col-xs-12">
 										<div>
-
-												@if (session()->has('loginError')) 
-												<div class="alert alert-danger">{!! session('loginError') !!}
-													<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-														<span aria-hidden="true">&times;</span>
-													</button> 
-												</div>
-												@endif
+											@if (session()->has('loginError')) 
+											<div class="alert alert-danger">{!! session('loginError') !!}
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button> 
+											</div>
+											@endif
 										</div>
 										<div class="mb-30">
 											<h3 class="text-center txt-dark mb-10">Masuk Tritih Golf & Country Club</h3>
@@ -67,7 +63,6 @@
 										</div>	
 										<div class="form-wrap">
 											<form action="/login" method="post">
-												
 												@csrf
 												<div class="form-group">
 													<label class="control-label mb-10" for="email">Email / Nomor Telpon</label>

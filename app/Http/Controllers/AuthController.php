@@ -106,11 +106,8 @@ class AuthController extends Controller {
 
     public function logout (Request $request) {
         Auth::logout();
- 
         $request->session()->invalidate();
-    
         $request->session()->regenerateToken();
-    
         return redirect('/');
     }
     
@@ -153,20 +150,19 @@ class AuthController extends Controller {
 
         $token = Str::random(64);
         DB::table('password_resets')->insert([
-              'email'=>$request->email,
-              'token'=>$token,
-              'created_at'=>Carbon::now(),
+            'email'=>$request->email,
+            'token'=>$token,
+            'created_at'=>Carbon::now(),
         ]);
         
         $action_link = route('Reset-pasword',['token'=>$token,'email'=>$request->email]);
         $body = "We are received a request to reset the password for <b>Golf Card </b> account associated with ".$request->email.". You can reset your password by clicking the link below";
 
-       Mail::send('email-forgot',['action_link'=>$action_link,'body'=>$body], function($message) use ($request){
-             $message->from('imasnurdianto.stu@pnc.ac.id','Imas Nurdianto');
-             $message->to($request->email, '')
-                     ->subject('Reset Password');
-       });
+        Mail::send('email-forgot',['action_link'=>$action_link,'body'=>$body], function($message) use ($request){
+            $message->from('imasnurdianto.stu@pnc.ac.id','Imas Nurdianto');
+            $message->to($request->email, '')->subject('Reset Password');
+        });
 
-       return back()->with('resetSuccess', 'Reset Password sudah dikirim ke email anda! silahkan cek email');
-   }
+        return back()->with('resetSuccess', 'Reset Password sudah dikirim ke email anda! silahkan cek email');
+    }
 }
