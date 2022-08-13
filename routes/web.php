@@ -52,13 +52,15 @@ Route::post('/Lupa-pasword',[AuthController::class,'sendresetlink'])->name('Lupa
 
 Route::get('/Reset-pasword/{token}',[AuthController::class,'showResetForm'])->name('Reset-pasword');
 Route::post('/Reset-pasword',[AuthController::class,'resetPassword'])->name('Reset-pasword.update');
-//seeder
-Route::get('/', function(){
-    $statusmember = Visitor::get(); 
 
-    dd($statusmember);
-});
 
-// Analisis Tamu
-Route::get('/analisis-tamu', [VisitorController::class, 'index'])->name('analisis-tamu');
-Route::get('/datavisitor', [VisitorController::class, 'store'])->name('datavisitor');
+// //seeder
+// Route::get('/', function(){
+//     $statusmember = Visitor::get(); 
+
+//     dd($statusmember);
+// });
+
+// // Analisis Tamu
+// Route::get('/analisis-tamu', [VisitorController::class, 'index'])->name('analisis-tamu');
+// Route::get('/datavisitor', [VisitorController::class, 'store'])->name('datavisitor');
