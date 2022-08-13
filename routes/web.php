@@ -43,3 +43,5 @@ Route::get('/scan-tamu', function () {
 Route::get('/Lupa-pasword', [AuthController::class, 'forgot_password'])->middleware('guest');
 
 Route::get('/logout', [AuthController::class, 'logout']);
+
+

@@ -96,17 +96,17 @@
                                     <li>
                                         <span class="block">Tamu Mingguan</span>
                                         <span class="block txt-dark weight-500 font-18"><span
-                                                class="counter-anim">3,24,222</span></span>
+                                                class="counter-anim">{{ $visitor_week }}</span></span>
                                     </li>
                                     <li>
                                         <span class="block">Tamu Bulanan</span>
                                         <span class="block txt-dark weight-500 font-18"><span
-                                                class="counter-anim">1,23,432</span></span>
+                                                class="counter-anim">{{ $visitor_month }}</span></span>
                                     </li>
                                     <li>
                                         <span class="block">Total Tamu Berkunjung</span>
                                         <span class="block txt-dark weight-500 font-18"><span
-                                                class="counter-anim">1,23,432</span></span>
+                                                class="counter-anim">{{ $visitor_year }}</span></span>
                                     </li>
                                 </ul>
                             </div>
@@ -163,7 +163,7 @@
                 </div>
                 {{-- Total tamu VIP & VIP --}}
                 <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12
-					ol-lg-6 col-md-12 col-sm-12 col-xs-12"">
+					ol-lg-6 col-md-12 col-sm-12 col-xs-12">
                     <div class="panel panel-default card-view panel-refresh">
                         <h6>Total Tamu VIP</h6>
                         <hr class="light-grey-hr row mt-10 mb-15" />
@@ -241,14 +241,14 @@
 
                                                 @foreach ($visitor as $item)
                                                 <tr>
-                                                    <td><span class="txt-dark weight-500">##{{ $item->id }}</span></td>
-                                                    <td>Y{{ $item->name }}</td>
+                                                    <td><span class="txt-dark weight-500">#{{ $item->id }}</span></td>
+                                                    <td>{{ $item->name }}</td>
                                                     <td>{{ date('d F Y', strtotime($item->created_at)) }}</td>
                                                     <td>
                                                         @if($item->tipe_member == 'VVIP')
-														<span class="label label-success">VVIP</span>
+														<span class="label label-warning">VVIP</span>
 													@else
-														<span class="label label-warning">VIP</span>
+														<span class="label label-success">VIP</span>
 													@endif
 													{{-- <span class="txt-dark weight-500">{{ $item->tipe_member }}</span> --}}
 												
@@ -313,6 +313,29 @@
         </div>
     </div>
         <script>
-            var vvip_jan = "{{ $january }}";
+            var vvip_jan = <?php print $Jan_vvip; ?>;
+            var vip_jan = <?php print $Jan_vip; ?>;
+            var vvip_feb = <?php print $Feb_vvip; ?>;
+            var vip_feb = <?php print $Feb_vip; ?>;
+            var vvip_mar = <?php print $Mar_vvip; ?>;
+            var vip_mar = <?php print $Mar_vip; ?>;
+            var vvip_apr = <?php print $Apr_vvip; ?>;
+            var vip_apr = <?php print $Apr_vip; ?>;
+            var vvip_mei = <?php print $Mei_vvip; ?>;
+            var vip_mei = <?php print $Mei_vip; ?>;
+            var vvip_jun = <?php print $Jun_vvip; ?>;
+            var vip_jun = <?php print $Jun_vip; ?>;
+            var vvip_jul = <?php print $Jul_vvip; ?>;
+            var vip_jul = <?php print $Jul_vip; ?>;
+            var vvip_aug = <?php print $Aug_vvip; ?>;
+            var vip_aug = <?php print $Aug_vip; ?>;
+            var vvip_sep = <?php print $Sep_vvip; ?>;
+            var vip_sep = <?php print $Sep_vip; ?>;
+            var vvip_oct = <?php print $Oct_vvip; ?>;
+            var vip_oct = <?php print $Oct_vip; ?>;
+            var vvip_nov = <?php print $Nov_vvip; ?>;
+            var vip_nov = <?php print $Nov_vip; ?>;
+            var vvip_dec = <?php print $Dec_vvip; ?>;
+            var vip_dec = <?php print $Dec_vip; ?>;
         </script>
 @endsection
