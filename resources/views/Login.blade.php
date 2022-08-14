@@ -11,7 +11,12 @@
 		
 		<!-- Favicon -->
 		<link rel="shortcut icon" href="favicon.ico">
-		<link rel="icon" href="favicon.ico" type="image/x-icon">
+		<link rel="icon" href="{{ asset('tgcc144.PNG') }}" type="image/x-icon">
+
+		<!-- PWA  -->
+		<meta name="theme-color" content="#6777ef"/>
+		<link rel="apple-touch-icon" href="{{ asset('tgcc144.PNG') }}">
+		<link rel="manifest" href="{{ asset('/manifest.json') }}">
 		
 		<!-- vector map CSS -->
 		<link href="../../vendors/bower_components/jasny-bootstrap/dist/css/jasny-bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -112,5 +117,14 @@
 		
 		<!-- Init JavaScript -->
 		<script src="dist/js/init.js"></script>
+
+		<script src="{{ asset('/sw.js') }}"></script>
+		<script>
+			if (!navigator.serviceWorker.controller) {
+				navigator.serviceWorker.register("/sw.js").then(function (reg) {
+					console.log("Service worker has been registered for scope: " + reg.scope);
+				});
+			}
+		</script>
 	</body>
 </html>
