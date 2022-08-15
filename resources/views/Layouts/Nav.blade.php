@@ -16,11 +16,9 @@
     </div>
     <div id="mobile_only_nav" class="mobile-only-nav pull-right">
         <ul class="nav navbar-right top-nav pull-right">
-
-
             <li class="dropdown auth-drp">
-                <a href="#" class="dropdown-toggle pr-0" data-toggle="dropdown"><img src="/dist/img/user1.png"
-                        alt="user_auth" class="user-auth-img img-circle" /><span class="user-online-status"></span></a>
+                <a href="#" class="dropdown-toggle pr-0"
+                    data-toggle="dropdown"><span>{{ auth()->user()->name }}</span></a>
                 <ul class="dropdown-menu user-auth-dropdown" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
                     <li>
                         <a href="/logout"><i class="zmdi zmdi-power"></i><span>Log Out</span></a>

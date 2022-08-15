@@ -20,7 +20,6 @@ class CreateLogAdminsTable extends Migration
             $table->string('activities');
             
             $table->timestamps();
-           
             // $table->integer('user_id');
             // $table->integer('user_id')->unsigned();
             // $table->foreign('user_id')->reference('id')->on('users');

@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Exception;
+use Session;
 use App\Models\User;
 use App\Models\Visitor;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
-
-
-
 
 class AuthController extends Controller {
 
@@ -31,26 +30,14 @@ class AuthController extends Controller {
 
 
         public function dashboard(){
-            
-
             // memanggil data visitor
             $data['visitor'] = Visitor::all()->sortByDesc('created_at');
             $data['visitor_today'] = Visitor::whereDate('created_at', now()->format('Y-m-d'))->count();
-           
             $data['visitor_week'] = Visitor::whereBetween('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY), Carbon::now()->endOfWeek(Carbon::SATURDAY)])->get()->count();
             $data['visitor_month'] = Visitor::whereMonth('created_at', now()->month)->count(); //bulan ini  
             $data['visitor_year'] = Visitor::whereYear('created_at', now()->format('Y'))->count();
-
-
-            // $visitorTraffic = PageView::where('created_at', '>=', \Carbon\Carbon::now->subMonth())
-            //             ->groupBy(DB::raw('Date(created_at)'))
-            //             ->orderBy('created_at', 'DESC')->get();
-
-
-            
             $data['visitor_vip'] = Visitor::where('tipe_member', 'VIP')->count();
             $data['visitor_vvip'] = Visitor::where('tipe_member', 'VVIP')->count();
-            
             $data['visitor_vvip_female'] = Visitor::where([
                                                 ['tipe_member', 'VVIP'],
                                                 ['gender', 'perempuan'],
@@ -61,7 +48,6 @@ class AuthController extends Controller {
                                             ])->count();
             
             //VIP 
-
             $data['visitor_vip_female'] = Visitor::where([
                                                 ['tipe_member', 'VIP'],
                                                 ['gender', 'perempuan'],
@@ -70,10 +56,6 @@ class AuthController extends Controller {
                                                 ['tipe_member', 'VIP'],
                                                 ['gender', 'laki-laki'],
                                             ])->count();
-
-
-            // $data['january'] = Visitor::whereMonth('created_at', '01')->whereYear('created_at', now()->format('M'))->count();
-            // $data['january'] = Visitor::whereMonth('created_at', '01')->whereYear('created_at', now()->format('Y'))->count();
             $data['Jan_vvip'] = Visitor::whereMonth('created_at', '01')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
             $data['Jan_vip'] = Visitor::whereMonth('created_at', '01')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
             $data['Feb_vvip'] = Visitor::whereMonth('created_at', '02')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
@@ -98,7 +80,6 @@ class AuthController extends Controller {
             $data['Nov_vip'] = Visitor::whereMonth('created_at', '11')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
             $data['Dec_vvip'] = Visitor::whereMonth('created_at', '12')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
             $data['Dec_vip'] = Visitor::whereMonth('created_at', '12')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
-
             
             // rEKAP hARIAN
             // $data['vvip_sen'] = Visitor::whereBetween('created_at', [Carbon::now()->startOfWeek(Carbon::MONDAY)->addDays(1), Carbon::now()->endOfWeek(Carbon::SUNDAY)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
@@ -116,17 +97,12 @@ class AuthController extends Controller {
             $data['vip_jum'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY)->addDays(5)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
             $data['vvip_sab'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY)->addDays(6)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
             $data['vip_sab'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY)->addDays(6)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
-
-
-
-
-        
-
             return view('/Analisis-tamu', $data);
         }
 
-         
-         
+    public function password_baru(){
+        return view('/Reset-pasword');
+    }
 
     //ini untuk function login
     public function login(Request $request)
@@ -193,13 +169,67 @@ class AuthController extends Controller {
     //     return redirect()->intended('/login');
     // }
 
+    
+
     public function logout (Request $request) {
         Auth::logout();
- 
         $request->session()->invalidate();
-    
         $request->session()->regenerateToken();
-    
         return redirect('/');
+    }
+    
+    public function resetPassword(Request $request){
+        $request->validate([
+            'email'=>'required|email|exists:users,email',
+            'password'=>'required|confirmed',
+            'password_confirmation'=>'required',
+        ]);
+
+        $check_token = DB::table('password_resets')->where([
+            'email'=>$request->email,
+            'token'=>$request->token,
+        ])->first();
+
+        if(!$check_token){
+            return back()->withInput()->with('fail', 'Invalid token');
+        }else{
+
+            User::where('email', $request->email)->update([
+                'password'=> Hash::make($request->password)
+            ]);
+
+            DB::table('password_resets')->where([
+                'email'=>$request->email
+            ])->delete();
+
+            return redirect()->intended('login')->with('info', 'Your password has been changed! You can login with new password')->with('verifiedEmail', $request->email);
+        }
+    }
+
+    public function showResetForm(Request $request, $token = null){
+        return view('Reset-pasword')->with(['token'=>$token,'email'=>$request->email]);
+    }
+
+    public function sendresetlink(Request $request){
+        $request->validate([
+            'email'=>'required|email|exists:users,email'
+        ]);
+
+        $token = Str::random(64);
+        DB::table('password_resets')->insert([
+            'email'=>$request->email,
+            'token'=>$token,
+            'created_at'=>Carbon::now(),
+        ]);
+        
+        $action_link = route('Reset-pasword',['token'=>$token,'email'=>$request->email]);
+        $body = "We are received a request to reset the password for <b>Golf Card </b> account associated with ".$request->email.". You can reset your password by clicking the link below";
+
+        Mail::send('email-forgot',['action_link'=>$action_link,'body'=>$body], function($message) use ($request){
+            $message->from('imasnurdianto.stu@pnc.ac.id','Imas Nurdianto');
+            $message->to($request->email, '')->subject('Reset Password');
+        });
+
+        return back()->with('resetSuccess', 'Reset Password sudah dikirim ke email anda! silahkan cek email');
     }
 }
