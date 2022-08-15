@@ -2,8 +2,8 @@
     <div class="mobile-only-brand pull-left">
         <div class="nav-header pull-left">
             <div class="logo-wrap">
-                <a href="/analisis-tamu">
-                    <img class="brand-img" src="dist/img/tgcc_icon.svg" alt="brand" />
+                <a href="/dashboard">
+                    <img class="brand-img mb-10" src="dist/img/tgcc_icon.svg" alt="brand" />
                     <span class="brand-text">TGCC</span>
                 </a>
             </div>

@@ -17,8 +17,11 @@ class UserSeeder extends Seeder
         User::create([
             'email' => 'imasnurdianto@gmail.com',
             'name' => 'imas',
+            'phone'=> '087736202888',
             'password' => Hash::make('tes'),
-            'status' => 'active',
+            'role_id' => '1',
+            // 'status' => 'active',
         ]);
+        
     }
 }

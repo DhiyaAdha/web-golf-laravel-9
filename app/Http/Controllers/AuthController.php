@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
-
+use App\Models\Visitor;
 
 class AuthController extends Controller {
 
@@ -29,7 +29,37 @@ class AuthController extends Controller {
         }
 
     public function dashboard(){
-            return view('/Analisis-tamu');
+
+            // memanggil data visitor
+            $data['visitor'] = Visitor::all();
+            $data['visitor_today'] = Visitor::whereDate('created_at', now()->format('Y-m-d'))->count();
+            
+            $data['visitor_vip'] = Visitor::where('tipe_member', 'VIP')->count();
+            $data['visitor_vvip'] = Visitor::where('tipe_member', 'VVIP')->count();
+            
+            $data['visitor_vvip_female'] = Visitor::where([
+                                                ['tipe_member', 'VVIP'],
+                                                ['gender', 'perempuan'],
+                                            ])->count();
+            $data['visitor_vvip_male'] = Visitor::where([
+                                                ['tipe_member', 'VVIP'],
+                                                ['gender', 'laki-laki'],
+                                            ])->count();
+            
+            //VIP 
+
+            $data['visitor_vip_female'] = Visitor::where([
+                                                ['tipe_member', 'VIP'],
+                                                ['gender', 'perempuan'],
+                                            ])->count();
+            $data['visitor_vip_male'] = Visitor::where([
+                                                ['tipe_member', 'VIP'],
+                                                ['gender', 'laki-laki'],
+                                            ])->count();
+
+            $data['january'] = Visitor::whereMonth('created_at', '01')->whereYear('created_at', now()->format('Y'))->count();
+            $data['february'] = Visitor::whereMonth('created_at', '02')->whereYear('created_at', now()->format('Y'))->count();
+            return view('/Analisis-tamu', $data);
         }
 
         public function password_baru(){
@@ -83,7 +113,7 @@ class AuthController extends Controller {
                 ],
             ];
             //  return response()->json($respon, 200);
-            return redirect()->intended('/analisis-tamu');
+            return redirect()->intended('/dashboard');
             // dd(session()->all());
         }
     }
@@ -106,11 +136,8 @@ class AuthController extends Controller {
 
     public function logout (Request $request) {
         Auth::logout();
- 
         $request->session()->invalidate();
-    
         $request->session()->regenerateToken();
-    
         return redirect('/');
     }
     
@@ -153,20 +180,19 @@ class AuthController extends Controller {
 
         $token = Str::random(64);
         DB::table('password_resets')->insert([
-              'email'=>$request->email,
-              'token'=>$token,
-              'created_at'=>Carbon::now(),
+            'email'=>$request->email,
+            'token'=>$token,
+            'created_at'=>Carbon::now(),
         ]);
         
         $action_link = route('Reset-pasword',['token'=>$token,'email'=>$request->email]);
         $body = "We are received a request to reset the password for <b>Golf Card </b> account associated with ".$request->email.". You can reset your password by clicking the link below";
 
-       Mail::send('email-forgot',['action_link'=>$action_link,'body'=>$body], function($message) use ($request){
-             $message->from('imasnurdianto.stu@pnc.ac.id','Imas Nurdianto');
-             $message->to($request->email, '')
-                     ->subject('Reset Password');
-       });
+        Mail::send('email-forgot',['action_link'=>$action_link,'body'=>$body], function($message) use ($request){
+            $message->from('imasnurdianto.stu@pnc.ac.id','Imas Nurdianto');
+            $message->to($request->email, '')->subject('Reset Password');
+        });
 
-       return back()->with('resetSuccess', 'Reset Password sudah dikirim ke email anda! silahkan cek email');
-   }
+        return back()->with('resetSuccess', 'Reset Password sudah dikirim ke email anda! silahkan cek email');
+    }
 }
