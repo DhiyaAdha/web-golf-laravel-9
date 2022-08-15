@@ -27,7 +27,6 @@ class CreateDepositHistoriesTable extends Migration
             $table->foreign('visitor_id')->references('id')->on('visitors');
         });
 
-
     }
 
     /**

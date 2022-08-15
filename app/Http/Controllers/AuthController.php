@@ -12,7 +12,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+
 use Carbon\Carbon;
+
+
 
 
 class AuthController extends Controller {
@@ -25,6 +28,7 @@ class AuthController extends Controller {
     public function forgot_password(){
             return view('/Lupa-pasword');
         }
+
 
         public function dashboard(){
             
@@ -41,6 +45,7 @@ class AuthController extends Controller {
             // $visitorTraffic = PageView::where('created_at', '>=', \Carbon\Carbon::now->subMonth())
             //             ->groupBy(DB::raw('Date(created_at)'))
             //             ->orderBy('created_at', 'DESC')->get();
+
 
             
             $data['visitor_vip'] = Visitor::where('tipe_member', 'VIP')->count();
@@ -65,6 +70,7 @@ class AuthController extends Controller {
                                                 ['tipe_member', 'VIP'],
                                                 ['gender', 'laki-laki'],
                                             ])->count();
+
 
             // $data['january'] = Visitor::whereMonth('created_at', '01')->whereYear('created_at', now()->format('M'))->count();
             // $data['january'] = Visitor::whereMonth('created_at', '01')->whereYear('created_at', now()->format('Y'))->count();
@@ -114,7 +120,7 @@ class AuthController extends Controller {
 
 
 
-            
+        
 
             return view('/Analisis-tamu', $data);
         }

@@ -20,11 +20,13 @@ class CreateLogLimitsTable extends Migration
             $table->string('activities');
 
             $table->timestamp('created_at');
-       });
 
-       Schema::table('log_limits', function($table) {
-        $table->foreign('visitor_id')->references('id')->on('visitors');
-    });
+        });
+
+        Schema::table('log_limits', function($table) {
+            $table->foreign('visitor_id')->references('id')->on('visitors');
+        });
+
 
     }
 

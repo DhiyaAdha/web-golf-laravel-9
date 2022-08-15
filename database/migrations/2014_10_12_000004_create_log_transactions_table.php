@@ -20,11 +20,12 @@ class CreateLogTransactionsTable extends Migration
             $table->string('activities');
             $table->timestamp('created_at');
             // $table->integer('visitor_id');
-       });
 
-       Schema::table('log_transactions', function($table) {
-        $table->foreign('visitor_id')->references('id')->on('visitors');
-    });
+        });
+
+        Schema::table('log_transactions', function($table) {
+            $table->foreign('visitor_id')->references('id')->on('visitors');
+        });
 
 
     }

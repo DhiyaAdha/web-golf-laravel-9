@@ -29,10 +29,11 @@ class CreatePersonalAccessTokensTable extends Migration
             $table->timestamps();
         });
 
-       //solusi #1
-       Schema::table('personal_access_tokens', function($table) {
-        $table->foreign('tokenable_id')->references('id')->on('users');
-    });
+        //solusi #1
+        Schema::table('personal_access_tokens', function($table) {
+            $table->foreign('tokenable_id')->references('id')->on('users');
+        });
+
 
     }
 
