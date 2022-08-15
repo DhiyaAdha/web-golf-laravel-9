@@ -34,6 +34,7 @@ class CreatePersonalAccessTokensTable extends Migration
             $table->foreign('tokenable_id')->references('id')->on('users');
         });
 
+
     }
 
     /**

@@ -19,9 +19,11 @@ class StatusMember extends Seeder
     public function definition()
     {
         return [
+
             'name' => 'imas',
             'email' => 'dhiya@gmail.com',
             'phone'=> '087736202888',
+
 
             // 'status' => collect(['VIP', 'VVIP'])->random(1), [0],
             //status untuk enum

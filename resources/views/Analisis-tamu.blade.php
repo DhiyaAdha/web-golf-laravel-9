@@ -92,27 +92,26 @@
                                 <ul class="flex-stat mt-40">
                                     <li>
                                         <span class="block">Tamu Mingguan</span>
-                                        <span class="block txt-dark weight-500 font-18">
-											<span class="counter-anim">3,24,222</span>
-										</span>
+                                        <span class="block txt-dark weight-500 font-18"><span
+                                                class="counter-anim">{{ $visitor_week }}</span></span>
                                     </li>
                                     <li>
                                         <span class="block">Tamu Bulanan</span>
-                                        <span class="block txt-dark weight-500 font-18">
-											<span class="counter-anim">1,23,432</span>
-										</span>
+                                        <span class="block txt-dark weight-500 font-18"><span
+                                                class="counter-anim">{{ $visitor_month }}</span></span>
                                     </li>
                                     <li>
                                         <span class="block">Total Tamu Berkunjung</span>
-                                        <span class="block txt-dark weight-500 font-18">
-											<span class="counter-anim">1,23,432</span>
-										</span>
+                                        <span class="block txt-dark weight-500 font-18"><span
+                                                class="counter-anim">{{ $visitor_year }}</span></span>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                {{-- Chart Rekap Harian --}}
                 <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                     <div class="panel panel-default card-view panel-refresh relative">
                         <div class="refresh-container">
@@ -122,42 +121,17 @@
                             <div class="pull-left">
                                 <h6 class="panel-title txt-dark">Rekap Harian</h6>
                             </div>
-                            <div class="ct-chart ct-perfect-fourth"></div>
-                            <script>
-                                var data = {
-                                    labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
-                                    series: [
-                                        [75, 105, 80, 60, 70, 100, 30],
-                                        [150, 55, 110, 110, 110, 60, 40]
-                                    ]
-                                };
-
-                                var options = {
-                                    seriesBarDistance: 15
-                                };
-
-                                var responsiveOptions = [
-                                    ['screen and (min-width: 641px) and (max-width: 1024px)', {
-                                        seriesBarDistance: 10,
-                                        axisX: {
-                                            labelInterpolationFnc: function(value) {
-                                                return value;
-                                            }
-                                        }
-                                    }],
-                                    ['screen and (max-width: 640px)', {
-                                        seriesBarDistance: 5,
-                                        axisX: {
-                                            labelInterpolationFnc: function(value) {
-                                                return value[0];
-                                            }
-                                        }
-                                    }]
-                                ];
-
-                                new Chartist.Bar('.ct-chart', data, options, responsiveOptions);
-                            </script>
+                            <div class="pull-right">
+                            </div>
                             <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+                                <div id="morris_extra_bar_chart" class="morris-chart" style="height:340px;"></div>
+                                <ul class="flex-stat mt-40">
+                                    
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -198,7 +172,7 @@
 
                 {{-- Total tamu VIP & VIP --}}
                 <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12
-					ol-lg-6 col-md-12 col-sm-12 col-xs-12"">
+					ol-lg-6 col-md-12 col-sm-12 col-xs-12">
                     <div class="panel panel-default card-view panel-refresh">
                         <h6>Total Tamu VIP</h6>
                         <hr class="light-grey-hr row mt-10 mb-15" />
@@ -295,7 +269,44 @@
             <!-- /Footer -->
         </div>
     </div>
-	<script>
-		var vvip_jan = "{{ $january }}";
-	</script>
+    <script>
+        var vvip_jan = <?php print $Jan_vvip; ?>;
+        var vip_jan = <?php print $Jan_vip; ?>;
+        var vvip_feb = <?php print $Feb_vvip; ?>;
+        var vip_feb = <?php print $Feb_vip; ?>;
+        var vvip_mar = <?php print $Mar_vvip; ?>;
+        var vip_mar = <?php print $Mar_vip; ?>;
+        var vvip_apr = <?php print $Apr_vvip; ?>;
+        var vip_apr = <?php print $Apr_vip; ?>;
+        var vvip_mei = <?php print $Mei_vvip; ?>;
+        var vip_mei = <?php print $Mei_vip; ?>;
+        var vvip_jun = <?php print $Jun_vvip; ?>;
+        var vip_jun = <?php print $Jun_vip; ?>;
+        var vvip_jul = <?php print $Jul_vvip; ?>;
+        var vip_jul = <?php print $Jul_vip; ?>;
+        var vvip_aug = <?php print $Aug_vvip; ?>;
+        var vip_aug = <?php print $Aug_vip; ?>;
+        var vvip_sep = <?php print $Sep_vvip; ?>;
+        var vip_sep = <?php print $Sep_vip; ?>;
+        var vvip_oct = <?php print $Oct_vvip; ?>;
+        var vip_oct = <?php print $Oct_vip; ?>;
+        var vvip_nov = <?php print $Nov_vvip; ?>;
+        var vip_nov = <?php print $Nov_vip; ?>;
+        var vvip_dec = <?php print $Dec_vvip; ?>;
+        var vip_dec = <?php print $Dec_vip; ?>;
+        var vvip_min = <?php print $vvip_min; ?>;
+        var vip_min = <?php print $vip_min; ?>;
+        var vvip_sen = <?php print $vvip_sen; ?>;
+        var vip_sen = <?php print $vip_sen; ?>;
+        var vvip_sel = <?php print $vvip_sel; ?>;
+        var vip_sel = <?php print $vip_sel; ?>;
+        var vvip_rab = <?php print $vvip_rab; ?>;
+        var vip_rab = <?php print $vip_rab; ?>;
+        var vvip_kam = <?php print $vvip_kam; ?>;
+        var vip_kam = <?php print $vip_kam; ?>;
+        var vvip_jum = <?php print $vvip_jum; ?>;
+        var vip_jum = <?php print $vip_jum; ?>;
+        var vvip_sab = <?php print $vvip_sab; ?>;
+        var vip_sab = <?php print $vip_sab; ?>;
+    </script>
 @endsection
