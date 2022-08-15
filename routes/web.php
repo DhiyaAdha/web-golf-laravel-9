@@ -44,4 +44,4 @@ Route::get('/Lupa-pasword', [AuthController::class, 'forgot_password'])->middlew
 
 Route::get('/logout', [AuthController::class, 'logout']);
 
-
+//hello

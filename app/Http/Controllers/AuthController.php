@@ -27,13 +27,14 @@ class AuthController extends Controller {
         }
 
         public function dashboard(){
+            
 
             // memanggil data visitor
-            $data['visitor'] = Visitor::all()->sortBy('id');
+            $data['visitor'] = Visitor::all()->sortByDesc('created_at');
             $data['visitor_today'] = Visitor::whereDate('created_at', now()->format('Y-m-d'))->count();
            
-            $data['visitor_week'] = Visitor::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get()->count();
-            $data['visitor_month'] = Visitor::whereMonth('created_at', now()->month)->count(); //bulan ini
+            $data['visitor_week'] = Visitor::whereBetween('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY), Carbon::now()->endOfWeek(Carbon::SATURDAY)])->get()->count();
+            $data['visitor_month'] = Visitor::whereMonth('created_at', now()->month)->count(); //bulan ini  
             $data['visitor_year'] = Visitor::whereYear('created_at', now()->format('Y'))->count();
 
 
@@ -93,6 +94,23 @@ class AuthController extends Controller {
             $data['Dec_vip'] = Visitor::whereMonth('created_at', '12')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
 
             
+            // rEKAP hARIAN
+            // $data['vvip_sen'] = Visitor::whereBetween('created_at', [Carbon::now()->startOfWeek(Carbon::MONDAY)->addDays(1), Carbon::now()->endOfWeek(Carbon::SUNDAY)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
+            $data['vvip_min'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY)->addDays(0)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
+            $data['vip_min'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY)->addDays(0)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
+            $data['vvip_sen'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY)->addDays(1)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
+            $data['vip_sen'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY)->addDays(1)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
+            $data['vvip_sel'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY)->addDays(2)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
+            $data['vip_sel'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY)->addDays(2)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
+            $data['vvip_rab'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY)->addDays(3)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
+            $data['vip_rab'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY)->addDays(3)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
+            $data['vvip_kam'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY)->addDays(4)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
+            $data['vip_kam'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY)->addDays(4)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
+            $data['vvip_jum'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY)->addDays(5)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
+            $data['vip_jum'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY)->addDays(5)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
+            $data['vvip_sab'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY)->addDays(6)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
+            $data['vip_sab'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY)->addDays(6)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
+
 
 
 
