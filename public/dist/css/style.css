@@ -24537,9 +24537,9 @@ ul.inbox-nav li a:focus {
 }
 
 .error-head {
-    font-size: 112px;
-    font-style: italic;
-    line-height: 112px;
+  font-size: 112px;
+  font-style: linier;
+  line-height: 112px; 
 }
 
 .error-bg-img {
