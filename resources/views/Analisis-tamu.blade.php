@@ -322,6 +322,7 @@
         </div>
     </div>
         <script>
+			
             var vvip_jan = <?php print $Jan_vvip; ?>;
             var vip_jan = <?php print $Jan_vip; ?>;
             var vvip_feb = <?php print $Feb_vvip; ?>;
