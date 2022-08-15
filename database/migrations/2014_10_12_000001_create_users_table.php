@@ -32,7 +32,7 @@ class CreateUsersTable extends Migration
             // $table->foreign('role_id')->reference('id')->on('roles');  
             // $table->foreign('role_id')->constrained();
             // $table->foreign('country_id')->references('id')->on('countries');
-            
+
         });
 
         // Schema::table('users', function($table) {

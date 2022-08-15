@@ -21,7 +21,9 @@ class UserSeeder extends Seeder
             'password' => Hash::make('tes'),
             'role_id' => '1',
             // 'status' => 'active',
+
         ]);
         
+
     }
 }

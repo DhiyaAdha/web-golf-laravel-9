@@ -122,20 +122,23 @@ $(document).ready(function(){
 		// Morris bar chart
 		Morris.Bar({
 			element: 'morris_extra_bar_chart',
-			data: [{
-				y: '2006',
-				a: 100,
-				b: 90,
-				c: 60
-			}],
+			data: [
+				{ y: 'Sen', a: vvip_sen, b: vip_sen },
+				{ y: 'Sel', a: vvip_sel,  b: vip_sel },
+				{ y: 'Rab', a: vvip_rab,  b: vip_rab },
+				{ y: 'Kam', a: vvip_kam,  b: vip_kam },
+				{ y: 'Jum', a: vvip_jum,  b: vip_jum },
+				{ y: 'Sab', a: vvip_sab,  b: vvip_sab },
+				{ y: 'Mgg', a: vvip_min, b: vip_min }
+			  ],
 			xkey: 'y',
-			ykeys: ['a', 'b', 'c'],
-			labels: ['A', 'B', 'C'],
-			barColors:['#fec107', '#ff2a00', '#2879ff'],
+			ykeys: ['a', 'b', ],
+			labels: ['VVIP', 'VIP', ],
+			barColors:['#fec107', '#32FFC1',],
 			hideHover: 'auto',
 			gridLineColor: '#878787',
 			resize: true,
-			barGap:7,
+			barGap: 4,
 			gridTextColor:'#878787',
 			gridTextFamily:"Roboto"
 		});
@@ -144,19 +147,7 @@ $(document).ready(function(){
 /*****Ready function end*****/
 
 /*****Load function start*****/
-$(window).load(function(){
-	window.setTimeout(function(){
-		$.toast({
-			heading: 'Welcome to Hound',
-			text: 'Use the predefined ones, or specify a custom position object.',
-			position: 'top-right',
-			loaderBg:'#fec107',
-			icon: 'success',
-			hideAfter: 3500, 
-			stack: 6
-		});
-	}, 3000);
-});
+
 /*****Load function* end*****/
 
 /*****Sparkline function start*****/
