@@ -138,6 +138,7 @@ $(document).ready(function () {
             },
         });
     }
+
     if ($("#morris_extra_line_chart").length > 0) {
         var data = [
             {
@@ -183,66 +184,67 @@ $(document).ready(function () {
                 itouch: 200,
             },
         ];
+
         var dataNew = [
             {
                 period: "Jan",
                 vvip: vvip_jan,
-                vip: 10,
+                vip: vip_jan,
             },
             {
                 period: "Feb",
-                vvip: 20,
-                vip: 10,
+                vvip: vvip_feb,
+                vip: vip_feb,
             },
             {
                 period: "March",
-                vvip: 20,
-                vip: 10,
+                vvip: vvip_mar,
+                vip: vip_mar,
             },
             {
                 period: "April",
-                vvip: 20,
-                vip: 10,
+                vvip: vvip_apr,
+                vip: vip_apr,
             },
             {
                 period: "May",
-                vvip: 20,
-                vip: 10,
+                vvip: vvip_mei,
+                vip: vip_mei,
             },
             {
                 period: "June",
-                vvip: 20,
-                vip: 10,
+                vvip: vvip_jun,
+                vip: vip_jun,
             },
             {
                 period: "July",
-                vvip: 20,
-                vip: 10,
+                vvip: vvip_jul,
+                vip: vip_jul,
             },
             {
                 period: "Aug",
-                vvip: 20,
-                vip: 10,
+                vvip: vvip_aug,
+                vip: vip_aug,
             },
             {
                 period: "Sep",
-                vvip: 20,
-                vip: 10,
+                vvip: vvip_sep,
+                vip: vip_sep,
             },
             {
                 period: "Oct",
-                vvip: 20,
-                vip: 10,
+                vvip: vvip_oct,
+                vip: vip_oct,
             },
             {
                 period: "Nov",
-                vvip: 20,
-                vip: 10,
+                vvip: vvip_nov,
+                vip: vip_nov,
             },
             {
                 period: "Dec",
-                vvip: 20,
-                vip: 10,
+                vvip: vvip_dec,
+                vip: vip_dec,
             },
         ];
         var lineChart = Morris.Line({
@@ -254,11 +256,11 @@ $(document).ready(function () {
             pointSize: 2,
             fillOpacity: 0,
             lineWidth: 2,
-            pointStrokeColors: ["#fec107", "#e91e63", "#2879ff"],
+            pointStrokeColors: ["#fec107", "#32FFC1"],
             behaveLikeLine: true,
             gridLineColor: "#878787",
             hideHover: "auto",
-            lineColors: ["#fec107", "#e91e63", "#2879ff"],
+            lineColors: ["#fec107", "#32FFC1"],
             resize: true,
             redraw: true,
             gridTextColor: "#878787",
@@ -364,3 +366,43 @@ $(window).resize(function (e) {
     sparkResize = setTimeout(sparklineLogin, 200);
 });
 sparklineLogin();
+
+// Grafik rekap harian
+var data = {
+    labels: ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"],
+    series: [
+        [100, 105, 80, 60, 70, 100, 30],
+        [160, 55, 110, 110, 110, 60, 40],
+    ],
+};
+
+var options = {
+    seriesBarDistance: 15,
+};
+
+var responsiveOptions = [
+    [
+        "screen and (min-width: 641px) and (max-width: 1024px)",
+        {
+            seriesBarDistance: 10,
+            axisX: {
+                labelInterpolationFnc: function (value) {
+                    return value;
+                },
+            },
+        },
+    ],
+    [
+        "screen and (max-width: 640px)",
+        {
+            seriesBarDistance: 5,
+            axisX: {
+                labelInterpolationFnc: function (value) {
+                    return value[0];
+                },
+            },
+        },
+    ],
+];
+
+new Chartist.Bar(".ct-chart", data, options, responsiveOptions);
