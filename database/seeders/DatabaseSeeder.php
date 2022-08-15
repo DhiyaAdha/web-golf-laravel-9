@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
     {
 
         // \App\Models\User::factory(10)->create();
-        // $this->call(UserSeeder::class);
+        $this->call(UserSeeder::class);
         $this->call(StatusMember::class);
 
 
@@ -28,7 +28,6 @@ class DatabaseSeeder extends Seeder
         for($i = 1; $i <= 20; $i++) {
 
         DB::table('visitors')->insert([
- 
         // 'id' => Visitor::all()->random()->id,
         'name' => $faker->name,
         'email' => preg_replace('/@example\..*/', '@example.com', $faker->unique()->safeEmail),
