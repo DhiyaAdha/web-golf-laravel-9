@@ -41,6 +41,7 @@
 								<div class="row">
 									<div class="col-sm-12 col-xs-12">
 										<div class="mb-50">
+											
                                             <h2 class="block error-head text-center mb-10"
                                             style="font-family: arial black; font-size: 100px; background: -webkit-gradient(linear, left bottom, right top, from(#171d18),to(#15e26a)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                                             500</h2>
