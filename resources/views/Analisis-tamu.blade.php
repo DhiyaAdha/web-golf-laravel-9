@@ -91,7 +91,7 @@
                         </div>
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
-                                <div id="morris_extra_line_chart" class="morris-chart" style="height:293px;"></div>
+                                <div id="morris_extra_line_chart" class="morris-chart" style="height:300px;"></div>
                                 <ul class="flex-stat mt-40">
                                     <li>
                                         <span class="block">Tamu Mingguan</span>
@@ -122,41 +122,8 @@
                             <div class="pull-left">
                                 <h6 class="panel-title txt-dark">Rekap Harian</h6>
                             </div>
-                            <div class="ct-chart ct-perfect-fourth"></div>
-                            <script>
-                                var data = {
-                                    labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
-                                    series: [
-                                        [75, 105, 80, 60, 70, 100, 30],
-                                        [150, 55, 110, 110, 110, 60, 40]
-                                    ]
-                                };
-
-                                var options = {
-                                    seriesBarDistance: 15
-                                };
-
-                                var responsiveOptions = [
-                                    ['screen and (min-width: 641px) and (max-width: 1024px)', {
-                                        seriesBarDistance: 10,
-                                        axisX: {
-                                            labelInterpolationFnc: function(value) {
-                                                return value;
-                                            }
-                                        }
-                                    }],
-                                    ['screen and (max-width: 640px)', {
-                                        seriesBarDistance: 5,
-                                        axisX: {
-                                            labelInterpolationFnc: function(value) {
-                                                return value[0];
-                                            }
-                                        }
-                                    }]
-                                ];
-
-                                new Chartist.Bar('.ct-chart', data, options, responsiveOptions);
-                            </script>
+                            <div class="ct-chart ct-perfect-fourth">
+                            </div>
                             <div class="clearfix"></div>
                         </div>
                     </div>
@@ -174,19 +141,20 @@
                         <div class="label-chatrs col-lg-6">
                             {{-- <span class="clabels clabels-lg inline-block bg-green mr-10 pull-left"></span> --}}
                             <span class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"><span
-                                    class="block font-22 weight-500 mb-5"><span class="counter-anim">112</span></span><span
+                                    class="block font-22 weight-500 mb-5"><span class="counter-anim"
+                                        style="color: #01C853;">112</span></span><span
                                     class="block txt-grey">Laki-laki</span></span>
-                            <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-success"></i>
+                            <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right"></i>
                             <div class="clearfix"></div>
                         </div>
                         <div class="label-chatrs">
                             <div class="">
                                 {{-- <span class="clabels clabels-lg inline-block bg-yellow mr-10 pull-left"></span> --}}
                                 <span class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"><span
-                                        class="block font-22 weight-500 mb-5"><span
-                                            class="counter-anim">70</span></span><span
+                                        class="block font-22 weight-500 mb-5"><span class="counter-anim"
+                                            style="color: #01C853;">70</span></span><span
                                         class="block txt-grey">Perempuan</span></span>
-                                <i class="big-rpsn-icon zmdi zmdi-female pull-right txt-warning"></i>
+                                <i class="big-rpsn-icon zmdi zmdi-female pull-right"></i>
                                 <div class="clearfix"></div>
                                 <hr class="light-grey-hr row mt-10 mb-15" />
                             </div>
@@ -202,20 +170,20 @@
                         <div class="label-chatrs col-lg-6">
                             {{-- <span class="clabels clabels-lg inline-block bg-green mr-10 pull-left"></span> --}}
                             <span class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"><span
-                                    class="block font-22 weight-500 mb-5"><span
-                                        class="counter-anim">112</span></span><span
+                                    class="block font-22 weight-500 mb-5"><span class="counter-anim"
+                                        style="color: #01C853;">112</span></span><span
                                     class="block txt-grey">Laki-laki</span></span>
-                            <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-success"></i>
+                            <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right"></i>
                             <div class="clearfix"></div>
                         </div>
                         <div class="label-chatrs">
                             <div class="">
                                 {{-- <span class="clabels clabels-lg inline-block bg-yellow mr-10 pull-left"></span> --}}
                                 <span class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"><span
-                                        class="block font-22 weight-500 mb-5"><span
-                                            class="counter-anim">70</span></span><span
+                                        class="block font-22 weight-500 mb-5"><span class="counter-anim"
+                                            style="color: #01C853;">70</span></span><span
                                         class="block txt-grey">Perempuan</span></span>
-                                <i class="big-rpsn-icon zmdi zmdi-female pull-right txt-warning"></i>
+                                <i class="big-rpsn-icon zmdi zmdi-female pull-right"></i>
                                 <div class="clearfix"></div>
                                 <hr class="light-grey-hr row mt-10 mb-15" />
                             </div>
