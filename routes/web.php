@@ -32,7 +32,6 @@ Route::get('/', function () {
 Route::get('/login', [AuthController::class, 'index'])->Middleware('guest')->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
-<<<<<<< HEAD
 //untuk route logout
 Route::get('/logout', [AuthController::class, 'logout']);
 
@@ -64,18 +63,3 @@ Route::post('/Reset-pasword',[AuthController::class,'resetPassword'])->name('Res
 // // Analisis Tamu
 // Route::get('/analisis-tamu', [VisitorController::class, 'index'])->name('analisis-tamu');
 // Route::get('/datavisitor', [VisitorController::class, 'store'])->name('datavisitor');
-=======
-Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
-// Route::get('/dashboard', function () {
-//     return view('Analisis-tamu');
-// });
-Route::get('/scan-tamu', function () {
-    return view('Scan-tamu');
-});
-
-Route::get('/Lupa-pasword', [AuthController::class, 'forgot_password'])->middleware('guest');
-
-Route::get('/logout', [AuthController::class, 'logout']);
-
-//hello
->>>>>>> dhiya

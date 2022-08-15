@@ -226,7 +226,6 @@
                                 <div class="table-wrap">
                                     <div class="table-responsive">
                                         <table class="table table-hover mb-0">
-<<<<<<< HEAD
 											<thead>
 												<tr>
 													<th>ID</th>
