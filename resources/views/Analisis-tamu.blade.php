@@ -94,7 +94,7 @@
                         </div>
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
-                                <div id="morris_extra_line_chart" class="morris-chart" style="height:300px;"></div>
+                                <div id="morris_extra_line_chart" class="morris-chart" style="height:293px;"></div>
                                 <ul class="flex-stat mt-40">
                                     <li>
                                         <span class="block">Tamu Mingguan</span>
@@ -128,8 +128,41 @@
                             <div class="pull-left">
                                 <h6 class="panel-title txt-dark">Rekap Harian</h6>
                             </div>
-                            <div class="ct-chart ct-perfect-fourth">
-                            </div>
+                            <div class="ct-chart ct-perfect-fourth"></div>
+                            <script>
+                                var data = {
+                                    labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
+                                    series: [
+                                        [75, 105, 80, 60, 70, 100, 30],
+                                        [150, 55, 110, 110, 110, 60, 40]
+                                    ]
+                                };
+
+                                var options = {
+                                    seriesBarDistance: 15
+                                };
+
+                                var responsiveOptions = [
+                                    ['screen and (min-width: 641px) and (max-width: 1024px)', {
+                                        seriesBarDistance: 10,
+                                        axisX: {
+                                            labelInterpolationFnc: function(value) {
+                                                return value;
+                                            }
+                                        }
+                                    }],
+                                    ['screen and (max-width: 640px)', {
+                                        seriesBarDistance: 5,
+                                        axisX: {
+                                            labelInterpolationFnc: function(value) {
+                                                return value[0];
+                                            }
+                                        }
+                                    }]
+                                ];
+
+                                new Chartist.Bar('.ct-chart', data, options, responsiveOptions);
+                            </script>
                             <div class="clearfix"></div>
                         </div>
                     </div>
