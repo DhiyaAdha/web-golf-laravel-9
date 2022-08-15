@@ -25,7 +25,7 @@ Route::get('/', function () {
     if (Auth::user()) {
         return redirect('/dashboard');
     }    
-    return view('login');
+    return view('Login');
     });
 
     //untuk route login
