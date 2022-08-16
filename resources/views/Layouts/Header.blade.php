@@ -9,7 +9,7 @@
     <meta name="author" content="hencework" />
 
     <!-- PWA  -->
-    <meta name="theme-color" content="#6777ef"/>
+    <meta name="theme-color" content="#6777ef" />
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.PNG') }}">
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
 
@@ -29,6 +29,7 @@
 
     <!-- Custom CSS -->
     <link href="dist/css/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="dist/css/custom.css" type="text/css">
 
     {{-- Chartist JS --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
