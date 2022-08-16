@@ -22,6 +22,15 @@ class UserSeeder extends Seeder
             'role_id' => '1',
             // 'status' => 'active',
 
+        ],
+        [
+            'email' => 'zaenury5868@gmail.com',
+            'name' => 'dhany',
+            'phone'=> '082214515603',
+            'password' => Hash::make('tes'),
+            'role_id' => '2',
+            // 'status' => 'active',
+
         ]);
         
 
