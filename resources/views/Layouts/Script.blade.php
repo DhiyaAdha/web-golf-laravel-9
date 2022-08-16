@@ -50,11 +50,11 @@
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
 
-<script src="{{ asset('/sw.js') }}"></script>
+{{-- <script src="{{ asset('/sw.js') }}"></script> --}}
 <script>
-    if (!navigator.serviceWorker.controller) {
-        navigator.serviceWorker.register("/sw.js").then(function (reg) {
-            console.log("Service worker has been registered for scope: " + reg.scope);
-        });
-    }
+    // if (!navigator.serviceWorker.controller) {
+    //     navigator.serviceWorker.register("/sw.js").then(function (reg) {
+    //         console.log("Service worker has been registered for scope: " + reg.scope);
+    //     });
+    // }
 </script>

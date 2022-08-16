@@ -63,3 +63,7 @@ Route::post('/Reset-pasword',[AuthController::class,'resetPassword'])->name('Res
 // // Analisis Tamu
 // Route::get('/analisis-tamu', [VisitorController::class, 'index'])->name('analisis-tamu');
 // Route::get('/datavisitor', [VisitorController::class, 'store'])->name('datavisitor');
+
+
+//route untuk invoice
+Route::get('/invoice',[AuthController::class,'invoice'])->name('invoice');
