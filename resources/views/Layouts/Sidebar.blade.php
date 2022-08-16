@@ -103,7 +103,7 @@
             </a>
         </li>
         {{-- hideadmin --}}
-        @if (auth()->user()->id=='3')
+        @if (auth()->user()->role_id=='1')
         <li>
             <a class="{{ Request::is('daftar-admin') ? 'active' : '' }}" href="/daftar-admin" data-toggle="collapse"
                 data-target="#ecom_dr">
