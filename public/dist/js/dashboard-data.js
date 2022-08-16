@@ -138,7 +138,7 @@ $(document).ready(function () {
             },
         });
     }
-    
+
     if ($("#morris_extra_line_chart").length > 0) {
         var data = [
             {
@@ -292,18 +292,18 @@ $(document).ready(function () {
 /*****Ready function end*****/
 
 /*****Load function start*****/
-$(window).load(function(){
-	window.setTimeout(function(){
-		$.toast({
-			// heading: '',
-			text: 'Selamat Datang Kembali',
-			position: 'top-right',
-			loaderBg:'#fec107',
-			icon: 'success',
-			hideAfter: 2000, 
-			stack: 6
-		});
-	}, 1000);
+$(window).load(function () {
+    window.setTimeout(function () {
+        $.toast({
+            // heading: '',
+            text: "Selamat Datang Kembali",
+            position: "top-right",
+            loaderBg: "#fec107",
+            icon: "success",
+            hideAfter: 2000,
+            stack: 6,
+        });
+    }, 1000);
 });
 /*****Load function* end*****/
 
@@ -373,8 +373,6 @@ var data = {
     series: [
         [100, 105, 80, 60, 70, 100, 30],
         [160, 55, 110, 110, 110, 60, 40],
-
-        
     ],
 };
 
