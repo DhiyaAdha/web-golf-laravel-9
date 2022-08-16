@@ -64,7 +64,6 @@
             </a>
         </li>
 
-<<<<<<< HEAD
 <!-- Left Sidebar Menu -->
 <div class="fixed-sidebar-left">
     <ul class="nav navbar-nav side-nav nicescroll-bar">
@@ -144,7 +143,4 @@
     </ul>
 </div>
 <!-- /Left Sidebar Menu -->
-=======
-
 </div>
->>>>>>> yudis
