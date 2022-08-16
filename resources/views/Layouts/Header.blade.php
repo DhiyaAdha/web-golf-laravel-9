@@ -6,6 +6,7 @@
 	<!-- Favicon -->
 	<link rel="shortcut icon" href="favicon.ico">
 	<link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+	<link rel="stylesheet" href="dist/icon/fontawesome/css/all.css">
 	
 	<!-- Morris Charts CSS -->
     <link href="{{ asset('vendors/bower_components/morris.js/morris.css') }}" rel="stylesheet" type="text/css"/>

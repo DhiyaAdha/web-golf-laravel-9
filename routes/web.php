@@ -37,3 +37,17 @@ Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth
 Route::get('/Lupa-pasword', [AuthController::class, 'forgot_password'])->middleware('guest');
 
 Route::get('/logout', [AuthController::class, 'logout']);
+
+Route::get('/reset-pasword', function () {
+    return view('Reset-pasword');
+});
+Route::get('/new-pasword', function () {
+    return view('New-pasword');
+});
+Route::get('/daftar-tamu', function () {
+    return view('Daftar-tamu');
+});
+
+Route::get('/404notfon', function () {
+    return view('404notfon');
+});

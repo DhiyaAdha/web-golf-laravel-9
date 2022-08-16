@@ -161,7 +161,7 @@ h4 {
   text-transform: capitalize; }
 
 h5 {
-  font-size: 18px;
+  font-size: 21px;
   line-height: 26px;
   text-transform: capitalize; }
 
@@ -896,7 +896,8 @@ button.fc-agendaWeek-button, .fc-prev-button, .fc-next-button, .fc-today-button 
   button.btn-info.fc-month-button.fc-state-default.fc-corner-left,
   button.btn-info.fc-agendaWeek-button, .btn-info.fc-prev-button, .btn-info.fc-next-button, .btn-info.fc-today-button {
     background: #01C853;
-    border: solid 1px #01C853; }
+    border: solid 1px #01C853;
+  }
     .btn.btn-info:hover, .wizard > .actions a.btn-info:hover, .dt-buttons .btn-info.dt-button:hover, .tablesaw-sortable th.tablesaw-sortable-head button.btn-info:hover, .sweet-alert button.btn-info:hover, .owl-theme .owl-nav .btn-info[class*="owl-"]:hover, button.btn-info.fc-agendaDay-button.fc-state-default.fc-corner-right:hover,
     button.btn-info.fc-month-button.fc-state-default.fc-corner-left:hover,
     button.btn-info.fc-agendaWeek-button:hover, .btn-info.fc-prev-button:hover, .btn-info.fc-next-button:hover, .btn-info.fc-today-button:hover, .btn.btn-info:active, .wizard > .actions a.btn-info:active, .dt-buttons .btn-info.dt-button:active, .tablesaw-sortable th.tablesaw-sortable-head button.btn-info:active, .sweet-alert button.btn-info:active, .owl-theme .owl-nav .btn-info[class*="owl-"]:active, button.btn-info.fc-agendaDay-button.fc-state-default.fc-corner-right:active,
@@ -1144,8 +1145,10 @@ button.fc-agendaWeek-button, .fc-prev-button, .fc-next-button, .fc-today-button 
     .owl-theme .owl-nav button.btn-info[class*="owl-"].fc-agendaWeek-button, button.btn-info.fc-agendaDay-button.fc-state-default.fc-corner-right,
     button.btn-info.fc-month-button.fc-state-default.fc-corner-left,
     button.btn-info.fc-agendaWeek-button, .btn-outline.btn-info.fc-prev-button, .btn-outline.btn-info.fc-next-button, .btn-outline.btn-info.fc-today-button {
-      border: solid 1px rgba(233, 30, 99, 0.5);
-      color: #e91e63; }
+      border: solid 1px #01C853;
+      color: #01C853;
+    }
+ 
       .btn.btn-outline.btn-info:hover, .wizard > .actions a.btn-outline.btn-info:hover, .wizard > .actions .note-editor a.btn-info.note-btn.btn-sm:hover, .note-editor .wizard > .actions a.btn-info.note-btn.btn-sm:hover, ul.wysihtml5-toolbar a.btn.btn-info:hover, ul.wysihtml5-toolbar .wizard > .actions a.btn-info:hover, .wizard > .actions ul.wysihtml5-toolbar a.btn-info:hover, ul.wysihtml5-toolbar .dt-buttons a.btn-info.dt-button:hover, .dt-buttons ul.wysihtml5-toolbar a.btn-info.dt-button:hover, ul.wysihtml5-toolbar .owl-theme .owl-nav a.btn-info[class*="owl-"]:hover, .owl-theme .owl-nav ul.wysihtml5-toolbar a.btn-info[class*="owl-"]:hover, ul.wysihtml5-toolbar a.btn-info.fc-prev-button:hover, ul.wysihtml5-toolbar a.btn-info.fc-next-button:hover, ul.wysihtml5-toolbar a.btn-info.fc-today-button:hover, .note-editor .btn.btn-info.note-btn.btn-sm:hover, .note-editor .dt-buttons .btn-info.note-btn.btn-sm.dt-button:hover, .dt-buttons .note-editor .btn-info.note-btn.btn-sm.dt-button:hover, .note-editor .sweet-alert button.btn-info.note-btn.btn-sm:hover, .sweet-alert .note-editor button.btn-info.note-btn.btn-sm:hover, .note-editor .owl-theme .owl-nav .btn-info.note-btn.btn-sm[class*="owl-"]:hover, .owl-theme .owl-nav .note-editor .btn-info.note-btn.btn-sm[class*="owl-"]:hover, .note-editor .btn-info.note-btn.btn-sm.fc-prev-button:hover, .note-editor .btn-info.note-btn.btn-sm.fc-next-button:hover, .note-editor .btn-info.note-btn.btn-sm.fc-today-button:hover, .dt-buttons .btn-outline.btn-info.dt-button:hover, .tablesaw-sortable th.tablesaw-sortable-head button.btn-info:hover, .sweet-alert button.btn-outline.btn-info:hover, .owl-theme .owl-nav .btn-outline.btn-info[class*="owl-"]:hover, button.btn-info.fc-agendaDay-button.fc-state-default.fc-corner-right:hover,
       button.btn-info.fc-month-button.fc-state-default.fc-corner-left:hover,
       button.btn-info.fc-agendaWeek-button:hover, .btn-outline.btn-info.fc-prev-button:hover, .btn-outline.btn-info.fc-next-button:hover, .btn-outline.btn-info.fc-today-button:hover, .btn.btn-outline.btn-info:focus, .wizard > .actions a.btn-outline.btn-info:focus, .wizard > .actions .note-editor a.btn-info.note-btn.btn-sm:focus, .note-editor .wizard > .actions a.btn-info.note-btn.btn-sm:focus, ul.wysihtml5-toolbar a.btn.btn-info:focus, ul.wysihtml5-toolbar .wizard > .actions a.btn-info:focus, .wizard > .actions ul.wysihtml5-toolbar a.btn-info:focus, ul.wysihtml5-toolbar .dt-buttons a.btn-info.dt-button:focus, .dt-buttons ul.wysihtml5-toolbar a.btn-info.dt-button:focus, ul.wysihtml5-toolbar .owl-theme .owl-nav a.btn-info[class*="owl-"]:focus, .owl-theme .owl-nav ul.wysihtml5-toolbar a.btn-info[class*="owl-"]:focus, ul.wysihtml5-toolbar a.btn-info.fc-prev-button:focus, ul.wysihtml5-toolbar a.btn-info.fc-next-button:focus, ul.wysihtml5-toolbar a.btn-info.fc-today-button:focus, .note-editor .btn.btn-info.note-btn.btn-sm:focus, .note-editor .dt-buttons .btn-info.note-btn.btn-sm.dt-button:focus, .dt-buttons .note-editor .btn-info.note-btn.btn-sm.dt-button:focus, .note-editor .sweet-alert button.btn-info.note-btn.btn-sm:focus, .sweet-alert .note-editor button.btn-info.note-btn.btn-sm:focus, .note-editor .owl-theme .owl-nav .btn-info.note-btn.btn-sm[class*="owl-"]:focus, .owl-theme .owl-nav .note-editor .btn-info.note-btn.btn-sm[class*="owl-"]:focus, .note-editor .btn-info.note-btn.btn-sm.fc-prev-button:focus, .note-editor .btn-info.note-btn.btn-sm.fc-next-button:focus, .note-editor .btn-info.note-btn.btn-sm.fc-today-button:focus, .dt-buttons .btn-outline.btn-info.dt-button:focus, .tablesaw-sortable th.tablesaw-sortable-head button.btn-info:focus, .sweet-alert button.btn-outline.btn-info:focus, .owl-theme .owl-nav .btn-outline.btn-info[class*="owl-"]:focus, button.btn-info.fc-agendaDay-button.fc-state-default.fc-corner-right:focus,
@@ -2636,9 +2639,9 @@ a#toggle_mobile_nav {
     .wrapper.theme-3-active .navbar.navbar-inverse.navbar-fixed-top .nav > li > a:active, .wrapper.theme-3-active .navbar.navbar-inverse.navbar-fixed-top .nav > li > a:hover, .wrapper.theme-3-active .navbar.navbar-inverse.navbar-fixed-top .nav > li > a:focus, .wrapper.theme-4-active .navbar.navbar-inverse.navbar-fixed-top .nav > li > a:active, .wrapper.theme-4-active .navbar.navbar-inverse.navbar-fixed-top .nav > li > a:hover, .wrapper.theme-4-active .navbar.navbar-inverse.navbar-fixed-top .nav > li > a:focus, .wrapper.theme-5-active .navbar.navbar-inverse.navbar-fixed-top .nav > li > a:active, .wrapper.theme-5-active .navbar.navbar-inverse.navbar-fixed-top .nav > li > a:hover, .wrapper.theme-5-active .navbar.navbar-inverse.navbar-fixed-top .nav > li > a:focus, .wrapper.theme-6-active .navbar.navbar-inverse.navbar-fixed-top .nav > li > a:active, .wrapper.theme-6-active .navbar.navbar-inverse.navbar-fixed-top .nav > li > a:hover, .wrapper.theme-6-active .navbar.navbar-inverse.navbar-fixed-top .nav > li > a:focus {
       color: #fff; }
   .wrapper.theme-1-active.pimary-color-red .fixed-sidebar-left .side-nav li.navigation-header > span, .wrapper.theme-2-active.pimary-color-red .fixed-sidebar-left .side-nav li.navigation-header > span, .wrapper.theme-3-active.pimary-color-red .fixed-sidebar-left .side-nav li.navigation-header > span, .wrapper.theme-4-active.pimary-color-red .fixed-sidebar-left .side-nav li.navigation-header > span, .wrapper.theme-5-active.pimary-color-red .fixed-sidebar-left .side-nav li.navigation-header > span, .wrapper.theme-6-active.pimary-color-red .fixed-sidebar-left .side-nav li.navigation-header > span {
-    color: #ff2a00; }
+    color: #01C853; }
   .wrapper.theme-1-active.pimary-color-red .fixed-sidebar-left .side-nav > li > a.active, .wrapper.theme-2-active.pimary-color-red .fixed-sidebar-left .side-nav > li > a.active, .wrapper.theme-3-active.pimary-color-red .fixed-sidebar-left .side-nav > li > a.active, .wrapper.theme-4-active.pimary-color-red .fixed-sidebar-left .side-nav > li > a.active, .wrapper.theme-5-active.pimary-color-red .fixed-sidebar-left .side-nav > li > a.active, .wrapper.theme-6-active.pimary-color-red .fixed-sidebar-left .side-nav > li > a.active {
-    background: #ff2a00; }
+    background: #01C853; }
   .wrapper.theme-1-active.pimary-color-blue .fixed-sidebar-left .side-nav li.navigation-header > span, .wrapper.theme-2-active.pimary-color-blue .fixed-sidebar-left .side-nav li.navigation-header > span, .wrapper.theme-3-active.pimary-color-blue .fixed-sidebar-left .side-nav li.navigation-header > span, .wrapper.theme-4-active.pimary-color-blue .fixed-sidebar-left .side-nav li.navigation-header > span, .wrapper.theme-5-active.pimary-color-blue .fixed-sidebar-left .side-nav li.navigation-header > span, .wrapper.theme-6-active.pimary-color-blue .fixed-sidebar-left .side-nav li.navigation-header > span {
     color: #2879ff; }
   .wrapper.theme-1-active.pimary-color-blue .fixed-sidebar-left .side-nav > li > a.active, .wrapper.theme-2-active.pimary-color-blue .fixed-sidebar-left .side-nav > li > a.active, .wrapper.theme-3-active.pimary-color-blue .fixed-sidebar-left .side-nav > li > a.active, .wrapper.theme-4-active.pimary-color-blue .fixed-sidebar-left .side-nav > li > a.active, .wrapper.theme-5-active.pimary-color-blue .fixed-sidebar-left .side-nav > li > a.active, .wrapper.theme-6-active.pimary-color-blue .fixed-sidebar-left .side-nav > li > a.active {
@@ -5539,21 +5542,15 @@ a.compose-mail {
 
 /*Labels*/
 .label, .jvectormap-tip {
-  padding: 3px 6px 3px;
-  font-size: 11px;
+  padding: 8px 95px;
+  font-size: 14px;
   border-radius: 50px;
   text-transform: capitalize;
   font-weight: 400; }
-  .label.label-info, .label-info.jvectormap-tip {
-    background: #e91e63; }
-  .label.label-primary, .label-primary.jvectormap-tip {
-    background: #2879ff; }
-  .label.label-success, .label-success.jvectormap-tip {
-    background: #01c853; }
-  .label.label-danger, .label-danger.jvectormap-tip {
-    background: #ff2a00; }
-  .label.label-warning, .label-warning.jvectormap-tip {
-    background: #fec107; }
+  .label.label-vip, .label-info.jvectormap-tip {
+    background: #32FFC1; }
+  .label.label-vvip, .label-primary.jvectormap-tip {
+    background: #FFDE32; }
 
 /*Badge*/
 .badge {
@@ -6729,8 +6726,10 @@ ul.inbox-nav li a:hover, ul.inbox-nav li.active a, ul.inbox-nav li a:focus {
 
 .error-head {
   font-size: 112px;
-  font-style: italic;
-  line-height: 112px; }
+  line-height: 112px;
+  color: #006A2C;
+  Width: 409px;
+; }
 
 .error-bg-img {
   background: url("../img/errorbg.jpg");
@@ -7270,3 +7269,32 @@ ul.inbox-nav li a:hover, ul.inbox-nav li.active a, ul.inbox-nav li a:focus {
     margin-bottom: 20px; } }
 
 /*# sourceMappingURL=style.css.map */
+#search{
+  /* align-items: center; */
+  background-color: #f7f7f9;
+
+  border-bottom: #01C853;
+  /* display: right; */
+  /* justify-content: space-between; */
+  margin: 0.5em 0;
+  padding: 0.5em 0.5em 0.5em 1em;
+  transition: all 0.5s;
+  width: 300px;
+  font-size: 15px;
+}
+#search button,
+#search input {
+  justify-content: right;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: #E8F9FD;
+  font: inherit;
+  outline: 0;
+  
+}
+.fa-search{
+  color: rgb(109, 109, 109);
+}

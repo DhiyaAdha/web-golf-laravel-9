@@ -44,3 +44,5 @@
 <!-- Init JavaScript -->
 <script src="dist/js/init.js"></script>
 <script src="dist/js/dashboard-data.js"></script>
+
+<script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
