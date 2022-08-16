@@ -11,14 +11,16 @@
 		
 		<!-- Favicon -->
 		<link rel="shortcut icon" href="favicon.ico">
-		<link rel="icon" href="favicon.ico" type="image/x-icon">
+		<link rel="icon" href="{{ asset('tgcc144.PNG') }}" type="image/x-icon">
+
+		<!-- PWA  -->
+		<meta name="theme-color" content="#6777ef"/>
+		<link rel="apple-touch-icon" href="{{ asset('tgcc144.PNG') }}">
+		<link rel="manifest" href="{{ asset('/manifest.json') }}">
 		
 		<!-- vector map CSS -->
 		<link href="../../vendors/bower_components/jasny-bootstrap/dist/css/jasny-bootstrap.min.css" rel="stylesheet" type="text/css"/>
-		
-		
-		
-		
+
 		<!-- Custom CSS -->
 		<link href="dist/css/style.css" rel="stylesheet" type="text/css">
 	</head>
@@ -33,7 +35,7 @@
 			<header class="sp-header">
 				<div class="sp-logo-wrap pull-left">
 					
-					<a href="Analisis-tamu">
+					<a href="#">
 						<img class="brand-img mr-10" src="dist/img/tgcc.svg" alt="brand"/>
 					</a>
 				</div>
@@ -52,14 +54,13 @@
 								<div class="row">
 									<div class="col-sm-12 col-xs-12">
 										<div>
-
-												@if (session()->has('loginError')) 
-												<div class="alert alert-danger">{!! session('loginError') !!}
-													<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-														<span aria-hidden="true">&times;</span>
-													</button> 
-												</div>
-												@endif
+											@if (session()->has('loginError')) 
+											<div class="alert alert-danger">{!! session('loginError') !!}
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button> 
+											</div>
+											@endif
 										</div>
 										<div class="mb-30">
 											<h3 class="text-center txt-dark mb-10">Masuk Tritih Golf & Country Club</h3>
@@ -67,7 +68,6 @@
 										</div>	
 										<div class="form-wrap">
 											<form action="/login" method="post">
-												
 												@csrf
 												<div class="form-group">
 													<label class="control-label mb-10" for="email">Email / Nomor Telpon</label>
@@ -80,7 +80,7 @@
 												</div>
 												<div class="form-group">
 													<label class="pull-left control-label mb-10" for="password">Password</label>
-													<a class="capitalize-font txt-primary block mb-10 pull-right font-12" href="Lupa-pasword">Lupa Password?</a>
+													<a class="capitalize-font txt-primary block mb-10 pull-right font-12" href="{{ route('Lupa-pasword') }}">Lupa Password?</a>
 													<div class="clearfix"></div>
 													<input type="password" name="password" class="form-control" id="password" placeholder="Masukan Password" required>
 												</div>
@@ -117,5 +117,14 @@
 		
 		<!-- Init JavaScript -->
 		<script src="dist/js/init.js"></script>
+
+		<script src="{{ asset('/sw.js') }}"></script>
+		<script>
+			if (!navigator.serviceWorker.controller) {
+				navigator.serviceWorker.register("/sw.js").then(function (reg) {
+					console.log("Service worker has been registered for scope: " + reg.scope);
+				});
+			}
+		</script>
 	</body>
 </html>

@@ -44,14 +44,31 @@
 							<div class="auth-form  ml-auto mr-auto no-float">
 								<div class="row">
 									<div class="col-sm-12 col-xs-12">
+										<div>
+
+											@if (session()->has('resetSuccess')) 
+											<div class="alert alert-success">{!! session('resetSuccess') !!}
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button> 
+											</div>
+											@endif
+									</div>
 										<div class="mb-30">
 											<h3 class="text-center txt-dark mb-10">Anda Lupa Password?</h3>
 										</div>	
 										<div class="form-wrap">
-											<form action="#">
+											<form action="{{ route('Lupa-pasword') }}" method="post">
+
+												@csrf
 												<div class="form-group">
-													<label class="control-label mb-10" for="exampleInputEmail_2">Email</label>
-													<input type="email" class="form-control" required="" id="exampleInputEmail_2" placeholder="Masukan Email">
+													<label class="control-label mb-10" for="email">Email / Nomor Telpon</label>
+													<input type="email" name="email" class="form-control" id="email" placeholder="Masukan Email Nomor Telepon" @error('email') is-invalid @enderror autofocus required value="{{ old('email') }}">
+													@error('email')
+													<div class="text-danger" >
+														{{ $message }}
+													</div>
+													@enderror
 												</div>
 												
 												<div class="form-group text-center">

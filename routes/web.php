@@ -6,9 +6,9 @@ use App\Http\Controllers\LoginController;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
+use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\ResetPasswordController;
+use GuzzleHttp\Middleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,29 +25,41 @@ Route::get('/', function () {
     if (Auth::user()) {
         return redirect('/dashboard');
     }    
-    return view('login');
-});
+    return view('Login');
+    });
 
     //untuk route login
-Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::get('/login', [AuthController::class, 'index'])->Middleware('guest')->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
-
-Route::get('/Lupa-pasword', [AuthController::class, 'forgot_password'])->middleware('guest');
-
+//untuk route logout
 Route::get('/logout', [AuthController::class, 'logout']);
 
-Route::get('/reset-pasword', function () {
-    return view('Reset-pasword');
-});
-Route::get('/new-pasword', function () {
-    return view('New-pasword');
-});
-Route::get('/daftar-tamu', function () {
-    return view('Daftar-tamu');
+//level admin dan superadmin
+Route::group(['middleware' => ['auth','ceklevel:1,3']], function() {
+Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
+Route::get('/daftar-admin', [AuthController::class, 'daftar-admin'])->name('daftar-admin');
 });
 
-Route::get('/404notfon', function () {
-    return view('404notfon');
+Route::group(['middleware' => ['auth','ceklevel:1,3,4,9,10,5,8']], function() {
+    Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
+    Route::get('/daftar-admin', [AuthController::class, 'daftar-admin'])->name('daftar-admin');
 });
+
+Route::get('/Lupa-pasword', [AuthController::class, 'forgot_password'])->middleware('guest')->name('Lupa-pasword');
+Route::post('/Lupa-pasword',[AuthController::class,'sendresetlink'])->name('Lupa-pasword.link');
+
+Route::get('/Reset-pasword/{token}',[AuthController::class,'showResetForm'])->name('Reset-pasword');
+Route::post('/Reset-pasword',[AuthController::class,'resetPassword'])->name('Reset-pasword.update');
+
+
+// //seeder
+// Route::get('/', function(){
+//     $statusmember = Visitor::get(); 
+
+//     dd($statusmember);
+// });
+
+// // Analisis Tamu
+// Route::get('/analisis-tamu', [VisitorController::class, 'index'])->name('analisis-tamu');
+// Route::get('/datavisitor', [VisitorController::class, 'store'])->name('datavisitor');
