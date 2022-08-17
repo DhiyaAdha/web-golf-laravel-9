@@ -1,0 +1,23 @@
+.kotak {
+    width: 320px;
+    height: 200px;
+    border-radius: 10px;
+    border: 1.8px solid gray;
+    /* opacity: 0.5; */
+    position: absolute;
+    top: 60px;
+    left: 52px;
+}
+
+.gambar-qr {
+    position: absolute;
+    top: 30px;
+    left: 100px;
+}
+
+.btn-qr {
+    border-radius: 10px;
+    background-color: #d8d8d8;
+    width: 100px;
+    height: 25px;
+}
