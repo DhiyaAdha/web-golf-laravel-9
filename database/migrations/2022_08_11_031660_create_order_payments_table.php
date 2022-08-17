@@ -25,7 +25,6 @@ class CreateOrderPaymentsTable extends Migration
 
 
             $table->timestamps();
-            
         });
 
         Schema::table('order_payments', function($table) {

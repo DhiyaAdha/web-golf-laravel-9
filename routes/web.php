@@ -25,7 +25,7 @@ Route::get('/', function () {
     if (Auth::user()) {
         return redirect('/dashboard');
     }    
-    return view('login');
+    return view('Login');
     });
 
     //untuk route login
@@ -36,9 +36,16 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout']);
 
 //level admin dan superadmin
+Route::get('/daftar-tamu', function () {
+    return view('Daftar-tamu');
+});
 Route::group(['middleware' => ['auth','ceklevel:1,3']], function() {
 Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
 Route::get('/daftar-admin', [AuthController::class, 'daftar-admin'])->name('daftar-admin');
+});
+
+Route::get('/scan-tamu', function () {
+    return view('Scan-tamu');
 });
 
 Route::group(['middleware' => ['auth','ceklevel:1,3,4,9,10,5,8']], function() {
