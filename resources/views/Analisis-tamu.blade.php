@@ -251,7 +251,7 @@
 															@endif
 														</td>
 														<td>
-															{{ date('H:i', strtotime($item->created_at)) }}
+															{{ date('H:i', strtotime($item->created_at)) }} WIB
 														</td>
 													</tr>
 												@endforeach
