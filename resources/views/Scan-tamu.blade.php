@@ -85,7 +85,7 @@
                             <div class="card-body">
                                 <h4 class="card-title">Data Pengunjung</h4>
                                 <i class="fa-solid fa-qrcode fa-10x mt-20 mb-10"></i><br><br>
-                                <a href="/dashboard" class="btn btn-primary mb-20">Scan Barcode</a>
+                                <a href="/order" class="btn btn-primary mb-20">Scan Barcode</a>
                             </div>
                         </div>
                     </div>

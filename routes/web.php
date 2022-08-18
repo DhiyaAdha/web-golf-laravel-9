@@ -67,3 +67,8 @@ Route::post('/Reset-pasword',[AuthController::class,'resetPassword'])->name('Res
 
 //route untuk invoice
 Route::get('/invoice',[AuthController::class,'invoice'])->name('invoice');
+
+
+Route::get('/scan-tamu',[AuthController::class,'scantamu'])->name('scantamu');
+
+Route::get('/order',[AuthController::class,'order'])->name('order');

@@ -257,4 +257,12 @@ class AuthController extends Controller {
         // $judulhalaman = "Invoice";
         return view('/invoice', $data);
     }
+
+    public function scantamu(){
+        return view('/Scan-tamu');
+    }
+
+    public function order(){
+        return view('/order');
+    }
 }
