@@ -268,4 +268,19 @@ class AuthController extends Controller {
         // $judulhalaman = "Invoice";
         return view('/invoice', $data);
     }
+
+    public function scantamu(){
+        return view('/scan-tamu');
+    }
+    public function scantamuberhasil(){
+        return view('/scan-tamu-berhasil');
+    }
+
+    public function order(){
+        return view('/order');
+    }
+
+    public function daftar_admin(){
+        return ('Welcome Daftar Admin');
+    }
 }
