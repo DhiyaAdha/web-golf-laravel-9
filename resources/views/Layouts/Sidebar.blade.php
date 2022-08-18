@@ -14,7 +14,7 @@
             </a>
         </li>
         <li>
-            <a class="{{ Request::is('scan-tamu') ? 'active' : '' }}" href="scan-tamu">
+            <a class="{{ Request::is('scan-tamu') ? 'active' : '' }}" href="scan-tamu" >
                 <div class="pull-left">
                     <i class="fa fa-camera-retro mr-20"></i>
                     <span class="right-nav-text">Scan Tamu</span>
@@ -23,7 +23,7 @@
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="{{ Request::is('daftar-tamu') }}" href="daftar-tamu">
                 <div class="pull-left">
                     <i class="fa fa-user mr-20"></i>
                     <span class="right-nav-text">Daftar Tamu</span>

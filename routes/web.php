@@ -36,18 +36,26 @@ Route::post('/login', [AuthController::class, 'login']);
 //untuk route logout
 Route::get('/logout', [AuthController::class, 'logout']);
 
+
 //level admin dan superadmin
-Route::group(['middleware' => ['auth','ceklevel:1']], function() {
+Route::group(['middleware' => ['auth','ceklevel:1,3']], function() {
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
+    Route::get('/daftar-admin', [AuthController::class, 'daftar-admin'])->name('daftar-admin');
 });
 
 Route::get('/scan-tamu', function () {
     return view('Scan-tamu');
 });
 
+
+Route::get('/daftar-tamu', [AuthController::class, 'daftartamu']
+)->name('Daftar-tamu');
+
+
 Route::get('/scan-tamu-berhasil', function () {
     return view('Scan-tamu-berhasil');
 });
+
 
 Route::group(['middleware' => ['auth','ceklevel:1,3,4,9,10,5,8']], function() {
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
@@ -58,6 +66,5 @@ Route::post('/Lupa-pasword',[AuthController::class,'sendresetlink'])->name('Lupa
 Route::get('/Reset-pasword/{token}',[AuthController::class,'showResetForm'])->name('Reset-pasword');
 Route::post('/Reset-pasword',[AuthController::class,'resetPassword'])->name('Reset-pasword.update');
 
-//route untuk invoice
 Route::get('/invoice',[AuthController::class,'invoice'])->name('invoice');
 Route::get('/package-item',[PackageController::class,'item'])->name('package.item');
