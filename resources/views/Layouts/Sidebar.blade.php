@@ -7,6 +7,7 @@
         <li>
             <a class="{{ Request::is('dashboard') ? 'active' : '' }}" href="/dashboard" class="active">
                 <div class="pull-left">
+                    <i class="fa fa-bar-chart-o mr-20"></i>
                     <span class="right-nav-text">Analisis Tamu</span>
                 </div>
                 <div class="clearfix"></div>
@@ -15,6 +16,7 @@
         <li>
             <a class="{{ Request::is('scan-tamu') ? 'active' : '' }}" href="scan-tamu">
                 <div class="pull-left">
+                    <i class="fa fa-camera-retro mr-20"></i>
                     <span class="right-nav-text">Scan Tamu</span>
                 </div>
                 <div class="clearfix"></div>
@@ -23,6 +25,7 @@
         <li>
             <a href="#">
                 <div class="pull-left">
+                    <i class="fa fa-user mr-20"></i>
                     <span class="right-nav-text">Daftar Tamu</span>
                 </div>
                 <div class="clearfix"></div>
@@ -31,8 +34,7 @@
         {{-- hideadmin --}}
         @if (auth()->user()->role_id=='1')
         <li>
-            <a class="{{ Request::is('daftar-admin') ? 'active' : '' }}" href="/daftar-admin" data-toggle="collapse"
-                data-target="#ecom_dr">
+            <a class="{{ Request::is('daftar-admin') ? 'active' : '' }}" href="#">
                 <div class="pull-left">
                     <i class="fa fa-user mr-20"></i>
                     <span class="right-nav-text">Daftar Admin</span>
