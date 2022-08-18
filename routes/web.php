@@ -41,7 +41,15 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
 });
 
-Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
+Route::get('/scan-tamu', function () {
+    return view('Scan-tamu');
+});
+
+Route::get('/scan-tamu-berhasil', function () {
+    return view('Scan-tamu-berhasil');
+});
+
+Route::group(['middleware' => ['auth','ceklevel:1,3,4,9,10,5,8']], function() {
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
 });
 

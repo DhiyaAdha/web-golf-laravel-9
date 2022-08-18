@@ -7,7 +7,7 @@
     <meta name="author" content="tgcc" />
 
     <!-- PWA  -->
-    <meta name="theme-color" content="#6777ef"/>
+    <meta name="theme-color" content="#6777ef" />
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.PNG') }}">
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
 
@@ -36,8 +36,12 @@
 
     <!-- Custom CSS -->
     <link href="dist/css/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="dist/css/custom.css" type="text/css">
 
     {{-- Chartist JS --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
     <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+
+    {{-- HTML5-QRCODE --}}
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 </head>
