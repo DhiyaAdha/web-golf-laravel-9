@@ -38,7 +38,7 @@ Route::get('/logout', [AuthController::class, 'logout']);
 //level admin dan superadmin
 Route::group(['middleware' => ['auth','ceklevel:1']], function() {
 Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
-// Route::get('/daftar-admin', [AuthController::class, 'daftar-admin'])->name('daftar-admin');
+Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
 });
 
 Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {

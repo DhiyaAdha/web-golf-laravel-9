@@ -296,7 +296,7 @@ $(window).load(function(){
 	window.setTimeout(function(){
 		$.toast({
 			// heading: '',
-			text: 'Selamat Datang Kembali',
+			text: 'Selamat Datang Kembali <strong>Admin</strong>',
 			position: 'top-right',
 			loaderBg:'#fec107',
 			icon: 'success',

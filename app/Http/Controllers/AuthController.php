@@ -265,4 +265,8 @@ class AuthController extends Controller {
     public function order(){
         return view('/order');
     }
+
+    public function daftar_admin(){
+        return ('Welcome Daftar Admin');
+    }
 }
