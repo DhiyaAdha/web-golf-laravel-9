@@ -41,6 +41,14 @@ Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth
 Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
 });
 
+// Route::get('/scan-tamu', function () {
+//     return view('Scan-tamu');
+// });
+
+// Route::get('/scan-tamu-berhasil', function () {
+//     return view('Scan-tamu-berhasil');
+// });
+
 Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
     // Route::get('/daftar-admin', [AuthController::class, 'daftar-admin'])->name('daftar-admin');
@@ -69,6 +77,7 @@ Route::post('/Reset-pasword',[AuthController::class,'resetPassword'])->name('Res
 Route::get('/invoice',[AuthController::class,'invoice'])->name('invoice');
 
 
-Route::get('/scan-tamu',[AuthController::class,'scantamu'])->name('scantamu');
+Route::get('/Scan-tamu',[AuthController::class,'scantamu'])->name('Scan-tamu');
+Route::get('/Scan-tamu-berhasil',[AuthController::class,'scantamuberhasil'])->name('Scan-tamu-berhasil');
 
 Route::get('/order',[AuthController::class,'order'])->name('order');

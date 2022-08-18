@@ -261,6 +261,9 @@ class AuthController extends Controller {
     public function scantamu(){
         return view('/Scan-tamu');
     }
+    public function scantamuberhasil(){
+        return view('/Scan-tamu-berhasil');
+    }
 
     public function order(){
         return view('/order');

@@ -138,7 +138,7 @@ $(document).ready(function () {
             },
         });
     }
-    
+
     if ($("#morris_extra_line_chart").length > 0) {
         var data = [
             {
@@ -373,8 +373,6 @@ var data = {
     series: [
         [100, 105, 80, 60, 70, 100, 30],
         [160, 55, 110, 110, 110, 60, 40],
-
-        
     ],
 };
 

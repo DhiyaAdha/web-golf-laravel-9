@@ -1,74 +1,26 @@
 @extends('Layouts.Main')
 
 @section('content')
+    {{-- Script --}}
+    {{-- <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script> --}}
+    {{-- Script --}}
+
     <div class="page-wrapper">
         <div class="container-fluid">
+            <div class="row heading-bg">
+                <!-- Breadcrumb -->
+                @include('Layouts.Breadcrumb')
+                <!-- /Breadcrumb -->
+            </div>
             <div class="row">
-                <h3 mt-15>Scan Tamu</h3>
-                <div class="col-lg-8">
-                    <div class="panel panel-default card-view">
+                <div class="col-lg-8" style="position: relative;">
+                    <div style="height: 300px" class="panel panel-default card-view">
                         <h6>Data Pengunjung</h6>
                         <div class="col-sm-12">
                             <div class="panel-body">
-                                <div class="table-wrap mt-40">
-                                    <div class="table-responsive">
-                                        <table class="table mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>First Name</th>
-                                                    <th>Last Name</th>
-                                                    <th>Username</th>
-                                                    <th>Role</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Jens</td>
-                                                    <td>Brincker</td>
-                                                    <td>Brincker123</td>
-                                                    <td><span class="label label-danger">admin</span> </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>Mark</td>
-                                                    <td>Hay</td>
-                                                    <td>Hay123</td>
-                                                    <td><span class="label label-info">member</span> </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>Anthony</td>
-                                                    <td>Davie</td>
-                                                    <td>Davie123</td>
-                                                    <td><span class="label label-warning">developer</span> </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td>David</td>
-                                                    <td>Perry</td>
-                                                    <td>Perry123</td>
-                                                    <td><span class="label label-success">supporter</span> </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>5</td>
-                                                    <td>Anthony</td>
-                                                    <td>Davie</td>
-                                                    <td>Davie123</td>
-                                                    <td><span class="label label-info">member</span> </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>6</td>
-                                                    <td>Alan</td>
-                                                    <td>Gilchrist</td>
-                                                    <td>Gilchrist123</td>
-                                                    <td><span class="label label-success">supporter</span> </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                                <p class="mt-500"
+                                    style="text-align: center; color:gray; position:absolute; top:100px; left:350px;">Tidak
+                                    ada data</p>
                             </div>
                             </ </div>
                             <!-- /Basic Table -->
@@ -78,20 +30,51 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-4">
-                    <div class="panel-panel default card-view" style="text-align: center;">
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-body">
-                                <h4 class="card-title">Data Pengunjung</h4>
-                                <i class="fa-solid fa-qrcode fa-10x mt-20 mb-10"></i><br><br>
-                                <a href="/order" class="btn btn-primary mb-20">Scan Barcode</a>
+                    <div style="height: 300px" class="panel panel-default card-view">
+                        <h6>Data Pengunjung</h6>
+                        <div id="reader" width="600px" class="mt-10"></div>
+                        <script>
+                            function onScanSuccess(decodedText, decodedResult) {
+                                // handle the scanned code as you like, for example:
+                                // console.log(`Code matched = ${decodedText}`, decodedResult);
+                                $("#result").val(decodedText)
+                            }
+
+                            function onScanFailure(error) {
+                                // handle scan failure, usually better to ignore and keep scanning.
+                                // for example:
+                                console.warn(`Code scan error = ${error}`);
+                            }
+
+                            let html5QrcodeScanner = new Html5QrcodeScanner(
+                                "reader", {
+                                    fps: 10,
+                                    qrbox: {
+                                        width: 250,
+                                        height: 250
+                                    }
+                                },
+                                /* verbose= */
+                                false);
+                            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+                        </script>
+                        {{-- <div class="kotak bg-white mt-10">
+                            <div class="gambar-qr">
+                                <img src="/dist/img/qr.png" alt="" width="100px">
+                                <a href="">
+                                    <div class="btn-qr" style="text-align:center;">Scan QR</div>
+                                </a>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
-
-
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <input type="text" id="result" size="50px">
+                </div>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection
