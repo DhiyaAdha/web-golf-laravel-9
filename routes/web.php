@@ -48,11 +48,15 @@ Route::get('/scan-tamu', function () {
     return view('Scan-tamu');
 });
 
+
 Route::get('/daftar-tamu', [AuthController::class, 'daftartamu']
-// function () {
-//     return view('Daftar-tamu');
-// }
 )->name('Daftar-tamu');
+
+
+Route::get('/scan-tamu-berhasil', function () {
+    return view('Scan-tamu-berhasil');
+});
+
 
 Route::group(['middleware' => ['auth','ceklevel:1,3,4,9,10,5,8']], function() {
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
@@ -66,13 +70,4 @@ Route::get('/Reset-pasword/{token}',[AuthController::class,'showResetForm'])->na
 Route::post('/Reset-pasword',[AuthController::class,'resetPassword'])->name('Reset-pasword.update');
 
 
-// //seeder
-// Route::get('/', function(){
-//     $statusmember = Visitor::get(); 
 
-//     dd($statusmember);
-// });
-
-// // Analisis Tamu
-// Route::get('/analisis-tamu', [VisitorController::class, 'index'])->name('analisis-tamu');
-// Route::get('/datavisitor', [VisitorController::class, 'store'])->name('datavisitor');
