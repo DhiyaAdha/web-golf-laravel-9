@@ -72,7 +72,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-4">
-                    <input type="text" id="result" size="50px">
+                    <input type="text" id="result" size="30px">
                 </div>
             </div>
         </div>

@@ -39,3 +39,15 @@
     border-radius: 10px;
     margin-top: 15px;
 }
+
+.borderless table {
+    border-top-style: none;
+    border-left-style: none;
+    border-right-style: none;
+    border-bottom-style: none;
+}
+
+.borderless td,
+.borderless th {
+    border: none;
+}
