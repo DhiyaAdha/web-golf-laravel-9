@@ -48,9 +48,10 @@ Route::get('/scan-tamu', function () {
     return view('Scan-tamu');
 });
 
-
 Route::get('/daftar-tamu', [AuthController::class, 'daftartamu']
 )->name('Daftar-tamu');
+Route::get('/Tambah-tamu', [AuthController::class, 'tambahtamu']
+)->name('tambah-tamu');
 
 
 Route::get('/scan-tamu-berhasil', function () {
