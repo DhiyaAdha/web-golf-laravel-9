@@ -259,10 +259,10 @@ class AuthController extends Controller {
     }
 
     public function scantamu(){
-        return view('/Scan-tamu');
+        return view('/scan-tamu');
     }
     public function scantamuberhasil(){
-        return view('/Scan-tamu-berhasil');
+        return view('/scan-tamu-berhasil');
     }
 
     public function order(){
