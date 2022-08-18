@@ -100,6 +100,17 @@ class AuthController extends Controller {
             return view('/Analisis-tamu', $data);
         }
 
+    public function daftartamu(){
+        $data['visitor'] = Visitor::all()->sortByDesc('created_at');
+        return view('/Daftar-tamu', $data);
+    }
+
+        // public function edittamu(){
+        //     // $data['visitor'] = Visitor::all()->sortByDesc('created_at');
+        //     return view('Edit-tamu');
+        // }
+
+
     public function password_baru(){
         return view('/Reset-pasword');
     }

@@ -14,7 +14,7 @@
         </li>
 
         <li>
-            <a class="{{ Request::is('scan-tamu') ? 'active' : '' }}" href="scan-tamu">
+            <a class="{{ Request::is('scan-tamu') ? 'active' : '' }}" href="scan-tamu" >
                 <div class="pull-left">
                     <span class="right-nav-text">Scan Tamu</span>
                 </div>
@@ -22,7 +22,7 @@
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="{{ Request::is('daftar-tamu') }}" href="daftar-tamu">
                 <div class="pull-left">
                     <span class="right-nav-text">Daftar Tamu</span>
                 </div>

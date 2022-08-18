@@ -14,11 +14,14 @@
                                     <h6>Daftar Tamu</h6>
                                 </div>
                                 <div class="col-lg-2" style="text-align: end;">
+                                   <a href="">
                                     <i class="fa-2x zmdi zmdi-fullscreen"
                                         style="border: 0px solid silver; border-radius: 0.25em; padding: 0.5em;"></i>
-                                    <i class="fa-2x fa-plus"
+                                   </a>
+                                    <a href="">
+                                        <i class="fa-2x fa-plus"
                                         style="border: 0px solid silver; border-radius: 0.25em; padding: 0.5em;"></i>
-
+                                    </a>
                                     <div class="row">
                                         <div class="col-lg-0"></div>
                                         <div class="col-lg-4">
@@ -37,8 +40,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
@@ -58,115 +59,45 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+
+                                                @foreach ($visitor as $item)
                                                 <tr>
-                                                    <td style="text-align: center;">#13324</td>
-                                                    <td style="text-align: center;">Pamungkas Nuli Ramadhan</td>
-                                                    <td style="text-align: center;">pamungkasnuli@rocketmail.com</td>
-                                                    <td style="text-align: center;">081126458792</td>
-                                                    <td style="text-align: center;"><span
-                                                            class="label label-vip">VIP</span> </td>
+                                                    <td style="text-align: center;">#{{ $item->id }}</td>
+                                                    <td style="text-align: center;">{{ $item->name }}</td>
+                                                    <td style="text-align: center;">{{ $item->email }}</td>
+                                                    <td style="text-align: center;">{{ $item->phone }}</td>
                                                     <td style="text-align: center;">
-                                                        <img src="dist/img/Card-Tamu.svg" alt=""
-                                                            style="padding: 2px 7px 2px 2px;">
-                                                        <img src="dist/img/edit.svg" alt=""
-                                                            style="padding: 2px 7px 2px 2px;">
-                                                        <img src="dist/img/hapus.svg" alt=""
-                                                            style="padding: 2px 7px 2px 2px;">
+
+                                                        @if($item->tipe_member == 'VVIP')
+                                                            <span class="label label-success">VVIP</span>
+                                                        @else
+                                                            <span class="label label-warning">VIP</span>
+                                                        @endif
+                                                        
                                                     </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="text-align: center;">#13324</td>
-                                                    <td style="text-align: center;">Pamungkas Nuli Ramadhan</td>
-                                                    <td style="text-align: center;">pamungkasnuli@rocketmail.com</td>
-                                                    <td style="text-align: center;">081126458792</td>
-                                                    <td style="text-align: center;"><span
-                                                            class="label label-vip">VIP</span> </td>
-                                                    <td style="text-align: center;"> <img src="dist/img/Card-Tamu.svg"
-                                                            alt="" style="padding: 2px 7px 2px 2px;">
-                                                        <img src="dist/img/edit.svg" alt=""
-                                                            style="padding: 2px 7px 2px 2px;">
-                                                        <img src="dist/img/hapus.svg" alt=""
-                                                            style="padding: 2px 7px 2px 2px;">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="text-align: center;">#13324</td>
-                                                    <td style="text-align: center;">Pamungkas Nuli Ramadhan</td>
-                                                    <td style="text-align: center;">pamungkasnuli@rocketmail.com</td>
-                                                    <td style="text-align: center;">081126458792</td>
-                                                    <td style="text-align: center;"><span
-                                                            class="label label-vip">VIP</span> </td>
-                                                    <td style="text-align: center;"> <img src="dist/img/Card-Tamu.svg"
-                                                            alt="" style="padding: 2px 7px 2px 2px;">
-                                                        <img src="dist/img/edit.svg" alt=""
-                                                            style="padding: 2px 7px 2px 2px;">
-                                                        <img src="dist/img/hapus.svg" alt=""
-                                                            style="padding: 2px 7px 2px 2px;">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="text-align: center;">#13324</td>
-                                                    <td style="text-align: center;">Pamungkas Nuli Ramadhan</td>
-                                                    <td style="text-align: center;">pamungkasnuli@rocketmail.com</td>
-                                                    <td style="text-align: center;">081126458792</td>
-                                                    <td style="text-align: center;"><span
-                                                            class="label label-vip">VIP</span> </td>
-                                                    <td style="text-align: center;"> <img src="dist/img/Card-Tamu.svg"
-                                                            alt="" style="padding: 2px 7px 2px 2px;">
-                                                        <img src="dist/img/edit.svg" alt=""
-                                                            style="padding: 2px 7px 2px 2px;">
-                                                        <img src="dist/img/hapus.svg" alt=""
-                                                            style="padding: 2px 7px 2px 2px;">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="text-align: center;">#13324</td>
-                                                    <td style="text-align: center;">Pamungkas Nuli Ramadhan</td>
-                                                    <td style="text-align: center;">pamungkasnuli@rocketmail.com</td>
-                                                    <td style="text-align: center;">081126458792</td>
-                                                    <td style="text-align: center;"><span
-                                                            class="label label-vvip">VVIP</span> </td>
                                                     <td style="text-align: center;">
-                                                        <img src="dist/img/Card-Tamu.svg" alt=""
+                                                          <a href="#"> 
+                                                            <img src="dist/img/Card-Tamu.svg" alt=""
                                                             style="padding: 2px 7px 2px 2px;">
-                                                        <img src="dist/img/edit.svg" alt=""
+                                                        </a>  
+                                                        <a href="#">
+                                                            <img src="dist/img/edit.svg" alt=""
                                                             style="padding: 2px 7px 2px 2px;">
-                                                        <img src="dist/img/hapus.svg" alt=""
+                                                        </a>
+                                                        <a href="#">
+                                                            <img src="dist/img/hapus.svg" alt=""
                                                             style="padding: 2px 7px 2px 2px;">
+                                                        </a>
+                                                        
+                                                        
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td style="text-align: center;">#13324</td>
-                                                    <td style="text-align: center;">Pamungkas Nuli Ramadhan</td>
-                                                    <td style="text-align: center;">pamungkasnuli@rocketmail.com</td>
-                                                    <td style="text-align: center;">081126458792</td>
-                                                    <td style="text-align: center;"><span
-                                                            class="label label-vvip">VVIP</span> </td>
-                                                    <td style="text-align: center;">
-                                                        <img src="dist/img/Card-Tamu.svg" alt=""
-                                                            style="padding: 2px 7px 2px 2px;">
-                                                        <img src="dist/img/edit.svg" alt=""
-                                                            style="padding: 2px 7px 2px 2px;">
-                                                        <img src="dist/img/hapus.svg" alt=""
-                                                            style="padding: 2px 7px 2px 2px;">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="text-align: center;">#13324</td>
-                                                    <td style="text-align: center;">Pamungkas Nuli Ramadhan</td>
-                                                    <td style="text-align: center;">pamungkasnuli@rocketmail.com</td>
-                                                    <td style="text-align: center;">081126458792</td>
-                                                    <td style="text-align: center;"><span
-                                                            class="label label-vvip">VVIP</span> </td>
-                                                    <td style="text-align: center;"> <img src="dist/img/Card-Tamu.svg"
-                                                            alt="" style="padding: 2px 7px 2px 2px;">
-                                                        <img src="dist/img/edit.svg" alt=""
-                                                            style="padding: 2px 7px 2px 2px;">
-                                                        <img src="dist/img/hapus.svg" alt=""
-                                                            style="padding: 2px 7px 2px 2px;">
-                                                    </td>
-                                                </tr>
+                                                
+                                                @endforeach
                                             </tbody>
+
+                                            
+
                                         </table>
                                     </div>
                                 </div>
