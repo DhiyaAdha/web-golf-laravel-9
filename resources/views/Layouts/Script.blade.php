@@ -42,10 +42,10 @@
 
 <!-- Switchery JavaScript -->
 <script src="vendors/bower_components/switchery/dist/switchery.min.js"></script>
- <!-- Init JavaScript -->
- <script src="dist/js/init.js"></script>
- <script src="dist/js/dashboard-data.js"></script>
- <script src="dist/js/dashboard3-data.js"></script>
+<!-- Init JavaScript -->
+<script src="dist/js/init.js"></script>
+<script src="dist/js/dashboard-data.js"></script>
+<script src="dist/js/dashboard3-data.js"></script>
 
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
@@ -53,7 +53,7 @@
 <script src="{{ asset('/sw.js') }}"></script>
 <script>
     if (!navigator.serviceWorker.controller) {
-        navigator.serviceWorker.register("/sw.js").then(function (reg) {
+        navigator.serviceWorker.register("/sw.js").then(function(reg) {
             console.log("Service worker has been registered for scope: " + reg.scope);
         });
     }

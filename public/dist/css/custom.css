@@ -21,3 +21,21 @@
     width: 100px;
     height: 25px;
 }
+
+.box-deposit {
+    background-color: #01c853;
+    width: 380px;
+    height: 80px;
+    color: white;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.box-limit-kupon {
+    background-color: #232323;
+    width: 190px;
+    height: 80px;
+    color: white;
+    border-radius: 10px;
+    margin-top: 15px;
+}
