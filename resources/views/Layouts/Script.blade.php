@@ -54,9 +54,8 @@
 
 {{-- <script src="{{ asset('/sw.js') }}"></script> --}}
 <script>
-    $('#check_box_value').text($("#check_box_switch").bootstrapSwitch('state'));
-    $('#check_box_switch').on('switchChange.bootstrapSwitch', function () {
-        $("#check_box_value").text($('#check_box_switch').bootstrapSwitch('state'));
+    $('.js-switch-1').each(function() {
+        new Switchery($(this)[0], $(this).data());
     });
     // if (!navigator.serviceWorker.controller) {
     //     navigator.serviceWorker.register("/sw.js").then(function (reg) {

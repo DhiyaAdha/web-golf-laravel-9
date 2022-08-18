@@ -31,46 +31,84 @@
 							</div>
 							<div class="panel-wrapper collapse in">
 								<div class="panel-body">
-									<div class="table-wrap mt-40">
+									<div class="table-wrap">
 										<div class="table-responsive">
 											<table class="table mb-0">
 												<thead>
                                                     <tr>
-                                                        <th>Nama Produk</th>
-                                                        <th>Kategori</th>
-                                                        <th>Harga Weekdays</th>
-                                                        <th>Harga Weekend</th>
-                                                        <th>Status</th>
-                                                        <th>Opsi</th>
+                                                        <th class="table-th">Nama Produk</th>
+                                                        <th class="table-th">Kategori</th>
+                                                        <th class="table-th">Harga Weekdays</th>
+                                                        <th class="table-th">Harga Weekend</th>
+                                                        <th class="table-th">Status</th>
+                                                        <th class="table-th">Opsi</th>
                                                     </tr>
 												</thead>
 												<tbody>
                                                     <tr>
-                                                        <td>One Game</td>
-                                                        <td>Package</td>
-                                                        <td>
+                                                        <td class="table-th table-td">One Game</td>
+                                                        <td class="table-th table-td">Package</td>
+                                                        <td class="table-th table-td">
                                                             <div class="form-group">
-																<div class="input-group">
-																	<div class="input-group-addon btn btn-default">
-                                                                        Rp
-                                                                    </div>
-																	<label class="form-control"></label>
-																</div>
-															</div>
+                                                                <div class="input-group">
+                                                                    <div class="input-group-addon">Rp</div>
+                                                                    <label class="form-control"></label>
+                                                                </div>
+                                                            </div>
                                                         </td>
-                                                        <td>
+                                                        <td class="table-th table-td">
                                                             <div class="form-group">
-																<div class="input-group">
-																	<div class="input-group-addon btn btn-default">
-                                                                        Rp
-                                                                    </div>
-																	<label class="form-control"></label>
-																</div>
-															</div>
+                                                                <div class="input-group">
+                                                                    <div class="input-group-addon">Rp</div>
+                                                                    <label class="form-control"></label>
+                                                                </div>
+                                                            </div>
                                                         </td>
-                                                        <td>
-                                                            <input id="check_box_switch" type="checkbox" data-off-text="Tunda" data-on-text="Aktif"  class="bs-switch">
-                                                            <label></label>
+                                                        <td class="table-th table-td">
+                                                            <input type="checkbox" checked class="js-switch js-switch-1"  data-color="#01c853" data-size="small"/>
+                                                        </td>
+                                                        <td class="table-th table-td">
+                                                            <div>
+                                                                <a href="#">
+                                                                    <img src="{{ asset('img/edit.svg') }}">
+                                                                </a>
+                                                                <a href="#">
+                                                                    <img src="{{ asset('img/hapus.svg') }}">
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="table-th table-td">One Game</td>
+                                                        <td class="table-th table-td">Package</td>
+                                                        <td class="table-th table-td">
+                                                            <div class="form-group">
+                                                                <div class="input-group">
+                                                                    <div class="input-group-addon">Rp</div>
+                                                                    <label class="form-control"></label>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="table-th table-td">
+                                                            <div class="form-group">
+                                                                <div class="input-group">
+                                                                    <div class="input-group-addon">Rp</div>
+                                                                    <label class="form-control"></label>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="table-th table-td">
+                                                            <input type="checkbox" checked class="js-switch js-switch-1"  data-color="#01c853" data-size="small"/>
+                                                        </td>
+                                                        <td class="table-th table-td">
+                                                            <div>
+                                                                <a href="#">
+                                                                    <img src="{{ asset('img/edit.svg') }}">
+                                                                </a>
+                                                                <a href="#">
+                                                                    <img src="{{ asset('img/hapus.svg') }}">
+                                                                </a>
+                                                            </div>
                                                         </td>
                                                     </tr>
 												</tbody>
