@@ -312,8 +312,6 @@
             var vip_jum = <?php print $vip_jum; ?>;
             var vvip_sab = <?php print $vvip_sab; ?>;
             var vip_sab = <?php print $vip_sab; ?>;
-           
-            
         </script>
 
 @endsection

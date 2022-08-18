@@ -32,6 +32,8 @@
 <!-- Owl JavaScript -->
 <script src="vendors/bower_components/owl.carousel/dist/owl.carousel.min.js"></script>
 
+<script src="vendors/bower_components/bootstrap-switch/dist/js/bootstrap-switch.min.js"></script>
+
 <!-- ChartJS JavaScript -->
 <script src="vendors/chart.js/Chart.min.js"></script>
 
@@ -52,6 +54,10 @@
 
 {{-- <script src="{{ asset('/sw.js') }}"></script> --}}
 <script>
+    $('#check_box_value').text($("#check_box_switch").bootstrapSwitch('state'));
+    $('#check_box_switch').on('switchChange.bootstrapSwitch', function () {
+        $("#check_box_value").text($('#check_box_switch').bootstrapSwitch('state'));
+    });
     // if (!navigator.serviceWorker.controller) {
     //     navigator.serviceWorker.register("/sw.js").then(function (reg) {
     //         console.log("Service worker has been registered for scope: " + reg.scope);
