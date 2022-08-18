@@ -1302,6 +1302,7 @@ button.btn-default.fc-agendaWeek-button,
 .btn-default.fc-today-button {
     background: gainsboro;
     border: solid 1px gainsboro;
+
     color: #212121 !important;
 }
 .btn.btn-default:hover,
@@ -25537,3 +25538,4 @@ ul.inbox-nav li a:focus {
 }
 
 /*# sourceMappingURL=style.css.map */
+

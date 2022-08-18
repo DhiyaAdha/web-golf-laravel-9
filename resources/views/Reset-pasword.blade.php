@@ -32,15 +32,12 @@
 		<div class="wrapper pa-0">
 			<header class="sp-header">
 				<div class="sp-logo-wrap pull-left">
-					
 					<a href="#">
 						<img class="brand-img mr-10" src="/dist/img/tgcc.svg" alt="brand"/>
 					</a>
 				</div>
 				<div class="clearfix"></div>
 			</header>
-			
-			
 			
 			<!-- Main Content -->
 			<div class="page-wrapper pa-0 ma-0 auth-page">
@@ -52,16 +49,14 @@
 								<div class="row">
 									<div class="col-sm-12 col-xs-12">
 										<div>
-
-												@if (Session::get('resetSuccess')) 
-												<div class="alert alert-danger">{!! Session::get('resetSuccess') !!}
-													<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-														<span aria-hidden="true">&times;</span>
-													</button> 
-												</div>
-												@endif
+											@if (Session::get('resetSuccess')) 
+											<div class="alert alert-danger">{!! Session::get('resetSuccess') !!}
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button> 
+											</div>
+											@endif
 										</div>
-										
 										<div class="mb-30">
 											<h5 class="text-center txt-dark mb-10">Lupa Password Tritih Golf & Country Club</h5>
 											<h6 class="text-center nonecase-font txt-grey">Masukan Password Baru Anda</h6>

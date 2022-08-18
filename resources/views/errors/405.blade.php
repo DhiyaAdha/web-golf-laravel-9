@@ -1,11 +1,9 @@
-<<<<<<< HEAD
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-		<title>404 NotFound</title>
+		<title>405 NotFound</title>
 		<meta name="description" content="Hound is a Dashboard & Admin Site Responsive Template by hencework." />
 		<meta name="keywords" content="admin, admin dashboard, admin template, cms, crm, Hound Admin, Houndadmin, premium admin templates, responsive admin, sass, panel, software, ui, visualization, web app, application" />
 		<meta name="author" content="hencework"/>
@@ -82,22 +80,3 @@
 		<script src="/dist/js/init.js"></script>
 	</body>
 </html>
-=======
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>404 Custom Error Page Example</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-5 pt-5">
-        <div class="alert alert-danger text-center">
-            <h2 class="display-3">405</h2>
-            <p class="display-5">Oops! Something is wrong.</p>
-        </div>
-    </div>
-</body>
-</html>
->>>>>>> dhany

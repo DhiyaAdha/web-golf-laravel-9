@@ -233,40 +233,37 @@
                                 <div class="table-wrap">
                                     <div class="table-responsive">
                                         <table class="table table-hover mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Nama Tamu</th>
-                                                    <th>Tanggal</th>
-                                                    <th>Kategori Tamu</th>
-                                                    <th>Pukul</th>
-                                                </tr>
-                                            </thead>
-
-                                            <tbody>
-                                                {{-- analisis-tamu --}}
-                                                @foreach ($visitor as $item)
-                                                    <tr>
-                                                        <td><span class="txt-dark weight-500">#{{ $item->id }}</span>
-                                                        </td>
-                                                        <td>{{ $item->name }}</td>
-                                                        <td><span class="txt-success"><i
-                                                                    class="zmdi zmdi-caret-up mr-10 font-20"></i><span>{{ date('d F Y', strtotime($item->created_at)) }}</span></span>
-                                                        </td>
-                                                        <td>
-                                                            @if ($item->tipe_member == 'VVIP')
-                                                                <span class="label label-success">VVIP</span>
-                                                            @else
-                                                                <span class="label label-warning">VIP</span>
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            {{ date('H:i', strtotime($item->created_at)) }}
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>Nama Tamu</th>
+													<th>Tanggal</th>
+													<th>Kategori Tamu</th>
+													<th>Pukul</th>
+												</tr>
+											</thead>
+											
+											<tbody>
+												{{-- analisis-tamu --}}
+												@foreach ($visitor as $item)
+													<tr>
+														<td><span class="txt-dark weight-500">#{{ $item->id }}</span></td>
+														<td>{{ $item->name }}</td>
+														<td><span class="txt-success"><i class="zmdi zmdi-caret-up mr-10 font-20"></i><span>{{ date('d F Y', strtotime($item->created_at)) }}</span></span></td>
+														<td>
+															@if($item->tipe_member == 'VVIP')
+																<span class="label label-success">VVIP</span>
+															@else
+																<span class="label label-warning">VIP</span>
+															@endif
+														</td>
+														<td>
+															{{ date('H:i', strtotime($item->created_at)) }} WIB
+														</td>
+													</tr>
+												@endforeach
+											</tbody>
+										</table>
                                     </div>
                                 </div>
                             </div>
@@ -279,44 +276,49 @@
             <!-- /Footer -->
         </div>
     </div>
-    <script>
-        var vvip_jan = <?php print $Jan_vvip; ?>;
-        var vip_jan = <?php print $Jan_vip; ?>;
-        var vvip_feb = <?php print $Feb_vvip; ?>;
-        var vip_feb = <?php print $Feb_vip; ?>;
-        var vvip_mar = <?php print $Mar_vvip; ?>;
-        var vip_mar = <?php print $Mar_vip; ?>;
-        var vvip_apr = <?php print $Apr_vvip; ?>;
-        var vip_apr = <?php print $Apr_vip; ?>;
-        var vvip_mei = <?php print $Mei_vvip; ?>;
-        var vip_mei = <?php print $Mei_vip; ?>;
-        var vvip_jun = <?php print $Jun_vvip; ?>;
-        var vip_jun = <?php print $Jun_vip; ?>;
-        var vvip_jul = <?php print $Jul_vvip; ?>;
-        var vip_jul = <?php print $Jul_vip; ?>;
-        var vvip_aug = <?php print $Aug_vvip; ?>;
-        var vip_aug = <?php print $Aug_vip; ?>;
-        var vvip_sep = <?php print $Sep_vvip; ?>;
-        var vip_sep = <?php print $Sep_vip; ?>;
-        var vvip_oct = <?php print $Oct_vvip; ?>;
-        var vip_oct = <?php print $Oct_vip; ?>;
-        var vvip_nov = <?php print $Nov_vvip; ?>;
-        var vip_nov = <?php print $Nov_vip; ?>;
-        var vvip_dec = <?php print $Dec_vvip; ?>;
-        var vip_dec = <?php print $Dec_vip; ?>;
-        var vvip_min = <?php print $vvip_min; ?>;
-        var vip_min = <?php print $vip_min; ?>;
-        var vvip_sen = <?php print $vvip_sen; ?>;
-        var vip_sen = <?php print $vip_sen; ?>;
-        var vvip_sel = <?php print $vvip_sel; ?>;
-        var vip_sel = <?php print $vip_sel; ?>;
-        var vvip_rab = <?php print $vvip_rab; ?>;
-        var vip_rab = <?php print $vip_rab; ?>;
-        var vvip_kam = <?php print $vvip_kam; ?>;
-        var vip_kam = <?php print $vip_kam; ?>;
-        var vvip_jum = <?php print $vvip_jum; ?>;
-        var vip_jum = <?php print $vip_jum; ?>;
-        var vvip_sab = <?php print $vvip_sab; ?>;
-        var vip_sab = <?php print $vip_sab; ?>;
-    </script>
+
+        <script>
+			
+            var vvip_jan = <?php print $Jan_vvip; ?>;
+            var vip_jan = <?php print $Jan_vip; ?>;
+            var vvip_feb = <?php print $Feb_vvip; ?>;
+            var vip_feb = <?php print $Feb_vip; ?>;
+            var vvip_mar = <?php print $Mar_vvip; ?>;
+            var vip_mar = <?php print $Mar_vip; ?>;
+            var vvip_apr = <?php print $Apr_vvip; ?>;
+            var vip_apr = <?php print $Apr_vip; ?>;
+            var vvip_mei = <?php print $Mei_vvip; ?>;
+            var vip_mei = <?php print $Mei_vip; ?>;
+            var vvip_jun = <?php print $Jun_vvip; ?>;
+            var vip_jun = <?php print $Jun_vip; ?>;
+            var vvip_jul = <?php print $Jul_vvip; ?>;
+            var vip_jul = <?php print $Jul_vip; ?>;
+            var vvip_aug = <?php print $Aug_vvip; ?>;
+            var vip_aug = <?php print $Aug_vip; ?>;
+            var vvip_sep = <?php print $Sep_vvip; ?>;
+            var vip_sep = <?php print $Sep_vip; ?>;
+            var vvip_oct = <?php print $Oct_vvip; ?>;
+            var vip_oct = <?php print $Oct_vip; ?>;
+            var vvip_nov = <?php print $Nov_vvip; ?>;
+            var vip_nov = <?php print $Nov_vip; ?>;
+            var vvip_dec = <?php print $Dec_vvip; ?>;
+            var vip_dec = <?php print $Dec_vip; ?>;
+
+
+            var vvip_min = <?php print $vvip_min; ?>;
+            var vip_min = <?php print $vip_min; ?>;
+            var vvip_sen = <?php print $vvip_sen; ?>;
+            var vip_sen = <?php print $vip_sen; ?>;
+            var vvip_sel = <?php print $vvip_sel; ?>;
+            var vip_sel = <?php print $vip_sel; ?>;
+            var vvip_rab = <?php print $vvip_rab; ?>;
+            var vip_rab = <?php print $vip_rab; ?>;
+            var vvip_kam = <?php print $vvip_kam; ?>;
+            var vip_kam = <?php print $vip_kam; ?>;
+            var vvip_jum = <?php print $vvip_jum; ?>;
+            var vip_jum = <?php print $vip_jum; ?>;
+            var vvip_sab = <?php print $vvip_sab; ?>;
+            var vip_sab = <?php print $vip_sab; ?>;
+        </script>
+
 @endsection

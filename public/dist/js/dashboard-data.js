@@ -187,62 +187,62 @@ $(document).ready(function () {
 
         var dataNew = [
             {
-                period: "Jan",
+                period: "Ja",
                 vvip: vvip_jan,
                 vip: vip_jan,
             },
             {
-                period: "Feb",
+                period: "Fb",
                 vvip: vvip_feb,
                 vip: vip_feb,
             },
             {
-                period: "March",
+                period: "Ma",
                 vvip: vvip_mar,
                 vip: vip_mar,
             },
             {
-                period: "April",
+                period: "Ap",
                 vvip: vvip_apr,
                 vip: vip_apr,
             },
             {
-                period: "May",
+                period: "My",
                 vvip: vvip_mei,
                 vip: vip_mei,
             },
             {
-                period: "June",
+                period: "Jn",
                 vvip: vvip_jun,
                 vip: vip_jun,
             },
             {
-                period: "July",
+                period: "Jl",
                 vvip: vvip_jul,
                 vip: vip_jul,
             },
             {
-                period: "Aug",
+                period: "Ag",
                 vvip: vvip_aug,
                 vip: vip_aug,
             },
             {
-                period: "Sep",
+                period: "Sp",
                 vvip: vvip_sep,
                 vip: vip_sep,
             },
             {
-                period: "Oct",
+                period: "Oc",
                 vvip: vvip_oct,
                 vip: vip_oct,
             },
             {
-                period: "Nov",
+                period: "Nv",
                 vvip: vvip_nov,
                 vip: vip_nov,
             },
             {
-                period: "Dec",
+                period: "Dc",
                 vvip: vvip_dec,
                 vip: vip_dec,
             },
@@ -292,18 +292,18 @@ $(document).ready(function () {
 /*****Ready function end*****/
 
 /*****Load function start*****/
-$(window).load(function () {
-    window.setTimeout(function () {
-        $.toast({
-            // heading: '',
-            text: "Selamat Datang Kembali",
-            position: "top-right",
-            loaderBg: "#fec107",
-            icon: "success",
-            hideAfter: 2000,
-            stack: 6,
-        });
-    }, 1000);
+$(window).load(function(){
+	window.setTimeout(function(){
+		$.toast({
+			// heading: '',
+			text: 'Selamat Datang Kembali <strong>Admin</strong>',
+			position: 'top-right',
+			loaderBg:'#fec107',
+			icon: 'success',
+			hideAfter: 2000, 
+			stack: 6
+		});
+	}, 1000);
 });
 /*****Load function* end*****/
 

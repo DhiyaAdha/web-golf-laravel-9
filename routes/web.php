@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PackageController;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -25,7 +26,7 @@ Route::get('/', function () {
     if (Auth::user()) {
         return redirect('/dashboard');
     }    
-    return view('login');
+    return view('Login');
     });
 
     //untuk route login
@@ -35,31 +36,32 @@ Route::post('/login', [AuthController::class, 'login']);
 //untuk route logout
 Route::get('/logout', [AuthController::class, 'logout']);
 
+
 //level admin dan superadmin
-Route::group(['middleware' => ['auth','ceklevel:1,3']], function() {
+Route::group(['middleware' => ['auth','ceklevel:1']], function() {
 Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
-Route::get('/daftar-admin', [AuthController::class, 'daftar-admin'])->name('daftar-admin');
+Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
 });
 
-Route::get('/scan-tamu', function () {
-    return view('Scan-tamu');
-});
+// Route::get('/scan-tamu', function () {
+//     return view('Scan-tamu');
+// });
 
-Route::get('/scan-tamu-berhasil', function () {
-    return view('Scan-tamu-berhasil');
-});
+// Route::get('/scan-tamu-berhasil', function () {
+//     return view('Scan-tamu-berhasil');
+// });
 
-Route::group(['middleware' => ['auth','ceklevel:1,3,4,9,10,5,8']], function() {
+Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
-    Route::get('/daftar-admin', [AuthController::class, 'daftar-admin'])->name('daftar-admin');
 });
 
 Route::get('/Lupa-pasword', [AuthController::class, 'forgot_password'])->middleware('guest')->name('Lupa-pasword');
 Route::post('/Lupa-pasword',[AuthController::class,'sendresetlink'])->name('Lupa-pasword.link');
-
 Route::get('/Reset-pasword/{token}',[AuthController::class,'showResetForm'])->name('Reset-pasword');
 Route::post('/Reset-pasword',[AuthController::class,'resetPassword'])->name('Reset-pasword.update');
 
+Route::get('/invoice',[AuthController::class,'invoice'])->name('invoice');
+Route::get('/package-item',[PackageController::class,'item'])->name('package.item');
 
 // //seeder
 // Route::get('/', function(){
@@ -71,3 +73,10 @@ Route::post('/Reset-pasword',[AuthController::class,'resetPassword'])->name('Res
 // // Analisis Tamu
 // Route::get('/analisis-tamu', [VisitorController::class, 'index'])->name('analisis-tamu');
 // Route::get('/datavisitor', [VisitorController::class, 'store'])->name('datavisitor');
+
+
+
+Route::get('/scan-tamu',[AuthController::class,'scantamu'])->name('scan-tamu');
+Route::get('/scan-tamu-berhasil',[AuthController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
+
+Route::get('/order',[AuthController::class,'order'])->name('order');
