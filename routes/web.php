@@ -62,7 +62,6 @@ Route::post('/Reset-pasword',[AuthController::class,'resetPassword'])->name('Res
 
 Route::get('/invoice',[AuthController::class,'invoice'])->name('invoice');
 Route::get('/package-item',[PackageController::class,'item'])->name('package.item');
-=======
 
 // //seeder
 // Route::get('/', function(){
