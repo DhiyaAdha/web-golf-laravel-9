@@ -54,6 +54,7 @@
 
 {{-- <script src="{{ asset('/sw.js') }}"></script> --}}
 <script>
+<<<<<<< HEAD
     $('#check_box_value').text($("#check_box_switch").bootstrapSwitch('state'));
     $('#check_box_switch').on('switchChange.bootstrapSwitch', function () {
         $("#check_box_value").text($('#check_box_switch').bootstrapSwitch('state'));

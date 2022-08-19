@@ -64,6 +64,7 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::get('/tambah-tamu',[AuthController::class,'tambahtamu'])->name('tambah-tamu');
     Route::get('/riwayat-invoice',[AuthController::class,'riwayatinvoice'])->name('riwayat-invoice');
 });
+
 //Finish level admin dan superadmin
 
 Route::get('/Lupa-pasword', [AuthController::class, 'forgot_password'])->middleware('guest')->name('Lupa-pasword');

@@ -19,10 +19,15 @@ class DatabaseSeeder extends Seeder
     {
 
         // \App\Models\User::factory(10)->create();
+<<<<<<< HEAD
 
         $this->call(UserSeeder::class);
         $this->call(StatusMember::class);
 
+=======
+        // $this->call(UserSeeder::class);
+        // $this->call(StatusMember::class);
+>>>>>>> 8929619fe8ef86ec9956b8a3bf5046469a6be05e
 
         $faker = Faker::create('id_ID');
 

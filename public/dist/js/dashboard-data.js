@@ -292,6 +292,10 @@ $(document).ready(function () {
 /*****Ready function end*****/
 
 /*****Load function start*****/
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8929619fe8ef86ec9956b8a3bf5046469a6be05e
 $(window).load(function(){
 	window.setTimeout(function(){
 		$.toast({
@@ -305,6 +309,10 @@ $(window).load(function(){
 		});
 	}, 1000);
 });
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8929619fe8ef86ec9956b8a3bf5046469a6be05e
 /*****Load function* end*****/
 
 var sparklineLogin = function () {
