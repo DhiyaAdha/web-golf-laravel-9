@@ -84,7 +84,7 @@ class AuthController extends Controller {
             $data['Dec_vvip'] = Visitor::whereMonth('created_at', '12')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
             $data['Dec_vip'] = Visitor::whereMonth('created_at', '12')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
             
-            // rEKAP hARIAN
+            // REKAP hARIAN
             // $data['vvip_sen'] = Visitor::whereBetween('created_at', [Carbon::now()->startOfWeek(Carbon::MONDAY)->addDays(1), Carbon::now()->endOfWeek(Carbon::SUNDAY)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
             $data['vvip_min'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY)->addDays(0)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
             $data['vip_min'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY)->addDays(0)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
@@ -174,8 +174,6 @@ class AuthController extends Controller {
             // dd(session()->all());
         }
     }
-
-
     // public function logout(Request $request){
     //     $user = $request->user();
     //     $user->currentAccessToken()->delete();
@@ -188,9 +186,6 @@ class AuthController extends Controller {
     //     // return response()->json($respon, 200);
     //     return redirect()->intended('/login');
     // }
-
-    
-
     public function logout (Request $request) {
         Auth::logout();
         $request->session()->invalidate();
