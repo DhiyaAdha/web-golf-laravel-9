@@ -11,11 +11,11 @@
         <div class="col-md-12">
         <div class="row">
         <div class="col-md-2">
-            <h2 style="font-size: 16px;">Invoice</h2>
+            <h2 style="font-size: 16px;"><strong>Invoice</strong></h2>
         </div>
 		@foreach ($invoice as $item)
         <div class="col-md-10 text-right">
-            <h3 class="float-right" style="font-size: 16px;">Order #{{ $item->unique_number }}</h3>
+            <h3 class="float-right" style="font-size: 16px;"><strong>Order #{{ $item->unique_number }}</strong></h3>
         </div>
         </div>
     		<hr>
@@ -161,6 +161,11 @@
     							</tr>
     						</tbody>
     					</table>
+						<div class="form-group text-right">
+									<button type="submit" class="btn btn-info">Selesai</button>
+									&nbsp;&nbsp;
+									<button type="submit" class="">Print Struk</button>
+								</div>
     				</div>
     			</div>
     		</div>
