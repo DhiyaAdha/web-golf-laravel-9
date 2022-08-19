@@ -41,12 +41,14 @@ Route::get('/logout', [AuthController::class, 'logout']);
 Route::group(['middleware' => ['auth','ceklevel:1']], function() {
 Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
 Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
+Route::get('/tambah-admin', [AuthController::class, 'tambah_admin'])->name('tambah-admin');
 });
 
 
 Route::group(['middleware' => ['auth','ceklevel:1']], function() {
 Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
 Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
+Route::get('/tambah-admin', [AuthController::class, 'tambah_admin'])->name('tambah-admin');
 
 });
 
@@ -58,7 +60,9 @@ Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daft
 //     return view('Scan-tamu-berhasil');
 // });
 
+
 Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
+
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
     // Route::get('/daftar-admin', [AuthController::class, 'daftar-admin'])->name('daftar-admin');
 });
@@ -94,3 +98,4 @@ Route::get('/order',[AuthController::class,'order'])->name('order');
 Route::get('/daftar-tamu',[AuthController::class,'daftartamu'])->name('daftar-tamu');
 Route::get('/tambah-tamu',[AuthController::class,'tambahtamu'])->name('tambah-tamu');
 
+// heloo 

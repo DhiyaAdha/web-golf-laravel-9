@@ -282,6 +282,9 @@ class AuthController extends Controller {
     }
 
     public function daftar_admin(){
-        return ('Welcome Daftar Admin');
+        return view('/daftar-admin');
+    }
+    public function tambah_admin(){
+        return view('/tambah-admin');
     }
 }

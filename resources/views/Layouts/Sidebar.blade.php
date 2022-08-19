@@ -34,7 +34,7 @@
         {{-- hideadmin --}}
         @if (auth()->user()->role_id=='1')
         <li>
-            <a class="{{ Request::is('daftar-admin') ? 'active' : '' }}" href="#">
+            <a class="{{ Request::is('daftar-admin') ? 'active' : '' }}" href="daftar-admin">
                 <div class="pull-left">
                     <i class="fa fa-user mr-20"></i>
                     <span class="right-nav-text">Daftar Admin</span>
