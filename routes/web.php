@@ -46,10 +46,11 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
     Route::get('/scan-tamu',[AuthController::class,'scantamu'])->name('scan-tamu');
     Route::get('/scan-tamu-berhasil',[AuthController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
     Route::get('/order',[AuthController::class,'order'])->name('order');
-
+    Route::get('/package-item',[PackageController::class,'item'])->name('package.item');
     Route::get('/daftar-tamu',[AuthController::class,'daftartamu'])->name('daftar-tamu');
     Route::get('/tambah-tamu',[AuthController::class,'tambahtamu'])->name('tambah-tamu');
     Route::get('/riwayat-invoice',[AuthController::class,'riwayatinvoice'])->name('riwayat-invoice');
+
 });
 
 Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {

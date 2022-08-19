@@ -1,4 +1,4 @@
-@extends('Layouts.Main')
+@extends('Layouts.Main', ['title' => 'TGCC | Paket Bermain'])
 @section('content')
     <!-- Main Content -->
 		<div class="page-wrapper">
@@ -45,14 +45,26 @@
                                                     </tr>
 												</thead>
 												<tbody>
+                                                    @foreach ($products as $product)
+                                                    {{-- <tr>
+                                                        <td>{{ $product->name }}</td>
+                                                        <td>default</td>
+                                                        <td>{{ $product->price }}</td>
+                                                        <td>{{ $product->price }}</td>
+                                                        <td>{{ $product->price }}</td>
+                                                        <td>
+                                                            <a href="{{ route('product.editform',['id'=>$product->id]) }}" class="btn btn-primary w-100 m-1" style="color:white;">EDIT</a>
+                                                            <a href="{{ route('product.remove',['id'=>$product->id]) }}" class="btn btn-danger w-100 m-1" style="color:white;">REMOVE</a>
+                                                        </td>
+                                                    </tr> --}}
                                                     <tr>
-                                                        <td class="table-th table-td">One Game</td>
-                                                        <td class="table-th table-td">Package</td>
+                                                        <td class="table-th table-td">{{ $product->name }}</td>
+                                                        <td class="table-th table-td">default</td>
                                                         <td class="table-th table-td">
                                                             <div class="form-group">
                                                                 <div class="input-group">
                                                                     <div class="input-group-addon">Rp</div>
-                                                                    <label class="form-control"></label>
+                                                                    <label class="form-control">{{ $product->price }}</label>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -60,7 +72,7 @@
                                                             <div class="form-group">
                                                                 <div class="input-group">
                                                                     <div class="input-group-addon">Rp</div>
-                                                                    <label class="form-control"></label>
+                                                                    <label class="form-control">{{ $product->price }}</label>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -78,39 +90,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                    <tr>
-                                                        <td class="table-th table-td">One Game</td>
-                                                        <td class="table-th table-td">Package</td>
-                                                        <td class="table-th table-td">
-                                                            <div class="form-group">
-                                                                <div class="input-group">
-                                                                    <div class="input-group-addon">Rp</div>
-                                                                    <label class="form-control"></label>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="table-th table-td">
-                                                            <div class="form-group">
-                                                                <div class="input-group">
-                                                                    <div class="input-group-addon">Rp</div>
-                                                                    <label class="form-control"></label>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="table-th table-td">
-                                                            <input type="checkbox" checked class="js-switch js-switch-1"  data-color="#01c853" data-size="small"/>
-                                                        </td>
-                                                        <td class="table-th table-td">
-                                                            <div>
-                                                                <a href="#">
-                                                                    <img src="{{ asset('img/edit.svg') }}">
-                                                                </a>
-                                                                <a href="#">
-                                                                    <img src="{{ asset('img/hapus.svg') }}">
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
+                                                    @endforeach
 												</tbody>
 											</table>
 										</div>

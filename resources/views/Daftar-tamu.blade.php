@@ -1,4 +1,4 @@
-@extends('Layouts.Main')
+@extends('Layouts.Main', ['title' => 'TGCC | Daftar Tamu'])
 <div class="page-wrapper">
     <div class="container-fluid">
         <div class="row heading-bg">

@@ -49,9 +49,6 @@
 <script src="dist/js/dashboard-data.js"></script>
 <script src="dist/js/dashboard3-data.js"></script>
 
-{{-- Font Awesome --}}
-<script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
-
 {{-- <script src="{{ asset('/sw.js') }}"></script> --}}
 <script>
     $('#check_box_value').text($("#check_box_switch").bootstrapSwitch('state'));
