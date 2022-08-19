@@ -15,8 +15,13 @@ class CreatePackageDefaultsTable extends Migration
     {
         Schema::create('package_defaults', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->integer('price');
+            $table->string('name', 255);
+            $table->string('category');
+            $table->integer('price_weekdays');
+            $table->integer('price_weekend');
+            $table->integer('status');
+            $table->timestamps();
+
 
         });
     }

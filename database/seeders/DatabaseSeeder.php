@@ -34,14 +34,12 @@ class DatabaseSeeder extends Seeder
         'gender' => $faker->randomElement(['laki-laki', 'perempuan']),
         'tipe_member' => $faker->randomElement(['VIP', 'VVIP']),
         'created_at' => $faker->dateTimeThisYear(),
-        // 'created_at' => \Carbon\Carbon::now()->addMinutes(rand(0,
-        // 60 * 23))->addSeconds(rand(0, 60)),
+        'created_at' => \Carbon\Carbon::now()->addMinutes(rand(0,
+        60 * 23))->addSeconds(rand(0, 60)),
         'updated_at' => \Carbon\Carbon::now()->addMinutes(rand(0,
         60 * 23))->addSeconds(rand(0, 60))
         ]);
         
-
-
         // 'id', 'name', 'gender', 'tipe_member'
         }
     }

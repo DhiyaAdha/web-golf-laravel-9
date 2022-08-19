@@ -16,7 +16,7 @@ class CreateVisitorsTable extends Migration
         Schema::create('visitors', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('email')->nullable();
+            $table->string('email', 255)->nullable();
             $table->string('phone')->nullable();
             $table->string('position')->nullable();
             $table->string('company')->nullable();
@@ -24,7 +24,7 @@ class CreateVisitorsTable extends Migration
             // $table->string('tipe_member')->default('VIP');
             $table->enum('tipe_member',['VVIP', 'VIP']);
 
-
+            $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
         });
