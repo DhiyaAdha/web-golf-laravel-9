@@ -6,7 +6,7 @@
             <div class="row" style="padding: 25px 25px">
                 <div class="col-sm-12">
                     <div class="panel panel-default card-view">
-                        <div class="panel-heading">
+                        <div class="panel-heding">
 
                             {{-- <div class="clearfix"></div> --}}
                             <div class="row">
@@ -20,7 +20,7 @@
                                    </a>
                                     <a href="{{ route('tambah-tamu') }}">
                                         <i class="fa-2x fa-plus"
-                                        style="border: 0px solid silver; border-radius: 0.25em; padding: 0.5em;"></i>
+                                        ></i>
                                     </a>
                                     <div class="row">
                                         <div class="col-lg-0"></div>
@@ -69,9 +69,9 @@
                                                     <td style="text-align: center;">
 
                                                         @if($item->tipe_member == 'VVIP')
-                                                            <span class="label label-success">VVIP</span>
+                                                        <span class="label label-vvip">VVIP</span>
                                                         @else
-                                                            <span class="label label-warning">VIP</span>
+                                                        <span class="label label-vip">VIP</span>
                                                         @endif
                                                         
                                                     </td>
