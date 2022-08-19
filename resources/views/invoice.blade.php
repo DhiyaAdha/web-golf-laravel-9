@@ -6,7 +6,7 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <div class="page-wrapper">
-<div class="container-fluid">
+{{-- <div class="container-fluid">
 	<!-- Title -->
 	<div class="row heading-bg">
 		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
@@ -21,7 +21,8 @@
 		</div>
 		<!-- /Breadcrumb -->
 	</div>
-	<!-- /Title -->
+	<!-- /Title --> --}}
+<div class="container">
     <div class="row">
         <div class="col-md-12">
         <div class="row">

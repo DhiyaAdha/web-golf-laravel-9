@@ -105,9 +105,15 @@ class AuthController extends Controller {
 
     public function daftartamu(){
         $data['visitor'] = Visitor::all()->sortByDesc('created_at');
+
+        
         return view('/Daftar-tamu', $data);
     }
-
+    
+    public function tambahtamu(){
+        
+        return view('/Tambah-tamu');
+    }
         // public function edittamu(){
         //     // $data['visitor'] = Visitor::all()->sortByDesc('created_at');
         //     return view('Edit-tamu');
@@ -281,6 +287,7 @@ class AuthController extends Controller {
     }
 
     public function daftar_admin(){
+
         return ('Welcome To Daftar Admin');
     }
 

@@ -43,14 +43,6 @@ Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth
 Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
 });
 
-// Route::get('/scan-tamu', function () {
-//     return view('Scan-tamu');
-// });
-
-// Route::get('/scan-tamu-berhasil', function () {
-//     return view('Scan-tamu-berhasil');
-// });
-
 Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
 });
@@ -60,12 +52,14 @@ Route::post('/Lupa-pasword',[AuthController::class,'sendresetlink'])->name('Lupa
 Route::get('/Reset-pasword/{token}',[AuthController::class,'showResetForm'])->name('Reset-pasword');
 Route::post('/Reset-pasword',[AuthController::class,'resetPassword'])->name('Reset-pasword.update');
 
+
 Route::get('/invoice',[AuthController::class,'invoice'])->name('invoice');
 Route::get('/package-item',[PackageController::class,'item'])->name('package.item');
 
 // //seeder
 // Route::get('/', function(){
 //     $statusmember = Visitor::get(); 
+
 
 //     dd($statusmember);
 // });
@@ -83,3 +77,6 @@ Route::get('/order',[AuthController::class,'order'])->name('order');
 
 
 Route::get('/Daftar-tamu',[AuthController::class,'daftar_tamu'])->name('Daftar-tamu');
+
+// Route::get('/daftar-tamu',[AuthController::class,'daftartamu'])->name('daftar-tamu');
+// Route::get('/tambah-tamu',[AuthController::class,'tambahtamu'])->name('tambah-tamu');
