@@ -31,11 +31,43 @@
 .label.label-vip{
     background: #32FFC1;
     padding: 9px 50px;
+    font-size: 14px;
 }
 
 .label.label-vvip{
     background: #FFDE32;
     padding: 9px 50px;
+    font-size: 14px;
+}
+.label.label-admin{
+    color: #000000;
+    padding: 9px 50px;
+    font-size: 14px;
+}
+
+.label.label-super-admin{
+    color: #000000;
+    padding: 9px 50px;
+    font-size: 14px;
+}
+.label.label-tambah{
+    background:#2879FF;
+    padding: 9px 50px;
+    font-size: 14px;
+}
+.label.label-update{
+    background: #5901C8;
+    padding: 9px 50px;
+    font-size: 14px;
+}
+.label.label-hapus{
+    background:#FF2A00;
+    padding: 9px 50px;
+    font-size: 14px;
+}
+.label.label-sa{
+    background:#5901C8;
+    padding: 5px 8px;
 }
 
 .panel-heding{
@@ -70,6 +102,9 @@
     position: absolute;
     top: 30px;
     left: 100px;
+}
+.form-check {
+    padding: 2px 0px 25px;
 }
 
 .btn-qr {
