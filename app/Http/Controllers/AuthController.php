@@ -121,6 +121,10 @@ class AuthController extends Controller {
         
         return view('/Tambah-tamu');
     }
+    public function tambahadmin(){
+        
+        return view('/Tambah-admin');
+    }
         // public function edittamu(){
         //     // $data['visitor'] = Visitor::all()->sortByDesc('created_at');
         //     return view('Edit-tamu');
