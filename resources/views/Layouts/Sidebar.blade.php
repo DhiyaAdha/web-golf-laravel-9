@@ -22,7 +22,7 @@
             </a>
         </li>
         <li>
-            <a href="{{ Request::is('daftar-tamu') }}" href="daftar-tamu">
+            <a class="{{ Request::is('Daftar-tamu') ? 'active' : '' }}" href="/daftar-tamu" >
                 <div class="pull-left">
                     <span class="right-nav-text">Daftar Tamu</span>
                 </div>

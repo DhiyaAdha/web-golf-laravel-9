@@ -105,6 +105,8 @@ class AuthController extends Controller {
 
     public function daftartamu(){
         $data['visitor'] = Visitor::all()->sortByDesc('created_at');
+
+        
         return view('/Daftar-tamu', $data);
     }
     

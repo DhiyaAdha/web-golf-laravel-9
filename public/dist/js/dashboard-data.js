@@ -292,19 +292,19 @@ $(document).ready(function () {
 /*****Ready function end*****/
 
 /*****Load function start*****/
-$(window).load(function(){
-	window.setTimeout(function(){
-		$.toast({
-			// heading: '',
-			text: 'Selamat Datang Kembali <strong>Admin</strong>',
-			position: 'top-right',
-			loaderBg:'#fec107',
-			icon: 'success',
-			hideAfter: 2000, 
-			stack: 6
-		});
-	}, 1000);
-});
+// $(window).load(function(){
+// 	window.setTimeout(function(){
+// 		$.toast({
+// 			// heading: '',
+// 			text: 'Selamat Datang Kembali <strong>Admin</strong>',
+// 			position: 'top-right',
+// 			loaderBg:'#fec107',
+// 			icon: 'success',
+// 			hideAfter: 2000, 
+// 			stack: 6
+// 		});
+// 	}, 1000);
+// });
 /*****Load function* end*****/
 
 var sparklineLogin = function () {
