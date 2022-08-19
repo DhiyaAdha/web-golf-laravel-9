@@ -50,9 +50,8 @@
                                         <table class="table mb-0">
                                             <thead>
                                                 <tr>
-                                                    <th style="text-align: center;">ID</th>
-                                                    <th style="text-align: center;">Nama</th>
-                                                    <th style="text-align: center;">Email</th>
+                                                    <th>Nama</th>
+                                                    <th>Email</th>
                                                     <th style="text-align: center;">Nomer hp</th>
                                                     <th style="text-align: center;">Kategori Tamu</th>
                                                     <th style="text-align: center;">Aksi</th>
@@ -62,9 +61,8 @@
 
                                                 @foreach ($visitor as $item)
                                                 <tr>
-                                                    <td style="text-align: center;">#{{ $item->id }}</td>
-                                                    <td style="text-align: center;">{{ $item->name }}</td>
-                                                    <td style="text-align: center;">{{ $item->email }}</td>
+                                                    <td>{{ $item->name }}</td>
+                                                    <td>{{ $item->email }}</td>
                                                     <td style="text-align: center;">{{ $item->phone }}</td>
                                                     <td style="text-align: center;">
 
