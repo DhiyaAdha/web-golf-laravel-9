@@ -37,46 +37,37 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout']);
 
 
-//level admin dan superadmin
+//Start level admin dan superadmin
 Route::group(['middleware' => ['auth','ceklevel:1']], function() {
-Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
-Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
+    Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
+    Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
+    Route::get('/invoice',[AuthController::class,'invoice'])->name('invoice');
+    Route::get('/package-item',[PackageController::class,'item'])->name('package.item');
+    Route::get('/scan-tamu',[AuthController::class,'scantamu'])->name('scan-tamu');
+    Route::get('/scan-tamu-berhasil',[AuthController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
+    Route::get('/order',[AuthController::class,'order'])->name('order');
+
+    Route::get('/daftar-tamu',[AuthController::class,'daftartamu'])->name('daftar-tamu');
+    Route::get('/tambah-tamu',[AuthController::class,'tambahtamu'])->name('tambah-tamu');
+    Route::get('/riwayat-invoice',[AuthController::class,'riwayatinvoice'])->name('riwayat-invoice');
 });
-
-// Route::get('/scan-tamu', function () {
-//     return view('Scan-tamu');
-// });
-
-// Route::get('/scan-tamu-berhasil', function () {
-//     return view('Scan-tamu-berhasil');
-// });
 
 Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
+    Route::get('/invoice',[AuthController::class,'invoice'])->name('invoice');
+    Route::get('/package-item',[PackageController::class,'item'])->name('package.item');
+    Route::get('/scan-tamu',[AuthController::class,'scantamu'])->name('scan-tamu');
+    Route::get('/scan-tamu-berhasil',[AuthController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
+    Route::get('/order',[AuthController::class,'order'])->name('order');
+
+    Route::get('/daftar-tamu',[AuthController::class,'daftartamu'])->name('daftar-tamu');
+    Route::get('/tambah-tamu',[AuthController::class,'tambahtamu'])->name('tambah-tamu');
+    Route::get('/riwayat-invoice',[AuthController::class,'riwayatinvoice'])->name('riwayat-invoice');
 });
+
+//Finish level admin dan superadmin
 
 Route::get('/Lupa-pasword', [AuthController::class, 'forgot_password'])->middleware('guest')->name('Lupa-pasword');
 Route::post('/Lupa-pasword',[AuthController::class,'sendresetlink'])->name('Lupa-pasword.link');
 Route::get('/Reset-pasword/{token}',[AuthController::class,'showResetForm'])->name('Reset-pasword');
 Route::post('/Reset-pasword',[AuthController::class,'resetPassword'])->name('Reset-pasword.update');
-
-Route::get('/invoice',[AuthController::class,'invoice'])->name('invoice');
-Route::get('/package-item',[PackageController::class,'item'])->name('package.item');
-
-// //seeder
-// Route::get('/', function(){
-//     $statusmember = Visitor::get(); 
-
-//     dd($statusmember);
-// });
-
-// // Analisis Tamu
-// Route::get('/analisis-tamu', [VisitorController::class, 'index'])->name('analisis-tamu');
-// Route::get('/datavisitor', [VisitorController::class, 'store'])->name('datavisitor');
-
-
-
-Route::get('/scan-tamu',[AuthController::class,'scantamu'])->name('scan-tamu');
-Route::get('/scan-tamu-berhasil',[AuthController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
-
-Route::get('/order',[AuthController::class,'order'])->name('order');
