@@ -109,6 +109,13 @@ class AuthController extends Controller {
         
         return view('/Daftar-tamu', $data);
     }
+
+    public function riwayatinvoice(){
+        $data['visitor'] = Visitor::all()->sortByDesc('created_at');
+
+        
+        return view('/riwayat-invoice', $data);
+    }
     
     public function tambahtamu(){
         
@@ -274,9 +281,5 @@ class AuthController extends Controller {
     public function daftar_admin(){
 
         return ('Welcome To Daftar Admin');
-    }
-
-    public function daftar_tamu(){
-        return view('/Daftar-tamu');
     }
 }

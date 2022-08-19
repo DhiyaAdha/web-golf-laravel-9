@@ -61,6 +61,14 @@
 												</button> 
 											</div>
 											@endif
+
+											@if (session()->has('info')) 
+											<div class="alert alert-success">{!! session('info') !!}
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button> 
+											</div>
+											@endif
 										</div>
 										<div class="mb-30">
 											<h3 class="text-center txt-dark mb-10">Masuk Tritih Golf & Country Club</h3>
