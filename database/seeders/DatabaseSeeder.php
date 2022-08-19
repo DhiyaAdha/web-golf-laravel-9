@@ -22,7 +22,6 @@ class DatabaseSeeder extends Seeder
         // $this->call(UserSeeder::class);
         // $this->call(StatusMember::class);
 
-
         $faker = Faker::create('id_ID');
 
         for($i = 1; $i <= 100; $i++) {

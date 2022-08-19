@@ -8,6 +8,16 @@
     top: 60px;
     left: 52px;
 }
+.switchery.switchery-small {
+    margin: auto;
+}
+
+.table-td {
+    padding-bottom: 0px !important;
+}
+.table-th {
+    padding-left: 0px !important;
+}
 
 .gambar-qr {
     position: absolute;
