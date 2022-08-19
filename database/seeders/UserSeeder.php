@@ -20,10 +20,15 @@ class UserSeeder extends Seeder
             'phone'=> '087736202888',
             'password' => Hash::make('tes'),
             'role_id' => '2',
-            // 'status' => 'active',
-
         ]);
         
+        User::create([
+            'email' => '5868ruth@gmail.com',
+            'name' => 'dita',
+            'phone'=> '087736202888',
+            'password' => Hash::make('tes'),
+            'role_id' => '1',
+        ]);
 
     }
 }

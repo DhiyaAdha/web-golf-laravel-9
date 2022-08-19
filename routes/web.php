@@ -41,23 +41,15 @@ Route::get('/logout', [AuthController::class, 'logout']);
 Route::group(['middleware' => ['auth','ceklevel:1']], function() {
 Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
 Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
+Route::get('/daftar-admin', [AuthController::class, 'daftar_admin']);
 });
 
 
 Route::group(['middleware' => ['auth','ceklevel:1']], function() {
 Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
-Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
+Route::get('/package-item',[PackageController::class,'item'])->name('package.item');
 
 });
-
-// Route::get('/scan-tamu', function () {
-//     return view('Scan-tamu');
-// });
-
-// Route::get('/scan-tamu-berhasil', function () {
-//     return view('Scan-tamu-berhasil');
-// });
-
 
 Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
 

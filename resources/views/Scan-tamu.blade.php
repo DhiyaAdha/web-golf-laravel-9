@@ -1,10 +1,6 @@
-@extends('Layouts.Main')
+@extends('Layouts.Main', ['title' => 'TGCC | Scan Tamu'])
 
 @section('content')
-    {{-- Script --}}
-    {{-- <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script> --}}
-    {{-- Script --}}
-
     <div class="page-wrapper">
         <div class="container-fluid">
             <div class="row heading-bg">
