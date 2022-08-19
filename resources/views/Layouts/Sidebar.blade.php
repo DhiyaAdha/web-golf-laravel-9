@@ -23,7 +23,7 @@
             </a>
         </li>
         <li>
-            <a href="{{ Request::is('daftar-tamu') }}" href="daftar-tamu">
+            <a class="{{ Request::is('daftar-tamu') ? 'active' : '' }}" href="/Daftar-tamu">
                 <div class="pull-left">
                     <i class="fa fa-user mr-20"></i>
                     <span class="right-nav-text">Daftar Tamu</span>
@@ -34,7 +34,7 @@
         {{-- hideadmin --}}
         @if (auth()->user()->role_id=='1')
         <li>
-            <a class="{{ Request::is('daftar-admin') ? 'active' : '' }}" href="#">
+            <a class="{{ Request::is('daftar-admin') ? 'active' : '' }}" href="/daftar-admin">
                 <div class="pull-left">
                     <i class="fa fa-user mr-20"></i>
                     <span class="right-nav-text">Daftar Admin</span>

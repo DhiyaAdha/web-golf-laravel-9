@@ -80,3 +80,6 @@ Route::get('/scan-tamu',[AuthController::class,'scantamu'])->name('scan-tamu');
 Route::get('/scan-tamu-berhasil',[AuthController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
 
 Route::get('/order',[AuthController::class,'order'])->name('order');
+
+
+Route::get('/Daftar-tamu',[AuthController::class,'daftar_tamu'])->name('Daftar-tamu');
