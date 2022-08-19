@@ -16,13 +16,12 @@ class CreateDetailTransactionsTable extends Migration
         Schema::create('detail_transactions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('log_transaction_id')->unsigned();
-            $table->integer('package_default_id')->unsigned();
-            $table->timestamps();
+            $table->integer('package_id')->unsigned();
         });
 
 
         Schema::table('detail_transactions', function($table) {
-            $table->foreign('package_default_id')->references('id')->on('package_defaults');
+            $table->foreign('package_id')->references('id')->on('packages');
             $table->foreign('log_transaction_id')->references('id')->on('log_transactions');
         });
     }
@@ -34,6 +33,6 @@ class CreateDetailTransactionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_payments');
+        Schema::dropIfExists('detail_transactions');
     }
 }

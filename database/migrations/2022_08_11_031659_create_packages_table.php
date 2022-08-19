@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePackageDefaultsTable extends Migration
+class CreatePackagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreatePackageDefaultsTable extends Migration
      */
     public function up()
     {
-        Schema::create('package_defaults', function (Blueprint $table) {
+        Schema::create('packages', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 255);
+            $table->string('name');
             $table->string('category');
             $table->integer('price_weekdays');
             $table->integer('price_weekend');
             $table->integer('status');
             $table->timestamps();
-
 
         });
     }
@@ -33,6 +32,6 @@ class CreatePackageDefaultsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('package_defaults');
+        Schema::dropIfExists('packages');
     }
 }
