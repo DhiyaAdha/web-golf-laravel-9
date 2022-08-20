@@ -74,7 +74,7 @@
                                                         
                                                     </td>
                                                     <td style="text-align: center;">
-                                                          <a href="#"> 
+                                                        <a href="#"> 
                                                             <img src="dist/img/Card-Tamu.svg" alt=""
                                                             style="padding: 2px 7px 2px 2px;">
                                                         </a>  
@@ -92,11 +92,11 @@
                                                 </tr>
                                                 
                                                 @endforeach
+                                                    
                                             </tbody>
-
                                             
-
                                         </table>
+                                        {{ $visitor->links() }}
                                     </div>
                                 </div>
                             </div>

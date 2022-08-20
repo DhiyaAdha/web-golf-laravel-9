@@ -34,7 +34,7 @@ class AuthController extends Controller {
 
         public function dashboard(){
             // memanggil data visitor
-            $data['visitor'] = Visitor::all()->sortByDesc('created_at');
+            $data['visitor'] = DB::table('Visitors')->orderBy('created_at', 'desc')->paginate(20);
             $data['visitor_today'] = Visitor::whereDate('created_at', now()->format('Y-m-d'))->count();
             $data['visitor_week'] = Visitor::whereBetween('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY), Carbon::now()->endOfWeek(Carbon::SATURDAY)])->get()->count();
             $data['visitor_month'] = Visitor::whereMonth('created_at', now()->month)->count(); //bulan ini  
@@ -274,7 +274,7 @@ class AuthController extends Controller {
     }
     
     public function daftartamu(){
-        $data['visitor'] = Visitor::all()->sortByDesc('created_at');
+        $data['visitor'] = DB::table('Visitors')->orderBy('created_at', 'desc')->paginate(20);
 
         
         return view('/Daftar-tamu', $data);
@@ -304,16 +304,19 @@ class AuthController extends Controller {
             'position'   => 'required',
             'tipe_member'   => 'required',
         ]);
-            $visitors = Visitor::create([
-                'name'      => $request->name,
-                'address'   => $request->address,
-                'gender'    => $request->gender,
-                'email'    => $request->email,
-                'phone'    => $request->phone,
-                'company'    => $request->company,
-                'position'    => $request->position,
-                'tipe_member'    => $request->tipe_member
-            ]);
+        
+        $visitors = Visitor::create([
+            
+            'name'      => $request->name,
+            'address'   => $request->address,
+            'gender'    => $request->gender,
+            'email'    => $request->email,
+            'phone'    => $request->phone,
+            'company'    => $request->company,                
+            'position'    => $request->position,
+            'tipe_member'    => $request->tipe_member,
+            'created_at'    => Carbon::now()
+        ]);
             // $visitors->address = $request->alamat;
             $visitors->save();
             return redirect('/daftar-tamu')
