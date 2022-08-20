@@ -50,6 +50,7 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
     Route::get('/tambah-tamu',[AuthController::class,'tambahtamu'])->name('tambah-tamu');
     Route::get('/tambah-admin',[AuthController::class,'tambahadmin'])->name('tambah-admin');
     Route::get('/riwayat-invoice',[AuthController::class,'riwayatinvoice'])->name('riwayat-invoice');
+
 });
 
 Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
@@ -64,8 +65,6 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::get('/riwayat-invoice',[AuthController::class,'riwayatinvoice'])->name('riwayat-invoice');
     Route::get('/tambah-admin',[AuthController::class,'tambahadmin'])->name('tambah-admin');
 });
-
-//Finish level admin dan superadmin
 
 Route::get('/Lupa-pasword', [AuthController::class, 'forgot_password'])->middleware('guest')->name('Lupa-pasword');
 Route::post('/Lupa-pasword',[AuthController::class,'sendresetlink'])->name('Lupa-pasword.link');

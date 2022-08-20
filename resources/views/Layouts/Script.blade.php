@@ -118,4 +118,27 @@
             { orderable: false, targets: [0, 1, 2, 3, 4, 5,] },
         ],
     });
+
+    $(document).on("click", "#show-scan", function() {
+        $(".disabled-scan").css("display", "none");
+
+        function onScanSuccess(decodedText, decodedResult) {
+            $("#result").val(decodedText)
+        }
+
+        function onScanFailure(error) {
+            console.warn(`Code scan error = ${error}`);
+        }
+
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader", {
+                fps: 10,
+                qrbox: {
+                    width: 250,
+                    height: 250
+                }
+            },
+            false);
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    })
 </script>
