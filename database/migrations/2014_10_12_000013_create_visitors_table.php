@@ -19,6 +19,7 @@ class CreateVisitorsTable extends Migration
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
+            $table->string('address')->nullable();
             $table->string('position')->nullable();
             $table->string('company')->nullable();
             $table->enum('gender',['laki-laki', 'perempuan']);

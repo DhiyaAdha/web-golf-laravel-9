@@ -103,31 +103,16 @@ class AuthController extends Controller {
             return view('/Analisis-tamu', $data);
         }
 
-    public function daftartamu(){
-        $data['visitor'] = Visitor::all()->sortByDesc('created_at');
-
         
-        return view('/Daftar-tamu', $data);
-    }
-    
-    public function tambahtamu(){
         
-        return view('/Tambah-tamu');
-    }
-        // public function edittamu(){
-        //     // $data['visitor'] = Visitor::all()->sortByDesc('created_at');
-        //     return view('Edit-tamu');
-        // }
-
-
-    public function password_baru(){
-        return view('/Reset-pasword');
+        public function password_baru(){
+            return view('/Reset-pasword');
     }
 
     //ini untuk function login
     public function login(Request $request)
     {
-
+        
         $validate = Validator::make($request->all(), [
             'email' => 'required|email:dns',
             'password' => 'required',
@@ -153,12 +138,12 @@ class AuthController extends Controller {
                 // return response(['message'=>'Invalid Credential'], 401);
                 // return response(['message'=>'Login Failed! Email atau Password yang anda masukkan Salah!'], 401);
             }
-
+            
             $user = User::where('email', $request->email)->first();
             if(!Hash::check($request->password, $user->password, [])){
                 throw new Exception('Error in login');
             }
-
+            
             $tokenResult = $user->createToken('token-auth')->plainTextToken;
             $respon = [
                 'status' => 'success',
@@ -175,11 +160,11 @@ class AuthController extends Controller {
         }
     }
     // public function logout(Request $request){
-    //     $user = $request->user();
-    //     $user->currentAccessToken()->delete();
-    //     $respon = [
-    //             'status' => 'error',
-    //             'msg' => 'Logout Successfully',
+        //     $user = $request->user();
+        //     $user->currentAccessToken()->delete();
+        //     $respon = [
+            //             'status' => 'error',
+            //             'msg' => 'Logout Successfully',
     //             'errors' => null,
     //             'content' => null,
     //     ];
@@ -199,37 +184,37 @@ class AuthController extends Controller {
             'password'=>'required|confirmed',
             'password_confirmation'=>'required',
         ]);
-
+        
         $check_token = DB::table('password_resets')->where([
             'email'=>$request->email,
             'token'=>$request->token,
-        ])->first();
-
-        if(!$check_token){
-            return back()->withInput()->with('fail', 'Invalid token');
-        }else{
-
-            User::where('email', $request->email)->update([
-                'password'=> Hash::make($request->password)
+            ])->first();
+            
+            if(!$check_token){
+                return back()->withInput()->with('fail', 'Invalid token');
+            }else{
+                
+                User::where('email', $request->email)->update([
+                    'password'=> Hash::make($request->password)
             ]);
-
+            
             DB::table('password_resets')->where([
                 'email'=>$request->email
             ])->delete();
-
+            
             return redirect()->intended('login')->with('info', 'Your password has been changed! You can login with new password')->with('verifiedEmail', $request->email);
         }
     }
-
+    
     public function showResetForm(Request $request, $token = null){
         return view('Reset-pasword')->with(['token'=>$token,'email'=>$request->email]);
     }
-
+    
     public function sendresetlink(Request $request){
         $request->validate([
             'email'=>'required|email|exists:users,email'
         ]);
-
+        
         $token = Str::random(64);
         DB::table('password_resets')->insert([
             'email'=>$request->email,
@@ -239,52 +224,100 @@ class AuthController extends Controller {
         
         $action_link = route('Reset-pasword',['token'=>$token,'email'=>$request->email]);
         $body = "We are received a request to reset the password for <b>Golf Card </b> account associated with ".$request->email.". You can reset your password by clicking the link below";
-
+        
         Mail::send('email-forgot',['action_link'=>$action_link,'body'=>$body], function($message) use ($request){
             $message->from('imasnurdianto.stu@pnc.ac.id','Imas Nurdianto');
             $message->to($request->email, '')->subject('Reset Password');
         });
-
+        
         return back()->with('resetSuccess', 'Reset Password sudah dikirim ke email anda! silahkan cek email');
     }
     
-
+    
     //fungsi untuk INVOICE
     public function invoice(){
         $data['invoice'] = Invoice::all();
         // $invoice = Invoice::where('id',$id)->first();
         // dd($invoice);
         // if(is_null($invoice)){
-        //     $todaydate = Carbon::today();
-        //     $invoice = new Invoice;
-        //     $invoice->id = $id;
-        //     $invoice->created_at = $todaydate;
-        //     $invoice->status = 1;
-        //     $invoice->save();
-        // }
-        // $order_payments = Order::find($id);
-        // $unique_number = $order_payments->unique_number;
-        // $profile = Profile::where('user_id',$customer_id)->first();
+            //     $todaydate = Carbon::today();
+            //     $invoice = new Invoice;
+            //     $invoice->id = $id;
+            //     $invoice->created_at = $todaydate;
+            //     $invoice->status = 1;
+            //     $invoice->save();
+            // }
+            // $order_payments = Order::find($id);
+            // $unique_number = $order_payments->unique_number;
+            // $profile = Profile::where('user_id',$customer_id)->first();
         // $orderitems = Orderitem::where('order_id',$order_id)->get();
         // $judulhalaman = "Invoice";
         return view('/invoice', $data);
     }
-
+    
     public function scantamu(){
         return view('/scan-tamu');
     }
     public function scantamuberhasil(){
         return view('/scan-tamu-berhasil');
     }
-
+    
     public function order(){
         return view('/order');
     }
-
+    
     public function daftar_admin(){
         return view('/daftar-admin');
     }
     public function tambah_admin(){
         return view('/tambah-admin');
     }
+    
+    public function daftartamu(){
+        $data['visitor'] = Visitor::all()->sortByDesc('created_at');
+
+        
+        return view('/Daftar-tamu', $data);
+    }
+    
+    public function tambahtamu(){
+        
+        return view('/Tambah-tamu');
+    }
+        // public function edittamu(){
+        //     // $data['visitor'] = Visitor::all()->sortByDesc('created_at');
+        //     return view('Edit-tamu');
+        // }
+
+    public function inserttamu(Request $request){
+        // dd($request->all());
+        // $data[Visitor]::create($request->all()); 
+        // return redirect()->route('Daftar-tamu');
+
+        $this->validate($request, [
+            'name'     => 'required',
+            'address'     => 'required',
+            'gender'   => 'required',
+            'email'   => 'required|email',
+            'phone'   => 'required',
+            'company'   => 'required',
+            'position'   => 'required',
+            'tipe_member'   => 'required',
+        ]);
+            $visitors = Visitor::create([
+                'name'      => $request->name,
+                'address'   => $request->address,
+                'gender'    => $request->gender,
+                'email'    => $request->email,
+                'phone'    => $request->phone,
+                'company'    => $request->company,
+                'position'    => $request->position,
+                'tipe_member'    => $request->tipe_member
+            ]);
+            // $visitors->address = $request->alamat;
+            $visitors->save();
+            return redirect('/daftar-tamu')
+            ->with('sukses','Company has been created successfully.');
+    }
+
 }
