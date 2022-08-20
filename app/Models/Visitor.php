@@ -12,6 +12,7 @@ class Visitor extends Model
 
     protected $table = "visitors";
     protected $primarykey = "id";
+    protected $dates = ['deleted_at'];
 
     protected $guarded = [];
     // protected $fillable = [

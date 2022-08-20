@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use App\Models\Invoice;
 use App\Models\Order;
 use Symfony\Component\HttpKernel\Profiler\Profile;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AuthController extends Controller {
 
@@ -274,7 +275,7 @@ class AuthController extends Controller {
     }
     
     public function daftartamu(){
-        $data['visitor'] = DB::table('Visitors')->orderBy('created_at', 'desc')->paginate(20);
+        $data['visitor'] = DB::table('Visitors')->orderBy('created_at', 'desc')->whereNull('deleted_at')->paginate(20);
 
         
         return view('/Daftar-tamu', $data);
@@ -322,5 +323,14 @@ class AuthController extends Controller {
             return redirect('/daftar-tamu')
             ->with('sukses','Company has been created successfully.');
     }
+
+    public function hapus($id)
+{
+    $visitor = Visitor::find($id);
+    $visitor->delete();
+    
+
+    return back();
+}
 
 }
