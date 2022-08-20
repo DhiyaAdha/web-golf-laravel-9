@@ -1,4 +1,4 @@
-@extends('Layouts.Main', ['title' => 'Perpus | Siswa'])
+@extends('Layouts.Main', ['title' => 'TGCC | Analisis Tamu'])
 @section('content')
     <div class="page-wrapper">
         <div class="container-fluid">

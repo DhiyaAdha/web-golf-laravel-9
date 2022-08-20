@@ -46,15 +46,12 @@ Route::get('/daftar-admin', [AuthController::class, 'daftar_admin']);
 
 
 Route::group(['middleware' => ['auth','ceklevel:1']], function() {
-Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
-Route::get('/package-item',[PackageController::class,'item'])->name('package.item');
-
+    Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
+    Route::resource('package', PackageController::class)->except(['show','update']);
 });
 
 Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
-
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
-    // Route::get('/daftar-admin', [AuthController::class, 'daftar-admin'])->name('daftar-admin');
 });
 
 Route::get('/Lupa-pasword', [AuthController::class, 'forgot_password'])->middleware('guest')->name('Lupa-pasword');
@@ -63,19 +60,6 @@ Route::get('/Reset-pasword/{token}',[AuthController::class,'showResetForm'])->na
 Route::post('/Reset-pasword',[AuthController::class,'resetPassword'])->name('Reset-pasword.update');
 
 Route::get('/invoice',[AuthController::class,'invoice'])->name('invoice');
-Route::get('/package-item',[PackageController::class,'item'])->name('package.item');
-
-// //seeder
-// Route::get('/', function(){
-//     $statusmember = Visitor::get(); 
-
-
-//     dd($statusmember);
-// });
-
-// // Analisis Tamu
-// Route::get('/analisis-tamu', [VisitorController::class, 'index'])->name('analisis-tamu');
-// Route::get('/datavisitor', [VisitorController::class, 'store'])->name('datavisitor');
 
 //route untuk invoice
 Route::get('/invoice',[AuthController::class,'invoice'])->name('invoice');

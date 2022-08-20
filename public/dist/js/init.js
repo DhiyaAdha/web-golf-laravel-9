@@ -368,6 +368,62 @@ var boxLayout = function() {
 }
 boxLayout();	
 
+/**Only For Setting Panel Start**/
+var fixedHeader = function() {
+	if($(".setting-panel #switch_3").is(":checked")) {
+		$wrapper.addClass("scrollable-nav");
+	} else {
+		$wrapper.removeClass("scrollable-nav");
+	}
+};
+fixedHeader();	
+$(document).on('change', '.setting-panel #switch_3', function () {
+	fixedHeader();
+	return false;
+});
+
+/*Theme Color Init*/
+$(document).on('click', '.theme-option-wrap > li', function (e) {
+	$(this).addClass('active-theme').siblings().removeClass('active-theme');
+	$wrapper.removeClass (function (index, className) {
+		return (className.match (/(^|\s)theme-\S+/g) || []).join(' ');
+	}).addClass($(this).attr('id')+'-active');
+	return false;	
+});
+
+/*Primary Color Init*/
+var primaryColor = 'input:radio[name="radio-primary-color"]';
+if( $('input:radio[name="radio-primary-color"]').length > 0 ){
+	$(primaryColor)[0].checked = true;
+	$(document).on('click',primaryColor, function (e) {
+		$wrapper.removeClass (function (index, className) {
+			return (className.match (/(^|\s)pimary-color-\S+/g) || []).join(' ');
+		}).addClass($(this).attr('id'));
+		return;
+	});
+}
+
+/*Reset Init*/
+$(document).on('click', '#reset_setting', function (e) {
+	$('.theme-option-wrap > li').removeClass('active-theme').first().addClass('active-theme');
+	$wrapper.removeClass (function (index, className) {
+		return (className.match (/(^|\s)theme-\S+/g) || []).join(' ');
+	}).addClass('theme-1-active');
+	if($(".setting-panel #switch_3").is(":checked"))
+		$('.setting-panel .layout-switcher .switchery').trigger('click');
+		$('#pimary-color-red').trigger('click');
+	return false;	
+});
+
+	
+/*Switchery Init*/
+var elems = Array.prototype.slice.call(document.querySelectorAll('.setting-panel .js-switch'));
+$('.setting-panel .js-switch').each(function() {
+	new Switchery($(this)[0], $(this).data());
+});
+
+/*Only For Setting Panel end*/
+
 /***** Resize function start *****/
 $(window).on("resize", function () {
 	setHeightWidth();
