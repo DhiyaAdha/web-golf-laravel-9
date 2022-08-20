@@ -34,9 +34,15 @@ class DatabaseSeeder extends Seeder
                 60 * 23))->addSeconds(rand(0, 60))
             ]);
 
-            DB::table('package_defaults')->insert([
+            DB::table('packages')->insert([
                 'name' => $faker->word,
-                'price' => $faker->randomFloat(2, 0, 10000)
+                'category' => $faker->randomElement(['default', 'additonal']),
+                'price_weekdays' => $faker->randomFloat(2, 0, 10000),
+                'price_weekend' => $faker->randomFloat(2, 0, 10000),
+                'status' => $faker->randomElement([0, 1]),
+                'created_at' => $faker->dateTimeThisYear(),
+                'updated_at' => \Carbon\Carbon::now()->addMinutes(rand(0,
+                60 * 23))->addSeconds(rand(0, 60))
             ]);
         }
     }
