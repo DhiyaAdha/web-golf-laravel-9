@@ -6,7 +6,7 @@
             <div class="row" style="padding: 25px 25px">
                 <div class="col-sm-12">
                     <div class="panel panel-default card-view">
-                        <div class="panel-heading">
+                        <div class="panel-heding">
 
                             {{-- <div class="clearfix"></div> --}}
                             <div class="row">
@@ -20,7 +20,7 @@
                                    </a>
                                     <a href="{{ route('tambah-tamu') }}">
                                         <i class="fa-2x fa-plus"
-                                        style="border: 0px solid silver; border-radius: 0.25em; padding: 0.5em;"></i>
+                                        ></i>
                                     </a>
                                     <div class="row">
                                         <div class="col-lg-0"></div>
@@ -50,9 +50,8 @@
                                         <table class="table mb-0">
                                             <thead>
                                                 <tr>
-                                                    <th style="text-align: center;">ID</th>
-                                                    <th style="text-align: center;">Nama</th>
-                                                    <th style="text-align: center;">Email</th>
+                                                    <th>Nama</th>
+                                                    <th>Email</th>
                                                     <th style="text-align: center;">Nomer hp</th>
                                                     <th style="text-align: center;">Kategori Tamu</th>
                                                     <th style="text-align: center;">Aksi</th>
@@ -62,16 +61,15 @@
 
                                                 @foreach ($visitor as $item)
                                                 <tr>
-                                                    <td style="text-align: center;">#{{ $item->id }}</td>
-                                                    <td style="text-align: center;">{{ $item->name }}</td>
-                                                    <td style="text-align: center;">{{ $item->email }}</td>
+                                                    <td>{{ $item->name }}</td>
+                                                    <td>{{ $item->email }}</td>
                                                     <td style="text-align: center;">{{ $item->phone }}</td>
                                                     <td style="text-align: center;">
 
                                                         @if($item->tipe_member == 'VVIP')
-                                                            <span class="label label-success">VVIP</span>
+                                                        <span class="label label-vvip">VVIP</span>
                                                         @else
-                                                            <span class="label label-warning">VIP</span>
+                                                        <span class="label label-vip">VIP</span>
                                                         @endif
                                                         
                                                     </td>

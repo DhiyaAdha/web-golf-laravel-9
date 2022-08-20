@@ -21,9 +21,7 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call(UserSeeder::class);
         // $this->call(StatusMember::class);
-
         $faker = Faker::create('id_ID');
-
         for($i = 1; $i <= 500; $i++) {
             DB::table('visitors')->insert([
                 'name' => $faker->name,
