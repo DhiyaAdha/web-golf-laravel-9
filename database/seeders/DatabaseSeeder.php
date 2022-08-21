@@ -18,14 +18,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-        // \App\Models\User::factory(10)->create();
+        
         // $this->call(UserSeeder::class);
-        // $this->call(StatusMember::class);
 
         $faker = Faker::create('id_ID');
 
         for($i = 1; $i <= 100; $i++) {
-
         DB::table('visitors')->insert([
         // 'id' => Visitor::all()->random()->id,
         'name' => $faker->name,

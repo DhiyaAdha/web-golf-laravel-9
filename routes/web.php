@@ -102,4 +102,6 @@ Route::post('/inserttamu',[AuthController::class,'inserttamu'])->name('inserttam
 //Delete Daftar Tamu
 route::get('/daftar-tamu/hapus/{id}', [AuthController::class, 'hapus'])->name('hapus');
 
+route::get('qrcode/{id}', [AuthController::class, 'generate'])->name('generate');
+
 // heloo 

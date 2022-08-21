@@ -76,7 +76,7 @@
                                                         
                                                     </td>
                                                     <td style="text-align: center;">
-                                                        <a href="#"> 
+                                                        <a href="{{ route('generate',$item->id) }}"> 
                                                             <img src="dist/img/Card-Tamu.svg" alt=""
                                                             style="padding: 2px 7px 2px 2px;">
                                                         </a>  
@@ -128,6 +128,9 @@ $('.delete-confirm').on('click', function (event) {
     }).then(function(value) {
         if (value) {
             window.location.href = url;
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
         }
     });
 });
