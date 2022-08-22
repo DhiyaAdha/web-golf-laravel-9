@@ -17,10 +17,10 @@
                                     <h6>Daftar Tamu</h6>
                                 </div>
                                 <div class="col-lg-2" style="text-align: end;">
-                                   <a href="">
+                                <a href="">
                                     <i class="fa-2x zmdi zmdi-fullscreen"
                                         style="border: 0px solid silver; border-radius: 0.25em; padding: 0.5em;"></i>
-                                   </a>
+                                </a>
                                     <a href="{{ route('tambah-tamu') }}">
                                         <i class="fa-2x fa-plus"
                                         ></i>

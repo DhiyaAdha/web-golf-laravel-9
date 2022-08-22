@@ -36,7 +36,7 @@ class AuthController extends Controller {
 
 
 
-    public function dashboard(){
+    public function dashboard() {
         // memanggil data visitor
         $data['visitor'] = DB::table('Visitors')->orderBy('created_at', 'desc')->paginate(10);
         $data['visitor_today'] = Visitor::whereDate('created_at', now()->format('Y-m-d'))->count();
@@ -343,4 +343,10 @@ class AuthController extends Controller {
         $qrcode = QrCode::size(400)->generate($visitor->id);
         return view('qrcode',compact('qrcode'));
     }
+
+    public function riyawatinvoice(){
+
+        return view ('');
+    }
+
 }
