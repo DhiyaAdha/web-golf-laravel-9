@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -109,8 +109,8 @@ class AuthController extends Controller {
         }
 
         public function password_baru(){
-        return view('/Daftar-tamu', $data);
-    }
+        return view('/Reset-pasword');
+        }
 
     public function riwayatinvoice(){
         $data['visitor'] = Visitor::all()->sortByDesc('created_at');
@@ -119,10 +119,6 @@ class AuthController extends Controller {
         return view('/riwayat-invoice', $data);
     }
     
-    public function tambahtamu(){
-        
-        return view('/Tambah-tamu');
-    }
     public function tambahadmin(){
         
         return view('/Tambah-admin');
@@ -132,10 +128,6 @@ class AuthController extends Controller {
         //     return view('Edit-tamu');
         // }
 
-
-    public function password_baru(){
-        return view('/Reset-pasword');
-    }
 
     //ini untuk function login
     public function login(Request $request)
