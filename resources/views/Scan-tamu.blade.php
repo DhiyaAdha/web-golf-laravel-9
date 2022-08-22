@@ -1,10 +1,6 @@
-@extends('Layouts.Main')
+@extends('Layouts.Main', ['title' => 'TGCC | Scan Tamu'])
 
 @section('content')
-    {{-- Script --}}
-    {{-- <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script> --}}
-    {{-- Script --}}
-
     <div class="page-wrapper">
         <div class="container-fluid">
             <div class="row heading-bg">
@@ -33,48 +29,32 @@
                 <div class="col-lg-4">
                     <div style="height: 300px" class="panel panel-default card-view">
                         <h6>Data Pengunjung</h6>
-                        <div id="reader" width="600px" class="mt-10"></div>
-                        <script>
-                            function onScanSuccess(decodedText, decodedResult) {
-                                // handle the scanned code as you like, for example:
-                                // console.log(`Code matched = ${decodedText}`, decodedResult);
-                                $("#result").val(decodedText)
-                            }
-
-                            function onScanFailure(error) {
-                                // handle scan failure, usually better to ignore and keep scanning.
-                                // for example:
-                                console.warn(`Code scan error = ${error}`);
-                            }
-
-                            let html5QrcodeScanner = new Html5QrcodeScanner(
-                                "reader", {
-                                    fps: 10,
-                                    qrbox: {
-                                        width: 250,
-                                        height: 250
-                                    }
-                                },
-                                /* verbose= */
-                                false);
-                            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-                        </script>
-                        {{-- <div class="kotak bg-white mt-10">
+                        <div class="kotak bg-white mt-10">
+                            <div id="reader" width="600px" class=""></div>
                             <div class="gambar-qr">
-                                <img src="/dist/img/qr.png" alt="" width="100px">
-                                <a href="">
-                                    <div class="btn-qr" style="text-align:center;">Scan QR</div>
-                                </a>
+                                <div class="disabled-scan">
+                                    <img src="/dist/img/qr.png" alt="" width="80px">
+                                    <div class="btn-scan mt-10">
+                                        {{-- <button type="button" id="show-scan" style="text-align:center;">Scan QR</button> --}}
+                                        <div class="btn-scan-qr">
+                                            <a href="#" id="show-scan">
+                                                <p>Scan Barcode</p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-4">
-                    <input type="text" id="result" size="50px">
-                </div>
-            </div>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <input type="text" id="result" size="30px">
+        </div>
+    </div>
+    </div>
     </div>
 @endsection

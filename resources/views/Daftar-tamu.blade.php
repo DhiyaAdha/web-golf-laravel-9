@@ -1,3 +1,4 @@
+@extends('Layouts.Main', ['title' => 'TGCC | Daftar Tamu'])
 @extends('Layouts.Main')
 
 @include('sweetalert::alert') 
