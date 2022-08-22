@@ -292,4 +292,7 @@ class AuthController extends Controller {
     public function tambah_admin(){
         return view('/tambah-admin');
     }
+    public function tambahdeposit(){
+        return view('/tambah-deposit');
+    }
 }
