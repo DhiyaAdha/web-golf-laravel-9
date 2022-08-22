@@ -17,7 +17,7 @@ class CreateLogLimitsTable extends Migration
             $table->increments('id');
             $table->integer('visitor_id')->unsigned();
             $table->string('type');
-            $table->string('activities');
+            $table->string('activities' );
 
             $table->timestamp('created_at');
 

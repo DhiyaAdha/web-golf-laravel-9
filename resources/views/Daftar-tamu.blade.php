@@ -1,4 +1,6 @@
 @extends('Layouts.Main')
+
+@include('sweetalert::alert') 
 <div class="page-wrapper">
     <div class="container-fluid">
         <div class="row heading-bg">
@@ -74,7 +76,7 @@
                                                         
                                                     </td>
                                                     <td style="text-align: center;">
-                                                          <a href="#"> 
+                                                        <a href="{{ route('generate',$item->id) }}"> 
                                                             <img src="dist/img/Card-Tamu.svg" alt=""
                                                             style="padding: 2px 7px 2px 2px;">
                                                         </a>  
@@ -82,9 +84,9 @@
                                                             <img src="dist/img/edit.svg" alt=""
                                                             style="padding: 2px 7px 2px 2px;">
                                                         </a>
-                                                        <a href="#">
-                                                            <img src="dist/img/hapus.svg" alt=""
-                                                            style="padding: 2px 7px 2px 2px;">
+                                                        <a href="/daftar-tamu/hapus/{{ $item->id }}" class="delete-confirm">
+                                                            <img src="dist/img/hapus.svg" alt="Hapus"
+                                                            style="padding: 2px 7px 2px 2px;" >
                                                         </a>
                                                         
                                                         
@@ -92,11 +94,11 @@
                                                 </tr>
                                                 
                                                 @endforeach
+                                                    
                                             </tbody>
-
                                             
-
                                         </table>
+                                        {{ $visitor->links() }}
                                     </div>
                                 </div>
                             </div>
@@ -109,3 +111,27 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+<script type="text/javascript">
+
+$('.delete-confirm').on('click', function (event) {
+    event.preventDefault();
+    const url = $(this).attr('href');
+    swal({
+        title: 'Are you sure?',
+        text: 'This record and it`s details will bes deleted!',
+        icon: '{{ asset('warning.png') }}',
+        buttons: ["Cancel", "Yes!"],
+    }).then(function(value) {
+        if (value) {
+            window.location.href = url;
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+        }
+    });
+});
+</script>

@@ -17,21 +17,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
-        // \App\Models\User::factory(10)->create();
-
         $this->call(UserSeeder::class);
-        $this->call(StatusMember::class);
 
         $faker = Faker::create('id_ID');
 
         for($i = 1; $i <= 100; $i++) {
-
         DB::table('visitors')->insert([
         // 'id' => Visitor::all()->random()->id,
         'name' => $faker->name,
         'email' => preg_replace('/@example\..*/', '@example.com', $faker->unique()->safeEmail),
         'phone' => $faker->phoneNumber,
+        'address' => $faker->address(),
         'gender' => $faker->randomElement(['laki-laki', 'perempuan']),
         'tipe_member' => $faker->randomElement(['VIP', 'VVIP']),
         'created_at' => $faker->dateTimeThisYear(),
@@ -41,8 +37,6 @@ class DatabaseSeeder extends Seeder
         60 * 23))->addSeconds(rand(0, 60))
         ]);
         
-
-
         // 'id', 'name', 'gender', 'tipe_member'
         }
     }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePackageAdditionalsTable extends Migration
+class CreatePackagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,15 @@ class CreatePackageAdditionalsTable extends Migration
      */
     public function up()
     {
-        Schema::create('package_additionals', function (Blueprint $table) {
+        Schema::create('packages', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('price');
+            $table->string('category');
+            $table->integer('price_weekdays');
+            $table->integer('price_weekend');
+            $table->integer('status');
+            $table->timestamps();
+
         });
     }
 
@@ -27,6 +32,6 @@ class CreatePackageAdditionalsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('package_additionals');
+        Schema::dropIfExists('packages');
     }
 }
