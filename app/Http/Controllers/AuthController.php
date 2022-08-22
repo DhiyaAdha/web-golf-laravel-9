@@ -32,6 +32,7 @@ class AuthController extends Controller {
 
     public function forgot_password(){
             return view('/Lupa-pasword');
+
         }
 
 
@@ -111,22 +112,6 @@ class AuthController extends Controller {
         public function password_baru(){
         return view('/Reset-pasword');
         }
-
-    public function riwayatinvoice(){
-        $data['visitor'] = Visitor::all()->sortByDesc('created_at');
-
-        
-        return view('/riwayat-invoice', $data);
-    }
-    
-    public function tambahadmin(){
-        
-        return view('/Tambah-admin');
-    }
-        // public function edittamu(){
-        //     // $data['visitor'] = Visitor::all()->sortByDesc('created_at');
-        //     return view('Edit-tamu');
-        // }
 
 
     //ini untuk function login
@@ -291,15 +276,17 @@ class AuthController extends Controller {
         return view('/daftar-admin');
     }
 
+
     public function tambah_admin(){
         return view('/tambah-admin');
     }
     
     public function daftartamu(){
-        $data['visitor'] = DB::table('Visitors')->orderBy('created_at', 'desc')->whereNull('deleted_at')->paginate(20);
+        $data = DB::table('Visitors')->orderBy('created_at', 'desc')->whereNull('deleted_at')->paginate(20);
 
         
-        return view('/Daftar-tamu', $data);
+        // return view('/Daftar-tamu', $data);
+        return response()->json($data);
     }
     
     public function tambahtamu(){

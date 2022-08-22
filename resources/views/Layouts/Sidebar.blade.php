@@ -61,7 +61,7 @@
             <i class="zmdi zmdi-more"></i>
         </li>
         <li>
-            <a class="{{ Request::is('package-item') ? 'active' : '' }}" href="{{ route('package.item')}}">
+            <a class="{{ Request::is('package') ? 'active' : '' }}" href="{{ route('package.index')}}">
                 <div class="pull-left">
                     <i class="zmdi zmdi-smartphone-setup mr-20"></i>
                     <span class="right-nav-text">Paket Bermain</span>

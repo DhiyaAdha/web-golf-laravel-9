@@ -2,7 +2,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" href="{{ asset('tgcc144.PNG') }}" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>TGCC</title>
+    <title>{{ $title ?? 'TGCC' }}</title>
     <meta name="description" content="Aplikasi TGCC Member" />
     <meta name="author" content="tgcc" />
 
@@ -45,5 +45,8 @@
 
     {{-- HTML5-QRCODE --}}
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+    {{-- Bootstrap --}}
+
 </head>
 
