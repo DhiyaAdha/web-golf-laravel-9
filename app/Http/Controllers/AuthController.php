@@ -289,6 +289,14 @@ class AuthController extends Controller {
         
         return view('/Tambah-tamu');
     }
+    public function edittamu(){
+        
+        return view('/edit-tamu');
+    }
+    public function edit_admin(){
+        
+        return view('/edit-admin');
+    }
         // public function edittamu(){
         //     // $data['visitor'] = Visitor::all()->sortByDesc('created_at');
         //     return view('Edit-tamu');

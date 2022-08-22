@@ -42,6 +42,7 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
 Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
 Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
 Route::get('/tambah-admin', [AuthController::class, 'tambah_admin'])->name('tambah-admin');
+Route::get('/edit-admin', [AuthController::class, 'edit_admin'])->name('edit-admin');
 });
 
 
@@ -49,7 +50,7 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
 Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
 Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
 Route::get('/tambah-admin', [AuthController::class, 'tambah_admin'])->name('tambah-admin');
-
+Route::get('/edit-tamu',[AuthController::class,'edittamu'])->name('edit-tamu');
 });
 
 // Route::get('/scan-tamu', function () {
@@ -99,7 +100,10 @@ Route::get('/daftar-tamu',[AuthController::class,'daftartamu'])->name('daftar-ta
 Route::get('/tambah-tamu',[AuthController::class,'tambahtamu'])->name('tambah-tamu');
 Route::post('/inserttamu',[AuthController::class,'inserttamu'])->name('inserttamu');
 
+
 //Delete Daftar Tamu
 route::get('/daftar-tamu/hapus/{id}', [AuthController::class, 'hapus'])->name('hapus');
 
 route::get('qrcode/{id}', [AuthController::class, 'generate'])->name('generate');
+
+route::get('/daftar-admin/hapus/{id}', [AuthController::class, 'hapus'])->name('hapus');
