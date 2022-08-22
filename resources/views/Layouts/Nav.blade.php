@@ -18,7 +18,7 @@
         <ul class="nav navbar-right top-nav pull-right">
             <li class="dropdown auth-drp">
                 <a href="#" class="dropdown-toggle pr-0"
-                    data-toggle="dropdown"><span>{{ auth()->user()->name }}</span></a>
+                    data-toggle="dropdown"><span><strong>{{ auth()->user()->name }}</strong></span></a>
                 <ul class="dropdown-menu user-auth-dropdown" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
                     <li>
                         <a href="/logout"><i class="zmdi zmdi-power"></i><span>Log Out</span></a>
