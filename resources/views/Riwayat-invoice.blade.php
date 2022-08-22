@@ -28,12 +28,24 @@
                                 </div>
                                 <div class="col-lg-2" style="text-align: end;">
                                   
-                                    <form role="search" method="GET">
-                                        <div class="form-group">
-                                            <input type="hidden" name="_token" value="{{csrf_token()}}">
-                                            <input type="text" class="form-control" name="q" placeholder="Search">
+                                    <div class="row">
+                                        <div class="col-lg-0"></div>
+                                        <div class="col-lg-4">
+                                            <div class="boxcontainer">
+                                                <table class="elementcontainer">
+                                                    <tr>
+                                                        <td>
+                                                            <input type="text" placeholder="search" class="search">
+                                                        </td>
+                                                        <td>
+                                                            <a href="#"><i
+                                                                    class="fa-solid fa-magnifying-glass"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
