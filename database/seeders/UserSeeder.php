@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'name' => 'dhany',
             'phone'=> '087736202888',
             'password' => Hash::make('tes'),
-            'role_id' => '2',
+            'role_id' => '1',
             // 'status' => 'active',
 
         ]);

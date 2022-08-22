@@ -97,4 +97,9 @@ Route::get('/order',[AuthController::class,'order'])->name('order');
 
 Route::get('/daftar-tamu',[AuthController::class,'daftartamu'])->name('daftar-tamu');
 Route::get('/tambah-tamu',[AuthController::class,'tambahtamu'])->name('tambah-tamu');
-Route::get('/tambah-deposit',[AuthController::class,'tambahdeposit'])->name('tambah-deposit');
+Route::post('/inserttamu',[AuthController::class,'inserttamu'])->name('inserttamu');
+
+//Delete Daftar Tamu
+route::get('/daftar-tamu/hapus/{id}', [AuthController::class, 'hapus'])->name('hapus');
+
+route::get('qrcode/{id}', [AuthController::class, 'generate'])->name('generate');

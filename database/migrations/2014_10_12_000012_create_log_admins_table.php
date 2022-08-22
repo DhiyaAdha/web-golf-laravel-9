@@ -18,17 +18,8 @@ class CreateLogAdminsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('type');
             $table->string('activities');
-            
             $table->timestamps();
-            // $table->integer('user_id');
-            // $table->integer('user_id')->unsigned();
-            // $table->foreign('user_id')->reference('id')->on('users');
-            // $table->foreign('user_id')->references('id')->on('users');
-            
-            
-            // $table->foreignId('user_id')->constrained();
-            // $table->foreignId('user_id')->unique();
-            // $table->foreign('user_id')->references('id')->on('users');
+
         });
 
         Schema::table('log_admins', function($table) {
