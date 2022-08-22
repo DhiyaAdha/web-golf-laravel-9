@@ -19,11 +19,10 @@ class DatabaseSeeder extends Seeder
     {
 
         
-        // $this->call(UserSeeder::class);
+        $this->call(UserSeeder::class);
 
         $faker = Faker::create('id_ID');
-
-        for($i = 1; $i <= 100; $i++) {
+        for($i = 1; $i <= 200; $i++) {
         DB::table('visitors')->insert([
         // 'id' => Visitor::all()->random()->id,
         'name' => $faker->name,

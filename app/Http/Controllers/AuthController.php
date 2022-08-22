@@ -37,7 +37,7 @@ class AuthController extends Controller {
 
         public function dashboard(){
             // memanggil data visitor
-            $data['visitor'] = DB::table('Visitors')->orderBy('created_at', 'desc')->paginate(10);
+            $data['visitor'] = DB::table('Visitors')->orderBy('created_at', 'desc')->paginate(20);
             $data['visitor_today'] = Visitor::whereDate('created_at', now()->format('Y-m-d'))->count();
             $data['visitor_week'] = Visitor::whereBetween('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY), Carbon::now()->endOfWeek(Carbon::SATURDAY)])->get()->count();
             $data['visitor_month'] = Visitor::whereMonth('created_at', now()->month)->count(); //bulan ini  
@@ -108,11 +108,9 @@ class AuthController extends Controller {
             return view('/Analisis-tamu', $data);
         }
 
-        
-        
         public function password_baru(){
             return view('/Reset-pasword');
-    }
+        }
 
     //ini untuk function login
     public function login(Request $request)
@@ -176,6 +174,7 @@ class AuthController extends Controller {
     //     // return response()->json($respon, 200);
     //     return redirect()->intended('/login');
     // }
+
     public function logout (Request $request) {
         Auth::logout();
         $request->session()->invalidate();

@@ -72,6 +72,8 @@ Route::post('/Lupa-pasword',[AuthController::class,'sendresetlink'])->name('Lupa
 Route::get('/Reset-pasword/{token}',[AuthController::class,'showResetForm'])->name('Reset-pasword');
 Route::post('/Reset-pasword',[AuthController::class,'resetPassword'])->name('Reset-pasword.update');
 
+
+
 Route::get('/invoice',[AuthController::class,'invoice'])->name('invoice');
 Route::get('/package-item',[PackageController::class,'item'])->name('package.item');
 
