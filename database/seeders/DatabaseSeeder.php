@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call(UserSeeder::class);
         $faker = Faker::create('id_ID');
-        for($i = 1; $i <= 500; $i++) {
+        for($i = 1; $i <= 300; $i++) {
             DB::table('visitors')->insert([
                 'name' => $faker->name,
                 'email' => preg_replace('/@example\..*/', '@example.com', $faker->unique()->safeEmail),
@@ -35,7 +35,6 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => \Carbon\Carbon::now()->addMinutes(rand(0,
                 60 * 23))->addSeconds(rand(0, 60))
             ]);
-
             DB::table('packages')->insert([
                 'name' => $faker->word,
                 'category' => $faker->randomElement(['default', 'additonal']),
@@ -46,7 +45,6 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => \Carbon\Carbon::now()->addMinutes(rand(0,
                 60 * 23))->addSeconds(rand(0, 60))
             ]);
-
         }
     }
 }
