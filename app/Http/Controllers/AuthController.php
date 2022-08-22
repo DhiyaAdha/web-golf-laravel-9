@@ -282,11 +282,11 @@ class AuthController extends Controller {
     }
     
     public function daftartamu(){
-        $data = DB::table('Visitors')->orderBy('created_at', 'desc')->whereNull('deleted_at')->paginate(20);
+        $data['visitor'] = DB::table('Visitors')->orderBy('created_at', 'desc')->whereNull('deleted_at')->paginate(20);
 
         
-        // return view('/Daftar-tamu', $data);
-        return response()->json($data);
+        return view('/Daftar-tamu', $data);
+        // return response()->json($data);
     }
     
     public function tambahtamu(){
@@ -344,6 +344,13 @@ class AuthController extends Controller {
         $visitor = Visitor::findOrFail($id);
         $qrcode = QrCode::size(400)->generate($visitor->id);
         return view('qrcode',compact('qrcode'));
+    }
+
+    public function riwayatinvoice(){
+        $data['visitor'] = Visitor::all()->sortByDesc('created_at');
+
+        
+        return view('/riwayat-invoice', $data);
     }
 
 }
