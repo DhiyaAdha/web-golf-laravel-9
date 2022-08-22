@@ -91,6 +91,13 @@
     margin: auto;
 }
 
+.dataTables_wrapper .dataTables_filter input {
+    padding: 15px !important;
+}
+.dataTables_wrapper .dataTables_filter {
+    padding: 0px !important;
+}
+
 .table-td {
     padding-bottom: 0px !important;
 }

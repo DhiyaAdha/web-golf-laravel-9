@@ -27,15 +27,14 @@ Route::get('/', function () {
         return redirect('/dashboard');
     }    
     return view('Login');
-    });
+});
 
-    //untuk route login
+//untuk route login
 Route::get('/login', [AuthController::class, 'index'])->Middleware('guest')->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
 //untuk route logout
 Route::get('/logout', [AuthController::class, 'logout']);
-
 
 //Start level admin dan superadmin
 Route::group(['middleware' => ['auth','ceklevel:1']], function() {
@@ -46,9 +45,10 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
     Route::get('/scan-tamu',[AuthController::class,'scantamu'])->name('scan-tamu');
     Route::get('/scan-tamu-berhasil',[AuthController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
     Route::get('/order',[AuthController::class,'order'])->name('order');
-    Route::get('/package-item',[PackageController::class,'item'])->name('package.item');
+    Route::resource('package', PackageController::class)->except(['show','update']);
     Route::get('/daftar-tamu',[AuthController::class,'daftartamu'])->name('daftar-tamu');
     Route::get('/tambah-tamu',[AuthController::class,'tambahtamu'])->name('tambah-tamu');
+    Route::get('/tambah-admin',[AuthController::class,'tambahadmin'])->name('tambah-admin');
     Route::get('/riwayat-invoice',[AuthController::class,'riwayatinvoice'])->name('riwayat-invoice');
 
 });
@@ -60,13 +60,11 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::get('/scan-tamu',[AuthController::class,'scantamu'])->name('scan-tamu');
     Route::get('/scan-tamu-berhasil',[AuthController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
     Route::get('/order',[AuthController::class,'order'])->name('order');
-
     Route::get('/daftar-tamu',[AuthController::class,'daftartamu'])->name('daftar-tamu');
     Route::get('/tambah-tamu',[AuthController::class,'tambahtamu'])->name('tambah-tamu');
     Route::get('/riwayat-invoice',[AuthController::class,'riwayatinvoice'])->name('riwayat-invoice');
+    Route::get('/tambah-admin',[AuthController::class,'tambahadmin'])->name('tambah-admin');
 });
-
-//Finish level admin dan superadmin
 
 Route::get('/Lupa-pasword', [AuthController::class, 'forgot_password'])->middleware('guest')->name('Lupa-pasword');
 Route::post('/Lupa-pasword',[AuthController::class,'sendresetlink'])->name('Lupa-pasword.link');

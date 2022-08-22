@@ -49,17 +49,75 @@
 <script src="dist/js/dashboard-data.js"></script>
 <script src="dist/js/dashboard3-data.js"></script>
 
-{{-- <script src="{{ asset('/sw.js') }}"></script> --}}
+{{-- Font Awesome --}}
+<script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
+
+<script src="{{ asset('/sw.js') }}"></script>
 <script>
-    $('#check_box_value').text($("#check_box_switch").bootstrapSwitch('state'));
-    $('#check_box_switch').on('switchChange.bootstrapSwitch', function() {
-        $("#check_box_value").text($('#check_box_switch').bootstrapSwitch('state'));
+    if (!navigator.serviceWorker.controller) {
+        navigator.serviceWorker.register("/sw.js").then(function (reg) {
+            console.log("Service worker has been registered for scope: " + reg.scope);
+        });
+    }
+    $('.js-switch-1').each(function() {
+        new Switchery($(this)[0], $(this).data());
     });
-    // if (!navigator.serviceWorker.controller) {
-    //     navigator.serviceWorker.register("/sw.js").then(function (reg) {
-    //         console.log("Service worker has been registered for scope: " + reg.scope);
-    //     });
-    // }
+    $('#dt-package').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "lengthChange": false,
+        "searching": true,
+        "paginate": {
+            "first":      "First",
+            "last":       "Last",
+            "next":       "Next",
+            "previous":   "Previous"
+        },
+        "ajax" : {
+            "url" : "{{ route('package.index') }}",
+            "type" : "GET",
+            "datatype" : "json"
+        },
+        "columns" : [
+            { "data": function(data) { return data.name }},
+            { "data": function(data) { return data.name }},
+            { "data": function(data) { 
+                return `<div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">Rp</div>
+                                <label class="form-control">${data.price}</label>
+                            </div>
+                        </div>`;  
+            }},
+            { "data": function(data) { 
+                return `<div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">Rp</div>
+                                <label class="form-control">${data.price}</label>
+                            </div>
+                        </div>`; 
+            }},
+            { "data": function(data) { 
+                return `<input type="checkbox" checked class="js-switch js-switch-1"  data-color="#01c853" />`;  
+            }},
+            { "data": "action"},
+        ],
+        order: [],
+        responsive: true,
+        language: {
+            search: "",
+            searchPlaceholder: "Cari",
+            emptyTable: "Tidak ada data yang sesuai",
+            info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+            infoFiltered: "(difilter dari _MAX_ total data)",
+            infoEmpty: "Tidak ada data yang sesuai",
+            lengthMenu: "Menampilkan _MENU_ data",
+            zeroRecords: "Tidak ada data yang sesuai"
+        },
+        columnDefs: [
+            { orderable: false, targets: [0, 1, 2, 3, 4, 5,] },
+        ],
+    });
 
     $(document).on("click", "#show-scan", function() {
         $(".disabled-scan").css("display", "none");

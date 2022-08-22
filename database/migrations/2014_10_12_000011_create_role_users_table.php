@@ -17,7 +17,7 @@ class CreateRoleUsersTable extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('role_id');
 
-            $table->primary(['user_id', 'role_id']);
+            $table->primary(['user_id']);
         });
     }
 
