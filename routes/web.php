@@ -8,6 +8,7 @@ use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ResetPasswordController;
 use GuzzleHttp\Middleware;
 
@@ -40,7 +41,7 @@ Route::get('/logout', [AuthController::class, 'logout']);
 Route::group(['middleware' => ['auth','ceklevel:1']], function() {
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
     Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
-    Route::get('/invoice',[AuthController::class,'invoice'])->name('invoice');
+    Route::get('/invoice',[InvoiceController::class,'invoice'])->name('invoice');
     Route::get('/package-item',[PackageController::class,'item'])->name('package.item');
     Route::get('/scan-tamu',[AuthController::class,'scantamu'])->name('scan-tamu');
     Route::get('/scan-tamu-berhasil',[AuthController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
@@ -53,14 +54,15 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
     //Delete Daftar Tamu
     route::get('/daftar-tamu/hapus/{id}', [AuthController::class, 'hapus'])->name('hapus');
     Route::get('/tambah-admin',[AuthController::class,'tambahadmin'])->name('tambah-admin');
-    Route::get('/riwayat-invoice',[AuthController::class,'riwayatinvoice'])->name('riwayat-invoice');
+    
+    Route::get('/riwayat-invoice',[InvoiceController::class,'riwayatinvoice'])->name('riwayat-invoice');
 
 });
 
 //Level admin dan superadmin
 Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
-    Route::get('/invoice',[AuthController::class,'invoice'])->name('invoice');
+    Route::get('/invoice',[InvoiceController::class,'invoice'])->name('invoice');
     Route::get('/package-item',[PackageController::class,'item'])->name('package.item');
     Route::get('/scan-tamu',[AuthController::class,'scantamu'])->name('scan-tamu');
     Route::get('/scan-tamu-berhasil',[AuthController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
@@ -71,7 +73,7 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     route::get('qrcode/{id}', [AuthController::class, 'generate'])->name('generate');
     //Delete Daftar Tamu
     route::get('/daftar-tamu/hapus/{id}', [AuthController::class, 'hapus'])->name('hapus');
-    Route::get('/riwayat-invoice',[AuthController::class,'riwayatinvoice'])->name('riwayat-invoice');
+    Route::get('/riwayat-invoice',[InvoiceController::class,'riwayatinvoice'])->name('riwayat-invoice');
     Route::get('/tambah-admin',[AuthController::class,'tambahadmin'])->name('tambah-admin');
 });
 
