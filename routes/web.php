@@ -39,20 +39,18 @@ Route::get('/logout', [AuthController::class, 'logout']);
 //Start level admin dan superadmin
 Route::group(['middleware' => ['auth','ceklevel:1']], function() {
 
-    Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
-    Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
-    Route::get('/invoice',[AuthController::class,'invoice'])->name('invoice');
-    Route::get('/package-item',[PackageController::class,'item'])->name('package.item');
-    Route::get('/scan-tamu',[AuthController::class,'scantamu'])->name('scan-tamu');
-    Route::get('/scan-tamu-berhasil',[AuthController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
-    Route::get('/order',[AuthController::class,'order'])->name('order');
-    Route::resource('package', PackageController::class)->except(['show','update']);
-    Route::get('/daftar-tamu',[AuthController::class,'daftartamu'])->name('daftar-tamu');
-    Route::get('/tambah-tamu',[AuthController::class,'tambahtamu'])->name('tambah-tamu');
-    Route::get('/tambah-admin',[AuthController::class,'tambahadmin'])->name('tambah-admin');
-    Route::get('/riwayat-invoice',[AuthController::class,'riwayatinvoice'])->name('riwayat-invoice');
+Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
+Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
+Route::get('/tambah-admin', [AuthController::class, 'tambah_admin'])->name('tambah-admin');
+Route::get('/edit-admin', [AuthController::class, 'edit_admin'])->name('edit-admin');
+});
 
 
+Route::group(['middleware' => ['auth','ceklevel:1']], function() {
+Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
+Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
+Route::get('/tambah-admin', [AuthController::class, 'tambah_admin'])->name('tambah-admin');
+Route::get('/edit-tamu',[AuthController::class,'edittamu'])->name('edit-tamu');
 });
 
 Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
