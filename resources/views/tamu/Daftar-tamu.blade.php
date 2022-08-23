@@ -92,7 +92,7 @@
                                                                 <img src="dist/img/Card-Tamu.svg" alt=""
                                                                     style="padding: 2px 7px 2px 2px;">
                                                             </a>
-                                                            <a href="#">
+                                                            <a href="/edit-tamu">
                                                                 <img src="dist/img/edit.svg" alt=""
                                                                     style="padding: 2px 7px 2px 2px;">
                                                             </a>
