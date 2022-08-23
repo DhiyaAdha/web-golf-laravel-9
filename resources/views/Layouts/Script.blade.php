@@ -62,6 +62,7 @@
     $('.js-switch-1').each(function() {
         new Switchery($(this)[0], $(this).data());
     });
+    
     $('#dt-package').DataTable({
         "processing": true,
         "serverSide": true,
@@ -80,12 +81,12 @@
         },
         "columns" : [
             { "data": function(data) { return data.name }},
-            { "data": function(data) { return data.name }},
+            { "data": function(data) { return data.category }},
             { "data": function(data) { 
                 return `<div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-addon">Rp</div>
-                                <label class="form-control">${data.price}</label>
+                                <label class="form-control">${data.price_weekdays}</label>
                             </div>
                         </div>`;  
             }},
@@ -93,12 +94,16 @@
                 return `<div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-addon">Rp</div>
-                                <label class="form-control">${data.price}</label>
+                                <label class="form-control">${data.price_weekend}</label>
                             </div>
                         </div>`; 
             }},
             { "data": function(data) { 
-                return `<input type="checkbox" checked class="js-switch js-switch-1"  data-color="#01c853" />`;  
+                if(data.status == 0) {
+                    return `<input type="checkbox" checked class="js-switch js-switch-1"  data-color="#01c853" />`;  
+                } else {
+                    return `<input type="checkbox" class="js-switch js-switch-1"  data-color="#01c853" />`;  
+                }
             }},
             { "data": "action"},
         ],

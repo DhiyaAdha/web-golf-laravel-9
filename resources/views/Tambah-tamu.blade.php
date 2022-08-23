@@ -22,24 +22,26 @@
                         <h6 class="control-label mb-10">Tambah Tamu</h6>
                             <div class="panel-body">
                                 <div class="form-wrap">
-                                    <form action="/tambah-tamu" method="post">
+                                    {{-- Insert Tamu --}}
+                                    <form action="/inserttamu" method="POST" enctype="multipart/form-data">
+                                        @csrf
                                         <div class="form-group">
                                             <label class="control-label mb-10" for="">Nama Lengkap</label>
-                                            <input type="text" class="form-control" id="result" size="50px" placeholder="Masukan Nama" required autofocus>
+                                            <input type="text" name="name" class="form-control" id="name" size="50px" placeholder="Masukan Nama" required autofocus>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label mb-10" for="">Alamat</label>
-                                            <input type="text" class="form-control" id="result" size="50px" placeholder="Masukan Alamat" required autofocus>
+                                            <label class="control-label mb-10" for="address">Alamat</label>
+                                            <input type="text" class="form-control" name="address" id="address" size="50px" placeholder="Masukan Alamat" required autofocus>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label mb-10" for="">Jenis Kelamin</label>
+                                            <label class="control-label mb-10" for="gender">Jenis Kelamin</label>
                                             <div class="form-check">
                                                 <label class="radio-inline">
-                                                    <input type="radio" name="survey" id="Radios1" value="Yes">Pria
-                                                  </label>
-                                                  <label class="radio-inline">
-                                                    <input type="radio" name="survey" id="Radios2" value="No">Wanita
-                                                  </label> 
+                                                    <input type="radio" name="gender" id="gender" value="laki-laki">Pria
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="gender" id="gender" value="perempuan">Wanita
+                                                </label> 
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -53,20 +55,21 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label mb-10" for="">Nomer Hp</label>
-                                            <input type="number" class="form-control" id="result" size="50px" placeholder="Masukan Nomer Hp" required autofocus>
+                                            <input type="number" name="phone" class="form-control" id="phone" size="50px" placeholder="Masukan Nomer Hp" required autofocus>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label mb-10" for="">Perusahaan</label>
-                                            <input type="text" class="form-control" id="result" size="50px" placeholder="Masukan Nama Perusahaan" required autofocus>
+                                            <input type="text" name="company" class="form-control" id="company" size="50px" placeholder="Masukan Nama Perusahaan" required autofocus>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label mb-10" for="">Jabatan</label>
-                                            <input type="text" class="form-control" id="result" size="50px" placeholder="Masukan Jabatan" required autofocus>
+                                            <input type="text" name="position" class="form-control" id="position" size="50px" placeholder="Masukan Jabatan" required autofocus>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label mb-10" for="">Tamu Ini Adalah Tamu VIP
                                             <div class="switch">
-                                                <input id="cmn-toggle-4" class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
+                                                <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" value="VVIP" name="tipe_member">
+                                                <input id="cmn-toggle-4"  class="cmn-toggle cmn-toggle-round-flat" name="tipe_member" type="checkbox" value="VIP">
                                                 <label for="cmn-toggle-4"></label>
                                             </div>
                                         </div>
@@ -78,12 +81,9 @@
                             <!-- /Basic Table -->   
                     </div>
                 </div>
-               
-            </div>
-           
+            </div>  
         </div>
     </div>
 @endsection
-<script>
-    
+<script>    
 </script>
