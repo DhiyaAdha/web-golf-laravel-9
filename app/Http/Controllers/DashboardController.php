@@ -12,7 +12,7 @@ class DashboardController extends Controller
     //
     public function dashboard(){
         // memanggil data visitor
-        $data['visitor'] = DB::table('Visitors')->orderBy('created_at', 'desc')->paginate(10);
+        $data['visitor'] = DB::table('visitors')->orderBy('created_at', 'desc')->paginate(10);
         $data['visitor_today'] = Visitor::whereDate('created_at', now()->format('Y-m-d'))->count();
         $data['visitor_week'] = Visitor::whereBetween('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY), Carbon::now()->endOfWeek(Carbon::SATURDAY)])->get()->count();
         $data['visitor_month'] = Visitor::whereMonth('created_at', now()->month)->count(); //bulan ini  
@@ -83,6 +83,6 @@ class DashboardController extends Controller
         $data['vvip_min'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(6)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
         $data['vip_min'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(6)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
 
-        return view('/Analisis-tamu', $data);
+        return view('/analisis-tamu', $data);
     }
 }

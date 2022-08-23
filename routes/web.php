@@ -47,7 +47,6 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
 
     Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
     Route::get('/invoice',[InvoiceController::class,'invoice'])->name('invoice');
-    Route::get('/package-item',[PackageController::class,'item'])->name('package.item');
     Route::get('/scan-tamu',[ScanController::class,'scantamu'])->name('scan-tamu');
     Route::get('/scan-tamu-berhasil',[ScanController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
     Route::get('/order',[AuthController::class,'order'])->name('order');
@@ -83,7 +82,6 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware('auth');
     Route::get('/invoice',[InvoiceController::class,'invoice'])->name('invoice');
 
-    Route::get('/package-item',[PackageController::class,'item'])->name('package.item');
     Route::get('/scan-tamu',[ScanController::class,'scantamu'])->name('scan-tamu');
     Route::get('/scan-tamu-berhasil',[ScanController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
     Route::get('/order',[AuthController::class,'order'])->name('order');

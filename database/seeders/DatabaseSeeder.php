@@ -38,8 +38,8 @@ class DatabaseSeeder extends Seeder
             DB::table('packages')->insert([
                 'name' => $faker->word,
                 'category' => $faker->randomElement(['default', 'additonal']),
-                'price_weekdays' => $faker->randomFloat(2, 0, 10000),
-                'price_weekend' => $faker->randomFloat(2, 0, 10000),
+                'price_weekdays' => $faker->randomDigit,
+                'price_weekend' => $faker->randomDigit,
                 'status' => $faker->randomElement([0, 1]),
                 'created_at' => $faker->dateTimeThisYear(),
                 'updated_at' => \Carbon\Carbon::now()->addMinutes(rand(0,
