@@ -23,7 +23,7 @@
             </a>
         </li>
         <li>
-            <a class="{{ Request::is('daftar-tamu') ? 'active' : '' }}" href="/tamu/daftar-tamu">
+            <a class="{{ Request::is('daftar-tamu') ? 'active' : '' }}" href="/daftar-tamu">
             {{-- <a class="{{ Request::is('Daftar-tamu') ? 'active' : '' }}" href="/daftar-tamu" > --}}
                 <div class="pull-left">
                     <i class="fa fa-user mr-20"></i>
@@ -41,7 +41,7 @@
                     <span class="right-nav-text">Daftar Admin</span>
                 </div>
                 <div class="clearfix"></div>
-            </a>
+            </a>`
         </li>
         @endif
         <li>
