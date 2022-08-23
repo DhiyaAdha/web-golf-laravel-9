@@ -22,6 +22,7 @@
                         <h6 class="control-label mb-10">Tambah Tamu</h6>
                             <div class="panel-body">
                                 <div class="form-wrap">
+                                    {{-- Insert Tamu --}}
                                     <form action="/inserttamu" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-group">

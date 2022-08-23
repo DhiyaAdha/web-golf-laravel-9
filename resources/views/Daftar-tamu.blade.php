@@ -1,29 +1,42 @@
 @extends('Layouts.Main', ['title' => 'TGCC | Daftar Tamu'])
 @include('sweetalert::alert') 
+
 <div class="page-wrapper">
     <div class="container-fluid">
         <div class="row heading-bg">
-            @include('Layouts.Breadcrumb')
+            <div class="row">
+                <div class="container-fluid">
+                    <div class="col-lg-8">
+                        <h5>Daftar-Tamu</h5>
+                    </div>
+                    <div class="col-lg-4 col-sm-8 col-md-8 col-xs-12">
+                        <ol class="breadcrumb">
+                            <li><a href="javascript:void(0)">Dashboard</a></li>
+                            <li class="active"><span>Daftar-Tamu</span></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
             <div class="row" style="padding: 25px 25px">
                 <div class="col-sm-12">
                     <div class="panel panel-default card-view">
                         <div class="panel-heding">
-
                             {{-- <div class="clearfix"></div> --}}
                             <div class="row">
                                 <div class="col-lg-10">
                                     <h6>Daftar Tamu</h6>
                                 </div>
                                 <div class="col-lg-2" style="text-align: end;">
-                                   <a href="">
-                                    <i class="fa-2x zmdi zmdi-fullscreen"
-                                        style="border: 0px solid silver; border-radius: 0.25em; padding: 0.5em;"></i>
-                                   </a>
-                                    <a href="{{ route('tambah-tamu') }}">
-                                        <i class="fa-2x fa-plus"
-                                        ></i>
+                                    <a href="">
+                                        <i class="fa-2x zmdi zmdi-fullscreen"
+                                            style="border: 0px solid silver; border-radius: 0.25em; padding: 0.5em;"></i>
                                     </a>
-                                    <div class="row">
+                                        <a href="{{ route('tambah-tamu') }}">
+                                            <i class="fa-2x fa-plus"
+                                            ></i>
+                                        </a>
+                                <div class="row">
                                         <div class="col-lg-0"></div>
                                         <div class="col-lg-4">
                                             <div class="boxcontainer">
@@ -44,6 +57,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
                                 <div class="table-wrap mt-40">
