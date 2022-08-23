@@ -102,7 +102,16 @@
                                 <h6 class="panel-title txt-dark">Statistika Tamu Berkunjung</h6>
                             </div>
                             <div class="pull-right">
+                                <select name="period" class="pl-10 text-base sm:text-sm mt-1 form-select block w-full text-gray-500 focus:bg-gray-100">
+                                    <option value="">{{ __('Pilih Tahun') }}</option>
+                                    @foreach(\Carbon\CarbonPeriod::create(now(), '1 year', now()->addYears(3)) as $date)
+                                        <option value="{{ $date->format('Y') }}" {{ $date->format('Y') == request()->query('period') ? 'selected' : '' }}>
+                                            {{ $date->format('Y') }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
+
                             <div class="clearfix"></div>
                         </div>
                         <div class="panel-wrapper collapse in">
@@ -110,21 +119,23 @@
                                 <div id="morris_extra_line_chart" class="morris-chart" style="height:293px;"></div>
                                 <ul class="flex-stat mt-40">
                                     <li>
-                                        <span class="block">Tamu Mingguan</span>
-                                        <span class="block txt-dark weight-500 font-18"><span
-                                                class="counter-anim">{{ $visitor_week }}</span></span>
-                                    </li>
-                                    <li>
-                                        <span class="block">Tamu Bulanan</span>
-                                        <span class="block txt-dark weight-500 font-18"><span
-                                                class="counter-anim">{{ $visitor_month }}</span></span>
+                                        <span class="block"></span>
+                                        <span class="block txt-dark weight-500 font-18">
+                                            <span
+                                                class="">
+                                            </span>
+                                        </span>
                                     </li>
                                     <li>
                                         <span class="block">Total Tamu Berkunjung</span>
                                         <span class="block txt-dark weight-500 font-18"><span
                                                 class="counter-anim">{{ $visitor_year }}</span></span>
-
                                     </li>
+                                    {{-- <li>
+                                        <span class="block">Tamu Bulanan ini</span>
+                                        <span class="block txt-dark weight-500 font-18"><span
+                                                class="counter-anim">{{ $visitor_month }}</span></span>
+                                    </li> --}}
                                 </ul>
                             </div>
                         </div>
@@ -140,8 +151,6 @@
                         <div class="panel-heading">
                             <div class="pull-left">
                                 <h6 class="panel-title txt-dark">Rekap Harian</h6>
-                            </div>
-                            <div class="pull-right">
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -265,9 +274,9 @@
 														<td><span class="txt-success"><i class="zmdi zmdi-caret-up mr-10 font-20"></i><span>{{ date('d F Y', strtotime($item->created_at)) }}</span></span></td>
 														<td>
 															@if($item->tipe_member == 'VVIP')
-																<span class="label label-success">VVIP</span>
+																<span class="label label-warning">VVIP</span>
 															@else
-																<span class="label label-warning">VIP</span>
+																<span class="label label-success">VIP</span>
 															@endif
 														</td>
 														<td>
@@ -277,6 +286,7 @@
 												@endforeach
 											</tbody>
 										</table>
+                                        {{ $visitor->links() }}
                                     </div>
                                 </div>
                             </div>
@@ -330,8 +340,9 @@
             var vip_kam = <?php print $vip_kam; ?>;
             var vvip_jum = <?php print $vvip_jum; ?>;
             var vip_jum = <?php print $vip_jum; ?>;
-            var vvip_sab = <?php print $vvip_sab; ?>;
-            var vip_sab = <?php print $vip_sab; ?>;
+            var vvip_sa = <?php print $vvip_sa; ?>;
+            var vip_sa = <?php print $vip_sa; ?>;
         </script>
+
 
 @endsection
