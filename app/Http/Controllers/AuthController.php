@@ -278,11 +278,10 @@ class AuthController extends Controller {
     }
     
     public function daftartamu(){
-        $data = DB::table('Visitors')->orderBy('created_at', 'desc')->whereNull('deleted_at')->paginate(20);
+        $data['visitor'] = DB::table('Visitors')->orderBy('created_at', 'desc')->whereNull('deleted_at')->paginate(20);
 
         
-        // return view('/Daftar-tamu', $data);
-        return response()->json($data);
+        return view('/Daftar-tamu', $data);
     }
     
     public function tambahtamu(){
