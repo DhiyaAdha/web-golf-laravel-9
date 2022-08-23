@@ -91,6 +91,8 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     // Route: Daftar-tamu
     Route::get('/daftar-tamu',[TamuController::class,'daftartamu'])->name('daftar-tamu');
     Route::get('/tambah-tamu',[TamuController::class,'tambahtamu'])->name('tambah-tamu');
+    Route::get('/tambah-deposit',[TamuController::class,'tambahdeposit'])->name('tambah-deposit');
+    Route::get('/kartu-tamu',[TamuController::class,'kartutamu'])->name('kartu-tamu');
     Route::post('/inserttamu',[TamuController::class,'inserttamu'])->name('inserttamu');
     route::get('/daftar-tamu/hapus/{id}', [TamuController::class, 'hapus'])->name('hapus');
     route::get('qrcode/{id}', [ScanController::class, 'generate'])->name('generate');

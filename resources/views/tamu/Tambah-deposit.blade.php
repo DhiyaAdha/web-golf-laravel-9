@@ -23,11 +23,15 @@
                             <div class="panel-body">
                                 <div class="form-wrap">
                                     <form action="/tambah-tamu" method="post">
-                                        <div class="form-group">
+                                    <div class="form-group">
+                                            <label class="control-label mb-10" for="">Tambah Jumlah Deposit</label>
+                                            <input type="number" name="name" class="form-control" id="name" size="50px" placeholder="Masukan Jumlah Deposit" required autofocus>
+                                            <p>Pastikan tamu memberitahu atau memberi bukti transfer, baik berupa screenshoot atau invoice</p>
+                                        </div>
+                                        <!-- <div class="form-group">
                                             <label class="control-label mb-10" for="">Tambah Jumlah Deposit</label>
                                             <input type="number" class="form-control" size="50px" placeholder="Masukan Jumlah Deposit">
-                                            <p>Pastikan tamu memberitahu atau memberi bukti transfer, baik berupa screenshoot atau invoice</p>
-                                        </div>  
+                                        </div>   -->
                                         <div class="form-group text-left">
                                             <button type="submit" class="btn btn-info">Selanjutnya</button>
                                         </div>
