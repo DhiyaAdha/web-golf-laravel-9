@@ -32,8 +32,8 @@
                         <div class="kotak bg-white mt-10">
                             <div id="reader" width="600px" class=""></div>
                             <div class="gambar-qr">
-                                <div class="disabled-scan">
-                                    <img src="/dist/img/qr.png" alt="" width="80px">
+                                <div class="disabled-scan ">
+                                    <img src="/dist/img/qr.png" alt="" width="80px" class="ml-20">
                                     <div class="btn-scan mt-10">
                                         {{-- <button type="button" id="show-scan" style="text-align:center;">Scan QR</button> --}}
                                         <div class="btn-scan-qr">
@@ -46,16 +46,16 @@
                             </div>
                         </div>
                     </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <p>Hasil Scan</p>
+                        <input type="text" id="result" size="30px">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-4">
-            <input type="text" id="result" size="30px">
-        </div>
-    </div>
-    </div>
     </div>
 @endsection
 

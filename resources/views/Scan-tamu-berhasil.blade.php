@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div style="height: 400px" class="panel panel-default card-view">
+                    <div style="height: 600px" class="panel panel-default card-view">
                         <h6>Sisa Limit dan Deposit Yudistira</h6>
                         <div class="box-deposit">
                             <div class="row">
@@ -77,16 +77,77 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="box-limit-kupon">
+
+                        {{-- Coba rev tpi gajadi --}}
+                        {{-- <div class="box-deposit-rev">
                             <div class="row">
-                                <div class="col-lg-6">
-                                    <p class="ml-30 mt-10">Limit Kupon</p>
+                                <div class="col-lg-12">
+                                    <p>Deposit</p>
                                 </div>
-                                <div class="col-lg-6">
-                                    <h6>yudistira</h6>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-2 col-sm-2" style="text-align: left;">
+                                    <h4 class="ml-30" style="color: white;">Rp.</h4>
+                                </div>
+                                <div class="col-lg-6 col-md-2 col-sm-2" style="text-align: right;">
+                                    <h4 class="mr-30" style="color: white;">12.000.000</h4>
+                                </div>
+                            </div>
+                        </div> --}}
+
+                        {{-- <div class="box-limit-kupon">
+                            <div class="row">
+                                <p class="ml-30 mt-10">Limit Kupon</p>
+                            </div>
+                        </div> --}}
+
+
+                        <div class="col-lg-6">
+                            <div class="box-limit-kupon-rev">
+                                <p>Limit Kupon</p>
+                                <h4 style="color: white">0</h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="box-limit-bulanan-rev">
+                                <p>Limit Bulanan</p>
+                                <h4 style="color: white">2</h4>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12 mt-10">
+                                <div class="btn-deposit">
+                                    <a href="#">
+                                        <h6 style="color: #01c853;">Deposit</h6>
+                                    </a>
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-lg-12 mt-10">
+                                <div class="btn-proses">
+                                    <a href="#">
+                                        <h6 style="color: #ffffff;">Proses</h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- <div class="col-lg-6">
+                            <div class="box-limit-kupon">
+                                <div class="box-1">
+                                    <p class="">Limit Kupon</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="box-limit-bulanan">
+                                <div class="box-2">
+                                    <p class="ml-20 mt-10">Limit Bulanan</p>
+                                </div>
+                            </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
