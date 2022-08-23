@@ -55,57 +55,72 @@
 <script src="{{ asset('/sw.js') }}"></script>
 <script>
     if (!navigator.serviceWorker.controller) {
-        navigator.serviceWorker.register("/sw.js").then(function (reg) {
+        navigator.serviceWorker.register("/sw.js").then(function(reg) {
             console.log("Service worker has been registered for scope: " + reg.scope);
         });
     }
     $('.js-switch-1').each(function() {
         new Switchery($(this)[0], $(this).data());
     });
-    
+
     $('#dt-package').DataTable({
         "processing": true,
         "serverSide": true,
         "lengthChange": false,
         "searching": true,
         "paginate": {
-            "first":      "First",
-            "last":       "Last",
-            "next":       "Next",
-            "previous":   "Previous"
+            "first": "First",
+            "last": "Last",
+            "next": "Next",
+            "previous": "Previous"
         },
-        "ajax" : {
-            "url" : "{{ route('package.index') }}",
-            "type" : "GET",
-            "datatype" : "json"
+        "ajax": {
+            "url": "{{ route('package.index') }}",
+            "type": "GET",
+            "datatype": "json"
         },
-        "columns" : [
-            { "data": function(data) { return data.name }},
-            { "data": function(data) { return data.category }},
-            { "data": function(data) { 
-                return `<div class="form-group">
+        "columns": [{
+                "data": function(data) {
+                    return data.name
+                }
+            },
+            {
+                "data": function(data) {
+                    return data.category
+                }
+            },
+            {
+                "data": function(data) {
+                    return `<div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-addon">Rp</div>
                                 <label class="form-control">${data.price_weekdays}</label>
                             </div>
-                        </div>`;  
-            }},
-            { "data": function(data) { 
-                return `<div class="form-group">
+                        </div>`;
+                }
+            },
+            {
+                "data": function(data) {
+                    return `<div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-addon">Rp</div>
                                 <label class="form-control">${data.price_weekend}</label>
                             </div>
-                        </div>`; 
-            }},
-            { "data": function(data) { 
-                if(data.status == 0) {
-                    return `<input type="checkbox" checked class="js-switch js-switch-1"  data-color="#01c853" />`;  
-                } else {
-                    return `<input type="checkbox" class="js-switch js-switch-1"  data-color="#01c853" />`;  
+                        </div>`;
                 }
-            }},
-            { "data": "action"},
+            },
+            {
+                "data": function(data) {
+                    if (data.status == 0) {
+                        return `<input type="checkbox" checked class="js-switch js-switch-1"  data-color="#01c853" />`;
+                    } else {
+                        return `<input type="checkbox" class="js-switch js-switch-1"  data-color="#01c853" />`;
+                    }
+                }
+            },
+            {
+                "data": "action"
+            },
         ],
         order: [],
         responsive: true,
@@ -119,9 +134,10 @@
             lengthMenu: "Menampilkan _MENU_ data",
             zeroRecords: "Tidak ada data yang sesuai"
         },
-        columnDefs: [
-            { orderable: false, targets: [0, 1, 2, 3, 4, 5,] },
-        ],
+        columnDefs: [{
+            orderable: false,
+            targets: [0, 1, 2, 3, 4, 5, ]
+        }, ],
     });
 
     $(document).on("click", "#show-scan", function() {
