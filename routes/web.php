@@ -50,6 +50,7 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
     Route::get('/package-item',[PackageController::class,'item'])->name('package.item');
     Route::get('/scan-tamu',[ScanController::class,'scantamu'])->name('scan-tamu');
     Route::get('/scan-tamu-berhasil',[ScanController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
+    Route::get('/proses',[ScanController::class,'proses'])->name('proses');
     Route::get('/order',[AuthController::class,'order'])->name('order');
     Route::resource('package', PackageController::class)->except(['show','update']);
 
@@ -98,7 +99,7 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     // Route::get('/riwayat-invoice',[AuthController::class,'riwayatinvoice'])->name('riwayat-invoice');
     Route::get('/riwayat-invoice',[InvoiceController::class,'riwayatinvoice'])->name('riwayat-invoice');
 
-    Route::get('/tambah-admin',[AuthController::class,'tambahadmin'])->name('tambah-admin');
+    Route::get('/tambah-admin',[AuthController::class,'tambah_admin'])->name('tambah-admin');
 });
 
 //Finish level admin dan superadmin

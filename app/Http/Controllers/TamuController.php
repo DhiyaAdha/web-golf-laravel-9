@@ -20,7 +20,7 @@ class TamuController extends Controller
     
     public function tambahtamu(){
         
-        return view('/Tambah-tamu');
+        return view('tamu.Tambah-tamu');
     }
 
     // Fungsi Menambahkan-tamu
