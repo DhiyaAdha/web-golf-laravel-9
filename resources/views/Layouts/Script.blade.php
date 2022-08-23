@@ -54,15 +54,15 @@
 
 <script src="{{ asset('/sw.js') }}"></script>
 <script>
-    if (!navigator.serviceWorker.controller) {
-        navigator.serviceWorker.register("/sw.js").then(function(reg) {
-            console.log("Service worker has been registered for scope: " + reg.scope);
-        });
-    }
-    $('.js-switch-1').each(function() {
-        new Switchery($(this)[0], $(this).data());
-    });
-
+    // if (!navigator.serviceWorker.controller) {
+    //     navigator.serviceWorker.register("/sw.js").then(function (reg) {
+    //         console.log("Service worker has been registered for scope: " + reg.scope);
+    //     });
+    // }
+    // $('.js-switch-1').each(function() {
+    //     new Switchery($(this)[0], $(this).data());
+    // });
+    
     $('#dt-package').DataTable({
         "processing": true,
         "serverSide": true,
