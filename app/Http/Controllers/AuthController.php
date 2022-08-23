@@ -7,7 +7,6 @@ use Exception;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Order;
-use App\Models\Invoice;
 use App\Models\Visitor;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -16,8 +15,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -32,85 +31,87 @@ class AuthController extends Controller {
 
     public function forgot_password(){
             return view('/Lupa-pasword');
-    }
+
+        }
 
 
-    public function dashboard(){
-        // memanggil data visitor
-        $data['visitor'] = DB::table('Visitors')->orderBy('created_at', 'desc')->paginate(10);
-        $data['visitor_today'] = Visitor::whereDate('created_at', now()->format('Y-m-d'))->count();
-        $data['visitor_week'] = Visitor::whereBetween('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY), Carbon::now()->endOfWeek(Carbon::SATURDAY)])->get()->count();
-        $data['visitor_month'] = Visitor::whereMonth('created_at', now()->month)->count(); //bulan ini  
-        $data['visitor_year'] = Visitor::whereYear('created_at', now()->format('Y'))->count();
-        $data['visitor_years'] = Visitor::whereYear('created_at', '2023')->count();
-        $data['visitor_vip'] = Visitor::where('tipe_member', 'VIP')->count();
-        $data['visitor_vvip'] = Visitor::where('tipe_member', 'VVIP')->count();
-        $data['visitor_vvip_female'] = Visitor::where([
-                                            ['tipe_member', 'VVIP'],
-                                            ['gender', 'perempuan'],
-                                        ])->count();
-        $data['visitor_vvip_male'] = Visitor::where([
-                                            ['tipe_member', 'VVIP'],
-                                            ['gender', 'laki-laki'],
-                                        ])->count();
-        
-        //VIP 
-        $data['visitor_vip_female'] = Visitor::where([
-                                            ['tipe_member', 'VIP'],
-                                            ['gender', 'perempuan'],
-                                        ])->count();
-        $data['visitor_vip_male'] = Visitor::where([
-                                            ['tipe_member', 'VIP'],
-                                            ['gender', 'laki-laki'],
-                                        ])->count();
-        $data['Jan_vvip'] = Visitor::whereMonth('created_at', '01')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
-        $data['Jan_vip'] = Visitor::whereMonth('created_at', '01')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
-        $data['Feb_vvip'] = Visitor::whereMonth('created_at', '02')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
-        $data['Feb_vip'] = Visitor::whereMonth('created_at', '02')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
-        $data['Mar_vvip'] = Visitor::whereMonth('created_at', '03')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
-        $data['Mar_vip'] = Visitor::whereMonth('created_at', '03')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
-        $data['Apr_vvip'] = Visitor::whereMonth('created_at', '04')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
-        $data['Apr_vip'] = Visitor::whereMonth('created_at', '04')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
-        $data['Mei_vvip'] = Visitor::whereMonth('created_at', '05')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
-        $data['Mei_vip'] = Visitor::whereMonth('created_at', '05')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
-        $data['Jun_vvip'] = Visitor::whereMonth('created_at', '06')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
-        $data['Jun_vip'] = Visitor::whereMonth('created_at', '06')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
-        $data['Jul_vvip'] = Visitor::whereMonth('created_at', '07')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
-        $data['Jul_vip'] = Visitor::whereMonth('created_at', '07')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
-        $data['Aug_vvip'] = Visitor::whereMonth('created_at', '08')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
-        $data['Aug_vip'] = Visitor::whereMonth('created_at', '08')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
-        $data['Sep_vvip'] = Visitor::whereMonth('created_at', '09')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
-        $data['Sep_vip'] = Visitor::whereMonth('created_at', '09')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
-        $data['Oct_vvip'] = Visitor::whereMonth('created_at', '10')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
-        $data['Oct_vip'] = Visitor::whereMonth('created_at', '10')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
-        $data['Nov_vvip'] = Visitor::whereMonth('created_at', '11')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
-        $data['Nov_vip'] = Visitor::whereMonth('created_at', '11')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
-        $data['Dec_vvip'] = Visitor::whereMonth('created_at', '12')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
-        $data['Dec_vip'] = Visitor::whereMonth('created_at', '12')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
-        
-        // REKAP hARIAN
-        // $data['vvip_sen'] = Visitor::whereBetween('created_at', [Carbon::now()->startOfWeek(Carbon::MONDAY)->addDays(1), Carbon::now()->endOfWeek(Carbon::SUNDAY)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
-        
-        $data['vvip_sen'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
-        $data['vip_sen'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
-        $data['vvip_sel'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(1)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
-        $data['vip_sel'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(1)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
-        $data['vvip_rab'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(2)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
-        $data['vip_rab'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(2)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
-        $data['vvip_kam'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(3)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
-        $data['vip_kam'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(3)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
-        $data['vvip_jum'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(4)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
-        $data['vip_jum'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(4)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
-        $data['vvip_sa'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(5)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
-        $data['vip_sa'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(5)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
-        $data['vvip_min'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(6)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
-        $data['vip_min'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(6)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
-        return view('/Analisis-tamu', $data);
-    }
-        
-    public function password_baru(){
-            return view('/Reset-pasword');
-    }
+        public function dashboard(){
+            // memanggil data visitor
+            $data['visitor'] = DB::table('Visitors')->orderBy('created_at', 'desc')->paginate(10);
+            $data['visitor_today'] = Visitor::whereDate('created_at', now()->format('Y-m-d'))->count();
+            $data['visitor_week'] = Visitor::whereBetween('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY), Carbon::now()->endOfWeek(Carbon::SATURDAY)])->get()->count();
+            $data['visitor_month'] = Visitor::whereMonth('created_at', now()->month)->count(); //bulan ini  
+            $data['visitor_year'] = Visitor::whereYear('created_at', now()->format('Y'))->count();
+            $data['visitor_years'] = Visitor::whereYear('created_at', '2023')->count();
+            $data['visitor_vip'] = Visitor::where('tipe_member', 'VIP')->count();
+            $data['visitor_vvip'] = Visitor::where('tipe_member', 'VVIP')->count();
+            $data['visitor_vvip_female'] = Visitor::where([
+                                                ['tipe_member', 'VVIP'],
+                                                ['gender', 'perempuan'],
+                                            ])->count();
+            $data['visitor_vvip_male'] = Visitor::where([
+                                                ['tipe_member', 'VVIP'],
+                                                ['gender', 'laki-laki'],
+                                            ])->count();
+            
+            //VIP 
+            $data['visitor_vip_female'] = Visitor::where([
+                                                ['tipe_member', 'VIP'],
+                                                ['gender', 'perempuan'],
+                                            ])->count();
+            $data['visitor_vip_male'] = Visitor::where([
+                                                ['tipe_member', 'VIP'],
+                                                ['gender', 'laki-laki'],
+                                            ])->count();
+            $data['Jan_vvip'] = Visitor::whereMonth('created_at', '01')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
+            $data['Jan_vip'] = Visitor::whereMonth('created_at', '01')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
+            $data['Feb_vvip'] = Visitor::whereMonth('created_at', '02')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
+            $data['Feb_vip'] = Visitor::whereMonth('created_at', '02')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
+            $data['Mar_vvip'] = Visitor::whereMonth('created_at', '03')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
+            $data['Mar_vip'] = Visitor::whereMonth('created_at', '03')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
+            $data['Apr_vvip'] = Visitor::whereMonth('created_at', '04')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
+            $data['Apr_vip'] = Visitor::whereMonth('created_at', '04')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
+            $data['Mei_vvip'] = Visitor::whereMonth('created_at', '05')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
+            $data['Mei_vip'] = Visitor::whereMonth('created_at', '05')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
+            $data['Jun_vvip'] = Visitor::whereMonth('created_at', '06')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
+            $data['Jun_vip'] = Visitor::whereMonth('created_at', '06')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
+            $data['Jul_vvip'] = Visitor::whereMonth('created_at', '07')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
+            $data['Jul_vip'] = Visitor::whereMonth('created_at', '07')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
+            $data['Aug_vvip'] = Visitor::whereMonth('created_at', '08')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
+            $data['Aug_vip'] = Visitor::whereMonth('created_at', '08')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
+            $data['Sep_vvip'] = Visitor::whereMonth('created_at', '09')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
+            $data['Sep_vip'] = Visitor::whereMonth('created_at', '09')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
+            $data['Oct_vvip'] = Visitor::whereMonth('created_at', '10')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
+            $data['Oct_vip'] = Visitor::whereMonth('created_at', '10')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
+            $data['Nov_vvip'] = Visitor::whereMonth('created_at', '11')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
+            $data['Nov_vip'] = Visitor::whereMonth('created_at', '11')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
+            $data['Dec_vvip'] = Visitor::whereMonth('created_at', '12')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VVIP')->count();
+            $data['Dec_vip'] = Visitor::whereMonth('created_at', '12')->whereYear('created_at', now()->format('Y'))->where('tipe_member', 'VIP')->count();
+            
+            // REKAP hARIAN
+            // $data['vvip_sen'] = Visitor::whereBetween('created_at', [Carbon::now()->startOfWeek(Carbon::MONDAY)->addDays(1), Carbon::now()->endOfWeek(Carbon::SUNDAY)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
+            
+            $data['vvip_sen'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
+            $data['vip_sen'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
+            $data['vvip_sel'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(1)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
+            $data['vip_sel'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(1)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
+            $data['vvip_rab'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(2)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
+            $data['vip_rab'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(2)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
+            $data['vvip_kam'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(3)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
+            $data['vip_kam'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(3)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
+            $data['vvip_jum'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(4)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
+            $data['vip_jum'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(4)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
+            $data['vvip_sa'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(5)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
+            $data['vip_sa'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(5)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
+            $data['vvip_min'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(6)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
+            $data['vip_min'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(6)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
+            return view('/Analisis-tamu', $data);
+        }
+
+        public function password_baru(){
+        return view('/Reset-pasword');
+        }
+
 
     //ini untuk function login
     public function login(Request $request)
@@ -236,28 +237,6 @@ class AuthController extends Controller {
         return back()->with('resetSuccess', 'Reset Password sudah dikirim ke email anda! silahkan cek email');
     }
     
-    
-    //fungsi untuk INVOICE
-    public function invoice(){
-        $data['invoice'] = Invoice::all();
-        // $invoice = Invoice::where('id',$id)->first();
-        // dd($invoice);
-        // if(is_null($invoice)){
-            //     $todaydate = Carbon::today();
-            //     $invoice = new Invoice;
-            //     $invoice->id = $id;
-            //     $invoice->created_at = $todaydate;
-            //     $invoice->status = 1;
-            //     $invoice->save();
-            // }
-            // $order_payments = Order::find($id);
-            // $unique_number = $order_payments->unique_number;
-            // $profile = Profile::where('user_id',$customer_id)->first();
-        // $orderitems = Orderitem::where('order_id',$order_id)->get();
-        // $judulhalaman = "Invoice";
-        return view('/invoice', $data);
-    }
-    
     public function scantamu(){
         return view('/scan-tamu');
     }
@@ -273,14 +252,14 @@ class AuthController extends Controller {
 
         return view('/daftar-admin');
     }
+
+
     public function tambah_admin(){
         return view('/tambah-admin');
     }
     
     public function daftartamu(){
         $data['visitor'] = DB::table('Visitors')->orderBy('created_at', 'desc')->whereNull('deleted_at')->paginate(20);
-
-        
         return view('/Daftar-tamu', $data);
     }
     

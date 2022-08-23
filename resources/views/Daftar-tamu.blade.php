@@ -1,5 +1,4 @@
 @extends('Layouts.Main', ['title' => 'TGCC | Daftar Tamu'])
-
 @include('sweetalert::alert') 
 <div class="page-wrapper">
     <div class="container-fluid">
