@@ -45,7 +45,7 @@
         </li>
         @endif
         <li>
-            <a class="{{ Request::is('riwayat-invoice') ? 'active' : '' }}" href="{{ route('riwayat-invoice')}}">
+            <a class="{{ Request::is('riwayat-invoice') ? 'active' : '' }}" href="{{ route('riwayat-invoice.index')}}">
                 <div class="pull-left">
                     <i class="fa fa-money mr-20"></i>
                     <span class="right-nav-text">Invoice</span>

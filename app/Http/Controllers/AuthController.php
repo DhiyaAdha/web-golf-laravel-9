@@ -7,13 +7,14 @@ use Exception;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Order;
-use App\Models\Invoice;
+// use App\Models\Invoice;
 use App\Models\Visitor;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\LogTransaction;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Hash;
@@ -168,7 +169,7 @@ class AuthController extends Controller {
     
     //fungsi untuk INVOICE
     public function invoice(){
-        $data['invoice'] = Invoice::all();
+        $data['invoice'] = LogTransaction::all();
         // $invoice = Invoice::where('id',$id)->first();
         // dd($invoice);
         // if(is_null($invoice)){
@@ -194,7 +195,7 @@ class AuthController extends Controller {
     
     public function daftar_admin(){
 
-        return view('/daftar-admin');
+        return view('admin.daftar-admin');
     }
 
     public function tambah_admin(){
