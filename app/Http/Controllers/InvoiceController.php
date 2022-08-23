@@ -1,38 +1,89 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Invoice;
 
 use App\Models\Visitor;
 use Illuminate\Http\Request;
+use App\Models\LogTransaction;
 
 class InvoiceController extends Controller
 {
-    //fungsi untuk INVOICE
-    public function invoice(){
-        $data['invoice'] = Invoice::all();
-        // $invoice = Invoice::where('id',$id)->first();
-        // dd($invoice);
-        // if(is_null($invoice)){
-            //     $todaydate = Carbon::today();
-            //     $invoice = new Invoice;
-            //     $invoice->id = $id;
-            //     $invoice->created_at = $todaydate;
-            //     $invoice->status = 1;
-            //     $invoice->save();
-            // }
-            // $order_payments = Order::find($id);
-            // $unique_number = $order_payments->unique_number;
-            // $profile = Profile::where('user_id',$customer_id)->first();
-        // $orderitems = Orderitem::where('order_id',$order_id)->get();
-        // $judulhalaman = "Invoice";
-        return view('Invoice.invoice', $data);
-    }
-
-    public function riwayatinvoice(){
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
         $data['visitor'] = Visitor::all()->sortByDesc('created_at');
 
         
-        return view('Invoice.riwayat-invoice', $data);
+        return view('invoice.riwayat-invoice', $data);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 }

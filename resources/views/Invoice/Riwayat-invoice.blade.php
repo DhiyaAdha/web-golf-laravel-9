@@ -53,38 +53,17 @@
                             <div class="panel-body">
                                 <div class="table-wrap mt-0">
                                     <div class="table-responsive">
-                                        <table class="table mb-30">
+                                        <table class="table mb-0" id="dt-riwayat-invoice">
                                             <thead>
                                                 <tr>
-                                                    <th style="text-align: center;">Nama</th>
-                                                    <th style="text-align: center;">Kategori Tamu</th>
-                                                    <th style="text-align: center;">Total Bayar</th>
-                                                    <th style="text-align: center;">Tanggal Bayar</th>
+                                                    <th class="table-th">Nama</th>
+                                                    <th class="table-th">Kategori Tamu</th>
+                                                    <th class="table-th">Total Bayar</th>
+                                                    <th class="table-th">Tanggal Bayar</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-
-                                                @foreach ($visitor as $item)
-                                                <tr>
-                                                    <td style="text-align: light;">{{ $item->name }}</td>
-                                                    <td style="text-align: center;">
-
-                                                        @if($item->tipe_member == 'VVIP')
-                                                            <span class="label label-success">VVIP</span>
-                                                        @else
-                                                            <span class="label label-warning">VIP</span>
-                                                        @endif
-                                                        
-                                                    </td>
-                                                    <td style="text-align: center;">{{ $item->email }}</td>
-                                                    <td style="text-align: center;">{{ $item->phone }}</td>
-                                                </tr>
-                                                
-                                                @endforeach
                                             </tbody>
-
-                                            
-
                                         </table>
                                     </div>
                                 </div>

@@ -42,7 +42,6 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
     Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
     Route::get('/invoice',[InvoiceController::class,'invoice'])->name('invoice');
-    Route::get('/package-item',[PackageController::class,'item'])->name('package.item');
     Route::get('/scan-tamu',[AuthController::class,'scantamu'])->name('scan-tamu');
     Route::get('/scan-tamu-berhasil',[AuthController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
     Route::get('/order',[AuthController::class,'order'])->name('order');
@@ -55,7 +54,7 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
     route::get('/daftar-tamu/hapus/{id}', [AuthController::class, 'hapus'])->name('hapus');
     Route::get('/tambah-admin',[AuthController::class,'tambahadmin'])->name('tambah-admin');
     
-    Route::get('/riwayat-invoice',[InvoiceController::class,'riwayatinvoice'])->name('riwayat-invoice');
+    Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
 
 });
 
@@ -63,18 +62,19 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
 Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
     Route::get('/invoice',[InvoiceController::class,'invoice'])->name('invoice');
-    Route::get('/package-item',[PackageController::class,'item'])->name('package.item');
     Route::get('/scan-tamu',[AuthController::class,'scantamu'])->name('scan-tamu');
     Route::get('/scan-tamu-berhasil',[AuthController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
     Route::get('/order',[AuthController::class,'order'])->name('order');
+    Route::resource('package', PackageController::class)->except(['show','update']);
     Route::get('/daftar-tamu',[AuthController::class,'daftartamu'])->name('daftar-tamu');
     Route::get('/tambah-tamu',[AuthController::class,'tambahtamu'])->name('tambah-tamu');
     Route::post('/inserttamu',[AuthController::class,'inserttamu'])->name('inserttamu');
     route::get('qrcode/{id}', [AuthController::class, 'generate'])->name('generate');
     //Delete Daftar Tamu
     route::get('/daftar-tamu/hapus/{id}', [AuthController::class, 'hapus'])->name('hapus');
-    Route::get('/riwayat-invoice',[InvoiceController::class,'riwayatinvoice'])->name('riwayat-invoice');
     Route::get('/tambah-admin',[AuthController::class,'tambahadmin'])->name('tambah-admin');
+
+    Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
 });
 
 //Finish level admin dan superadmin
