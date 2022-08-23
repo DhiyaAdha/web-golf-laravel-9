@@ -119,20 +119,23 @@
                                 <div id="morris_extra_line_chart" class="morris-chart" style="height:293px;"></div>
                                 <ul class="flex-stat mt-40">
                                     <li>
-                                        <span class="block">Tamu Mingguan</span>
-                                        <span class="block txt-dark weight-500 font-18"><span
-                                                class="counter-anim">{{ $visitor_week }}</span></span>
-                                    </li>
-                                    <li>
-                                        <span class="block">Tamu Bulanan</span>
-                                        <span class="block txt-dark weight-500 font-18"><span
-                                                class="counter-anim">{{ $visitor_month }}</span></span>
+                                        <span class="block"></span>
+                                        <span class="block txt-dark weight-500 font-18">
+                                            <span
+                                                class="">
+                                            </span>
+                                        </span>
                                     </li>
                                     <li>
                                         <span class="block">Total Tamu Berkunjung</span>
                                         <span class="block txt-dark weight-500 font-18"><span
                                                 class="counter-anim">{{ $visitor_year }}</span></span>
                                     </li>
+                                    {{-- <li>
+                                        <span class="block">Tamu Bulanan ini</span>
+                                        <span class="block txt-dark weight-500 font-18"><span
+                                                class="counter-anim">{{ $visitor_month }}</span></span>
+                                    </li> --}}
                                 </ul>
                             </div>
                         </div>
@@ -148,18 +151,6 @@
                         <div class="panel-heading">
                             <div class="pull-left">
                                 <h6 class="panel-title txt-dark">Rekap Harian</h6>
-                            </div>
-                            <div class="pull-right">
-                                <div class="btn-group dropcenter">
-                                    <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
-                                        Select Year
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">2022</a></li>
-                                    <li><a class="dropdown-item" href="#">2023</a></li>
-                                    <li><a class="dropdown-item" href="#">2024</a></li>
-                                    </ul>
-                                </div>
                             </div>
                             <div class="clearfix"></div>
                         </div>

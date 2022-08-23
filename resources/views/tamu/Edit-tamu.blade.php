@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="container-fluid">
                         <div class="col-lg-8">
-                            <h5>Tambah Tamu</h5>
+                            <h5>Edit Tamu</h5>
                         </div>
                     </div>
                 </div>
@@ -19,7 +19,7 @@
                 <div class="row">
                 <div class="col-lg-8" style="position: relative;">
                     <div style="height: 900px" class="panel panel-default card-view">
-                        <h6 class="control-label mb-10">Tambah Tamu</h6>
+                        <h6 class="control-label mb-10">Edit Tamu</h6>
                             <div class="panel-body">
                                 <div class="form-wrap">
                                     <form action="/inserttamu" method="POST" enctype="multipart/form-data">
@@ -73,7 +73,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group text-left">
-                                            <button type="submit" class="btn btn-info">Selanjutnya</button>
+                                            <button type="submit" class="btn btn-info">Simpan</button>
                                         </div>
                                     </form>
                             </div>
