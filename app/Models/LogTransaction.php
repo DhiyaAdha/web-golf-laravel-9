@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class LogTransaction extends Model
@@ -11,11 +12,14 @@ class LogTransaction extends Model
     use HasFactory;
 
     protected $table = "log_transactions";
-    protected $primarykey = "id";
 
     
     protected $fillable = [
-        'visitor_id', 'user_id', 'payment_type', 'payment_status', 'total', 'status', 'created_at'
+        'id','visitor_id','total','tipe_member', 'created_at'
         
     ];
+    
+    public function visitor() {
+        return $this->belongsTo(Visitor::class);
+    }
 }

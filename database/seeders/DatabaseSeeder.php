@@ -3,11 +3,13 @@
 namespace Database\Seeders;
 
 use App\Models\Visitor;
+use Faker\Factory as Faker;
 use App\Models\PackageDefault;
 use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Support\Facades\DB;
+use Database\Seeders\InvoiceSeeder;
+use Database\Seeders\VisitorSeeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,6 +23,8 @@ class DatabaseSeeder extends Seeder
 
         // \App\Models\User::factory(10)->create();
         $this->call(UserSeeder::class);
+        $this->call(VisitorSeeder::class);
+        $this->call(InvoiceSeeder::class);
         $faker = Faker::create('id_ID');
         for($i = 1; $i <= 300; $i++) {
             DB::table('visitors')->insert([

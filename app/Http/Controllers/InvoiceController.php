@@ -13,12 +13,19 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data['visitor'] = Visitor::all()->sortByDesc('created_at');
+        // $logtransaction = LogTransaction::find(1);
+        // $visitor = visitor::find(1);
 
-        
-        return view('invoice.riwayat-invoice', $data);
+        // $riwayat_invoice = LogTransaction::orderBy('id')->$logtransaction->visitor()->associate($visitor)->get();
+        $riwayat_invoice = LogTransaction::with('visitor')->orderBy('id')->get();
+        if($request->ajax()){
+            return datatables()->of($riwayat_invoice)
+                        ->addIndexColumn()
+                        ->make(true);
+        }
+        return view('invoice.riwayat-invoice');
     }
 
     /**

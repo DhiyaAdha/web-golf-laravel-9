@@ -999,6 +999,7 @@ div.switch5 > input.switch:focus ~ label:before {
     padding-top: 6px;
 }
 
+
 /* input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;

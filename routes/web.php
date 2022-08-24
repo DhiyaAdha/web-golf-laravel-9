@@ -77,6 +77,7 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::get('/scan-tamu',[ScanController::class,'scantamu'])->name('scan-tamu');
     Route::get('/scan-tamu-berhasil',[ScanController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
     Route::get('/order',[AuthController::class,'order'])->name('order');
+    Route::resource('package', PackageController::class)->except(['show','update']);
 
     // Route: Daftar-tamu
     Route::get('/daftar-tamu',[TamuController::class,'daftartamu'])->name('daftar-tamu');
