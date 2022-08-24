@@ -184,26 +184,36 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <div class="form-group text-right">
-                                {{-- <button type="submit" class="btn btn-info">Selesai</button> --}}
-                                <div class="btn-selesai">
-                                    <a href="/riwayat-invoice">
-                                        <p style="color: white">Selesai</p>
-                                    </a>
+                            <div class="row">
+                                <div class="col-lg-8">
                                 </div>
-                                <button type="submit" class="">Print Struk</button>
-                                {{-- <div class="btn-print">
-                                    <a href="#">
-                                        <i class="fa-regular fa-file-lines">
-                                            Print Struct
-                                        </i>
-                                    </a> --}}
+                                <div class="col-lg-2">
+                                    <div class="btn-selesai">
+                                        <a href="/riwayat-invoice">
+                                            <p style="color: white">Selesai</p>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="btn-print">
+                                        <a href="#">
+                                            <i class="fa-regular fa-file-lines">
+                                                Print Struct
+                                            </i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="form-group text-right">
+                                    {{-- <button type="submit" class="btn btn-info">Selesai</button> --}}
+
+
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        @include('Layouts.Footer')
     </div>
 @endsection
