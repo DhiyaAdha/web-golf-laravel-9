@@ -29,9 +29,9 @@
         <div class="col-md-2">
             <h2 style="font-size: 16px;"><strong>Invoice</strong></h2>
         </div>
-		@foreach ($invoice as $item)
+		
         <div class="col-md-10 text-right">
-            <h3 class="float-right" style="font-size: 16px;"><strong>Order #{{ $item->unique_number }}</strong></h3>
+            <h3 class="float-right" style="font-size: 16px;"><strong>Order #0001</strong></h3>
         </div>
         </div>
     		<hr>
@@ -51,7 +51,7 @@
     			<div class="col-md-6 text-right">
     				<address>
         			<strong>Metode Pembayaran:</strong><br>
-					{{ $item->payment_type }}<br>
+					Cash<br>
     				
     				</address>
     			</div>
@@ -67,12 +67,12 @@
     			<div class="col-md-6 text-right">
     				<address>
     					<strong>Order Date:</strong><br>
-    					{{ $item->created_at->format('d-m-Y') }}<br><br>
+    					25 Agustus 2022<br><br>
     				</address>
     			</div>
     		</div>
     	</div>
-		@endforeach
+		
     </div>
     
     <div class="row">
@@ -92,50 +92,40 @@
     							<!-- foreach ($order->lineItems as $line) or some such thing here -->
     							<tr>
     								<td>
-										@if($item->package_default_id == '1')
+										
 											<span>Practice</span>
-										@else
+										
 											
-										@endif
+										
 									</td>
     								<td class="text-center">Rp
-										@if($item->package_default_id == '1')
+										
 											<span>50000</span>
-										@else
-											
-										@endif
+										
 									</td>
     								<td class="text-center">1</td>
     								<td class="text-right">Rp
-										@if($item->package_default_id == '1')
+										
 											<span>50000</span>
-										@else
-											
-										@endif
+										
 									</td>
     							</tr>
 								<tr>
     								<td>
-										@if($item->package_additional_id == '1')
+										
 											<span>Paket 1</span>
-										@else
-											
-										@endif
+										
 									</td>
     								<td class="text-center">Rp
-										@if($item->package_additional_id == '1')
+										
 											<span>100000</span>
-										@else
-											
-										@endif
+										
 									</td>
     								<td class="text-center">1</td>
     								<td class="text-right">Rp
-										@if($item->package_default_id == '1')
+										
 											<span>100000</span>
-										@else
-											
-										@endif
+										
 									</td>
     							</tr>
                                
@@ -144,11 +134,9 @@
     								<td class="thick-line"></td>
     								<td class="thick-line text-right">Subtotal</td>
     								<td class="thick-line text-right">
-										@if($item->package_default_id == '1' && $item->package_additional_id == '1')
+										
 											<span>Rp 150000</span>
-										@else
-											
-										@endif
+										
 									</td>
     							</tr>
     							<tr>
@@ -168,11 +156,9 @@
     								<td class="no-line"></td>
     								<td class="no-line text-right"><strong>Total Bayar</strong></td>
     								<td class="no-line text-right">
-										@if($item->package_default_id == '1' && $item->package_additional_id == '1')
+										
 											<span>Rp 150000</span>
-										@else
-											
-										@endif
+										
 									</td>
     							</tr>
     						</tbody>
