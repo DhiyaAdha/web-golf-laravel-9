@@ -35,4 +35,6 @@ class InvoiceController extends Controller
         
         return view('Invoice.riwayat-invoice', $data);
     }
+
+    
 }
