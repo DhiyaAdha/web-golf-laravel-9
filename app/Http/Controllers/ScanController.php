@@ -17,7 +17,7 @@ class ScanController extends Controller
         return view('/scan-tamu-berhasil');
     }
 
-    // fungsi generate QRcode Daftar-tamu
+    fungsi generate QRcode Daftar-tamu
     public function generate ($id)
     {
         $visitor = Visitor::findOrFail($id);

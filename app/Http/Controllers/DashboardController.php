@@ -79,8 +79,8 @@ class DashboardController extends Controller
         $data['vip_kam'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(3)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
         $data['vvip_jum'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(4)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
         $data['vip_jum'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(4)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
-        $data['vvip_sa'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(5)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
-        $data['vip_sa'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(5)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
+        $data['vvip_sab'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(5)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
+        $data['vip_sab'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(5)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
         $data['vvip_min'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(6)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
         $data['vip_min'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(6)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
 

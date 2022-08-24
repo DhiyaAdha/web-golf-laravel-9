@@ -14,7 +14,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ResetPasswordController;
-
+use App\Http\Controllers\ScanqrController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,8 +83,10 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::get('/daftar-tamu',[TamuController::class,'daftartamu'])->name('daftar-tamu');
     Route::get('/tambah-tamu',[TamuController::class,'tambahtamu'])->name('tambah-tamu');
     Route::post('/inserttamu',[TamuController::class,'inserttamu'])->name('inserttamu');
-    route::get('/daftar-tamu/hapus/{id}', [TamuController::class, 'hapus'])->name('hapus');
+    Route::get('/daftar-tamu/hapus/{id}', [TamuController::class, 'hapus'])->name('hapus');
     route::get('qrcode/{id}', [ScanController::class, 'generate'])->name('generate');
+    // Route::resource('qrcode/{id}', ScanqrController::class)->except(['show', 'update']);
+    
 
     Route::get('/tambah-admin',[AuthController::class,'tambahadmin'])->name('tambah-admin');
 
