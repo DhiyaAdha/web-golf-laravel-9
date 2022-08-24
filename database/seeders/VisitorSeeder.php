@@ -22,10 +22,12 @@ class VisitorSeeder extends Seeder
     public function run()
     {
         //
-        Visitor::truncate();
+        // Visitor::truncate();
         $faker = Faker::create('id_ID');
         for ($i=0; $i < 10; $i++) { 
-                Visitor::create([
+            DB::table('visitors')->insert
+                // Visitor::create
+                ([
                 'name' => $faker->name(),
                 'email' => $faker->email(),
                 'phone'=> $faker->phoneNumber(),
