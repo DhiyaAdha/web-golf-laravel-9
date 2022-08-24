@@ -35,12 +35,14 @@ class VisitorSeeder extends Seeder
         //         'gender' => $faker->randomElement(['laki-laki', 'perempuan']),
         //         'tipe_member' => $faker->randomElement(['VIP', 'VVIP']),
         //         'created_at' => $faker->dateTimeThisYear(),
-        //         // 'created_at' => \Carbon\Carbon::now()->addMinutes(rand(0,
-        //         // 60 * 23))->addSeconds(rand(0, 60)),
+        //         
         //         'updated_at' => \Carbon\Carbon::now()->addMinutes(rand(0,
         //         60 * 23))->addSeconds(rand(0, 60))
         //     ]);
         // }
+
+        // 'created_at' => \Carbon\Carbon::now()->addMinutes(rand(0,
+        //         // 60 * 23))->addSeconds(rand(0, 60)),
 
 
 
@@ -55,27 +57,12 @@ class VisitorSeeder extends Seeder
                 'address' => $faker->address(),
                 'company' => $faker->company(),
                 'gender' => $faker->randomElement(['laki-laki', 'perempuan']),
-                'tipe_member' => $faker->randomElement(['VIP', 'VVIP'])
+                'tipe_member' => $faker->randomElement(['VIP', 'VVIP']),
+                'created_at' => $faker->dateTimeThisYear(),
+                 
+                'updated_at' => \Carbon\Carbon::now()->addMinutes(rand(0,
+                60 * 23))->addSeconds(rand(0, 60))
             ]);
         }
-        // Visitor::create([
-        //     'name' => 'kelvin',
-        //     'email' => 'rijik@gmail.com',
-        //     'phone'=> '0877333402821',
-        //     'address' => 'pinus',
-        //     'company' => 'pertamina',
-        //     'gender' => 'laki-laki',
-        //     'tipe_member' => 'VIP',
-        // ]);
-        // Visitor::create([
-        //     'name' => 'rijik',
-        //     'email' => 'rijik@gmail.com',
-        //     'phone'=> '087732212821',
-        //     'address' => 'lengkong',
-        //     'company' => 'pertamina',
-        //     'gender' => 'perempuan ',
-        //     'tipe_member' => 'VVIP',
-        // ]);
-
     }
 }
