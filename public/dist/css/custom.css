@@ -240,10 +240,21 @@
     margin-bottom: 12px;
     border-radius: 2px;
     box-shadow: none;
-    padding: 15px 18px 0;
+    padding: 15px 18px 10px 15px;
     margin-left: -9px;
     margin-right: -9px;
 }
+.label.label-Berhasil{
+    background: #01C853;
+    padding: 9px 50px;
+    font-size: 14px;
+}
+.label.label-Batal{
+    background: #FEC107;
+    padding: 9px 50px;
+    font-size: 14px;
+}
+
 
 .panel-left{
     background: #fff;

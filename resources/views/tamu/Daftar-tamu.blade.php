@@ -18,7 +18,7 @@
                 </div>
             </div>
 
-            <div class="row" style="padding: 25px 25px">
+            <div class="row" style="padding: 2px 10px 10px 10px">
                 <div class="col-sm-12">
                     <div class="panel panel-default card-view">
                         <div class="panel-heding">
@@ -59,7 +59,7 @@
 
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
-                                <div class="table-wrap mt-40">
+                                <div class="table-wrap mt-1">
                                     <div class="table-responsive">
                                         <table class="table mb-0">
                                             <thead>
