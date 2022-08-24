@@ -11,8 +11,8 @@ class TamuController extends Controller
 {
     // fungsi Paginasi
     public function daftartamu(){
-        $data['visitor'] = DB::table('Visitors')->orderBy('created_at', 'desc')->whereNull('deleted_at')->paginate(20);
-        return view('/Daftar-tamu', $data);
+        $data['visitor'] = DB::table('visitors')->orderBy('created_at', 'desc')->whereNull('deleted_at')->paginate(20);
+        return view('tamu.Daftar-tamu', $data);
 
         // return response()->json($data);
     }

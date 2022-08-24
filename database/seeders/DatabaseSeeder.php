@@ -8,6 +8,9 @@ use App\Models\PackageDefault;
 use Illuminate\Database\Seeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Support\Facades\DB;
+
+use Database\Seeders\InvoiceSeeder;
+
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
@@ -25,7 +28,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(VisitorSeeder::class);
         $this->call(PackageSeeder::class);
+        $this->call(InvoiceSeeder::class);
 
-        
     }
 }
