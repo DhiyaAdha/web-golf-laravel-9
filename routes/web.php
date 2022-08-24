@@ -46,8 +46,7 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware('auth');
 
     Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
-    Route::get('/invoice',[InvoiceController::class,'invoice'])->name('invoice');
-    Route::get('/package-item',[PackageController::class,'item'])->name('package.item');
+    Route::get('/invoice',[AuthController::class,'invoice'])->name('invoice');
     Route::get('/scan-tamu',[ScanController::class,'scantamu'])->name('scan-tamu');
     Route::get('/scan-tamu-berhasil',[ScanController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
     Route::get('/proses',[ScanController::class,'proses'])->name('proses');
@@ -62,32 +61,24 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
     
     Route::get('/tambah-admin',[AuthController::class,'tambahadmin'])->name('tambah-admin');
     
-    Route::get('/riwayat-invoice',[InvoiceController::class,'riwayatinvoice'])->name('riwayat-invoice');
+    Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
 
-Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
-Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
-Route::get('/tambah-admin', [AuthController::class, 'tambah_admin'])->name('tambah-admin');
-Route::get('/edit-admin', [AuthController::class, 'edit_admin'])->name('edit-admin');
-});
-
-
-Route::group(['middleware' => ['auth','ceklevel:1']], function() {
-Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
-Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
-Route::get('/tambah-admin', [AuthController::class, 'tambah_admin'])->name('tambah-admin');
-Route::get('/edit-tamu',[AuthController::class,'edittamu'])->name('edit-tamu');
+    
+    
+    Route::get('/tambah-admin', [AuthController::class, 'tambah_admin'])->name('tambah-admin');
+    Route::get('/edit-admin', [AuthController::class, 'edit_admin'])->name('edit-admin');
+    Route::get('/edit-tamu',[AuthController::class,'edittamu'])->name('edit-tamu');
 });
 
 //Level admin dan superadmin
 Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
 
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware('auth');
-    Route::get('/invoice',[InvoiceController::class,'invoice'])->name('invoice');
-
-    Route::get('/package-item',[PackageController::class,'item'])->name('package.item');
+    Route::get('/invoice',[AuthController::class,'invoice'])->name('invoice');
     Route::get('/scan-tamu',[ScanController::class,'scantamu'])->name('scan-tamu');
     Route::get('/scan-tamu-berhasil',[ScanController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
     Route::get('/order',[AuthController::class,'order'])->name('order');
+    Route::resource('package', PackageController::class)->except(['show','update']);
 
     // Route: Daftar-tamu
     Route::get('/daftar-tamu',[TamuController::class,'daftartamu'])->name('daftar-tamu');
@@ -95,11 +86,15 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::post('/inserttamu',[TamuController::class,'inserttamu'])->name('inserttamu');
     route::get('/daftar-tamu/hapus/{id}', [TamuController::class, 'hapus'])->name('hapus');
     route::get('qrcode/{id}', [ScanController::class, 'generate'])->name('generate');
-    
-    // Route::get('/riwayat-invoice',[AuthController::class,'riwayatinvoice'])->name('riwayat-invoice');
-    Route::get('/riwayat-invoice',[InvoiceController::class,'riwayatinvoice'])->name('riwayat-invoice');
 
-    Route::get('/tambah-admin',[AuthController::class,'tambah_admin'])->name('tambah-admin');
+
+    Route::get('/tambah-admin',[AuthController::class,'tambahadmin'])->name('tambah-admin');
+
+    Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
+
+    
+
+    Route::get('/edit-tamu',[AuthController::class,'edittamu'])->name('edit-tamu');
 });
 
 //Finish level admin dan superadmin

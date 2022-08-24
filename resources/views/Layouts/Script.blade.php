@@ -63,6 +63,7 @@
         new Switchery($(this)[0], $(this).data());
     });
 
+
     $('#dt-package').DataTable({
         "processing": true,
         "serverSide": true,
@@ -138,6 +139,73 @@
             orderable: false,
             targets: [0, 1, 2, 3, 4, 5, ]
         }, ],
+    });
+
+    // invoice
+    $('#dt-riwayat').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "lengthChange": false,
+        "searching": true,
+        "paginate": {
+            "first": "First",
+            "last": "Last",
+            "next": "Next",
+            "previous": "Previous"
+        },
+        "ajax": {
+            "url": "{{ route('riwayat-invoice.index') }}",
+            "type": "GET",
+            "datatype": "json"
+        },
+        "columns": [
+            // { "data": function(data) { return data.name }},
+            // { "data": function(data) { return data.category }},
+            {
+                "data": function(data) {
+                    return data.visitor.name
+                }
+            },
+            {
+                "data": function(data) {
+                    return data.visitor.tipe_member
+                }
+
+            },
+            {
+                "data": function(data) {
+                    return `<span>Rp ${data.total}</span>`
+                }
+            },
+            {
+                "data": function(data) {
+                    return moment(data.created_at).format("DD MMMM YYYY")
+                }
+            },
+
+
+        ],
+        order: [],
+        responsive: true,
+        language: {
+            search: "",
+            searchPlaceholder: "Cari",
+            emptyTable: "Tidak ada data yang sesuai",
+            info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+            infoFiltered: "(difilter dari _MAX_ total data)",
+            infoEmpty: "Tidak ada data yang sesuai",
+            lengthMenu: "Menampilkan _MENU_ data",
+            zeroRecords: "Tidak ada data yang sesuai"
+        },
+        columnDefs: [{
+                orderable: false,
+                targets: [0, 1, 2, 3, ]
+            },
+            {
+                targets: [1, 2, 3],
+                className: 'text-center'
+            }
+        ],
     });
 
     $(document).on("click", "#show-scan", function() {
