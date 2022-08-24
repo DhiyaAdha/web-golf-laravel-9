@@ -19,7 +19,7 @@ class InvoiceController extends Controller
         // $visitor = visitor::find(1);
 
         // $riwayat_invoice = LogTransaction::orderBy('id')->$logtransaction->visitor()->associate($visitor)->get();
-        $riwayat_invoice = LogTransaction::with('visitor')->orderBy('id')->get();
+        $riwayat_invoice = LogTransaction::with('visitor')->orderBy('created_at', 'desc')->get();
         if($request->ajax()){
             return datatables()->of($riwayat_invoice)
                         ->addIndexColumn()

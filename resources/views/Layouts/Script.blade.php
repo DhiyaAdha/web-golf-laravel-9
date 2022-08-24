@@ -146,7 +146,7 @@
             // { "data": function(data) { return data.category }},
             { "data": function(data) { return data.visitor.name }},
             { "data": function(data) { return data.visitor.tipe_member }},
-            { "data": function(data) { return data.total }},
+            { "data": function(data) { return `<span>Rp ${data.total}</span>` }},
             { "data": function(data) { return moment(data.created_at).format("DD MMMM YYYY") }},
             
            
@@ -165,7 +165,7 @@
         },
         columnDefs: [
             { orderable: false, targets: [0, 1, 2,3,] },
-            { targets: [1, 2], className: 'text-center'}
+            { targets: [1, 2, 3], className: 'text-center'}
         ],
     });
 
