@@ -25,8 +25,7 @@ class CreateVisitorsTable extends Migration
             $table->enum('gender',['laki-laki', 'perempuan']);
             // $table->string('tipe_member')->default('VIP');
             $table->enum('tipe_member',['VVIP', 'VIP']);
-
-            $table->rememberToken();
+            // $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
         });

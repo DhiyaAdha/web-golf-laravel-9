@@ -21,11 +21,17 @@ class CreateDepositHistoriesTable extends Migration
             $table->enum('payment_type',['deposit', 'cash', 'transfer']);
 
             $table->timestamps();
+
+            $table->foreign('visitor_id')
+                ->references('id')
+                ->on('visitors')
+                ->onDelete('cascade');
+
         });
 
-        Schema::table('deposit_histories', function($table) {
-            $table->foreign('visitor_id')->references('id')->on('visitors');
-        });
+        // Schema::table('deposit_histories', function($table) {
+        //     $table->foreign('visitor_id')->references('id')->on('visitors');
+        // });
 
     }
 

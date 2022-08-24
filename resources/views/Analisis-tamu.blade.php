@@ -127,7 +127,8 @@
                                         </span>
                                     </li>
                                     <li>
-                                        <span class="block">Total Tamu Berkunjung</span>
+                                        {{-- <span class="block">Total Tamu Berkunjung</span> --}}
+                                        <span class="block">Statistika Pertahun</span>
                                         <span class="block txt-dark weight-500 font-18"><span
                                                 class="counter-anim">{{ $visitor_year }}</span></span>
                                     </li>
@@ -257,7 +258,7 @@
                                         <table class="table table-hover mb-0">
 											<thead>
 												<tr>
-													<th>ID</th>
+													
 													<th>Nama Tamu</th>
 													<th>Tanggal</th>
 													<th>Kategori Tamu</th>
@@ -269,7 +270,7 @@
 												{{-- analisis-tamu --}}
 												@foreach ($visitor as $item)
 													<tr>
-														<td><span class="txt-dark weight-500">#{{ $item->id }}</span></td>
+														{{-- <td><span class="txt-dark weight-500">#{{ $item->id }}</span></td> --}}
 														<td>{{ $item->name }}</td>
 														<td><span class="txt-success"><i class="zmdi zmdi-caret-up mr-10 font-20"></i><span>{{ date('d F Y', strtotime($item->created_at)) }}</span></span></td>
 														<td>
