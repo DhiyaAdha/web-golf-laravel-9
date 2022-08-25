@@ -39,7 +39,7 @@
     			<div class="col-md-6">
     				<address>
     				<strong>Nama Tamu:</strong><br>
-					<td><span class="txt-dark weight-500">{{ Auth::user()->name }}</span></td>
+					<td><span class="txt-dark weight-500">{{ $visitor->name }}</span></td>
 					<br>
 					{{  Auth::user()->email }}<br>
 					{{  Auth::user()->phone }}<br>
