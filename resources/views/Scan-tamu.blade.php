@@ -14,9 +14,13 @@
                         <h6>Data Pengunjung</h6>
                         <div class="col-sm-12">
                             <div class="panel-body">
-                                <p class="mt-500"
-                                    style="text-align: center; color:gray; position:absolute; top:100px; left:350px;">Tidak
-                                    ada data</p>
+                                {{-- <p class="ct-txt mt-500"
+                                    style="text-align: center; color:gray; position:absolute; top:100px; left:350px;">
+                                    Tidak
+                                    ada data</p> --}}
+                                <div class="ct-txt">
+                                    <p>Tidak ada data</p>
+                                </div>
                             </div>
                             </ </div>
                             <!-- /Basic Table -->
@@ -33,7 +37,7 @@
                             <div id="reader" width="600px" class=""></div>
                             <div class="gambar-qr">
                                 <div class="disabled-scan ">
-                                    <img src="/dist/img/qr.png" alt="" width="80px" class="ml-20">
+                                    <img src="/dist/img/qr.png" class="ml-20">
                                     <div class="btn-scan mt-10">
                                         {{-- <button type="button" id="show-scan" style="text-align:center;">Scan QR</button> --}}
                                         <div class="btn-scan-qr">

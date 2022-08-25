@@ -291,7 +291,6 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
-                                        =======
                                         <thead>
                                             <tr>
 
@@ -325,7 +324,6 @@
                                             @endforeach
                                         </tbody>
                                         </table>
-                                        >>>>>>> dhiya
                                         {{ $visitor->links() }}
                                     </div>
                                 </div>
@@ -381,7 +379,6 @@
         var vvip_sab = <?php print $vvip_sab; ?>;
         var vip_sab = <?php print $vip_sab; ?>;
     </script>
-
 
     var vvip_min = <?php print $vvip_min; ?>;
     var vip_min = <?php print $vip_min; ?>;

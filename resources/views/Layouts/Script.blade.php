@@ -161,6 +161,7 @@
             "type": "GET",
             "datatype": "json"
         },
+        "render": $.fn.dataTable.render.text(),
         "columns": [
             // { "data": function(data) { return data.name }},
             // { "data": function(data) { return data.category }},
@@ -171,7 +172,11 @@
             },
             {
                 "data": function(data) {
-                    return data.visitor.tipe_member
+                    if (data.visitor.tipe_member == 'VIP') {
+                        return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
+                    } else {
+                        return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
+                    }
                 }
             },
             {
