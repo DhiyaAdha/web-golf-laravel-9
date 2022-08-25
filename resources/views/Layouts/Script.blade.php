@@ -62,7 +62,7 @@
     // $('.js-switch-1').each(function() {
     //     new Switchery($(this)[0], $(this).data());
     // });
-    
+
 
     $('#dt-package').DataTable({
         "processing": true,
@@ -151,26 +151,44 @@
         "lengthChange": false,
         "searching": true,
         "paginate": {
-            "first":      "First",
-            "last":       "Last",
-            "next":       "Next",
-            "previous":   "Previous"
+            "first": "First",
+            "last": "Last",
+            "next": "Next",
+            "previous": "Previous"
         },
-        "ajax" : {
-            "url" : "{{ route('riwayat-invoice.index') }}",
-            "type" : "GET",
-            "datatype" : "json"
+        "ajax": {
+            "url": "{{ route('riwayat-invoice.index') }}",
+            "type": "GET",
+            "datatype": "json"
         },
-        "columns" : [
+        "columns": [
             // { "data": function(data) { return data.name }},
             // { "data": function(data) { return data.category }},
-            { "data": function(data) { return data.visitor.name }},
-            { "data": function(data) { return data.visitor.tipe_member }},
-            { "data": function(data) { return `<span>Rp ${data.total}</span>` }},
+            {
+                "data": function(data) {
+                    return data.visitor.name
+                }
+            },
+            {
+                "data": function(data) {
+                    return data.visitor.tipe_member
+                }
+            },
+            {
+                "data": function(data) {
+                    return `<span>Rp ${data.total}</span>`
+                }
+            },
 
-            { "data": function(data) { return moment(data.created_at).format("DD MMMM YYYY") }},
-            
-           { "data": "action"},
+            {
+                "data": function(data) {
+                    return moment(data.created_at).format("DD MMMM YYYY")
+                }
+            },
+
+            // {
+            //     "data": "action"
+            // },
 
         ],
         order: [],
@@ -185,38 +203,43 @@
             lengthMenu: "Menampilkan _MENU_ data",
             zeroRecords: "Tidak ada data yang sesuai"
         },
-        columnDefs: [
-            { orderable: false, targets: [0, 1, 2,3,] },
-            { targets: [1, 2, 3], className: 'text-center'}
+        columnDefs: [{
+                orderable: false,
+                targets: [0, 1, 2, 3, ]
+            },
+            {
+                targets: [1, 2, 3],
+                className: 'text-center'
+            }
         ],
     });
 
     // search
     // $(document).ready(function(){
-	// 	load_data();
-	// 	function load_data(jurusan, keyword)
-	// 	{
-	// 		$.ajax({
-	// 			method:"POST",
-	// 			url:"{{ route('riwayat-invoice.index') }",
-	// 			data: {jurusan: jurusan, keyword:keyword},
-	// 			success:function(hasil)
-	// 			{
-	// 				$('.data').html(hasil);
-	// 			}
-	// 		});
-	//  	}
-	// 	$('#s_keyword').keyup(function(){
-	// 		var jurusan = $("#s_jurusan").val();
+    // 	load_data();
+    // 	function load_data(jurusan, keyword)
+    // 	{
+    // 		$.ajax({
+    // 			method:"POST",
+    // 			url:"{{ route('riwayat-invoice.index') }",
+    // 			data: {jurusan: jurusan, keyword:keyword},
+    // 			success:function(hasil)
+    // 			{
+    // 				$('.data').html(hasil);
+    // 			}
+    // 		});
+    //  	}
+    // 	$('#s_keyword').keyup(function(){
+    // 		var jurusan = $("#s_jurusan").val();
     // 		var keyword = $("#s_keyword").val();
-	// 		load_data(jurusan, keyword);
-	// 	});
-	// 	$('#s_jurusan').change(function(){
-	// 		var jurusan = $("#s_jurusan").val();
+    // 		load_data(jurusan, keyword);
+    // 	});
+    // 	$('#s_jurusan').change(function(){
+    // 		var jurusan = $("#s_jurusan").val();
     // 		var keyword = $("#s_keyword").val();
-	// 		load_data(jurusan, keyword);
-	// 	});
-	// });
+    // 		load_data(jurusan, keyword);
+    // 	});
+    // });
 
 
     $(document).on("click", "#show-scan", function() {
