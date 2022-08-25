@@ -161,9 +161,11 @@
             "type": "GET",
             "datatype": "json"
         },
+        "render": $.fn.dataTable.render.text(),
         "columns": [
             // { "data": function(data) { return data.name }},
             // { "data": function(data) { return data.category }},
+<<<<<<< HEAD
 <<<<<<< HEAD
             { "data": function(data) { return data.visitor.name }},
             { "data": function(data) { return data.visitor.tipe_member }},
@@ -176,15 +178,21 @@
 =======
             <<
             << << < HEAD {
+=======
+            {
+>>>>>>> c8a06426adf4551301848480452e8909adab2bb3
                 "data": function(data) {
                     return data.visitor.name
                 }
             },
             {
                 "data": function(data) {
-                    return data.visitor.tipe_member
+                    if (data.visitor.tipe_member == 'VIP') {
+                        return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
+                    } else {
+                        return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
+                    }
                 }
-
             },
             {
                 "data": function(data) {
@@ -197,6 +205,7 @@
                 }
             },
 
+<<<<<<< HEAD
 
             ===
             === = {
@@ -221,6 +230,11 @@
             }, >>>
             >>> > dhiya
 >>>>>>> f4b36bd06055bf7bbf47d11779b4958d637d7816
+=======
+            // {
+            //     "data": "action"
+            // },
+>>>>>>> c8a06426adf4551301848480452e8909adab2bb3
         ],
         order: [],
         responsive: true,
