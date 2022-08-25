@@ -23,16 +23,8 @@
             </a>
         </li>
         <li>
-<<<<<<< HEAD
-
             <a class="{{ Request::is('daftar-tamu') ? 'active' : '' }}" href="/daftar-tamu">
 
-                {{-- <a class="{{ Request::is('Daftar-tamu') ? 'active' : '' }}" href="/daftar-tamu" > --}}
-
-
-=======
-            <a class="{{ Request::is('daftar-tamu') ? 'active' : '' }}" href="/daftar-tamu">
->>>>>>> dhiya
                 <div class="pull-left">
                     <i class="fa fa-user mr-20"></i>
                     <span class="right-nav-text">Daftar Tamu</span>
