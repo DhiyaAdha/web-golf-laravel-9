@@ -17,6 +17,10 @@ class ScanController extends Controller
         return view('/scan-tamu-berhasil');
     }
 
+    public function proses (){
+        return view('proses');
+    }
+
     // fungsi generate QRcode Daftar-tamu
     public function generate ($id)
     {
