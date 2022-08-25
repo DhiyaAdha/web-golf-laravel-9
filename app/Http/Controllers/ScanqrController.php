@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
 use App\Models\Visitor;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Helpers\ApiFormatter;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
-class VisitorApiController extends Controller
+class ScanqrController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,13 +16,6 @@ class VisitorApiController extends Controller
     public function index()
     {
         //
-        $data = Visitor::all();
-
-        if($data)  {
-            return ApiFormatter::createApi(200, 'Success',$data);
-        } else {
-            return ApiFormatter::createApi(400, 'Failed');
-        }
     }
 
     /**
@@ -56,6 +48,9 @@ class VisitorApiController extends Controller
     public function show($id)
     {
         //
+        // $visitor = Visitor::findOrFail($id);
+        // $qrcode = QrCode::size(400)->generate($visitor->id);
+        // return view('qrcode',compact('qrcode'));
     }
 
     /**

@@ -24,14 +24,24 @@ class CreateLogTransactionsTable extends Migration
             $table->timestamp('created_at');
             // $table->integer('visitor_id');
 
-        });
+            $table->foreign('visitor_id')
+                ->references('id')
+                ->on('visitors')
+                ->onDelete('cascade');
 
-        Schema::table('log_transactions', function($table) {
-            $table->foreign('visitor_id')->references('id')->on('visitors');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+
+
         });
+        
+        // Schema::table('log_transactions', function($table) {
+        //     $table->foreign('visitor_id')->references('id')->on('visitors');
+        //     $table->foreign('user_id')->references('id')->on('users');
+        // });
     }
-
     /**
      * Reverse the migrations.
      *
@@ -41,4 +51,5 @@ class CreateLogTransactionsTable extends Migration
     {
         Schema::dropIfExists('log_transactions');
     }
+
 }

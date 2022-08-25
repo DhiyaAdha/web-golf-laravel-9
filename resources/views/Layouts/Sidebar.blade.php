@@ -23,9 +23,8 @@
             </a>
         </li>
         <li>
-            <a class="{{ Request::is('daftar-tamu') ? 'active' : '' }}" href="/daftar-tamu">
-
-                {{-- <a class="{{ Request::is('Daftar-tamu') ? 'active' : '' }}" href="/daftar-tamu" > --}}
+            <a class="{{ Request::is('daftar-tamu') ? 'active' : '' }}" href="{{ route('daftar-tamu')}}">
+            {{-- <a class="{{ Request::is('Daftar-tamu') ? 'active' : '' }}" href="/daftar-tamu" > --}}
 
                 <div class="pull-left">
                     <i class="fa fa-user mr-20"></i>
@@ -35,20 +34,20 @@
             </a>
         </li>
         {{-- hideadmin --}}
-        @if (auth()->user()->role_id == '1')
-            <li>
-                <a class="{{ Request::is('daftar-admin') ? 'active' : '' }}" href=" /daftar-admin">
-                    <div class="pull-left">
-                        <i class="fa fa-user mr-20"></i>
-                        <span class="right-nav-text">Daftar Admin</span>
-                    </div>
-                    <div class="clearfix"></div>
-                </a>
-            </li>
+        @if (auth()->user()->role_id=='1')
+        <li>
+            <a class="{{ Request::is('daftar-admin') ? 'active' : '' }}" href="daftar-admin">
+                <div class="pull-left">
+                    <i class="fa fa-user mr-20"></i>
+                    <span class="right-nav-text">Daftar Admin</span>
+                </div>
+                <div class="clearfix"></div>
+            </a>
+        </li>
 
         @endif
         <li>
-            <a class="{{ Request::is('riwayat-invoice') ? 'active' : '' }}" href="/riwayat-invoice">
+            <a class="{{ Request::is('riwayat-invoice') ? 'active' : '' }}" href="{{ route('riwayat-invoice.index')}}">
                 <div class="pull-left">
                     <i class="fa fa-money mr-20"></i>
                     <span class="right-nav-text">Invoice</span>

@@ -29,39 +29,3 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:sanctum'], function(){
 });
 
 
-// API Dhiya
-Route::get('/Visitors', function(){
-    return response()->json(
-        [
-            "message" => "Get Method Success"
-
-        ]
-        );
-});
-
-Route::post('/Visitor', function(){
-    return response()->json(
-        [
-            "message" => "Post Method Success"
-
-        ]
-        );
-});
-
-Route::put('/Visitor/{id}', function($id){
-    return response()->json(
-        [
-            "message" => "PUT Method Success". $id
-
-        ]
-        );
-});
-
-Route::delete('/Visitor/{id}', function($id){
-    return response()->json(
-        [
-            "message" => "DELETE Method Success".$id
-
-        ]
-        );
-});

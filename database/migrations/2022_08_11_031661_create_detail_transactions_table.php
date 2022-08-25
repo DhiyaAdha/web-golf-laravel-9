@@ -17,13 +17,19 @@ class CreateDetailTransactionsTable extends Migration
             $table->increments('id');
             $table->integer('log_transaction_id')->unsigned();
             $table->integer('package_id')->unsigned();
-        });
 
 
-        Schema::table('detail_transactions', function($table) {
-            $table->foreign('package_id')->references('id')->on('packages');
-            $table->foreign('log_transaction_id')->references('id')->on('log_transactions');
+            $table->foreign('package_id')
+                ->references('id')
+                ->on('packages')
+                ->onDelete('cascade');
+            $table->foreign('log_transaction_id')
+                ->references('id')
+                ->on('log_transactions')
+                ->onDelete('cascade');
+
         });
+
     }
 
     /**
