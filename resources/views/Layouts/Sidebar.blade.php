@@ -23,16 +23,7 @@
             </a>
         </li>
         <li>
-<<<<<<< HEAD
-            <a class="{{ Request::is('daftar-tamu') ? 'active' : '' }}" href="{{ route('daftar-tamu')}}">
-            {{-- <a class="{{ Request::is('Daftar-tamu') ? 'active' : '' }}" href="/daftar-tamu" > --}}
-=======
-
             <a class="{{ Request::is('daftar-tamu') ? 'active' : '' }}" href="/daftar-tamu">
-
-                {{-- <a class="{{ Request::is('Daftar-tamu') ? 'active' : '' }}" href="/daftar-tamu" > --}}
->>>>>>> f4b36bd06055bf7bbf47d11779b4958d637d7816
-
                 <div class="pull-left">
                     <i class="fa fa-user mr-20"></i>
                     <span class="right-nav-text">Daftar Tamu</span>
@@ -41,20 +32,6 @@
             </a>
         </li>
         {{-- hideadmin --}}
-<<<<<<< HEAD
-        @if (auth()->user()->role_id=='1')
-        <li>
-            <a class="{{ Request::is('daftar-admin') ? 'active' : '' }}" href="daftar-admin">
-                <div class="pull-left">
-                    <i class="fa fa-user mr-20"></i>
-                    <span class="right-nav-text">Daftar Admin</span>
-                </div>
-                <div class="clearfix"></div>
-            </a>
-        </li>
-
-=======
-
         @if (auth()->user()->role_id == '1')
             <li>
                 <a class="{{ Request::is('daftar-admin') ? 'active' : '' }}" href="daftar-admin">
@@ -65,8 +42,7 @@
                     <div class="clearfix"></div>
                 </a>
             </li>
->>>>>>> f4b36bd06055bf7bbf47d11779b4958d637d7816
-        @endif
+            @endif
         <li>
             <a class="{{ Request::is('riwayat-invoice') ? 'active' : '' }}" href="{{ route('riwayat-invoice.index') }}">
                 <div class="pull-left">
