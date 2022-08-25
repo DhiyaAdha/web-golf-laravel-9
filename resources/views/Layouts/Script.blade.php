@@ -164,32 +164,7 @@
         "columns": [
             // { "data": function(data) { return data.name }},
             // { "data": function(data) { return data.category }},
-            <<
-            << << < HEAD {
-                "data": function(data) {
-                    return data.visitor.name
-                }
-            },
             {
-                "data": function(data) {
-                    return data.visitor.tipe_member
-                }
-
-            },
-            {
-                "data": function(data) {
-                    return `<span>Rp ${data.total}</span>`
-                }
-            },
-            {
-                "data": function(data) {
-                    return moment(data.created_at).format("DD MMMM YYYY")
-                }
-            },
-
-
-            ===
-            === = {
                 "data": function(data) {
                     return data.visitor.name
                 }
@@ -208,8 +183,11 @@
                 "data": function(data) {
                     return moment(data.created_at).format("DD MMMM YYYY")
                 }
-            }, >>>
-            >>> > dhiya
+            },
+
+            // {
+            //     "data": "action"
+            // },
         ],
         order: [],
         responsive: true,
