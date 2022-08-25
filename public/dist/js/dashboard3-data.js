@@ -129,8 +129,10 @@ $(document).ready(function(){
 				{ y: 'Kam', a: vvip_kam,  b: vip_kam },
 				{ y: 'Jum', a: vvip_jum,  b: vip_jum },
 				{ y: 'Sab', a: vvip_sab,  b: vip_sab },
-				{ y: 'Mgg', a: vvip_min,  wb: vip_min }
-			],
+
+				{ y: 'Mgg', a: vvip_min, b: vip_min }
+			  ],
+
 			xkey: 'y',
 			ykeys: ['a', 'b', ],
 			labels: ['VVIP', 'VIP', ],

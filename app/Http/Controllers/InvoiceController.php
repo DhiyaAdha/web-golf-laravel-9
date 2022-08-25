@@ -32,7 +32,9 @@ class InvoiceController extends Controller
             // ->rawColumns(['action'])
             // ->addIndexColumn()
             // ->make(true);
+
         }
+        
         return view('invoice.riwayat-invoice');
     }
 
@@ -101,4 +103,6 @@ class InvoiceController extends Controller
     {
         //
     }
+
+    
 }

@@ -127,7 +127,7 @@
                         <div class="row">
                             <div class="col-lg-12 mt-10">
                                 <div class="btn-proses">
-                                    <a href="#">
+                                    <a href="/proses">
                                         <h6 style="color: #ffffff;">Proses</h6>
                                     </a>
                                 </div>

@@ -73,7 +73,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group text-left">
-                                            <button type="submit" class="btn btn-info">Simpan</button>
+                                            <a href="/tambah-deposit"><button type="submit" class="btn btn-info">Simpan</button></a>
                                         </div>
                                     </form>
                             </div>
