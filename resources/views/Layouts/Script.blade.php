@@ -149,7 +149,7 @@
             { "data": function(data) { return `<span>Rp ${data.total}</span>` }},
             { "data": function(data) { return moment(data.created_at).format("DD MMMM YYYY") }},
             
-           
+           { "data": "action"},
         ],
         order: [],
         responsive: true,

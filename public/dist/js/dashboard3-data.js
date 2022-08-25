@@ -128,7 +128,7 @@ $(document).ready(function(){
 				{ y: 'Rab', a: vvip_rab,  b: vip_rab },
 				{ y: 'Kam', a: vvip_kam,  b: vip_kam },
 				{ y: 'Jum', a: vvip_jum,  b: vip_jum },
-				{ y: 'Sab', a: vvip_sab,  b: vvip_sab },
+				{ y: 'Sab', a: vvip_sab,  b: vip_sab },
 				{ y: 'Mgg', a: vvip_min, b: vip_min }
 			  ],
 			xkey: 'y',

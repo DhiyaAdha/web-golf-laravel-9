@@ -341,8 +341,8 @@
             var vip_kam = <?php print $vip_kam; ?>;
             var vvip_jum = <?php print $vvip_jum; ?>;
             var vip_jum = <?php print $vip_jum; ?>;
-            var vvip_sa = <?php print $vvip_sa; ?>;
-            var vip_sa = <?php print $vip_sa; ?>;
+            var vvip_sab = <?php print $vvip_sab; ?>;
+            var vip_sab = <?php print $vip_sab; ?>;
         </script>
 
 
