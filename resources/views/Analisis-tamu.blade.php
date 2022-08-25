@@ -291,7 +291,6 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
-                                        =======
                                         <thead>
                                             <tr>
 

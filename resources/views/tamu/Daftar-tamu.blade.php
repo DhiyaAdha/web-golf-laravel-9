@@ -1,6 +1,5 @@
 @extends('Layouts.Main', ['title' => 'TGCC | Daftar Tamu'])
 @include('sweetalert::alert')
-
 <div class="page-wrapper">
     <div class="container-fluid">
         <div class="row heading-bg">
@@ -88,11 +87,11 @@
 
                                                         </td>
                                                         <td style="text-align: center;">
-                                                            <a href="{{ route('generate', $item->id) }}">
+                                                            <a href="{{ route('kartu-tamu') }}">
                                                                 <img src="dist/img/Card-Tamu.svg" alt=""
                                                                     style="padding: 2px 7px 2px 2px;">
                                                             </a>
-                                                            <a href="/edit-tamu">
+                                                            <a href="{{ route('edit-tamu') }}">
                                                                 <img src="dist/img/edit.svg" alt=""
                                                                     style="padding: 2px 7px 2px 2px;">
                                                             </a>
