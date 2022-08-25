@@ -23,6 +23,7 @@ class CreatePackagesTable extends Migration
             $table->timestamps();
 
         });
+        
     }
 
     /**

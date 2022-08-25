@@ -63,7 +63,8 @@
     //     new Switchery($(this)[0], $(this).data());
     // });
     
-
+    
+    // package
     $('#dt-package').DataTable({
         "processing": true,
         "serverSide": true,
@@ -78,7 +79,8 @@
         "ajax" : {
             "url" : "{{ route('package.index') }}",
             "type" : "GET",
-            "datatype" : "json"
+            "datatype" : "json",
+            
         },
         "columns" : [
             { "data": function(data) { return data.name }},
@@ -127,8 +129,6 @@
 
 
     // invoice
-    // $()
-
     $('#dt-riwayat').DataTable({
         "processing": true,
         "serverSide": true,
@@ -172,33 +172,12 @@
     });
 
     // search
-    // $(document).ready(function(){
-	// 	load_data();
-	// 	function load_data(jurusan, keyword)
-	// 	{
-	// 		$.ajax({
-	// 			method:"POST",
-	// 			url:"{{ route('riwayat-invoice.index') }",
-	// 			data: {jurusan: jurusan, keyword:keyword},
-	// 			success:function(hasil)
-	// 			{
-	// 				$('.data').html(hasil);
-	// 			}
-	// 		});
-	//  	}
-	// 	$('#s_keyword').keyup(function(){
-	// 		var jurusan = $("#s_jurusan").val();
-    // 		var keyword = $("#s_keyword").val();
-	// 		load_data(jurusan, keyword);
-	// 	});
-	// 	$('#s_jurusan').change(function(){
-	// 		var jurusan = $("#s_jurusan").val();
-    // 		var keyword = $("#s_keyword").val();
-	// 		load_data(jurusan, keyword);
-	// 	});
-	// });
 
 
+
+    
+
+    // scan
     $(document).on("click", "#show-scan", function() {
         $(".disabled-scan").css("display", "none");
 

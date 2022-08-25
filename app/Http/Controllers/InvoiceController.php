@@ -15,15 +15,23 @@ class InvoiceController extends Controller
      */
     public function index(Request $request)
     {
+        
         // $logtransaction = LogTransaction::find(1);
         // $visitor = visitor::find(1);
-
         // $riwayat_invoice = LogTransaction::orderBy('id')->$logtransaction->visitor()->associate($visitor)->get();
+
+        
         $riwayat_invoice = LogTransaction::with('visitor')->orderBy('created_at', 'desc')->get();
         if($request->ajax()){
             return datatables()->of($riwayat_invoice)
                         ->addIndexColumn()
                         ->make(true);
+
+            // return datatables()->of(LogTransaction::select('*'))
+            // ->addColumn('action', 'company-action')
+            // ->rawColumns(['action'])
+            // ->addIndexColumn()
+            // ->make(true);
         }
         return view('invoice.riwayat-invoice');
     }
