@@ -62,8 +62,6 @@
     // $('.js-switch-1').each(function() {
     //     new Switchery($(this)[0], $(this).data());
     // });
-
-
     $('#dt-package').DataTable({
         "processing": true,
         "serverSide": true,
@@ -75,10 +73,10 @@
             "next": "Next",
             "previous": "Previous"
         },
-        "ajax": {
-            "url": "{{ route('package.index') }}",
-            "type": "GET",
-            "datatype": "json"
+        "ajax" : {
+            "url" : "{{ route('package.index') }}",
+            "type" : "GET",
+            "datatype" : "json",
         },
         "columns": [{
                 "data": function(data) {
@@ -143,8 +141,6 @@
 
 
     // invoice
-    // $()
-
     $('#dt-riwayat').DataTable({
         "processing": true,
         "serverSide": true,
@@ -233,46 +229,17 @@
             }
         ],
     });
-
     // search
-    // $(document).ready(function(){
-    // 	load_data();
-    // 	function load_data(jurusan, keyword)
-    // 	{
-    // 		$.ajax({
-    // 			method:"POST",
-    // 			url:"{{ route('riwayat-invoice.index') }",
-    // 			data: {jurusan: jurusan, keyword:keyword},
-    // 			success:function(hasil)
-    // 			{
-    // 				$('.data').html(hasil);
-    // 			}
-    // 		});
-    //  	}
-    // 	$('#s_keyword').keyup(function(){
-    // 		var jurusan = $("#s_jurusan").val();
-    // 		var keyword = $("#s_keyword").val();
-    // 		load_data(jurusan, keyword);
-    // 	});
-    // 	$('#s_jurusan').change(function(){
-    // 		var jurusan = $("#s_jurusan").val();
-    // 		var keyword = $("#s_keyword").val();
-    // 		load_data(jurusan, keyword);
-    // 	});
-    // });
 
-
+    // scan
     $(document).on("click", "#show-scan", function() {
         $(".disabled-scan").css("display", "none");
-
         function onScanSuccess(decodedText, decodedResult) {
             $("#result").val(decodedText)
         }
-
         function onScanFailure(error) {
             console.warn(`Code scan error = ${error}`);
         }
-
         let html5QrcodeScanner = new Html5QrcodeScanner(
             "reader", {
                 fps: 10,
