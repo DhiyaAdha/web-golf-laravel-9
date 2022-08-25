@@ -36,44 +36,44 @@ $( document ).ready(function() {
 		}, {
 		  // Remove this configuration to see that chart rendered with cardinal spline interpolation
 		  // Sometimes, on large jumps in data values, it's better to use simple smoothing.
-		  lineSmooth: Chartist.Interpolation.simple({
+		lineSmooth: Chartist.Interpolation.simple({
 			divisor: 2
-		  }),
-		  fullWidth: true,
-		  chartPadding: {
+		}),
+		fullWidth: true,
+		chartPadding: {
 			right: 20
-		  },
-		  low: 0
+		},
+		low: 0
 		});
 	}
 	
 	if( $('#ct_chart_3').length > 0 ){
 		new Chartist.Pie('#ct_chart_3', {
-		  series: [20, 10, 30, 40]
+		series: [20, 10, 30, 40]
 		}, {
-		  donut: true,
-		  donutWidth: 60,
-		  startAngle: 270,
-		  total: 200,
-		  showLabel: true
+		donut: true,
+		donutWidth: 60,
+		startAngle: 270,
+		total: 200,
+		showLabel: true
 		});
 	}
 	
 	if( $('#ct_chart_4').length > 0 ){
 		new Chartist.Bar('#ct_chart_4',{
 			labels: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8', 'W9', 'W10'],
-			  series: [
+			series: [
 				[1, 2, 4, 8, 6, -2, -1, -4, -6, -2]
-			  ]
+			]
 			},
 			{
-			  high: 10,
-			  low: -10,
-			  axisX: {
+			high: 10,
+			low: -10,
+			axisX: {
 				labelInterpolationFnc: function(value, index) {
-				  return index % 2 === 0 ? value : null;
+				return index % 2 === 0 ? value : null;
 				}
-			  }
+			}
 			});
 	}
 	

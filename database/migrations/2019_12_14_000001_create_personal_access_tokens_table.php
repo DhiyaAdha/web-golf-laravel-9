@@ -25,12 +25,18 @@ class CreatePersonalAccessTokensTable extends Migration
             $table->text('abilities')->nullable();
             $table->timestamp('last_used_at')->nullable();
             $table->timestamps();
+
+            $table->foreign('tokenable_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+
         });
 
         //solusi #1
-        Schema::table('personal_access_tokens', function($table) {
-            $table->foreign('tokenable_id')->references('id')->on('users');
-        });
+        // Schema::table('personal_access_tokens', function($table) {
+        //     $table->foreign('tokenable_id')->references('id')->on('users');
+        // });
 
 
     }

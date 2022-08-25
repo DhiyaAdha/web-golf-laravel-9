@@ -128,7 +128,8 @@
                                         </span>
                                     </li>
                                     <li>
-                                        <span class="block">Total Tamu Berkunjung</span>
+                                        {{-- <span class="block">Total Tamu Berkunjung</span> --}}
+                                        <span class="block">Statistika Pertahun</span>
                                         <span class="block txt-dark weight-500 font-18"><span
                                                 class="counter-anim">{{ $visitor_year }}</span></span>
                                     </li>
@@ -290,6 +291,41 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
+                                        =======
+                                        <thead>
+                                            <tr>
+
+                                                <th>Nama Tamu</th>
+                                                <th>Tanggal</th>
+                                                <th>Kategori Tamu</th>
+                                                <th>Pukul</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {{-- analisis-tamu --}}
+                                            @foreach ($visitor as $item)
+                                                <tr>
+                                                    {{-- <td><span class="txt-dark weight-500">#{{ $item->id }}</span></td> --}}
+                                                    <td>{{ $item->name }}</td>
+                                                    <td><span class="txt-success"><i
+                                                                class="zmdi zmdi-caret-up mr-10 font-20"></i><span>{{ date('d F Y', strtotime($item->created_at)) }}</span></span>
+                                                    </td>
+                                                    <td>
+                                                        @if ($item->tipe_member == 'VVIP')
+                                                            <span class="label label-warning">VVIP</span>
+                                                        @else
+                                                            <span class="label label-success">VIP</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        {{ date('H:i', strtotime($item->created_at)) }} WIB
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                        </table>
+                                        >>>>>>> dhiya
                                         {{ $visitor->links() }}
                                     </div>
                                 </div>
@@ -343,7 +379,23 @@
         var vip_kam = <?php print $vip_kam; ?>;
         var vvip_jum = <?php print $vvip_jum; ?>;
         var vip_jum = <?php print $vip_jum; ?>;
-        var vvip_sa = <?php print $vvip_sa; ?>;
-        var vip_sa = <?php print $vip_sa; ?>;
+        var vvip_sab = <?php print $vvip_sab; ?>;
+        var vip_sab = <?php print $vip_sab; ?>;
+    </script>
+
+
+    var vvip_min = <?php print $vvip_min; ?>;
+    var vip_min = <?php print $vip_min; ?>;
+    var vvip_sen = <?php print $vvip_sen; ?>;
+    var vip_sen = <?php print $vip_sen; ?>;
+    var vvip_sel = <?php print $vvip_sel; ?>;
+    var vip_sel = <?php print $vip_sel; ?>;
+    var vvip_rab = <?php print $vvip_rab; ?>;
+    var vip_rab = <?php print $vip_rab; ?>;
+    var vvip_kam = <?php print $vvip_kam; ?>;
+    var vip_kam = <?php print $vip_kam; ?>;
+    var vvip_jum = <?php print $vvip_jum; ?>;
+    var vip_jum = <?php print $vip_jum; ?>;
+    var vip_sa = <?php print $vip_sab; ?>;
     </script>
 @endsection

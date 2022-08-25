@@ -45,23 +45,24 @@
 <!-- Switchery JavaScript -->
 <script src="vendors/bower_components/switchery/dist/switchery.min.js"></script>
 <!-- Init JavaScript -->
-<script src="dist/js/init.js"></script>
-<script src="dist/js/dashboard-data.js"></script>
-<script src="dist/js/dashboard3-data.js"></script>
+<script src="/dist/js/init.js"></script>
+<script src="/dist/js/dashboard-data.js"></script>
+<script src="/dist/js/dashboard3-data.js"></script>
 
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
 
 <script src="{{ asset('/sw.js') }}"></script>
 <script>
-    if (!navigator.serviceWorker.controller) {
-        navigator.serviceWorker.register("/sw.js").then(function(reg) {
-            console.log("Service worker has been registered for scope: " + reg.scope);
-        });
-    }
-    $('.js-switch-1').each(function() {
-        new Switchery($(this)[0], $(this).data());
-    });
+    // if (!navigator.serviceWorker.controller) {
+    //     navigator.serviceWorker.register("/sw.js").then(function (reg) {
+    //         console.log("Service worker has been registered for scope: " + reg.scope);
+    //     });
+    // }
+    // $('.js-switch-1').each(function() {
+    //     new Switchery($(this)[0], $(this).data());
+    // });
+
 
     $('#dt-package').DataTable({
         "processing": true,
@@ -140,7 +141,10 @@
         }, ],
     });
 
+
     // invoice
+    // $()
+
     $('#dt-riwayat').DataTable({
         "processing": true,
         "serverSide": true,
@@ -160,7 +164,8 @@
         "columns": [
             // { "data": function(data) { return data.name }},
             // { "data": function(data) { return data.category }},
-            {
+            <<
+            << << < HEAD {
                 "data": function(data) {
                     return data.visitor.name
                 }
@@ -183,6 +188,28 @@
             },
 
 
+            ===
+            === = {
+                "data": function(data) {
+                    return data.visitor.name
+                }
+            },
+            {
+                "data": function(data) {
+                    return data.visitor.tipe_member
+                }
+            },
+            {
+                "data": function(data) {
+                    return `<span>Rp ${data.total}</span>`
+                }
+            },
+            {
+                "data": function(data) {
+                    return moment(data.created_at).format("DD MMMM YYYY")
+                }
+            }, >>>
+            >>> > dhiya
         ],
         order: [],
         responsive: true,
@@ -206,6 +233,34 @@
             }
         ],
     });
+
+    // search
+    // $(document).ready(function(){
+    // 	load_data();
+    // 	function load_data(jurusan, keyword)
+    // 	{
+    // 		$.ajax({
+    // 			method:"POST",
+    // 			url:"{{ route('riwayat-invoice.index') }",
+    // 			data: {jurusan: jurusan, keyword:keyword},
+    // 			success:function(hasil)
+    // 			{
+    // 				$('.data').html(hasil);
+    // 			}
+    // 		});
+    //  	}
+    // 	$('#s_keyword').keyup(function(){
+    // 		var jurusan = $("#s_jurusan").val();
+    // 		var keyword = $("#s_keyword").val();
+    // 		load_data(jurusan, keyword);
+    // 	});
+    // 	$('#s_jurusan').change(function(){
+    // 		var jurusan = $("#s_jurusan").val();
+    // 		var keyword = $("#s_keyword").val();
+    // 		load_data(jurusan, keyword);
+    // 	});
+    // });
+
 
     $(document).on("click", "#show-scan", function() {
         $(".disabled-scan").css("display", "none");

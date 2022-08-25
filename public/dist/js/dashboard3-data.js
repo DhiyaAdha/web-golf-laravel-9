@@ -13,7 +13,7 @@ $(document).ready(function(){
 	if( $('#chart_7').length > 0 ){
 		var ctx7 = document.getElementById("chart_7").getContext("2d");
 		var data7 = {
-			 labels: [
+			labels: [
 			"Low",
 			"Medium",
 			"High"
@@ -65,7 +65,7 @@ $(document).ready(function(){
 	if( $('#chart_6').length > 0 ){
 		var ctx6 = document.getElementById("chart_6").getContext("2d");
 		var data6 = {
-			 labels: [
+			labels: [
 			"Completed",
 			"Delayed",
 			"Overdue",
@@ -128,9 +128,9 @@ $(document).ready(function(){
 				{ y: 'Rab', a: vvip_rab,  b: vip_rab },
 				{ y: 'Kam', a: vvip_kam,  b: vip_kam },
 				{ y: 'Jum', a: vvip_jum,  b: vip_jum },
-				{ y: 'Sab', a: vvip_sab,  b: vvip_sab },
-				{ y: 'Mgg', a: vvip_min, b: vip_min }
-			  ],
+				{ y: 'Sab', a: vvip_sab,  b: vip_sab },
+				{ y: 'Mgg', a: vvip_min,  wb: vip_min }
+			],
 			xkey: 'y',
 			ykeys: ['a', 'b', ],
 			labels: ['VVIP', 'VIP', ],

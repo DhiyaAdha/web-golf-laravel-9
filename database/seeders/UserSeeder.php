@@ -22,5 +22,13 @@ class UserSeeder extends Seeder
             'role_id' => '1',
         ]);
 
+        User::create([
+            'email' => 'dhiya@gmail.com',
+            'name' => 'dhiya',
+            'phone'=> '08733302888',
+            'password' => Hash::make('tes'),
+            'role_id' => '2',
+        ]);
+
     }
 }
