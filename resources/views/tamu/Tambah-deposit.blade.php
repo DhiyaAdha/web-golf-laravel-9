@@ -32,6 +32,7 @@
                                         <button type="submit" class="btn btn-info">Selanjutnya</button>
                                     </div>
                                 </form>
+
                             </div>
                             <!-- /Basic Table -->
                         </div>

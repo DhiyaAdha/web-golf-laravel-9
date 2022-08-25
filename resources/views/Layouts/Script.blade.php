@@ -63,7 +63,6 @@
         new Switchery($(this)[0], $(this).data());
     });
 
-
     $('#dt-package').DataTable({
         "processing": true,
         "serverSide": true,

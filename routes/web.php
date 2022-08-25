@@ -63,12 +63,20 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
     
     Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
 
-    
-    
+
+    Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
+    Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
     Route::get('/tambah-admin', [AuthController::class, 'tambah_admin'])->name('tambah-admin');
     Route::get('/edit-admin', [AuthController::class, 'edit_admin'])->name('edit-admin');
-    Route::get('/edit-tamu',[AuthController::class,'edittamu'])->name('edit-tamu');
-});
+    });
+
+
+    Route::group(['middleware' => ['auth','ceklevel:1']], function() {
+    Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
+    Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
+    Route::get('/tambah-admin', [AuthController::class, 'tambah_admin'])->name('tambah-admin');
+    Route::get('/edit-tamu',[TamuController::class,'edittamu'])->name('edit-tamu');
+    });
 
 //Level admin dan superadmin
 Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
@@ -83,6 +91,8 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     // Route: Daftar-tamu
     Route::get('/daftar-tamu',[TamuController::class,'daftartamu'])->name('daftar-tamu');
     Route::get('/tambah-tamu',[TamuController::class,'tambahtamu'])->name('tambah-tamu');
+    Route::get('/tambah-deposit',[TamuController::class,'tambahdeposit'])->name('tambah-deposit');
+    Route::get('/kartu-tamu',[TamuController::class,'kartutamu'])->name('kartu-tamu');
     Route::post('/inserttamu',[TamuController::class,'inserttamu'])->name('inserttamu');
     route::get('/daftar-tamu/hapus/{id}', [TamuController::class, 'hapus'])->name('hapus');
     route::get('qrcode/{id}', [ScanController::class, 'generate'])->name('generate');

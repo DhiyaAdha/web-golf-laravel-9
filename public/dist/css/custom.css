@@ -219,6 +219,41 @@
     flex-grow: 1;
 }
 
+/* kartu-tamu */
+.container-fluid {
+    padding-right: 40px;
+    padding-left: 40px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.panel-heding{
+    border: none;
+    color: inherit;
+    border-radius: 0;
+    margin: 10px 15px 35px 15px;
+    padding: 10px 15px 3px 15px;
+}
+.panel-hading{
+    background: #fff;
+    margin-bottom: 12px;
+    border-radius: 2px;
+    box-shadow: none;
+    padding: 15px 18px 0;
+    margin-left: -9px;
+    margin-right: -9px;
+}
+
+.panel-left{
+    background: #fff;
+    margin-bottom: 12px;
+    border-radius: 2px;
+    box-shadow: none;
+    padding: 15px 18px 75px;
+    margin-left: -9px;
+    margin-right: -9px;
+}
+
 .box-limit-bulanan {
     background-color: #232323;
     width: 170px;
