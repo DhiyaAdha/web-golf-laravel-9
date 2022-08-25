@@ -324,7 +324,6 @@
                                             @endforeach
                                         </tbody>
                                         </table>
-                                        >>>>>>> dhiya
                                         {{ $visitor->links() }}
                                     </div>
                                 </div>
@@ -365,7 +364,10 @@
         var vvip_dec = <?php print $Dec_vvip; ?>;
         var vip_dec = <?php print $Dec_vip; ?>;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> c8a06426adf4551301848480452e8909adab2bb3
         var vvip_min = <?php print $vvip_min; ?>;
         var vip_min = <?php print $vip_min; ?>;
         var vvip_sen = <?php print $vvip_sen; ?>;
@@ -381,7 +383,10 @@
         var vvip_sab = <?php print $vvip_sab; ?>;
         var vip_sab = <?php print $vip_sab; ?>;
     </script>
+<<<<<<< HEAD
 
+=======
+>>>>>>> c8a06426adf4551301848480452e8909adab2bb3
 
     var vvip_min = <?php print $vvip_min; ?>;
     var vip_min = <?php print $vip_min; ?>;

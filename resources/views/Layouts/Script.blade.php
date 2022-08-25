@@ -157,11 +157,42 @@
             "type": "GET",
             "datatype": "json"
         },
+        "render": $.fn.dataTable.render.text(),
         "columns": [
             // { "data": function(data) { return data.name }},
             // { "data": function(data) { return data.category }},
 
+      
             {
+
+                "data": function(data) {
+                    return data.visitor.name
+                }
+            },
+            {
+                "data": function(data) {
+                    if (data.visitor.tipe_member == 'VIP') {
+                        return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
+                    } else {
+                        return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
+                    }
+                }
+            },
+            {
+                "data": function(data) {
+                    return `<span>Rp ${data.total}</span>`
+                }
+            },
+
+            {
+                "data": function(data) {
+                    return moment(data.created_at).format("DD MMMM YYYY")
+                }
+            },
+
+
+{
+
                 "data": function(data) {
                     return data.visitor.name
                 }
@@ -176,36 +207,17 @@
                     return `<span>Rp ${data.total}</span>`
                 }
             },
-
             {
                 "data": function(data) {
                     return moment(data.created_at).format("DD MMMM YYYY")
                 }
+
             },
 
             // {
             //     "data": "action"
             // },
-{
-                "data": function(data) {
-                    return data.visitor.name
-                }
-            },
-            {
-                "data": function(data) {
-                    return data.visitor.tipe_member
-                }
-            },
-            {
-                "data": function(data) {
-                    return `<span>Rp ${data.total}</span>`
-                }
-            },
-            {
-                "data": function(data) {
-                    return moment(data.created_at).format("DD MMMM YYYY")
-                }
-            },
+
         ],
         order: [],
         responsive: true,

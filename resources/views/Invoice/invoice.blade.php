@@ -185,16 +185,16 @@
                                 </tbody>
                             </table>
                             <div class="row">
-                                <div class="col-lg-8">
+                                <div class="col-lg-7">
                                 </div>
-                                <div class="col-lg-2">
+                                <div class="col-lg-3 col-md-12">
                                     <div class="btn-selesai">
                                         <a href="/riwayat-invoice">
                                             <p style="color: white">Selesai</p>
                                         </a>
                                     </div>
                                 </div>
-                                <div class="col-lg-2">
+                                <div class="col-lg-2 col-md-12">
                                     <div class="btn-print">
                                         <a href="#">
                                             <i class="fa-regular fa-file-lines">
