@@ -20,6 +20,46 @@
             <!-- /Title -->
 
 
+<div class="page-wrapper">
+{{-- <div class="container-fluid">
+	<!-- Title -->
+	<div class="row heading-bg">
+		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+			<h5 class="txt-dark">Invoice</h5>
+		</div>
+		<!-- Breadcrumb -->
+		<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+			<ol class="breadcrumb">
+				<li><a href="javascript:void(0)">Dashboard</a></li>
+				<li class="active"><span>Invoice</span></li>
+			</ol>
+		</div>
+		<!-- /Breadcrumb -->
+	</div>
+	<!-- /Title --> --}}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+        <div class="row">
+        <div class="col-md-2">
+            <h2 style="font-size: 16px;"><strong>Invoice</strong></h2>
+        </div>
+		
+        <div class="col-md-10 text-right">
+            <h3 class="float-right" style="font-size: 16px;"><strong>Order #0001</strong></h3>
+        </div>
+        </div>
+    		<hr>
+    		<div class="row">
+    			<div class="col-md-6">
+    				<address>
+    				<strong>Nama Tamu:</strong><br>
+					<td><span class="txt-dark weight-500">{{ $visitor->name }}</span></td>
+					<br>
+					{{  Auth::user()->email }}<br>
+					{{  Auth::user()->phone }}<br>
+
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-default card-view">

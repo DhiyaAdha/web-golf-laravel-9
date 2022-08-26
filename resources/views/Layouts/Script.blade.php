@@ -157,55 +157,13 @@
             "type": "GET",
             "datatype": "json"
         },
-        "columns": [
-            // { "data": function(data) { return data.name }},
-            // { "data": function(data) { return data.category }},
 
-            {
-                "data": function(data) {
-                    return data.visitor.name
-                }
-            },
-            {
-                "data": function(data) {
-                    return data.visitor.tipe_member
-                }
-            },
-            {
-                "data": function(data) {
-                    return `<span>Rp ${data.total}</span>`
-                }
-            },
+        "columns" : [
+            { data: 'name', searchable: true, orderable: false },
+            { data: 'tipe_member', searchable: true, orderable: false },
+            { data: 'total', searchable: true, orderable: false },
+            { data: 'created_at', searchable: true, orderable: false },
 
-            {
-                "data": function(data) {
-                    return moment(data.created_at).format("DD MMMM YYYY")
-                }
-            },
-
-            // {
-            //     "data": "action"
-            // },
-{
-                "data": function(data) {
-                    return data.visitor.name
-                }
-            },
-            {
-                "data": function(data) {
-                    return data.visitor.tipe_member
-                }
-            },
-            {
-                "data": function(data) {
-                    return `<span>Rp ${data.total}</span>`
-                }
-            },
-            {
-                "data": function(data) {
-                    return moment(data.created_at).format("DD MMMM YYYY")
-                }
-            },
         ],
         order: [],
         responsive: true,
@@ -219,14 +177,9 @@
             lengthMenu: "Menampilkan _MENU_ data",
             zeroRecords: "Tidak ada data yang sesuai"
         },
-        columnDefs: [{
-                orderable: false,
-                targets: [0, 1, 2, 3, ]
-            },
-            {
-                targets: [1, 2, 3],
-                className: 'text-center'
-            }
+        columnDefs: [
+            { className: 'text-center', targets: [1, 2, 3]}
+
         ],
     });
     // search
