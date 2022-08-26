@@ -47,7 +47,7 @@ Route::post('/Reset-pasword',[AuthController::class,'resetPassword'])->name('Res
 //untuk route logout
 Route::get('/logout', [AuthController::class, 'logout']);
 
-//Level admin
+//Level superadmin
 Route::group(['middleware' => ['auth','ceklevel:1']], function() {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware('auth');
     Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
