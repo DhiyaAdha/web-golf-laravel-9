@@ -363,11 +363,6 @@
         var vip_nov = <?php print $Nov_vip; ?>;
         var vvip_dec = <?php print $Dec_vvip; ?>;
         var vip_dec = <?php print $Dec_vip; ?>;
-
-<<<<<<< HEAD
-
-=======
->>>>>>> c8a06426adf4551301848480452e8909adab2bb3
         var vvip_min = <?php print $vvip_min; ?>;
         var vip_min = <?php print $vip_min; ?>;
         var vvip_sen = <?php print $vvip_sen; ?>;
@@ -383,23 +378,4 @@
         var vvip_sab = <?php print $vvip_sab; ?>;
         var vip_sab = <?php print $vip_sab; ?>;
     </script>
-<<<<<<< HEAD
-
-=======
->>>>>>> c8a06426adf4551301848480452e8909adab2bb3
-
-    var vvip_min = <?php print $vvip_min; ?>;
-    var vip_min = <?php print $vip_min; ?>;
-    var vvip_sen = <?php print $vvip_sen; ?>;
-    var vip_sen = <?php print $vip_sen; ?>;
-    var vvip_sel = <?php print $vvip_sel; ?>;
-    var vip_sel = <?php print $vip_sel; ?>;
-    var vvip_rab = <?php print $vvip_rab; ?>;
-    var vip_rab = <?php print $vip_rab; ?>;
-    var vvip_kam = <?php print $vvip_kam; ?>;
-    var vip_kam = <?php print $vip_kam; ?>;
-    var vvip_jum = <?php print $vvip_jum; ?>;
-    var vip_jum = <?php print $vip_jum; ?>;
-    var vip_sa = <?php print $vip_sab; ?>;
-    </script>
-@endsection
+@endsectiona 

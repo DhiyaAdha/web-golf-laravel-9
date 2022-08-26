@@ -224,7 +224,7 @@
     margin-bottom: 12px;
     border-radius: 2px;
     box-shadow: none;
-    padding: 15px 18px 2px 15px;
+    padding: 15px 18px -17px 15px;
     margin-left: -9px;
     margin-right: -9px;
 }
@@ -238,6 +238,36 @@
     padding: 9px 50px;
     font-size: 14px;
 }
+.data{
+    color: #696969;
+    font-size: 16px;
+}
+.isi{
+    color: #000000;
+    font-size: 16px;
+}
+.btn1{
+    background-color: #01C853;
+    color: black;
+    cursor: pointer;
+    border-color: #0fe016;
+    padding: 10px 20px 10px;
+}
+.btn2{
+    background-color: #01C853;
+    border-color: #0fe016;
+    padding: 10px 20px 10px;
+    color: black;
+    cursor: pointer;
+}
+.btn3{
+    background-color: #01C853;
+    border-color: #0fe016;
+    padding: 10px 20px 10px;
+    color: black;
+    cursor: pointer;
+}
+
 
 
 .panel-left {

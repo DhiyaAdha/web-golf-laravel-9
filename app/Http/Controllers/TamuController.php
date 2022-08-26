@@ -38,6 +38,18 @@ class TamuController extends Controller
         
         return view('tamu.kartu-tamu');
     }
+    public function riwayatdeposit(){
+        
+        return view('tamu.riwayat-deposit');
+    }
+    public function riwayattransiksi(){
+        
+        return view('tamu.riwayat-transaksi');
+    }
+    public function riwayatlimit(){
+        
+        return view('tamu.riwayat-limit');
+    }
 
     // Fungsi Menambahkan-tamu
     public function inserttamu(Request $request){

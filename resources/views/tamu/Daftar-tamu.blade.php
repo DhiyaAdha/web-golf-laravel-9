@@ -1,6 +1,7 @@
 @extends('Layouts.Main', ['title' => 'TGCC | Daftar Tamu'])
-@include('sweetalert::alert')
+@section('content')
 <div class="page-wrapper">
+    @include('sweetalert::alert')
     <div class="container-fluid">
         <div class="row heading-bg">
             <div class="row">
@@ -28,8 +29,7 @@
                                 </div>
                                 <div class="col-lg-2" style="text-align: end;">
                                     <a href="">
-                                        <i class="fa-2x zmdi zmdi-fullscreen"
-                                            style="border: 0px solid silver; border-radius: 0.25em; padding: 0.5em;"></i>
+                                        <i class="fa-2x zmdi zmdi-fullscreen" style="border: 0px solid silver; border-radius: 0.25em; padding: 0.5em;"></i>
                                     </a>
                                     <a href="{{ route('tambah-tamu') }}">
                                         <i class="fa-2x fa-plus"></i>
@@ -44,8 +44,7 @@
                                                             <input type="text" placeholder="search" class="search">
                                                         </td>
                                                         <td>
-                                                            <a href="#"><i
-                                                                    class="fa-solid fa-magnifying-glass"></i></a>
+                                                            <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -73,37 +72,33 @@
                                             <tbody>
 
                                                 @foreach ($visitor as $item)
-                                                    <tr>
-                                                        <td>{{ $item->name }}</td>
-                                                        <td>{{ $item->email }}</td>
-                                                        <td style="text-align: center;">{{ $item->phone }}</td>
-                                                        <td style="text-align: center;">
+                                                <tr>
+                                                    <td>{{ $item->name }}</td>
+                                                    <td>{{ $item->email }}</td>
+                                                    <td style="text-align: center;">{{ $item->phone }}</td>
+                                                    <td style="text-align: center;">
 
-                                                            @if ($item->tipe_member == 'VVIP')
-                                                                <span class="label label-vvip">VVIP</span>
-                                                            @else
-                                                                <span class="label label-vip">VIP</span>
-                                                            @endif
+                                                        @if ($item->tipe_member == 'VVIP')
+                                                        <span class="label label-vvip">VVIP</span>
+                                                        @else
+                                                        <span class="label label-vip">VIP</span>
+                                                        @endif
 
-                                                        </td>
-                                                        <td style="text-align: center;">
-                                                            <a href="{{ route('kartu-tamu') }}">
-                                                                <img src="dist/img/Card-Tamu.svg" alt=""
-                                                                    style="padding: 2px 7px 2px 2px;">
-                                                            </a>
-                                                            <a href="{{ route('edit-tamu') }}">
-                                                                <img src="dist/img/edit.svg" alt=""
-                                                                    style="padding: 2px 7px 2px 2px;">
-                                                            </a>
-                                                            <a href="/daftar-tamu/hapus/{{ $item->id }}"
-                                                                class="delete-confirm">
-                                                                <img src="dist/img/hapus.svg" alt="Hapus"
-                                                                    style="padding: 2px 7px 2px 2px;">
-                                                            </a>
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        <a href="{{ route('kartu-tamu') }}">
+                                                            <img src="dist/img/Card-Tamu.svg" alt="" style="padding: 2px 7px 2px 2px;">
+                                                        </a>
+                                                        <a href="{{ route('edit-tamu') }}">
+                                                            <img src="dist/img/edit.svg" alt="" style="padding: 2px 7px 2px 2px;">
+                                                        </a>
+                                                        <a href="/daftar-tamu/hapus/{{ $item->id }}" class="delete-confirm">
+                                                            <img src="dist/img/hapus.svg" alt="Hapus" style="padding: 2px 7px 2px 2px;">
+                                                        </a>
 
 
-                                                        </td>
-                                                    </tr>
+                                                    </td>
+                                                </tr>
                                                 @endforeach
 
                                             </tbody>
@@ -133,7 +128,8 @@
         swal({
             title: 'Are you sure?',
             text: 'This record and it`s details will bes deleted!',
-            icon: '{{ asset('warning.png') }}',
+            icon: '{{ asset('
+            warning.png ') }}',
             buttons: ["Cancel", "Yes!"],
         }).then(function(value) {
             if (value) {
@@ -145,3 +141,5 @@
         });
     });
 </script>
+
+@endsection
