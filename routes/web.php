@@ -64,13 +64,12 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
     Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
 
 
+
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
     Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
     Route::get('/tambah-admin', [AuthController::class, 'tambah_admin'])->name('tambah-admin');
     Route::get('/edit-admin', [AuthController::class, 'edit_admin'])->name('edit-admin');
     });
-
-
     Route::group(['middleware' => ['auth','ceklevel:1']], function() {
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth');
     Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
