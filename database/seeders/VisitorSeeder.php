@@ -63,7 +63,6 @@ class VisitorSeeder extends Seeder
                 'updated_at' => \Carbon\Carbon::now()->addMinutes(rand(0,
                 60 * 23))->addSeconds(rand(0, 60))
             ]);
-
         }
     }
 }
