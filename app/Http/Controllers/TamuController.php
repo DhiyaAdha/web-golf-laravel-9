@@ -11,8 +11,11 @@ class TamuController extends Controller
 {
     // fungsi Paginasi
     public function daftartamu(){
+
         $data['visitor'] = DB::table('visitors')->orderBy('created_at', 'desc')->whereNull('deleted_at')->paginate(20);
+
         return view('tamu.Daftar-tamu', $data);
+
 
         // return response()->json($data);
     }
@@ -20,7 +23,20 @@ class TamuController extends Controller
     
     public function tambahtamu(){
         
-        return view('/Tambah-tamu');
+        return view('tamu.Tambah-tamu');
+
+    }
+    public function edittamu(){
+        
+        return view('tamu.edit-tamu');
+    }
+    public function tambahdeposit(){
+        
+        return view('tamu.tambah-deposit');
+    }
+    public function kartutamu(){
+        
+        return view('tamu.kartu-tamu');
     }
 
     // Fungsi Menambahkan-tamu

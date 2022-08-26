@@ -18,7 +18,6 @@ class PackageSeeder extends Seeder
         //
         $faker = Faker::create('id_ID');
         for($i = 1; $i <= 300; $i++) {
-
             DB::table('packages')->insert([
                 'name' => $faker->word,
                 'category' => $faker->randomElement(['default', 'additonal']),

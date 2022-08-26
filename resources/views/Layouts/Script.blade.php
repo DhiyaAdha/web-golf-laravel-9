@@ -62,50 +62,66 @@
     // $('.js-switch-1').each(function() {
     //     new Switchery($(this)[0], $(this).data());
     // });
-    
+
+
     $('#dt-package').DataTable({
         "processing": true,
         "serverSide": true,
         "lengthChange": false,
         "searching": true,
         "paginate": {
-            "first":      "First",
-            "last":       "Last",
-            "next":       "Next",
-            "previous":   "Previous"
+            "first": "First",
+            "last": "Last",
+            "next": "Next",
+            "previous": "Previous"
         },
-        "ajax" : {
-            "url" : "{{ route('package.index') }}",
-            "type" : "GET",
-            "datatype" : "json"
+        "ajax": {
+            "url": "{{ route('package.index') }}",
+            "type": "GET",
+            "datatype": "json"
         },
-        "columns" : [
-            { "data": function(data) { return data.name }},
-            { "data": function(data) { return data.category }},
-            { "data": function(data) { 
-                return `<div class="form-group">
+        "columns": [{
+                "data": function(data) {
+                    return data.name
+                }
+            },
+            {
+                "data": function(data) {
+                    return data.category
+                }
+            },
+            {
+                "data": function(data) {
+                    return `<div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-addon">Rp</div>
                                 <label class="form-control">${data.price_weekdays}</label>
                             </div>
-                        </div>`;  
-            }},
-            { "data": function(data) { 
-                return `<div class="form-group">
+                        </div>`;
+                }
+            },
+            {
+                "data": function(data) {
+                    return `<div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-addon">Rp</div>
                                 <label class="form-control">${data.price_weekend}</label>
                             </div>
-                        </div>`; 
-            }},
-            { "data": function(data) { 
-                if(data.status == 0) {
-                    return `<input type="checkbox" checked class="js-switch js-switch-1"  data-color="#01c853" />`;  
-                } else {
-                    return `<input type="checkbox" class="js-switch js-switch-1"  data-color="#01c853" />`;  
+                        </div>`;
                 }
-            }},
-            { "data": "action"},
+            },
+            {
+                "data": function(data) {
+                    if (data.status == 0) {
+                        return `<input type="checkbox" checked class="js-switch js-switch-1"  data-color="#01c853" />`;
+                    } else {
+                        return `<input type="checkbox" class="js-switch js-switch-1"  data-color="#01c853" />`;
+                    }
+                }
+            },
+            {
+                "data": "action"
+            },
         ],
         order: [],
         responsive: true,
@@ -119,10 +135,12 @@
             lengthMenu: "Menampilkan _MENU_ data",
             zeroRecords: "Tidak ada data yang sesuai"
         },
-        columnDefs: [
-            { orderable: false, targets: [0, 1, 2, 3, 4, 5,] },
-        ],
+        columnDefs: [{
+            orderable: false,
+            targets: [0, 1, 2, 3, 4, 5, ]
+        }, ],
     });
+
 
     // invoice
     $('#dt-riwayat').DataTable({
@@ -131,21 +149,49 @@
         "lengthChange": false,
         "searching": true,
         "paginate": {
-            "first":      "First",
-            "last":       "Last",
-            "next":       "Next",
-            "previous":   "Previous"
+            "first": "First",
+            "last": "Last",
+            "next": "Next",
+            "previous": "Previous"
         },
-        "ajax" : {
-            "url" : "{{ route('riwayat-invoice.index') }}",
-            "type" : "GET",
-            "datatype" : "json"
+        "ajax": {
+            "url": "{{ route('riwayat-invoice.index') }}",
+            "type": "GET",
+            "datatype": "json"
         },
+        "render": $.fn.dataTable.render.text(),
+
         "columns" : [
             { data: 'name', searchable: true, orderable: false },
             { data: 'tipe_member', searchable: true, orderable: false },
             { data: 'total', searchable: true, orderable: false },
             { data: 'created_at', searchable: true, orderable: false },
+
+            {
+                "data": function(data) {
+                    return data.visitor.name
+                }
+            },
+            {
+                "data": function(data) {
+                    if (data.visitor.tipe_member == 'VIP') {
+                        return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
+                    } else {
+                        return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
+                    }
+                }
+            },
+            {
+                "data": function(data) {
+                    return `<span>Rp ${data.total}</span>`
+                }
+            },
+            {
+                "data": function(data) {
+                    return moment(data.created_at).format("DD MMMM YYYY")
+                }
+            },
+
         ],
         order: [],
         responsive: true,
@@ -159,10 +205,49 @@
             lengthMenu: "Menampilkan _MENU_ data",
             zeroRecords: "Tidak ada data yang sesuai"
         },
+<<<<<<< HEAD
         columnDefs: [
             { className: 'text-center', targets: [1, 2, 3]}
+=======
+        columnDefs: [{
+                orderable: false,
+                targets: [0, 1, 2, 3, ]
+            },
+            {
+                targets: [1, 2, 3],
+                className: 'text-center'
+            }
+>>>>>>> yudis
         ],
     });
+
+    // search
+    // $(document).ready(function(){
+    // 	load_data();
+    // 	function load_data(jurusan, keyword)
+    // 	{
+    // 		$.ajax({
+    // 			method:"POST",
+    // 			url:"{{ route('riwayat-invoice.index') }",
+    // 			data: {jurusan: jurusan, keyword:keyword},
+    // 			success:function(hasil)
+    // 			{
+    // 				$('.data').html(hasil);
+    // 			}
+    // 		});
+    //  	}
+    // 	$('#s_keyword').keyup(function(){
+    // 		var jurusan = $("#s_jurusan").val();
+    // 		var keyword = $("#s_keyword").val();
+    // 		load_data(jurusan, keyword);
+    // 	});
+    // 	$('#s_jurusan').change(function(){
+    // 		var jurusan = $("#s_jurusan").val();
+    // 		var keyword = $("#s_keyword").val();
+    // 		load_data(jurusan, keyword);
+    // 	});
+    // });
+
 
     $(document).on("click", "#show-scan", function() {
         $(".disabled-scan").css("display", "none");
