@@ -88,7 +88,7 @@ class AuthController extends Controller {
                 ],
             ];
             //  return response()->json($respon, 200);
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/analisis-tamu');
             // dd(session()->all());
         }
     }

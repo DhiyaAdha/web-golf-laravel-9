@@ -6,40 +6,76 @@ use Carbon\Carbon;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class TamuController extends Controller
 {
-    // fungsi Paginasi
-    public function daftartamu(){
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //Paginasi
+        $visitor = DB::table('visitors')->orderBy('created_at', 'desc')->whereNull('deleted_at')->paginate(20);
 
-        $data['visitor'] = DB::table('visitors')->orderBy('created_at', 'desc')->whereNull('deleted_at')->paginate(20);
-
-        return view('tamu.Daftar-tamu', $data);
-
-
-        // return response()->json($data);
+        return view('tamu.daftar-tamu', compact('visitor'));
     }
 
-    
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(Request $request)
+    {
+        //
+        $this->validate($request, [
+            'name'     => 'required',
+            'address'     => 'required',
+            'gender'   => 'required',
+            'email'   => 'required|email',
+            'phone'   => 'required',
+            'company'   => 'required',
+            'position'   => 'required',
+            'tipe_member'   => 'required',
+        ]);
+        
+        $visitors = Visitor::create([
+            
+            'name'      => $request->name,
+            'address'   => $request->address,
+            'gender'    => $request->gender,
+            'email'    => $request->email,
+            'phone'    => $request->phone,
+            'company'    => $request->company,                
+            'position'    => $request->position,
+            'tipe_member'    => $request->tipe_member,
+            'created_at'    => Carbon::now()
+        ]);
+            // $visitors->address = $request->alamat;
+            $visitors->save();
+            return redirect('/daftar-tamu')
+            ->with('sukses','Company has been created successfully.');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
     public function tambahtamu(){
         
         return view('tamu.Tambah-tamu');
 
     }
-    public function edittamu(){
-        
-        return view('tamu.edit-tamu');
-    }
-    public function tambahdeposit(){
-        
-        return view('tamu.tambah-deposit');
-    }
-    public function kartutamu(){
-        
-        return view('tamu.kartu-tamu');
-    }
-
-    // Fungsi Menambahkan-tamu
     public function inserttamu(Request $request){
         // dd($request->all());
         // $data[Visitor]::create($request->all()); 
@@ -74,12 +110,68 @@ class TamuController extends Controller
             ->with('sukses','Company has been created successfully.');
     }
 
-    // fungsi Hapus-tamu
-    public function hapus($id)
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-        $visitor = Visitor::find($id);
-        $visitor->delete();
-        return back();
+        //
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Visitor  $visitor
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $visitor = Visitor::find($id);
+        return view('tamu.Edit-tamu',compact('visitor'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Visitor  $visitor
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name'     => 'required',
+            'address'    => 'required',
+            'gender'   => 'required',
+            'email'   => 'required|email',
+            'phone'   => 'required',
+            'company'   => 'required',
+            'position'   => 'required',
+        
+        ]);
+        $visitor = Visitor::find($id);
+        
+        $visitor->fill($request->post())->save();
+    
+        return redirect()->route('daftar-tamu.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+        $visitor = Visitor::find($id);
+        $visitor->delete();
+        // return redirect ('daftar-tamu.index');
+        return redirect()->route('daftar-tamu.index');
+    
+    }
 }

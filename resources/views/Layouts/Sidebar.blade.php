@@ -5,7 +5,7 @@
             <i class="zmdi zmdi-more"></i>
         </li>
         <li>
-            <a class="{{ Request::is('dashboard') ? 'active' : '' }}" href="/dashboard" class="active">
+                <a class="{{ Request::is('analisis-tamu') ? 'active' : '' }}" href="{{ route('analisis-tamu.index') }}">
                 <div class="pull-left">
                     <i class="fa fa-bar-chart-o mr-20"></i>
                     <span class="right-nav-text">Analisis Tamu</span>
@@ -23,7 +23,7 @@
             </a>
         </li>
         <li>
-            <a class="{{ Request::is('daftar-tamu') ? 'active' : '' }}" href="/daftar-tamu">
+            <a class="{{ Request::is('daftar-tamu') ? 'active' : '' }}" href="{{ route('daftar-tamu.index') }}">
                 <div class="pull-left">
                     <i class="fa fa-user mr-20"></i>
                     <span class="right-nav-text">Daftar Tamu</span>

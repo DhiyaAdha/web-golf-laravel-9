@@ -291,41 +291,8 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
-                                        =======
-                                        <thead>
-                                            <tr>
-
-                                                <th>Nama Tamu</th>
-                                                <th>Tanggal</th>
-                                                <th>Kategori Tamu</th>
-                                                <th>Pukul</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody>
-                                            {{-- analisis-tamu --}}
-                                            @foreach ($visitor as $item)
-                                                <tr>
-                                                    {{-- <td><span class="txt-dark weight-500">#{{ $item->id }}</span></td> --}}
-                                                    <td>{{ $item->name }}</td>
-                                                    <td><span class="txt-success"><i
-                                                                class="zmdi zmdi-caret-up mr-10 font-20"></i><span>{{ date('d F Y', strtotime($item->created_at)) }}</span></span>
-                                                    </td>
-                                                    <td>
-                                                        @if ($item->tipe_member == 'VVIP')
-                                                            <span class="label label-warning">VVIP</span>
-                                                        @else
-                                                            <span class="label label-success">VIP</span>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        {{ date('H:i', strtotime($item->created_at)) }} WIB
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
+                                        
                                         </table>
-                                        >>>>>>> dhiya
                                         {{ $visitor->links() }}
                                     </div>
                                 </div>

@@ -15,7 +15,7 @@ class Visitor extends Model
 
     // protected $guarded = [];
     protected $fillable = [
-        'id','name', 'email', 'phone', 'gender', 'tipe_member', 'created_at', 'updated_at'
+        'id','name', 'email','address','position','company', 'phone', 'gender', 'tipe_member', 'created_at', 'updated_at'
         
     ];
     

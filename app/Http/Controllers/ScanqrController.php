@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Visitor;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -16,6 +17,11 @@ class ScanqrController extends Controller
     public function index()
     {
         //
+        // $visitors = Visitor::all();
+        // return View::make('Scan-tamu')
+        // ->with('visitors', $visitors);
+
+        return view('Scan-tamu.index',compact('visitor'));
     }
 
     /**

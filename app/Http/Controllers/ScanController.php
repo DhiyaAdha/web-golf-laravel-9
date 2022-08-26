@@ -10,9 +10,9 @@ class ScanController extends Controller
 {
     
     // Scantamu - sidebar
-    public function scantamu(){
-        return view('/scan-tamu');
-    }
+    // public function scantamu(){
+    //     return view('/scan-tamu');
+    // }
     public function scantamuberhasil(){
         return view('/scan-tamu-berhasil');
     }
