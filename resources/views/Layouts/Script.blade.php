@@ -161,38 +161,26 @@
             "type": "GET",
             "datatype": "json"
         },
-        "render": $.fn.dataTable.render.text(),
-        "columns": [
-            // { "data": function(data) { return data.name }},
-            // { "data": function(data) { return data.category }},
-            {
-                "data": function(data) {
-                    return data.visitor.name
-                }
+        "columns": [{
+                data: 'name',
+                searchable: true,
+                orderable: false
             },
             {
-                "data": function(data) {
-                    if (data.visitor.tipe_member == 'VIP') {
-                        return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
-                    } else {
-                        return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
-                    }
-                }
+                data: 'tipe_member',
+                searchable: true,
+                orderable: false
             },
             {
-                "data": function(data) {
-                    return `<span>Rp ${data.total}</span>`
-                }
+                data: 'total',
+                searchable: true,
+                orderable: false
             },
             {
-                "data": function(data) {
-                    return moment(data.created_at).format("DD MMMM YYYY")
-                }
+                data: 'created_at',
+                searchable: true,
+                orderable: false
             },
-
-            // {
-            //     "data": "action"
-            // },
         ],
         order: [],
         responsive: true,
@@ -207,14 +195,9 @@
             zeroRecords: "Tidak ada data yang sesuai"
         },
         columnDefs: [{
-                orderable: false,
-                targets: [0, 1, 2, 3, ]
-            },
-            {
-                targets: [1, 2, 3],
-                className: 'text-center'
-            }
-        ],
+            className: 'text-center',
+            targets: [1, 2, 3]
+        }],
     });
 
     // search
