@@ -38,7 +38,12 @@ Route::get('/', function () {
 //untuk route login
 Route::get('/login', [AuthController::class, 'index'])->Middleware('guest')->name('login');
 Route::post('/login', [AuthController::class, 'login']);
+//Route untuk sebelum Login
+Route::get('/Lupa-pasword', [AuthController::class, 'forgot_password'])->middleware('guest')->name('Lupa-pasword');
+Route::post('/Lupa-pasword',[AuthController::class,'sendresetlink'])->name('Lupa-pasword.link');
+Route::get('/Reset-pasword/{token}',[AuthController::class,'showResetForm'])->name('Reset-pasword');
 
+Route::post('/Reset-pasword',[AuthController::class,'resetPassword'])->name('Reset-pasword.update');
 //untuk route logout
 Route::get('/logout', [AuthController::class, 'logout']);
 
@@ -85,13 +90,4 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
     Route::get('/edit-tamu',[AuthController::class,'edittamu'])->name('edit-tamu');
 });
-
 //Finish level admin dan superadmin
-
-//Route untuk sebelum Login
-Route::get('/Lupa-pasword', [AuthController::class, 'forgot_password'])->middleware('guest')->name('Lupa-pasword');
-Route::post('/Lupa-pasword',[AuthController::class,'sendresetlink'])->name('Lupa-pasword.link');
-Route::get('/Reset-pasword/{token}',[AuthController::class,'showResetForm'])->name('Reset-pasword');
-
-Route::post('/Reset-pasword',[AuthController::class,'resetPassword'])->name('Reset-pasword.update');
-
