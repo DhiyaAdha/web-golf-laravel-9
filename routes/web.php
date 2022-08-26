@@ -67,8 +67,9 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
     
     route::get('qrcode/{id}', [ScanController::class, 'generate'])->name('generate');
     Route::get('/tambah-admin',[AuthController::class,'tambahadmin'])->name('tambah-admin');
-    Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
+    Route::get('/daftar-tamu/destroy/{id}', [TamuController::class, 'delete'])->name('daftar-tamu.delete');
     Route::get('/tambah-admin', [AuthController::class, 'tambah_admin'])->name('tambah-admin');
+    Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
     Route::get('/edit-admin', [AuthController::class, 'edit_admin'])->name('edit-admin');
     
     // Route::resource('package', PackageController::class)->except(['show','update']);
@@ -87,10 +88,11 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::resource('analisis-tamu', DashboardController::class);
     Route::resource('package', PackageController::class)->except(['show','update']);
     Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
-    Route::resource('/daftar-tamu', TamuController::class)->except(['index','show','destroy', 'tambahtamu', 'inserttamu', 'updatetamu']);
+    Route::get('/daftar-tamu/destroy/{id}', [TamuController::class, 'delete'])->name('daftar-tamu.delete');
+    Route::resource('/daftar-tamu', TamuController::class);
+    Route::resource('/tambah-tamu', TamuController::class);
     Route::resource('/Scan-tamu', ScanqrController::class);
-   
-    // imas
+    
     Route::get('/invoice/{id}',[InvoiceController::class,'show'])->name('show');
     Route::get('/invoice',[AuthController::class,'invoice'])->name('invoice');
     Route::get('/scan-tamu',[ScanController::class,'scantamu'])->name('scan-tamu');
@@ -101,6 +103,7 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     route::get('qrcode/{id}', [ScanController::class, 'generate'])->name('generate');
     Route::get('/tambah-admin',[AuthController::class,'tambahadmin'])->name('tambah-admin');
     Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
+
 
     // Route::resource('package', PackageController::class)->except(['show','update']);
     // Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);

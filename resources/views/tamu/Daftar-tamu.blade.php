@@ -33,7 +33,11 @@
                                             style="border: 0px solid silver; border-radius: 0.25em; padding: 0.5em;"></i>
                                     </a>
                                     {{-- tambah tamu --}}
-                                    <a href="{{ route('tambah-tamu') }}">
+                                    {{-- <a href="{{ route('tambah-tamu') }}"> --}}
+                                    {{-- <a href="{{ route('Tambah-tamu') }}"> --}}
+                                    
+                                    {{-- <a href="{{ URL('/daftar-tamu.tambahtamu') }}"> --}}
+                                    <a href="{{ route('tambah-tamu.create') }}">
                                         <i class="fa-2x fa-plus"></i>
                                     </a>
                                     <div class="row">
@@ -85,8 +89,19 @@
                                                             @endif
                                                         </td>
                                                         {{-- hapus-tamu --}}
+                                                        {{-- revisi --}}
                                                         <td style="text-align: center;">
-                                                            <form action="{{ route('daftar-tamu.destroy',$item->id) }}" method="Post" id="delete-confirm">
+                                                            <a  href="{{ route('daftar-tamu.destroy',$item->id) }}">
+                                                                <img src="dist/img/Card-Tamu.svg" alt=""
+                                                                ></a>
+                                                            <a  href="{{ route('daftar-tamu.edit',$item->id) }}">
+                                                                <img src="dist/img/edit.svg" alt=""
+                                                                ></a>
+                                                            <a  href="{{ route('daftar-tamu.delete',$item->id) }}">
+                                                                <img src="dist/img/edit.svg" alt=""
+                                                                ></a>
+                                                                {{-- pop up script hilang --}}
+                                                            {{-- <form action="{{ route('daftar-tamu.destroy',$item->id) }}" method="Post" id="delete-confirm">
                                                                 <a class="btn" href="#">
                                                                     <img src="dist/img/Card-Tamu.svg" alt=""
                                                                     style="padding: 2px 7px 2px 2px;"></a>
@@ -98,7 +113,16 @@
                                                                 <button type="submit" class="btn" style="background-color: white" class="delete-confirm">
                                                                     <img src="dist/img/hapus.svg" alt="Hapus" class="delete-confirm"
                                                                     style="padding: 2px 7px 2px 2px;" ></button>
-                                                            </form>
+                                                            </form> --}}
+
+                                                            {{-- <a href="#">
+                                                                <img src="dist/img/Card-Tamu.svg" alt=""></a>
+                                                            <a href="{{ route('daftar-tamu.edit',$item->id) }}">
+                                                                <img src="dist/img/edit.svg" alt=""></a>
+                                                            <button type="submit" style="background-color: white" class="delete-confirm">
+                                                                <img src="dist/img/hapus.svg" alt="Hapus" class="delete-confirm"></button> --}}
+
+
                                                         </td>
                                                     </tr>
                                                 @endforeach

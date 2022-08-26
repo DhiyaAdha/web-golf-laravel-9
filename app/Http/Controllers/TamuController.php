@@ -54,9 +54,11 @@ class TamuController extends Controller
             'tipe_member'    => $request->tipe_member,
             'created_at'    => Carbon::now()
         ]);
+
             // $visitors->address = $request->alamat;
             $visitors->save();
-            return redirect('/daftar-tamu')
+            // return redirect('/daftar-tamu')
+            return redirect('tamu.tambah-tamu')
             ->with('sukses','Company has been created successfully.');
     }
 
@@ -73,7 +75,10 @@ class TamuController extends Controller
 
     public function tambahtamu(){
         
-        return view('tamu.Tambah-tamu');
+        // $visitors = Visitor::all();
+
+        // return view('tamu.tambah-tamu');
+        return view('/daftar-tamu');
 
     }
     public function inserttamu(Request $request){
@@ -165,7 +170,7 @@ class TamuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
         //
         $visitor = Visitor::find($id);

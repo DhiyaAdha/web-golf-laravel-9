@@ -28,4 +28,6 @@ class ScanController extends Controller
         $qrcode = QrCode::size(400)->generate($visitor->id);
         return view('qrcode',compact('qrcode'));
     }
+
+    
 }
