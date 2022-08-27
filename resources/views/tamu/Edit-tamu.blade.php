@@ -22,7 +22,7 @@
                         <h6 class="control-label mb-10">Edit Tamu</h6>
                             <div class="panel-body">
                                 <div class="form-wrap">
-                                    <form   action="{{ route('daftar-tamu.update', $visitor->id) }}" method="POST">
+                                    <form   action="{{ route('update-tamu', $visitor->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                         <div class="col-lg-6">

@@ -17,6 +17,7 @@ class CreateDetailTransactionsTable extends Migration
             $table->increments('id');
             $table->integer('log_transaction_id')->unsigned();
             $table->integer('package_id')->unsigned();
+            $table->integer('quantity');
 
 
             $table->foreign('package_id')

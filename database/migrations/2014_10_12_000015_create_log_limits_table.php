@@ -18,6 +18,7 @@ class CreateLogLimitsTable extends Migration
             $table->integer('visitor_id')->unsigned();
             $table->string('type');
             $table->string('activities' );
+            $table->integer('quota');
             $table->timestamp('created_at');
 
             $table->foreign('visitor_id')

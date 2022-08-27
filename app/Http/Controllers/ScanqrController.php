@@ -21,7 +21,7 @@ class ScanqrController extends Controller
         // return View::make('Scan-tamu')
         // ->with('visitors', $visitors);
 
-        return view('Scan-tamu.index',compact('visitor'));
+        return view('Scan-tamu');
     }
 
     /**
@@ -91,5 +91,13 @@ class ScanqrController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    // fungsi generate QRcode Daftar-tamu
+    public function generate ($id)
+    {
+        $visitor = Visitor::findOrFail($id);
+        $qrcode = QrCode::size(400)->generate($visitor->id);
+        return view('qrcode',compact('qrcode'));
     }
 }

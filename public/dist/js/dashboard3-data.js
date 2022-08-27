@@ -131,7 +131,6 @@ $(document).ready(function(){
 				{ y: 'Sab', a: vvip_sab,  b: vip_sab },
 				{ y: 'Mgg', a: vvip_min, b: vip_min }
 			],
-
 			xkey: 'y',
 			ykeys: ['a', 'b', ],
 			labels: ['VVIP', 'VIP', ],

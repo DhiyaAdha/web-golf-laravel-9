@@ -37,7 +37,7 @@
                                     {{-- <a href="{{ route('Tambah-tamu') }}"> --}}
                                     
                                     {{-- <a href="{{ URL('/daftar-tamu.tambahtamu') }}"> --}}
-                                    <a href="{{ route('tambah-tamu.create') }}">
+                                    <a href="{{ route('tambah-tamu') }}">
                                         <i class="fa-2x fa-plus"></i>
                                     </a>
                                     <div class="row">
@@ -88,41 +88,16 @@
                                                                 <span class="label label-vip">VIP</span>
                                                             @endif
                                                         </td>
-                                                        {{-- hapus-tamu --}}
-                                                        {{-- revisi --}}
                                                         <td style="text-align: center;">
-                                                            <a  href="{{ route('daftar-tamu.destroy',$item->id) }}">
+                                                            <a  href="{{ route('generate',$item->id) }}">
                                                                 <img src="dist/img/Card-Tamu.svg" alt=""
-                                                                ></a>
-                                                            <a  href="{{ route('daftar-tamu.edit',$item->id) }}">
+                                                                style="padding: 2px 7px 2px 2px;"></a>
+                                                            <a  href="{{ route('edit-tamu',$item->id) }}">
                                                                 <img src="dist/img/edit.svg" alt=""
-                                                                ></a>
-                                                            <a  href="{{ route('daftar-tamu.delete',$item->id) }}">
-                                                                <img src="dist/img/edit.svg" alt=""
-                                                                ></a>
-                                                                {{-- pop up script hilang --}}
-                                                            {{-- <form action="{{ route('daftar-tamu.destroy',$item->id) }}" method="Post" id="delete-confirm">
-                                                                <a class="btn" href="#">
-                                                                    <img src="dist/img/Card-Tamu.svg" alt=""
-                                                                    style="padding: 2px 7px 2px 2px;"></a>
-                                                                <a class="btn" href="{{ route('daftar-tamu.edit',$item->id) }}">
-                                                                    <img src="dist/img/edit.svg" alt=""
-                                                                    style="padding: 2px 7px 2px 2px;"></a>
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="btn" style="background-color: white" class="delete-confirm">
-                                                                    <img src="dist/img/hapus.svg" alt="Hapus" class="delete-confirm"
-                                                                    style="padding: 2px 7px 2px 2px;" ></button>
-                                                            </form> --}}
-
-                                                            {{-- <a href="#">
-                                                                <img src="dist/img/Card-Tamu.svg" alt=""></a>
-                                                            <a href="{{ route('daftar-tamu.edit',$item->id) }}">
-                                                                <img src="dist/img/edit.svg" alt=""></a>
-                                                            <button type="submit" style="background-color: white" class="delete-confirm">
-                                                                <img src="dist/img/hapus.svg" alt="Hapus" class="delete-confirm"></button> --}}
-
-
+                                                                style="padding: 2px 7px 2px 2px;"></a>
+                                                            <a  href="{{ route('hapus-tamu',$item->id) }}" class="delete-confirm">
+                                                                <img src="dist/img/hapus.svg" alt=""
+                                                                style="padding: 2px 7px 2px 2px;"></a>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -145,24 +120,29 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
 <script type="text/javascript">
-    document.querySelector('#delete-confirm').addEventListener('submit', function(e) {
-    var form = this;
-    e.preventDefault();
+    
 
+    $('.delete-confirm').on('click', function(event) {
+    var form = this;
+    event.preventDefault();
+    const url = $(this).attr('href');
     
         swal({
-            title: 'Are you sure?',
-            text: 'Will be deleted!',
+            title: '',
+            text: 'Anda Yakin Menghapus Data Tamu Ini?',
             icon: '{{ asset('warning.png') }}',
-            buttons: ["Batal", "Yes!"],
+            buttons: ["Batal", "HAPUS TAMU"],
+            closeOnClickOutside: false,
         }).then(function(isConfirm) {
         if (isConfirm) {
             swal({
             title: 'Deleted!',
             text: 'Data berhasil dihapus!',
             icon: 'success'
-        }).then(function() {
-            form.submit(); 
+        }).then(function(value) {
+            if (value) {
+                window.location.href = url;
+            }
         });
     } 
     })

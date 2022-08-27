@@ -78,7 +78,7 @@ class TamuController extends Controller
         // $visitors = Visitor::all();
 
         // return view('tamu.tambah-tamu');
-        return view('/daftar-tamu');
+        return view('tamu.tambah-tamu');
 
     }
     public function inserttamu(Request $request){
@@ -135,7 +135,7 @@ class TamuController extends Controller
     public function edit($id)
     {
         $visitor = Visitor::find($id);
-        return view('tamu.Edit-tamu',compact('visitor'));
+        return view('tamu.edit-tamu',compact('visitor'));
     }
 
     /**
@@ -158,10 +158,9 @@ class TamuController extends Controller
         
         ]);
         $visitor = Visitor::find($id);
-        
         $visitor->fill($request->post())->save();
     
-        return redirect()->route('daftar-tamu.index');
+        return redirect()->route('daftar-tamu');
     }
 
     /**
@@ -176,7 +175,7 @@ class TamuController extends Controller
         $visitor = Visitor::find($id);
         $visitor->delete();
         // return redirect ('daftar-tamu.index');
-        return redirect()->route('daftar-tamu.index');
+        return redirect()->route('daftar-tamu');
     
     }
 }
