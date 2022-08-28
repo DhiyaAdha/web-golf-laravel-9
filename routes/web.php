@@ -107,7 +107,6 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::get('/edit-tamu/{id}',[TamuController::class,'edit'])->name('edit-tamu');
     Route::post('/update-tamu',[TamuController::class,'update'])->name('update-tamu');
 
-
     // Route::resource('/Scan-tamu', ScanqrController::class);
     Route::get('/scan-tamu',[ScanController::class,'scantamu'])->name('scan-tamu');
     Route::get('/scan-tamu-berhasil',[ScanController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
@@ -117,12 +116,8 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
 
     Route::get('/tambah-deposit',[TamuController::class,'tambahdeposit'])->name('tambah-deposit');
     Route::get('/kartu-tamu',[TamuController::class,'kartutamu'])->name('kartu-tamu');
-
     Route::get('/tambah-admin',[AuthController::class,'tambahadmin'])->name('tambah-admin');
     
-    
-    // Route::get('/daftar-tamu/hapus/{id}', [TamuController::class, 'hapus'])->name('hapus');
-    // Route::resource('package', PackageController::class)->except(['show','update']);
     // Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
     // Route::resource('/daftar-tamu', TamuController::class)->except(['index','show','destroy', 'tambahtamu', 'inserttamu', 'updatetamu']);
     // Route::resource('/Scan-tamu', ScanqrController::class);
