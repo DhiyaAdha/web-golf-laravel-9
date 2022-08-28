@@ -15,7 +15,7 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
         $data['visitor'] = DB::table('Visitors')->orderBy('created_at', 'desc')->paginate(10);
@@ -89,7 +89,27 @@ class DashboardController extends Controller
         $data['vvip_min'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(6)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
         $data['vip_min'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(6)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
 
+        $visitor = Visitor::select(['name', 'created_at', 'tipe_member', 'updated_at'])->get();
+        if($request->ajax()){
+            return datatables()->of($visitor)
+            ->editColumn('created_at', function ($data) {
+                return $data->created_at->format('d F Y');  
+            })
+            ->editColumn('tipe_member', function ($data) {
+                return $data->tipe_member;
+                // if ($data->tipe_member == 'VIP') {
+                //     return `<span class="label label-vip">$data->tipe_member</span>`;
+                // } else {
+                //     return `<span class="label label-vvip">$data->tipe_member</span>`;
+                // }
+            })
+            ->editColumn('updated_at', function ($data) {
+                return $data->created_at->format('H:i');
+            })
+            ->rawColumns(['name','action'])
+            ->make(true);
 
+        }
         return view('/Analisis-tamu', $data);
         
     }

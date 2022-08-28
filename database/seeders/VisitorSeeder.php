@@ -54,9 +54,10 @@ class VisitorSeeder extends Seeder
             Visitor::create([
                 'name' => $faker->name(),
                 'email' => $faker->email(),
-                'phone'=> $faker->phoneNumber(),
+                'phone'=> $faker->numerify('08#########'),
                 'address' => $faker->address(),
                 'company' => $faker->company(),
+                'position' => $faker->randomElement(['Direktur', 'Seketaris','HRD', 'CEO']),
                 'gender' => $faker->randomElement(['laki-laki', 'perempuan']),
                 'tipe_member' => $faker->randomElement(['VIP', 'VVIP']),
                 'created_at' => $faker->dateTimeThisYear(),

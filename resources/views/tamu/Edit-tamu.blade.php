@@ -24,7 +24,7 @@
                                 <div class="form-wrap">
                                     <form   action="{{ route('update-tamu', $visitor->id) }}" method="POST">
                                         @csrf
-                                        @method('PUT')
+                                        @method('POST')
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label class="control-label mb-10" for="name">Nama Lengkap</label>
@@ -68,14 +68,15 @@
                                                 <label class="control-label mb-10" for="">Jabatan</label>
                                                 <input type="text" name="position" value="{{ $visitor->position }}" class="form-control" id="position" size="50px" placeholder="Masukan Jabatan" required autofocus>
                                             </div>
-                                            {{-- <div class="form-group">
+                                            {{-- 405 eror --}}
+                                            <div class="form-group">
                                                 <label class="control-label mb-10" for="">Tamu Ini Adalah Tamu VIP
                                                 <div class="switch">
                                                     <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" value="VVIP" name="tipe_member">
                                                     <input id="cmn-toggle-4"  class="cmn-toggle cmn-toggle-round-flat" name="tipe_member" type="checkbox" value="VIP" {{  ($visitor->tipe_member == "VIP" ? ' checked' : '') }} >
                                                     <label for="cmn-toggle-4"></label>
                                                 </div>
-                                            </div> --}}
+                                            </div>
                                             <div class="form-group text-left">
                                                 <button type="submit" class="btn btn-info">Simpan</button></a>
                                             </div>

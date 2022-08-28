@@ -1,150 +1,66 @@
 @extends('Layouts.Main', ['title' => 'TGCC | Daftar Tamu'])
-@include('sweetalert::alert')
-
-<div class="page-wrapper">
-    <div class="container-fluid">
-        <div class="row heading-bg">
-            <div class="row">
-                <div class="container-fluid">
-                    <div class="col-lg-8">
-                        <h5>Daftar-Tamu</h5>
-                    </div>
-                    <div class="col-lg-4 col-sm-8 col-md-8 col-xs-12">
+@section('content')
+    <!-- Main Content -->
+		<div class="page-wrapper">
+			<div class="container-fluid">
+				<!-- Title -->
+				<div class="row heading-bg">
+					<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h5 class="txt-dark">Daftar Tamu</h5>
+					</div>
+					<!-- Breadcrumb -->
+					<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <ol class="breadcrumb">
                             <li><a href="javascript:void(0)">Dashboard</a></li>
-                            <li class="active"><span>Daftar-Tamu</span></li>
+                            <li class="active"><span>Paket Bermain</span></li>
                         </ol>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row" style="padding: 2px 10px 10px 10px">
-                <div class="col-sm-12">
-                    <div class="panel panel-default card-view">
-                        <div class="panel-heding">
-                            {{-- <div class="clearfix"></div> --}}
-                            <div class="row">
-                                <div class="col-lg-10">
-                                    <h6>Daftar Tamu</h6>
-                                </div>
-                                <div class="col-lg-2" style="text-align: end;">
-                                    <a href="">
-                                        <i class="fa-2x zmdi zmdi-fullscreen"
-                                            style="border: 0px solid silver; border-radius: 0.25em; padding: 0.5em;"></i>
-                                    </a>
-                                    {{-- tambah tamu --}}
-                                    {{-- <a href="{{ route('tambah-tamu') }}"> --}}
-                                    {{-- <a href="{{ route('Tambah-tamu') }}"> --}}
-                                    
-                                    {{-- <a href="{{ URL('/daftar-tamu.tambahtamu') }}"> --}}
-                                    <a href="{{ route('tambah-tamu') }}">
-                                        <i class="fa-2x fa-plus"></i>
-                                    </a>
-                                    <div class="row">
-                                        <div class="col-lg-0"></div>
-                                        <div class="col-lg-4">
-                                            <div class="boxcontainer">
-                                                <table class="elementcontainer">
-                                                    <tr>
-                                                        <td>
-                                                            <input type="text" placeholder="search" class="search">
-                                                        </td>
-                                                        <td>
-                                                            <a href="#"><i
-                                                                    class="fa-solid fa-magnifying-glass"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+					</div>
+					<!-- /Breadcrumb -->
+				</div>
+				<!-- /Title -->
+				
+				<div class="row">
+					<!-- Basic Table -->
+					<div class="col-sm-12">
+						<div class="panel panel-default card-view">
+                            <div class="pull-left">
+                                <h6 class="panel-title txt-dark">Daftar Tamu</h6>
                             </div>
-                        </div>
-                        <div class="panel-wrapper collapse in">
-                            <div class="panel-body">
-                                <div class="table-wrap mt-1">
-                                    <div class="table-responsive">
-                                        <table class="table mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Nama</th>
-                                                    <th>Email</th>
-                                                    <th style="text-align: center;">Nomer hp</th>
-                                                    <th style="text-align: center;">Kategori Tamu</th>
-                                                    <th style="text-align: center;">Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($visitor as $item)
-                                                    <tr>
-                                                        <td>{{ $item->name }}</td>
-                                                        <td>{{ $item->email }}</td>
-                                                        <td style="text-align: center;">{{ $item->phone }}</td>
-                                                        <td style="text-align: center;">
-                                                            @if ($item->tipe_member == 'VVIP')
-                                                                <span class="label label-vvip">VVIP</span>
-                                                            @else
-                                                                <span class="label label-vip">VIP</span>
-                                                            @endif
-                                                        </td>
-                                                        <td style="text-align: center;">
-                                                            <a  href="{{ route('generate',$item->id) }}">
-                                                                <img src="dist/img/Card-Tamu.svg" alt=""
-                                                                style="padding: 2px 7px 2px 2px;"></a>
-                                                            <a  href="{{ route('edit-tamu',$item->id) }}">
-                                                                <img src="dist/img/edit.svg" alt=""
-                                                                style="padding: 2px 7px 2px 2px;"></a>
-                                                            <a  href="{{ route('hapus-tamu',$item->id) }}" class="delete-confirm">
-                                                                <img src="dist/img/hapus.svg" alt=""
-                                                                style="padding: 2px 7px 2px 2px;"></a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        {{ $visitor->links() }}
-                                    </div>
-                                </div>
+							<div class="col-lg-11" style="text-align: end;">
+                                <a href="{{ route('tambah-tamu') }}">
+                                        <i class="fa-2x fa-plus"
+                                        ></i></a>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                            <div class="clearfix"></div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="table-wrap">
+										<div class="table-responsive">
+											<table class="table mb-0" id="dt-tamu">
+												<thead>
+                                                    <tr>
+                                                        <th class="" style="margin-left: 20px;">Nama</th>
+                                                        <th class="">Email</th>
+                                                        <th class="">Phone</th>
+                                                        <th class="" style="padding-left: 60px;">Tipe</th>
+                                                        <th class="">Opsi</th>
+                                                    </tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /Basic Table -->
+				</div>
+			</div>
+			<!-- Footer -->
             @include('Layouts.Footer')
-        </div>
-    </div>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-
-<script type="text/javascript">
-    
-
-    $('.delete-confirm').on('click', function(event) {
-    var form = this;
-    event.preventDefault();
-    const url = $(this).attr('href');
-    
-        swal({
-            title: '',
-            text: 'Anda Yakin Menghapus Data Tamu Ini?',
-            icon: '{{ asset('warning.png') }}',
-            buttons: ["Batal", "HAPUS TAMU"],
-            closeOnClickOutside: false,
-        }).then(function(isConfirm) {
-        if (isConfirm) {
-            swal({
-            title: 'Deleted!',
-            text: 'Data berhasil dihapus!',
-            icon: 'success'
-        }).then(function(value) {
-            if (value) {
-                window.location.href = url;
-            }
-        });
-    } 
-    })
-    });
-</script>
+            <!-- /Footer -->
+		</div>
+		<!-- /Main Content -->
+@endsection

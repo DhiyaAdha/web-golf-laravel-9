@@ -34,7 +34,7 @@
 		</div>
 		<!-- /Breadcrumb -->
 	</div>
-	<!-- /Title --> --}}
+	<!-- /Title -->
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -105,8 +105,6 @@
                                 </address>
                             </div>
                         </div>
-
-
                         <div class="table-responsive">
                             <table class="table table-condensed">
                                 <thead>
@@ -121,51 +119,34 @@
                                     <!-- foreach ($order->lineItems as $line) or some such thing here -->
                                     <tr>
                                         <td>
-
                                             <span>Practice</span>
-
-
-
                                         </td>
                                         <td class="text-center">Rp
-
                                             <span>50000</span>
-
                                         </td>
                                         <td class="text-center">1</td>
                                         <td class="text-right">Rp
-
                                             <span>50000</span>
-
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-
                                             <span>Paket 1</span>
-
                                         </td>
                                         <td class="text-center">Rp
-
                                             <span>100000</span>
-
                                         </td>
                                         <td class="text-center">1</td>
                                         <td class="text-right">Rp
-
                                             <span>100000</span>
-
                                         </td>
                                     </tr>
-
                                     <tr>
                                         <td class="thick-line"></td>
                                         <td class="thick-line"></td>
                                         <td class="thick-line text-right">Subtotal</td>
                                         <td class="thick-line text-right">
-
                                             <span>Rp 150000</span>
-
                                         </td>
                                     </tr>
                                     <tr>
@@ -185,9 +166,7 @@
                                         <td class="no-line"></td>
                                         <td class="no-line text-right"><strong>Total Bayar</strong></td>
                                         <td class="no-line text-right">
-
                                             <span>Rp 150000</span>
-
                                         </td>
                                     </tr>
                                 </tbody>
@@ -213,8 +192,6 @@
                                 </div>
                                 <div class="form-group text-right">
                                     {{-- <button type="submit" class="btn btn-info">Selesai</button> --}}
-
-
                                 </div>
                             </div>
                         </div>

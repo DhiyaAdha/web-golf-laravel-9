@@ -100,4 +100,20 @@ class ScanqrController extends Controller
         $qrcode = QrCode::size(400)->generate($visitor->id);
         return view('qrcode',compact('qrcode'));
     }
+
+    // Scantamu-berhasil
+    public function scantamuberhasil(){
+            return view('/scan-tamu-berhasil');
+    }
+    
+    public function proses (){
+            return view('proses');
+    }
+
+
+    public function kartutamu(){
+        
+            return view('tamu.kartu-tamu');
+    }
+
 }

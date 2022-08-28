@@ -119,7 +119,7 @@
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
                                 <div id="morris_extra_line_chart" class="morris-chart" style="height:293px;"></div>
-                                <ul class="flex-stat mt-40">
+                                <ul class="flex-stat mt-45" style="display: flex">
                                     <li>
                                         <span class="block"></span>
                                         <span class="block txt-dark weight-500 font-18">
@@ -159,8 +159,20 @@
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
                                 <div id="morris_extra_bar_chart" class="morris-chart" style="height:340px;"></div>
-                                <ul class="flex-stat mt-40">
-
+                                <ul class="flex-stat mt-1" style="display: flex">
+                                    <li>
+                                        <span class="block"></span>
+                                        <span class="block txt-dark weight-500 font-18">
+                                            <span class="">
+                                            </span>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        {{-- <span class="block">Total Tamu Berkunjung</span> --}}
+                                        <span class="block">Statistika Mingguan</span>
+                                        <span class="block txt-dark weight-500 font-18"><span
+                                                class="counter-anim">{{ $visitor_week }}</span></span>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -236,69 +248,43 @@
 
             <!-- Row Tabel Tamu-->
             <div class="row">
-                <div class="col-lg-12 col-md-7 col-sm-12 col-xs-12">
-                    <div class="panel panel-default card-view panel-refresh">
-                        <div class="refresh-container">
-                            <div class="la-anim-1"></div>
+                <!-- Basic Table -->
+                <div class="col-sm-12">
+                    <div class="panel panel-default card-view">
+                        <div class="pull-left">
+                            <h6 class="panel-title txt-dark">Terakhir Tamu Berkunjung</h6>
                         </div>
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                <h6 class="panel-title txt-dark">terakhir tamu berkunjung</h6>
-                            </div>
-                            <div class="pull-right">
-                                <a href="#" class="pull-left inline-block full-screen mr-15">
-                                    <i class="zmdi zmdi-fullscreen"></i>
-                                </a>
-                            </div>
-                            <div class="clearfix"></div>
+                        <div class="pull-right" >
+                            <a href="#" class="pull-left inline-block full-screen mr-40">
+                                <i class="fa-2x zmdi zmdi-fullscreen"
+                                            style="border: 0px solid silver; border-radius: 0.25em; "></i>
+                            </a>
                         </div>
+                        <div class="clearfix"></div>
                         <div class="panel-wrapper collapse in">
-                            <div class="panel-body row pa-0">
+                            <div class="panel-body">
                                 <div class="table-wrap">
                                     <div class="table-responsive">
-                                        <table class="table table-hover mb-0">
+                                        <table class="table mb-0" id="dt-analisis">
                                             <thead>
                                                 <tr>
-                                                    <th>ID</th>
-                                                    <th>Nama Tamu</th>
-                                                    <th>Tanggal</th>
-                                                    <th>Kategori Tamu</th>
-                                                    <th>Pukul</th>
+                                                    {{-- <th class="" style="margin-left: 20px;">ID</th> --}}
+                                                    <th class="">NAMA TAMU</th>
+                                                    <th class="">TANGGAL</th>
+                                                    <th class="">KATAGORI TAMU</th>
+                                                    <th class="table-th">PUKUL</th>
                                                 </tr>
                                             </thead>
-
                                             <tbody>
-                                                {{-- analisis-tamu --}}
-                                                @foreach ($visitor as $item)
-                                                    <tr>
-                                                        <td><span class="txt-dark weight-500">#{{ $item->id }}</span>
-                                                        </td>
-                                                        <td>{{ $item->name }}</td>
-                                                        <td><span class="txt-success"><i
-                                                                    class="zmdi zmdi-caret-up mr-10 font-20"></i><span>{{ date('d F Y', strtotime($item->created_at)) }}</span></span>
-                                                        </td>
-                                                        <td>
-                                                            @if ($item->tipe_member == 'VVIP')
-                                                                <span class="label label-vvip">VVIP</span>
-                                                            @else
-                                                                <span class="label label-vip">VIP</span>
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            {{ date('H:i', strtotime($item->created_at)) }} WIB
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
                                             </tbody>
                                         </table>
-                                        
-                                        {{ $visitor->links() }}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- /Basic Table -->
             </div>
             <!-- Footer -->
             @include('Layouts.Footer')
@@ -346,7 +332,6 @@
         var vip_jum = <?php print $vip_jum; ?>;
         var vvip_sab = <?php print $vvip_sab; ?>;
         var vip_sab = <?php print $vip_sab; ?>;
-    </script>
 
     var vvip_min = <?php print $vvip_min; ?>;
     var vip_min = <?php print $vip_min; ?>;
