@@ -42,7 +42,7 @@
                                                         <th class="" style="margin-left: 20px;">Nama</th>
                                                         <th class="">Email</th>
                                                         <th class="">Phone</th>
-                                                        <th class="" style="padding-left: 60px;">Tipe</th>
+                                                        <th class="" >Tipe</th>
                                                         <th class="">Opsi</th>
                                                     </tr>
 												</thead>
