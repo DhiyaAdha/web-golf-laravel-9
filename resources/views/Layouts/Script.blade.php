@@ -166,16 +166,17 @@
             "type": "GET",
             "datatype": "json"
         },
-        "columns": [{
-                data: 'name',
-                searchable: true,
-                orderable: false
-            },
-            {
-                data: 'tipe_member',
-                searchable: true,
-                orderable: false
+        "render": $.fn.dataTable.render.text(),
+        "columns": [
+            // { "data": function(data) { return data.name }},
+            // { "data": function(data) { return data.category }},
 
+
+            {
+
+                "data": function(data) {
+                    return data.visitor.name
+                }
             },
             {
                 data: 'total',
@@ -187,6 +188,39 @@
                 searchable: true,
                 orderable: false
             },
+            {
+                "data": function(data) {
+                    return moment(data.created_at).format("DD MMMM YYYY")
+                }
+            },
+
+
+            {
+
+                "data": function(data) {
+                    return data.visitor.name
+                }
+            },
+            {
+                "data": function(data) {
+                    return data.visitor.tipe_member
+                }
+            },
+            {
+                "data": function(data) {
+                    return `<span>Rp ${data.total}</span>`
+                }
+            },
+            {
+                "data": function(data) {
+                    return moment(data.created_at).format("DD MMMM YYYY")
+                }
+
+            },
+
+            // {
+            //     "data": "action"
+            // },
         ],
         order: [],
         responsive: true,

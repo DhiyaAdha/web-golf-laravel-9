@@ -10,8 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Hash;
 
-
-
 class VisitorSeeder extends Seeder
 {
     /**
@@ -23,8 +21,6 @@ class VisitorSeeder extends Seeder
     {
         //
 
-
-        
         // $faker = Faker::create('id_ID');
         // for($i = 1; $i <= 300; $i++) {
         //     DB::table('visitors')->insert([
@@ -36,7 +32,7 @@ class VisitorSeeder extends Seeder
         //         'gender' => $faker->randomElement(['laki-laki', 'perempuan']),
         //         'tipe_member' => $faker->randomElement(['VIP', 'VVIP']),
         //         'created_at' => $faker->dateTimeThisYear(),
-        //         
+        //
         //         'updated_at' => \Carbon\Carbon::now()->addMinutes(rand(0,
         //         60 * 23))->addSeconds(rand(0, 60))
         //     ]);
@@ -45,25 +41,23 @@ class VisitorSeeder extends Seeder
         // 'created_at' => \Carbon\Carbon::now()->addMinutes(rand(0,
         //         // 60 * 23))->addSeconds(rand(0, 60)),
 
-
-
         // Visitor::truncate();
         $faker = Faker::create('id_ID');
 
-        for ($i=0; $i < 500; $i++) { 
+        for ($i = 0; $i < 500; $i++) {
             Visitor::create([
                 'name' => $faker->name(),
                 'email' => $faker->email(),
-                'phone'=> $faker->phoneNumber(),
+                'phone' => $faker->phoneNumber(),
                 'address' => $faker->address(),
                 'company' => $faker->company(),
                 'gender' => $faker->randomElement(['laki-laki', 'perempuan']),
                 'tipe_member' => $faker->randomElement(['VIP', 'VVIP']),
                 'created_at' => $faker->dateTimeThisYear(),
-                'updated_at' => \Carbon\Carbon::now()->addMinutes(rand(0,
-                60 * 23))->addSeconds(rand(0, 60))
+                'updated_at' => \Carbon\Carbon::now()
+                    ->addMinutes(rand(0, 60 * 23))
+                    ->addSeconds(rand(0, 60)),
             ]);
-
         }
     }
 }

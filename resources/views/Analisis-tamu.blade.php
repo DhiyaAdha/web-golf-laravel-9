@@ -363,9 +363,6 @@
         var vip_nov = <?php print $Nov_vip; ?>;
         var vvip_dec = <?php print $Dec_vvip; ?>;
         var vip_dec = <?php print $Dec_vip; ?>;
-
-
-
         var vvip_min = <?php print $vvip_min; ?>;
         var vip_min = <?php print $vip_min; ?>;
         var vvip_sen = <?php print $vvip_sen; ?>;
@@ -381,7 +378,6 @@
         var vvip_sab = <?php print $vvip_sab; ?>;
         var vip_sab = <?php print $vip_sab; ?>;
     </script>
-
 
     var vvip_min = <?php print $vvip_min; ?>;
     var vip_min = <?php print $vip_min; ?>;
