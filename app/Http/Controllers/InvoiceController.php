@@ -18,6 +18,7 @@ class InvoiceController extends Controller
      */
     public function index(Request $request)
     {
+
         $riwayat_invoice = LogTransaction::select(['log_transactions.id', 'log_transactions.total', 'visitors.name', 'visitors.tipe_member', 'log_transactions.created_at'])
         ->leftJoin('visitors', 'visitors.id', '=', 'log_transactions.visitor_id')->get();
         if($request->ajax()){
@@ -30,6 +31,7 @@ class InvoiceController extends Controller
             })
             ->rawColumns(['name','action'])
             ->make(true);
+
         }
         return view('invoice.riwayat-invoice');
     }

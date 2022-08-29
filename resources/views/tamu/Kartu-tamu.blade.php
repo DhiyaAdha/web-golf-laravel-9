@@ -26,14 +26,26 @@
                             </div>
                             <div class="pull-right">
                                 <span class="no-margin-switcher">
-                                    <a href="http://"><i class="fa-solid fa-address-card"></i></a>
+                                    <a href="https://tse4.mm.bing.net/th?id=OIP.3S7-hQjSnc_alBueJd370AHaEu&pid=Api&P=0"><i class="fa-solid fa-address-card"></i></a>
                                 </span>
                             </div>
                             <div class="clearfix"></div>
+                            <div>
+                                <p class="judul">Nama Lengkap</p>
+                                <h6 class="title">Pamungkas Nuli Ramadhan</h6>
+                                <p class="judul">Email</p>
+                                <h6 class="title">PamungkasNuli@gmail.com</h6>
+                                <p class="judul">Nomer Hp</p>
+                                <h6 class="title">0845545526386</h6>
+                                <p class="judul">Jenis Kelamin</p>
+                                <h6 class="title">Laki Laki</h6>
+                                <p class="judul">Kategori Tamu</p>
+                                <h6 class="title">VVIP</h6>
+                            </div>
                         </div>
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
-                                <div id="morris_extra_line_chart" class="morris-chart" style="height:293px;"></div>
+                                <div id="morris_extra_line_chart" class="morris-chart" style="height: 30px;"></div>
                             </div>
                         </div>
                     </div>
@@ -53,8 +65,8 @@
                     </div>
                     <div class="panel panel-default card-view">
                         <div class="panel-heding">
-                            <div class="pull-left">
-                                <h6 class="panel-title txt-dark">Sisa Deposit</h6>
+                            <div class="pull">
+                                <h6 class="panel-title txt-dark" style="text-align: center;">Sisa Deposit</h6>
                             </div>
                             <div class="pull-right">
                             </div>
@@ -70,9 +82,9 @@
                             <div class="la-anim-1"></div>
                         </div>
                         <div class="panel-heading">
-                            <div class="pull-left">
-                                <h6 class="panel-title txt-dark">Barcode Untuk diScan</h6>
-                                <h6 class="panel-title txt-dark">Setiap Main</h6>
+                            <div class="pull">
+                                <h6 class="panel-title txt-dark" style="text-align: center;">Barcode Untuk diScan</h6>
+                                <h6 class="panel-title txt-dark" style="text-align: center;">Setiap Main</h6>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -86,7 +98,225 @@
                     </div>
                 </div>
             </div>
+            <div class="cret-btn">
+                <div class="title-baru">
+                    <div>
+                        <p class="judul-btn">Aktifitas</p>
+                    </div>
+                </div>
+                <div class="btn-clik">
+                    <button id="btn1">Transaksi</button>
+                    <button id="btn2">Deposit</button>
+                    <button id="btn3">Limit</button>
+                </div>
+                <div>
+                    <div class="row" style="padding: 5px 0px">
+                        <div class="col-sm-12">
+                            <div class="panel panel-default card-view">
+                                <div class="panel-heding">
+                                    <div class="row">
+                                        <div class="col-lg-10">
+                                            <h6>Riwayat Transaksi</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-wrapper collapse in">
+                                    <div class="panel-bodi">
+                                        <div class="table-wrap mt-40">
+                                            <div class="table-responsive">
+                                                <table class="table mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="text-align: center;">Order ID</th>
+                                                            <th>Informasi</th>
+                                                            <th style="text-align: center;">Status</th>
+                                                            <th style="text-align: center;">Tanggal</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="text-align: center;"><span class="label" style="color: #000000; font-size: 14px;">#10021</span></td>
+                                                            <td>Transaksi berhasil ! Arya GP telah melakukan pembayaran sebesar Rp.1.500.000,00</td>
+                                                            <td style="text-align: center;">
+                                                                <span class="label label-Berhasil">Berhasil</span>
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <p>12 Jan 2022</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="text-align: center;"><span class="label" style="color: #000000; font-size: 14px;">#10021</span></td>
+                                                            <td>Transaksi berhasil ! Arya GP telah melakukan pembayaran menggunakan Limit Gratis.</td>
+                                                            <td style="text-align: center;">
+                                                                <span class="label label-Berhasil">Berhasil</span>
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <p>12 Jan 2022</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="text-align: center;"><span class="label" style="color: #000000; font-size: 14px;">#10021</span></td>
+                                                            <td>Transaksi dibatalkan ! Arya GP telah membatalkan transaksi Limit Gratis.</td>
+                                                            <td style="text-align: center;">
+                                                                <span class="label label-Batal">Batal</span>
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <p>12 Jan 2022</p>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="row" style="padding: 5px 0px">
+                        <div class="col-sm-12">
+                            <div class="panel panel-default card-view">
+                                <div class="panel-heding">
+                                    <div class="row">
+                                        <div class="col-lg-10">
+                                            <h6>Riwayat Deposit</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-wrapper collapse in">
+                                    <div class="panel-bodi">
+                                        <div class="table-wrap mt-40">
+                                            <div class="table-responsive">
+                                                <table class="table mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="text-align: center;">Balence</th>
+                                                            <th></th>
+                                                            <th>Informasi</th>
+                                                            <th style="text-align: center;">Jenis Pembayaran</th>
+                                                            <th style="text-align: center;">Tanggal</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="text-align: center;"><span class="label" style="color: #000000; font-size: 14px;">Rp</span></td>
+                                                            <td style="text-align: center;"><span class="label" style="color: #000000; font-size: 14px;">500.000</span></td>
+                                                            <td>Transaksi berhasil ! Arya GP telah melakukan pembayaran sebesar Rp.1.500.000,00</td>
+                                                            <td style="text-align: center;">
+                                                                <span class="label label-B" style="color: #000000; font-size: 14px;">Tranfer</span>
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <p>12 Jan 2022</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="text-align: center;"><span class="label" style="color: #000000; font-size: 14px;">Rp</span></td>
+                                                            <td style="text-align: center;"><span class="label" style="color: #000000; font-size: 14px;">500.000</span></td>
+                                                            <td>Transaksi berhasil ! Arya GP telah melakukan pembayaran menggunakan Limit Gratis.</td>
+                                                            <td style="text-align: center;">
+                                                                <span class="label label-B" style="color: #000000; font-size: 14px;">Tunai</span>
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <p>12 Jan 2022</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="text-align: center;"><span class="label" style="color: #000000; font-size: 14px;">Rp</span></td>
+                                                            <td style="text-align: center;"><span class="label" style="color: #000000; font-size: 14px;">500.000</span></td>
+                                                            <td>Transaksi dibatalkan ! Arya GP telah membatalkan transaksi Limit Gratis.</td>
+                                                            <td style="text-align: center;">
+                                                                <span class="label label-B" style="color: #000000; font-size: 14px;">tranfer</span>
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <p>12 Jan 2022</p>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding: 5px 0px">
+                        <div class="col-sm-12">
+                            <div class="panel panel-default card-view">
+                                <div class="panel-heding">
+                                    <div class="row">
+                                        <div class="col-lg-10">
+                                            <h6>Riwayat Limit</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-wrapper collapse in">
+                                    <div class="panel-bodi">
+                                        <div class="table-wrap mt-40">
+                                            <div class="table-responsive">
+                                                <table class="table mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                        <th>Informasi</th>
+                                                            <th style="text-align: center;">Tipe</th>
+                                                            <th style="text-align: center;">Tanggal</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Transaksi berhasil ! Arya GP telah melakukan pembayaran sebesar Rp.1.500.000,00</td>
+                                                            <td style="text-align: center;">
+                                                                <span class="label label-B" style="color: #000000; font-size: 14px;">Reset</span>
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <p>12 Jan 2022</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Transaksi berhasil ! Arya GP telah melakukan pembayaran menggunakan Limit Gratis.</td>
+                                                            <td style="text-align: center;">
+                                                                <span class="label label-B" style="color: #000000; font-size: 14px;">Berkurang</span>
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <p>12 Jan 2022</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Transaksi dibatalkan ! Arya GP telah membatalkan transaksi Limit Gratis.</td>
+                                                            <td style="text-align: center;">
+                                                                <span class="label label-B" style="color: #000000; font-size: 14px;">Reset</span>
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <p>12 Jan 2022</p>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             @include('Layouts.Footer')
         </div>
     </div>
-</div>
+
+    <script>
+        $(document).ready(function() {
+
+            $("#btn1").click(function() {
+                document.getElementById("transaksi").style.display = "none";
+            })
+            $('#btn2').click(function() {
+                $('#transaksi').fadeOut();
+            })
+
+
+        });
+    </script>

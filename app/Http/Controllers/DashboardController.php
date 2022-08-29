@@ -6,13 +6,18 @@ use Carbon\Carbon;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
-    //
-    public function dashboard(){
-        // memanggil data visitor
-
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        //
         $data['visitor'] = DB::table('Visitors')->orderBy('created_at', 'desc')->paginate(10);
         $data['visitor_today'] = Visitor::whereDate('created_at', now()->format('Y-m-d'))->count();
         $data['visitor_week'] = Visitor::whereBetween('created_at', [Carbon::now()->startOfWeek(Carbon::SUNDAY), Carbon::now()->endOfWeek(Carbon::SATURDAY)])->get()->count();
@@ -84,8 +89,94 @@ class DashboardController extends Controller
         $data['vvip_min'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(6)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VVIP')->count();
         $data['vip_min'] = Visitor::whereDate('created_at', [Carbon::now()->startOfWeek()->addDays(6)])->whereMonth('created_at', now()->month)->get()->where('tipe_member', 'VIP')->count();
 
+        $visitor = Visitor::select(['name', 'created_at', 'tipe_member', 'updated_at'])->get();
+        if($request->ajax()){
+            return datatables()->of($visitor)
+            ->editColumn('created_at', function ($data) {
+                return $data->created_at->format('d F Y');  
+            })
+            ->editColumn('tipe_member', function ($data) {
+                return $data->tipe_member;
+                // if ($data->tipe_member == 'VIP') {
+                //     return `<span class="label label-vip">$data->tipe_member</span>`;
+                // } else {
+                //     return `<span class="label label-vvip">$data->tipe_member</span>`;
+                // }
+            })
+            ->editColumn('updated_at', function ($data) {
+                return $data->created_at->format('H:i');
+            })
+            ->rawColumns(['name','action'])
+            ->make(true);
 
+        }
         return view('/Analisis-tamu', $data);
+        
+    }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 }

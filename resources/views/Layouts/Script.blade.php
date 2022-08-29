@@ -63,8 +63,8 @@
     //     new Switchery($(this)[0], $(this).data());
     // });
 
-
-    $('#dt-package').DataTable({
+    // data analisis
+    $('#dt-analisis').DataTable({
         "processing": true,
         "serverSide": true,
         "lengthChange": false,
@@ -76,9 +76,64 @@
             "previous": "Previous"
         },
         "ajax": {
-            "url": "{{ route('package.index') }}",
+            "url": "{{ route('analisis-tamu.index') }}",
             "type": "GET",
             "datatype": "json"
+        },
+
+        "render": $.fn.dataTable.render.text(),
+
+
+        "columns" : [
+            { data: 'name', searchable: true, orderable: false },
+            { data: 'created_at', searchable: true, orderable: false },
+            { data: 'tipe_member', searchable: true, orderable: false },
+            { data: 'updated_at', searchable: true, orderable: false },
+
+            // {
+            //     "data": function(data) {
+            //         if (data.visitor.tipe_member == 'VIP') {
+            //             return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
+            //         } else {
+            //             return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
+            //         }
+            //     }
+            // },
+        ],
+        order: [],
+        responsive: true,
+        language: {
+            search: "",
+            searchPlaceholder: "Cari",
+            emptyTable: "Tidak ada data yang sesuai",
+            info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+            infoFiltered: "(difilter dari _MAX_ total data)",
+            infoEmpty: "Tidak ada data yang sesuai",
+            lengthMenu: "Menampilkan _MENU_ data",
+            zeroRecords: "Tidak ada data yang sesuai"
+        },
+        columnDefs: [
+            { className: 'text-left', targets: [0, 1, 2, 3,]}
+
+        ],
+    });
+
+    //data package
+    $('#dt-package').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "lengthChange": false,
+        "searching": true,
+        "paginate": {
+            "first": "First",
+            "last": "Last",
+            "next": "Next",
+            "previous": "Previous"
+        },
+        "ajax" : {
+            "url" : "{{ route('package.index') }}",
+            "type" : "GET",
+            "datatype" : "json",
         },
         "columns": [{
                 "data": function(data) {
@@ -141,6 +196,133 @@
         }, ],
     });
 
+    //data tamu
+    $('#dt-tamu').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "lengthChange": false,
+        "searching": true,
+        "paginate": {
+            "first": "First",
+            "last": "Last",
+            "next": "Next",
+            "previous": "Previous"
+        },
+        "ajax": {
+            "url": "{{ route('daftar-tamu') }}",
+            "type": "GET",
+            "datatype": "json"
+        },
+
+        "render": $.fn.dataTable.render.text(),
+
+
+        "columns" : [
+            { data: 'name', searchable: true, orderable: false },
+            { data: 'email', searchable: true, orderable: false },
+            { data: 'phone', searchable: true, orderable: false },
+            { data: 'tipe_member', searchable: true, orderable: false },
+            { data: 'action', searchable: false, orderable: false },
+
+            // {
+            //     "data": function(data) {
+            //         if (data.visitor.tipe_member == 'VIP') {
+            //             return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
+            //         } else {
+            //             return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
+            //         }
+            //     }
+            // },
+
+
+        ],
+        order: [],
+        responsive: true,
+        language: {
+            search: "",
+            searchPlaceholder: "Cari",
+            emptyTable: "Tidak ada data yang sesuai",
+            info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+            infoFiltered: "(difilter dari _MAX_ total data)",
+            infoEmpty: "Tidak ada data yang sesuai",
+            lengthMenu: "Menampilkan _MENU_ data",
+            zeroRecords: "Tidak ada data yang sesuai"
+        },
+        columnDefs: [
+            { className: 'text-left', targets: [ 1, 2, 3, 4]}
+
+        ],
+    });
+
+    // daftar-tamu
+    // $('#dt-tamu').DataTable({
+    //     "processing": true,
+    //     "serverSide": true,
+    //     "lengthChange": false,
+    //     "searching": true,
+    //     "paginate": {
+    //         "first": "First",
+    //         "last": "Last",
+    //         "next": "Next",
+    //         "previous": "Previous"
+    //     },
+    //     "ajax" : {
+    //         "url" : "{{ route('daftar-tamu') }}",
+    //         "type" : "GET",
+    //         "datatype" : "json",
+    //     },
+    //     "columns": [{
+    //             "data": function(data) {
+    //                 return data.name
+    //             }
+    //         },
+    //         {
+    //             "data": function(data) {
+    //                 return data.email
+    //             }
+    //         },
+    //         {
+    //             "data": function(data) {
+    //                 return data.phone
+    //             }
+    //         },
+    //         {
+    //             "data": function(data) {
+    //                 if (data.tipe_member == 'VIP') {
+    //                     return `<span class="label label-vip">${data.tipe_member}</span>`;
+    //                 } else {
+    //                     return `<span class="label label-vvip">${data.tipe_member}</span>`;
+    //                 }
+    //             }
+    //         },
+    //         // {
+    //         //     "data": function(data) {
+    //         //         return data.tipe_member
+    //         //     }
+    //         // },
+    //         {
+    //             "data": "action"
+    //         },
+    //     ],
+    //     order: [],
+    //     responsive: true,
+    //     language: {
+    //         search: "",
+    //         searchPlaceholder: "Cari",
+    //         emptyTable: "Tidak ada data yang sesuai",
+    //         info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+    //         infoFiltered: "(difilter dari _MAX_ total data)",
+    //         infoEmpty: "Tidak ada data yang sesuai",
+    //         lengthMenu: "Menampilkan _MENU_ data",
+    //         zeroRecords: "Tidak ada data yang sesuai"
+    //     },
+    //     columnDefs: [{
+    //         orderable: false,
+    //         targets: [0, 1, 2, 3, 4,]
+    //     }, ],
+    // });
+
+
 
     // invoice
     $('#dt-riwayat').DataTable({
@@ -159,7 +341,9 @@
             "type": "GET",
             "datatype": "json"
         },
+
         "render": $.fn.dataTable.render.text(),
+
 
         "columns" : [
             { data: 'name', searchable: true, orderable: false },
@@ -177,6 +361,7 @@
             //     }
             // },
 
+
         ],
         order: [],
         responsive: true,
@@ -192,48 +377,19 @@
         },
         columnDefs: [
             { className: 'text-center', targets: [1, 2, 3]}
+
         ],
     });
 
-    // search
-    // $(document).ready(function(){
-    // 	load_data();
-    // 	function load_data(jurusan, keyword)
-    // 	{
-    // 		$.ajax({
-    // 			method:"POST",
-    // 			url:"{{ route('riwayat-invoice.index') }",
-    // 			data: {jurusan: jurusan, keyword:keyword},
-    // 			success:function(hasil)
-    // 			{
-    // 				$('.data').html(hasil);
-    // 			}
-    // 		});
-    //  	}
-    // 	$('#s_keyword').keyup(function(){
-    // 		var jurusan = $("#s_jurusan").val();
-    // 		var keyword = $("#s_keyword").val();
-    // 		load_data(jurusan, keyword);
-    // 	});
-    // 	$('#s_jurusan').change(function(){
-    // 		var jurusan = $("#s_jurusan").val();
-    // 		var keyword = $("#s_keyword").val();
-    // 		load_data(jurusan, keyword);
-    // 	});
-    // });
-
-
+    // scan
     $(document).on("click", "#show-scan", function() {
         $(".disabled-scan").css("display", "none");
-
         function onScanSuccess(decodedText, decodedResult) {
             $("#result").val(decodedText)
         }
-
         function onScanFailure(error) {
             console.warn(`Code scan error = ${error}`);
         }
-
         let html5QrcodeScanner = new Html5QrcodeScanner(
             "reader", {
                 fps: 10,
@@ -246,3 +402,4 @@
         html5QrcodeScanner.render(onScanSuccess, onScanFailure);
     })
 </script>
+
