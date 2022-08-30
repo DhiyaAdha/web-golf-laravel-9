@@ -72,55 +72,19 @@
 
 
                         <div class="table-responsive">
-                            <table class="table table-condensed">
+                            <table class="table table-condensed" id="dt-invoice">
                                 <thead>
                                     <tr>
                                         <td><strong>Item</strong></td>
-                                        <td class="text-center"><strong>Harga</strong></td>
-                                        <td class="text-center"><strong>Jumlah</strong></td>
-                                        <td class="text-right"><strong>Total</strong></td>
+                                        <td class=""><strong>Harga</strong></td>
+                                        <td class=""><strong>Jumlah</strong></td>
+                                        <td class=""><strong>Total</strong></td>
+                                        
                                     </tr>
                                 </thead>
+                                <tr></tr>
                                 <tbody>
                                     <!-- foreach ($order->lineItems as $line) or some such thing here -->
-                                    <tr>
-                                        <td>
-
-                                            <span>{{ $package->category }}</span>
-
-
-
-                                        </td>
-                                        <td class="text-center">Rp
-
-                                            <span>{{ formatrupiah($detail->harga) }}</span>
-
-                                        </td>
-                                        <td class="text-center">{{ $detail->quantity }}</td>
-                                        <td class="text-right">Rp
-
-                                            <span>{{ formatrupiah($detail->harga * $detail->quantity) }}</span>
-
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-
-                                            <span>{{ $package->category }}</span>
-
-                                        </td>
-                                        <td class="text-center">Rp
-
-                                            <span>{{ formatrupiah($detail->harga) }}</span>
-
-                                        </td>
-                                        <td class="text-center">{{ $detail->quantity }}</td>
-                                        <td class="text-right">Rp
-
-                                            <span>{{ formatrupiah($detail->harga * $detail->quantity) }}</span>
-
-                                        </td>
-                                    </tr>
 
                                     <tr>
                                         <td class="thick-line"></td>
@@ -128,7 +92,7 @@
                                         <td class="thick-line text-right">Subtotal</td>
                                         <td class="thick-line text-right">
 
-                                            <span>Rp {{ formatrupiah($detail->harga * $detail->quantity * 2) }}</span>
+                                            <span>Rp. {{ formatrupiah($detail->harga * $detail->quantity * 2) }}</span>
 
                                         </td>
                                     </tr>
@@ -136,13 +100,13 @@
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
                                         <td class="no-line text-right">Limit Bulanan</td>
-                                        <td class="no-line text-right">Rp -</td>
+                                        <td class="no-line text-right">Rp. -</td>
                                     </tr>
                                     <tr>
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
                                         <td class="no-line text-right">Deposit</td>
-                                        <td class="no-line text-right">Rp -</td>
+                                        <td class="no-line text-right">Rp. -</td>
                                     </tr>
                                     <tr>
                                         <td class="no-line"></td>
@@ -150,7 +114,7 @@
                                         <td class="no-line text-right"><strong>Total Bayar</strong></td>
                                         <td class="no-line text-right">
 
-                                            <span>Rp {{ formatrupiah($transaction->total) }}</span>
+                                            <span>Rp. {{ formatrupiah($transaction->total) }}</span>
 
                                         </td>
                                     </tr>
