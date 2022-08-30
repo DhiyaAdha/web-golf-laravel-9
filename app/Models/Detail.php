@@ -12,7 +12,7 @@ class Detail extends Model
 
     
     protected $fillable = [
-        'id','log_transaction_id','package_id'
+        'id','log_transaction_id','package_id','quantity'
         
     ];
 }
