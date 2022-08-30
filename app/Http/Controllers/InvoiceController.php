@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Detail;
-use App\Models\Package;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
 use App\Models\LogTransaction;
@@ -64,10 +62,8 @@ class InvoiceController extends Controller
     public function show($id)
     {
         $transaction = LogTransaction::find($id);
-        $package = Package::find($id);
         $data['transaction'] = $transaction;
         $data['visitor'] = Visitor::find($transaction->visitor_id);
-        // $data['package'] = Package::find($package->id);
         // $data['detail'] = Detail::where('transaction_id', $id)->get();
         return view('invoice.invoice', $data);
     }
@@ -104,11 +100,6 @@ class InvoiceController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function exportpdf ()
-    {
-        return 'berhasil yee';
     }
 
     

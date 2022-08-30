@@ -3,7 +3,7 @@
         <div class="nav-header pull-left">
             <div class="logo-wrap">
                 <a href="/dashboard">
-                    <img class="brand-img" src="{{ asset('dist/img/tgcc_icon.svg') }}" alt="brand" />
+                    <img class="brand-img" src="dist/img/tgcc_icon.svg" alt="brand" />
                     <span class="brand-text">TGCC</span>
                 </a>
             </div>

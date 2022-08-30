@@ -228,16 +228,17 @@
     margin-left: -9px;
     margin-right: -9px;
 }
-.label.label-Berhasil {
-    background: #01c853;
+.label.label-Berhasil{
+    background: #01C853;
     padding: 9px 50px;
     font-size: 14px;
 }
-.label.label-Batal {
-    background: #fec107;
+.label.label-Batal{
+    background: #FEC107;
     padding: 9px 50px;
     font-size: 14px;
 }
+
 
 .panel-left {
     background: #fff;

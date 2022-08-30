@@ -12,48 +12,35 @@
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+    <link rel="shortcut icon" href="favicon.ico">
     <link rel="icon" href="{{ asset('tgcc144.PNG') }}" type="image/x-icon">
 
     <!-- Morris Charts CSS -->
-    <link href="{{ asset('vendors/bower_components/morris.js/morris.css') }}" rel="stylesheet" type="text/css" />
-    <link
-        href="{{ asset('vendors/bower_components/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css') }}"
-        rel="stylesheet" type="text/css" />
-    <link href="{{ asset('vendors/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet"
-        type="text/css" />
-    <link href="{{ asset('vendors/bower_components/switchery/dist/switchery.min.css') }}" rel="stylesheet"
-        type="text/css" />
-    <link href="{{ asset('vendors/bower_components/bootstrap-select/dist/css/bootstrap-select.min.css') }}"
-        rel="stylesheet" type="text/css" />
-    <link href="{{ asset('vendors/bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}"
-        rel="stylesheet" type="text/css" />
-    <link href="{{ asset('vendors/bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css') }}"
-        rel="stylesheet" type="text/css" />
-    <link href="{{ asset('vendors/bower_components/multiselect/css/multi-select.css') }}" rel="stylesheet"
-        type="text/css" />
-    <link
-        href="{{ asset('vendors/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}"
-        rel="stylesheet" type="text/css" />
-    <link href="{{ asset('vendors/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') }}"
-        rel="stylesheet" type="text/css" />
+    <link href="vendors/bower_components/morris.js/morris.css" rel="stylesheet" type="text/css" />
+    <link href="vendors/bower_components/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="vendors/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="vendors/bower_components/switchery/dist/switchery.min.css" rel="stylesheet" type="text/css" />
+    <link href="vendors/bower_components/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+    <link href="vendors/bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" rel="stylesheet" type="text/css" />
+    <link href="vendors/bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css" rel="stylesheet" type="text/css" />
+    <link href="vendors/bower_components/multiselect/css/multi-select.css" rel="stylesheet" type="text/css" />
+    <link href="vendors/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="vendors/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
 
     <!-- Data table CSS -->
-    <link href="{{ asset('vendors/bower_components/datatables/media/css/jquery.dataTables.min.css') }}"
-        rel="stylesheet" type="text/css" />
-    <link href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet"
+    <link href="vendors/bower_components/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet"
+        type="text/css" />
+
+    <link href="vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css" rel="stylesheet"
         type="text/css">
 
     <!-- Custom CSS -->
-    <link href="{{ asset('dist/css/style.css') }}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{ asset('dist/css/custom.css') }}" type="text/css">
+    <link href="dist/css/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="dist/css/custom.css" type="text/css">
 
     {{-- Chartist JS --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
     <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
-
-    {{-- Font Awesome --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
 
 
     {{-- HTML5-QRCODE --}}
@@ -62,3 +49,4 @@
     {{-- Bootstrap --}}
 
 </head>
+
