@@ -20,9 +20,9 @@
     <link
         href="{{ asset('vendors/bower_components/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css') }}"
         rel="stylesheet" type="text/css" />
-    <link href="{{ asset('vendors/bower_components/select2/dist/css/select2.min.css" rel="stylesheet') }}"
+    <link href="{{ asset('vendors/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet"
         type="text/css" />
-    <link href="{{ asset('vendors/bower_components/switchery/dist/switchery.min.css" rel="stylesheet') }}"
+    <link href="{{ asset('vendors/bower_components/switchery/dist/switchery.min.css') }}" rel="stylesheet"
         type="text/css" />
     <link href="{{ asset('vendors/bower_components/bootstrap-select/dist/css/bootstrap-select.min.css') }}"
         rel="stylesheet" type="text/css" />
@@ -41,7 +41,6 @@
     <!-- Data table CSS -->
     <link href="{{ asset('vendors/bower_components/datatables/media/css/jquery.dataTables.min.css') }}"
         rel="stylesheet" type="text/css" />
-
     <link href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet"
         type="text/css">
 

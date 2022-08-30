@@ -35,7 +35,7 @@
 <script src="{{ asset('vendors/bower_components/bootstrap-switch/dist/js/bootstrap-switch.min.js') }}"></script>
 
 <!-- ChartJS JavaScript -->
-<script src="vendors/chart.js/Chart.min.js"></script>
+<script src="{{ asset('vendors/chart.js/Chart.min.js') }}"></script>
 
 <!-- Morris Charts JavaScript -->
 <script src="{{ asset('vendors/bower_components/raphael/raphael.min.js') }}"></script>
@@ -148,8 +148,6 @@
 
 
     // invoice
-    // $()
-
     $('#dt-riwayat').DataTable({
         "processing": true,
         "serverSide": true,
@@ -166,6 +164,9 @@
             "type": "GET",
             "datatype": "json"
         },
+
+        "render": $.fn.dataTable.render.text(),
+
         "columns": [{
                 data: 'name',
                 searchable: true,
@@ -175,7 +176,6 @@
                 data: 'tipe_member',
                 searchable: true,
                 orderable: false
-
             },
             {
                 data: 'total',
@@ -185,8 +185,19 @@
             {
                 data: 'created_at',
                 searchable: true,
-                orderable: false
+                orderable: true
             },
+
+            // {
+            //     "data": function(data) {
+            //         if (data.visitor.tipe_member == 'VIP') {
+            //             return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
+            //         } else {
+            //             return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
+            //         }
+            //     }
+            // },
+
         ],
         order: [],
         responsive: true,
@@ -200,10 +211,12 @@
             lengthMenu: "Menampilkan _MENU_ data",
             zeroRecords: "Tidak ada data yang sesuai"
         },
+
         columnDefs: [{
             className: 'text-center',
             targets: [1, 2, 3]
         }],
+
     });
 
     // search
