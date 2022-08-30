@@ -10,14 +10,13 @@
             <div class="row">
                 <div class="col-lg-8">
                     <div class="panel panel-default card-view" style="height: 200px;">
-                        <strong>Ingin Menggunakan</strong>
-                        <div class="form-group">
-                            <select class="form-control select2 mt-5">
-                                <option>Pilih Metode Pembayaran</option>
-                                <option value="">Limit Bulanan</option>
-                                <option value="">Limit Kupon</option>
-                                <option value="">Cash/Transfer</option>
-                            </select>
+                        <strong>Pilih Paket Bermain</strong>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label class="checkbox" for="myCheckboxId">
+                                </label>
+                                <input class="checkbox__input" type="checkbox" name="myCheckboxId" id="myCheckboxId">
+                            </div>
                         </div>
                     </div>
                 </div>

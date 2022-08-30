@@ -196,9 +196,9 @@
                                 </div>
                                 <div class="col-lg-2 col-md-12">
                                     <div class="btn-print">
-                                        <a href="#">
+                                        <a href="/exportpdf">
                                             <i class="fa-regular fa-file-lines">
-                                                Print Struct
+                                                <p style="font-family:Arial, Helvetica, sans-serif">Print Struct</p>
                                             </i>
                                         </a>
                                     </div>

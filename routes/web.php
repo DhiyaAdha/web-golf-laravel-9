@@ -106,4 +106,7 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
     Route::get('/edit-tamu',[AuthController::class,'edittamu'])->name('edit-tamu');
 });
+
+Route::get('/exportpdf',[InvoiceController::class,'exportpdf'])->name('exportpdf');
+
 //Finish level admin dan superadmin
