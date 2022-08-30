@@ -3,51 +3,51 @@
 <!-- JavaScript -->
 
 <!-- jQuery -->
-<script src="vendors/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="{{ asset('vendors/bower_components/jquery/dist/jquery.min.js') }}"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="{{ asset('vendors/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 
 <!-- Data table JavaScript -->
-<script src="vendors/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="{{ asset('vendors/bower_components/datatables/media/js/jquery.dataTables.min.js') }}"></script>
 
 <!-- Slimscroll JavaScript -->
-<script src="dist/js/jquery.slimscroll.js"></script>
+<script src="{{ asset('dist/js/jquery.slimscroll.js') }}"></script>
 
 <!-- simpleWeather JavaScript -->
-<script src="vendors/bower_components/moment/min/moment.min.js"></script>
-<script src="vendors/bower_components/simpleWeather/jquery.simpleWeather.min.js"></script>
-<script src="dist/js/simpleweather-data.js"></script>
+<script src="{{ asset('vendors/bower_components/moment/min/moment.min.js') }}"></script>
+<script src="{{ asset('vendors/bower_components/simpleWeather/jquery.simpleWeather.min.js') }}"></script>
+<script src="{{ asset('dist/js/simpleweather-data.js') }}"></script>
 
 <!-- Progressbar Animation JavaScript -->
-<script src="vendors/bower_components/waypoints/lib/jquery.waypoints.min.js"></script>
-<script src="vendors/bower_components/jquery.counterup/jquery.counterup.min.js"></script>
+<script src="{{ asset('vendors/bower_components/waypoints/lib/jquery.waypoints.min.js') }}"></script>
+<script src="{{ asset('vendors/bower_components/jquery.counterup/jquery.counterup.min.js') }}"></script>
 
 <!-- Fancy Dropdown JS -->
-<script src="dist/js/dropdown-bootstrap-extended.js"></script>
+<script src="{{ asset('dist/js/dropdown-bootstrap-extended.js') }}"></script>
 
 <!-- Sparkline JavaScript -->
-{{-- <script src="vendors/jquery.sparkline/dist/jquery.sparkline.min.js"></script> --}}
+{{-- <script src="{{ asset('vendors/jquery.sparkline/dist/jquery.sparkline.min.js') }}"></script> --}}
 
 <!-- Owl JavaScript -->
-<script src="vendors/bower_components/owl.carousel/dist/owl.carousel.min.js"></script>
+<script src="{{ asset('vendors/bower_components/owl.carousel/dist/owl.carousel.min.js') }}"></script>
 
-<script src="vendors/bower_components/bootstrap-switch/dist/js/bootstrap-switch.min.js"></script>
+<script src="{{ asset('vendors/bower_components/bootstrap-switch/dist/js/bootstrap-switch.min.js') }}"></script>
 
 <!-- ChartJS JavaScript -->
-<script src="vendors/chart.js/Chart.min.js"></script>
+<script src="{{ asset('vendors/chart.js/Chart.min.js') }}"></script>
 
 <!-- Morris Charts JavaScript -->
-<script src="vendors/bower_components/raphael/raphael.min.js"></script>
-<script src="vendors/bower_components/morris.js/morris.min.js"></script>
-<script src="vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.js"></script>
+<script src="{{ asset('vendors/bower_components/raphael/raphael.min.js') }}"></script>
+<script src="{{ asset('vendors/bower_components/morris.js/morris.min.js') }}"></script>
+<script src="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.js') }}"></script>
 
 <!-- Switchery JavaScript -->
-<script src="vendors/bower_components/switchery/dist/switchery.min.js"></script>
+<script src="{{ asset('vendors/bower_components/switchery/dist/switchery.min.js') }}"></script>
 <!-- Init JavaScript -->
-<script src="/dist/js/init.js"></script>
-<script src="/dist/js/dashboard-data.js"></script>
-<script src="/dist/js/dashboard3-data.js"></script>
+<script src="{{ asset('/dist/js/init.js') }}"></script>
+<script src="{{ asset('/dist/js/dashboard-data.js') }}"></script>
+<script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
 
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
@@ -217,278 +217,248 @@
 
     //data tamu
     $('#dt-tamu').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "lengthChange": false,
-                "searching": true,
-                "paginate": {
-                    "first": "First",
-                    "last": "Last",
-                    "next": "Next",
-                    "previous": "Previous"
-                },
-                "ajax": {
-                    "url": "{{ route('daftar-tamu') }}",
-                    "type": "GET",
-                    "datatype": "json"
-                },
-                <<
-                <<
-                <<
-                <
-                HEAD "columns": [{
-                        data: 'name',
-                        searchable: true,
-                        orderable: false
-                    },
-                    {
-                        data: 'tipe_member',
-                        searchable: true,
-                        orderable: false
-                    },
-                    {
-                        data: 'total',
-                        searchable: true,
-                        orderable: false
-                    },
-                    {
-                        data: 'created_at',
-                        searchable: true,
-                        orderable: false
-                    }, ===
-                    ===
-                    =
+        "processing": true,
+        "serverSide": true,
+        "lengthChange": false,
+        "searching": true,
+        "paginate": {
+            "first": "First",
+            "last": "Last",
+            "next": "Next",
+            "previous": "Previous"
+        },
+        "ajax": {
+            "url": "{{ route('daftar-tamu') }}",
+            "type": "GET",
+            "datatype": "json"
+        },
 
-                    "render": $.fn.dataTable.render.text(),
+        "render": $.fn.dataTable.render.text(),
 
 
-                    "columns": [{
-                            data: 'name',
-                            searchable: true,
-                            orderable: false
-                        },
-                        {
-                            data: 'email',
-                            searchable: true,
-                            orderable: false
-                        },
-                        {
-                            data: 'phone',
-                            searchable: true,
-                            orderable: false
-                        },
-                        {
-                            data: 'tipe_member',
-                            searchable: true,
-                            orderable: false
-                        },
-                        {
-                            data: 'action',
-                            searchable: false,
-                            orderable: false
-                        },
+        "columns": [{
+                data: 'name',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'email',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'phone',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'tipe_member',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'action',
+                searchable: false,
+                orderable: false
+            },
 
-                        // {
-                        //     "data": function(data) {
-                        //         if (data.visitor.tipe_member == 'VIP') {
-                        //             return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
-                        //         } else {
-                        //             return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
-                        //         }
-                        //     }
-                        // },
+            // {
+            //     "data": function(data) {
+            //         if (data.visitor.tipe_member == 'VIP') {
+            //             return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
+            //         } else {
+            //             return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
+            //         }
+            //     }
+            // },
 
 
-                    ],
-                    order: [],
-                    responsive: true,
-                    language: {
-                        search: "",
-                        searchPlaceholder: "Cari",
-                        emptyTable: "Tidak ada data yang sesuai",
-                        info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
-                        infoFiltered: "(difilter dari _MAX_ total data)",
-                        infoEmpty: "Tidak ada data yang sesuai",
-                        lengthMenu: "Menampilkan _MENU_ data",
-                        zeroRecords: "Tidak ada data yang sesuai"
-                    },
-                    columnDefs: [{
-                            className: 'text-left',
-                            targets: [1, 2, 3, 4]
-                        }
+        ],
+        order: [],
+        responsive: true,
+        language: {
+            search: "",
+            searchPlaceholder: "Cari",
+            emptyTable: "Tidak ada data yang sesuai",
+            info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+            infoFiltered: "(difilter dari _MAX_ total data)",
+            infoEmpty: "Tidak ada data yang sesuai",
+            lengthMenu: "Menampilkan _MENU_ data",
+            zeroRecords: "Tidak ada data yang sesuai"
+        },
+        columnDefs: [{
+                className: 'text-left',
+                targets: [1, 2, 3, 4]
+            }
 
-                    ],
-                });
+        ],
+    });
 
-            // daftar-tamu
-            // $('#dt-tamu').DataTable({
-            //     "processing": true,
-            //     "serverSide": true,
-            //     "lengthChange": false,
-            //     "searching": true,
-            //     "paginate": {
-            //         "first": "First",
-            //         "last": "Last",
-            //         "next": "Next",
-            //         "previous": "Previous"
-            //     },
-            //     "ajax" : {
-            //         "url" : "{{ route('daftar-tamu') }}",
-            //         "type" : "GET",
-            //         "datatype" : "json",
-            //     },
-            //     "columns": [{
-            //             "data": function(data) {
-            //                 return data.name
-            //             }
-            //         },
-            //         {
-            //             "data": function(data) {
-            //                 return data.email
-            //             }
-            //         },
-            //         {
-            //             "data": function(data) {
-            //                 return data.phone
-            //             }
-            //         },
-            //         {
-            //             "data": function(data) {
-            //                 if (data.tipe_member == 'VIP') {
-            //                     return `<span class="label label-vip">${data.tipe_member}</span>`;
-            //                 } else {
-            //                     return `<span class="label label-vvip">${data.tipe_member}</span>`;
-            //                 }
-            //             }
-            //         },
-            //         // {
-            //         //     "data": function(data) {
-            //         //         return data.tipe_member
-            //         //     }
-            //         // },
-            //         {
-            //             "data": "action"
-            //         },
-            //     ],
-            //     order: [],
-            //     responsive: true,
-            //     language: {
-            //         search: "",
-            //         searchPlaceholder: "Cari",
-            //         emptyTable: "Tidak ada data yang sesuai",
-            //         info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
-            //         infoFiltered: "(difilter dari _MAX_ total data)",
-            //         infoEmpty: "Tidak ada data yang sesuai",
-            //         lengthMenu: "Menampilkan _MENU_ data",
-            //         zeroRecords: "Tidak ada data yang sesuai"
-            //     },
-            //     columnDefs: [{
-            //         orderable: false,
-            //         targets: [0, 1, 2, 3, 4,]
-            //     }, ],
-            // });
+    // daftar-tamu
+    // $('#dt-tamu').DataTable({
+    //     "processing": true,
+    //     "serverSide": true,
+    //     "lengthChange": false,
+    //     "searching": true,
+    //     "paginate": {
+    //         "first": "First",
+    //         "last": "Last",
+    //         "next": "Next",
+    //         "previous": "Previous"
+    //     },
+    //     "ajax" : {
+    //         "url" : "{{ route('daftar-tamu') }}",
+    //         "type" : "GET",
+    //         "datatype" : "json",
+    //     },
+    //     "columns": [{
+    //             "data": function(data) {
+    //                 return data.name
+    //             }
+    //         },
+    //         {
+    //             "data": function(data) {
+    //                 return data.email
+    //             }
+    //         },
+    //         {
+    //             "data": function(data) {
+    //                 return data.phone
+    //             }
+    //         },
+    //         {
+    //             "data": function(data) {
+    //                 if (data.tipe_member == 'VIP') {
+    //                     return `<span class="label label-vip">${data.tipe_member}</span>`;
+    //                 } else {
+    //                     return `<span class="label label-vvip">${data.tipe_member}</span>`;
+    //                 }
+    //             }
+    //         },
+    //         // {
+    //         //     "data": function(data) {
+    //         //         return data.tipe_member
+    //         //     }
+    //         // },
+    //         {
+    //             "data": "action"
+    //         },
+    //     ],
+    //     order: [],
+    //     responsive: true,
+    //     language: {
+    //         search: "",
+    //         searchPlaceholder: "Cari",
+    //         emptyTable: "Tidak ada data yang sesuai",
+    //         info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+    //         infoFiltered: "(difilter dari _MAX_ total data)",
+    //         infoEmpty: "Tidak ada data yang sesuai",
+    //         lengthMenu: "Menampilkan _MENU_ data",
+    //         zeroRecords: "Tidak ada data yang sesuai"
+    //     },
+    //     columnDefs: [{
+    //         orderable: false,
+    //         targets: [0, 1, 2, 3, 4,]
+    //     }, ],
+    // });
 
 
 
-            // invoice
-            $('#dt-riwayat').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "lengthChange": false,
-                "searching": true,
-                "paginate": {
-                    "first": "First",
-                    "last": "Last",
-                    "next": "Next",
-                    "previous": "Previous"
-                },
-                "ajax": {
-                    "url": "{{ route('riwayat-invoice.index') }}",
-                    "type": "GET",
-                    "datatype": "json"
-                },
+    // invoice
+    $('#dt-riwayat').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "lengthChange": false,
+        "searching": true,
+        "paginate": {
+            "first": "First",
+            "last": "Last",
+            "next": "Next",
+            "previous": "Previous"
+        },
+        "ajax": {
+            "url": "{{ route('riwayat-invoice.index') }}",
+            "type": "GET",
+            "datatype": "json"
+        },
 
-                "render": $.fn.dataTable.render.text(),
-
-
-                "columns": [{
-                        data: 'name',
-                        searchable: true,
-                        orderable: false
-                    },
-                    {
-                        data: 'tipe_member',
-                        searchable: true,
-                        orderable: false
-                    },
-                    {
-                        data: 'total',
-                        searchable: true,
-                        orderable: false
-                    },
-                    {
-                        data: 'created_at',
-                        searchable: true,
-                        orderable: true
-                    },
-
-                    // {
-                    //     "data": function(data) {
-                    //         if (data.visitor.tipe_member == 'VIP') {
-                    //             return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
-                    //         } else {
-                    //             return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
-                    //         }
-                    //     }
-                    // },
+        "render": $.fn.dataTable.render.text(),
 
 
-                    >>>
-                    >>>
-                    >
-                    imas
-                ],
-                order: [],
-                responsive: true,
-                language: {
-                    search: "",
-                    searchPlaceholder: "Cari",
-                    emptyTable: "Tidak ada data yang sesuai",
-                    info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
-                    infoFiltered: "(difilter dari _MAX_ total data)",
-                    infoEmpty: "Tidak ada data yang sesuai",
-                    lengthMenu: "Menampilkan _MENU_ data",
-                    zeroRecords: "Tidak ada data yang sesuai"
-                },
+        "columns": [{
+                data: 'name',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'tipe_member',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'total',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'created_at',
+                searchable: true,
+                orderable: true
+            },
 
-                columnDefs: [{
-                        className: 'text-center',
-                        targets: [1, 2, 3]
-                    }
+            // {
+            //     "data": function(data) {
+            //         if (data.visitor.tipe_member == 'VIP') {
+            //             return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
+            //         } else {
+            //             return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
+            //         }
+            //     }
+            // },
 
-                ],
-            });
 
-            $(document).on("click", "#show-scan", function() {
-                $(".disabled-scan").css("display", "none");
+        ],
+        order: [],
+        responsive: true,
+        language: {
+            search: "",
+            searchPlaceholder: "Cari",
+            emptyTable: "Tidak ada data yang sesuai",
+            info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+            infoFiltered: "(difilter dari _MAX_ total data)",
+            infoEmpty: "Tidak ada data yang sesuai",
+            lengthMenu: "Menampilkan _MENU_ data",
+            zeroRecords: "Tidak ada data yang sesuai"
+        },
 
-                function onScanSuccess(decodedText, decodedResult) {
-                    $("#result").val(decodedText)
+        columnDefs: [{
+                className: 'text-center',
+                targets: [1, 2, 3]
+            }
+
+        ],
+    });
+
+    $(document).on("click", "#show-scan", function() {
+        $(".disabled-scan").css("display", "none");
+
+        function onScanSuccess(decodedText, decodedResult) {
+            $("#result").val(decodedText)
+        }
+
+        function onScanFailure(error) {
+            console.warn(`Code scan error = ${error}`);
+        }
+
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader", {
+                fps: 10,
+                qrbox: {
+                    width: 250,
+                    height: 250
                 }
-
-                function onScanFailure(error) {
-                    console.warn(`Code scan error = ${error}`);
-                }
-
-                let html5QrcodeScanner = new Html5QrcodeScanner(
-                    "reader", {
-                        fps: 10,
-                        qrbox: {
-                            width: 250,
-                            height: 250
-                        }
-                    },
-                    false);
-                html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-            })
+            },
+            false);
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    })
 </script>
