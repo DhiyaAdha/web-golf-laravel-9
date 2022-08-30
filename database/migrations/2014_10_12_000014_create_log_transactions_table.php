@@ -21,6 +21,7 @@ class CreateLogTransactionsTable extends Migration
             $table->integer('payment_status');
             $table->integer('total');
             $table->integer('status');
+            
             $table->timestamp('created_at');
             // $table->integer('visitor_id');
 

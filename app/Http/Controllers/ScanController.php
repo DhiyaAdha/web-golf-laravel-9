@@ -10,22 +10,25 @@ class ScanController extends Controller
 {
     
     // Scantamu - sidebar
-    public function scantamu(){
-        return view('/scan-tamu');
-    }
-    public function scantamuberhasil(){
-        return view('/scan-tamu-berhasil');
-    }
+    // public function scantamu(){
+    //     return view('/scan-tamu');
+    // }
 
-    public function proses (){
-        return view('proses');
-    }
+    // public function scantamuberhasil(){
+    //     return view('/scan-tamu-berhasil');
+    // }
+
+    // public function proses (){
+    //     return view('proses');
+    // }
 
     // fungsi generate QRcode Daftar-tamu
-    public function generate ($id)
-    {
-        $visitor = Visitor::findOrFail($id);
-        $qrcode = QrCode::size(400)->generate($visitor->id);
-        return view('qrcode',compact('qrcode'));
-    }
+    // public function generate ($id)
+    // {
+    //     $visitor = Visitor::findOrFail($id);
+    //     $qrcode = QrCode::size(400)->generate($visitor->id);
+    //     return view('qrcode',compact('qrcode'));
+    // }
+
+    
 }

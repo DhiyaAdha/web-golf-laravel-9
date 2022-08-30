@@ -88,7 +88,7 @@ class AuthController extends Controller {
                 ],
             ];
             //  return response()->json($respon, 200);
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/analisis-tamu');
             // dd(session()->all());
         }
     }
@@ -165,28 +165,6 @@ class AuthController extends Controller {
         });
         
         return back()->with('resetSuccess', 'Reset Password sudah dikirim ke email anda! silahkan cek email');
-    }
-    
-    //fungsi untuk INVOICE
-    public function invoice(){
-        // $data['invoice'] = LogTransaction::all();
-        // $invoice = Invoice::where('id',$id)->first();
-        // dd($invoice);
-        // if(is_null($invoice)){
-            //     $todaydate = Carbon::today();
-            //     $invoice = new Invoice;
-            //     $invoice->id = $id;
-            //     $invoice->created_at = $todaydate;
-            //     $invoice->status = 1;
-            //     $invoice->save();
-            // }
-            // $order_payments = Order::find($id);
-            // $unique_number = $order_payments->unique_number;
-            // $profile = Profile::where('user_id',$customer_id)->first();
-        // $orderitems = Orderitem::where('order_id',$order_id)->get();
-        // $judulhalaman = "Invoice";
-        return view('invoice.invoice');
-
     }
     
     public function order(){
