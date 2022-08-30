@@ -15,7 +15,7 @@ class LogTransaction extends Model
 
     
     protected $fillable = [
-        'id','visitor_id','total','tipe_member', 'created_at'
+        'id','order_number' ,'visitor_id','total','tipe_member', 'created_at'
         
     ];
     

@@ -29,7 +29,7 @@
                             </div>
 
                             <div class="col-md-10 text-right">
-                                <h3 class="float-right" style="font-size: 16px;"><strong>Order #{{ $visitor->id }}</strong></h3>
+                                <h3 class="float-right" style="font-size: 16px;"><strong>Order #{{ $transaction->order_number }}</strong></h3>
                             </div>
                         </div>
                         <div class="row">
@@ -65,7 +65,7 @@
                             <div class="col-md-6 text-right">
                                 <address>
                                     <strong>Order Date:</strong><br>
-                                    <p style="color: #616161">{{ $transaction->created_at }}</p><br><br>
+                                    <p style="color: #616161">{{ $transaction->created_at->format('d F Y | H:i:s') }}</p><br><br>
                                 </address>
                             </div>
                         </div>
@@ -93,13 +93,13 @@
                                         </td>
                                         <td class="text-center">Rp
 
-                                            <span>{{ $detail->harga }}</span>
+                                            <span>{{ formatrupiah($detail->harga) }}</span>
 
                                         </td>
                                         <td class="text-center">{{ $detail->quantity }}</td>
                                         <td class="text-right">Rp
 
-                                            <span>{{ $detail->harga * $detail->quantity }}</span>
+                                            <span>{{ formatrupiah($detail->harga * $detail->quantity) }}</span>
 
                                         </td>
                                     </tr>
@@ -111,13 +111,13 @@
                                         </td>
                                         <td class="text-center">Rp
 
-                                            <span>{{ $detail->harga }}</span>
+                                            <span>{{ formatrupiah($detail->harga) }}</span>
 
                                         </td>
                                         <td class="text-center">{{ $detail->quantity }}</td>
                                         <td class="text-right">Rp
 
-                                            <span>{{ $detail->harga * $detail->quantity }}</span>
+                                            <span>{{ formatrupiah($detail->harga * $detail->quantity) }}</span>
 
                                         </td>
                                     </tr>
@@ -128,7 +128,7 @@
                                         <td class="thick-line text-right">Subtotal</td>
                                         <td class="thick-line text-right">
 
-                                            <span>Rp {{ $detail->harga * $detail->quantity * 2 }}</span>
+                                            <span>Rp {{ formatrupiah($detail->harga * $detail->quantity * 2) }}</span>
 
                                         </td>
                                     </tr>
