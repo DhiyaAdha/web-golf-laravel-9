@@ -15,6 +15,10 @@
                             <div class="checkbox checkbox-success">
                                 <input type="checkbox" id="cb1">
                                 <label for="cb1">One Games</label>
+                                <button id="decrement" onclick="stepper(this)">-</button>
+                                <input type="number" min="0" max="100" step="1" value="0"
+                                    id="my-input" readonly>
+                                <button id="increment" onclick="stepper(this)">+</button>
                             </div>
                             <div class="checkbox checkbox-success">
                                 <input type="checkbox" id="cb2">

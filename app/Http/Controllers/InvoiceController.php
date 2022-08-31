@@ -126,5 +126,8 @@ class InvoiceController extends Controller
         return 'berhasil';
     }
 
+    public function metodepembayaran () {
+        return view('Invoice.metode-pembayaran');
+    }
     
 }
