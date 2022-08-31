@@ -110,7 +110,7 @@
                         <div class="row">
                             <div class="col-lg-12 mt-10">
                                 <div class="btn-proses">
-                                    <a href="/proses">
+                                    <a href="/">
                                         <h6 style="color: #ffffff;">Checkout</h6>
                                     </a>
                                 </div>

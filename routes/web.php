@@ -46,7 +46,6 @@ Route::get('/Reset-pasword/{token}',[AuthController::class,'showResetForm'])->na
 Route::post('/Reset-pasword',[AuthController::class,'resetPassword'])->name('Reset-pasword.update');
 //untuk route logout
 Route::get('/logout', [AuthController::class, 'logout']);
-// aman
 
 
 //Level superadmin
@@ -62,7 +61,6 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
     Route::post('/update-tamu',[TamuController::class,'update'])->name('update-tamu');
     Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
     Route::get('/invoice/{id}',[InvoiceController::class,'show'])->name('show');
-    Route::get('/invoice',[AuthController::class,'invoice'])->name('invoice');
     Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name('scan-tamu');
     Route::get('/scan-tamu-berhasil',[ScanController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
     route::get('qrcode/{id}', [ScanqrController::class, 'generate'])->name('generate');
@@ -72,6 +70,7 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
     Route::get('/edit-admin', [AuthController::class, 'edit_admin'])->name('edit-admin');
     //route untuk order
     Route::resource('proses', OrderController::class);
+    Route::get('/metode_pembayaran', [InvoiceController::class, 'metode_pembayaran'])->name('metode_pembayaran');
 });
 
 
@@ -83,7 +82,6 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::resource('package', PackageController::class)->except(['show','update']);
     Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
     Route::get('/invoice/{id}',[InvoiceController::class,'show'])->name('show');
-    Route::get('/invoice',[AuthController::class,'invoice'])->name('invoice');
     Route::get('/daftar-tamu', [TamuController::class, 'index'])->name('daftar-tamu');
     Route::get('/daftar-tamu/destroy/{id}', [TamuController::class, 'delete'])->name('hapus-tamu');
     Route::get('/tambah-tamu', [TamuController::class, 'tambahtamu'])->name('tambah-tamu');
@@ -99,5 +97,6 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::get('/tambah-deposit',[TamuController::class,'tambahdeposit'])->name('tambah-deposit');
     Route::get('/kartu-tamu',[ScanqrController::class,'kartutamu'])->name('kartu-tamu');
     Route::get('/tambah-admin',[AuthController::class,'tambahadmin'])->name('tambah-admin');
+    Route::resource('proses', OrderController::class);
 });
 //Finish level admin dan superadmin
