@@ -71,7 +71,7 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
     Route::get('/tambah-admin', [AuthController::class, 'tambah_admin'])->name('tambah-admin');
     Route::get('/edit-admin', [AuthController::class, 'edit_admin'])->name('edit-admin');
     //route untuk order
-    Route::resource('order', OrderController::class);
+    Route::resource('proses', OrderController::class);
 });
 
 
