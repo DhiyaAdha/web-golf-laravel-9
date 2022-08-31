@@ -27,6 +27,7 @@ class InvoiceSeeder extends Seeder
             DB::table('log_transactions')->insert([
                 
                 // 'region_id' => Region::all()->random()->id,
+                'order_number' => $faker->unique()->numberBetween,
                 'visitor_id' => $faker->randomElement($visitor),
                 'user_id' => User::all()->random()->id,
 

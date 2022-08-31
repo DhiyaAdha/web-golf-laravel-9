@@ -14,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->fungsiHelper();
     }
 
     /**
@@ -24,6 +24,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Paginator::useBootstrap();
+        // Paginator::useBootstrap();
+    }
+    protected function fungsiHelper(){
+        foreach(glob(__DIR__.'/../Helpers/*.php') as $namafile){
+            require_once $namafile;
+        }
     }
 }
