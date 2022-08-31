@@ -219,6 +219,13 @@
     margin: -35px -30px -3px 15px;
     padding: 10px 15px 3px 15px;
 }
+.panel-hiding {
+    border: none;
+    color: inherit;
+    border-radius: 0;
+    margin: -35px -30px -3px 15px;
+    padding: 7px 47px 9px 0px;
+}
 .panel-hading {
     background: #fff;
     margin-bottom: 12px;
@@ -274,17 +281,7 @@
         border-radius: 2px;
         box-shadow: none;
         padding: 15px 15px 0;
-        margin-left: 10px;
-        margin-right: -9px;
-}
-.card-qr{
-        background: #fff;
-        margin-bottom: 12px;
-        border: 25px solid rgba(255, 255, 255, 0.1);
-        border-radius: 2px;
-        box-shadow: none;
-        padding: 15px 15px 0;
-        margin-left: -9px;
+        margin-left: 20px;
         margin-right: -9px;
 }
 .card-riwayat{
@@ -297,6 +294,17 @@
         margin-left: -9px;
         margin-right: -9px;
 }
+.card-qr{
+    /* background: #fff; */
+    /* margin-bottom: 12px; */
+    border: 25px solid rgba(255, 255, 255, 0.1);
+    /* border-radius: 2px; */
+    /* box-shadow: none; */
+    padding: 15px 15px 0;
+    /* margin-left: -9px; */
+    /* margin-right: -9px; */
+}
+
 
 /* kartu-tamu */
 .panel-left {
