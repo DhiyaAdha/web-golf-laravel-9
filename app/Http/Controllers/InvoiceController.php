@@ -109,5 +109,9 @@ class InvoiceController extends Controller
         //
     }
 
+    public function exportpdf () {
+        return 'berhasil';
+    }
+
     
 }

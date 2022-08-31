@@ -71,6 +71,7 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
 
     Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name('scan-tamu');
     Route::get('/scan-tamu-berhasil',[ScanController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
+    Route::get('/proses',[ScanqrController::class, 'proses'])->name('proses');
     
     Route::get('/order',[AuthController::class,'order'])->name('order');
     route::get('qrcode/{id}', [ScanqrController::class, 'generate'])->name('generate');
@@ -100,6 +101,8 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::resource('package', PackageController::class)->except(['show','update']);
     Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
     Route::get('/invoice/{id}',[InvoiceController::class,'show'])->name('show');
+    // export pdf invoice
+    Route::get('/exportpdf',[InvoiceController::class,'exportpdf'])->name('exportpdf');
     Route::get('/invoice',[AuthController::class,'invoice'])->name('invoice');
     Route::get('/order',[AuthController::class,'order'])->name('order');
     // dafar tamu
