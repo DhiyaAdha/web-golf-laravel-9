@@ -101,6 +101,8 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::resource('package', PackageController::class)->except(['show','update']);
     Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
     Route::get('/invoice/{id}',[InvoiceController::class,'show'])->name('show');
+    Route::get('/metode-pembayaran', [InvoiceController::class, 'metodepembayaran'])->name('metodepembayaran');
+
     // export pdf invoice
     Route::get('/exportpdf',[InvoiceController::class,'exportpdf'])->name('exportpdf');
     Route::get('/invoice',[AuthController::class,'invoice'])->name('invoice');
