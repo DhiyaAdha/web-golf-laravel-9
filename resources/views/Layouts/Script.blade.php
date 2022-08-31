@@ -3,51 +3,51 @@
 <!-- JavaScript -->
 
 <!-- jQuery -->
-<script src="vendors/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="{{ asset('vendors/bower_components/jquery/dist/jquery.min.js') }}"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="{{ asset('vendors/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 
 <!-- Data table JavaScript -->
-<script src="vendors/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="{{ asset('vendors/bower_components/datatables/media/js/jquery.dataTables.min.js') }}"></script>
 
 <!-- Slimscroll JavaScript -->
-<script src="dist/js/jquery.slimscroll.js"></script>
+<script src="{{ asset('dist/js/jquery.slimscroll.js') }}"></script>
 
 <!-- simpleWeather JavaScript -->
-<script src="vendors/bower_components/moment/min/moment.min.js"></script>
-<script src="vendors/bower_components/simpleWeather/jquery.simpleWeather.min.js"></script>
-<script src="dist/js/simpleweather-data.js"></script>
+<script src="{{ asset('vendors/bower_components/moment/min/moment.min.js') }}"></script>
+<script src="{{ asset('vendors/bower_components/simpleWeather/jquery.simpleWeather.min.js') }}"></script>
+<script src="{{ asset('dist/js/simpleweather-data.js') }}"></script>
 
 <!-- Progressbar Animation JavaScript -->
-<script src="vendors/bower_components/waypoints/lib/jquery.waypoints.min.js"></script>
-<script src="vendors/bower_components/jquery.counterup/jquery.counterup.min.js"></script>
+<script src="{{ asset('vendors/bower_components/waypoints/lib/jquery.waypoints.min.js') }}"></script>
+<script src="{{ asset('vendors/bower_components/jquery.counterup/jquery.counterup.min.js') }}"></script>
 
 <!-- Fancy Dropdown JS -->
-<script src="dist/js/dropdown-bootstrap-extended.js"></script>
+<script src="{{ asset('dist/js/dropdown-bootstrap-extended.js') }}"></script>
 
 <!-- Sparkline JavaScript -->
-{{-- <script src="vendors/jquery.sparkline/dist/jquery.sparkline.min.js"></script> --}}
+{{-- <script src="{{ asset('vendors/jquery.sparkline/dist/jquery.sparkline.min.js') }}"></script> --}}
 
 <!-- Owl JavaScript -->
-<script src="vendors/bower_components/owl.carousel/dist/owl.carousel.min.js"></script>
+<script src="{{ asset('vendors/bower_components/owl.carousel/dist/owl.carousel.min.js') }}"></script>
 
-<script src="vendors/bower_components/bootstrap-switch/dist/js/bootstrap-switch.min.js"></script>
+<script src="{{ asset('vendors/bower_components/bootstrap-switch/dist/js/bootstrap-switch.min.js') }}"></script>
 
 <!-- ChartJS JavaScript -->
 <script src="vendors/chart.js/Chart.min.js"></script>
 
 <!-- Morris Charts JavaScript -->
-<script src="vendors/bower_components/raphael/raphael.min.js"></script>
-<script src="vendors/bower_components/morris.js/morris.min.js"></script>
-<script src="vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.js"></script>
+<script src="{{ asset('vendors/bower_components/raphael/raphael.min.js') }}"></script>
+<script src="{{ asset('vendors/bower_components/morris.js/morris.min.js') }}"></script>
+<script src="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.js') }}"></script>
 
 <!-- Switchery JavaScript -->
-<script src="vendors/bower_components/switchery/dist/switchery.min.js"></script>
+<script src="{{ asset('vendors/bower_components/switchery/dist/switchery.min.js') }}"></script>
 <!-- Init JavaScript -->
-<script src="/dist/js/init.js"></script>
-<script src="/dist/js/dashboard-data.js"></script>
-<script src="/dist/js/dashboard3-data.js"></script>
+<script src="{{ asset('/dist/js/init.js') }}"></script>
+<script src="{{ asset('/dist/js/dashboard-data.js') }}"></script>
+<script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
 
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
@@ -62,6 +62,8 @@
     // $('.js-switch-1').each(function() {
     //     new Switchery($(this)[0], $(this).data());
     // });
+
+
     $('#dt-package').DataTable({
         "processing": true,
         "serverSide": true,
@@ -73,10 +75,10 @@
             "next": "Next",
             "previous": "Previous"
         },
-        "ajax" : {
-            "url" : "{{ route('package.index') }}",
-            "type" : "GET",
-            "datatype" : "json",
+        "ajax": {
+            "url": "{{ route('package.index') }}",
+            "type": "GET",
+            "datatype": "json"
         },
         "columns": [{
                 "data": function(data) {
@@ -85,7 +87,12 @@
             },
             {
                 "data": function(data) {
-                    return data.category
+                    // if (data.category.tipe_member == 'VIP') {
+                    //     return `<span class='label label-success'>${data.category.tipe_member}</span>`
+                    // } else {
+                    //     return `<span class='label label-success'>${data.category.tipe_member}</span>`
+                    // }
+                    // return data.category
                 }
             },
             {
@@ -141,6 +148,8 @@
 
 
     // invoice
+    // $()
+
     $('#dt-riwayat').DataTable({
         "processing": true,
         "serverSide": true,
@@ -162,7 +171,7 @@
             // { "data": function(data) { return data.name }},
             // { "data": function(data) { return data.category }},
 
-      
+
             {
 
                 "data": function(data) {
@@ -170,20 +179,15 @@
                 }
             },
             {
-                "data": function(data) {
-                    if (data.visitor.tipe_member == 'VIP') {
-                        return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
-                    } else {
-                        return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
-                    }
-                }
+                data: 'total',
+                searchable: true,
+                orderable: false
             },
             {
-                "data": function(data) {
-                    return `<span>Rp ${data.total}</span>`
-                }
+                data: 'created_at',
+                searchable: true,
+                orderable: false
             },
-
             {
                 "data": function(data) {
                     return moment(data.created_at).format("DD MMMM YYYY")
@@ -191,7 +195,7 @@
             },
 
 
-{
+            {
 
                 "data": function(data) {
                     return data.visitor.name
@@ -217,7 +221,6 @@
             // {
             //     "data": "action"
             // },
-
         ],
         order: [],
         responsive: true,
@@ -232,26 +235,50 @@
             zeroRecords: "Tidak ada data yang sesuai"
         },
         columnDefs: [{
-                orderable: false,
-                targets: [0, 1, 2, 3, ]
-            },
-            {
-                targets: [1, 2, 3],
-                className: 'text-center'
-            }
-        ],
+            className: 'text-center',
+            targets: [1, 2, 3]
+        }],
     });
-    // search
 
-    // scan
+    // search
+    // $(document).ready(function(){
+    // 	load_data();
+    // 	function load_data(jurusan, keyword)
+    // 	{
+    // 		$.ajax({
+    // 			method:"POST",
+    // 			url:"{{ route('riwayat-invoice.index') }",
+    // 			data: {jurusan: jurusan, keyword:keyword},
+    // 			success:function(hasil)
+    // 			{
+    // 				$('.data').html(hasil);
+    // 			}
+    // 		});
+    //  	}
+    // 	$('#s_keyword').keyup(function(){
+    // 		var jurusan = $("#s_jurusan").val();
+    // 		var keyword = $("#s_keyword").val();
+    // 		load_data(jurusan, keyword);
+    // 	});
+    // 	$('#s_jurusan').change(function(){
+    // 		var jurusan = $("#s_jurusan").val();
+    // 		var keyword = $("#s_keyword").val();
+    // 		load_data(jurusan, keyword);
+    // 	});
+    // });
+
+
     $(document).on("click", "#show-scan", function() {
         $(".disabled-scan").css("display", "none");
+
         function onScanSuccess(decodedText, decodedResult) {
             $("#result").val(decodedText)
         }
+
         function onScanFailure(error) {
             console.warn(`Code scan error = ${error}`);
         }
+
         let html5QrcodeScanner = new Html5QrcodeScanner(
             "reader", {
                 fps: 10,

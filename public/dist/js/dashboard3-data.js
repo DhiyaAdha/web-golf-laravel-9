@@ -3,7 +3,6 @@
 "use strict";
 
 /*****Ready function start*****/
-<<<<<<< HEAD
 $(document).ready(function(){
 	$('#support_table').DataTable({
 		"bFilter": false,
@@ -145,7 +144,6 @@ $(document).ready(function(){
 			gridTextColor:'#878787',
 			gridTextFamily:"Roboto"
 		});
-=======
 $(document).ready(function () {
     $("#support_table").DataTable({
         bFilter: false,
@@ -173,7 +171,6 @@ $(document).ready(function () {
                 },
             ],
         };
->>>>>>> c8a06426adf4551301848480452e8909adab2bb3
 
         var doughnutChart = new Chart(ctx7, {
             type: "doughnut",

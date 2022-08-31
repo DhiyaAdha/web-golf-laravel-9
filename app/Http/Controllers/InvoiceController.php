@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
 use App\Models\LogTransaction;
+use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Controller
 {
@@ -15,26 +16,19 @@ class InvoiceController extends Controller
      */
     public function index(Request $request)
     {
-        
-        // $logtransaction = LogTransaction::find(1);
-        // $visitor = visitor::find(1);
-        // $riwayat_invoice = LogTransaction::orderBy('id')->$logtransaction->visitor()->associate($visitor)->get();
-
-        
-        $riwayat_invoice = LogTransaction::with('visitor')->orderBy('created_at', 'desc')->get();
+        $riwayat_invoice = LogTransaction::select(['log_transactions.id', 'log_transactions.total', 'visitors.name', 'visitors.tipe_member', 'log_transactions.created_at'])
+        ->leftJoin('visitors', 'visitors.id', '=', 'log_transactions.visitor_id')->get();
         if($request->ajax()){
             return datatables()->of($riwayat_invoice)
-                        ->addIndexColumn()
-                        ->make(true);
-
-            // return datatables()->of(LogTransaction::select('*'))
-            // ->addColumn('action', 'company-action')
-            // ->rawColumns(['action'])
-            // ->addIndexColumn()
-            // ->make(true);
-
+            ->editColumn('name', function ($data) {
+                return '<a href="'.url('invoice/'.$data->id).'">'.$data->name."</a>";
+            })
+            ->editColumn('created_at', function ($data) {
+                return $data->created_at->format('d F Y');
+            })
+            ->rawColumns(['name','action'])
+            ->make(true);
         }
-        
         return view('invoice.riwayat-invoice');
     }
 
@@ -67,7 +61,11 @@ class InvoiceController extends Controller
      */
     public function show($id)
     {
-        //
+        $transaction = LogTransaction::find($id);
+        $data['transaction'] = $transaction;
+        $data['visitor'] = Visitor::find($transaction->visitor_id);
+        // $data['detail'] = Detail::where('transaction_id', $id)->get();
+        return view('invoice.invoice', $data);
     }
 
     /**
