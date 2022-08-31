@@ -72,6 +72,7 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
     Route::get('/edit-admin', [AuthController::class, 'edit_admin'])->name('edit-admin');
     //route untuk order
     Route::resource('proses', OrderController::class);
+    Route::get('/metode-pembayaran', [InvoiceController::class, 'metodepembayaran'])->name('metodepembayaran');
 });
 
 
