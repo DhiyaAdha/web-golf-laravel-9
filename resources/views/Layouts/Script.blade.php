@@ -63,6 +63,7 @@
     //     new Switchery($(this)[0], $(this).data());
     // });
 
+
     // data analisis
     $('#dt-analisis').DataTable({
         "processing": true,
@@ -84,11 +85,26 @@
         "render": $.fn.dataTable.render.text(),
 
 
-        "columns" : [
-            { data: 'name', searchable: true, orderable: false },
-            { data: 'created_at', searchable: true, orderable: false },
-            { data: 'tipe_member', searchable: true, orderable: false },
-            { data: 'updated_at', searchable: true, orderable: false },
+        "columns": [{
+                data: 'name',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'created_at',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'tipe_member',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'updated_at',
+                searchable: true,
+                orderable: false
+            },
 
             // {
             //     "data": function(data) {
@@ -112,8 +128,10 @@
             lengthMenu: "Menampilkan _MENU_ data",
             zeroRecords: "Tidak ada data yang sesuai"
         },
-        columnDefs: [
-            { className: 'text-left', targets: [0, 1, 2, 3,]}
+        columnDefs: [{
+                className: 'text-left',
+                targets: [0, 1, 2, 3, ]
+            }
 
         ],
     });
@@ -130,10 +148,10 @@
             "next": "Next",
             "previous": "Previous"
         },
-        "ajax" : {
-            "url" : "{{ route('package.index') }}",
-            "type" : "GET",
-            "datatype" : "json",
+        "ajax": {
+            "url": "{{ route('package.index') }}",
+            "type": "GET",
+            "datatype": "json"
         },
         "columns": [{
                 "data": function(data) {
@@ -196,6 +214,7 @@
         }, ],
     });
 
+
     //data tamu
     $('#dt-tamu').DataTable({
         "processing": true,
@@ -217,12 +236,31 @@
         "render": $.fn.dataTable.render.text(),
 
 
-        "columns" : [
-            { data: 'name', searchable: true, orderable: false },
-            { data: 'email', searchable: true, orderable: false },
-            { data: 'phone', searchable: true, orderable: false },
-            { data: 'tipe_member', searchable: true, orderable: false },
-            { data: 'action', searchable: false, orderable: false },
+        "columns": [{
+                data: 'name',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'email',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'phone',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'tipe_member',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'action',
+                searchable: false,
+                orderable: false
+            },
 
             // {
             //     "data": function(data) {
@@ -248,8 +286,10 @@
             lengthMenu: "Menampilkan _MENU_ data",
             zeroRecords: "Tidak ada data yang sesuai"
         },
-        columnDefs: [
-            { className: 'text-left', targets: [ 1, 2, 3, 4]}
+        columnDefs: [{
+                className: 'text-left',
+                targets: [1, 2, 3, 4]
+            }
 
         ],
     });
@@ -275,11 +315,26 @@
         "render": $.fn.dataTable.render.text(),
 
 
-        "columns" : [
-            { data: 'name', searchable: true, orderable: false },
-            { data: 'tipe_member', searchable: true, orderable: false },
-            { data: 'total', searchable: true, orderable: false },
-            { data: 'created_at', searchable: true, orderable: true },
+        "columns": [{
+                data: 'name',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'tipe_member',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'total',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'created_at',
+                searchable: true,
+                orderable: true
+            },
 
             // {
             //     "data": function(data) {
@@ -305,8 +360,11 @@
             lengthMenu: "Menampilkan _MENU_ data",
             zeroRecords: "Tidak ada data yang sesuai"
         },
-        columnDefs: [
-            { className: 'text-center', targets: [1, 2, 3]}
+
+        columnDefs: [{
+                className: 'text-center',
+                targets: [1, 2, 3]
+            }
 
         ],
     });
@@ -360,12 +418,15 @@
     // scan
     $(document).on("click", "#show-scan", function() {
         $(".disabled-scan").css("display", "none");
+
         function onScanSuccess(decodedText, decodedResult) {
             $("#result").val(decodedText)
         }
+
         function onScanFailure(error) {
             console.warn(`Code scan error = ${error}`);
         }
+
         let html5QrcodeScanner = new Html5QrcodeScanner(
             "reader", {
                 fps: 10,
@@ -378,4 +439,3 @@
         html5QrcodeScanner.render(onScanSuccess, onScanFailure);
     })
 </script>
-

@@ -179,4 +179,9 @@ class AuthController extends Controller {
     public function edit_admin(){
         return view('admin.edit-admin');
     }
+    public function riwayatinvoice(){
+        $data['visitor'] = Visitor::all()->sortByDesc('created_at');
+        return view('/riwayat-invoice', $data);
+    }
+
 }

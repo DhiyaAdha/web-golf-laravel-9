@@ -116,4 +116,6 @@ class ScanqrController extends Controller
             return view('tamu.kartu-tamu');
     }
 
+
+
 }

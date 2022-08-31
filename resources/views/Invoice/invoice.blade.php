@@ -11,7 +11,7 @@
                 <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
-                        <li><a href="javascript:void(0)">Dashboard</a></li>
+                        <li><a href="jav * ascript:void(0)">Dashboard</a></li>
                         <li class="active"><span>Invoice</span></li>
                     </ol>
                 </div>
@@ -29,7 +29,8 @@
                             </div>
 
                             <div class="col-md-10 text-right">
-                                <h3 class="float-right" style="font-size: 16px;"><strong>Order #{{ $transaction->order_number }}</strong></h3>
+                                <h3 class="float-right" style="font-size: 16px;"><strong>Order
+                                        #{{ $transaction->order_number }}</strong></h3>
                             </div>
                         </div>
                         <div class="row">
@@ -65,7 +66,8 @@
                             <div class="col-md-6 text-right">
                                 <address>
                                     <strong>Order Date:</strong><br>
-                                    <p style="color: #616161">{{ $transaction->created_at->format('d F Y | H:i:s') }}</p><br><br>
+                                    <p style="color: #616161">{{ $transaction->created_at->format('d F Y | H:i:s') }}</p>
+                                    <br><br>
                                 </address>
                             </div>
                         </div>
@@ -132,7 +134,7 @@
                                 </div>
                                 <div class="col-lg-2 col-md-12">
                                     <div class="btn-print">
-                                        <a href="#">
+                                        <a href="printpdf">
                                             <i class="fa-regular fa-file-lines">
                                                 Print Struct
                                             </i>
