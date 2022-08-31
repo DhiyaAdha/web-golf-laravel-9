@@ -40,9 +40,22 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $invoice = Detail::select(['packages.category', 'detail_transactions.harga', 'detail_transactions.quantity'])
+        ->leftJoin('packages', 'packages.id', '=', 'detail_transactions.package_id')->get();
+        if($request->ajax()){
+            return datatables()->of($invoice)
+            ->editColumn('harga', function ($data) {
+                return  ('Rp. ' .formatrupiah($data->harga));
+            })
+            ->editColumn('total', function ($data) {
+                return  ('Rp. ' .formatrupiah($data->harga * $data->quantity));
+            })
+            ->make(true);
+
+        }
+        return view('invoice.invoice');
     }
 
     /**

@@ -36,10 +36,10 @@
                                         <table class="table mb-0" id="dt-riwayat">
                                             <thead>
                                                 <tr>
-                                                    <th class="table-th" style="text-align:center">Nama</th>
-                                                    <th class="table-th" style="text-align:center">Kategori Tamu</th>
-                                                    <th class="table-th" style="text-align:center">Total Bayar</th>
-                                                    <th class="table-th" style="text-align:center">Tanggal Bayar</th>
+                                                    <th class="" style="">Nama</th>
+                                                    <th class="" style="">Kategori Tamu</th>
+                                                    <th class="" style="">Total Bayar</th>
+                                                    <th class="" style="">Tanggal Bayar</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
