@@ -37,13 +37,11 @@ class VisitorSeeder extends Seeder
         //         60 * 23))->addSeconds(rand(0, 60))
         //     ]);
         // }
-
         // 'created_at' => \Carbon\Carbon::now()->addMinutes(rand(0,
         //         // 60 * 23))->addSeconds(rand(0, 60)),
-
         // Visitor::truncate();
+        
         $faker = Faker::create('id_ID');
-
         for ($i=0; $i < 450; $i++) { 
             Visitor::create([
                 'name' => $faker->name(),
@@ -55,18 +53,10 @@ class VisitorSeeder extends Seeder
                 'gender' => $faker->randomElement(['laki-laki', 'perempuan']),
                 'tipe_member' => $faker->randomElement(['VIP', 'VVIP']),
                 'created_at' => $faker->dateTimeThisYear(),
-<<<<<<< HEAD
                 // 'created_at' => $faker->dateTimeThisMonth(),
                 'updated_at' => \Carbon\Carbon::now()->addMinutes(rand(0,
                 60 * 23))->addSeconds(rand(0, 60))
             ]);
-
-=======
-                'updated_at' => \Carbon\Carbon::now()
-                    ->addMinutes(rand(0, 60 * 23))
-                    ->addSeconds(rand(0, 60)),
-            ]);
->>>>>>> kevin
         }
     }
 }
