@@ -248,10 +248,10 @@
                         <div class="pull-left">
                             <h6 class="panel-title txt-dark">Terakhir Tamu Berkunjung</h6>
                         </div>
-                        <div class="pull-right" >
+                        <div class="pull-right">
                             <a href="#" class="pull-left inline-block full-screen mr-40">
                                 <i class="fa-2x zmdi zmdi-fullscreen"
-                                            style="border: 0px solid silver; border-radius: 0.25em; "></i>
+                                    style="border: 0px solid silver; border-radius: 0.25em; "></i>
                             </a>
                         </div>
                         <div class="clearfix"></div>
@@ -287,9 +287,9 @@
     </div>
 
     <script>
+        // fungsi grafik-line & Grafik-bar
         var dataMingguan = {!! json_encode($visitor_daily) !!}
         console.log(dataMingguan);
-
         var dataNewVisitor = {!! json_encode($visitor) !!}
         console.log(dataNewVisitor);
     </script>

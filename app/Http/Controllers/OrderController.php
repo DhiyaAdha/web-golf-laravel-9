@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Visitor;
-use Illuminate\View\View;
 use Illuminate\Http\Request;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
-class ScanqrController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,12 +13,7 @@ class ScanqrController extends Controller
      */
     public function index()
     {
-        //
-        // $visitors = Visitor::all();
-        // return View::make('Scan-tamu')
-        // ->with('visitors', $visitors);
-
-        return view('Scan-tamu');
+        return view('proses');
     }
 
     /**
@@ -54,9 +46,6 @@ class ScanqrController extends Controller
     public function show($id)
     {
         //
-        // $visitor = Visitor::findOrFail($id);
-        // $qrcode = QrCode::size(400)->generate($visitor->id);
-        // return view('qrcode',compact('qrcode'));
     }
 
     /**
@@ -92,30 +81,4 @@ class ScanqrController extends Controller
     {
         //
     }
-
-    // fungsi generate QRcode Daftar-tamu
-    public function generate ($id)
-    {
-        $visitor = Visitor::findOrFail($id);
-        $qrcode = QrCode::size(400)->generate($visitor->id);
-        return view('qrcode',compact('qrcode'));
-    }
-
-    // Scantamu-berhasil
-    public function scantamuberhasil(){
-            return view('/scan-tamu-berhasil');
-    }
-    
-    public function proses (){
-            return view('proses');
-    }
-
-
-    public function kartutamu(){
-        
-            return view('tamu.kartu-tamu');
-    }
-
-
-
 }

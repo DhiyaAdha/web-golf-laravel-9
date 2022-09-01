@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\LogTransaction;
+use App\Models\Detail;
 use App\Models\Package;
 use App\Models\Visitor;
 use Faker\Factory as Faker;
+use App\Models\LogTransaction;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -26,6 +27,8 @@ class DetailSeeder extends Seeder
 
                 'log_transaction_id' => LogTransaction::all()->random()->id,
                 'package_id' => Package::all()->random()->id,
+                'quantity' => $faker->numberBetween(1, 10),
+                'harga' => $faker->randomFloat(2, 0, 1000000)
             ]);
         }
     }

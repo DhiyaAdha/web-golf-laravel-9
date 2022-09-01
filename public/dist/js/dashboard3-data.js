@@ -144,7 +144,6 @@ $(document).ready(function(){
 			gridTextFamily:"Roboto",
 			// yLabelFormat: function(y){ return y != Math.round(y)?'':y; }
 		});
-
         var doughnutChart = new Chart(ctx7, {
             type: "doughnut",
             data: data7,
@@ -174,57 +173,56 @@ $(document).ready(function(){
         });
     }
     // ERORR
-    if ($("#chart_6").length > 0)
-        {
-            var ctx6 = document.getElementById("chart_6").getContext("2d");
-            var data6 = {
-                labels: ["Completed", "Delayed", "Overdue", "Not Started"],
-                datasets: [
-                    {
-                        data: [300, 50, 100, 70],
-                        backgroundColor: [
-                            "rgba(1,200,83,1)",
-                            "rgba(254,193,7,1)",
-                            "rgba(255,42,0,1)",
-                            "rgba(233,30,99,1)",
-                        ],
-                        hoverBackgroundColor: [
-                            "rgba(1,200,83,1)",
-                            "rgba(254,193,7,1)",
-                            "rgba(255,42,0,1)",
-                            "rgba(233,30,99,1)",
-                        ],
-                    },
-                ],
-            };
-            var pieChart = new Chart(ctx6, {
-                type: "pie",
-                data: data6,
-                options: {
-                    animation: {
-                        duration: 3000,
-                    },
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    legend: {
-                        labels: {
-                            fontFamily: "Roboto",
-                            fontColor: "#878787",
-                        },
-                    },
-                    tooltip: {
-                        backgroundColor: "rgba(33,33,33,1)",
-                        cornerRadius: 0,
-                        footerFontFamily: "'Roboto'",
-                    },
-                    elements: {
-                        arc: {
-                            borderWidth: 0,
-                        },
+    if ($("#chart_6").length > 0) {
+        var ctx6 = document.getElementById("chart_6").getContext("2d");
+        var data6 = {
+            labels: ["Completed", "Delayed", "Overdue", "Not Started"],
+            datasets: [
+                {
+                    data: [300, 50, 100, 70],
+                    backgroundColor: [
+                        "rgba(1,200,83,1)",
+                        "rgba(254,193,7,1)",
+                        "rgba(255,42,0,1)",
+                        "rgba(233,30,99,1)",
+                    ],
+                    hoverBackgroundColor: [
+                        "rgba(1,200,83,1)",
+                        "rgba(254,193,7,1)",
+                        "rgba(255,42,0,1)",
+                        "rgba(233,30,99,1)",
+                    ],
+                },
+            ],
+        };
+        var pieChart = new Chart(ctx6, {
+            type: "pie",
+            data: data6,
+            options: {
+                animation: {
+                    duration: 3000,
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    labels: {
+                        fontFamily: "Roboto",
+                        fontColor: "#878787",
                     },
                 },
-            });
-        }
+                tooltip: {
+                    backgroundColor: "rgba(33,33,33,1)",
+                    cornerRadius: 0,
+                    footerFontFamily: "'Roboto'",
+                },
+                elements: {
+                    arc: {
+                        borderWidth: 0,
+                    },
+                },
+            },
+        });
+    }
 
     if ($("#morris_extra_bar_chart").length > 0)
         // Morris bar chart
