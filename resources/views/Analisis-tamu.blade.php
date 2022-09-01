@@ -128,16 +128,10 @@
                                         </span>
                                     </li>
                                     <li>
-                                        {{-- <span class="block">Total Tamu Berkunjung</span> --}}
                                         <span class="block">Statistika Pertahun</span>
                                         <span class="block txt-dark weight-500 font-18"><span
                                                 class="counter-anim">{{ $visitor_year }}</span></span>
                                     </li>
-                                    {{-- <li>
-                                        <span class="block">Tamu Bulanan ini</span>
-                                        <span class="block txt-dark weight-500 font-18"><span
-                                                class="counter-anim">{{ $visitor_month }}</span></span>
-                                    </li> --}}
                                 </ul>
                             </div>
                         </div>
@@ -168,10 +162,10 @@
                                         </span>
                                     </li>
                                     <li>
-                                        {{-- <span class="block">Total Tamu Berkunjung</span> --}}
                                         <span class="block">Statistika Mingguan</span>
-                                        <span class="block txt-dark weight-500 font-18"><span
-                                                class="counter-anim">{{ $visitor_week }}</span></span>
+                                        <span class="block txt-dark weight-500 font-18">
+                                            <span class="">{{ $visitor_week }}</span>
+                                            </span>
                                     </li>
                                 </ul>
                             </div>
@@ -293,61 +287,10 @@
     </div>
 
     <script>
-        var vvip_jan = <?php print $Jan_vvip; ?>;
-        var vip_jan = <?php print $Jan_vip; ?>;
-        var vvip_feb = <?php print $Feb_vvip; ?>;
-        var vip_feb = <?php print $Feb_vip; ?>;
-        var vvip_mar = <?php print $Mar_vvip; ?>;
-        var vip_mar = <?php print $Mar_vip; ?>;
-        var vvip_apr = <?php print $Apr_vvip; ?>;
-        var vip_apr = <?php print $Apr_vip; ?>;
-        var vvip_mei = <?php print $Mei_vvip; ?>;
-        var vip_mei = <?php print $Mei_vip; ?>;
-        var vvip_jun = <?php print $Jun_vvip; ?>;
-        var vip_jun = <?php print $Jun_vip; ?>;
-        var vvip_jul = <?php print $Jul_vvip; ?>;
-        var vip_jul = <?php print $Jul_vip; ?>;
-        var vvip_aug = <?php print $Aug_vvip; ?>;
-        var vip_aug = <?php print $Aug_vip; ?>;
-        var vvip_sep = <?php print $Sep_vvip; ?>;
-        var vip_sep = <?php print $Sep_vip; ?>;
-        var vvip_oct = <?php print $Oct_vvip; ?>;
-        var vip_oct = <?php print $Oct_vip; ?>;
-        var vvip_nov = <?php print $Nov_vvip; ?>;
-        var vip_nov = <?php print $Nov_vip; ?>;
-        var vvip_dec = <?php print $Dec_vvip; ?>;
-        var vip_dec = <?php print $Dec_vip; ?>;
-
-
-        var vvip_min = <?php print $vvip_min; ?>;
-        var vip_min = <?php print $vip_min; ?>;
-        var vvip_sen = <?php print $vvip_sen; ?>;
-        var vip_sen = <?php print $vip_sen; ?>;
-        var vvip_sel = <?php print $vvip_sel; ?>;
-        var vip_sel = <?php print $vip_sel; ?>;
-        var vvip_rab = <?php print $vvip_rab; ?>;
-        var vip_rab = <?php print $vip_rab; ?>;
-        var vvip_kam = <?php print $vvip_kam; ?>;
-        var vip_kam = <?php print $vip_kam; ?>;
-        var vvip_jum = <?php print $vvip_jum; ?>;
-        var vip_jum = <?php print $vip_jum; ?>;
-        var vvip_sab = <?php print $vvip_sab; ?>;
-        var vip_sab = <?php print $vip_sab; ?>; <<
-
-
-        var vvip_min = <?php print $vvip_min; ?>;
-        var vip_min = <?php print $vip_min; ?>;
-        var vvip_sen = <?php print $vvip_sen; ?>;
-        var vip_sen = <?php print $vip_sen; ?>;
-        var vvip_sel = <?php print $vvip_sel; ?>;
-        var vip_sel = <?php print $vip_sel; ?>;
-        var vvip_rab = <?php print $vvip_rab; ?>;
-        var vip_rab = <?php print $vip_rab; ?>;
-        var vvip_kam = <?php print $vvip_kam; ?>;
-        var vip_kam = <?php print $vip_kam; ?>;
-        var vvip_jum = <?php print $vvip_jum; ?>;
-        var vip_jum = <?php print $vip_jum; ?>;
-        var vvip_sab = <?php print $vvip_sab; ?>;
-        var vip_sab = <?php print $vip_sab; ?>;
+        // fungsi grafik-line & Grafik-bar
+        var dataMingguan = {!! json_encode($visitor_daily) !!}
+        console.log(dataMingguan);
+        var dataNewVisitor = {!! json_encode($visitor) !!}
+        console.log(dataNewVisitor);
     </script>
 @endsection

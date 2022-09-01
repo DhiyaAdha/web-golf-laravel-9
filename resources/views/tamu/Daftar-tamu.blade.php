@@ -51,15 +51,41 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Basic Table -->
-            </div>
-        </div>
-        <!-- Footer -->
-        @include('Layouts.Footer')
-        <!-- /Footer -->
-    </div>
-    <!-- /Main Content -->
+							<div class="col-lg-11" style="text-align: end;">
+                                <a href="{{ route('tambah-tamu') }}">
+                                        <i class="fa-2x fa-plus"
+                                        ></i></a>
+                            </div>
+                            <div class="clearfix"></div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="table-wrap">
+										<div class="table-responsive">
+											<table class="table mb-0" id="dt-tamu">
+												<thead>
+                                                    <tr>
+                                                        <th class="" style="margin-left: 20px;"> <a href="{{ route('tambah-deposit') }}" >Nama</a> </th>
+                                                        <th class="">Email</th>
+                                                        <th class="">Phone</th>
+                                                        <th class="">Tipe</th>
+                                                        <th class="">Opsi</th>
+                                                    </tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /Basic Table -->
+				</div>
+			</div>
+			<!-- Footer -->
+            @include('Layouts.Footer')
+            <!-- /Footer -->
+		</div>
+		<!-- /Main Content -->
 @endsection

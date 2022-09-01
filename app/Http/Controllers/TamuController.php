@@ -238,6 +238,6 @@ class TamuController extends Controller
     public function tambahdeposit(){
         
             return view('tamu.tambah-deposit');
-        }
+    }
 
 }
