@@ -93,7 +93,7 @@
             {
                 data: 'created_at',
                 searchable: true,
-                orderable: false
+                orderable: true
             },
             {
                 data: 'tipe_member',
@@ -103,7 +103,7 @@
             {
                 data: 'updated_at',
                 searchable: true,
-                orderable: false
+                orderable: true
             },
 
             // {
