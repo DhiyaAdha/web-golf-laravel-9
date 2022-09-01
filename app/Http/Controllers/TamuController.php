@@ -26,7 +26,7 @@ class TamuController extends Controller
             return datatables()->of($visitor)
             ->addColumn('action', function($visitor){
                         $button = 
-                        '<a href="/qrcode/'.$visitor->id.'" id="'.$visitor->id.'"><img src="dist/img/Card-Tamu.svg" alt=""
+                        '<a href="'.url('kartu-tamu/'.$visitor->id).'"><img src="dist/img/Card-Tamu.svg" alt=""
                         style="padding: 2px 7px 2px 2px;">
                         </a>';
                         $button .= '&nbsp;&nbsp;';
@@ -42,10 +42,10 @@ class TamuController extends Controller
             ->editColumn('tipe_member', function ($data) {
                 return $data->tipe_member;
             })
-            ->editColumn('name', function ($data) {
+            ->editColumn('qrcode', function ($data) {
                 return '<a href="'.url('kartu-tamu/'.$data->id).'">'.$data->name."</a>";
             })
-            ->rawColumns(['name','action'])
+            ->rawColumns(['qrcode','action'])
             ->make(true);
 
         }

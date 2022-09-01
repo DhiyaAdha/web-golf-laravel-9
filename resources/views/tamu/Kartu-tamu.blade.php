@@ -32,15 +32,15 @@
                             <div class="clearfix"></div>
                             <div>
                                 <p class="judul">Nama Lengkap</p>
-                                <h6 class="title">Pamungkas Nuli Ramadhan</h6>
+                                <h6 class="title">{{ $visitor->name }}</h6>
                                 <p class="judul">Email</p>
-                                <h6 class="title">PamungkasNuli@gmail.com</h6>
+                                <h6 class="title">{{ $visitor->email }}</h6>
                                 <p class="judul">Nomer Hp</p>
-                                <h6 class="title">0845545526386</h6>
+                                <h6 class="title">{{ $visitor->phone }}</h6>
                                 <p class="judul">Jenis Kelamin</p>
-                                <h6 class="title">Laki Laki</h6>
+                                <h6 class="title">{{ $visitor->gender }}</h6>
                                 <p class="judul">Kategori Tamu</p>
-                                <h6 class="title">VVIP</h6>
+                                <h6 class="title">{{ $visitor->tipe_member }}</h6>
                             </div>
                         </div>
                         <div class="panel-wrapper collapse in">
