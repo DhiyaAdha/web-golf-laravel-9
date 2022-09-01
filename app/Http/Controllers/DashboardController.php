@@ -57,7 +57,6 @@ class DashboardController extends Controller
 
         $data['visitor_vip'] = Visitor::where('tipe_member', 'VIP')->count();
         $data['visitor_vvip'] = Visitor::where('tipe_member', 'VVIP')->count();
-
         $data['visitor_vvip_female'] = Visitor::where([
                                             ['tipe_member', 'VVIP'],
                                             ['gender', 'perempuan'],
@@ -66,7 +65,6 @@ class DashboardController extends Controller
                                             ['tipe_member', 'VVIP'],
                                             ['gender', 'laki-laki'],
                                         ])->count();
-        
         //VIP 
         $data['visitor_vip_female'] = Visitor::where([
                                             ['tipe_member', 'VIP'],
@@ -77,6 +75,7 @@ class DashboardController extends Controller
                                             ['gender', 'laki-laki'],
                                         ])->count();
                                         
+
         // data-table analisis tamu
         $visitor = Visitor::select(['name', 'created_at', 'tipe_member', 'updated_at'])->get();
         if($request->ajax()){

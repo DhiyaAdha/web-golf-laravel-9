@@ -93,7 +93,7 @@
             {
                 data: 'created_at',
                 searchable: true,
-                orderable: false
+                orderable: true
             },
             {
                 data: 'tipe_member',
@@ -293,7 +293,6 @@
 
         ],
     });
-
     // invoice
     $('#dt-riwayat').DataTable({
         "processing": true,
@@ -311,10 +310,7 @@
             "type": "GET",
             "datatype": "json"
         },
-
         "render": $.fn.dataTable.render.text(),
-
-
         "columns": [{
                 data: 'name',
                 searchable: true,
@@ -335,7 +331,6 @@
                 searchable: true,
                 orderable: true
             },
-
             // {
             //     "data": function(data) {
             //         if (data.visitor.tipe_member == 'VIP') {
@@ -345,8 +340,6 @@
             //         }
             //     }
             // },
-
-
         ],
         order: [],
         responsive: true,
@@ -360,15 +353,12 @@
             lengthMenu: "Menampilkan _MENU_ data",
             zeroRecords: "Tidak ada data yang sesuai"
         },
-
         columnDefs: [{
                 className: 'text-center',
                 targets: [1, 2, 3]
             }
-
         ],
     });
-
     // invoice detail
     $('#dt-invoice').DataTable({
         "processing": true,

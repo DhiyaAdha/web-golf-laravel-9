@@ -17,7 +17,6 @@
                                 <a href="{{ route('tambah-admin') }}">
                                         <i class="fa-2x fa-plus"
                                         ></i></a>
-
                                     <div class="row">
                                         <div class="col-lg-0"></div>
                                         <div class="col-lg-4">
@@ -36,8 +35,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
