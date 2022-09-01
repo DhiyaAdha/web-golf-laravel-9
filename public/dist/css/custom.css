@@ -1,8 +1,8 @@
 .boxcontainer {
     margin: auto;
     position: relative;
-    width: 180px;
-    height: 40px;
+    width: 152px;
+    height: 30px;
     border: 2px solid #7d7d7d7d;
     padding: 0px 10px;
     border-radius: 2px;
@@ -216,18 +216,26 @@
     border: none;
     color: inherit;
     border-radius: 0;
-    margin: 10px 15px 35px 15px;
+    margin: -35px -30px -3px 15px;
     padding: 10px 15px 3px 15px;
+}
+.panel-hiding {
+    border: none;
+    color: inherit;
+    border-radius: 0;
+    margin: -35px -30px -3px 15px;
+    padding: 7px 47px 9px 0px;
 }
 .panel-hading {
     background: #fff;
     margin-bottom: 12px;
     border-radius: 2px;
     box-shadow: none;
-    padding: 15px 18px 10px 15px;
+    padding: 15px 18px -17px 15px;
     margin-left: -9px;
     margin-right: -9px;
 }
+<<<<<<< HEAD
 .label.label-Berhasil {
     background: #01c853;
     padding: 9px 50px;
@@ -235,10 +243,108 @@
 }
 .label.label-Batal {
     background: #fec107;
+=======
+.data{
+    color: #696969;
+    font-size: 16px;
+}
+.isi{
+    color: #000000;
+    font-size: 16px;
+}
+.btn1{
+    background-color: #01C853;
+    color: black;
+    cursor: pointer;
+    border-color: #0fe016;
+    padding: 10px 20px 10px;
+}
+.btn2{
+    background-color: #01C853;
+    border-color: #0fe016;
+    padding: 10px 20px 10px;
+    color: black;
+    cursor: pointer;
+}
+.btn3{
+    background-color: #01C853;
+    border-color: #0fe016;
+    padding: 10px 20px 10px;
+    color: black;
+    cursor: pointer;
+}
+.card-tamu{
+        background: #fff;
+        margin-bottom: 12px;
+        border: 20px solid rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+        box-shadow: none;
+        padding: 15px 15px 0;
+        margin-left: 20px;
+        margin-right: -9px;
+}
+.card-riwayat{
+        background: #fff;
+        margin-bottom: 12px;
+        border: 25px solid rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+        box-shadow: none;
+        padding: 20px 15px 0;
+        margin-left: -9px;
+        margin-right: -9px;
+}
+.card-qr{
+    /* background: #fff; */
+    /* margin-bottom: 12px; */
+    border: 25px solid rgba(255, 255, 255, 0.1);
+    /* border-radius: 2px; */
+    /* box-shadow: none; */
+    padding: 15px 15px 0;
+    /* margin-left: -9px; */
+    /* margin-right: -9px; */
+}
+.label.label-berhasil {
+    background: #01C853;
     padding: 9px 50px;
     font-size: 14px;
 }
+.label.label-batal {
+    background: #FEC107;
+>>>>>>> kevin
+    padding: 9px 50px;
+    font-size: 14px;
+}
+.label.label-riwayat {
+    color: #000000;
+    padding: 9px 50px;
+    font-size: 14px;
+}
+.label.label-reset {
+    background: #000000;
+    padding: 5px 20px;
+    font-size: 14px;
+}
+.label.label-berkurang {
+    background: #000000;
+    padding: 5px 20px;
+    font-size: 14px;
+}
+.card-aktifitas{
+    /* margin-bottom: 12px; */
+    /* border: 20px  rgba(255, 255, 255, 0.1); */
+    /* border-radius: 2px; */
+    box-shadow: none;
+    padding: 15px 15px 0;
+    margin-left: 20px;
+    margin-right: -9px;
+}
 
+<<<<<<< HEAD
+=======
+
+
+/* kartu-tamu */
+>>>>>>> kevin
 .panel-left {
     background: #fff;
     margin-bottom: 12px;

@@ -31,13 +31,16 @@ use App\Http\Controllers\ScanqrController;
 
 Route::get('/', function () {
     if (Auth::user()) {
+
         return redirect('/analisis-tamu');
     }    
     return view('Login');
 });
 
 //untuk route login
-Route::get('/login', [AuthController::class, 'index'])->Middleware('guest')->name('login');
+Route::get('/login', [AuthController::class, 'index'])
+    ->Middleware('guest')
+    ->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 //Route untuk sebelum Login
 Route::get('/Lupa-pasword', [AuthController::class, 'forgot_password'])->middleware('guest')->name('Lupa-pasword');
@@ -46,7 +49,6 @@ Route::get('/Reset-pasword/{token}',[AuthController::class,'showResetForm'])->na
 Route::post('/Reset-pasword',[AuthController::class,'resetPassword'])->name('Reset-pasword.update');
 //untuk route logout
 Route::get('/logout', [AuthController::class, 'logout']);
-
 
 //Level superadmin
 Route::group(['middleware' => ['auth','ceklevel:1']], function() {

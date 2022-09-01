@@ -63,7 +63,10 @@
     //     new Switchery($(this)[0], $(this).data());
     // });
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> kevin
     // data analisis
     $('#dt-analisis').DataTable({
         "processing": true,
@@ -311,6 +314,7 @@
             "datatype": "json"
         },
         "render": $.fn.dataTable.render.text(),
+<<<<<<< HEAD
         "columns": [{
                 data: 'name',
                 searchable: true,
