@@ -101,7 +101,7 @@
             {
                 data: 'updated_at',
                 searchable: true,
-                orderable: false
+                orderable: true
             },
 
             // {
