@@ -73,6 +73,8 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
     //route untuk order
     Route::resource('proses', OrderController::class);
     Route::get('/metode_pembayaran', [InvoiceController::class, 'metode_pembayaran'])->name('metode_pembayaran');
+    //Kartu Tamu
+    Route::get('/kartu-tamu/{id}',[TamuController::class,'show'])->name('show');
 });
 
 
