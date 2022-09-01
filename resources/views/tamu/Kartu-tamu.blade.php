@@ -32,21 +32,28 @@
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-                            <div class="panel-wrapper collapse in">
-                                <div class="panel-body">
-                                    <div class="tabel">
-                                        <h5 class="data">Nama Lengkap</h5>
-                                        <p class="isi">Pamungkas Nuli Ramadhan</p>
-                                        <h5 class="data">Email</h5>
-                                        <p class="isi">PamungkasNuli@gmail.com</p>
-                                        <h5 class="data">Nomer Hp</h5>
-                                        <p class="isi">0845545526386</p>
-                                        <h5 class="data">Jenis Kelamin</h5>
-                                        <p class="isi">Laki Laki</p>
-                                        <h5 class="data">Kategori Tamu</h5>
-                                        <p class="isi">VVIP</p>
-                                    </div>
-                                </div>
+                            <div class="pull-right">
+                                <span class="no-margin-switcher">
+                                    <a href="https://tse4.mm.bing.net/th?id=OIP.3S7-hQjSnc_alBueJd370AHaEu&pid=Api&P=0"><i class="fa-solid fa-address-card"></i></a>
+                                </span>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div>
+                                <p class="judul">Nama Lengkap</p>
+                                <h6 class="title">{{ $visitor->name }}</h6>
+                                <p class="judul">Email</p>
+                                <h6 class="title">{{ $visitor->email }}</h6>
+                                <p class="judul">Nomer Hp</p>
+                                <h6 class="title">{{ $visitor->phone }}</h6>
+                                <p class="judul">Jenis Kelamin</p>
+                                <h6 class="title">{{ $visitor->gender }}</h6>
+                                <p class="judul">Kategori Tamu</p>
+                                <h6 class="title">{{ $visitor->tipe_member }}</h6>
+                            </div>
+                        </div>
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+                                <div id="morris_extra_line_chart" class="morris-chart" style="height: 30px;"></div>
                             </div>
                         </div>
                     </div>
