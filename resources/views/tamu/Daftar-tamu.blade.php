@@ -39,10 +39,10 @@
 											<table class="table mb-0" id="dt-tamu">
 												<thead>
                                                     <tr>
-                                                        <th class="" style="margin-left: 20px;">Nama</th>
+                                                        <th class="" style="margin-left: 20px;"> <a href="{{ route('tambah-deposit') }}" >Nama</a> </th>
                                                         <th class="">Email</th>
                                                         <th class="">Phone</th>
-                                                        <th class="" >Tipe</th>
+                                                        <th class="">Tipe</th>
                                                         <th class="">Opsi</th>
                                                     </tr>
 												</thead>

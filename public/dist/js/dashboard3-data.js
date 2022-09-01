@@ -122,17 +122,18 @@ $(document).ready(function(){
 		// Morris bar chart
 		Morris.Bar({
 			element: 'morris_extra_bar_chart',
-			data: [
-				{ y: 'Sen', a: vvip_sen, b: vip_sen },
-				{ y: 'Sel', a: vvip_sel,  b: vip_sel },
-				{ y: 'Rab', a: vvip_rab,  b: vip_rab },
-				{ y: 'Kam', a: vvip_kam,  b: vip_kam },
-				{ y: 'Jum', a: vvip_jum,  b: vip_jum },
-				{ y: 'Sab', a: vvip_sab,  b: vip_sab },
-				{ y: 'Mgg', a: vvip_min, b: vip_min }
-			],
+			data: dataMingguan,
+			// data: [
+			// 	{ y: 'Sen', a: 1, b: 1 },
+			// 	{ y: 'Sel', a: 2,  b: 2 },
+			// 	{ y: 'Rab', a: 3,  b: 3 },
+			// 	{ y: 'Kam', a: 4,  b: 4 },
+			// 	{ y: 'Jum', a: 5,  b: 5 },
+			// 	{ y: 'Sab', a: 6,  b: 6 },
+			// 	{ y: 'Mgg', a: 7, b: 7 }
+			// ],
 			xkey: 'y',
-			ykeys: ['a', 'b', ],
+			ykeys: ['a'	, 'b', ],
 			labels: ['VVIP', 'VIP', ],
 			barColors:['#fec107', '#32FFC1',],
 			hideHover: 'auto',
@@ -140,7 +141,8 @@ $(document).ready(function(){
 			resize: true,
 			barGap: 4,
 			gridTextColor:'#878787',
-			gridTextFamily:"Roboto"
+			gridTextFamily:"Roboto",
+			// yLabelFormat: function(y){ return y != Math.round(y)?'':y; }
 		});
 
         var doughnutChart = new Chart(ctx7, {

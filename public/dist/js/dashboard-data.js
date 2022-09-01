@@ -185,72 +185,10 @@ $(document).ready(function () {
             },
         ];
 
-        var dataNew = [
-            {
-                period: "Ja",
-                vvip: vvip_jan,
-                vip: vip_jan,
-            },
-            {
-                period: "Fb",
-                vvip: vvip_feb,
-                vip: vip_feb,
-            },
-            {
-                period: "Ma",
-                vvip: vvip_mar,
-                vip: vip_mar,
-            },
-            {
-                period: "Ap",
-                vvip: vvip_apr,
-                vip: vip_apr,
-            },
-            {
-                period: "My",
-                vvip: vvip_mei,
-                vip: vip_mei,
-            },
-            {
-                period: "Jn",
-                vvip: vvip_jun,
-                vip: vip_jun,
-            },
-            {
-                period: "Jl",
-                vvip: vvip_jul,
-                vip: vip_jul,
-            },
-            {
-                period: "Ag",
-                vvip: vvip_aug,
-                vip: vip_aug,
-            },
-            {
-                period: "Sp",
-                vvip: vvip_sep,
-                vip: vip_sep,
-            },
-            {
-                period: "Oc",
-                vvip: vvip_oct,
-                vip: vip_oct,
-            },
-            {
-                period: "Nv",
-                vvip: vvip_nov,
-                vip: vip_nov,
-            },
-            {
-                period: "Dc",
-                vvip: vvip_dec,
-                vip: vip_dec,
-            },
-        ];
         var lineChart = Morris.Line({
             element: "morris_extra_line_chart",
-            data: data,
-            xkey: "period",
+            data: data, 
+            xkey: "period", 
             ykeys: ["vvip", "vip"],
             labels: ["vvip", "vip"],
             pointSize: 2,
@@ -280,7 +218,7 @@ $(document).ready(function () {
             lineChart.setData(data);
             lineChart.redraw();
         } else {
-            lineChart.setData(dataNew);
+            lineChart.setData(dataNewVisitor);
             lineChart.redraw();
         }
     };
