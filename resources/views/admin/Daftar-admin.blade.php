@@ -11,12 +11,12 @@
 
                                 {{-- <div class="clearfix"></div> --}}
                                 <div class="row">
-                                    <div class="col-lg-10">
-                                        <h6>Daftar Admin</h6>
+                                    <div class="col-lg-10 mt-15">
+                                        <h6 style="margin-left: -20px;">Daftar Admin</h6>
                                     </div>
-                                    <div class="col-lg-2" style="text-align: end;">
+                                    <div class="col-lg-2 mt-10" style="text-align: end;">
                                         <a href="{{ route('tambah-admin') }}">
-                                            <i class="fa-2x fa-plus"></i></a>
+                                            <i class="fa-2x fa-plus" style="margin-right: 10px;"></i></a>
 
                                         <div class="row">
                                             <div class="col-lg-0"></div>
@@ -47,22 +47,36 @@
                                             <table class="table mb-0">
                                                 <thead>
                                                     <tr>
-                                                        <th style="text-align: center;">Nama</th>
-                                                        <th style="text-align: center;">Email</th>
-                                                        <th style="text-align: center;">Nomer hp</th>
+                                                        <th>Nama</th>
+                                                        <th>Email</th>
+                                                        <th>Nomer hp</th>
                                                         <th style="text-align: center;">Kategori Admin</th>
                                                         <th style="text-align: center;">Aksi</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td style="text-align: center;">Pamungkas Nuli Ramadhan</td>
-                                                        <td style="text-align: center;">pamungkasnuli@rocketmail.com</td>
-                                                        <td style="text-align: center;">081126458792</td>
-                                                        <td style="text-align: center;"><span class="label label-Super-Admin">Super Admin</span> </td>
+                                                        <td>Pamungkas Nuli Ramadhan</td>
+                                                        <td>pamungkasnuli@rocketmail.com</td>
+                                                        <td>081126458792</td>
+                                                        <td style="text-align: center; color:black;"><span class="label label-super-admin">Super Admin</span> </td>
                                                         <td style="text-align: center;">
                                                             <a href="/edit-admin">
-                                                                <img src="dist/img/edit.svg" alt="" style="padding: 2px 7px 2px 2px;">
+                                                                <img src="dist/img/edit.svg" alt="" style="padding: 2px 7px 2px 2px; ">
+                                                            </a>
+                                                            <a href="#">
+                                                                <img src="dist/img/hapus.svg" alt="" style="padding: 2px 7px 2px 2px;">
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Pamungkas Nuli Ramadhan</td>
+                                                        <td>pamungkasnuli@rocketmail.com</td>
+                                                        <td>081126458792</td>
+                                                        <td style="text-align: center; color:black;"><span class="label label-admin">Admin</span> </td>
+                                                        <td style="text-align: center;">
+                                                            <a href="/edit-admin">
+                                                                <img src="dist/img/edit.svg" alt="" style="padding: 2px 7px 2px 2px; ">
                                                             </a>
                                                             <a href="#">
                                                                 <img src="dist/img/hapus.svg" alt="" style="padding: 2px 7px 2px 2px;">
@@ -86,8 +100,8 @@
 
                                 {{-- <div class="clearfix"></div> --}}
                                 <div class="row">
-                                    <div class="col-lg-10">
-                                        <h6>history aktifitas</h6>
+                                    <div class="col-lg-10 mt-15">
+                                        <h6 style="margin-left: -20px;">history aktifitas</h6>
                                     </div>
                                 </div>
                             </div>

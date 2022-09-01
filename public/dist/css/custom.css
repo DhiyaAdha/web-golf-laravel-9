@@ -1,8 +1,8 @@
 .boxcontainer {
     margin: auto;
     position: relative;
-    width: 180px;
-    height: 40px;
+    width: 152px;
+    height: 30px;
     border: 2px solid #7d7d7d7d;
     padding: 0px 10px;
     border-radius: 2px;
@@ -235,16 +235,6 @@
     margin-left: -9px;
     margin-right: -9px;
 }
-.label.label-Berhasil{
-    background: #01C853;
-    padding: 9px 50px;
-    font-size: 14px;
-}
-.label.label-Batal{
-    background: #FEC107;
-    padding: 9px 50px;
-    font-size: 14px;
-}
 .data{
     color: #696969;
     font-size: 16px;
@@ -304,6 +294,41 @@
     /* margin-left: -9px; */
     /* margin-right: -9px; */
 }
+.label.label-berhasil {
+    background: #01C853;
+    padding: 9px 50px;
+    font-size: 14px;
+}
+.label.label-batal {
+    background: #FEC107;
+    padding: 9px 50px;
+    font-size: 14px;
+}
+.label.label-riwayat {
+    color: #000000;
+    padding: 9px 50px;
+    font-size: 14px;
+}
+.label.label-reset {
+    background: #000000;
+    padding: 5px 20px;
+    font-size: 14px;
+}
+.label.label-berkurang {
+    background: #000000;
+    padding: 5px 20px;
+    font-size: 14px;
+}
+.card-aktifitas{
+    /* margin-bottom: 12px; */
+    /* border: 20px  rgba(255, 255, 255, 0.1); */
+    /* border-radius: 2px; */
+    box-shadow: none;
+    padding: 15px 15px 0;
+    margin-left: 20px;
+    margin-right: -9px;
+}
+
 
 
 /* kartu-tamu */

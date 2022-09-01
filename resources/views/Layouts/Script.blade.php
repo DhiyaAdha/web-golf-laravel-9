@@ -414,7 +414,3 @@
         html5QrcodeScanner.render(onScanSuccess, onScanFailure);
     })
 </script>
-<<<<<<< HEAD
-=======
-
->>>>>>> imas
