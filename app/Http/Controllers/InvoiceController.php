@@ -30,10 +30,6 @@ class InvoiceController extends Controller
             })
             ->rawColumns(['name','action'])
             ->make(true);
-<<<<<<< HEAD
-
-=======
->>>>>>> kevin
         }
         return view('invoice.riwayat-invoice');
     }
