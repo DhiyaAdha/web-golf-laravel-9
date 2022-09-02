@@ -21,46 +21,43 @@
             </div>
             <div class="row">
                 <div class="col-lg-8">
-                    <div class="panel panel-default card-view" style="height: 300px;">
+                    <div class="panel panel-default card-view" style="height: 900px;">
                         <div class="form-group mt-10 ml-20">
-                            <strong>Pilih Paket Bermain</strong>
-                            <div class="checkbox checkbox-success">
-                                <input type="checkbox" id="cb1">
-                                <label for="cb1">One Games</label>
-                                <button id="decrement" onclick="stepper(this)">-</button>
-                                <input type="number" min="0" max="100" step="1" value="0"
-                                    id="my-input" readonly>
-                                <button id="increment" onclick="stepper(this)">+</button>
-                            </div>
-                            <div class="checkbox checkbox-success">
-                                <input type="checkbox" id="cb2">
-                                <label for="cb2">Practice</label>
-                            </div>
+                            <strong>
+                                Pilih Paket Bermain
+                            </strong>
+                            
+                            @foreach ($default as $item)
+                                <form class="form-inline">
+                                    <div class="form-group mb-2">
+                                            <input type="checkbox" class="form-control" id="">
+                                    </div>
+                                    <button type="button" id="decrement" onclick="stepper('decrement', {{ $item->id }})" >-</button>
+                                    <input type="number" min="1" max="5" step="1" value="1"
+                                    id="my-input-{{ $item->id }}" readonly>
+                                    <button type="button" id="increment" onclick="stepper('increment', {{ $item->id }})" >+</button>
+                                        <label for="">{{ $item->name }}</label>
+                                </form>
+                            @endforeach
                         </div>
                         <div class="col-lg-8">
                             <div class="form-group">
                                 <strong>Pilih Item Tambahan</strong>
                                 <div class="row">
-                                    <div class="col-lg-4">
-                                        <div class="checkbox checkbox-success">
-                                            <input type="checkbox" id="cb3">
-                                            <label for="cb3">Mobil 1 Cabine</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="checkbox checkbox-success">
-                                            <input type="checkbox" id="cb4">
-                                            <label for="cb4">Caddy</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 ">
-                                        <div class="checkbox checkbox-success">
-                                            <input type="checkbox" id="cb5">
-                                            <label for="cb5">Additional 1</label>
-                                        </div>
-                                    </div>
+                                    @foreach ($additional as $item2)
+                                        <form class="form-inline">
+                                            <div class="form-group mb-2">
+                                                    <input type="checkbox" class="form-control" id="">
+                                            </div>
+                                            <button type="button" id="decrement" onclick="stepper('decrement', {{ $item2->id }})" >-</button>
+                                            <input type="number" min="1" max="5" step="1" value="1"
+                                            id="my-input-{{ $item2->id }}" readonly>
+                                            <button type="button" id="increment" onclick="stepper('increment', {{ $item2->id }})" >+</button>
+                                                <label for="">{{ $item2->name }}</label>
+                                        </form>
+                                    @endforeach
                                 </div>
-                                <div class="row">
+                                {{-- <div class="row">
                                     <div class="col-lg-4">
                                         <div class="checkbox checkbox-success">
                                             <input type="checkbox" id="cb6">
@@ -79,13 +76,13 @@
                                             <label for="cb8">Additional 2</label>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="panel panel-default card-view" style="height: 300px;">
+                    <div class="panel panel-default card-view" style="height: 900px;">
                         <h5 style="text-align: center;" class="mt-15 mb-5"><strong>DAFTAR ORDER</strong></h5>
                         <div class="col-lg-6 mt-5">
                             <p style="color: #7D7D7D; text-align:left;" class="ml-12">Product</p>
@@ -140,4 +137,30 @@
             </div>
         </div>
     </div>
+
+    
 @endsection
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
+    <script>
+        
+        // document.getElementById('increment').style.display = 'none';
+        // document.getElementById('my-input').style.display = 'none';
+        // document.getElementById('decrement').style.display = 'none';
+
+        // var inputs = document.getElementsById('cb1');
+
+    $(function() {
+        $('#cb1').change(function() {
+            $('#grup1').toggle($(this).is(':checked'));
+        });
+    });
+
+    // $(function() {
+    //     $('#cb2').change(function() {
+    //         $('#grup2').toggle($(this).is(':checked'));
+    //     });
+    // });
+    
+
+        
+    </script>

@@ -441,10 +441,14 @@
 </script>
 {{-- Input Stepper --}}
 <script>
-    const myInput = document.getElementById("my-input");
-
-    function stepper(btn) {
-        let id = btn.getAttribute("id");
+    
+    // var myInput;
+    function stepper(btn, ids) {
+        let myInput = document.getElementById("my-input-"+ids);
+        // myInput = document.getElementById("my-input");
+        // console.log(id);
+        let id = btn;
+        // let id = btn.getAttribute("id");
         let min = myInput.getAttribute("min");
         let max = myInput.getAttribute("max");
         let step = myInput.getAttribute("step");
