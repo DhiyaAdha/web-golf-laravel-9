@@ -12,6 +12,7 @@ use PhpParser\Node\Stmt\Foreach_;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use CreatePersonalAccessTokensTable;
+use Illuminate\Mail\Transport\LogTransport;
 
 class DashboardController extends Controller
 {
@@ -139,8 +140,22 @@ class DashboardController extends Controller
             ['gender', 'laki-laki'],
         ])->count();
 
-        // data-table analisis tamu
+        // $visitor = Visitor::select(
+        //     'visitors.name as name',
+        //     'visitors.tipe_member as tipe_member',
+        //     'log_transactions.created_at'
+        // )
+        //     ->join(
+        //         'log_transactions',
+        //         'visitors.id',
+        //         '=',
+        //         'log_transactions.visitor_id'
+        //     )
+        //     ->get();
+        // dd($visitor);
+
         $visitor = Visitor::select([
+            'id',
             'name',
             'created_at',
             'tipe_member',
@@ -152,10 +167,18 @@ class DashboardController extends Controller
             return datatables()
                 ->of($visitor)
                 ->editColumn('updated_at', function ($data) {
-                    return $data->updated_at->format('d F Y');
+                    return empty($data->transaction($data->id))
+                        ? '-'
+                        : $data
+                            ->transaction($data->id)
+                            ->created_at->format('d F Y');
                 })
                 ->addColumn('times', function ($data) {
-                    return $data->updated_at->format('h:i a');
+                    return empty($data->transaction($data->id))
+                        ? '-'
+                        : $data
+                            ->transaction($data->id)
+                            ->created_at->format('h:i a');
                 })
                 ->editColumn('tipe_member', function ($data) {
                     return $data->tipe_member;

@@ -139,55 +139,9 @@ $(document).ready(function () {
         });
     }
 
-    if ($("#morris_extra_line_chart").length > 0) {
-        var data = [
-            {
-                period: "Son",
-                iphone: 50,
-                ipad: 80,
-                itouch: 20,
-            },
-            {
-                period: "Mon",
-                iphone: 130,
-                ipad: 100,
-                itouch: 80,
-            },
-            {
-                period: "Tue",
-                iphone: 80,
-                ipad: 60,
-                itouch: 70,
-            },
-            {
-                period: "Wed",
-                iphone: 70,
-                ipad: 200,
-                itouch: 140,
-            },
-            {
-                period: "Thu",
-                iphone: 180,
-                ipad: 150,
-                itouch: 140,
-            },
-            {
-                period: "Fri",
-                iphone: 105,
-                ipad: 100,
-                itouch: 80,
-            },
-            {
-                period: "Sat",
-                iphone: 250,
-                ipad: 150,
-                itouch: 200,
-            },
-        ];
-
+    if ($("#statistic_visitor_line").length > 0) {
         var lineChart = Morris.Line({
-            element: "morris_extra_line_chart",
-            data: data, 
+            element: "statistic_visitor_line",
             xkey: "period", 
             ykeys: ["vvip", "vip"],
             labels: ["vvip", "vip"],

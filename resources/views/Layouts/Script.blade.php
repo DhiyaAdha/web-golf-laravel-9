@@ -51,17 +51,7 @@
 
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
-
-<script src="{{ asset('/sw.js') }}"></script>
 <script>
-    // if (!navigator.serviceWorker.controller) {
-    //     navigator.serviceWorker.register("/sw.js").then(function (reg) {
-    //         console.log("Service worker has been registered for scope: " + reg.scope);
-    //     });
-    // }
-    // $('.js-switch-1').each(function() {
-    //     new Switchery($(this)[0], $(this).data());
-    // });
     // data analisis
     $('#dt-analisis').DataTable({
         "processing": true,
@@ -100,7 +90,9 @@
                 data: 'times',
             }
         ],
-        order: [],
+        order: [
+            [1, 'desc']
+        ],
         responsive: true,
         language: {
             search: "",
@@ -277,6 +269,7 @@
 
         ],
     });
+
     // invoice
     $('#dt-riwayat').DataTable({
         "processing": true,
@@ -342,6 +335,7 @@
             targets: [1, 2, 3]
         }],
     });
+
     // invoice detail
     $('#dt-invoice').DataTable({
         "processing": true,

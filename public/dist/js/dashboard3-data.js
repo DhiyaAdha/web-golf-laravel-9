@@ -118,10 +118,10 @@ $(document).ready(function(){
 		});
 	}
 	
-	if($('#morris_extra_bar_chart').length > 0) {
+	if($('#statistic_visitor_bar').length > 0) {
 		// Morris bar chart
 		Morris.Bar({
-			element: 'morris_extra_bar_chart',
+			element: 'statistic_visitor_bar',
 			data: dataMingguan,
 			// data: [
 			// 	{ y: 'Sen', a: 1, b: 1 },
@@ -144,6 +144,7 @@ $(document).ready(function(){
 			gridTextFamily:"Roboto",
 			// yLabelFormat: function(y){ return y != Math.round(y)?'':y; }
 		});
+		
         var doughnutChart = new Chart(ctx7, {
             type: "doughnut",
             data: data7,
