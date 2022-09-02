@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Package;
 
-class PackageController extends Controller
+class   PackageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -98,5 +98,35 @@ class PackageController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function tambahpackage () {
+        return view('package.tambah-package');
+    }
+
+    public function insertpackage(Request $request){
+        dd($request->all());
+        // Package::create($request->all());
+        // $data[Package]::create($request->all());
+
+        $this->validate($request, [
+            'name'=>'required',
+            'category'=>'required',
+            'price_weekdays'=>'required',
+            'price_weekend'=>'required',
+        ]);
+
+        $package = Package::create([
+            'name'=>$request->name,
+            'category'=>$request->category,
+            'price_weekdays'=>$request->price_weekdays,
+            'price_weekend'=>$request->price_weekend,
+        ]);
+
+        $package->save();
+        return redirect('/package')
+        ->with('sukses simpen euy');
+
+
     }
 }

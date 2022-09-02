@@ -58,6 +58,7 @@ Route::group(['middleware' => ['auth','ceklevel:1']], function() {
     Route::get('/daftar-tamu/destroy/{id}', [TamuController::class, 'delete'])->name('hapus-tamu');
     Route::get('/tambah-tamu', [TamuController::class, 'tambahtamu'])->name('tambah-tamu');
     Route::post('/inserttamu',[TamuController::class,'inserttamu'])->name('inserttamu');
+    Route::post('/insertpackage',[PackageController::class,'insertpackage'])->name('insertpackage');
     Route::get('/edit-tamu',[TamuController::class,'edit'])->name('edit-tamu');
     Route::post('/update-tamu',[TamuController::class,'update'])->name('update-tamu');
     Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
@@ -100,5 +101,7 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::get('/tambah-deposit',[TamuController::class,'tambahdeposit'])->name('tambah-deposit');
     Route::get('/kartu-tamu',[ScanqrController::class,'kartutamu'])->name('kartu-tamu');
     Route::get('/tambah-admin',[AuthController::class,'tambahadmin'])->name('tambah-admin');
+
+    Route::get('/tambah-package', [PackageController::class, 'tambahpackage'])->name('tambahpackage');
 });
 //Finish level admin dan superadmin

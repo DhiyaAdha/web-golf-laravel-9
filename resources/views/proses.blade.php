@@ -10,8 +10,22 @@
             <div class="row">
                 <div class="col-lg-8">
                     <div class="panel panel-default card-view" style="height: 300px;">
-                        <div class="form-group mt-10 ml-20">
-                            <strong>Pilih Paket Bermain</strong>
+                        <div class="row">
+                            <div class="col-lg-4 ml-20">
+                                <strong>Pilih Paket Bermain</strong>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="radio radio-custom">
+                                    <input type="radio" name="radio2" id="radio12" value="option2">
+                                    <label for="radio12"> radio1 </label>
+                                </div>
+                                <div class="radio radio-custom">
+                                    <input type="radio" name="radio2" id="radio12" value="option2">
+                                    <label for="radio12"> radio2 </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group ml-20">
                             <div class="checkbox checkbox-success">
                                 <input type="checkbox" id="cb1">
                                 <label for="cb1">One Games</label>

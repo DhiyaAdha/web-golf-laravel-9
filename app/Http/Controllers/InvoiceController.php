@@ -33,6 +33,7 @@ class InvoiceController extends Controller
 
         }
         return view('invoice.riwayat-invoice');
+
     }
 
     /**
