@@ -28,17 +28,20 @@
                             </strong>
                             
                             @foreach ($default as $item)
-                                <form class="form-inline">
-                                    <div class="form-group mb-2">
-                                            <input type="checkbox" class="form-control" id="">
-                                    </div>
-                                    <button type="button" id="decrement" onclick="stepper('decrement', {{ $item->id }})" >-</button>
-                                    <input type="number" min="1" max="5" step="1" value="1"
-                                    id="my-input-{{ $item->id }}" readonly>
-                                    <button type="button" id="increment" onclick="stepper('increment', {{ $item->id }})" >+</button>
+                            <form class="form-inline">
+                                <div class="checkbox checkbox-success">
+                                    <input id="checkbox1" type="checkbox" class="form-control form-control-{{ $item->id }}" onchange="valueChanged({{ $item->id }})">
+                                    <label for=""></label>
+                                </div>
+                                    <span class="wrap-quantity-{{ $item->id }}" style="display: none">
+                                        <button type="button" id="decrement" onclick="stepper('decrement', {{ $item->id }})" >-</button>
+                                        <input type="number" min="1" max="10" step="1" value="1"
+                                        id="my-input-{{ $item->id }}" readonly>
+                                        <button type="button" id="increment" onclick="stepper('increment', {{ $item->id }})" >+</button>
+                                    </span>
                                         <label for="">{{ $item->name }}</label>
-                                </form>
-                            @endforeach
+                            </form>
+                        @endforeach
                         </div>
                         <div class="col-lg-8">
                             <div class="form-group">
@@ -46,37 +49,20 @@
                                 <div class="row">
                                     @foreach ($additional as $item2)
                                         <form class="form-inline">
-                                            <div class="form-group mb-2">
-                                                    <input type="checkbox" class="form-control" id="">
+                                            <div class="checkbox checkbox-success">
+                                                <input id="checkbox2" type="checkbox" class="form-control form-control-{{ $item2->id }}" onchange="valueChanged({{ $item2->id }})">
+                                                <label for=""></label>
                                             </div>
-                                            <button type="button" id="decrement" onclick="stepper('decrement', {{ $item2->id }})" >-</button>
-                                            <input type="number" min="1" max="5" step="1" value="1"
-                                            id="my-input-{{ $item2->id }}" readonly>
-                                            <button type="button" id="increment" onclick="stepper('increment', {{ $item2->id }})" >+</button>
-                                                <label for="">{{ $item2->name }}</label>
+                                                <span class="wrap-quantity-{{ $item2->id }}" style="display: none">
+                                                    <button type="button" id="decrement" onclick="stepper('decrement', {{ $item2->id }})" >-</button>
+                                                    <input type="number" min="1" max="10" step="1" value="1"
+                                                    id="my-input-{{ $item2->id }}" readonly>
+                                                    <button type="button" id="increment" onclick="stepper('increment', {{ $item2->id }})" >+</button>
+                                                </span>
+                                                    <label for="">{{ $item2->name }}</label>
                                         </form>
                                     @endforeach
                                 </div>
-                                {{-- <div class="row">
-                                    <div class="col-lg-4">
-                                        <div class="checkbox checkbox-success">
-                                            <input type="checkbox" id="cb6">
-                                            <label for="cb6">Mobil 2 Cabine</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="checkbox checkbox-success">
-                                            <input type="checkbox" id="cb7">
-                                            <label for="cb7">Sewa Tongkat</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 ">
-                                        <div class="checkbox checkbox-success">
-                                            <input type="checkbox" id="cb8">
-                                            <label for="cb8">Additional 2</label>
-                                        </div>
-                                    </div>
-                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -141,7 +127,7 @@
     
 @endsection
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
-    <script>
+    <script type="text/javascript">
         
         // document.getElementById('increment').style.display = 'none';
         // document.getElementById('my-input').style.display = 'none';
@@ -149,17 +135,27 @@
 
         // var inputs = document.getElementsById('cb1');
 
-    $(function() {
-        $('#cb1').change(function() {
-            $('#grup1').toggle($(this).is(':checked'));
-        });
-    });
-
     // $(function() {
-    //     $('#cb2').change(function() {
-    //         $('#grup2').toggle($(this).is(':checked'));
+    //     $('#cb{{ $item->id }}').change(function() {
+    //         $(document).toggle($(this).is(':checked'));
     //     });
     // });
+
+    // $(function() {
+    //     $('#cb{{ $item2->id }}').change(function() {
+    //         $(document).toggle($(this).is(':checked'));
+    //     });
+    // });
+
+
+    
+    function valueChanged(id)
+    {
+        if($('.form-control-'+id).is(":checked"))   
+            $(".wrap-quantity-"+id).show();
+        else
+            $(".wrap-quantity-"+id).hide();
+    }
     
 
         

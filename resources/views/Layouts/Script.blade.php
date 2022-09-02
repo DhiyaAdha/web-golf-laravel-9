@@ -441,8 +441,6 @@
 </script>
 {{-- Input Stepper --}}
 <script>
-    
-    // var myInput;
     function stepper(btn, ids) {
         let myInput = document.getElementById("my-input-"+ids);
         // myInput = document.getElementById("my-input");
