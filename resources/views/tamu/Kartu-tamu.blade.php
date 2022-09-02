@@ -51,11 +51,6 @@
                                 <h6 class="title">{{ $visitor->tipe_member }}</h6>
                             </div>
                         </div>
-                        <div class="panel-wrapper collapse in">
-                            <div class="panel-body">
-                                <div id="morris_extra_line_chart" class="morris-chart" style="height: 30px;"></div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
