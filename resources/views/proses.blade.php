@@ -127,36 +127,12 @@
     
 @endsection
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
-    <script type="text/javascript">
-        
-        // document.getElementById('increment').style.display = 'none';
-        // document.getElementById('my-input').style.display = 'none';
-        // document.getElementById('decrement').style.display = 'none';
-
-        // var inputs = document.getElementsById('cb1');
-
-    // $(function() {
-    //     $('#cb{{ $item->id }}').change(function() {
-    //         $(document).toggle($(this).is(':checked'));
-    //     });
-    // });
-
-    // $(function() {
-    //     $('#cb{{ $item2->id }}').change(function() {
-    //         $(document).toggle($(this).is(':checked'));
-    //     });
-    // });
-
-
-    
+    <script type="text/javascript">  
     function valueChanged(id)
     {
         if($('.form-control-'+id).is(":checked"))   
             $(".wrap-quantity-"+id).show();
         else
             $(".wrap-quantity-"+id).hide();
-    }
-    
-
-        
+    }   
     </script>
