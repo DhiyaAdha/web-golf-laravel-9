@@ -139,118 +139,12 @@ $(document).ready(function () {
         });
     }
 
-    if ($("#morris_extra_line_chart").length > 0) {
-        var data = [
-            {
-                period: "Son",
-                iphone: 50,
-                ipad: 80,
-                itouch: 20,
-            },
-            {
-                period: "Mon",
-                iphone: 130,
-                ipad: 100,
-                itouch: 80,
-            },
-            {
-                period: "Tue",
-                iphone: 80,
-                ipad: 60,
-                itouch: 70,
-            },
-            {
-                period: "Wed",
-                iphone: 70,
-                ipad: 200,
-                itouch: 140,
-            },
-            {
-                period: "Thu",
-                iphone: 180,
-                ipad: 150,
-                itouch: 140,
-            },
-            {
-                period: "Fri",
-                iphone: 105,
-                ipad: 100,
-                itouch: 80,
-            },
-            {
-                period: "Sat",
-                iphone: 250,
-                ipad: 150,
-                itouch: 200,
-            },
-        ];
-
-        var dataNew = [
-            {
-                period: "Ja",
-                vvip: vvip_jan,
-                vip: vip_jan,
-            },
-            {
-                period: "Fb",
-                vvip: vvip_feb,
-                vip: vip_feb,
-            },
-            {
-                period: "Ma",
-                vvip: vvip_mar,
-                vip: vip_mar,
-            },
-            {
-                period: "Ap",
-                vvip: vvip_apr,
-                vip: vip_apr,
-            },
-            {
-                period: "My",
-                vvip: vvip_mei,
-                vip: vip_mei,
-            },
-            {
-                period: "Jn",
-                vvip: vvip_jun,
-                vip: vip_jun,
-            },
-            {
-                period: "Jl",
-                vvip: vvip_jul,
-                vip: vip_jul,
-            },
-            {
-                period: "Ag",
-                vvip: vvip_aug,
-                vip: vip_aug,
-            },
-            {
-                period: "Sp",
-                vvip: vvip_sep,
-                vip: vip_sep,
-            },
-            {
-                period: "Oc",
-                vvip: vvip_oct,
-                vip: vip_oct,
-            },
-            {
-                period: "Nv",
-                vvip: vvip_nov,
-                vip: vip_nov,
-            },
-            {
-                period: "Dc",
-                vvip: vvip_dec,
-                vip: vip_dec,
-            },
-        ];
+    if ($("#statistic_visitor_line").length > 0) {
         var lineChart = Morris.Line({
-            element: "morris_extra_line_chart",
-            data: data,
-            xkey: "period",
+            element: "statistic_visitor_line",
+            xkey: "period", 
+            // ykeys: ["visitor_id"],
+            // labels: ["visitor_id"],
             ykeys: ["vvip", "vip"],
             labels: ["vvip", "vip"],
             pointSize: 2,
@@ -280,7 +174,7 @@ $(document).ready(function () {
             lineChart.setData(data);
             lineChart.redraw();
         } else {
-            lineChart.setData(dataNew);
+            lineChart.setData(dataNewVisitor);
             lineChart.redraw();
         }
     };

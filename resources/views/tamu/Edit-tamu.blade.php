@@ -45,8 +45,6 @@
                                                     </label> 
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label class="control-label mb-10" for="">Email</label>
                                                 <input type="email" name="email" value="{{ $visitor->email }}" class="form-control" id="email" placeholder="Masukan Email" @error('email') is-invalid @enderror autofocus required value="{{ old('email') }}">
@@ -60,6 +58,8 @@
                                                 <label class="control-label mb-10" for="">Nomer Hp</label>
                                                 <input type="number" name="phone" value="{{ $visitor->phone }}" class="form-control" id="phone" size="50px" placeholder="Masukan Nomer Hp" required autofocus>
                                             </div>
+                                        </div>
+                                        <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label class="control-label mb-10" for="">Perusahaan</label>
                                                 <input type="text" name="company" value="{{ $visitor->company }}" class="form-control" id="company" size="50px" placeholder="Masukan Nama Perusahaan" required autofocus>

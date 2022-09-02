@@ -172,16 +172,12 @@ class AuthController extends Controller {
         return view('admin.daftar-admin');
     }
 
-    public function tambah_admin(){
+    public function tambahadmin(){
         return view('admin.tambah-admin');
     }
 
     public function edit_admin(){
         return view('admin.edit-admin');
-    }
-    public function riwayatinvoice(){
-        $data['visitor'] = Visitor::all()->sortByDesc('created_at');
-        return view('/riwayat-invoice', $data);
     }
 
 }

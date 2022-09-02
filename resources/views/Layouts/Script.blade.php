@@ -51,19 +51,7 @@
 
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
-
-<script src="{{ asset('/sw.js') }}"></script>
 <script>
-    // if (!navigator.serviceWorker.controller) {
-    //     navigator.serviceWorker.register("/sw.js").then(function (reg) {
-    //         console.log("Service worker has been registered for scope: " + reg.scope);
-    //     });
-    // }
-    // $('.js-switch-1').each(function() {
-    //     new Switchery($(this)[0], $(this).data());
-    // });
-
-
     // data analisis
     $('#dt-analisis').DataTable({
         "processing": true,
@@ -83,40 +71,28 @@
         },
 
         "render": $.fn.dataTable.render.text(),
-
-
         "columns": [{
-                data: 'name',
-                searchable: true,
-                orderable: false
+                data: 'name'
             },
             {
-                data: 'created_at',
-                searchable: true,
-                orderable: false
+                data: 'updated_at'
             },
             {
-                data: 'tipe_member',
-                searchable: true,
-                orderable: false
+                "data": function(data) {
+                    if (data.tipe_member == 'VIP') {
+                        return `<span class='label label-success'>${data.tipe_member}</span>`;
+                    } else {
+                        return `<span class='label label-warning'>${data.tipe_member}</span>`;
+                    }
+                }
             },
             {
-                data: 'updated_at',
-                searchable: true,
-                orderable: false
-            },
-
-            // {
-            //     "data": function(data) {
-            //         if (data.visitor.tipe_member == 'VIP') {
-            //             return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
-            //         } else {
-            //             return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
-            //         }
-            //     }
-            // },
+                data: 'times',
+            }
         ],
-        order: [],
+        order: [
+            [1, 'desc']
+        ],
         responsive: true,
         language: {
             search: "",
@@ -311,10 +287,7 @@
             "type": "GET",
             "datatype": "json"
         },
-
         "render": $.fn.dataTable.render.text(),
-
-
         "columns": [{
                 data: 'name',
                 searchable: true,
@@ -335,7 +308,6 @@
                 searchable: true,
                 orderable: true
             },
-
             // {
             //     "data": function(data) {
             //         if (data.visitor.tipe_member == 'VIP') {
@@ -345,8 +317,6 @@
             //         }
             //     }
             // },
-
-
         ],
         order: [],
         responsive: true,
@@ -360,13 +330,10 @@
             lengthMenu: "Menampilkan _MENU_ data",
             zeroRecords: "Tidak ada data yang sesuai"
         },
-
         columnDefs: [{
-                className: 'text-center',
-                targets: [1, 2, 3]
-            }
-
-        ],
+            className: 'text-center',
+            targets: [1, 2, 3]
+        }],
     });
 
     // invoice detail
@@ -390,11 +357,27 @@
         "render": $.fn.dataTable.render.text(),
 
 
-        "columns" : [
-            { data: 'category', searchable: true, orderable: false },
-            { data: 'harga', searchable: true, orderable: false },
-            { data: 'quantity', searchable: true, orderable: false },
-            { data: 'total', searchable: true, orderable: false, className: 'text-right' },
+        "columns": [{
+                data: 'category',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'harga',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'quantity',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'total',
+                searchable: true,
+                orderable: false,
+                className: 'text-right'
+            },
 
         ],
         order: [],
@@ -409,8 +392,10 @@
             lengthMenu: "Menampilkan _MENU_ data",
             zeroRecords: "Tidak ada data yang sesuai"
         },
-        columnDefs: [
-            {className: 'text-center', targets: [1 , 2]}
+        columnDefs: [{
+                className: 'text-center',
+                targets: [1, 2]
+            }
 
         ],
     });

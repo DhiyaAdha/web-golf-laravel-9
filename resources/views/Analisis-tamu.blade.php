@@ -1,25 +1,7 @@
 @extends('Layouts.Main', ['title' => 'TGCC | Analisis Tamu'])
 @section('content')
     <div class="page-wrapper">
-        <div class="container-fluid">
-            <div class="row heading-bg">
-                <!-- Breadcrumb -->
-                <div class="row">
-                    <div class="container-fluid">
-                        <div class="col-lg-8">
-                            <h5>Analisis Tamu</h5>
-                        </div>
-                        <div class="col-lg-4 col-sm-8 col-md-8 col-xs-12">
-                            <ol class="breadcrumb">
-                                <li><a href="javascript:void(0)">Dashboard</a></li>
-                                <li class="active"><span>analisis tamu</span></li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- /Breadcrumb -->
-            </div>
+        <div class="container-fluid pt-25">
             {{-- Row Kalkulasi Tamu --}}
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
@@ -29,13 +11,13 @@
                                 <div class="sm-data-box" style="background-color:#01C853;">
                                     <div class="container-fluid">
                                         <div class="row p-2">
-                                            <div class="col-xs-6 text-left data-wrap-left">
+                                            <div class="col-xs-7 text-left data-wrap-left">
                                                 <span class="txt-light block counter"><span
                                                         class="counter-anim">{{ $visitor_today }}</span></span>
                                                 <span class="weight-500 uppercase-font txt-light block font-13">Jumlah tamu
                                                     hari ini</span>
                                             </div>
-                                            <div class="col-xs-6 text-right data-wrap-right">
+                                            <div class="col-xs-5 text-right data-wrap-right">
                                                 <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i>
                                             </div>
                                         </div>
@@ -92,60 +74,67 @@
                     </div>
                 </div>
             </div>
-
             {{-- Row Statistika Tamu --}}
             <div class="row">
-                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-6">
                     <div class="panel panel-default card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
                                 <h6 class="panel-title txt-dark">Statistika Tamu Berkunjung</h6>
                             </div>
-                            <div class="pull-right">
-                                <select name="period"
-                                    class="pl-10 text-base sm:text-sm mt-1 form-select block w-full text-gray-500 focus:bg-gray-100">
-                                    <option value="">{{ __('Pilih Tahun') }}</option>
-                                    @foreach (\Carbon\CarbonPeriod::create(now(), '1 year', now()->addYears(3)) as $date)
+                            <form action="{{ url()->current() }}">
+                                <div class="pull-right">
+                                    <select name="year"
+                                        class="pl-10 text-base sm:text-sm mt-1 form-select block w-full text-gray-500 focus:bg-gray-100"
+                                        onchange="this.form.submit()">
+                                        <option value="">{{ __('Pilih Tahun') }}</option>
+                                        @foreach ($years as $row)
+                                            @if (request('year') != '')
+                                                <option value="{{ $row }}"
+                                                    {{ request('year') == $row ? 'selected' : '' }}>
+                                                    {{ $row }}</option>
+                                            @else
+                                                <option value="{{ $row }}"
+                                                    {{ $row == date('Y') ? 'selected' : '' }}>
+                                                    {{ $row }}</option>
+                                            @endif
+                                        @endforeach
+
+                                        {{-- @foreach (\Carbon\CarbonPeriod::create(now(), '1 year', now()->addYears(3)) as $date)
                                         <option value="{{ $date->format('Y') }}"
                                             {{ $date->format('Y') == request()->query('period') ? 'selected' : '' }}>
                                             {{ $date->format('Y') }}
                                         </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
+                                        @endforeach --}}
+                                    </select>
+                                </div>
+                            </form>
                             <div class="clearfix"></div>
                         </div>
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
-                                <div id="morris_extra_line_chart" class="morris-chart" style="height:293px;"></div>
+                                <div id="statistic_visitor_line" class="morris-chart" style="height:293px;"></div>
                                 <ul class="flex-stat mt-45" style="display: flex">
                                     <li>
                                         <span class="block"></span>
                                         <span class="block txt-dark weight-500 font-18">
                                             <span class="">
                                             </span>
-                                        </span>
                                     </li>
+                                    {{-- statistik pertahun --}}
                                     <li>
-                                        {{-- <span class="block">Total Tamu Berkunjung</span> --}}
                                         <span class="block">Statistika Pertahun</span>
                                         <span class="block txt-dark weight-500 font-18"><span
+                                                {{-- class="counter-anim">{{ $visitor_year }}</span></span> --}}
                                                 class="counter-anim">{{ $visitor_year }}</span></span>
                                     </li>
-                                    {{-- <li>
-                                        <span class="block">Tamu Bulanan ini</span>
-                                        <span class="block txt-dark weight-500 font-18"><span
-                                                class="counter-anim">{{ $visitor_month }}</span></span>
-                                    </li> --}}
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 {{-- Chart Rekap Harian --}}
-                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-6">
                     <div class="panel panel-default card-view panel-refresh relative">
                         <div class="refresh-container">
                             <div class="la-anim-1"></div>
@@ -158,7 +147,7 @@
                         </div>
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
-                                <div id="morris_extra_bar_chart" class="morris-chart" style="height:340px;"></div>
+                                <div id="statistic_visitor_bar" class="morris-chart" style="height:340px;"></div>
                                 <ul class="flex-stat mt-1" style="display: flex">
                                     <li>
                                         <span class="block"></span>
@@ -168,19 +157,17 @@
                                         </span>
                                     </li>
                                     <li>
-                                        {{-- <span class="block">Total Tamu Berkunjung</span> --}}
                                         <span class="block">Statistika Mingguan</span>
-                                        <span class="block txt-dark weight-500 font-18"><span
-                                                class="counter-anim">{{ $visitor_week }}</span></span>
+                                        <span class="block txt-dark weight-500 font-18">
+                                            {{-- <span class="">{{ $visitor_week }}</span> --}}
+                                        </span>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
-
             {{-- Total tamu VIP & VVIP --}}
             <div class="row">
                 <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 ol-lg-6 col-md-12 col-sm-12 col-xs-12">
@@ -212,7 +199,6 @@
                         </div>
                     </div>
                 </div>
-
                 {{-- Total tamu VIP & VIP --}}
                 <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12
 					ol-lg-6 col-md-12 col-sm-12 col-xs-12">
@@ -248,18 +234,8 @@
 
             <!-- Row Tabel Tamu-->
             <div class="row">
-                <!-- Basic Table -->
-                <div class="col-sm-12">
+                <div class="col-lg-12">
                     <div class="panel panel-default card-view">
-                        <div class="pull-left">
-                            <h6 class="panel-title txt-dark">Terakhir Tamu Berkunjung</h6>
-                        </div>
-                        <div class="pull-right">
-                            <a href="#" class="pull-left inline-block full-screen mr-40">
-                                <i class="fa-2x zmdi zmdi-fullscreen"
-                                    style="border: 0px solid silver; border-radius: 0.25em; "></i>
-                            </a>
-                        </div>
                         <div class="clearfix"></div>
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
@@ -268,7 +244,6 @@
                                         <table class="table mb-0" id="dt-analisis">
                                             <thead>
                                                 <tr>
-                                                    {{-- <th class="" style="margin-left: 20px;">ID</th> --}}
                                                     <th class="">NAMA TAMU</th>
                                                     <th class="">TANGGAL</th>
                                                     <th class="">KATAGORI TAMU</th>
@@ -284,70 +259,18 @@
                         </div>
                     </div>
                 </div>
-                <!-- /Basic Table -->
             </div>
-            <!-- Footer -->
-            @include('Layouts.Footer')
-            <!-- /Footer -->
         </div>
+        <!-- Footer -->
+        @include('Layouts.Footer')
+        <!-- /Footer -->
     </div>
-
+    </div>
     <script>
-        var vvip_jan = <?php print $Jan_vvip; ?>;
-        var vip_jan = <?php print $Jan_vip; ?>;
-        var vvip_feb = <?php print $Feb_vvip; ?>;
-        var vip_feb = <?php print $Feb_vip; ?>;
-        var vvip_mar = <?php print $Mar_vvip; ?>;
-        var vip_mar = <?php print $Mar_vip; ?>;
-        var vvip_apr = <?php print $Apr_vvip; ?>;
-        var vip_apr = <?php print $Apr_vip; ?>;
-        var vvip_mei = <?php print $Mei_vvip; ?>;
-        var vip_mei = <?php print $Mei_vip; ?>;
-        var vvip_jun = <?php print $Jun_vvip; ?>;
-        var vip_jun = <?php print $Jun_vip; ?>;
-        var vvip_jul = <?php print $Jul_vvip; ?>;
-        var vip_jul = <?php print $Jul_vip; ?>;
-        var vvip_aug = <?php print $Aug_vvip; ?>;
-        var vip_aug = <?php print $Aug_vip; ?>;
-        var vvip_sep = <?php print $Sep_vvip; ?>;
-        var vip_sep = <?php print $Sep_vip; ?>;
-        var vvip_oct = <?php print $Oct_vvip; ?>;
-        var vip_oct = <?php print $Oct_vip; ?>;
-        var vvip_nov = <?php print $Nov_vvip; ?>;
-        var vip_nov = <?php print $Nov_vip; ?>;
-        var vvip_dec = <?php print $Dec_vvip; ?>;
-        var vip_dec = <?php print $Dec_vip; ?>;
-
-
-        var vvip_min = <?php print $vvip_min; ?>;
-        var vip_min = <?php print $vip_min; ?>;
-        var vvip_sen = <?php print $vvip_sen; ?>;
-        var vip_sen = <?php print $vip_sen; ?>;
-        var vvip_sel = <?php print $vvip_sel; ?>;
-        var vip_sel = <?php print $vip_sel; ?>;
-        var vvip_rab = <?php print $vvip_rab; ?>;
-        var vip_rab = <?php print $vip_rab; ?>;
-        var vvip_kam = <?php print $vvip_kam; ?>;
-        var vip_kam = <?php print $vip_kam; ?>;
-        var vvip_jum = <?php print $vvip_jum; ?>;
-        var vip_jum = <?php print $vip_jum; ?>;
-        var vvip_sab = <?php print $vvip_sab; ?>;
-        var vip_sab = <?php print $vip_sab; ?>; <<
-
-
-        var vvip_min = <?php print $vvip_min; ?>;
-        var vip_min = <?php print $vip_min; ?>;
-        var vvip_sen = <?php print $vvip_sen; ?>;
-        var vip_sen = <?php print $vip_sen; ?>;
-        var vvip_sel = <?php print $vvip_sel; ?>;
-        var vip_sel = <?php print $vip_sel; ?>;
-        var vvip_rab = <?php print $vvip_rab; ?>;
-        var vip_rab = <?php print $vip_rab; ?>;
-        var vvip_kam = <?php print $vvip_kam; ?>;
-        var vip_kam = <?php print $vip_kam; ?>;
-        var vvip_jum = <?php print $vvip_jum; ?>;
-        var vip_jum = <?php print $vip_jum; ?>;
-        var vvip_sab = <?php print $vvip_sab; ?>;
-        var vip_sab = <?php print $vip_sab; ?>;
+        // fungsi grafik-line & Grafik-bar
+        var dataMingguan = {!! json_encode($visitor_daily) !!}
+        console.log(dataMingguan);
+        var dataNewVisitor = {!! json_encode($visitor) !!}
+        console.log(dataNewVisitor);
     </script>
 @endsection

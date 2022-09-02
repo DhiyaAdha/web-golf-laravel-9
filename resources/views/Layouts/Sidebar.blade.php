@@ -23,6 +23,7 @@
             </a>
         </li>
         <li>
+
             <a class="{{ Request::is('daftar-tamu') ? 'active' : '' }}" href="{{ route('daftar-tamu') }}">
                 <div class="pull-left">
                     <i class="fa fa-user mr-20"></i>

@@ -23,14 +23,17 @@ class InvoiceController extends Controller
         if($request->ajax()){
             return datatables()->of($riwayat_invoice)
             ->editColumn('name', function ($data) {
-                return '<a href="'.url('invoice/'.$data->id).'">'.$data->name."</a>";
+                    return '<a href="
+                    '.url('invoice/'.$data->id).'
+                    ">'
+                    .$data->name.
+                    "</a>";
             })
             ->editColumn('created_at', function ($data) {
                 return $data->created_at->format('d F Y');
             })
             ->rawColumns(['name','action'])
             ->make(true);
-
         }
         return view('invoice.riwayat-invoice');
 
@@ -127,8 +130,8 @@ class InvoiceController extends Controller
         return 'berhasil';
     }
 
-    public function metodepembayaran () {
-        return view('Invoice.metode-pembayaran');
+    public function metode_pembayaran () {
+        return view('Invoice.metode_pembayaran');
     }
     
 }

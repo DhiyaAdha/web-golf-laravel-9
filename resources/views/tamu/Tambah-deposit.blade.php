@@ -29,7 +29,7 @@
                                             atau invoice</p>
                                     </div>
                                     <div class="form-group text-left">
-                                        <button type="submit" class="btn btn-info">Selanjutnya</button>
+                                        <a href="daftar-tamu"><button type="submit" class="btn btn-info">Selanjutnya</button></a>
                                     </div>
                                 </form>
 
