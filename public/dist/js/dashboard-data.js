@@ -189,6 +189,8 @@ $(document).ready(function () {
             element: "morris_extra_line_chart",
             data: data, 
             xkey: "period", 
+            // ykeys: ["visitor_id"],
+            // labels: ["visitor_id"],
             ykeys: ["vvip", "vip"],
             labels: ["vvip", "vip"],
             pointSize: 2,

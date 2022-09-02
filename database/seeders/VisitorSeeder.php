@@ -56,6 +56,7 @@ class VisitorSeeder extends Seeder
                 // 'created_at' => $faker->dateTimeThisMonth(),
                 'updated_at' => \Carbon\Carbon::now()->addMinutes(rand(0,
                 60 * 23))->addSeconds(rand(0, 60))
+                // 'updated_at' => $faker->dateTimeThisYear()
             ]);
         }
     }

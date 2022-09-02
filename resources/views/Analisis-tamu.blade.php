@@ -106,9 +106,11 @@
                                             <span class="">
                                             </span>
                                     </li>
+                                    {{-- statistik pertahun --}}
                                     <li>
                                         <span class="block">Statistika Pertahun</span>
                                         <span class="block txt-dark weight-500 font-18"><span
+                                                {{-- class="counter-anim">{{ $visitor_year }}</span></span> --}}
                                                 class="counter-anim">{{ $visitor_year }}</span></span>
                                     </li>
                                 </ul>
@@ -142,7 +144,7 @@
                                     <li>
                                         <span class="block">Statistika Mingguan</span>
                                         <span class="block txt-dark weight-500 font-18">
-                                            <span class="">{{ $visitor_week }}</span>
+                                            {{-- <span class="">{{ $visitor_week }}</span> --}}
                                         </span>
                                     </li>
                                 </ul>

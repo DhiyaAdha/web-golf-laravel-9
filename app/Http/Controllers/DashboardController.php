@@ -22,7 +22,7 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-        // Statistika Pertahun
+        // Statistika Pertahun      
         $month = range(1, 12);
         $months = [
             1 => 'Jan.',
@@ -40,19 +40,17 @@ class DashboardController extends Controller
         ];
         $year = range(2020, Carbon::now()->year);
         $getyear = $request->year ? $request->year : Carbon::now()->year;
+        // dd($getyear);
         foreach ($month as $key => $value) {
             $data['visitor'][$key]['period'] = $months[$value];
-            $data['visitor'][$key]['vvip'] = Visitor::whereMonth(
-                'created_at',
-                strlen($value) == 1 ? '0' . $value : $value
-            )
+            // dd($get);
+            $data['visitor'][$key]['vvip'] = Visitor::whereMonth (
+                'created_at', strlen($value) == 1 ? '0' . $value : $value )
                 ->whereYear('created_at', $getyear)
                 ->where('tipe_member', 'VVIP')
                 ->count();
             $data['visitor'][$key]['vip'] = Visitor::whereMonth(
-                'created_at',
-                strlen($value) == 1 ? '0' . $value : $value
-            )
+                'created_at', strlen($value) == 1 ? '0' . $value : $value)
                 ->whereYear('created_at', $getyear)
                 ->where('tipe_member', 'VIP')
                 ->count();
@@ -95,6 +93,7 @@ class DashboardController extends Controller
                 ->where('tipe_member', 'VIP')
                 ->count();
         }
+        
         $data['visitor_week'] = Visitor::whereBetween('created_at', [
             Carbon::now()->startOfWeek(),
             Carbon::now()->endOfWeek(Carbon::SATURDAY),
@@ -108,14 +107,10 @@ class DashboardController extends Controller
         $data['visitor_month'] = Visitor::whereMonth(
             'created_at',
             now()->month
-        )->count(); //bulan ini
+        )->count(); 
         $data['visitor_year'] = Visitor::whereYear(
             'created_at',
             now()->format('Y')
-        )->count();
-        $data['visitor_years'] = Visitor::whereYear(
-            'created_at',
-            '2023'
         )->count();
 
         $data['visitor_vip'] = Visitor::where('tipe_member', 'VIP')->count();
