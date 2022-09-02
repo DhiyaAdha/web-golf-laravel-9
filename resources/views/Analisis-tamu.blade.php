@@ -11,13 +11,13 @@
                                 <div class="sm-data-box" style="background-color:#01C853;">
                                     <div class="container-fluid">
                                         <div class="row p-2">
-                                            <div class="col-xs-6 text-left data-wrap-left">
+                                            <div class="col-xs-7 text-left data-wrap-left">
                                                 <span class="txt-light block counter"><span
                                                         class="counter-anim">{{ $visitor_today }}</span></span>
                                                 <span class="weight-500 uppercase-font txt-light block font-13">Jumlah tamu
                                                     hari ini</span>
                                             </div>
-                                            <div class="col-xs-6 text-right data-wrap-right">
+                                            <div class="col-xs-5 text-right data-wrap-right">
                                                 <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i>
                                             </div>
                                         </div>
@@ -76,29 +76,44 @@
             </div>
             {{-- Row Statistika Tamu --}}
             <div class="row">
-                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-6">
                     <div class="panel panel-default card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
                                 <h6 class="panel-title txt-dark">Statistika Tamu Berkunjung</h6>
                             </div>
-                            <div class="pull-right">
-                                <select name="period"
-                                    class="pl-10 text-base sm:text-sm mt-1 form-select block w-full text-gray-500 focus:bg-gray-100">
-                                    <option value="">{{ __('Pilih Tahun') }}</option>
-                                    @foreach (\Carbon\CarbonPeriod::create(now(), '1 year', now()->addYears(3)) as $date)
+                            <form action="{{ url()->current() }}">
+                                <div class="pull-right">
+                                    <select name="year"
+                                        class="pl-10 text-base sm:text-sm mt-1 form-select block w-full text-gray-500 focus:bg-gray-100"
+                                        onchange="this.form.submit()">
+                                        <option value="">{{ __('Pilih Tahun') }}</option>
+                                        @foreach ($years as $row)
+                                            @if (request('year') != '')
+                                                <option value="{{ $row }}"
+                                                    {{ request('year') == $row ? 'selected' : '' }}>
+                                                    {{ $row }}</option>
+                                            @else
+                                                <option value="{{ $row }}"
+                                                    {{ $row == date('Y') ? 'selected' : '' }}>
+                                                    {{ $row }}</option>
+                                            @endif
+                                        @endforeach
+
+                                        {{-- @foreach (\Carbon\CarbonPeriod::create(now(), '1 year', now()->addYears(3)) as $date)
                                         <option value="{{ $date->format('Y') }}"
                                             {{ $date->format('Y') == request()->query('period') ? 'selected' : '' }}>
                                             {{ $date->format('Y') }}
                                         </option>
-                                    @endforeach
-                                </select>
-                            </div>
+                                        @endforeach --}}
+                                    </select>
+                                </div>
+                            </form>
                             <div class="clearfix"></div>
                         </div>
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
-                                <div id="morris_extra_line_chart" class="morris-chart" style="height:293px;"></div>
+                                <div id="statistic_visitor_line" class="morris-chart" style="height:293px;"></div>
                                 <ul class="flex-stat mt-45" style="display: flex">
                                     <li>
                                         <span class="block"></span>
@@ -119,7 +134,7 @@
                     </div>
                 </div>
                 {{-- Chart Rekap Harian --}}
-                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-6">
                     <div class="panel panel-default card-view panel-refresh relative">
                         <div class="refresh-container">
                             <div class="la-anim-1"></div>
@@ -132,7 +147,7 @@
                         </div>
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
-                                <div id="morris_extra_bar_chart" class="morris-chart" style="height:340px;"></div>
+                                <div id="statistic_visitor_bar" class="morris-chart" style="height:340px;"></div>
                                 <ul class="flex-stat mt-1" style="display: flex">
                                     <li>
                                         <span class="block"></span>

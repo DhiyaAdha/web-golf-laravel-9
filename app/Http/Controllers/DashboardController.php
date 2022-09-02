@@ -12,6 +12,8 @@ use PhpParser\Node\Stmt\Foreach_;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use CreatePersonalAccessTokensTable;
+use Illuminate\Mail\Transport\LogTransport;
+use Illuminate\Database\Eloquent\Builder;
 
 class DashboardController extends Controller
 {
@@ -25,34 +27,49 @@ class DashboardController extends Controller
         // Statistika Pertahun      
         $month = range(1, 12);
         $months = [
-            1 => 'Jan.',
-            2 => 'Feb.',
-            3 => 'Mar.',
-            4 => 'Apr.',
+            1 => 'Jan',
+            2 => 'Feb',
+            3 => 'Mar',
+            4 => 'Apr',
             5 => 'May',
-            6 => 'Jun.',
-            7 => 'Jul.',
-            8 => 'Aug.',
-            9 => 'Sep.',
-            10 => 'Oct.',
-            11 => 'Nov.',
-            12 => 'Dec.',
+            6 => 'Jun',
+            7 => 'Jul',
+            8 => 'Aug',
+            9 => 'Sep',
+            10 => 'Oct',
+            11 => 'Nov',
+            12 => 'Dec',
         ];
-        $year = range(2020, Carbon::now()->year);
+        $data['years'] = range(Carbon::now()->year - 3, Carbon::now()->year);
         $getyear = $request->year ? $request->year : Carbon::now()->year;
         // dd($getyear);
         foreach ($month as $key => $value) {
             $data['visitor'][$key]['period'] = $months[$value];
-            // dd($get);
-            $data['visitor'][$key]['vvip'] = Visitor::whereMonth (
-                'created_at', strlen($value) == 1 ? '0' . $value : $value )
+            $data['visitor'][$key]['vvip'] = LogTransaction::whereHas(
+                'visitor',
+                function (Builder $query) {
+                    $query->where('tipe_member', 'VVIP');
+                }
+            )
+                ->whereMonth(
+                    'created_at',
+                    strlen($value) == 1 ? '0' . $value : $value
+                )
                 ->whereYear('created_at', $getyear)
-                ->where('tipe_member', 'VVIP')
+                // ->where('tipe_member', 'VVIP')
                 ->count();
-            $data['visitor'][$key]['vip'] = Visitor::whereMonth(
-                'created_at', strlen($value) == 1 ? '0' . $value : $value)
+            $data['visitor'][$key]['vip'] = LogTransaction::whereHas(
+                'visitor',
+                function (Builder $query) {
+                    $query->where('tipe_member', 'VIP');
+                }
+            )
+                ->whereMonth(
+                    'created_at',
+                    strlen($value) == 1 ? '0' . $value : $value
+                )
                 ->whereYear('created_at', $getyear)
-                ->where('tipe_member', 'VIP')
+                // ->where('tipe_member', 'VIP')
                 ->count();
         }
         // Statistika-mingguan
@@ -107,10 +124,10 @@ class DashboardController extends Controller
         $data['visitor_month'] = Visitor::whereMonth(
             'created_at',
             now()->month
-        )->count(); 
-        $data['visitor_year'] = Visitor::whereYear(
+        )->count(); //bulan ini
+        $data['visitor_year'] = LogTransaction::whereYear(
             'created_at',
-            now()->format('Y')
+            $request->year
         )->count();
 
         $data['visitor_vip'] = Visitor::where('tipe_member', 'VIP')->count();
@@ -132,8 +149,23 @@ class DashboardController extends Controller
             ['tipe_member', 'VIP'],
             ['gender', 'laki-laki'],
         ])->count();
-        // data-table analisis tamu
+
+        // $visitor = Visitor::select(
+        //     'visitors.name as name',
+        //     'visitors.tipe_member as tipe_member',
+        //     'log_transactions.created_at'
+        // )
+        //     ->join(
+        //         'log_transactions',
+        //         'visitors.id',
+        //         '=',
+        //         'log_transactions.visitor_id'
+        //     )
+        //     ->get();
+        // dd($visitor);
+
         $visitor = Visitor::select([
+            'id',
             'name',
             'created_at',
             'tipe_member',
@@ -145,10 +177,18 @@ class DashboardController extends Controller
             return datatables()
                 ->of($visitor)
                 ->editColumn('updated_at', function ($data) {
-                    return $data->updated_at->format('d F Y');
+                    return empty($data->transaction($data->id))
+                        ? '-'
+                        : $data
+                            ->transaction($data->id)
+                            ->created_at->format('d F Y');
                 })
                 ->addColumn('times', function ($data) {
-                    return $data->updated_at->format('h:i a');
+                    return empty($data->transaction($data->id))
+                        ? '-'
+                        : $data
+                            ->transaction($data->id)
+                            ->created_at->format('h:i a');
                 })
                 ->editColumn('tipe_member', function ($data) {
                     return $data->tipe_member;
