@@ -119,6 +119,7 @@ class DashboardController extends Controller
                 // ->where('tipe_member', 'VIP')
                 ->count();
         }
+        dd($data['visitor_daily']);
 
         // foreach ($day as $key => $value) {
         //     $data['visitor_daily'][$key]['y'] = $days[$key];
