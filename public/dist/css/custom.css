@@ -296,13 +296,11 @@
 }
 .label.label-berhasil {
     background: #01C853;
-    padding: 9px 50px;
-    font-size: 14px;
+
 }
 .label.label-batal {
     background: #FEC107;
-    padding: 9px 50px;
-    font-size: 14px;
+
 }
 .label.label-riwayat {
     color: #000000;
@@ -311,13 +309,10 @@
 }
 .label.label-reset {
     background: #000000;
-    padding: 5px 20px;
-    font-size: 14px;
 }
 .label.label-berkurang {
     background: #000000;
-    padding: 5px 20px;
-    font-size: 14px;
+
 }
 .card-aktifitas{
     /* margin-bottom: 12px; */
@@ -325,7 +320,7 @@
     /* border-radius: 2px; */
     box-shadow: none;
     padding: 15px 15px 0;
-    margin-left: 20px;
+    margin-left: 5px;
     margin-right: -9px;
 }
 
