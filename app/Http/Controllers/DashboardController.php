@@ -23,53 +23,112 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         // Statistika Pertahun
-       
         $month = range(1, 12);
-        $months = array(1 => 'Jan.', 2 => 'Feb.', 3 => 'Mar.', 4 => 'Apr.', 5 => 'May', 6 => 'Jun.', 7 => 'Jul.', 8 => 'Aug.', 9 => 'Sep.', 10 => 'Oct.', 11 => 'Nov.', 12 => 'Dec.');
+        $months = [
+            1 => 'Jan.',
+            2 => 'Feb.',
+            3 => 'Mar.',
+            4 => 'Apr.',
+            5 => 'May',
+            6 => 'Jun.',
+            7 => 'Jul.',
+            8 => 'Aug.',
+            9 => 'Sep.',
+            10 => 'Oct.',
+            11 => 'Nov.',
+            12 => 'Dec.',
+        ];
         $year = range(2020, Carbon::now()->year);
-        $getyear = ($request->year) ? $request->year : Carbon::now()->year;
+        $getyear = $request->year ? $request->year : Carbon::now()->year;
         foreach ($month as $key => $value) {
             $data['visitor'][$key]['period'] = $months[$value];
-            $data['visitor'][$key]['vvip'] = Visitor::whereMonth('created_at', (strlen($value) == 1) ? '0' . $value : $value)
-                ->whereYear('created_at', $getyear)->where('tipe_member', 'VVIP')->count();
-            $data['visitor'][$key]['vip'] = Visitor::whereMonth('created_at', (strlen($value) == 1) ? '0' . $value : $value)
-                ->whereYear('created_at', $getyear)->where('tipe_member', 'VIP')->count();
+            $data['visitor'][$key]['vvip'] = Visitor::whereMonth(
+                'created_at',
+                strlen($value) == 1 ? '0' . $value : $value
+            )
+                ->whereYear('created_at', $getyear)
+                ->where('tipe_member', 'VVIP')
+                ->count();
+            $data['visitor'][$key]['vip'] = Visitor::whereMonth(
+                'created_at',
+                strlen($value) == 1 ? '0' . $value : $value
+            )
+                ->whereYear('created_at', $getyear)
+                ->where('tipe_member', 'VIP')
+                ->count();
         }
-
         // Statistika-mingguan
         $day = range(1, 7);
-        $days = array('Senin.', 'Selasa.', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu');
-        $week = range([Carbon::now()->startOfWeek()], Carbon::now()->endOfWeek()->week);
-        $start_date = Carbon::now()->startOfWeek()->format('Y-m-d');
-        $end_date = Carbon::now()->endOfWeek()->format('Y-m-d');
+        $days = [
+            'Senin.',
+            'Selasa.',
+            'Rabu',
+            'Kamis',
+            'Jumat',
+            'Sabtu',
+            'Minggu',
+        ];
+        $week = range(
+            [Carbon::now()->startOfWeek()],
+            Carbon::now()->endOfWeek()->week
+        );
+        $start_date = Carbon::now()
+            ->startOfWeek()
+            ->format('Y-m-d');
+        $end_date = Carbon::now()
+            ->endOfWeek()
+            ->format('Y-m-d');
         $date_period = CarbonPeriod::create($start_date, $end_date)->toArray();
-        $getweek = ($request->week) ? $request->week : Carbon::now()->week;
+        $getweek = $request->week ? $request->week : Carbon::now()->week;
         foreach ($day as $key => $value) {
             $data['visitor_daily'][$key]['y'] = $days[$key];
-            $data['visitor_daily'][$key]['a'] = Visitor::whereDate('created_at', $date_period[$key])->where('tipe_member', 'VVIP')->count();
-            $data['visitor_daily'][$key]['b'] = Visitor::whereDate('created_at', $date_period[$key])->where('tipe_member', 'VIP')->count();
+            $data['visitor_daily'][$key]['a'] = Visitor::whereDate(
+                'created_at',
+                $date_period[$key]
+            )
+                ->where('tipe_member', 'VVIP')
+                ->count();
+            $data['visitor_daily'][$key]['b'] = Visitor::whereDate(
+                'created_at',
+                $date_period[$key]
+            )
+                ->where('tipe_member', 'VIP')
+                ->count();
         }
-        $data['visitor_week'] = Visitor::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek(Carbon::SATURDAY)])->get()->count();
-        $data['visitor_today'] = Visitor::whereDate('created_at', now()->format('Y-m-d'))->count();
-        $data['visitor_month'] = Visitor::whereMonth('created_at', now()->month)->count(); //bulan ini  
-        $data['visitor_year'] = Visitor::whereYear('created_at', now()->format('Y'))->count();
-        $data['visitor_years'] = Visitor::whereYear('created_at', '2023')->count();
-        
+        $data['visitor_week'] = Visitor::whereBetween('created_at', [
+            Carbon::now()->startOfWeek(),
+            Carbon::now()->endOfWeek(Carbon::SATURDAY),
+        ])
+            ->get()
+            ->count();
+        $data['visitor_today'] = Visitor::whereDate(
+            'created_at',
+            now()->format('Y-m-d')
+        )->count();
+        $data['visitor_month'] = Visitor::whereMonth(
+            'created_at',
+            now()->month
+        )->count(); //bulan ini
+        $data['visitor_year'] = Visitor::whereYear(
+            'created_at',
+            now()->format('Y')
+        )->count();
+        $data['visitor_years'] = Visitor::whereYear(
+            'created_at',
+            '2023'
+        )->count();
+
         $data['visitor_vip'] = Visitor::where('tipe_member', 'VIP')->count();
         $data['visitor_vvip'] = Visitor::where('tipe_member', 'VVIP')->count();
-        $data['visitor_vvip_female'] = Visitor::where(
-            [
-                ['tipe_member', 'VVIP'],
-                ['gender', 'perempuan'],
-            ]
-        )->count();
-        $data['visitor_vvip_male'] = Visitor::where(
-            [
-                ['tipe_member', 'VVIP'],
-                ['gender', 'laki-laki'],
-            ]
-        )->count();
-        //VIP 
+        $data['visitor_vvip_female'] = Visitor::where([
+            ['tipe_member', 'VVIP'],
+            ['gender', 'perempuan'],
+        ])->count();
+        $data['visitor_vvip_male'] = Visitor::where([
+            ['tipe_member', 'VVIP'],
+            ['gender', 'laki-laki'],
+        ])->count();
+        //VIP
         $data['visitor_vip_female'] = Visitor::where([
             ['tipe_member', 'VIP'],
             ['gender', 'perempuan'],
@@ -78,25 +137,26 @@ class DashboardController extends Controller
             ['tipe_member', 'VIP'],
             ['gender', 'laki-laki'],
         ])->count();
-
-
         // data-table analisis tamu
-        $visitor = Visitor::select(['name', 'created_at', 'tipe_member', 'updated_at'])->get();
+        $visitor = Visitor::select([
+            'name',
+            'created_at',
+            'tipe_member',
+            'updated_at',
+        ])
+            ->orderBy('updated_at', 'desc')
+            ->get();
         if ($request->ajax()) {
-            return datatables()->of($visitor)
-                ->editColumn('created_at', function ($data) {
-                    return $data->created_at->format('d F Y');
+            return datatables()
+                ->of($visitor)
+                ->editColumn('updated_at', function ($data) {
+                    return $data->updated_at->format('d F Y');
+                })
+                ->addColumn('times', function ($data) {
+                    return $data->updated_at->format('h:i a');
                 })
                 ->editColumn('tipe_member', function ($data) {
                     return $data->tipe_member;
-                    // if ($data->tipe_member == 'VIP') {
-                    //     return `<span class="label label-vip">$data->tipe_member</span>`;
-                    // } else {
-                    //     return `<span class="label label-vvip">$data->tipe_member</span>`;
-                    // }
-                })
-                ->editColumn('updated_at', function ($data) {
-                    return $data->created_at->format('H:i');
                 })
                 ->rawColumns(['name', 'action'])
                 ->make(true);
