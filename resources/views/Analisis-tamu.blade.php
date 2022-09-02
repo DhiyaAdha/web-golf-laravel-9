@@ -76,24 +76,39 @@
             </div>
             {{-- Row Statistika Tamu --}}
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                     <div class="panel panel-default card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
                                 <h6 class="panel-title txt-dark">Statistika Tamu Berkunjung</h6>
                             </div>
-                            <div class="pull-right">
-                                <select name="period"
-                                    class="pl-10 text-base sm:text-sm mt-1 form-select block w-full text-gray-500 focus:bg-gray-100">
-                                    <option value="">{{ __('Pilih Tahun') }}</option>
-                                    @foreach (\Carbon\CarbonPeriod::create(now(), '1 year', now()->addYears(3)) as $date)
+                            <form action="{{ url()->current() }}">
+                                <div class="pull-right">
+                                    <select name="year"
+                                        class="pl-10 text-base sm:text-sm mt-1 form-select block w-full text-gray-500 focus:bg-gray-100"
+                                        onchange="this.form.submit()">
+                                        <option value="">{{ __('Pilih Tahun') }}</option>
+                                        @foreach ($years as $row)
+                                            @if (request('year') != '')
+                                                <option value="{{ $row }}"
+                                                    {{ request('year') == $row ? 'selected' : '' }}>
+                                                    {{ $row }}</option>
+                                            @else
+                                                <option value="{{ $row }}"
+                                                    {{ $row == date('Y') ? 'selected' : '' }}>
+                                                    {{ $row }}</option>
+                                            @endif
+                                        @endforeach
+
+                                        {{-- @foreach (\Carbon\CarbonPeriod::create(now(), '1 year', now()->addYears(3)) as $date)
                                         <option value="{{ $date->format('Y') }}"
                                             {{ $date->format('Y') == request()->query('period') ? 'selected' : '' }}>
                                             {{ $date->format('Y') }}
                                         </option>
-                                    @endforeach
-                                </select>
-                            </div>
+                                        @endforeach --}}
+                                    </select>
+                                </div>
+                            </form>
                             <div class="clearfix"></div>
                         </div>
                         <div class="panel-wrapper collapse in">
@@ -117,7 +132,7 @@
                     </div>
                 </div>
                 {{-- Chart Rekap Harian --}}
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                     <div class="panel panel-default card-view panel-refresh relative">
                         <div class="refresh-container">
                             <div class="la-anim-1"></div>

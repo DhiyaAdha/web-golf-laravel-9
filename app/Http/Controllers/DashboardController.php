@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use CreatePersonalAccessTokensTable;
 use Illuminate\Mail\Transport\LogTransport;
+use Illuminate\Database\Eloquent\Builder;
 
 class DashboardController extends Controller
 {
@@ -26,36 +27,48 @@ class DashboardController extends Controller
         // Statistika Pertahun
         $month = range(1, 12);
         $months = [
-            1 => 'Jan.',
-            2 => 'Feb.',
-            3 => 'Mar.',
-            4 => 'Apr.',
+            1 => 'Jan',
+            2 => 'Feb',
+            3 => 'Mar',
+            4 => 'Apr',
             5 => 'May',
-            6 => 'Jun.',
-            7 => 'Jul.',
-            8 => 'Aug.',
-            9 => 'Sep.',
-            10 => 'Oct.',
-            11 => 'Nov.',
-            12 => 'Dec.',
+            6 => 'Jun',
+            7 => 'Jul',
+            8 => 'Aug',
+            9 => 'Sep',
+            10 => 'Oct',
+            11 => 'Nov',
+            12 => 'Dec',
         ];
-        $year = range(2020, Carbon::now()->year);
+        $data['years'] = range(Carbon::now()->year - 3, Carbon::now()->year);
         $getyear = $request->year ? $request->year : Carbon::now()->year;
         foreach ($month as $key => $value) {
             $data['visitor'][$key]['period'] = $months[$value];
-            $data['visitor'][$key]['vvip'] = Visitor::whereMonth(
-                'created_at',
-                strlen($value) == 1 ? '0' . $value : $value
+            $data['visitor'][$key]['vvip'] = LogTransaction::whereHas(
+                'visitor',
+                function (Builder $query) {
+                    $query->where('tipe_member', 'VVIP');
+                }
             )
+                ->whereMonth(
+                    'created_at',
+                    strlen($value) == 1 ? '0' . $value : $value
+                )
                 ->whereYear('created_at', $getyear)
-                ->where('tipe_member', 'VVIP')
+                // ->where('tipe_member', 'VVIP')
                 ->count();
-            $data['visitor'][$key]['vip'] = Visitor::whereMonth(
-                'created_at',
-                strlen($value) == 1 ? '0' . $value : $value
+            $data['visitor'][$key]['vip'] = LogTransaction::whereHas(
+                'visitor',
+                function (Builder $query) {
+                    $query->where('tipe_member', 'VIP');
+                }
             )
+                ->whereMonth(
+                    'created_at',
+                    strlen($value) == 1 ? '0' . $value : $value
+                )
                 ->whereYear('created_at', $getyear)
-                ->where('tipe_member', 'VIP')
+                // ->where('tipe_member', 'VIP')
                 ->count();
         }
 
@@ -111,9 +124,9 @@ class DashboardController extends Controller
             'created_at',
             now()->month
         )->count(); //bulan ini
-        $data['visitor_year'] = Visitor::whereYear(
+        $data['visitor_year'] = LogTransaction::whereYear(
             'created_at',
-            now()->format('Y')
+            $request->year
         )->count();
         $data['visitor_years'] = Visitor::whereYear(
             'created_at',
