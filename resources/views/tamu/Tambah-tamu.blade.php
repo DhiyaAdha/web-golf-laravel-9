@@ -15,7 +15,7 @@
                 <!-- /Breadcrumb -->
             </div>
             <div class="row">
-                <div class="col-lg-8" style="position: relative;">
+                <div class="col-lg-12" style="position: relative;">
                     <div style="height: 900px" class="panel panel-default card-view">
                         <h6 class="control-label mb-10">Tambah Tamu</h6>
                         <div class="panel-body">
@@ -70,7 +70,7 @@
                                         <input type="text" name="position" class="form-control" id="position"
                                             size="50px" placeholder="Masukan Jabatan" required autofocus>
                                     </div>
-                                    {{-- <div class="form-group">
+                                    <div class="form-group">
                                         <label class="control-label mb-10" for="">Tamu Ini Adalah Tamu VIP
                                             <div class="switch">
                                                 <input class="cmn-toggle cmn-toggle-round-flat" type="hidden"
@@ -79,7 +79,7 @@
                                                     name="tipe_member" type="checkbox" value="VIP">
                                                 <label for="cmn-toggle-4"></label>
                                             </div>
-                                    </div> --}}
+                                    </div>
                                     <div class="form-group text-left">
                                         <button type="submit" class="btn btn-info">Selanjutnya</button>
                                     </div>

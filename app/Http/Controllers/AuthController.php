@@ -172,7 +172,7 @@ class AuthController extends Controller {
         return view('admin.daftar-admin');
     }
 
-    public function tambah_admin(){
+    public function tambahadmin(){
         return view('admin.tambah-admin');
     }
 
