@@ -144,6 +144,7 @@ $(document).ready(function(){
 			gridTextColor:'#878787',
 			gridTextFamily:"Roboto"
 		});
+});
 $(document).ready(function () {
     $("#support_table").DataTable({
         bFilter: false,
