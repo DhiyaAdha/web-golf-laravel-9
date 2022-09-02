@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Detail;
+use App\Models\Package;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
 use App\Models\LogTransaction;
@@ -21,7 +23,11 @@ class InvoiceController extends Controller
         if($request->ajax()){
             return datatables()->of($riwayat_invoice)
             ->editColumn('name', function ($data) {
-                return '<a href="'.url('invoice/'.$data->id).'">'.$data->name."</a>";
+                    return '<a href="
+                    '.url('invoice/'.$data->id).'
+                    ">'
+                    .$data->name.
+                    "</a>";
             })
             ->editColumn('created_at', function ($data) {
                 return $data->created_at->format('d F Y');
@@ -37,9 +43,22 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $invoice = Detail::select(['packages.category', 'detail_transactions.harga', 'detail_transactions.quantity'])
+        ->leftJoin('packages', 'packages.id', '=', 'detail_transactions.package_id')->get();
+        if($request->ajax()){
+            return datatables()->of($invoice)
+            ->editColumn('harga', function ($data) {
+                return  ('Rp. ' .formatrupiah($data->harga));
+            })
+            ->editColumn('total', function ($data) {
+                return  ('Rp. ' .formatrupiah($data->harga * $data->quantity));
+            })
+            ->make(true);
+
+        }
+        return view('invoice.invoice');
     }
 
     /**
@@ -62,8 +81,12 @@ class InvoiceController extends Controller
     public function show($id)
     {
         $transaction = LogTransaction::find($id);
+        $package = Package::find($id);
+        $detail = Detail::find($id);
         $data['transaction'] = $transaction;
         $data['visitor'] = Visitor::find($transaction->visitor_id);
+        $data['package'] = Package::find($package->id);
+        $data['detail'] = Detail::find($detail->id);
         // $data['detail'] = Detail::where('transaction_id', $id)->get();
         return view('invoice.invoice', $data);
     }
@@ -102,5 +125,12 @@ class InvoiceController extends Controller
         //
     }
 
+    public function exportpdf () {
+        return 'berhasil';
+    }
+
+    public function metode_pembayaran () {
+        return view('Invoice.metode_pembayaran');
+    }
     
 }

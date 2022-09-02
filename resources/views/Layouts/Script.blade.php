@@ -35,7 +35,7 @@
 <script src="{{ asset('vendors/bower_components/bootstrap-switch/dist/js/bootstrap-switch.min.js') }}"></script>
 
 <!-- ChartJS JavaScript -->
-<script src="vendors/chart.js/Chart.min.js"></script>
+<script src="{{ asset('vendors/chart.js/Chart.min.js') }}"></script>
 
 <!-- Morris Charts JavaScript -->
 <script src="{{ asset('vendors/bower_components/raphael/raphael.min.js') }}"></script>
@@ -62,8 +62,79 @@
     // $('.js-switch-1').each(function() {
     //     new Switchery($(this)[0], $(this).data());
     // });
+    // data analisis
+    $('#dt-analisis').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "lengthChange": false,
+        "searching": true,
+        "paginate": {
+            "first": "First",
+            "last": "Last",
+            "next": "Next",
+            "previous": "Previous"
+        },
+        "ajax": {
+            "url": "{{ route('analisis-tamu.index') }}",
+            "type": "GET",
+            "datatype": "json"
+        },
+
+        "render": $.fn.dataTable.render.text(),
 
 
+        "columns": [{
+                data: 'name',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'created_at',
+                searchable: true,
+                orderable: true
+            },
+            {
+                data: 'tipe_member',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'updated_at',
+                searchable: true,
+                orderable: true
+            },
+
+            // {
+            //     "data": function(data) {
+            //         if (data.visitor.tipe_member == 'VIP') {
+            //             return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
+            //         } else {
+            //             return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
+            //         }
+            //     }
+            // },
+        ],
+        order: [],
+        responsive: true,
+        language: {
+            search: "",
+            searchPlaceholder: "Cari",
+            emptyTable: "Tidak ada data yang sesuai",
+            info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+            infoFiltered: "(difilter dari _MAX_ total data)",
+            infoEmpty: "Tidak ada data yang sesuai",
+            lengthMenu: "Menampilkan _MENU_ data",
+            zeroRecords: "Tidak ada data yang sesuai"
+        },
+        columnDefs: [{
+                className: 'text-left',
+                targets: [0, 1, 2, 3, ]
+            }
+
+        ],
+    });
+
+    //data package
     $('#dt-package').DataTable({
         "processing": true,
         "serverSide": true,
@@ -87,12 +158,7 @@
             },
             {
                 "data": function(data) {
-                    // if (data.category.tipe_member == 'VIP') {
-                    //     return `<span class='label label-success'>${data.category.tipe_member}</span>`
-                    // } else {
-                    //     return `<span class='label label-success'>${data.category.tipe_member}</span>`
-                    // }
-                    // return data.category
+                    return data.category
                 }
             },
             {
@@ -147,9 +213,85 @@
     });
 
 
-    // invoice
-    // $()
+    //data tamu
+    $('#dt-tamu').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "lengthChange": false,
+        "searching": true,
+        "paginate": {
+            "first": "First",
+            "last": "Last",
+            "next": "Next",
+            "previous": "Previous"
+        },
+        "ajax": {
+            "url": "{{ route('daftar-tamu') }}",
+            "type": "GET",
+            "datatype": "json"
+        },
 
+        "render": $.fn.dataTable.render.text(),
+
+
+        "columns": [{
+                data: 'name',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'email',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'phone',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'tipe_member',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'action',
+                searchable: false,
+                orderable: false
+            },
+
+            // {
+            //     "data": function(data) {
+            //         if (data.visitor.tipe_member == 'VIP') {
+            //             return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
+            //         } else {
+            //             return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
+            //         }
+            //     }
+            // },
+
+
+        ],
+        order: [],
+        responsive: true,
+        language: {
+            search: "",
+            searchPlaceholder: "Cari",
+            emptyTable: "Tidak ada data yang sesuai",
+            info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+            infoFiltered: "(difilter dari _MAX_ total data)",
+            infoEmpty: "Tidak ada data yang sesuai",
+            lengthMenu: "Menampilkan _MENU_ data",
+            zeroRecords: "Tidak ada data yang sesuai"
+        },
+        columnDefs: [{
+                className: 'text-left',
+                targets: [1, 2, 3, 4]
+            }
+
+        ],
+    });
+    // invoice
     $('#dt-riwayat').DataTable({
         "processing": true,
         "serverSide": true,
@@ -167,16 +309,15 @@
             "datatype": "json"
         },
         "render": $.fn.dataTable.render.text(),
-        "columns": [
-            // { "data": function(data) { return data.name }},
-            // { "data": function(data) { return data.category }},
-
-
+        "columns": [{
+                data: 'name',
+                searchable: true,
+                orderable: false
+            },
             {
-
-                "data": function(data) {
-                    return data.visitor.name
-                }
+                data: 'tipe_member',
+                searchable: true,
+                orderable: false
             },
             {
                 data: 'total',
@@ -186,40 +327,16 @@
             {
                 data: 'created_at',
                 searchable: true,
-                orderable: false
+                orderable: true
             },
-            {
-                "data": function(data) {
-                    return moment(data.created_at).format("DD MMMM YYYY")
-                }
-            },
-
-
-            {
-
-                "data": function(data) {
-                    return data.visitor.name
-                }
-            },
-            {
-                "data": function(data) {
-                    return data.visitor.tipe_member
-                }
-            },
-            {
-                "data": function(data) {
-                    return `<span>Rp ${data.total}</span>`
-                }
-            },
-            {
-                "data": function(data) {
-                    return moment(data.created_at).format("DD MMMM YYYY")
-                }
-
-            },
-
             // {
-            //     "data": "action"
+            //     "data": function(data) {
+            //         if (data.visitor.tipe_member == 'VIP') {
+            //             return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
+            //         } else {
+            //             return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
+            //         }
+            //     }
             // },
         ],
         order: [],
@@ -235,39 +352,58 @@
             zeroRecords: "Tidak ada data yang sesuai"
         },
         columnDefs: [{
-            className: 'text-center',
-            targets: [1, 2, 3]
-        }],
+                className: 'text-center',
+                targets: [1, 2, 3]
+            }
+        ],
+    });
+    // invoice detail
+    $('#dt-invoice').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "lengthChange": false,
+        "searching": false,
+        "paginate": {
+            "first": "First",
+            "last": "Last",
+            "next": "Next",
+            "previous": "Previous"
+        },
+        "ajax": {
+            "url": "{{ route('riwayat-invoice.create') }}",
+            "type": "GET",
+            "datatype": "json"
+        },
+
+        "render": $.fn.dataTable.render.text(),
+
+
+        "columns" : [
+            { data: 'category', searchable: true, orderable: false },
+            { data: 'harga', searchable: true, orderable: false },
+            { data: 'quantity', searchable: true, orderable: false },
+            { data: 'total', searchable: true, orderable: false, className: 'text-right' },
+
+        ],
+        order: [],
+        responsive: true,
+        language: {
+            search: "",
+            searchPlaceholder: "Cari",
+            emptyTable: "Tidak ada data yang sesuai",
+            info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+            infoFiltered: "(difilter dari _MAX_ total data)",
+            infoEmpty: "Tidak ada data yang sesuai",
+            lengthMenu: "Menampilkan _MENU_ data",
+            zeroRecords: "Tidak ada data yang sesuai"
+        },
+        columnDefs: [
+            {className: 'text-center', targets: [1 , 2]}
+
+        ],
     });
 
-    // search
-    // $(document).ready(function(){
-    // 	load_data();
-    // 	function load_data(jurusan, keyword)
-    // 	{
-    // 		$.ajax({
-    // 			method:"POST",
-    // 			url:"{{ route('riwayat-invoice.index') }",
-    // 			data: {jurusan: jurusan, keyword:keyword},
-    // 			success:function(hasil)
-    // 			{
-    // 				$('.data').html(hasil);
-    // 			}
-    // 		});
-    //  	}
-    // 	$('#s_keyword').keyup(function(){
-    // 		var jurusan = $("#s_jurusan").val();
-    // 		var keyword = $("#s_keyword").val();
-    // 		load_data(jurusan, keyword);
-    // 	});
-    // 	$('#s_jurusan').change(function(){
-    // 		var jurusan = $("#s_jurusan").val();
-    // 		var keyword = $("#s_keyword").val();
-    // 		load_data(jurusan, keyword);
-    // 	});
-    // });
-
-
+    // scan
     $(document).on("click", "#show-scan", function() {
         $(".disabled-scan").css("display", "none");
 
@@ -290,4 +426,25 @@
             false);
         html5QrcodeScanner.render(onScanSuccess, onScanFailure);
     })
+</script>
+{{-- Input Stepper --}}
+<script>
+    const myInput = document.getElementById("my-input");
+
+    function stepper(btn) {
+        let id = btn.getAttribute("id");
+        let min = myInput.getAttribute("min");
+        let max = myInput.getAttribute("max");
+        let step = myInput.getAttribute("step");
+        let val = myInput.getAttribute("value");
+        let calcStep = (id == "increment") ? (step * 1) :
+            (step * -1);
+        let newValue = parseInt(val) + calcStep;
+
+        if (newValue >= min && newValue <= max) {
+            myInput.setAttribute("value", newValue);
+        }
+
+        // console.log(id, min, max, step, val);
+    }
 </script>

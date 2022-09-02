@@ -118,23 +118,22 @@ $(document).ready(function(){
 		});
 	}
 	
-	if($('#morris_extra_bar_chart').length > 0)
+	if($('#morris_extra_bar_chart').length > 0) {
 		// Morris bar chart
 		Morris.Bar({
 			element: 'morris_extra_bar_chart',
-			data: [
-				{ y: 'Sen', a: vvip_sen, b: vip_sen },
-				{ y: 'Sel', a: vvip_sel,  b: vip_sel },
-				{ y: 'Rab', a: vvip_rab,  b: vip_rab },
-				{ y: 'Kam', a: vvip_kam,  b: vip_kam },
-				{ y: 'Jum', a: vvip_jum,  b: vip_jum },
-				{ y: 'Sab', a: vvip_sab,  b: vip_sab },
-
-				{ y: 'Mgg', a: vvip_min, b: vip_min }
-			  ],
-
+			data: dataMingguan,
+			// data: [
+			// 	{ y: 'Sen', a: 1, b: 1 },
+			// 	{ y: 'Sel', a: 2,  b: 2 },
+			// 	{ y: 'Rab', a: 3,  b: 3 },
+			// 	{ y: 'Kam', a: 4,  b: 4 },
+			// 	{ y: 'Jum', a: 5,  b: 5 },
+			// 	{ y: 'Sab', a: 6,  b: 6 },
+			// 	{ y: 'Mgg', a: 7, b: 7 }
+			// ],
 			xkey: 'y',
-			ykeys: ['a', 'b', ],
+			ykeys: ['a'	, 'b', ],
 			labels: ['VVIP', 'VIP', ],
 			barColors:['#fec107', '#32FFC1',],
 			hideHover: 'auto',
@@ -142,37 +141,9 @@ $(document).ready(function(){
 			resize: true,
 			barGap: 4,
 			gridTextColor:'#878787',
-			gridTextFamily:"Roboto"
+			gridTextFamily:"Roboto",
+			// yLabelFormat: function(y){ return y != Math.round(y)?'':y; }
 		});
-});
-$(document).ready(function () {
-    $("#support_table").DataTable({
-        bFilter: false,
-        bLengthChange: false,
-        bPaginate: false,
-        bInfo: false,
-    });
-    if ($("#chart_7").length > 0) {
-        var ctx7 = document.getElementById("chart_7").getContext("2d");
-        var data7 = {
-            labels: ["Low", "Medium", "High"],
-            datasets: [
-                {
-                    data: [300, 100, 50],
-                    backgroundColor: [
-                        "rgba(1,200,83,1)",
-                        "rgba(254,193,7,1)",
-                        "rgba(255,42,0,1)",
-                    ],
-                    hoverBackgroundColor: [
-                        "rgba(1,200,83,1)",
-                        "rgba(254,193,7,1)",
-                        "rgba(255,42,0,1)",
-                    ],
-                },
-            ],
-        };
-
         var doughnutChart = new Chart(ctx7, {
             type: "doughnut",
             data: data7,
@@ -201,6 +172,7 @@ $(document).ready(function () {
             },
         });
     }
+    // ERORR
     if ($("#chart_6").length > 0) {
         var ctx6 = document.getElementById("chart_6").getContext("2d");
         var data6 = {
@@ -223,7 +195,6 @@ $(document).ready(function () {
                 },
             ],
         };
-
         var pieChart = new Chart(ctx6, {
             type: "pie",
             data: data6,
@@ -278,6 +249,7 @@ $(document).ready(function () {
             gridTextFamily: "Roboto",
         });
 });
+// ERORR
 /*****Ready function end*****/
 
 /*****Load function start*****/

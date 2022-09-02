@@ -9,6 +9,12 @@
                 
                 <div class="auth-form  ml-auto mr-auto no-float">
                     <div class="row">
+                        <div class="checkbox checkbox-success">
+                            <input id="checkbox3" type="checkbox">
+                            <label for="checkbox3"> Success </label>
+                        </div>
+
+                        
                         <div class="">
                             
                             <h6 class=""><strong>Pilih Permainan</strong></h6>
@@ -72,4 +78,6 @@
    }
 } 
 </script>
+
+
 @endsection
