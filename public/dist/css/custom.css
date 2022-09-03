@@ -69,6 +69,12 @@ table#dt-tamu {
     display: flex !important;
 }
 
+.flex-grow-1 {
+    -webkit-box-flex: 1 !important;
+    -ms-flex-positive: 1 !important;
+    flex-grow: 1 !important;
+}
+
 .justify-content-center {
     -webkit-box-pack: center !important;
     -ms-flex-pack: center !important;

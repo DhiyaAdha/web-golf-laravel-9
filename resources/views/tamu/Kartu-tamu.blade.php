@@ -93,21 +93,26 @@
                 </div>
             </div>
             <div class="row">
-                <div class="panel-heading l">
+                {{-- <div class="panel-heading l">
                     <div class="pull-left">
                         <h6 class="panel-title txt-dark">Kartu tamu</h6>
                     </div>
                     <div class="clearfix"></div>
-                </div>
+                </div> --}}
                 <div class="panel-heading tabs">
-                    <ul role="tablist" class="nav nav-pills" id="myTabs_6">
-                        <li class="active" role="presentation"><a class="tabs-log" aria-expanded="true" data-toggle="tab"
-                                role="tab" href="#transaction_tabs">Transaksi</a></li>
-                        <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
-                                href="#deposit_tabs" aria-expanded="false">Deposit</a></li>
-                        <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
-                                href="#limit_tabs" aria-expanded="false">Limit</a></li>
-                    </ul>
+                    <div class="d-flex">
+                        <div class="flex-grow-1 d-flex align-items-center">
+                            <h6 class="panel-title txt-dark">Kartu tamu</h6>
+                        </div>
+                        <ul role="tablist" class="nav nav-pills" id="myTabs_6">
+                            <li class="active" role="presentation"><a class="tabs-log" aria-expanded="true"
+                                    data-toggle="tab" role="tab" href="#transaction_tabs">Transaksi</a></li>
+                            <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
+                                    href="#deposit_tabs" aria-expanded="false">Deposit</a></li>
+                            <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
+                                    href="#limit_tabs" aria-expanded="false">Limit</a></li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card-view p">
