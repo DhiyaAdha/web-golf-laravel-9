@@ -9,6 +9,104 @@
     text-align: end;
 }
 
+table#dt-analisis {
+    width: auto !important;
+}
+table#dt-tamu {
+    width: auto !important;
+}
+
+.float-left {
+    float: left !important;
+}
+
+.txt-muted {
+    color: #868e96 !important;
+}
+.panel.panel-default.card-view.p{
+    padding: 23px !important;
+}
+
+.panel.panel-default.card-view.b {
+    height: 23.5rem;
+}
+
+.d-flex.justify-content-center.p {
+    padding: 50px 0px;
+}
+.panel-heading.l {
+    padding: 10px 7px !important;
+}
+.panel-heading.tabs {
+    padding: 0px 10px 10px 7px !important;
+}
+
+.card-view.p {
+    padding: 0px !important;
+}
+
+.tabs ul li.active a {
+    border-radius: 4px !important;
+    border: none !important;
+    padding: 11px;
+}
+
+.tabs ul li a {
+    border: 1.5px solid #cfd0d0 !important;
+    border-radius: 4px !important;
+}
+
+.flex-column {
+    -webkit-box-orient: vertical !important;
+    -webkit-box-direction: normal !important;
+    -ms-flex-direction: column !important;
+    flex-direction: column !important;
+}
+
+.d-flex {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+}
+
+.flex-grow-1 {
+    -webkit-box-flex: 1 !important;
+    -ms-flex-positive: 1 !important;
+    flex-grow: 1 !important;
+}
+
+.justify-content-center {
+    -webkit-box-pack: center !important;
+    -ms-flex-pack: center !important;
+    justify-content: center !important;
+}
+
+.align-items-center {
+    -webkit-box-align: center !important;
+    -ms-flex-align: center !important;
+    align-items: center !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #fff; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb:vertical {
+    background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
 .elementcontainer {
     width: 100%;
     height: 100%;
@@ -235,15 +333,6 @@
     margin-left: -9px;
     margin-right: -9px;
 }
-<<<<<<< HEAD
-.label.label-Berhasil {
-    background: #01c853;
-    padding: 9px 50px;
-    font-size: 14px;
-}
-.label.label-Batal {
-    background: #fec107;
-=======
 .data{
     color: #696969;
     font-size: 16px;
@@ -310,7 +399,6 @@
 }
 .label.label-batal {
     background: #FEC107;
->>>>>>> kevin
     padding: 9px 50px;
     font-size: 14px;
 }
@@ -339,12 +427,7 @@
     margin-right: -9px;
 }
 
-<<<<<<< HEAD
-=======
-
-
 /* kartu-tamu */
->>>>>>> kevin
 .panel-left {
     background: #fff;
     margin-bottom: 12px;

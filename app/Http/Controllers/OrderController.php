@@ -12,10 +12,12 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $package = Package::get();
-        return view('proses', compact('package'));
+        $default = Package::where('category', 'default')->get();
+        $additional = Package::where('category', 'additional')->get();
+        return view('proses', compact('package','default','additional'));
     }
 
     /**
