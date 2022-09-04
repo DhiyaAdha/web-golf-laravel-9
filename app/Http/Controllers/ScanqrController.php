@@ -99,6 +99,7 @@ class ScanqrController extends Controller
         $visitor = Visitor::findOrFail($id);
         $qrcode = QrCode::size(400)->generate($visitor->id);
         return view('qrcode',compact('qrcode'));
+        // return view('qrcode',compact('qrcode'));
     }
 
     // Scantamu-berhasil
@@ -111,11 +112,19 @@ class ScanqrController extends Controller
     }
 
 
-    public function kartutamu(){
-        
-            return view('tamu.kartu-tamu');
-    }
+    public function kartutamu($id){
 
+        $visitor = Visitor::findOrFail($id);
+        $qrcode = QrCode::size(180)->generate($visitor->id);
+        $data['visitor'] =  Visitor::find($id);
+        // $data['email'] =$visitor->email;
+        // $data['phone'] =$visitor->phone;
+        // $data['gender'] =$visitor->gender;
+        // dd($data);
+        return view('tamu.kartu-tamu',compact('qrcode'),$data);
+        
+    }
+    
 
 
 }

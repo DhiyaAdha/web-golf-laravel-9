@@ -99,7 +99,7 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     // Route::resource('qrcode/{id}', ScanqrController::class)->except(['show', 'update']);
     route::get('qrcode/{id}', [ScanqrController::class, 'generate'])->name('generate');
     Route::get('/tambah-deposit',[TamuController::class,'tambahdeposit'])->name('tambah-deposit');
-    Route::get('/kartu-tamu',[ScanqrController::class,'kartutamu'])->name('kartu-tamu');
+    Route::get('/kartu-tamu/{id}',[ScanqrController::class,'kartutamu'])->name('kartu-tamu');
     Route::get('/tambah-admin',[AuthController::class,'tambahadmin'])->name('tambah-admin');
     Route::resource('proses', OrderController::class);
 });

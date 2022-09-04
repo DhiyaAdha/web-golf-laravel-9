@@ -73,12 +73,12 @@ class DashboardController extends Controller
                 ->count();
         }
         // Statistika-mingguan
-        $day = range(1, 7);
-        $days = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
-        $week = range(
-            [Carbon::now()->startOfWeek()],
-            Carbon::now()->endOfWeek()->week
-        );
+        // $day = range(1, 7);
+        // $days = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
+        // $week = range(
+        //     [Carbon::now()->startOfWeek()],
+        //     Carbon::now()->endOfWeek()->week
+        // );
         // echo '<pre>';
         // dd($week);
         // echo '</pre>';
@@ -148,10 +148,13 @@ class DashboardController extends Controller
         ])
             ->get()
             ->count();
-        $data['visitor_today'] = Visitor::whereDate(
+
+        // total hari ini
+        $data['visitor_today'] = LogTransaction::whereDate(
             'created_at',
             now()->translatedFormat('Y-m-d')
         )->count();
+
         $data['visitor_month'] = Visitor::whereMonth(
             'created_at',
             now()->month
@@ -161,26 +164,61 @@ class DashboardController extends Controller
             $request->year ? $request->year : date('Y')
         )->count();
 
-        $data['visitor_vip'] = Visitor::where('tipe_member', 'VIP')->count();
-        $data['visitor_vvip'] = Visitor::where('tipe_member', 'VVIP')->count();
-        $data['visitor_vvip_female'] = Visitor::where([
-            ['tipe_member', 'VVIP'],
-            ['gender', 'perempuan'],
-        ])->count();
-        $data['visitor_vvip_male'] = Visitor::where([
-            ['tipe_member', 'VVIP'],
-            ['gender', 'laki-laki'],
-        ])->count();
-        //VIP
-        $data['visitor_vip_female'] = Visitor::where([
-            ['tipe_member', 'VIP'],
-            ['gender', 'perempuan'],
-        ])->count();
-        $data['visitor_vip_male'] = Visitor::where([
-            ['tipe_member', 'VIP'],
-            ['gender', 'laki-laki'],
-        ])->count();
+        // total VIP VVIP 
+        $data['visitor_vip'] = LogTransaction::whereHas(
+            'visitor',
+            function (Builder $query) {
+                $query->where('tipe_member', 'VIP');
+            }
+        )->count();
+        // $data['visitor_vip'] = Visitor::where('tipe_member', 'VIP')->count();
+        $data['visitor_vvip'] = LogTransaction::whereHas(
+            'visitor',
+            function (Builder $query) {
+                $query->where('tipe_member', 'VVIP');
+            }
+        )->count();
 
+        // total gender
+          // per gender
+        // $data['visitor_vvip_male'] = Visitor::where([
+        //     ['tipe_member', 'VVIP'],
+        //     ['gender', 'laki-laki'],
+        // ])->count();
+        $data['visitor_vvip_female'] = LogTransaction::whereHas(
+            'visitor',
+            function (Builder $query) {
+                $query->where('tipe_member', 'VVIP')
+                ->where('gender','perempuan');
+            }
+        )->count();
+        $data['visitor_vvip_male'] = LogTransaction::whereHas(
+            'visitor',
+            function (Builder $query) {
+                $query->where('tipe_member', 'VVIP')
+                ->where('gender','laki-laki');
+            }
+        )->count();
+        // dd($data['visitor_vvip_female']);
+        
+        $data['visitor_vip_female'] = LogTransaction::whereHas(
+            'visitor',
+            function (Builder $query) {
+                $query->where('tipe_member', 'VIP')
+                ->where('gender','perempuan');
+            }
+        )->count();
+        $data['visitor_vip_male'] = LogTransaction::whereHas(
+            'visitor',
+            function (Builder $query) {
+                $query->where('tipe_member', 'VIP')
+                ->where('gender','laki-laki');
+            }
+        )->count();
+        // dd($data['visitor_vip_male']);
+
+
+        // join function
         // $visitor = Visitor::select(
         //     'visitors.name as name',
         //     'visitors.tipe_member as tipe_member',
@@ -211,15 +249,15 @@ class DashboardController extends Controller
                     return empty($data->transaction($data->id))
                         ? '-'
                         : $data
-                            ->transaction($data->id)
-                            ->created_at->translatedFormat('d F Y');
+                        ->transaction($data->id)
+                        ->created_at->translatedFormat('d F Y');
                 })
                 ->addColumn('times', function ($data) {
                     return empty($data->transaction($data->id))
                         ? '-'
                         : $data
-                            ->transaction($data->id)
-                            ->created_at->translatedFormat('h:i a');
+                        ->transaction($data->id)
+                        ->created_at->translatedFormat('h:i a');
                 })
                 ->editColumn('tipe_member', function ($data) {
                     return $data->tipe_member;
@@ -227,6 +265,7 @@ class DashboardController extends Controller
                 ->rawColumns(['name', 'action'])
                 ->make(true);
         }
+        // dd($visitor);
         return view('/Analisis-tamu', $data);
     }
 
