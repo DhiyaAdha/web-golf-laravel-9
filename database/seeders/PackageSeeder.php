@@ -17,16 +17,17 @@ class PackageSeeder extends Seeder
     {
         //
         $faker = Faker::create('id_ID');
-        for($i = 1; $i <= 8; $i++) {
+        for ($i = 1; $i <= 8; $i++) {
             DB::table('packages')->insert([
                 'name' => $faker->word,
-                'category' => $faker->randomElement(['default', 'additonal']),
+                'category' => $faker->randomElement(['default', 'additional']),
                 'price_weekdays' => $faker->randomFloat(2, 0, 10000),
                 'price_weekend' => $faker->randomFloat(2, 0, 10000),
                 'status' => $faker->randomElement([0, 1]),
                 'created_at' => $faker->dateTimeThisYear(),
-                'updated_at' => \Carbon\Carbon::now()->addMinutes(rand(0,
-                60 * 23))->addSeconds(rand(0, 60))
+                'updated_at' => \Carbon\Carbon::now()
+                    ->addMinutes(rand(0, 60 * 23))
+                    ->addSeconds(rand(0, 60)),
             ]);
         }
     }

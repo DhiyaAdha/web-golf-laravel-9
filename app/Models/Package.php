@@ -9,7 +9,11 @@ class Package extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id', 'name', 'price'
-        
+        'id',
+        'name',
+        'price_weekdays',
+        'price_weekend',
+        'category',
+        'status',
     ];
 }
