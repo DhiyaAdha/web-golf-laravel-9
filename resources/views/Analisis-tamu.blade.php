@@ -142,6 +142,7 @@
                         <div class="panel-heading">
                             <div class="pull-left">
                                 <h6 class="panel-title txt-dark">Rekap Harian</h6>
+                                <h6>{{ $now }}</h6>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -159,7 +160,7 @@
                                     <li>
                                         <span class="block">Statistika Mingguan</span>
                                         <span class="block txt-dark weight-500 font-18">
-                                            {{-- <span class="">{{ $visitor_week }}</span> --}}
+                                            <span class="">{{ $visitor_week }}</span>
                                         </span>
                                     </li>
                                 </ul>
