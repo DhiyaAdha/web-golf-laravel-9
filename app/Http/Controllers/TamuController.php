@@ -34,7 +34,7 @@ class TamuController extends Controller
         ])
             ->orderBy('created_at', 'desc')
             ->get();
-            
+
         if ($request->ajax()) {
             return datatables()
                 ->of($visitor)
@@ -127,6 +127,7 @@ class TamuController extends Controller
     {
         //
     }
+    
     public function inserttamu(Request $request)
     {
         $this->validate($request, [
@@ -153,6 +154,7 @@ class TamuController extends Controller
         ]);
         // $visitors->address = $request->alamat;
         $visitors->save();
+        // return redirect('/tambah-deposit')->with(
         return redirect('/daftar-tamu')->with(
             'sukses',
             'Company has been created successfully.'
@@ -167,12 +169,16 @@ class TamuController extends Controller
      */
     public function show($id)
     {
+        // dhiya
         $data['visitor'] = Visitor::find($id);
         $limit = LogLimit::find($id);
         $deposit = Deposit::find($id);
         $visitor = Visitor::findOrFail($id);
         $data['qrcode'] = QrCode::size(180)->generate($visitor->id);
 
+        $data['quota'] = $limit->quota;
+        $data['balance'] = $deposit->balance;
+        
         // $data['loglimit'] = $limit;
         // $data['loglimit'] = $limit->quota;
         // dd($data['loglimit']);
@@ -184,8 +190,6 @@ class TamuController extends Controller
         //     ]
         // ];
         // DB::table('log_limits', 'quota')->get();
-        $data['quota'] = $limit->quota;
-        $data['balance'] = $deposit->balance;
         // $data['qrcode'] = $qrcode->qr;
 
         // $data['visitor'] =  Visitor::find($id);

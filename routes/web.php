@@ -69,6 +69,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
         'show',
         'update',
     ]);
+
     Route::get('/daftar-tamu', [TamuController::class, 'index'])->name(
         'daftar-tamu'
     );
@@ -88,6 +89,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::post('/update-tamu', [TamuController::class, 'update'])->name(
         'update-tamu'
     );
+
     Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name(
         'daftar-admin'
     );
@@ -97,6 +99,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name(
         'scan-tamu'
     );
+
     Route::get('/scan-tamu-berhasil', [
         ScanController::class,
         'scantamuberhasil',
@@ -117,6 +120,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::get('/edit-admin', [AuthController::class, 'edit_admin'])->name(
         'edit-admin'
     );
+    
     //route untuk order
     Route::resource('proses', OrderController::class);
     Route::get('/metode_pembayaran', [

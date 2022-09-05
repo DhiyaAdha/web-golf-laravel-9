@@ -407,7 +407,7 @@
     });
 
     // kartu-tamu(transaksi)
-    $('#card-tamu').DataTable({
+    $('#transaksi').DataTable({
         "processing": true,
         "serverSide": true,
         "lengthChange": false,
@@ -437,11 +437,16 @@
                 searchable: true,
                 orderable: false
             },
-            {
-                data: 'updated_at',
-                searchable: true,
-                orderable: false
-            },
+            // {
+            //     data: 'action',
+            //     searchable: false,
+            //     orderable: false
+            // },
+            // {
+            //     data: 'updated_at',
+            //     searchable: true,
+            //     orderable: false
+            // },
             
         ],
         order: [],
@@ -458,7 +463,7 @@
         },
         columnDefs: [{
                 className: 'text-left',
-                targets: [1, 2, 3]
+                targets: [1, 2, 3, ]
             }
         ],
     });
