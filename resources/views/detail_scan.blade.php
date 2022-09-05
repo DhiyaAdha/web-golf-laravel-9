@@ -161,7 +161,7 @@
                         <div class="row">
                             <div class="col-lg-12 mt-10">
                                 <div class="btn-deposit">
-                                    <a href="/metode_pembayaran">
+                                    <a href="#">
                                         <h6 style="color: #01c853;">Deposit</h6>
                                     </a>
                                 </div>
@@ -170,7 +170,7 @@
                         <div class="row">
                             <div class="col-lg-12 mt-10">
                                 <div class="btn-proses">
-                                    <a href="/metode_pembayaran">
+                                    <a href="/proses">
                                         <h6 style="color: #ffffff;">Proses</h6>
                                     </a>
                                 </div>
