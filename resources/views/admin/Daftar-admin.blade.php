@@ -172,8 +172,7 @@
             swal({
                 title: 'Are you sure?',
                 text: 'This record and it`s details will bes deleted!',
-                icon: '{{ asset('
-                warning.png ') }}',
+                icon: '{{ asset("warning.png") }}',
                 buttons: ["Cancel", "Yes!"],
             }).then(function(value) {
                 if (value) {
