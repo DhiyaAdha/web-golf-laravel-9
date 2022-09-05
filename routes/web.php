@@ -145,6 +145,10 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name(
         'show'
     );
+    //Detail Scan
+    Route::get('/detail_scan/{id}', [ScanqrController::class, 'detail_datapengunjung'])->name(
+        'detail_scan'
+    );
 });
 
 //Level admin dan superadmin
@@ -224,11 +228,9 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('deposit/{id}', [TamuController::class, 'deposittamu'])->name(
         'deposittamu'
     );
-    
-    // Route::get('tambahdeposit/{id}', [TamuController::class, 'tambahdeposit'])->name(
-    //     'tambahdeposit'
-    // );
-
-
+    //Detail Scan
+    Route::get('/detail_scan/{id}', [ScanqrController::class, 'detail_datapengunjung'])->name(
+        'detail_scan'
+    );
 });
 //Finish level admin dan superadmin
