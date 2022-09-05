@@ -71,18 +71,6 @@ class DashboardController extends Controller
                 // ->where('tipe_member', 'VIP')
                 ->count();
         }
-
-        // Statistika-mingguan
-        $day = range(1, 7);
-        $days = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
-        $week = range(
-            [Carbon::now()->startOfWeek()],
-            Carbon::now()->endOfWeek()->week
-        );
-        // echo '<pre>';
-        // dd($week);
-        // echo '</pre>';
-        // exit();
         $start_date = Carbon::now()
             ->startOfWeek()
             ->translatedFormat('Y-m-d');
@@ -119,38 +107,15 @@ class DashboardController extends Controller
                 // ->where('tipe_member', 'VIP')
                 ->count();
         }
-
-        // foreach ($day as $key => $value) {
-        //     $data['visitor_daily'][$key]['y'] = $days[$key];
-        //     $data['visitor_daily'][$key]['a'] = LogTransaction::whereHas(
-        //         'visitor',
-        //         function (Builder $query) {
-        //             $query->where('tipe_member', 'VVIP');
-        //         }
-        //     )
-        //         ->whereDate('created_at', $date_period[$key])
-        //         // ->where('tipe_member', 'VVIP')
-        //         ->count();
-        //     $data['visitor_daily'][$key]['b'] = LogTransaction::whereHas(
-        //         'visitor',
-        //         function (Builder $query) {
-        //             $query->where('tipe_member', 'VIP');
-        //         }
-        //     )
-        //         ->whereDate('created_at', $date_period[$key])
-        //         // ->where('tipe_member', 'VIP')
-        //         ->count();
-        // }
         $data['visitor_week'] = Visitor::whereBetween('created_at', [
             Carbon::now()->startOfWeek(),
             Carbon::now()->endOfWeek(Carbon::SATURDAY),
         ])
             ->get()
             ->count();
-        $data['visitor_today'] = Visitor::whereDate(
-            'created_at',
-            now()->translatedFormat('Y-m-d')
-        )->count();
+        $data['visitor_today'] = LogTransaction::whereDate('created_at', now())
+            ->where('payment_status', '=', 1)
+            ->count();
         $data['visitor_month'] = Visitor::whereMonth(
             'created_at',
             now()->month

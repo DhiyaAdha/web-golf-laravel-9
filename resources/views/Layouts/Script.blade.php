@@ -110,6 +110,13 @@
             }
 
         ],
+        dom: "<'row mb-3'<'col-sm-12 col-md-8 pull-right'f><'toolbar col-sm-12 col-md-4 float-left'B>>" +
+            "<'row'<'col-sm-12'tr>>" +
+            "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+        // dom: '<"toolbar">frtip',
+        initComplete: function() {
+            $('div.toolbar').html('<b>Daftar nama terakhir bermain</b>').appendTo('.float-left');
+        }
     });
 
     //data package
@@ -427,7 +434,7 @@
 {{-- Input Stepper --}}
 <script>
     function stepper(btn, ids) {
-        let myInput = document.getElementById("my-input-"+ids);
+        let myInput = document.getElementById("my-input-" + ids);
         // myInput = document.getElementById("my-input");
         // console.log(id);
         let id = btn;
