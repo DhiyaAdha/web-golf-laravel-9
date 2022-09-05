@@ -43,6 +43,7 @@ class DashboardController extends Controller
         $data['years'] = range(Carbon::now()->year - 3, Carbon::now()->year);
         $getyear = $request->year ? $request->year : Carbon::now()->year;
         // dd($getyear);
+        
         foreach ($month as $key => $value) {
             $data['visitor'][$key]['period'] = $months[$value];
             $data['visitor'][$key]['vvip'] = LogTransaction::whereHas(
@@ -58,6 +59,7 @@ class DashboardController extends Controller
                 ->whereYear('created_at', $getyear)
                 // ->where('tipe_member', 'VVIP')
                 ->count();
+
             $data['visitor'][$key]['vip'] = LogTransaction::whereHas(
                 'visitor',
                 function (Builder $query) {
@@ -102,12 +104,14 @@ class DashboardController extends Controller
             $data['visitor_daily'][$key]['y'] = Carbon::create(
                 $day_period[$key]
             )->translatedFormat('D');
+
             $data['visitor_daily'][$key]['a'] = LogTransaction::whereHas(
                 'visitor',
                 function (Builder $query) {
                     $query->where('tipe_member', 'VVIP');
                 }
             )
+
                 ->whereDate('created_at', $day_period[$key])
                 // ->where('tipe_member', 'VVIP')
                 ->count();

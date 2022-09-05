@@ -32,7 +32,7 @@ class InvoiceSeeder extends Seeder
                 'user_id' => User::all()->random()->id,
 
                 'payment_type' => $faker->randomElement(['Cash','Transfer']),
-                'payment_status' => $faker->randomElement([0, 1]),
+                'payment_status' => $faker->randomElement([1]),
                 'total' => $faker->randomFloat(2, 0, 10000000),
                 'status' => $faker->randomElement([0, 1]),
                 'created_at' => \Carbon\Carbon::now()->addMinutes(rand(0,
