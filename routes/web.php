@@ -203,10 +203,12 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     route::get('qrcode/{id}', [ScanqrController::class, 'generate'])->name(
         'generate'
     );
+    
     Route::get('/tambah-deposit', [
         TamuController::class,
         'tambahdeposit',
     ])->name('tambah-deposit');
+
     Route::get('/kartu-tamu', [ScanqrController::class, 'kartutamu'])->name(
         'kartu-tamu'
     );
@@ -222,5 +224,11 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('deposit/{id}', [TamuController::class, 'deposittamu'])->name(
         'deposittamu'
     );
+    
+    // Route::get('tambahdeposit/{id}', [TamuController::class, 'tambahdeposit'])->name(
+    //     'tambahdeposit'
+    // );
+
+
 });
 //Finish level admin dan superadmin

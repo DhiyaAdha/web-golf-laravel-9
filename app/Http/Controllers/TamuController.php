@@ -154,8 +154,8 @@ class TamuController extends Controller
         ]);
         // $visitors->address = $request->alamat;
         $visitors->save();
-        // return redirect('/tambah-deposit')->with(
-        return redirect('/daftar-tamu')->with(
+        return redirect('/tambah-deposit')->with(
+        // return redirect('/daftar-tamu')->with(
             'sukses',
             'Company has been created successfully.'
         );
@@ -254,6 +254,7 @@ class TamuController extends Controller
     //function tambahan
     public function tambahdeposit()
     {
+
         return view('tamu.tambah-deposit');
     }
 
