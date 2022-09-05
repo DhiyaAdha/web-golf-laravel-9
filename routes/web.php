@@ -196,5 +196,13 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
         'tambah-admin'
     );
     Route::resource('proses', OrderController::class);
+
+    // Route::get('limittamu/{id}', [TamuController::class, 'limittamu'])->name('limittamu');
+    Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name(
+        'show'
+    );
+    Route::get('deposit/{id}', [TamuController::class, 'deposittamu'])->name(
+        'deposittamu'
+    );
 });
 //Finish level admin dan superadmin

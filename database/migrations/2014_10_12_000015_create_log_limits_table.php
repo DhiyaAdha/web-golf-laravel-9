@@ -16,9 +16,9 @@ class CreateLogLimitsTable extends Migration
         Schema::create('log_limits', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('visitor_id')->unsigned();
-            $table->string('type');
-            $table->string('activities' );
-            $table->integer('quota');
+            $table->string('type')->nullable();
+            $table->string('activities')->nullable();
+            $table->integer('quota')->nullable();
             $table->timestamp('created_at');
 
             $table->foreign('visitor_id')

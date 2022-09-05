@@ -32,6 +32,16 @@ class Visitor extends Model
     {
         return $this->hasMany(LogTransaction::class);
     }
+    
+    public function loglimit()
+    {
+        return $this->hasMany(LogLimit::class);
+    }
+
+    public function deposit()
+    {
+        return $this->hasMany(Deposit::class);
+    }
 
     public function transaction($visitorId)
     {

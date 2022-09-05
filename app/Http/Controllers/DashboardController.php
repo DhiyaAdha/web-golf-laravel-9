@@ -42,6 +42,7 @@ class DashboardController extends Controller
         ];
         $data['years'] = range(Carbon::now()->year - 3, Carbon::now()->year);
         $getyear = $request->year ? $request->year : Carbon::now()->year;
+        // dd($getyear);
         foreach ($month as $key => $value) {
             $data['visitor'][$key]['period'] = $months[$value];
             $data['visitor'][$key]['vvip'] = LogTransaction::whereHas(
@@ -124,31 +125,63 @@ class DashboardController extends Controller
             'created_at',
             $request->year ? $request->year : date('Y')
         )->count();
-        $data['visitor_years'] = Visitor::whereYear(
-            'created_at',
-            '2023'
+
+        // total VIP VVIP
+        $data['visitor_vip'] = LogTransaction::whereHas('visitor', function (
+            Builder $query
+        ) {
+            $query->where('tipe_member', 'VIP');
+        })->count();
+        // $data['visitor_vip'] = Visitor::where('tipe_member', 'VIP')->count();
+        $data['visitor_vvip'] = LogTransaction::whereHas('visitor', function (
+            Builder $query
+        ) {
+            $query->where('tipe_member', 'VVIP');
+        })->count();
+
+        // total gender
+        // per gender
+        // $data['visitor_vvip_male'] = Visitor::where([
+        //     ['tipe_member', 'VVIP'],
+        //     ['gender', 'laki-laki'],
+        // ])->count();
+
+        // total female male VVIP & VIP
+        $data['visitor_vvip_female'] = LogTransaction::whereHas(
+            'visitor',
+            function (Builder $query) {
+                $query
+                    ->where('tipe_member', 'VVIP')
+                    ->where('gender', 'perempuan');
+            }
         )->count();
+        $data['visitor_vvip_male'] = LogTransaction::whereHas(
+            'visitor',
+            function (Builder $query) {
+                $query
+                    ->where('tipe_member', 'VVIP')
+                    ->where('gender', 'laki-laki');
+            }
+        )->count();
+        $data['visitor_vip_female'] = LogTransaction::whereHas(
+            'visitor',
+            function (Builder $query) {
+                $query
+                    ->where('tipe_member', 'VIP')
+                    ->where('gender', 'perempuan');
+            }
+        )->count();
+        $data['visitor_vip_male'] = LogTransaction::whereHas(
+            'visitor',
+            function (Builder $query) {
+                $query
+                    ->where('tipe_member', 'VIP')
+                    ->where('gender', 'laki-laki');
+            }
+        )->count();
+        // dd($data['visitor_vip_male']);
 
-        $data['visitor_vip'] = Visitor::where('tipe_member', 'VIP')->count();
-        $data['visitor_vvip'] = Visitor::where('tipe_member', 'VVIP')->count();
-        $data['visitor_vvip_female'] = Visitor::where([
-            ['tipe_member', 'VVIP'],
-            ['gender', 'perempuan'],
-        ])->count();
-        $data['visitor_vvip_male'] = Visitor::where([
-            ['tipe_member', 'VVIP'],
-            ['gender', 'laki-laki'],
-        ])->count();
-        //VIP
-        $data['visitor_vip_female'] = Visitor::where([
-            ['tipe_member', 'VIP'],
-            ['gender', 'perempuan'],
-        ])->count();
-        $data['visitor_vip_male'] = Visitor::where([
-            ['tipe_member', 'VIP'],
-            ['gender', 'laki-laki'],
-        ])->count();
-
+        // join function
         // $visitor = Visitor::select(
         //     'visitors.name as name',
         //     'visitors.tipe_member as tipe_member',
@@ -163,6 +196,7 @@ class DashboardController extends Controller
         //     ->get();
         // dd($visitor);
 
+        // data-table analisis tamu
         $visitor = Visitor::select([
             'id',
             'name',
@@ -195,6 +229,7 @@ class DashboardController extends Controller
                 ->rawColumns(['name', 'action'])
                 ->make(true);
         }
+        // dd($visitor);
         return view('/Analisis-tamu', $data);
     }
 
