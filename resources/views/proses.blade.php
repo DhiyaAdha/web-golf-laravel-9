@@ -83,9 +83,13 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-6 mt-5">
-                                @foreach ($package as $data)
+                                @foreach ($default as $item)
                                     <p style="color: #7D7D7D; text-align:start;">
-                                        {{ $data->name }} <hr>
+                                        <input type="text" id="isChecked">
+
+                                        <span class="wrap-txt-{{ $item->id }}" style="display: none">
+                                            {{ $item->name }} <hr>
+                                        </span>
                                     </p>
                                 @endforeach
                             </div>
@@ -135,4 +139,14 @@
         else
             $(".wrap-quantity-"+id).hide();
     }   
+
+    $(document).ready(function(){
+        $('#isChecked').change(function(){
+        if($(this.checked).length)  { 
+                $(".wrap-txt-"+id).show();
+        }else{
+                $(".wrap-txt-"+id).hide();
+        }
+        });
+    });
     </script>
