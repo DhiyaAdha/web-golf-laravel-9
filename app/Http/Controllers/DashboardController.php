@@ -83,6 +83,8 @@ class DashboardController extends Controller
         // dd($week);
         // echo '</pre>';
         // exit();
+
+        // function mingguan
         $start_date = Carbon::now()
             ->startOfWeek()
             ->translatedFormat('Y-m-d');
@@ -121,6 +123,7 @@ class DashboardController extends Controller
         }
         // dd($data['visitor_daily']);
 
+
         // foreach ($day as $key => $value) {
         //     $data['visitor_daily'][$key]['y'] = $days[$key];
         //     $data['visitor_daily'][$key]['a'] = LogTransaction::whereHas(
@@ -142,6 +145,8 @@ class DashboardController extends Controller
         //         // ->where('tipe_member', 'VIP')
         //         ->count();
         // }
+
+        
         $data['visitor_week'] = Visitor::whereBetween('created_at', [
             Carbon::now()->startOfWeek(),
             Carbon::now()->endOfWeek(Carbon::SATURDAY),
@@ -154,7 +159,7 @@ class DashboardController extends Controller
             'created_at',
             now()->translatedFormat('Y-m-d')
         )->count();
-
+        // minggu ini
         $data['visitor_month'] = Visitor::whereMonth(
             'created_at',
             now()->month
@@ -164,6 +169,7 @@ class DashboardController extends Controller
             $request->year ? $request->year : date('Y')
         )->count();
 
+        
         // total VIP VVIP 
         $data['visitor_vip'] = LogTransaction::whereHas(
             'visitor',
@@ -185,6 +191,8 @@ class DashboardController extends Controller
         //     ['tipe_member', 'VVIP'],
         //     ['gender', 'laki-laki'],
         // ])->count();
+
+        // total female male VVIP & VIP
         $data['visitor_vvip_female'] = LogTransaction::whereHas(
             'visitor',
             function (Builder $query) {
@@ -199,8 +207,6 @@ class DashboardController extends Controller
                 ->where('gender','laki-laki');
             }
         )->count();
-        // dd($data['visitor_vvip_female']);
-        
         $data['visitor_vip_female'] = LogTransaction::whereHas(
             'visitor',
             function (Builder $query) {
@@ -233,6 +239,7 @@ class DashboardController extends Controller
         //     ->get();
         // dd($visitor);
 
+        // data-table analisis tamu
         $visitor = Visitor::select([
             'id',
             'name',

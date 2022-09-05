@@ -66,7 +66,12 @@
                         </div>
                         <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
                             <img src="/dist/img/Golf.svg">
-                            <h6 class="text-center">4</h6>
+                            <h6 class="text-center">
+                                {{ $quota }}
+                                {{-- {{ url('limittamu/{id}') }}  --}}
+                                
+                                
+                            </h6>
                         </div>
                     </div>
                     <div class="panel panel-default card-view p">
@@ -76,7 +81,9 @@
                         </div>
                         <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
                             <img src="/dist/img/money.svg">
-                            <h6 class="text-center"> IDR 4.500.000</h6>
+                            <h6 class="text-center"> 
+                                {{ number_format($balance, 0,"",".") }}
+                            </h6>
                         </div>
                     </div>
                 </div>
@@ -84,11 +91,12 @@
                     <div class="panel panel-default card-view b">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Barcode</h6>
-                            <div class="clearfix"></div>
+                            <div class="clearfix"></div>p
                         </div>
                         <div class="d-flex justify-content-center p">
                             {{-- <img src="/dist/img/Scanner.svg"> --}}
-                            {!! $qrcode !!}
+                            {!! $qrcode  !!}
+                            
                         
                         </div>
                     </div>

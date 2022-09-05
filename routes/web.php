@@ -85,6 +85,7 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
     Route::resource('package', PackageController::class)->except(['show','update']);
     Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
+    
     Route::get('/invoice/{id}',[InvoiceController::class,'show'])->name('show');
     Route::get('/daftar-tamu', [TamuController::class, 'index'])->name('daftar-tamu');
     Route::get('/daftar-tamu/destroy/{id}', [TamuController::class, 'delete'])->name('hapus-tamu');
@@ -102,5 +103,10 @@ Route::group(['middleware' => ['auth','ceklevel:1,2']], function() {
     Route::get('/kartu-tamu/{id}',[ScanqrController::class,'kartutamu'])->name('kartu-tamu');
     Route::get('/tambah-admin',[AuthController::class,'tambahadmin'])->name('tambah-admin');
     Route::resource('proses', OrderController::class);
+
+    // Route::get('limittamu/{id}', [TamuController::class, 'limittamu'])->name('limittamu');
+    Route::get('/kartu-tamu/{id}',[TamuController::class,'show'])->name('show');
+    Route::get('deposit/{id}', [TamuController::class, 'deposittamu'])->name('deposittamu');
+
 });
 //Finish level admin dan superadmin

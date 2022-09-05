@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Deposit;
+
 use App\Models\Visitor;
+use App\Models\LogLimit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class TamuController extends Controller
 {
@@ -101,21 +105,8 @@ class TamuController extends Controller
     {
         //
     }
-
-    public function tambahtamu()
-    {
-
-        // $visitors = Visitor::all();
-
-        // return view('tamu.tambah-tamu');
-        return view('tamu.tambah-tamu');
-    }
     public function inserttamu(Request $request)
     {
-        // dd($request->all());
-        // $data[Visitor]::create($request->all()); 
-        // return redirect()->route('Daftar-tamu');
-
         $this->validate($request, [
             'name'     => 'required',
             'address'     => 'required',
@@ -155,6 +146,31 @@ class TamuController extends Controller
     {
 
         $data['visitor'] = Visitor::find($id);
+        $limit = LogLimit::find($id);
+        $deposit = Deposit::find($id);
+        $visitor = Visitor::findOrFail($id);
+        $data['qrcode'] = QrCode::size(180)->generate($visitor->id);
+
+        // $data['loglimit'] = $limit;
+        // $data['loglimit'] = $limit->quota;
+        // dd($data['loglimit']);
+        // $data['quota'] = Visitor::find($limit->visitor_id);
+        // $data = [
+        //     [
+        //         'id' => $limit->visitor_id,
+        //         'quota' => $limit->quota,
+        //     ]
+        // ];
+        // DB::table('log_limits', 'quota')->get();
+        $data['quota'] = $limit->quota;
+        $data['balance'] = $deposit->balance;
+        // $data['qrcode'] = $qrcode->qr;
+        
+
+        // $data['visitor'] =  Visitor::find($id);
+            // return view('tamu.Kartu-tamu', $data);
+
+
 
 
         return view('tamu.kartu-tamu', $data);
@@ -216,9 +232,49 @@ class TamuController extends Controller
     }
 
 
+    //function tambahan
     public function tambahdeposit()
     {
 
         return view('tamu.tambah-deposit');
     }
+
+    public function tambahtamu()
+    {
+
+        // $visitors = Visitor::all();
+
+        // return view('tamu.tambah-tamu');
+        return view('tamu.tambah-tamu');
+    }
+
+    // public function limittamu($id){
+        
+    //     $limit = LogLimit::find($id);
+    //     // $data['loglimit'] = $limit;
+    //     // $data['loglimit'] = $limit->quota;
+    //     // dd($data['loglimit']);
+    //     // $data['quota'] = Visitor::find($limit->visitor_id);
+    //     $data = [
+    //         [
+    //             'id' => $limit->visitor_id,
+    //             'quota' => $limit->quota,
+    //         ]
+    //     ];
+    //     DB::table('log_limits', 'quota')->get();
+    //     return view('tamu.Kartu-tamu', $data);
+    //     // $visitor = Visitor::findOrFail($id);
+    //     // $visitor->limit = 1;
+    //     // $data['limit'] = LogLimit::find($id);
+    //     // dd($data['limit']);
+    // }
+
+    // public function deposittamu($id){
+    //     $deposit = Deposit::find($id);
+    //     $data['quota'] = Visitor::find($deposit->visitor_id);
+    //     return view('tamu.Kartu-tamu', $data);
+
+
+
+    // }
 }
