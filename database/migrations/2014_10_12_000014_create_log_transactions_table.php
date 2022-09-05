@@ -19,7 +19,7 @@ class CreateLogTransactionsTable extends Migration
             $table->integer('visitor_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->enum('payment_type',['deposit', 'cash', 'transfer', 'limit bulanan', 'limit kupon']);
-            $table->integer('payment_status');
+            $table->integer('payment_status')->default(1);
             $table->integer('total');
             $table->integer('status');
             

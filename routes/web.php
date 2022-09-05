@@ -106,7 +106,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
         'daftar-admin'
     );
     Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name(
-        'show'
+        'show'      
     );
     Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name(
         'scan-tamu'

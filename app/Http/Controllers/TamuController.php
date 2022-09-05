@@ -34,6 +34,7 @@ class TamuController extends Controller
         ])
             ->orderBy('created_at', 'desc')
             ->get();
+            
         if ($request->ajax()) {
             return datatables()
                 ->of($visitor)
