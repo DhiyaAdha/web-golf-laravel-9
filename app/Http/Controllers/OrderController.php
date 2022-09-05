@@ -2,26 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Visitor;
-use Illuminate\View\View;
+use App\Models\Package;
 use Illuminate\Http\Request;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
-class ScanqrController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        // $visitors = Visitor::all();
-        // return View::make('Scan-tamu')
-        // ->with('visitors', $visitors);
-
-        return view('Scan-tamu');
+        $package = Package::get();
+        $default = Package::where('category', 'default')->get();
+        $additional = Package::where('category', 'additional')->get();
+        return view('proses', compact('package','default','additional'));
     }
 
     /**
@@ -54,9 +50,6 @@ class ScanqrController extends Controller
     public function show($id)
     {
         //
-        // $visitor = Visitor::findOrFail($id);
-        // $qrcode = QrCode::size(400)->generate($visitor->id);
-        // return view('qrcode',compact('qrcode'));
     }
 
     /**
@@ -92,39 +85,4 @@ class ScanqrController extends Controller
     {
         //
     }
-
-    // fungsi generate QRcode Daftar-tamu
-    public function generate ($id)
-    {
-        $visitor = Visitor::findOrFail($id);
-        $qrcode = QrCode::size(400)->generate($visitor->id);
-        return view('qrcode',compact('qrcode'));
-        // return view('qrcode',compact('qrcode'));
-    }
-
-    // Scantamu-berhasil
-    public function scantamuberhasil(){
-            return view('/scan-tamu-berhasil');
-    }
-    
-    public function proses (){
-            return view('proses');
-    }
-
-
-    public function kartutamu($id){
-
-        $visitor = Visitor::findOrFail($id);
-        $qrcode = QrCode::size(180)->generate($visitor->id);
-        $data['visitor'] =  Visitor::find($id);
-        // $data['email'] =$visitor->email;
-        // $data['phone'] =$visitor->phone;
-        // $data['gender'] =$visitor->gender;
-        // dd($data);
-        return view('tamu.kartu-tamu',compact('qrcode'),$data);
-        
-    }
-    
-
-
 }

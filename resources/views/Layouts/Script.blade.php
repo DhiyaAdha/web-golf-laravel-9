@@ -1,6 +1,8 @@
 <!-- /#wrapper -->
 
 <!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
 <!-- jQuery -->
 <script src="{{ asset('vendors/bower_components/jquery/dist/jquery.min.js') }}"></script>
@@ -51,18 +53,7 @@
 
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
-
-<script src="{{ asset('/sw.js') }}"></script>
 <script>
-    // if (!navigator.serviceWorker.controller) {
-    //     navigator.serviceWorker.register("/sw.js").then(function (reg) {
-    //         console.log("Service worker has been registered for scope: " + reg.scope);
-    //     });
-    // }
-    // $('.js-switch-1').each(function() {
-    //     new Switchery($(this)[0], $(this).data());
-    // });
-
     // data analisis
     $('#dt-analisis').DataTable({
         "processing": true,
@@ -82,25 +73,28 @@
         },
 
         "render": $.fn.dataTable.render.text(),
-
-
-        "columns" : [
-            { data: 'name', searchable: true, orderable: false },
-            { data: 'created_at', searchable: true, orderable: false },
-            { data: 'tipe_member', searchable: true, orderable: false },
-            { data: 'updated_at', searchable: true, orderable: false },
-
-            // {
-            //     "data": function(data) {
-            //         if (data.visitor.tipe_member == 'VIP') {
-            //             return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
-            //         } else {
-            //             return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
-            //         }
-            //     }
-            // },
+        "columns": [{
+                data: 'name'
+            },
+            {
+                data: 'updated_at'
+            },
+            {
+                "data": function(data) {
+                    if (data.tipe_member == 'VIP') {
+                        return `<span class='label label-success'>${data.tipe_member}</span>`;
+                    } else {
+                        return `<span class='label label-warning'>${data.tipe_member}</span>`;
+                    }
+                }
+            },
+            {
+                data: 'times',
+            }
         ],
-        order: [],
+        order: [
+            [1, 'desc']
+        ],
         responsive: true,
         language: {
             search: "",
@@ -112,10 +106,19 @@
             lengthMenu: "Menampilkan _MENU_ data",
             zeroRecords: "Tidak ada data yang sesuai"
         },
-        columnDefs: [
-            { className: 'text-left', targets: [0, 1, 2, 3,]}
+        columnDefs: [{
+                className: 'text-left',
+                targets: [0, 1, 2, 3, ]
+            }
 
         ],
+        dom: "<'row mb-3'<'col-sm-12 col-md-8 pull-right'f><'toolbar col-sm-12 col-md-4 float-left'B>>" +
+            "<'row'<'col-sm-12'tr>>" +
+            "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+        // dom: '<"toolbar">frtip',
+        initComplete: function() {
+            $('div.toolbar').html('<b>Daftar nama terakhir bermain</b>').appendTo('.float-left');
+        }
     });
 
     //data package
@@ -142,12 +145,7 @@
             },
             {
                 "data": function(data) {
-                    // if (data.category.tipe_member == 'VIP') {
-                    //     return `<span class='label label-success'>${data.category.tipe_member}</span>`
-                    // } else {
-                    //     return `<span class='label label-success'>${data.category.tipe_member}</span>`
-                    // }
-                    // return data.category
+                    return data.category
                 }
             },
             {
@@ -201,6 +199,7 @@
         }, ],
     });
 
+
     //data tamu
     $('#dt-tamu').DataTable({
         "processing": true,
@@ -222,12 +221,31 @@
         "render": $.fn.dataTable.render.text(),
 
 
-        "columns" : [
-            { data: 'name', searchable: true, orderable: false },
-            { data: 'email', searchable: true, orderable: false },
-            { data: 'phone', searchable: true, orderable: false },
-            { data: 'tipe_member', searchable: true, orderable: false },
-            { data: 'action', searchable: false, orderable: false },
+        "columns": [{
+                data: 'name',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'email',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'phone',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'tipe_member',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'action',
+                searchable: false,
+                orderable: false
+            },
 
             // {
             //     "data": function(data) {
@@ -253,15 +271,15 @@
             lengthMenu: "Menampilkan _MENU_ data",
             zeroRecords: "Tidak ada data yang sesuai"
         },
-        columnDefs: [
-            { className: 'text-left', targets: [ 1, 2, 3, 4]}
+        columnDefs: [{
+                className: 'text-left',
+                targets: [1, 2, 3, 4]
+            }
 
         ],
     });
 
     // invoice
-    // $()
-
     $('#dt-riwayat').DataTable({
         "processing": true,
         "serverSide": true,
@@ -279,14 +297,26 @@
             "datatype": "json"
         },
         "render": $.fn.dataTable.render.text(),
-
-
-        "columns" : [
-            { data: 'name', searchable: true, orderable: false },
-            { data: 'tipe_member', searchable: true, orderable: false },
-            { data: 'total', searchable: true, orderable: false },
-            { data: 'created_at', searchable: true, orderable: true },
-
+        "columns": [{
+                data: 'name',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'tipe_member',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'total',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'created_at',
+                searchable: true,
+                orderable: true
+            },
             // {
             //     "data": function(data) {
             //         if (data.visitor.tipe_member == 'VIP') {
@@ -296,7 +326,6 @@
             //         }
             //     }
             // },
-
         ],
         order: [],
         responsive: true,
@@ -310,10 +339,10 @@
             lengthMenu: "Menampilkan _MENU_ data",
             zeroRecords: "Tidak ada data yang sesuai"
         },
-        columnDefs: [
-            { className: 'text-center', targets: [1, 2, 3]}
-
-        ],
+        columnDefs: [{
+            className: 'text-center',
+            targets: [1, 2, 3]
+        }],
     });
 
     // invoice detail
@@ -337,11 +366,27 @@
         "render": $.fn.dataTable.render.text(),
 
 
-        "columns" : [
-            { data: 'category', searchable: true, orderable: false },
-            { data: 'harga', searchable: true, orderable: false },
-            { data: 'quantity', searchable: true, orderable: false },
-            { data: 'total', searchable: true, orderable: false, className: 'text-right' },
+        "columns": [{
+                data: 'category',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'harga',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'quantity',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'total',
+                searchable: true,
+                orderable: false,
+                className: 'text-right'
+            },
 
         ],
         order: [],
@@ -356,41 +401,15 @@
             lengthMenu: "Menampilkan _MENU_ data",
             zeroRecords: "Tidak ada data yang sesuai"
         },
-        columnDefs: [
-            {className: 'text-center', targets: [1 , 2]}
+        columnDefs: [{
+                className: 'text-center',
+                targets: [1, 2]
+            }
 
         ],
-
     });
 
-    // search
-    // $(document).ready(function(){
-    // 	load_data();
-    // 	function load_data(jurusan, keyword)
-    // 	{
-    // 		$.ajax({
-    // 			method:"POST",
-    // 			url:"{{ route('riwayat-invoice.index') }",
-    // 			data: {jurusan: jurusan, keyword:keyword},
-    // 			success:function(hasil)
-    // 			{
-    // 				$('.data').html(hasil);
-    // 			}
-    // 		});
-    //  	}
-    // 	$('#s_keyword').keyup(function(){
-    // 		var jurusan = $("#s_jurusan").val();
-    // 		var keyword = $("#s_keyword").val();
-    // 		load_data(jurusan, keyword);
-    // 	});
-    // 	$('#s_jurusan').change(function(){
-    // 		var jurusan = $("#s_jurusan").val();
-    // 		var keyword = $("#s_keyword").val();
-    // 		load_data(jurusan, keyword);
-    // 	});
-    // });
-
-
+    // scan
     $(document).on("click", "#show-scan", function() {
         $(".disabled-scan").css("display", "none");
 
@@ -413,4 +432,28 @@
             false);
         html5QrcodeScanner.render(onScanSuccess, onScanFailure);
     })
+    
+</script>
+{{-- Input Stepper --}}
+<script>
+    function stepper(btn, ids) {
+        let myInput = document.getElementById("my-input-" + ids);
+        // myInput = document.getElementById("my-input");
+        // console.log(id);
+        let id = btn;
+        // let id = btn.getAttribute("id");
+        let min = myInput.getAttribute("min");
+        let max = myInput.getAttribute("max");
+        let step = myInput.getAttribute("step");
+        let val = myInput.getAttribute("value");
+        let calcStep = (id == "increment") ? (step * 1) :
+            (step * -1);
+        let newValue = parseInt(val) + calcStep;
+
+        if (newValue >= min && newValue <= max) {
+            myInput.setAttribute("value", newValue);
+        }
+
+        // console.log(id, min, max, step, val);
+    }
 </script>

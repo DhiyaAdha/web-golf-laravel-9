@@ -8,7 +8,6 @@
                     <div class="col-sm-12">
                         <div class="panel panel-default card-view">
                             <div class="panel-heding">
-
                                 {{-- <div class="clearfix"></div> --}}
                                 <div class="row">
                                     <div class="col-lg-10 mt-15">
@@ -35,8 +34,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>
@@ -97,7 +94,6 @@
                     <div class="col-sm-12">
                         <div class="panel panel-default card-view">
                             <div class="panel-heding">
-
                                 {{-- <div class="clearfix"></div> --}}
                                 <div class="row">
                                     <div class="col-lg-10 mt-15">
@@ -162,16 +158,13 @@
                         </div>
                     </div>
                 </div>
-
                 @include('Layouts.Footer')
             </div>
         </div>
     </div>
-
-
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-
     <script type="text/javascript">
         $('.delete-confirm').on('click', function(event) {
             event.preventDefault();

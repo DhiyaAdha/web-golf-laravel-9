@@ -167,10 +167,6 @@ class AuthController extends Controller {
         return back()->with('resetSuccess', 'Reset Password sudah dikirim ke email anda! silahkan cek email');
     }
     
-    public function order(){
-        return view('/order');
-    }
-    
     public function daftar_admin(){
 
         return view('admin.daftar-admin');
@@ -183,4 +179,5 @@ class AuthController extends Controller {
     public function edit_admin(){
         return view('admin.edit-admin');
     }
+
 }

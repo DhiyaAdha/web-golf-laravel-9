@@ -23,7 +23,11 @@ class InvoiceController extends Controller
         if($request->ajax()){
             return datatables()->of($riwayat_invoice)
             ->editColumn('name', function ($data) {
-                return '<a href="'.url('invoice/'.$data->id).'">'.$data->name."</a>";
+                    return '<a href="
+                    '.url('invoice/'.$data->id).'
+                    ">'
+                    .$data->name.
+                    "</a>";
             })
             ->editColumn('created_at', function ($data) {
                 return $data->created_at->format('d F Y');
@@ -121,5 +125,12 @@ class InvoiceController extends Controller
         //
     }
 
+    public function exportpdf () {
+        return 'berhasil';
+    }
+
+    public function metode_pembayaran () {
+        return view('Invoice.metode_pembayaran');
+    }
     
 }

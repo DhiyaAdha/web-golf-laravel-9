@@ -1,8 +1,6 @@
 @extends('Layouts.Main')
 
 @section('content')
-
-
 <div class="page-wrapper">
     <div class="container-fluid">
         <div class="row heading-bg">
@@ -17,7 +15,7 @@
             <!-- /Breadcrumb -->
         </div>
         <div class="row">
-            <div class="col-lg-6" style="position: relative;">
+            <div class="col-lg-12" style="position: relative;">
                 <div style="height: 900px" class="panel panel-default card-view">
                     <h6 class="control-label mb-10">Tambah Tamu</h6>
                     <div class="panel-body">
@@ -57,19 +55,6 @@
                                     <label class="control-label mb-10" for="">Nomer Hp</label>
                                     <input type="number" name="phone" class="form-control" id="phone" size="50px" placeholder="Masukan Nomer Hp" required autofocus>
                                 </div>
-                            </form>
-                        </div>
-                        <!-- /Basic Table -->
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6" style="position: relative;">
-                <div style="height: 300px" class="panel panel-default card-view">
-                    <div class="panel-body">
-                        <div class="form-wrap">
-                            {{-- Insert Tamu --}}
-                            <form action="/inserttamu" method="POST" enctype="multipart/form-data">
-                                @csrf
                                 <div class="form-group">
                                     <label class="control-label mb-10" for="">Perusahaan</label>
                                     <input type="text" name="company" class="form-control" id="company" size="50px" placeholder="Masukan Nama Perusahaan" required autofocus>
@@ -98,5 +83,4 @@
         </div>
     </div>
     @endsection
-    <script>
-    </script>
+    <script></script>
