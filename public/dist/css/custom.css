@@ -150,18 +150,15 @@ table#dt-tamu {
 }
 .label.label-tambah {
     background: #2879ff;
-    padding: 9px 50px;
-    font-size: 14px;
+    
 }
 .label.label-update {
     background: #5901c8;
-    padding: 9px 50px;
-    font-size: 14px;
+    
 }
 .label.label-hapus {
     background: #ff2a00;
-    padding: 9px 50px;
-    font-size: 14px;
+    
 }
 .label.label-sa {
     background: #5901c8;

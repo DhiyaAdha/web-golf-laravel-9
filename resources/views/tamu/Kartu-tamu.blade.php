@@ -35,17 +35,27 @@
                         </div>
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
-                                <div class="tabel">
-                                    <h5 class="data">Nama Lengkap</h5>
-                                    <p class="isi">Pamungkas Nuli Ramadhan</p>
-                                    <h5 class="data">Email</h5>
-                                    <p class="isi">PamungkasNuli@gmail.com</p>
-                                    <h5 class="data">Nomer Hp</h5>
-                                    <p class="isi">0845545526386</p>
-                                    <h5 class="data">Jenis Kelamin</h5>
-                                    <p class="isi">Laki Laki</p>
-                                    <h5 class="data">Kategori Tamu</h5>
-                                    <p class="isi">VVIP</p>
+                                <div class="user-others-details">
+                                    <div class="mb-15 d-flex flex-column">
+                                        <span class="txt-muted">Nama Lengkap</span>
+                                        <span>{{ $visitor->name }}</span>
+                                    </div>
+                                    <div class="mb-15 d-flex flex-column">
+                                        <span class="txt-muted">Email</span>
+                                        <span>{{ $visitor->email }}</span>
+                                    </div>
+                                    <div class="mb-15 d-flex flex-column">
+                                        <span class="txt-muted">No Hp</span>
+                                        <span>{{ $visitor->phone }}</span>
+                                    </div>
+                                    <div class="mb-15 d-flex flex-column">
+                                        <span class="txt-muted">Jenis Kelamin</span>
+                                        <span>{{ $visitor->gender }}</span>
+                                    </div>
+                                    <div class="mb-15 d-flex flex-column">
+                                        <span class="txt-muted">Kategori Tamu</span>
+                                        <span>{{ $visitor->tipe_member }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -86,10 +96,9 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="col-lg-3 mt-20">
-                    <div class="panel panel-default panel-dropdown card-view">  
+                    <div class="panel panel-default panel-dropdown card-view">
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body qr" style="padding: 5px 5px 203px;">
                                 <div class="pull">
@@ -104,15 +113,14 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-12 col-sm-12">
             <div>
-                <div class="panel-hding" style="padding-left: 28px;">
+                <div class="panel-heading" style="padding-left: 28px;">
                     <div class="pull-left mt-20">
                         <h6 class="panel-title txt-dark">Aktifitas</h6>
                     </div>
