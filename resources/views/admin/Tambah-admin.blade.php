@@ -22,15 +22,16 @@
                     <h6 class="control-label mb-10">Tambah admin</h6>
                     <div class="panel-body">
                         <div class="form-wrap">
-                            <form action="/tambah-admin" method="post">
+                        <form action="/store" method="POST" enctype="multipart/form-data">
+                                @csrf
                                 <div class="form-group">
                                     <label class="control-label mb-10" for="">Nama Lengkap</label>
                                     <input type="text" class="form-control" id="result" size="50px" placeholder="Masukan Nama" required autofocus>
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label class="control-label mb-10" for="">Alamat</label>
                                     <input type="text" class="form-control" id="result" size="50px" placeholder="Masukan Alamat" required autofocus>
-                                </div>
+                                </div> -->
                                 <div class="form-group">
                                     <label class="control-label mb-10" for="">Jenis Kelamin</label>
                                     <div class="form-check">
@@ -60,7 +61,7 @@
                                         <input type="radio" name="radio1" id="radio_1" value="option1" checked="">Super Admin
                                     </label>
                                     <label class="radio-inline">
-                                        <input  type="radio" name="radio1" id="radio_2" value="option2" checked="">Admin
+                                        <input type="radio" name="radio1" id="radio_2" value="option2" checked="">Admin
                                     </label>
                                 </div>
                                 <div class="form-group text-left">

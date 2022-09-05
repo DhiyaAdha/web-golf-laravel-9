@@ -276,14 +276,8 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-12">
-        @include('Layouts.Footer')
-    </div>
 </div>
-</div>
-</div>
-<div class="clearfix"></div>
-<div class="col-lg-12" style="margin-left: 45px;">
+<div class="col-lg-12">
     @include('Layouts.Footer')
 </div>
 @endsection

@@ -16,10 +16,9 @@
                                     <div class="col-lg-2 mt-10" style="text-align: end;">
                                         <a href="{{ route('tambah-admin') }}">
                                             <i class="fa-2x fa-plus" style="margin-right: 10px;"></i></a>
-
                                         <div class="row">
                                             <div class="col-lg-0"></div>
-                                            <div class="col-lg-4">
+                                            <!-- <div class="col-lg-4">
                                                 <div class="boxcontainer">
                                                     <table class="elementcontainer">
                                                         <tr>
@@ -32,7 +31,7 @@
                                                         </tr>
                                                     </table>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -41,7 +40,7 @@
                                 <div class="panel-bodi">
                                     <div class="table-wrap mt-40">
                                         <div class="table-responsive">
-                                            <table class="table mb-0">
+                                            <table class="table mb-0" id="dt-admin">
                                                 <thead>
                                                     <tr>
                                                         <th>Nama</th>
@@ -51,7 +50,7 @@
                                                         <th style="text-align: center;">Aksi</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <!-- <tbody>
                                                     <tr>
                                                         <td>Pamungkas Nuli Ramadhan</td>
                                                         <td>pamungkasnuli@rocketmail.com</td>
@@ -80,7 +79,7 @@
                                                             </a>
                                                         </td>
                                                     </tr>
-                                                </tbody>
+                                                </tbody> -->
                                             </table>
                                         </div>
                                     </div>
@@ -105,7 +104,7 @@
                                 <div class="panel-bodi">
                                     <div class="table-wrap mt-40">
                                         <div class="table-responsive">
-                                            <table class="table mb-0">
+                                            <table class="table mb-0" id="dt-admin">
                                                 <thead>
                                                     <tr>
                                                         <th style="text-align: center;">Role</th>
@@ -115,7 +114,7 @@
                                                         <th style="text-align: center;">Tanggal</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <!-- <tbody>
                                                     <tr>
                                                         <td style="text-align: center;"><span class="label label-sa">SA</span></td>
                                                         <td>Pamungkas Nuli Ramadhan</td>
@@ -149,7 +148,7 @@
                                                             <p>12 Jan 2022</p>
                                                         </td>
                                                     </tr>
-                                                </tbody>
+                                                </tbody> -->
                                             </table>
                                         </div>
                                     </div>
@@ -162,7 +161,7 @@
             </div>
         </div>
     </div>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script type="text/javascript">

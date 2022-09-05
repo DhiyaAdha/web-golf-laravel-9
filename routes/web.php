@@ -10,6 +10,7 @@ use App\Http\Controllers\TamuController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\InvoiceController;
@@ -72,6 +73,9 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::get('/daftar-tamu', [TamuController::class, 'index'])->name(
         'daftar-tamu'
     );
+    Route::get('/daftar-admin', [AdminController::class, 'index'])->name(
+        'daftar-admin'
+    );
     Route::get('/daftar-tamu/destroy/{id}', [
         TamuController::class,
         'delete',
@@ -82,17 +86,26 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::post('/inserttamu', [TamuController::class, 'inserttamu'])->name(
         'inserttamu'
     );
+    Route::post('/store', [AdminController::class, 'store'])->name(
+        'store'
+    );
     Route::get('/edit-tamu', [TamuController::class, 'edit'])->name(
         'edit-tamu'
     );
     Route::post('/update-tamu', [TamuController::class, 'update'])->name(
         'update-tamu'
     );
-    Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name(
-        'daftar-admin'
-    );
+    // Route::get('/daftar-admin', [AdminController::class, 'daftar_admin'])->name(
+    //     'daftar-admin'
+    // );
     Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name(
         'show'
+    );
+    Route::get('/daftar-admin/{id}', [AdminController::class, 'show'])->name(
+        'show'
+    );
+    Route::get('/daftar-admin/{id}', [AdminController::class, 'index'])->name(
+        'index'
     );
     Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name(
         'scan-tamu'
@@ -104,17 +117,17 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     route::get('qrcode/{id}', [ScanqrController::class, 'generate'])->name(
         'generate'
     );
-    Route::get('/tambah-admin', [AuthController::class, 'tambahadmin'])->name(
+    Route::get('/tambah-admin', [AdminController::class, 'tambahadmin'])->name(
         'tambah-admin'
     );
     Route::get('/daftar-tamu/destroy/{id}', [
         TamuController::class,
         'delete',
     ])->name('daftar-tamu.delete');
-    Route::get('/tambah-admin', [AuthController::class, 'tambah_admin'])->name(
+    Route::get('/tambah-admin', [AdminController::class, 'tambah_admin'])->name(
         'tambah-admin'
     );
-    Route::get('/edit-admin', [AuthController::class, 'edit_admin'])->name(
+    Route::get('/edit-admin', [AdminController::class, 'edit_admin'])->name(
         'edit-admin'
     );
     //route untuk order
@@ -192,7 +205,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/kartu-tamu', [ScanqrController::class, 'kartutamu'])->name(
         'kartu-tamu'
     );
-    Route::get('/tambah-admin', [AuthController::class, 'tambahadmin'])->name(
+    Route::get('/tambah-admin', [AdminController::class, 'tambahadmin'])->name(
         'tambah-admin'
     );
     Route::resource('proses', OrderController::class);
@@ -204,5 +217,9 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('deposit/{id}', [TamuController::class, 'deposittamu'])->name(
         'deposittamu'
     );
+    Route::post('/store', [AdminController::class, 'store'])->name(
+        'store'
+    );
+
 });
 //Finish level admin dan superadmin
