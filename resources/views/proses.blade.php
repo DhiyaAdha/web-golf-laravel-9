@@ -91,10 +91,24 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-6 mt-5">
-                                @foreach ($package as $data)
+                                @foreach ($default as $item)
                                     <p style="color: #7D7D7D; text-align:start;">
-                                        {{ $data->name }}
-                                        <hr>
+
+
+                                        <span class="wrap-txt-{{ $item->id }}" style="display: ">
+                                            {{ $item->name }}
+                                            <hr>
+                                        </span>
+                                    </p>
+                                @endforeach
+                                @foreach ($additional as $item2)
+                                    <p style="color: #7D7D7D; text-align:start;">
+
+
+                                        <span class="wrap-txt-{{ $item2->id }}" style="display: ">
+                                            {{ $item2->name }}
+                                            <hr>
+                                        </span>
                                     </p>
                                 @endforeach
                             </div>
@@ -137,30 +151,20 @@
 @endsection
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
 <script type="text/javascript">
-    // document.getElementById('increment').style.display = 'none';
-    // document.getElementById('my-input').style.display = 'none';
-    // document.getElementById('decrement').style.display = 'none';
-
-    // var inputs = document.getElementsById('cb1');
-
-    // $(function() {
-    //     $('#cb{{ $item->id }}').change(function() {
-    //         $(document).toggle($(this).is(':checked'));
-    //     });
-    // });
-
-    // $(function() {
-    //     $('#cb{{ $item2->id }}').change(function() {
-    //         $(document).toggle($(this).is(':checked'));
-    //     });
-    // });
-
-
-
     function valueChanged(id) {
         if ($('.form-control-' + id).is(":checked"))
             $(".wrap-quantity-" + id).show();
         else
             $(".wrap-quantity-" + id).hide();
     }
+
+    $(document).ready(function() {
+        $('#isChecked').change(function() {
+            if ($(this.checked).length) {
+                $(".wrap-txt-" + id).show();
+            } else {
+                $(".wrap-txt-" + id).hide();
+            }
+        });
+    });
 </script>

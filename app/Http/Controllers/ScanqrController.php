@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Deposit;
 use App\Models\Visitor;
+use App\Models\LogLimit;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use illuminate\support\facades\DB;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ScanqrController extends Controller
@@ -114,7 +117,24 @@ class ScanqrController extends Controller
         return view('tamu.kartu-tamu',compact('qrcode'),$data);
         
     }
+
+    //penghubung route dengan view
+    public function detailscan(){
+        return view('detail_scan');
+    }
     
+    //penghubung method dengan view yang akan ditampilkan
+    public function detail_datapengunjung($id){
+        $visitor = Visitor::find($id);
+        $deposit = Deposit::find($id);
+        $log_limit = LogLimit::find($id);
+        $data['visitor'] = $visitor;
+        $data['deposit'] = $deposit;
+        $data['log_limit'] = $log_limit;
 
+        return view('detail_scan', $data);
 
+        // $data_visitor = Visitor::all();
+        // return view('detail_scan', compact('data_visitor'));
+    }
 }
