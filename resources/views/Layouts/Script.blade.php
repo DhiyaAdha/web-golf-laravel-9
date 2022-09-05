@@ -1,8 +1,12 @@
 <!-- /#wrapper -->
 
 <!-- JavaScript -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
+</script>
 
 <!-- jQuery -->
 <script src="{{ asset('vendors/bower_components/jquery/dist/jquery.min.js') }}"></script>
@@ -46,6 +50,7 @@
 
 <!-- Switchery JavaScript -->
 <script src="{{ asset('vendors/bower_components/switchery/dist/switchery.min.js') }}"></script>
+<script src="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.min.js') }}"></script>
 <!-- Init JavaScript -->
 <script src="{{ asset('/dist/js/init.js') }}"></script>
 <script src="{{ asset('/dist/js/dashboard-data.js') }}"></script>
@@ -54,6 +59,36 @@
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
 <script>
+    $(document).on('click', '.delete', function() {
+        id = $(this).attr('id');
+        $('#confirmModal').modal('show');
+    });
+
+    $('#ok_button').click(function() {
+        $.ajax({
+            url: "package/destroy/" + id,
+            beforeSend: function() {
+                $('#ok_button').text('Hapus Data');
+            },
+            success: function(data) {
+                setTimeout(function() {
+                    $('#confirmModal').modal('hide');
+                    $('#dt-package').DataTable().ajax.reload(null, false);
+                });
+
+                window.setTimeout(function() {
+                    $.toast({
+                        text: 'Paket bermain berhasil dihapus permanen',
+                        position: 'top-right',
+                        loaderBg: '#fec107',
+                        icon: 'success',
+                        hideAfter: 2000,
+                        stack: 6
+                    });
+                }, 1000);
+            }
+        })
+    });
     // data analisis
     $('#dt-analisis').DataTable({
         "processing": true,
@@ -138,6 +173,7 @@
             "type": "GET",
             "datatype": "json"
         },
+        "render": $.fn.dataTable.render.text(),
         "columns": [{
                 "data": function(data) {
                     return data.name
@@ -150,28 +186,18 @@
             },
             {
                 "data": function(data) {
-                    return `<div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-addon">Rp</div>
-                                <label class="form-control">${data.price_weekdays}</label>
-                            </div>
-                        </div>`;
+                    return data.price_weekdays;
                 }
             },
             {
                 "data": function(data) {
-                    return `<div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-addon">Rp</div>
-                                <label class="form-control">${data.price_weekend}</label>
-                            </div>
-                        </div>`;
+                    return data.price_weekend;
                 }
             },
             {
                 "data": function(data) {
                     if (data.status == 0) {
-                        return `<input type="checkbox" checked class="js-switch js-switch-1"  data-color="#01c853" />`;
+                        return `<input type="checkbox" checked class="js-switch js-switch-1"  data-color="#e91e63" data-size="small"/>`;
                     } else {
                         return `<input type="checkbox" class="js-switch js-switch-1"  data-color="#01c853" />`;
                     }
@@ -432,7 +458,6 @@
             false);
         html5QrcodeScanner.render(onScanSuccess, onScanFailure);
     })
-    
 </script>
 {{-- Input Stepper --}}
 <script>

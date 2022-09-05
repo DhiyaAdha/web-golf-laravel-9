@@ -210,6 +210,10 @@ table#dt-tamu {
     padding: 2px 0px 25px;
 }
 
+.col-lg-6.p {
+    padding: 0px !important;
+}
+
 .btn-qr {
     border-radius: 10px;
     background-color: #d8d8d8;
