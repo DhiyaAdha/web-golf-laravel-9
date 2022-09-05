@@ -26,22 +26,26 @@
                             <strong>
                                 Pilih Paket Bermain
                             </strong>
-                            
+
                             @foreach ($default as $item)
-                            <form class="form-inline">
-                                <div class="checkbox checkbox-success">
-                                    <input id="checkbox1" type="checkbox" class="form-control form-control-{{ $item->id }}" onchange="valueChanged({{ $item->id }})">
-                                    <label for=""></label>
-                                </div>
+                                <form class="form-inline">
+                                    <div class="checkbox checkbox-success">
+                                        <input id="checkbox1" type="checkbox"
+                                            class="form-control form-control-{{ $item->id }}"
+                                            onchange="valueChanged({{ $item->id }})">
+                                        <label for=""></label>
+                                    </div>
                                     <span class="wrap-quantity-{{ $item->id }}" style="display: none">
-                                        <button type="button" id="decrement" onclick="stepper('decrement', {{ $item->id }})" >-</button>
+                                        <button type="button" id="decrement"
+                                            onclick="stepper('decrement', {{ $item->id }})">-</button>
                                         <input type="number" min="1" max="10" step="1" value="1"
-                                        id="my-input-{{ $item->id }}" readonly>
-                                        <button type="button" id="increment" onclick="stepper('increment', {{ $item->id }})" >+</button>
+                                            id="my-input-{{ $item->id }}" readonly>
+                                        <button type="button" id="increment"
+                                            onclick="stepper('increment', {{ $item->id }})">+</button>
                                     </span>
-                                        <label for="">{{ $item->name }}</label>
-                            </form>
-                        @endforeach
+                                    <label for="">{{ $item->name }}</label>
+                                </form>
+                            @endforeach
                         </div>
                         <div class="col-lg-8">
                             <div class="form-group">
@@ -50,16 +54,20 @@
                                     @foreach ($additional as $item2)
                                         <form class="form-inline">
                                             <div class="checkbox checkbox-success">
-                                                <input id="checkbox2" type="checkbox" class="form-control form-control-{{ $item2->id }}" onchange="valueChanged({{ $item2->id }})">
+                                                <input id="checkbox2" type="checkbox"
+                                                    class="form-control form-control-{{ $item2->id }}"
+                                                    onchange="valueChanged({{ $item2->id }})">
                                                 <label for=""></label>
                                             </div>
-                                                <span class="wrap-quantity-{{ $item2->id }}" style="display: none">
-                                                    <button type="button" id="decrement" onclick="stepper('decrement', {{ $item2->id }})" >-</button>
-                                                    <input type="number" min="1" max="10" step="1" value="1"
-                                                    id="my-input-{{ $item2->id }}" readonly>
-                                                    <button type="button" id="increment" onclick="stepper('increment', {{ $item2->id }})" >+</button>
-                                                </span>
-                                                    <label for="">{{ $item2->name }}</label>
+                                            <span class="wrap-quantity-{{ $item2->id }}" style="display: none">
+                                                <button type="button" id="decrement"
+                                                    onclick="stepper('decrement', {{ $item2->id }})">-</button>
+                                                <input type="number" min="1" max="10" step="1"
+                                                    value="1" id="my-input-{{ $item2->id }}" readonly>
+                                                <button type="button" id="increment"
+                                                    onclick="stepper('increment', {{ $item2->id }})">+</button>
+                                            </span>
+                                            <label for="">{{ $item2->name }}</label>
                                         </form>
                                     @endforeach
                                 </div>
@@ -85,14 +93,17 @@
                             <div class="col-lg-6 mt-5">
                                 @foreach ($package as $data)
                                     <p style="color: #7D7D7D; text-align:start;">
-                                        {{ $data->name }} <hr>
+                                        {{ $data->name }}
+                                        <hr>
                                     </p>
                                 @endforeach
                             </div>
                             <div class="col-lg-6 mt-5">
                                 @foreach ($package as $data)
-                                <p style="color: #7D7D7D; text-align:end;">Rp. {{ formatrupiah($data->price_weekdays) }} <hr>
-                                </p>
+                                    <p style="color: #7D7D7D; text-align:end;">Rp.
+                                        {{ formatrupiah($data->price_weekdays) }}
+                                        <hr>
+                                    </p>
                                 @endforeach
                             </div>
                         </div>
@@ -105,7 +116,7 @@
                             <div class="col-lg-6 mt-5">
                                 <p style="text-align:start;"><strong>Total</strong></p>
                             </div>
-                            <div class="col-lg-6 mt-5"> 
+                            <div class="col-lg-6 mt-5">
                                 <p style="text-align:end;">Rp. 1.000.000,00</p>
                             </div>
                         </div>
@@ -123,17 +134,14 @@
             </div>
         </div>
     </div>
-
-    
 @endsection
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
-    <script type="text/javascript">
-        
-        // document.getElementById('increment').style.display = 'none';
-        // document.getElementById('my-input').style.display = 'none';
-        // document.getElementById('decrement').style.display = 'none';
+<script type="text/javascript">
+    // document.getElementById('increment').style.display = 'none';
+    // document.getElementById('my-input').style.display = 'none';
+    // document.getElementById('decrement').style.display = 'none';
 
-        // var inputs = document.getElementsById('cb1');
+    // var inputs = document.getElementsById('cb1');
 
     // $(function() {
     //     $('#cb{{ $item->id }}').change(function() {
@@ -148,15 +156,11 @@
     // });
 
 
-    
-    function valueChanged(id)
-    {
-        if($('.form-control-'+id).is(":checked"))   
-            $(".wrap-quantity-"+id).show();
-        else
-            $(".wrap-quantity-"+id).hide();
-    }
-    
 
-        
-    </script>
+    function valueChanged(id) {
+        if ($('.form-control-' + id).is(":checked"))
+            $(".wrap-quantity-" + id).show();
+        else
+            $(".wrap-quantity-" + id).hide();
+    }
+</script>

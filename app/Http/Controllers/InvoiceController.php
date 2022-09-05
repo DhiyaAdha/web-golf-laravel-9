@@ -36,6 +36,7 @@ class InvoiceController extends Controller
             ->make(true);
         }
         return view('invoice.riwayat-invoice');
+
     }
 
     /**
