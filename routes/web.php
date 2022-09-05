@@ -182,6 +182,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
         'scan-tamu'
     );
     // Route::resource('qrcode/{id}', ScanqrController::class)->except(['show', 'update']);
+<<<<<<< HEAD
     route::get('qrcode/{id}', [ScanqrController::class, 'generate'])->name(
         'generate'
     );
@@ -195,6 +196,17 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/tambah-admin', [AuthController::class, 'tambahadmin'])->name(
         'tambah-admin'
     );
+=======
+    route::get('qrcode/{id}', [ScanqrController::class, 'generate'])->name('generate');
+    Route::get('/tambah-deposit',[TamuController::class,'tambahdeposit'])->name('tambah-deposit');
+    Route::get('/kartu-tamu/{id}',[ScanqrController::class,'kartutamu'])->name('kartu-tamu');
+    Route::get('/tambah-admin',[AuthController::class,'tambahadmin'])->name('tambah-admin');
+>>>>>>> dhiya
     Route::resource('proses', OrderController::class);
+
+    // Route::get('limittamu/{id}', [TamuController::class, 'limittamu'])->name('limittamu');
+    Route::get('/kartu-tamu/{id}',[TamuController::class,'show'])->name('show');
+    Route::get('deposit/{id}', [TamuController::class, 'deposittamu'])->name('deposittamu');
+
 });
 //Finish level admin dan superadmin
