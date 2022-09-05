@@ -85,10 +85,19 @@
                             <div class="col-lg-6 mt-5">
                                 @foreach ($default as $item)
                                     <p style="color: #7D7D7D; text-align:start;">
-                                        <input type="text" id="isChecked">
+                                        
 
-                                        <span class="wrap-txt-{{ $item->id }}" style="display: none">
+                                        <span class="wrap-txt-{{ $item->id }}" style="display: ">
                                             {{ $item->name }} <hr>
+                                        </span>
+                                    </p>
+                                @endforeach
+                                @foreach ($additional as $item2)
+                                    <p style="color: #7D7D7D; text-align:start;">
+                                        
+
+                                        <span class="wrap-txt-{{ $item2->id }}" style="display: ">
+                                            {{ $item2->name }} <hr>
                                         </span>
                                     </p>
                                 @endforeach
