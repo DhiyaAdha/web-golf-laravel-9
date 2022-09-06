@@ -26,7 +26,7 @@
                                 @csrf
                                 <div class="form-group">
                                     <label class="control-label mb-10" for="">Nama Lengkap</label>
-                                    <input type="text" class="form-control" id="result" size="50px" placeholder="Masukan Nama" required autofocus>
+                                    <input type="text" name="name" class="form-control" id="result" size="50px" placeholder="Masukan Nama" required autofocus>
                                 </div>
                                 <!-- <div class="form-group">
                                     <label class="control-label mb-10" for="">Alamat</label>
@@ -36,10 +36,10 @@
                                     <label class="control-label mb-10" for="">Jenis Kelamin</label>
                                     <div class="form-check">
                                         <label class="radio-inline">
-                                            <input type="radio" name="survey" id="Radios1" value="Yes">Pria
+                                            <input type="radio" name="gender" id="Radios1" value="Yes">Pria
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="survey" id="Radios2" value="No">Wanita
+                                            <input type="radio" name="gender" id="Radios2" value="No">Wanita
                                         </label>
                                     </div>
                                 </div>
@@ -53,15 +53,19 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
+                                    <label class="control-label mb-10" for="">Password</label>
+                                    <input type="text" name="password" class="form-control" id="show_hide_password" size="50px" placeholder="password" required autofocus>
+                                </div>
+                                <div class="form-group">
                                     <label class="control-label mb-10" for="">Nomer Hp</label>
-                                    <input type="number" class="form-control" id="result" size="50px" placeholder="Masukan Nomer Hp" required autofocus>
+                                    <input type="text" name="phone" class="form-control" id="result" size="50px" placeholder="Masukan Nomer Hp" required autofocus>
                                 </div>
                                 <div class="form-check">
                                     <label class="radio-inline">
-                                        <input type="radio" name="radio1" id="radio_1" value="option1" checked="">Super Admin
+                                        <input type="radio" name="role_id" id="radio_1" value="1" checked="">Super Admin
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="radio1" id="radio_2" value="option2" checked="">Admin
+                                        <input type="radio" name="role_id" id="radio_2" value="2" checked="">Admin
                                     </label>
                                 </div>
                                 <div class="form-group text-left">

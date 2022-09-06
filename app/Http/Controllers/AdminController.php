@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 
 class AdminController extends Controller
@@ -61,35 +62,33 @@ class AdminController extends Controller
      */
     public function create(Request $request)
     {
+        {
+            return view('admin.tambah-admin');
+        }
         //
-        $this->validate($request, [
-            'name' => 'required',
-            'address' => 'required',
-            'gender' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required',
-            'company' => 'required',
-            'position' => 'required',
-            'tipe_member' => 'required',
-        ]);
+        // $this->validate($request, [
+        //     'name' => 'required',
+        //     'gender' => 'required',
+        //     'email' => 'required|email',
+        //     'phone' => 'required',
+        //     'role_id' => 'required',
+        // ]);
 
-        $visitors = User::create([
-            'name' => $request->name,
-            'address' => $request->address,
-            'gender' => $request->gender,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'tipe_member' => $request->tipe_member,
-            'created_at' => Carbon::now(),
-        ]);
-
-        // $visitors->address = $request->alamat;
-        $visitors->save();
-        // return redirect('/daftar-tamu')
-        return redirect('admin.tambah-admin')->with(
-            'sukses',
-            'Company has been created successfully.'
-        );
+        // $visitors = User::create([
+        //     'name' => $request->name,
+        //     'gender' => $request->gender,
+        //     'email' => $request->email,
+        //     'phone' => $request->phone,
+        //     'role_id' => $request->role_id,
+        //     'created_at' => Carbon::now(),
+        // ]);
+        // // $visitors->address = $request->alamat;
+        // $visitors->save();
+        // // return redirect('/daftar-tamu')
+        // return redirect('admin.tambah-admin')->with(
+        //     'sukses',
+        //     'Company has been created successfully.'
+        // );
     }
 
     /**
@@ -103,30 +102,29 @@ class AdminController extends Controller
         //
         $this->validate($request, [
             'name' => 'required',
-            'address' => 'required',
             'gender' => 'required',
             'email' => 'required|email',
+            'password' => 'required|password',
             'phone' => 'required',
-            'company' => 'required',
-            'position' => 'required',
-            'tipe_member' => 'required',
+            'role_id' => 'required',
         ]);
 
         $visitors = User::create([
             'name' => $request->name,
-            'address' => $request->address,
             'gender' => $request->gender,
             'email' => $request->email,
+            'password' => Hash::make($request->password),
             'phone' => $request->phone,
-            'company' => $request->company,
-            'position' => $request->position,
-            'tipe_member' => $request->tipe_member,
+            'role_id' => $request->role_id,
             'created_at' => Carbon::now(),
         ]);
         // $visitors->address = $request->alamat;
-        $visitors->save();
-        return view('admin.Daftar-admin', compact('user')
-        );
+        // $visitors->save();
+        // return view('admin.Daftar-admin', compact('user')
+        // );
+        return redirect()
+            ->route('daftar-admin')
+            ->with('status', 'Berhasil Menambah Produk Baru');
     }
 
     /**
@@ -157,7 +155,7 @@ class AdminController extends Controller
     {
         //
         $visitor = User::find($id);
-        return view('admin.edit-admin', compact('user'));
+        return view('admin.edit-admin', compact('daftar-admin'));
     }
 
     /**
@@ -172,13 +170,9 @@ class AdminController extends Controller
         //
         $request->validate([
             'name' => 'required',
-            'address' => 'required',
             'gender' => 'required',
             'email' => 'required|email',
             'phone' => 'required',
-            'company' => 'required',
-            'position' => 'required',
-            'tipe_member' => 'required',
         ]);
         $visitor = User::find($id);
         $visitor->fill($request->post())->save();
