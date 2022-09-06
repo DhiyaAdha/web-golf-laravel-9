@@ -184,31 +184,31 @@
     //     alert("The Form has been Submitted.");
     // });
 
-    // $(document).ready(function() {
-    //     $('#isChecked').change(function() {
-    //         if ($(this.checked).length) {
-    //             $(".wrap-txt-" + id).show();
-    //         } else {
-    //             $(".wrap-txt-" + id).hide();
-    //         }
-    //     });
-    // });
-    // $(document).on('click', '.select-item', function () {
-    //     var radio = $(".selected-price:checked").val();
-    //     var name = $(this).data('name');
-    //     console.log(radio)
-    //     var price = (radio == 'weekdays') ? $(this).data('priceday') : $(this).data('priceend');
-        
-    //     var html = `<div class="row">
-    //                             <div class="col-lg-6 mt-5">
-    //                                 <p style="color: #7D7D7D; text-align:start;">${name}</p>
-    //                             </div>
-    //                             <div class="col-lg-6 mt-5">
-                                
-    //                                 <p style="color: #7D7D7D; text-align:end;">RP ${price}</p>
-    //                             </div>
-    //                         </div>`;
-    //     $('.wrap-selected-item').append(html)
-    // })
+    $(document).ready(function() {
+        $('#isChecked').change(function() {
+            if ($(this.checked).length) {
+                $(".wrap-txt-" + id).show();
+            } else {
+                $(".wrap-txt-" + id).hide();
+            }
+        });
+    });
+       $(document).on('click', '.select-item', function () {
+            var radio = $(".selected-price:checked").val();
+            var name = $(this).data('name');
+            console.log(radio)
+            var price = (radio == 'weekdays') ? $(this).data('priceday') : $(this).data('priceend');
+            
+            var html = `<div class="row">
+                                    <div class="col-lg-6 mt-5">
+                                        <p style="color: #7D7D7D; text-align:start;">${name}</p>
+                                    </div>
+                                    <div class="col-lg-6 mt-5">
+                                    
+                                        <p style="color: #7D7D7D; text-align:end;">RP ${price}</p>
+                                    </div>
+                                </div>`;
+            $('.wrap-selected-item').append(html)
+        });
 </script>
 @endsection
