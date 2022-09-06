@@ -57,7 +57,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="">Nomer Hp</label>
-                                        <input type="number" name="phone" class="form-control" id="phone"
+                                        <input type="text" min="0" onkeypress="return event.charCode >= 48 &amp;&amp; event.charCode <=57" name="phone" class="form-control" id="phone"
                                             size="50px" placeholder="Masukan Nomer Hp" required autofocus>
                                     </div>
                                     <div class="form-group">
