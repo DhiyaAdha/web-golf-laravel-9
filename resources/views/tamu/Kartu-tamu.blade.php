@@ -107,6 +107,7 @@
                         <div class="flex-grow-1 d-flex align-items-center">
                             <h6 class="panel-title txt-dark">Kartu tamu</h6>
                         </div>
+                        {{-- tab --}}
                         <ul role="tablist" class="nav nav-pills" id="myTabs_6">
                             <li class="active" role="presentation"><a class="tabs-log" aria-expanded="true" data-toggle="tab" role="tab" href="#transaction_tabs">Transaksi</a></li>
                             <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab" href="#deposit_tabs" aria-expanded="false">Deposit</a></li>
@@ -117,6 +118,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card-view p">
                         <div class="tab-content">
+                            {{-- transactions --}}
                             <div id="transaction_tabs" class="tab-pane fade active in" role="tabpanel">
                                 <div class="table-wrap">
                                     <div class="table-responsive">
@@ -168,6 +170,7 @@
                                     </div>
                                 </div>
                             </div>
+                            {{-- deposit --}}
                             <div id="deposit_tabs" class="tab-pane fade" role="tabpanel">
                                 <div class="table-wrap">
                                     <div class="table-responsive">
@@ -219,11 +222,13 @@
                                     </div>
                                 </div>
                             </div>
+                            {{-- limit --}}
                             <div id="limit_tabs" class="tab-pane fade" role="tabpanel">
                                 <div class="table-wrap">
                                     <div class="table-responsive">
                                         <table class="table table-hover">
                                             <thead>
+                                                {{-- Table head --}}
                                                 <tr>
                                                     <th>Order ID</th>
                                                     <th>Informasi</th>

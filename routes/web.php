@@ -61,6 +61,20 @@ Route::get('/logout', [AuthController::class, 'logout']);
 
 //Level superadmin
 Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
+    Route::get('/package/destroy/{id}', [
+        PackageController::class,
+        'destroy',
+    ])->name('package.destroy');
+    Route::post('/package/store', [PackageController::class, 'store'])->name(
+        'package.store'
+    );
+    Route::get('/package/edit/{id}', [PackageController::class, 'edit'])->name(
+        'package.edit'
+    );
+    Route::post('/package/update/{id}', [
+        PackageController::class,
+        'update',
+    ])->name('package.update');
     Route::resource('analisis-tamu', DashboardController::class);
     Route::resource('package', PackageController::class)->except([
         'show',
@@ -99,7 +113,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     //     'daftar-admin'
     // );
     Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name(
-        'show'
+        'show'      
     );
     Route::get('/daftar-admin/{id}', [AdminController::class, 'show'])->name(
         'show'
@@ -139,6 +153,10 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     //Kartu Tamu
     Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name(
         'show'
+    );
+    //Detail Scan
+    Route::get('/detail_scan/{id}', [ScanqrController::class, 'detail_datapengunjung'])->name(
+        'detail_scan'
     );
 });
 
@@ -217,9 +235,10 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('deposit/{id}', [TamuController::class, 'deposittamu'])->name(
         'deposittamu'
     );
-    Route::post('/store', [AdminController::class, 'store'])->name(
-        'store'
-    );
 
+    //Detail Scan
+    Route::get('/detail_scan/{id}', [ScanqrController::class, 'detail_datapengunjung'])->name(
+        'detail_scan'
+    );
 });
 //Finish level admin dan superadmin

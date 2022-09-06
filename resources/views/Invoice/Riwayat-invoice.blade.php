@@ -34,6 +34,7 @@
                                 <div class="table-wrap">
                                     <div class="table-responsive">
                                         <table class="table mb-0" id="dt-riwayat">
+                                            
                                             <thead>
                                                 <tr>
                                                     <th class="" style="">Nama</th>
