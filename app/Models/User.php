@@ -54,6 +54,11 @@ class User extends Authenticatable
     // {
     //     return $this->hasMany(DepositHistory::class);
     // }
+    
+    public function admin()
+    {
+        return $this->belongsTo(LogAdmin::class);
+    }
 
 
 }

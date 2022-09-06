@@ -63,6 +63,25 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group mb-30">
+                                            <label class="control-label mb-10 text-left">Status Paket</label>
+                                            <div class="radio-list">
+                                                <div class="radio-inline pl-0">
+                                                    <span class="radio radio-info"> <input type="radio" name="status"
+                                                            id="radio_11" value=0
+                                                            {{ $package->status == 0 ? 'checked' : '' }} required>
+                                                        <label for="radio_11">ON</label>
+                                                    </span>
+                                                </div>
+                                                <div class="radio-inline pl-0">
+                                                    <span class="radio radio-info"> <input type="radio" name="status"
+                                                            id="radio_12" value=1
+                                                            {{ $package->status == 1 ? 'checked' : '' }} required>
+                                                        <label for="radio_12">OFF</label>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <label class="control-label mb-10 text-left" for="example-email">Harga
                                                 Weekdays<span class="help"></span></label>

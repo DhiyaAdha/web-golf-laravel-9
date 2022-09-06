@@ -117,7 +117,6 @@
                             <div id="transaction_tabs" class="tab-pane fade active in" role="tabpanel">
                                 <div class="table-wrap">
                                     <div class="table-responsive">
-                                        {{-- <table class="table table-hover" id="transaksi"> --}}
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
@@ -179,52 +178,19 @@
                                                     <th style="text-align: center;">Tanggal</th>
                                                 </tr>
                                             </thead>
-                                        
                                             <tbody>
-                                                
-                                                @foreach ($deposit_history as $item)
+                                                @foreach ($deposit as $item)
                                                 <tr>
-                                                    
+                                                    <td> {{ $item->id }}</td>
+                                                    <td>    {{ $item->balance }} </td>
+                                                    <td> {{ $item->payment_type }} </td>
+                                                    <td> {{ $item->updated_at }} </td>
                                                 </tr>
+                                                
                                                 
                                             @endforeach
-                                                
+                                              
                                             </tbody>
-                                            {{-- <tbody>
-                                                <tr>
-                                                    <td>#10021</td>
-                                                    <td>Transaksi berhasil ! Arya GP telah melakukan
-                                                        pembayaran sebesar Rp.1.500.000,00</td>
-                                                    <td style="text-align: center;">
-                                                        <span class="label label-success">Berhasil</span>
-                                                    </td>
-                                                    <td style="text-align: center;">
-                                                        <p>12 Jan 2022</p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>#10021</td>
-                                                    <td>Transaksi berhasil ! Arya GP telah melakukan
-                                                        pembayaran menggunakan Limit Gratis.</td>
-                                                    <td style="text-align: center;">
-                                                        <span class="label label-success">Berhasil</span>
-                                                    </td>
-                                                    <td style="text-align: center;">
-                                                        <p>12 Jan 2022</p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>#10021</td>
-                                                    <td>Transaksi dibatalkan ! Arya GP telah
-                                                        membatalkan transaksi Limit Gratis.</td>
-                                                    <td style="text-align: center;">
-                                                        <span class="label label-warning">Batal</span>
-                                                    </td>
-                                                    <td style="text-align: center;">
-                                                        <p>12 Jan 2022</p>
-                                                    </td>
-                                                </tr>
-                                            </tbody> --}}
                                         </table>
                                     </div>
                                 </div>

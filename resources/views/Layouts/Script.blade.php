@@ -215,12 +215,12 @@
                     if (data.status == 0) {
                         return `<div class="checkbox checkbox-success checkbox-circle">
                                     <input id="checkbox-10" type="checkbox" disabled checked="">
-                                    <label for="checkbox-10"> ON </label>
+                                    <label for="checkbox-10"></label>
                                 </div>`;
                     } else {
                         return `<div class="checkbox checkbox-danger checkbox-circle">
                                     <input id="checkbox-12" type="checkbox" disabled checked="">
-                                    <label for="checkbox-12"> OFF </label>
+                                    <label for="checkbox-12"></label>
                                 </div>`;
                     }
                 }
@@ -314,6 +314,52 @@
 
         ],
     });
+
+    /* delete tamu */
+    $(document).on('click', '.delete-confirm', function() {
+        id = $(this).attr('id');
+        swal({
+            title: "Anda yakin ingin menghapus tamu ini?",
+            imageUrl: "../img/Warning.svg",
+            showCancelButton: true,
+            confirmButtonColor: "#FF2A00",
+            confirmButtonText: "Hapus paket",
+            cancelButtonText: "Batal",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function(isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url: "/daftar-tamu/destroy/" + id,
+                    beforeSend: function() {
+                        $('#ok_button').text('Hapus Data');
+                    },
+                    success: function(data) {
+                        setTimeout(function() {
+                            $('#confirmModal').modal('hide');
+                            $('#dt-tamu').DataTable().ajax.reload(null, false);
+                        });
+
+                        window.setTimeout(function() {
+                            $.toast({
+                                text: 'Data berhasil dihapus',
+                                position: 'top-right',
+                                loaderBg: '#fec107',
+                                icon: 'success',
+                                hideAfter: 2000,
+                                stack: 6
+                            });
+                        }, 1000);
+                        swal("Terhapus!", "", "success");
+                    }
+                })
+            } else {
+                swal("Dibatalkan", "akwoaokaokaokao", "error");
+            }
+        });
+        return false;
+    });
+    /* delete tamu *
 
     /* daftar invoice */
     $('#dt-riwayat').DataTable({

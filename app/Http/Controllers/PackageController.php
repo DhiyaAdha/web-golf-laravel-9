@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LogAdmin;
 use Illuminate\Http\Request;
 use App\Models\Package;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class PackageController extends Controller
 {
@@ -59,7 +61,12 @@ class PackageController extends Controller
             'category' => $request->category,
             'price_weekdays' => $request->price_weekdays,
             'price_weekend' => $request->price_weekend,
-            'status' => 0,
+            'status' => $request->status,
+        ]);
+        LogAdmin::create([
+            'user_id' => Auth::id(),
+            'type' => 'CREATE',
+            'activities' => '<b>'.auth()->user()->name.'</b>Menambahkan package baru bernama <b>'.$request->name.'</b>'
             // 'created_at' => Carbon::now(),
         ]);
 
@@ -105,8 +112,15 @@ class PackageController extends Controller
         $package->category = $request->category;
         $package->price_weekdays = $request->price_weekdays;
         $package->price_weekend = $request->price_weekend;
-        // $package->status = $request->status;
+        $package->status = $request->status;
         $package->updated_at = Carbon::now();
+        
+        LogAdmin::create([
+            'user_id' => Auth::id(),
+            'type' => 'UPDATE',
+            'activities' => 'Mengubah package <b>'.$package->name.'</b> menjadi <b>'.$request->name.'</b>'
+            // 'created_at' => Carbon::now(),
+        ]);
 
         $package->save();
         return redirect()
@@ -122,7 +136,14 @@ class PackageController extends Controller
      */
     public function destroy($id)
     {
+        $package = Package::find($id);
         Package::destroy($id);
+        LogAdmin::create([
+            'user_id' => Auth::id(),
+            'type' => 'DELETE',
+            'activities' => 'Menghapus package <b>'.$package->name.'</b>'
+            // 'created_at' => Carbon::now(),
+        ]);
         return redirect()->route('package.index');
     }
 

@@ -183,22 +183,6 @@ class DashboardController extends Controller
             }
         )->count();
         // dd($data['visitor_vip_male']);
-
-        // join function
-        // $visitor = Visitor::select(
-        //     'visitors.name as name',
-        //     'visitors.tipe_member as tipe_member',
-        //     'log_transactions.created_at'
-        // )
-        //     ->join(
-        //         'log_transactions',
-        //         'visitors.id',
-        //         '=',
-        //         'log_transactions.visitor_id'
-        //     )
-        //     ->get();
-        // dd($visitor);
-
         
         // data-table analisis tamu
         $visitor = Visitor::select([
