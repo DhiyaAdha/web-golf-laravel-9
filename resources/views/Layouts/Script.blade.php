@@ -63,34 +63,49 @@
     $("input[name='tch3']").TouchSpin();
     $(document).on('click', '.delete', function() {
         id = $(this).attr('id');
-        $('#confirmModal').modal('show');
-    });
+        swal({
+            title: "Anda yakin ingin menghapus paket ini?",
+            imageUrl: "../img/Warning.svg",
+            showCancelButton: true,
+            confirmButtonColor: "#FF2A00",
+            confirmButtonText: "Hapus paket",
+            cancelButtonText: "Batal",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function(isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url: "package/destroy/" + id,
+                    beforeSend: function() {
+                        $('#ok_button').text('Hapus Data');
+                    },
+                    success: function(data) {
+                        setTimeout(function() {
+                            $('#confirmModal').modal('hide');
+                            $('#dt-package').DataTable().ajax.reload(null, false);
+                        });
 
-    $('#ok_button').click(function() {
-        $.ajax({
-            url: "package/destroy/" + id,
-            beforeSend: function() {
-                $('#ok_button').text('Hapus Data');
-            },
-            success: function(data) {
-                setTimeout(function() {
-                    $('#confirmModal').modal('hide');
-                    $('#dt-package').DataTable().ajax.reload(null, false);
-                });
-
-                window.setTimeout(function() {
-                    $.toast({
-                        text: 'Paket bermain berhasil dihapus permanen',
-                        position: 'top-right',
-                        loaderBg: '#fec107',
-                        icon: 'success',
-                        hideAfter: 2000,
-                        stack: 6
-                    });
-                }, 1000);
+                        window.setTimeout(function() {
+                            $.toast({
+                                text: 'Paket bermain berhasil dihapus permanen',
+                                position: 'top-right',
+                                loaderBg: '#fec107',
+                                icon: 'success',
+                                hideAfter: 2000,
+                                stack: 6
+                            });
+                        }, 1000);
+                        swal("Terhapus!", "", "success");
+                    }
+                })
+            } else {
+                swal("Dibatalkan", "akwoaokaokaokao", "error");
             }
-        })
+        });
+        return false;
     });
+    /* delete package */
+
     // data analisis
     $('#dt-analisis').DataTable({
         "processing": true,
@@ -158,7 +173,7 @@
         }
     });
 
-    //data package
+    /* data package */
     $('#dt-package').DataTable({
         "processing": true,
         "serverSide": true,
@@ -183,25 +198,31 @@
             },
             {
                 "data": function(data) {
-                    return data.category
+                    return `<span class="label ${data.category == 'default' ? 'label-primary' : 'label-danger'}">${data.category}</span>`;
                 }
             },
             {
                 "data": function(data) {
-                    return data.price_weekdays;
+                    return `<span class="head-font block text-warning font-16">Rp.${data.price_weekdays}</span>`;
                 }
             },
             {
                 "data": function(data) {
-                    return data.price_weekend;
+                    return `<span class="head-font block text-warning font-16">Rp.${data.price_weekend}</span>`;
                 }
             },
             {
                 "data": function(data) {
                     if (data.status == 0) {
-                        return `<input type="checkbox" checked class="js-switch js-switch-1"  data-color="#e91e63" data-size="small"/>`;
+                        return `<div class="checkbox checkbox-success checkbox-circle">
+                                    <input id="checkbox-10" type="checkbox" disabled checked="">
+                                    <label for="checkbox-10"></label>
+                                </div>`;
                     } else {
-                        return `<input type="checkbox" class="js-switch js-switch-1"  data-color="#01c853" />`;
+                        return `<div class="checkbox checkbox-danger checkbox-circle">
+                                    <input id="checkbox-12" type="checkbox" disabled checked="">
+                                    <label for="checkbox-12"></label>
+                                </div>`;
                     }
                 }
             },
@@ -224,9 +245,9 @@
         columnDefs: [{
             orderable: false,
             targets: [0, 1, 2, 3, 4, 5, ]
-        }, ],
+        }],
     });
-
+    /* data package */
 
     //data tamu
     $('#dt-tamu').DataTable({
@@ -274,18 +295,6 @@
                 searchable: false,
                 orderable: false
             },
-
-            // {
-            //     "data": function(data) {
-            //         if (data.visitor.tipe_member == 'VIP') {
-            //             return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
-            //         } else {
-            //             return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
-            //         }
-            //     }
-            // },
-
-
         ],
         order: [],
         responsive: true,
@@ -307,7 +316,7 @@
         ],
     });
 
-    // invoice
+    /* daftar invoice */
     $('#dt-riwayat').DataTable({
         "processing": true,
         "serverSide": true,
@@ -326,34 +335,19 @@
         },
         "render": $.fn.dataTable.render.text(),
         "columns": [{
-                data: 'name',
-                searchable: true,
-                orderable: false
+                data: 'name'
             },
             {
-                data: 'tipe_member',
-                searchable: true,
-                orderable: false
+                "data": function(data) {
+                    return `<span class="label ${data.tipe_member == 'VIP' ? 'label-success' : 'label-warning'}">${data.tipe_member}</span>`;
+                }
             },
             {
-                data: 'total',
-                searchable: true,
-                orderable: false
+                data: 'total'
             },
             {
-                data: 'created_at',
-                searchable: true,
-                orderable: true
+                data: 'created_at'
             },
-            // {
-            //     "data": function(data) {
-            //         if (data.visitor.tipe_member == 'VIP') {
-            //             return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
-            //         } else {
-            //             return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
-            //         }
-            //     }
-            // },
         ],
         order: [],
         responsive: true,
@@ -370,8 +364,12 @@
         columnDefs: [{
             className: 'text-center',
             targets: [1, 2, 3]
+        }, {
+            orderable: false,
+            targets: [0, 1, 2, 3]
         }],
     });
+    /* daftar invoice */
 
     // invoice detail
     $('#dt-invoice').DataTable({
@@ -470,7 +468,7 @@
                 searchable: true,
                 orderable: false
             },
-            
+
         ],
         order: [],
         responsive: true,
@@ -485,10 +483,9 @@
             zeroRecords: "Tidak ada data yang sesuai"
         },
         columnDefs: [{
-                className: 'text-left',
-                targets: [1, 2, 3]
-            }
-        ],
+            className: 'text-left',
+            targets: [1, 2, 3]
+        }],
     });
 
 

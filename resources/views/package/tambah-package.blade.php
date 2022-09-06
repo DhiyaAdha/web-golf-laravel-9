@@ -12,7 +12,7 @@
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
                         <li><a href="index.html">Dashboard</a></li>
-                        <li><a href="#"><span>Paket</span></a></li>
+                        <li><a href="#"><span>Tambah paket</span></a></li>
                         <li class="active"><span>Tambah paket bermain</span></li>
                     </ol>
                 </div>
@@ -59,6 +59,23 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group mb-30">
+                                            <label class="control-label mb-10 text-left">Status Paket</label>
+                                            <div class="radio-list">
+                                                <div class="radio-inline pl-0">
+                                                    <span class="radio radio-info"> <input type="radio" name="status"
+                                                            id="radio_11" value=0 required>
+                                                        <label for="radio_11">ON</label>
+                                                    </span>
+                                                </div>
+                                                <div class="radio-inline pl-0">
+                                                    <span class="radio radio-info"> <input type="radio" name="status"
+                                                            id="radio_12" value=1 required>
+                                                        <label for="radio_12">OFF</label>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <label class="control-label mb-10 text-left" for="example-email">Harga
                                                 Weekdays<span class="help"></span></label>
@@ -81,6 +98,7 @@
                                                     placeholder="Masukan harga weekend" required>
                                             </div>
                                         </div>
+
                                         <button type="submit" class="btn btn-success">Submit</button>
                                     </form>
                                 </div>
