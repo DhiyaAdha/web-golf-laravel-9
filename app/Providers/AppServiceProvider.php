@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
+use Carbon\Carbon;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,9 +26,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // Paginator::useBootstrap();
+        config(['app.locale' => 'id']);
+        Carbon::setLocale('id');
     }
-    protected function fungsiHelper(){
-        foreach(glob(__DIR__.'/../Helpers/*.php') as $namafile){
+    protected function fungsiHelper()
+    {
+        foreach (glob(__DIR__ . '/../Helpers/*.php') as $namafile) {
             require_once $namafile;
         }
     }

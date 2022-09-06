@@ -1,6 +1,12 @@
 <!-- /#wrapper -->
 
 <!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
+</script>
 
 <!-- jQuery -->
 <script src="{{ asset('vendors/bower_components/jquery/dist/jquery.min.js') }}"></script>
@@ -44,6 +50,7 @@
 
 <!-- Switchery JavaScript -->
 <script src="{{ asset('vendors/bower_components/switchery/dist/switchery.min.js') }}"></script>
+<script src="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.min.js') }}"></script>
 <!-- Init JavaScript -->
 <script src="{{ asset('/dist/js/init.js') }}"></script>
 <script src="{{ asset('/dist/js/dashboard-data.js') }}"></script>
@@ -52,6 +59,52 @@
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
 <script>
+    /* delete package */
+    $(document).on('click', '.delete', function() {
+        id = $(this).attr('id');
+        swal({
+            title: "Anda yakin ingin menghapus paket ini?",
+            imageUrl: "../img/Warning.svg",
+            showCancelButton: true,
+            confirmButtonColor: "#FF2A00",
+            confirmButtonText: "Hapus paket",
+            cancelButtonText: "Batal",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function(isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url: "package/destroy/" + id,
+                    beforeSend: function() {
+                        $('#ok_button').text('Hapus Data');
+                    },
+                    success: function(data) {
+                        setTimeout(function() {
+                            $('#confirmModal').modal('hide');
+                            $('#dt-package').DataTable().ajax.reload(null, false);
+                        });
+
+                        window.setTimeout(function() {
+                            $.toast({
+                                text: 'Paket bermain berhasil dihapus permanen',
+                                position: 'top-right',
+                                loaderBg: '#fec107',
+                                icon: 'success',
+                                hideAfter: 2000,
+                                stack: 6
+                            });
+                        }, 1000);
+                        swal("Terhapus!", "", "success");
+                    }
+                })
+            } else {
+                swal("Dibatalkan", "akwoaokaokaokao", "error");
+            }
+        });
+        return false;
+    });
+    /* delete package */
+
     // data analisis
     $('#dt-analisis').DataTable({
         "processing": true,
@@ -110,9 +163,16 @@
             }
 
         ],
+        dom: "<'row mb-3'<'col-sm-12 col-md-8 pull-right'f><'toolbar col-sm-12 col-md-4 float-left'B>>" +
+            "<'row'<'col-sm-12'tr>>" +
+            "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+        // dom: '<"toolbar">frtip',
+        initComplete: function() {
+            $('div.toolbar').html('<b>Daftar nama terakhir bermain</b>').appendTo('.float-left');
+        }
     });
 
-    //data package
+    /* data package */
     $('#dt-package').DataTable({
         "processing": true,
         "serverSide": true,
@@ -129,6 +189,7 @@
             "type": "GET",
             "datatype": "json"
         },
+        "render": $.fn.dataTable.render.text(),
         "columns": [{
                 "data": function(data) {
                     return data.name
@@ -136,35 +197,31 @@
             },
             {
                 "data": function(data) {
-                    return data.category
+                    return `<span class="label ${data.category == 'default' ? 'label-primary' : 'label-danger'}">${data.category}</span>`;
                 }
             },
             {
                 "data": function(data) {
-                    return `<div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-addon">Rp</div>
-                                <label class="form-control">${data.price_weekdays}</label>
-                            </div>
-                        </div>`;
+                    return `<span class="head-font block text-warning font-16">Rp.${data.price_weekdays}</span>`;
                 }
             },
             {
                 "data": function(data) {
-                    return `<div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-addon">Rp</div>
-                                <label class="form-control">${data.price_weekend}</label>
-                            </div>
-                        </div>`;
+                    return `<span class="head-font block text-warning font-16">Rp.${data.price_weekend}</span>`;
                 }
             },
             {
                 "data": function(data) {
                     if (data.status == 0) {
-                        return `<input type="checkbox" checked class="js-switch js-switch-1"  data-color="#01c853" />`;
+                        return `<div class="checkbox checkbox-success checkbox-circle">
+                                    <input id="checkbox-10" type="checkbox" disabled checked="">
+                                    <label for="checkbox-10"> ON </label>
+                                </div>`;
                     } else {
-                        return `<input type="checkbox" class="js-switch js-switch-1"  data-color="#01c853" />`;
+                        return `<div class="checkbox checkbox-danger checkbox-circle">
+                                    <input id="checkbox-12" type="checkbox" disabled checked="">
+                                    <label for="checkbox-12"> OFF </label>
+                                </div>`;
                     }
                 }
             },
@@ -187,9 +244,9 @@
         columnDefs: [{
             orderable: false,
             targets: [0, 1, 2, 3, 4, 5, ]
-        }, ],
+        }],
     });
-
+    /* data package */
 
     //data tamu
     $('#dt-tamu').DataTable({
@@ -237,18 +294,6 @@
                 searchable: false,
                 orderable: false
             },
-
-            // {
-            //     "data": function(data) {
-            //         if (data.visitor.tipe_member == 'VIP') {
-            //             return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
-            //         } else {
-            //             return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
-            //         }
-            //     }
-            // },
-
-
         ],
         order: [],
         responsive: true,
@@ -270,7 +315,7 @@
         ],
     });
 
-    // invoice
+    /* daftar invoice */
     $('#dt-riwayat').DataTable({
         "processing": true,
         "serverSide": true,
@@ -289,34 +334,19 @@
         },
         "render": $.fn.dataTable.render.text(),
         "columns": [{
-                data: 'name',
-                searchable: true,
-                orderable: false
+                data: 'name'
             },
             {
-                data: 'tipe_member',
-                searchable: true,
-                orderable: false
+                "data": function(data) {
+                    return `<span class="label ${data.tipe_member == 'VIP' ? 'label-success' : 'label-warning'}">${data.tipe_member}</span>`;
+                }
             },
             {
-                data: 'total',
-                searchable: true,
-                orderable: false
+                data: 'total'
             },
             {
-                data: 'created_at',
-                searchable: true,
-                orderable: true
+                data: 'created_at'
             },
-            // {
-            //     "data": function(data) {
-            //         if (data.visitor.tipe_member == 'VIP') {
-            //             return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
-            //         } else {
-            //             return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
-            //         }
-            //     }
-            // },
         ],
         order: [],
         responsive: true,
@@ -333,8 +363,12 @@
         columnDefs: [{
             className: 'text-center',
             targets: [1, 2, 3]
+        }, {
+            orderable: false,
+            targets: [0, 1, 2, 3]
         }],
     });
+    /* daftar invoice */
 
     // invoice detail
     $('#dt-invoice').DataTable({
@@ -353,10 +387,7 @@
             "type": "GET",
             "datatype": "json"
         },
-
         "render": $.fn.dataTable.render.text(),
-
-
         "columns": [{
                 data: 'category',
                 searchable: true,
@@ -400,6 +431,63 @@
         ],
     });
 
+    // kartu-tamu(transaksi)
+    $('#card-tamu').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "lengthChange": false,
+        "searching": true,
+        "paginate": {
+            "first": "First",
+            "last": "Last",
+            "next": "Next",
+            "previous": "Previous"
+        },
+        "ajax": {
+            "url": "{{ route('kartu-tamu') }}",
+            "type": "GET",
+            "datatype": "json"
+        },
+
+        "render": $.fn.dataTable.render.text(),
+
+
+        "columns": [{
+                data: 'id',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'status',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'updated_at',
+                searchable: true,
+                orderable: false
+            },
+
+        ],
+        order: [],
+        responsive: true,
+        language: {
+            search: "",
+            searchPlaceholder: "Cari",
+            emptyTable: "Tidak ada data yang sesuai",
+            info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+            infoFiltered: "(difilter dari _MAX_ total data)",
+            infoEmpty: "Tidak ada data yang sesuai",
+            lengthMenu: "Menampilkan _MENU_ data",
+            zeroRecords: "Tidak ada data yang sesuai"
+        },
+        columnDefs: [{
+            className: 'text-left',
+            targets: [1, 2, 3]
+        }],
+    });
+
+
     // scan
     $(document).on("click", "#show-scan", function() {
         $(".disabled-scan").css("display", "none");
@@ -426,10 +514,12 @@
 </script>
 {{-- Input Stepper --}}
 <script>
-    const myInput = document.getElementById("my-input");
-
-    function stepper(btn) {
-        let id = btn.getAttribute("id");
+    function stepper(btn, ids) {
+        let myInput = document.getElementById("my-input-" + ids);
+        // myInput = document.getElementById("my-input");
+        // console.log(id);
+        let id = btn;
+        // let id = btn.getAttribute("id");
         let min = myInput.getAttribute("min");
         let max = myInput.getAttribute("max");
         let step = myInput.getAttribute("step");

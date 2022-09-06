@@ -5,15 +5,15 @@
             <!-- Title -->
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                    <h5 class="txt-dark">Tambah Paket</h5>
+                    <h5 class="txt-dark">Edit Paket</h5>
                 </div>
 
                 <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
                         <li><a href="index.html">Dashboard</a></li>
-                        <li><a href="#"><span>Tambah paket</span></a></li>
-                        <li class="active"><span>Tambah paket bermain</span></li>
+                        <li><a href="#"><span>Daftar Paket</span></a></li>
+                        <li class="active"><span>Edit paket bermain</span></li>
                     </ol>
                 </div>
                 <!-- /Breadcrumb -->
@@ -34,12 +34,13 @@
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
                                 <div class="form-wrap">
-                                    <form action="{{ route('package.store') }}" method="POST">
+                                    <form action="{{ route('package.update', $package->id) }}" method="POST">
                                         @csrf
                                         <div class="form-group">
                                             <label class="control-label mb-10 text-left" for="example-email">Nama Paket<span
                                                     class="help"></span></label>
-                                            <input type="text" id="example-email" name="name" class="form-control"
+                                            <input type="text" id="example-email" name="name"
+                                                value="{{ $package->name }}" class="form-control"
                                                 placeholder="Masukan nama paket" required>
                                         </div>
                                         <div class="form-group mb-30">
@@ -47,13 +48,16 @@
                                             <div class="radio-list">
                                                 <div class="radio-inline pl-0">
                                                     <span class="radio radio-info"> <input type="radio" name="category"
-                                                            id="radio_9" value="default" required>
+                                                            id="radio_9" value="default"
+                                                            {{ $package->category == 'default' ? 'checked' : '' }} required>
                                                         <label for="radio_9">Default</label>
                                                     </span>
                                                 </div>
                                                 <div class="radio-inline pl-0">
                                                     <span class="radio radio-info"> <input type="radio" name="category"
-                                                            id="radio_10" value="additional" required>
+                                                            id="radio_10" value="additional"
+                                                            {{ $package->category == 'additional' ? 'checked' : '' }}
+                                                            required>
                                                         <label for="radio_10">Additional</label>
                                                     </span>
                                                 </div>
@@ -67,6 +71,7 @@
                                                 <input type="text" min="0"
                                                     onkeypress="return event.charCode >= 48 && event.charCode <=57"
                                                     class="form-control" name="price_weekdays"
+                                                    value="{{ $package->price_weekdays }}"
                                                     placeholder="Masukan harga weekdays" required>
                                             </div>
                                         </div>
@@ -78,6 +83,7 @@
                                                 <input type="text" min="0"
                                                     onkeypress="return event.charCode >= 48 && event.charCode <=57"
                                                     class="form-control" name="price_weekend"
+                                                    value="{{ $package->price_weekend }}"
                                                     placeholder="Masukan harga weekend" required>
                                             </div>
                                         </div>
