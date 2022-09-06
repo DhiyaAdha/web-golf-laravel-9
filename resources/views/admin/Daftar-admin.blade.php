@@ -13,11 +13,11 @@
                                     <div class="col-lg-10 mt-15">
                                         <h6 style="margin-left: -20px;">Daftar Admin</h6>
                                     </div>
-                                    <div class="col-lg-2 mt-10" style="text-align: end;">
+                                    <div class="col-lg-2 mt-10" style="text-align: end; padding: 5px 30px 0px 5px;">
                                         <a href="{{ route('tambah-admin') }}">
                                             <i class="fa-2x fa-plus" style="margin-right: 10px;"></i></a>
                                         <div class="row">
-                                            <div class="col-lg-0"></div>
+                                            <!-- <div class="col-lg-0"></div> -->
                                             <!-- <div class="col-lg-4">
                                                 <div class="boxcontainer">
                                                     <table class="elementcontainer">
