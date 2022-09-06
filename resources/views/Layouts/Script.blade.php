@@ -215,12 +215,12 @@
                     if (data.status == 0) {
                         return `<div class="checkbox checkbox-success checkbox-circle">
                                     <input id="checkbox-10" type="checkbox" disabled checked="">
-                                    <label for="checkbox-10"> ON </label>
+                                    <label for="checkbox-10"> </label>
                                 </div>`;
                     } else {
                         return `<div class="checkbox checkbox-danger checkbox-circle">
                                     <input id="checkbox-12" type="checkbox" disabled checked="">
-                                    <label for="checkbox-12"> OFF </label>
+                                    <label for="checkbox-12">  </label>
                                 </div>`;
                     }
                 }
