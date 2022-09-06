@@ -50,5 +50,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // public function deposit_history()
+    // {
+    //     return $this->hasMany(DepositHistory::class);
+    // }
+
 
 }

@@ -184,7 +184,23 @@
                                                     <th style="text-align: center;">Tanggal</th>
                                                 </tr>
                                             </thead>
+                                        
                                             <tbody>
+                                                
+                                                @foreach ($deposit_history as $item)
+                                                <tr>
+                                                    <td> {{ $item->id }} </td>
+                                                    <td>{{ $item->name }}</td>
+                                                    <td>{{ $item->balance }}</td>
+                                                    <td>{{  }}</td>
+
+                                                    {{-- <td> {{ $reservation->end_date }} </td> --}}
+                                                </tr>
+                                                
+                                            @endforeach
+                                                
+                                            </tbody>
+                                            {{-- <tbody>
                                                 <tr>
                                                     <td>#10021</td>
                                                     <td>Transaksi berhasil ! Arya GP telah melakukan
@@ -218,7 +234,7 @@
                                                         <p>12 Jan 2022</p>
                                                     </td>
                                                 </tr>
-                                            </tbody>
+                                            </tbody> --}}
                                         </table>
                                     </div>
                                 </div>

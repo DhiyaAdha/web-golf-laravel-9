@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Deposit;
-
+use App\Models\DepositHistory;
 use App\Models\Visitor;
 use App\Models\LogLimit;
 use Illuminate\Http\Request;
@@ -189,7 +189,6 @@ class TamuController extends Controller
      */
     public function show($id)
     {
-        // dhiya
         $data['visitor'] = Visitor::find($id);
         $limit = LogLimit::where('visitor_id',$id)->first();
         $deposit = Deposit::where('visitor_id',$id)->first();
@@ -198,22 +197,11 @@ class TamuController extends Controller
 
         $data['quota'] = $limit->quota;
         $data['balance'] = $deposit->balance;
+        $data['deposit_history'] = DepositHistory::where('visitor_id', $id)
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
         
-        // $data['loglimit'] = $limit;
-        // $data['loglimit'] = $limit->quota;
-        // dd($data['loglimit']);
-        // $data['quota'] = Visitor::find($limit->visitor_id);
-        // $data = [
-        //     [
-        //         'id' => $limit->visitor_id,
-        //         'quota' => $limit->quota,
-        //     ]
-        // ];
-        // DB::table('log_limits', 'quota')->get();
-        // $data['qrcode'] = $qrcode->qr;
-
-        // $data['visitor'] =  Visitor::find($id);
-        // return view('tamu.Kartu-tamu', $data);
 
         return view('tamu.kartu-tamu', $data);
     }
