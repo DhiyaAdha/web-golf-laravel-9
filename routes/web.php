@@ -90,10 +90,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::get('/daftar-admin', [AdminController::class, 'index'])->name(
         'daftar-admin'
     );
-    Route::get('/daftar-tamu/destroy/{id}', [
-        TamuController::class,
-        'delete',
-    ])->name('hapus-tamu');
+    Route::get('/daftar-tamu/destroy/{id}', [TamuController::class,'delete',])->name('hapus-tamu');
     Route::get('/tambah-tamu', [TamuController::class, 'tambahtamu'])->name(
         'tambah-tamu'
     );
@@ -109,9 +106,6 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::post('/update-tamu', [TamuController::class, 'update'])->name(
         'update-tamu'
     );
-    // Route::get('/daftar-admin', [AdminController::class, 'daftar_admin'])->name(
-    //     'daftar-admin'
-    // );
     Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name(
         'show'      
     );
@@ -141,9 +135,10 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::get('/tambah-admin', [AdminController::class, 'tambah_admin'])->name(
         'tambah-admin'
     );
-    Route::get('/edit-admin', [AdminController::class, 'edit_admin'])->name(
+    Route::get('/edit-admin/{id}', [AdminController::class, 'edit'])->name(
         'edit-admin'
     );
+    Route::get('/daftar-admin/destroy/{id}', [AdminController::class,'delete',])->name('hapus-admin');
     //route untuk order
     Route::resource('proses', OrderController::class);
     Route::get('/metode_pembayaran', [
@@ -201,6 +196,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::post('/update-tamu/{id}', [TamuController::class, 'update'])->name(
         'update-tamu'
     );
+    
     // Route::resource('/Scan-tamu', ScanqrController::class);
     Route::get('/scan-tamu', [ScanqrController::class, 'scantamu'])->name(
         'scan-tamu'
@@ -226,7 +222,11 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/tambah-admin', [AdminController::class, 'tambahadmin'])->name(
         'tambah-admin'
     );
+    Route::post('/update-admin/{id}', [AdminController::class, 'update'])->name(
+        'update-admin'
+    );
     Route::resource('proses', OrderController::class);
+
 
     // Route::get('limittamu/{id}', [TamuController::class, 'limittamu'])->name('limittamu');
     Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name(

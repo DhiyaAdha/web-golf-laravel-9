@@ -50,36 +50,6 @@
                                                         <th style="text-align: center;">Aksi</th>
                                                     </tr>
                                                 </thead>
-                                                <!-- <tbody>
-                                                    <tr>
-                                                        <td>Pamungkas Nuli Ramadhan</td>
-                                                        <td>pamungkasnuli@rocketmail.com</td>
-                                                        <td>081126458792</td>
-                                                        <td style="text-align: center; color:black;"><span class="label label-super-admin">Super Admin</span> </td>
-                                                        <td style="text-align: center;">
-                                                            <a href="/edit-admin">
-                                                                <img src="dist/img/edit.svg" alt="" style="padding: 2px 7px 2px 2px; ">
-                                                            </a>
-                                                            <a href="#">
-                                                                <img src="dist/img/hapus.svg" alt="" style="padding: 2px 7px 2px 2px;">
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Pamungkas Nuli Ramadhan</td>
-                                                        <td>pamungkasnuli@rocketmail.com</td>
-                                                        <td>081126458792</td>
-                                                        <td style="text-align: center; color:black;"><span class="label label-admin">Admin</span> </td>
-                                                        <td style="text-align: center;">
-                                                            <a href="/edit-admin">
-                                                                <img src="dist/img/edit.svg" alt="" style="padding: 2px 7px 2px 2px; ">
-                                                            </a>
-                                                            <a href="#">
-                                                                <img src="dist/img/hapus.svg" alt="" style="padding: 2px 7px 2px 2px;">
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody> -->
                                             </table>
                                         </div>
                                     </div>
@@ -92,17 +62,17 @@
                 <div class="row" style="padding: 1px 25px">
                     <div class="col-sm-12">
                         <div class="panel panel-default card-view">
-                            <div class="panel-heding">
+                            <div class="panel-heading">
                                 {{-- <div class="clearfix"></div> --}}
                                 <div class="row">
                                     <div class="col-lg-10 mt-15">
-                                        <h6 style="margin-left: -20px;">history aktifitas</h6>
+                                        <h6 style="margin-left: 20px;">history aktifitas</h6>
                                     </div>
                                 </div>
                             </div>
                             <div class="panel-wrapper collapse in">
                                 <div class="panel-bodi">
-                                    <div class="table-wrap mt-40">
+                                    <div class="table-wrap mt-20">
                                         <div class="table-responsive">
                                             <table class="table mb-0" id="dt-admin">
                                                 <thead>
@@ -114,41 +84,7 @@
                                                         <th style="text-align: center;">Tanggal</th>
                                                     </tr>
                                                 </thead>
-                                                <!-- <tbody>
-                                                    <tr>
-                                                        <td style="text-align: center;"><span class="label label-sa">SA</span></td>
-                                                        <td>Pamungkas Nuli Ramadhan</td>
-                                                        <td>Menambah membership VIP/VVIP baru bernama Arya GP</td>
-                                                        <td style="text-align: center;">
-                                                            <span class="label label-tambah">Tambah</span>
-                                                        </td>
-                                                        <td style="text-align: center;">
-                                                            <p>12 Jan 2022</p>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="text-align: center;"><span class="label label-sa">SA</span></td>
-                                                        <td>Pamungkas Nuli Ramadhan</td>
-                                                        <td>Menambah membership VIP/VVIP baru bernama Arya GP</td>
-                                                        <td style="text-align: center;">
-                                                            <span class="label label-hapus">Delet</span>
-                                                        </td>
-                                                        <td style="text-align: center;">
-                                                            <p>12 Jan 2022</p>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="text-align: center;"><span class="label label-sa">SA</span></td>
-                                                        <td>Pamungkas Nuli Ramadhan</td>
-                                                        <td>Menambah membership VIP/VVIP baru bernama Arya GP</td>
-                                                        <td style="text-align: center;">
-                                                            <span class="label label-update">Update</span>
-                                                        </td>
-                                                        <td style="text-align: center;">
-                                                            <p>12 Jan 2022</p>
-                                                        </td>
-                                                    </tr>
-                                                </tbody> -->
+                                                <!--  -->
                                             </table>
                                         </div>
                                     </div>
