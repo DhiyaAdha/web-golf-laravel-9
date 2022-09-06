@@ -18,15 +18,18 @@
                 <!-- /Breadcrumb -->
             </div>
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="col-lg-6 mt-20">
                     <div class="panel panel-default panel-dropdown card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
-                                <h6 class="panel-title txt-dark">Kartu tamu</h6>
+                                <h6 class="panel-title txt-dark">Kartu Tamu</h6>
                             </div>
                             <div class="pull-right">
-                                <div class=" pull-left">
-                                    <a href="/dist/img/kartu-tamu.png"><i class="fa-solid fa-address-card"></i></a>
+                                <div class="dropdown  pull-left">
+                                    <a class="dropdown-toggle weight-500" id="examplePanelDropdown" data-toggle="dropdown"
+                                        href="#" aria-expanded="false" role="button">
+                                        <a href="/dist/img/kartu-tamu.png"><i class="fa-solid fa-address-card"></i></a>
+                                    </a>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
@@ -275,6 +278,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <div class="col-lg-12">
         @include('Layouts.Footer')

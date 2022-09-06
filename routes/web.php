@@ -10,6 +10,7 @@ use App\Http\Controllers\TamuController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\InvoiceController;

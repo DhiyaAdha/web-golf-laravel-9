@@ -320,6 +320,84 @@
 
         ],
     });
+    // data admin
+    $('#dt-admin').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "lengthChange": false,
+        "searching": true,
+        "paginate": {
+            "first": "First",
+            "last": "Last",
+            "next": "Next",
+            "previous": "Previous"
+        },
+        "ajax": {
+            "url": "{{ route('daftar-admin') }}",
+            "type": "GET",
+            "datatype": "json"
+        },
+
+        "render": $.fn.dataTable.render.text(),
+
+
+        "columns": [{
+                data: 'name',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'email',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'phone',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'role_id',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'action',
+                searchable: false,
+                orderable: false
+            },
+
+            // {
+            //     "data": function(data) {
+            //         if (data.visitor.tipe_member == 'VIP') {
+            //             return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
+            //         } else {
+            //             return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
+            //         }
+            //     }
+            // },
+
+
+        ],
+        order: [],
+        responsive: true,
+        language: {
+            search: "",
+            searchPlaceholder: "Cari",
+            emptyTable: "Tidak ada data yang sesuai",
+            info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+            infoFiltered: "(difilter dari _MAX_ total data)",
+            infoEmpty: "Tidak ada data yang sesuai",
+            lengthMenu: "Menampilkan _MENU_ data",
+            zeroRecords: "Tidak ada data yang sesuai"
+        },
+        columnDefs: [{
+                className: 'text-left',
+                targets: [1, 2, 3, 4]
+            }
+
+        ],
+    });
 
     /* daftar invoice */
     $('#dt-riwayat').DataTable({
