@@ -19,7 +19,6 @@ class RoleSeeder extends Seeder
             
             'id' => '1',
             'name' => 'Admin',
-            
         ]);
 
         Role::create([

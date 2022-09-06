@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-        \App\Models\User::factory(10)->create();
+        // \App\Models\User::factory(10)->create();
         $this->call(VisitorSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
@@ -33,7 +33,6 @@ class DatabaseSeeder extends Seeder
         $this->call(DetailSeeder::class);
         $this->call(LogLimitSeeder::class);
         $this->call(DepositSeeder::class);
-        $this->call(DepositHistorySeeder::class);
         
     }
 }
