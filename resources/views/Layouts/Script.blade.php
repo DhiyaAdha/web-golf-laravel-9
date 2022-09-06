@@ -61,7 +61,11 @@
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
 <script>
-    $("input[name='tch3']").TouchSpin();
+    $(".vertical-spin").TouchSpin({
+        verticalbuttons: true,
+        verticalupclass: 'ti-plus',
+        verticaldownclass: 'ti-minus'
+    });
     $(document).on('click', '.delete', function() {
         id = $(this).attr('id');
         swal({
