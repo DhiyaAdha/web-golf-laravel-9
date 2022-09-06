@@ -20,10 +20,14 @@
                         <h6 class="control-label mb-10">Tambah Tamu</h6>
                         <div class="panel-body">
                             <div class="form-wrap">
-                                <form action="/tambah-tamu" method="post">
+                                {{-- form --}}
+                                <form action="/tambah-deposit" method="post">
                                     <div class="form-group">
+                                        @csrf
+                                        <label class="control-label mb-10" for=""></label>
+                                        <input type="hidden" name="visitor_id" value="{{ $id }}" class="form-control">
                                         <label class="control-label mb-10" for="">Tambah Jumlah Deposit</label>
-                                        <input type="number" class="form-control" size="50px"
+                                        <input type="number" class="form-control" name="balance" size="50px"
                                             placeholder="Masukan Jumlah Deposit">
                                         <p>Pastikan tamu memberitahu atau memberi bukti transfer, baik berupa screenshoot
                                             atau invoice</p>

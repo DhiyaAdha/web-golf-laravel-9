@@ -208,7 +208,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
         'generate'
     );
     
-    Route::get('/tambah-deposit', [
+    Route::get('/tambah-deposit/{id}', [
         TamuController::class,
         'tambahdeposit',
     ])->name('tambah-deposit');
@@ -232,5 +232,11 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/detail_scan/{id}', [ScanqrController::class, 'detail_datapengunjung'])->name(
         'detail_scan'
     );
+
+    Route::post('/tambah-deposit', [TamuController::class, 'insertdeposit'])->name(
+        'insertdeposit'
+    );
+
+
 });
 //Finish level admin dan superadmin
