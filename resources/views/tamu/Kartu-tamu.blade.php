@@ -184,12 +184,7 @@
                                                 
                                                 @foreach ($deposit_history as $item)
                                                 <tr>
-                                                    <td> {{ $item->id }} </td>
-                                                    <td>{{ $item->name }}</td>
-                                                    <td>{{ $item->balance }}</td>
-                                                    <td>{{  }}</td>
-
-                                                    {{-- <td> {{ $reservation->end_date }} </td> --}}
+                                                    
                                                 </tr>
                                                 
                                             @endforeach

@@ -46,12 +46,12 @@ class DashboardController extends Controller
         $month_period = CarbonPeriod::create(Carbon::now()->subMonths(11), Carbon::now());
         // dd($monthPeriod);
         foreach($month_period as $key => $value) {
-            $month_new[$value->format('m')] = $value->format('n');
+            $month_new[$value->format('m')] = [$value->format('n'), $value->format('Y')];
         }
         // dd(array_values($month_new));
         foreach (array_values($month_new) as $key => $value) {
 
-            $data['visitor'][$key]['period'] = $months[$value];
+            $data['visitor'][$key]['period'] = $months[$value[0]];
             $data['visitor'][$key]['vvip'] = LogTransaction::where('payment_status', 1)->whereHas(
                 'visitor',
                 function (Builder $query) {
@@ -59,8 +59,11 @@ class DashboardController extends Controller
                 }
             )->whereMonth(
                 'created_at',
-                strlen($value) == 1 ? '0' . $value : $value
-            )->whereYear('created_at', $getyear)
+                strlen($value[0]) == 1 ? '0' . $value[0] : $value[0]
+            )->whereYear(
+                'created_at', 
+                $value[1]
+            )
             ->count();
 
             $data['visitor'][$key]['vip'] = LogTransaction::where('payment_status', 1)->whereHas(
@@ -70,8 +73,11 @@ class DashboardController extends Controller
                 }
             )->whereMonth(
                 'created_at',
-                strlen($value) == 1 ? '0' . $value : $value
-            )->whereYear('created_at', $getyear)
+                strlen($value[0]) == 1 ? '0' . $value[0] : $value[0]
+            )->whereYear(
+                'created_at', 
+                $value[1]
+            )
             ->count();
         }
 
