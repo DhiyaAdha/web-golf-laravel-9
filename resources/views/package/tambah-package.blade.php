@@ -60,18 +60,18 @@
                                             </div>
                                         </div>
                                         <div class="form-group mb-30">
-                                            <label class="control-label mb-10 text-left">Status</label>
+                                            <label class="control-label mb-10 text-left">Status Paket</label>
                                             <div class="radio-list">
                                                 <div class="radio-inline pl-0">
                                                     <span class="radio radio-info"> <input type="radio" name="status"
-                                                            id="radio_9" value="0" required>
-                                                        <label for="radio_9">ON</label>
+                                                            id="radio_11" value=0 required>
+                                                        <label for="radio_11">ON</label>
                                                     </span>
                                                 </div>
                                                 <div class="radio-inline pl-0">
                                                     <span class="radio radio-info"> <input type="radio" name="status"
-                                                            id="radio_10" value="1" required>
-                                                        <label for="radio_10">OFF</label>
+                                                            id="radio_12" value=1 required>
+                                                        <label for="radio_12">OFF</label>
                                                     </span>
                                                 </div>
                                             </div>
