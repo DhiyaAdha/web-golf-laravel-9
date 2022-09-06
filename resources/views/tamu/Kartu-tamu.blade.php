@@ -5,13 +5,14 @@
         <div class="container-fluid">
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                    <h5 class="txt-dark">panel-wells</h5>
+                    <h5 class="txt-dark">Detail tamu</h5>
                 </div>
                 <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
                         <li><a href="index.html">Dashboard</a></li>
-                        <li class="active"><span>Daftar tamu</span></li>
+                        <li><a href="index.html">Daftar tamu</a></li>
+                        <li class="active"><span>Detail tamu</span></li>
                     </ol>
                 </div>
                 <!-- /Breadcrumb -->
@@ -61,7 +62,7 @@
                 <div class="col-lg-3 col-md-4 col-sm-3 col-xs-12">
                     <div class="panel panel-default card-view p">
                         <div class="panel-heading">
-                            <h6 class="panel-title text-center">Limit Bulanan</h6>
+                            <h6 class="panel-title text-center">Limit bulanan</h6>
                             <div class="clearfix"></div>
                         </div>
                         <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
@@ -93,16 +94,10 @@
                 </div>
             </div>
             <div class="row">
-                {{-- <div class="panel-heading l">
-                    <div class="pull-left">
-                        <h6 class="panel-title txt-dark">Kartu tamu</h6>
-                    </div>
-                    <div class="clearfix"></div>
-                </div> --}}
                 <div class="panel-heading tabs">
                     <div class="d-flex">
                         <div class="flex-grow-1 d-flex align-items-center">
-                            <h6 class="panel-title txt-dark">Kartu tamu</h6>
+                            <h6 class="panel-title txt-dark">Riwayat tamu</h6>
                         </div>
                         {{-- tab --}}
                         <ul role="tablist" class="nav nav-pills" id="myTabs_6">
