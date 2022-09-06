@@ -12,7 +12,7 @@
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
                         <li><a href="javascript:void(0)">Dashboard</a></li>
-                        <li class="active"><span>Paket Bermain</span></li>
+                        <li class="active"><span>Daftar paket</span></li>
                     </ol>
                 </div>
                 <!-- /Breadcrumb -->
@@ -57,27 +57,6 @@
                                         </table>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal fade" tabindex="-1" role="dialog" id="confirmModal" data-backdrop="false">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">PERHATIAN</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-
-                                <p><b>Paket yang dihapus akan pindah secara permanen</b></p>
-                            </div>
-                            <div class="modal-footer bg-whitesmoke br">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-danger" name="ok_button" id="ok_button">Hapus
-                                    Data</button>
                             </div>
                         </div>
                     </div>

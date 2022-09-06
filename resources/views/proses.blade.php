@@ -96,16 +96,18 @@
                                         
 
                                         <span class="wrap-txt-{{ $item->id }}" style="display: ">
-                                            {{ $item->name }} <hr>
+                                            {{ $item->name }}
+                                            <hr>
                                         </span>
                                     </p>
                                 @endforeach
                                 @foreach ($additional as $item2)
                                     <p style="color: #7D7D7D; text-align:start;">
-                                        
+
 
                                         <span class="wrap-txt-{{ $item2->id }}" style="display: ">
-                                            {{ $item2->name }} <hr>
+                                            {{ $item2->name }}
+                                            <hr>
                                         </span>
                                     </p>
                                 @endforeach
@@ -157,13 +159,13 @@
             $(".wrap-quantity-"+id).hide();
     }   
 
-    $(document).ready(function(){
-        $('#isChecked').change(function(){
-        if($(this.checked).length)  { 
-                $(".wrap-txt-"+id).show();
-        }else{
-                $(".wrap-txt-"+id).hide();
-        }
+    $(document).ready(function() {
+        $('#isChecked').change(function() {
+            if ($(this.checked).length) {
+                $(".wrap-txt-" + id).show();
+            } else {
+                $(".wrap-txt-" + id).hide();
+            }
         });
     });
     </script>

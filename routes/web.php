@@ -37,43 +37,22 @@ Route::get('/', function () {
 });
 
 //untuk route login
-Route::get('/login', [AuthController::class, 'index'])
-    ->Middleware('guest')
-    ->name('login');
+Route::get('/login', [AuthController::class, 'index'])->Middleware('guest')->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 //Route untuk sebelum Login
-Route::get('/lupa-pasword', [AuthController::class, 'forgot_password'])
-    ->middleware('guest')
-    ->name('Lupa-pasword');
-Route::post('/lupa-pasword', [AuthController::class, 'sendresetlink'])->name(
-    'Lupa-pasword.link'
-);
-Route::get('/reset-pasword/{token}', [
-    AuthController::class,
-    'showResetForm',
-])->name('Reset-pasword');
-Route::post('/reset-pasword', [AuthController::class, 'resetPassword'])->name(
-    'Reset-pasword.update'
-);
+Route::get('/lupa-pasword', [AuthController::class, 'forgot_password'])->middleware('guest')->name('Lupa-pasword');
+Route::post('/lupa-pasword', [AuthController::class, 'sendresetlink'])->name('Lupa-pasword.link');
+Route::get('/reset-pasword/{token}', [AuthController::class,'showResetForm'])->name('Reset-pasword');
+Route::post('/reset-pasword', [AuthController::class, 'resetPassword'])->name('Reset-pasword.update');
 //untuk route logout
 Route::get('/logout', [AuthController::class, 'logout']);
 
 //Level superadmin
 Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
-    Route::get('/package/destroy/{id}', [
-        PackageController::class,
-        'destroy',
-    ])->name('package.destroy');
-    Route::post('/package/store', [PackageController::class, 'store'])->name(
-        'package.store'
-    );
-    Route::get('/package/edit/{id}', [PackageController::class, 'edit'])->name(
-        'package.edit'
-    );
-    Route::post('/package/update/{id}', [
-        PackageController::class,
-        'update',
-    ])->name('package.update');
+    Route::get('/package/destroy/{id}', [PackageController::class,'destroy'])->name('package.destroy');
+    Route::post('/package/store', [PackageController::class, 'store'])->name('package.store');
+    Route::get('/package/edit/{id}', [PackageController::class, 'edit'])->name('package.edit');
+    Route::post('/package/update/{id}', [PackageController::class,'update'])->name('package.update');
     Route::resource('analisis-tamu', DashboardController::class);
     Route::resource('package', PackageController::class)->except([
         'show',
@@ -137,18 +116,11 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     
     //route untuk order
     Route::resource('proses', OrderController::class);
-    Route::get('/metode_pembayaran', [
-        InvoiceController::class,
-        'metode_pembayaran',
-    ])->name('metode_pembayaran');
+    Route::get('/metode_pembayaran', [InvoiceController::class,'metode_pembayaran'])->name('metode_pembayaran');
     //Kartu Tamu
-    Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name(
-        'show'
-    );
+    Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name('show');
     //Detail Scan
-    Route::get('/detail_scan/{id}', [ScanqrController::class, 'detail_datapengunjung'])->name(
-        'detail_scan'
-    );
+    Route::get('/detail_scan/{id}', [ScanqrController::class, 'detail_datapengunjung'])->name('detail_scan');
 });
 
 //Level admin dan superadmin
@@ -220,14 +192,8 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
         'tambah-admin'
     );
     Route::resource('proses', OrderController::class);
-
-    // Route::get('limittamu/{id}', [TamuController::class, 'limittamu'])->name('limittamu');
-    Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name(
-        'show'
-    );
-    Route::get('deposit/{id}', [TamuController::class, 'deposittamu'])->name(
-        'deposittamu'
-    );
+    Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name('show');
+    Route::get('deposit/{id}', [TamuController::class, 'deposittamu'])->name('deposittamu');
     //Detail Scan
     Route::get('/detail_scan/{id}', [ScanqrController::class, 'detail_datapengunjung'])->name(
         'detail_scan'
