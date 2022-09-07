@@ -26,22 +26,60 @@
                             <strong>
                                 Pilih Paket Bermain
                             </strong>
-
+                            {{-- Radio Button --}}
+                            <div class="pull-right">
+                                <div class="radio radio-success">
+                                    <input type="radio" name="GameType" id="radio1" class="selected-price"
+                                        value="weekdays" checked>
+                                    <label for="radio1">
+                                        <strong class="text-muted">Price Weekdays</strong>
+                                    </label>
+                                </div>
+                                <br>
+                                <div class="radio radio-success">
+                                    <input type="radio" name="GameType" id="radio2" class="selected-price"
+                                        value="weekend">
+                                    <label for="radio2">
+                                        <strong class="text-muted">Price Weekends</strong>
+                                    </label>
+                                </div>
+                            </div>
                             @foreach ($default as $item)
                                 <form class="form-inline">
                                     <div class="checkbox checkbox-success">
-                                        <input id="checkbox1" type="checkbox"
-                                            class="form-control form-control-{{ $item->id }}"
+                                        <input id="checkbox" type="checkbox"
+                                            class="form-control select-item form-control-{{ $item->id }}"
                                             onchange="valueChanged({{ $item->id }})">
                                         <label for=""></label>
                                     </div>
                                     <span class="wrap-quantity-{{ $item->id }}" style="display: none">
+                                        {{-- <div class="input-group bootstrap-touchspin">
+                                            <span class="input-group-addon bootstrap-touchspin-prefix"
+                                                style="display: none;"></span>
+                                            <input class="vertical-spin form-control" type="text"
+                                                data-bts-button-down-class="btn btn-default"
+                                                data-bts-button-up-class="btn btn-default"
+                                                value="20"name="vertical-spin" style="display: block;">
+                                            <span class="input-group-addon bootstrap-touchspin-postfix"
+                                                style="display: none;"></span>
+                                            <span class="input-group-btn-vertical">
+                                                <button class="btn btn-default bootstrap-touchspin-up" type="button"><i
+                                                        class="ti-plus"></i></button>
+                                                <button class="btn btn-default bootstrap-touchspin-down" type="button"><i
+                                                        class="ti-minus"></i></button>
+                                            </span>
+                                        </div> --}}
                                         <button type="button" id="decrement"
-                                            onclick="stepper('decrement', {{ $item->id }})">-</button>
-                                        <input type="number" min="1" max="10" step="1" value="1"
-                                            id="my-input-{{ $item->id }}" readonly>
+                                            onclick="stepper('decrement', {{ $item->id }})"
+                                            data-name="{{ $item->name }}" data-priceday="{{ $item->price_weekdays }}"
+                                            data-priceend="{{ $item->price_weekend }}">-</button>
+                                        <input name="input1" type="number" min="0" max="100" step="1"
+                                            value="0" id="my-input-{{ $item->id }}"
+                                            onchange="valuePackage({{ $item->id }})" readonly>
                                         <button type="button" id="increment"
-                                            onclick="stepper('increment', {{ $item->id }})">+</button>
+                                            onclick="stepper('increment', {{ $item->id }})"
+                                            data-name="{{ $item->name }}" data-priceday="{{ $item->price_weekdays }}"
+                                            data-priceend="{{ $item->price_weekend }}">+</button>
                                     </span>
                                     <label for="">{{ $item->name }}</label>
                                 </form>
@@ -51,25 +89,34 @@
                             <div class="form-group">
                                 <strong>Pilih Item Tambahan</strong>
                                 <div class="row">
-                                    @foreach ($additional as $item2)
-                                        <form class="form-inline">
-                                            <div class="checkbox checkbox-success">
-                                                <input id="checkbox2" type="checkbox"
-                                                    class="form-control form-control-{{ $item2->id }}"
-                                                    onchange="valueChanged({{ $item2->id }})">
-                                                <label for=""></label>
+                                    <form class="form-inline">
+                                        @foreach ($additional as $item2)
+                                            <div>
+                                                <div class="checkbox checkbox-success">
+                                                    <div class="row">
+                                                        <input id="checkbox2" type="checkbox"
+                                                            class="form-control select-item form-control-{{ $item2->id }}"
+                                                            onchange="valueChanged({{ $item2->id }})"
+                                                            data-name="{{ $item2->name }}"
+                                                            data-priceday="{{ $item2->price_weekdays }}"
+                                                            data-priceend="{{ $item2->price_weekend }}">
+                                                        <label for=""></label>
+                                                    </div>
+                                                </div>
+                                                <span class="wrap-quantity-{{ $item2->id }}" style="display: none">
+                                                    {{-- <button id="decrement"
+                                                        onclick="stepper('decrement', {{ $item2->id }})">-</button>
+                                                    <input name="input2" type="number" min="0" max="100"
+                                                        step="1" value="0" id="my-input-{{ $item2->id }}"
+                                                        readonly>
+                                                    <button id="increment"
+                                                        onclick="stepper('increment', {{ $item2->id }})"
+                                                        data-id="{{ $item2->id }}">+</button> --}}
+                                                </span>
+                                                <label for="">{{ $item2->name }}</label>
                                             </div>
-                                            <span class="wrap-quantity-{{ $item2->id }}" style="display: none">
-                                                <button type="button" id="decrement"
-                                                    onclick="stepper('decrement', {{ $item2->id }})">-</button>
-                                                <input type="number" min="1" max="10" step="1"
-                                                    value="1" id="my-input-{{ $item2->id }}" readonly>
-                                                <button type="button" id="increment"
-                                                    onclick="stepper('increment', {{ $item2->id }})">+</button>
-                                            </span>
-                                            <label for="">{{ $item2->name }}</label>
-                                        </form>
-                                    @endforeach
+                                        @endforeach
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -93,7 +140,7 @@
                             <div class="col-lg-6 mt-5">
                                 @foreach ($default as $item)
                                     <p style="color: #7D7D7D; text-align:start;">
-
+                                        
 
                                         <span class="wrap-txt-{{ $item->id }}" style="display: ">
                                             {{ $item->name }}
@@ -120,6 +167,7 @@
                                     </p>
                                 @endforeach
                             </div>
+                        <div class="wrap-selected-item">
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
@@ -131,7 +179,8 @@
                                 <p style="text-align:start;"><strong>Total</strong></p>
                             </div>
                             <div class="col-lg-6 mt-5">
-                                <p style="text-align:end;">Rp. 1.000.000,00</p>
+                                <p style="text-align:end;"></p>
+                                {{-- <p style="text-align:end;">Rp. 1.000.000,00</p> --}}
                             </div>
                         </div>
                         <div class="row">
@@ -148,23 +197,42 @@
             </div>
         </div>
     </div>
-@endsection
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
-<script type="text/javascript">
-    function valueChanged(id) {
-        if ($('.form-control-' + id).is(":checked"))
-            $(".wrap-quantity-" + id).show();
-        else
-            $(".wrap-quantity-" + id).hide();
-    }
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        function valueChanged(id) {
+            if ($('.form-control-' + id).is(":checked"))
+                $(".wrap-quantity-" + id).show();
+            else
+                $(".wrap-quantity-" + id).hide();
+        };
 
-    $(document).ready(function() {
-        $('#isChecked').change(function() {
-            if ($(this.checked).length) {
-                $(".wrap-txt-" + id).show();
-            } else {
-                $(".wrap-txt-" + id).hide();
-            }
+        function valuePackage(id) {
+
+        };
+
+        $(document).on('input', '#increment', function() {
+            let jumlah = parseInt($(this).val());
+            console.log(jumlah)
         });
-    });
-</script>
+
+        // $(document).on('click', '#increment', function() {
+        //     let id = $(this).data('id');
+        //     console.log
+        //     let jumlah = parseInt($(this).val());
+        // var radio = $(".selected-price:checked").val();
+        // var name = $(this).data('name');
+        // var price = (radio == 'weekdays') ? $(this).data('priceday') : $(this).data('priceend');
+
+        // var html = `<div class="row">
+    //                 <div class="col-lg-6 mt-5">
+    //                     <p style="color: #7D7D7D; text-align:start;">${name}</p>
+    //                 </div>
+    //                 <div class="col-lg-6 mt-5">
+
+    //                     <p style="color: #7D7D7D; text-align:end;">RP ${price}</p>
+    //                 </div>
+    //             </div>`;
+        // $('.wrap-selected-item').append(html)
+        // })
+    </script>
+@endsection

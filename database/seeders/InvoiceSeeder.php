@@ -23,7 +23,7 @@ class InvoiceSeeder extends Seeder
         $faker = Faker::create('id_ID');
         // LogTransaction::truncate();
         $visitor = Visitor::pluck('id');
-        for($i = 1; $i <= 50; $i++) {
+        for($i = 1; $i <= 250; $i++) {
             DB::table('log_transactions')->insert([
                 
                 // 'region_id' => Region::all()->random()->id,

@@ -18,15 +18,18 @@
                 <!-- /Breadcrumb -->
             </div>
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="col-lg-6 mt-20">
                     <div class="panel panel-default panel-dropdown card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
-                                <h6 class="panel-title txt-dark">Kartu tamu</h6>
+                                <h6 class="panel-title txt-dark">Kartu Tamu</h6>
                             </div>
                             <div class="pull-right">
-                                <div class=" pull-left">
-                                    <a href="/dist/img/kartu-tamu.png"><i class="fa-solid fa-address-card"></i></a>
+                                <div class="dropdown  pull-left">
+                                    <a class="dropdown-toggle weight-500" id="examplePanelDropdown" data-toggle="dropdown"
+                                        href="#" aria-expanded="false" role="button">
+                                        <a href="/dist/img/kartu-tamu.png"><i class="fa-solid fa-address-card"></i></a>
+                                    </a>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
@@ -67,7 +70,7 @@
                         </div>
                         <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
                             <img src="/dist/img/Golf.svg">
-                            <h6 class="text-center">4</h6>
+                            <h6 class="text-center">{{ $quota }}</h6>
                         </div>
                     </div>
                     <div class="panel panel-default card-view p">
@@ -179,39 +182,17 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach ($deposit as $item)
                                                 <tr>
-                                                    <td>#10021</td>
-                                                    <td>Transaksi berhasil ! Arya GP telah melakukan
-                                                        pembayaran sebesar Rp.1.500.000,00</td>
-                                                    <td style="text-align: center;">
-                                                        <span class="label label-success">Berhasil</span>
-                                                    </td>
-                                                    <td style="text-align: center;">
-                                                        <p>12 Jan 2022</p>
-                                                    </td>
+                                                    <td> {{ $item->id }}</td>
+                                                    <td>    {{ $item->balance }} </td>
+                                                    <td> {{ $item->payment_type }} </td>
+                                                    <td> {{ $item->updated_at }} </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>#10021</td>
-                                                    <td>Transaksi berhasil ! Arya GP telah melakukan
-                                                        pembayaran menggunakan Limit Gratis.</td>
-                                                    <td style="text-align: center;">
-                                                        <span class="label label-success">Berhasil</span>
-                                                    </td>
-                                                    <td style="text-align: center;">
-                                                        <p>12 Jan 2022</p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>#10021</td>
-                                                    <td>Transaksi dibatalkan ! Arya GP telah
-                                                        membatalkan transaksi Limit Gratis.</td>
-                                                    <td style="text-align: center;">
-                                                        <span class="label label-warning">Batal</span>
-                                                    </td>
-                                                    <td style="text-align: center;">
-                                                        <p>12 Jan 2022</p>
-                                                    </td>
-                                                </tr>
+                                                
+                                                
+                                            @endforeach
+                                              
                                             </tbody>
                                         </table>
                                     </div>
@@ -275,6 +256,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <div class="col-lg-12">
         @include('Layouts.Footer')

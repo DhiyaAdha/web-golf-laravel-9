@@ -1,85 +1,53 @@
     @extends('Layouts.Main')
     @section('content')
-    <div class="page-wrapper">
-        <div class="container-fluid">
-            <div class="row heading-bg">
-                @include('Layouts.Breadcrumb')
-                <div class="row" style="padding: 20px 25px 1px 25px">
+        <div class="page-wrapper">
+            <div class="container-fluid">
+                <!-- Title -->
+                <div class="row heading-bg">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h5 class="txt-dark">Daftar Admin</h5>
+                    </div>
+                    <!-- Breadcrumb -->
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                        <ol class="breadcrumb">
+                            <li><a href="javascript:void(0)">Dashboard</a></li>
+                            <li class="active"><span>Daftar Admin</span></li>
+                        </ol>
+                    </div>
+                    <!-- /Breadcrumb -->
+                </div>
+                <!-- /Title -->
+                <div class="row">
                     <div class="col-sm-12">
                         <div class="panel panel-default card-view">
-                            <div class="panel-heding">
-                                {{-- <div class="clearfix"></div> --}}
-                                <div class="row">
-                                    <div class="col-lg-10 mt-15">
-                                        <h6 style="margin-left: -20px;">Daftar Admin</h6>
-                                    </div>
-                                    <div class="col-lg-2 mt-10" style="text-align: end;">
-                                        <a href="{{ route('tambah-admin') }}">
-                                            <i class="fa-2x fa-plus" style="margin-right: 10px;"></i></a>
-
-                                        <div class="row">
-                                            <div class="col-lg-0"></div>
-                                            <div class="col-lg-4">
-                                                <div class="boxcontainer">
-                                                    <table class="elementcontainer">
-                                                        <tr>
-                                                            <td>
-                                                                <input type="text" placeholder="search" class="search">
-                                                            </td>
-                                                            <td>
-                                                                <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
+                            <div class="panel-heading">
+                                <div class="pull-left">
+                                    <h6 class="panel-title txt-dark">Daftar Paket</h6>
+                                </div>
+                                <div class="pull-right">
+                                    <div class=" pull-left">
+                                        <a href="{{ route('admin.show') }}" class="btn btn-xs btn-success">Tambah
+                                            admin</a>
                                     </div>
                                 </div>
+                                <div class="clearfix"></div>
                             </div>
+                            <div class="clearfix"></div>
                             <div class="panel-wrapper collapse in">
-                                <div class="panel-bodi">
-                                    <div class="table-wrap mt-40">
+                                <div class="panel-body">
+                                    <div class="table-wrap">
                                         <div class="table-responsive">
-                                            <table class="table mb-0">
+                                            <table class="table mb-0 table-hover" id="dt-admin">
                                                 <thead>
                                                     <tr>
                                                         <th>Nama</th>
                                                         <th>Email</th>
                                                         <th>Nomer hp</th>
-                                                        <th style="text-align: center;">Kategori Admin</th>
-                                                        <th style="text-align: center;">Aksi</th>
+                                                        <th>Kategori Admin</th>
+                                                        <th>Aksi</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>Pamungkas Nuli Ramadhan</td>
-                                                        <td>pamungkasnuli@rocketmail.com</td>
-                                                        <td>081126458792</td>
-                                                        <td style="text-align: center; color:black;"><span class="label label-super-admin">Super Admin</span> </td>
-                                                        <td style="text-align: center;">
-                                                            <a href="/edit-admin">
-                                                                <img src="dist/img/edit.svg" alt="" style="padding: 2px 7px 2px 2px; ">
-                                                            </a>
-                                                            <a href="#">
-                                                                <img src="dist/img/hapus.svg" alt="" style="padding: 2px 7px 2px 2px;">
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Pamungkas Nuli Ramadhan</td>
-                                                        <td>pamungkasnuli@rocketmail.com</td>
-                                                        <td>081126458792</td>
-                                                        <td style="text-align: center; color:black;"><span class="label label-admin">Admin</span> </td>
-                                                        <td style="text-align: center;">
-                                                            <a href="/edit-admin">
-                                                                <img src="dist/img/edit.svg" alt="" style="padding: 2px 7px 2px 2px; ">
-                                                            </a>
-                                                            <a href="#">
-                                                                <img src="dist/img/hapus.svg" alt="" style="padding: 2px 7px 2px 2px;">
-                                                            </a>
-                                                        </td>
-                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -88,67 +56,33 @@
                             </div>
                         </div>
                     </div>
+                    <!-- /Basic Table -->
                 </div>
-                <!-- history aktifitas -->
-                <div class="row" style="padding: 1px 25px">
+                <div class="row">
                     <div class="col-sm-12">
                         <div class="panel panel-default card-view">
-                            <div class="panel-heding">
-                                {{-- <div class="clearfix"></div> --}}
-                                <div class="row">
-                                    <div class="col-lg-10 mt-15">
-                                        <h6 style="margin-left: -20px;">history aktifitas</h6>
-                                    </div>
+                            <div class="panel-heading">
+                                <div class="pull-left">
+                                    <h6 class="panel-title txt-dark">Riwayat Aktifitas</h6>
                                 </div>
+                                <div class="clearfix"></div>
                             </div>
+                            <div class="clearfix"></div>
                             <div class="panel-wrapper collapse in">
-                                <div class="panel-bodi">
-                                    <div class="table-wrap mt-40">
+                                <div class="panel-body">
+                                    <div class="table-wrap">
                                         <div class="table-responsive">
-                                            <table class="table mb-0">
+                                            <table class="table mb-0 table-hover" id="dt-aktifitas">
                                                 <thead>
                                                     <tr>
-                                                        <th style="text-align: center;">Role</th>
-                                                        <th>Nama Admin</th>
+                                                        <th>Role</th>
+                                                        <th>Nama</th>
                                                         <th>Informasi</th>
-                                                        <th style="text-align: center;">Status</th>
-                                                        <th style="text-align: center;">Tanggal</th>
+                                                        <th>Status</th>
+                                                        <th>Tanggal</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td style="text-align: center;"><span class="label label-sa">SA</span></td>
-                                                        <td>Pamungkas Nuli Ramadhan</td>
-                                                        <td>Menambah membership VIP/VVIP baru bernama Arya GP</td>
-                                                        <td style="text-align: center;">
-                                                            <span class="label label-tambah">Tambah</span>
-                                                        </td>
-                                                        <td style="text-align: center;">
-                                                            <p>12 Jan 2022</p>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="text-align: center;"><span class="label label-sa">SA</span></td>
-                                                        <td>Pamungkas Nuli Ramadhan</td>
-                                                        <td>Menambah membership VIP/VVIP baru bernama Arya GP</td>
-                                                        <td style="text-align: center;">
-                                                            <span class="label label-hapus">Delet</span>
-                                                        </td>
-                                                        <td style="text-align: center;">
-                                                            <p>12 Jan 2022</p>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="text-align: center;"><span class="label label-sa">SA</span></td>
-                                                        <td>Pamungkas Nuli Ramadhan</td>
-                                                        <td>Menambah membership VIP/VVIP baru bernama Arya GP</td>
-                                                        <td style="text-align: center;">
-                                                            <span class="label label-update">Update</span>
-                                                        </td>
-                                                        <td style="text-align: center;">
-                                                            <p>12 Jan 2022</p>
-                                                        </td>
-                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -157,32 +91,8 @@
                             </div>
                         </div>
                     </div>
+                    <!-- /Basic Table -->
                 </div>
-                @include('Layouts.Footer')
             </div>
         </div>
-    </div>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-    <script type="text/javascript">
-        $('.delete-confirm').on('click', function(event) {
-            event.preventDefault();
-            const url = $(this).attr('href');
-            swal({
-                title: 'Are you sure?',
-                text: 'This record and it`s details will bes deleted!',
-                icon: '{{ asset('
-                warning.png ') }}',
-                buttons: ["Cancel", "Yes!"],
-            }).then(function(value) {
-                if (value) {
-                    window.location.href = url;
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                }
-            });
-        });
-    </script>
     @endsection

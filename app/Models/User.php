@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use App\Models\Role;
 
 class User extends Authenticatable
 {
@@ -27,7 +27,6 @@ class User extends Authenticatable
         'password',
         'phone',
         'role_id',
-        // 'status',
     ];
 
 
@@ -50,10 +49,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // public function deposit_history()
+    // {
+    //     return $this->hasMany(DepositHistory::class);
+    // }
+    
     public function admin()
     {
         return $this->belongsTo(LogAdmin::class);
     }
 
-
+    public function role()
+    {
+        return $this->hasOne(Role::class, 'id');
+    }
 }
