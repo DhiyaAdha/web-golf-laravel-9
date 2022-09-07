@@ -24,6 +24,7 @@ class LogLimit extends Model
         return $this->belongsTo(Visitor::class);
     }
 
+    public $timestamps = false;
     
 
 }

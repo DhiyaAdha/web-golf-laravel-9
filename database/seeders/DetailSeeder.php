@@ -22,7 +22,7 @@ class DetailSeeder extends Seeder
         $faker = Faker::create('id_ID');
         // LogTransaction::truncate();
         $visitor = Visitor::pluck('id');
-        for($i = 1; $i <= 300; $i++) {
+        for($i = 1; $i <= 250; $i++) {
             DB::table('detail_transactions')->insert([
 
                 'log_transaction_id' => LogTransaction::all()->random()->id,

@@ -150,18 +150,15 @@ table#dt-tamu {
 }
 .label.label-tambah {
     background: #2879ff;
-    padding: 9px 50px;
-    font-size: 14px;
+    
 }
 .label.label-update {
     background: #5901c8;
-    padding: 9px 50px;
-    font-size: 14px;
+    
 }
 .label.label-hapus {
     background: #ff2a00;
-    padding: 9px 50px;
-    font-size: 14px;
+    
 }
 .label.label-sa {
     background: #5901c8;
@@ -215,6 +212,10 @@ table#dt-tamu {
 }
 .sweet-alert h2 {
     font-size: revert;
+}
+
+b, strong {
+    font-weight: 700 !important;
 }
 
 .table > tbody > tr > td, .jsgrid-table > tbody > tr > td, .table > tbody > tr > th, .jsgrid-table > tbody > tr > th, .table > tfoot > tr > td, .jsgrid-table > tfoot > tr > td, .table > tfoot > tr > th, .jsgrid-table > tfoot > tr > th, .table > thead > tr > td, .jsgrid-table > thead > tr > td, .table > thead > tr > th, .jsgrid-table > thead > tr > th {
@@ -333,7 +334,7 @@ table#dt-tamu {
     border: none;
     color: inherit;
     border-radius: 0;
-    margin: -35px -30px -3px 15px;
+    margin: -35px -30px -45px 15px;
     padding: 10px 15px 3px 15px;
 }
 .panel-hiding {
@@ -413,13 +414,11 @@ table#dt-tamu {
 }
 .label.label-berhasil {
     background: #01C853;
-    padding: 9px 50px;
-    font-size: 14px;
+
 }
 .label.label-batal {
     background: #FEC107;
-    padding: 9px 50px;
-    font-size: 14px;
+
 }
 .label.label-riwayat {
     color: #000000;
@@ -428,13 +427,10 @@ table#dt-tamu {
 }
 .label.label-reset {
     background: #000000;
-    padding: 5px 20px;
-    font-size: 14px;
 }
 .label.label-berkurang {
     background: #000000;
-    padding: 5px 20px;
-    font-size: 14px;
+
 }
 .card-aktifitas{
     /* margin-bottom: 12px; */
@@ -442,7 +438,7 @@ table#dt-tamu {
     /* border-radius: 2px; */
     box-shadow: none;
     padding: 15px 15px 0;
-    margin-left: 20px;
+    margin-left: 5px;
     margin-right: -9px;
 }
 

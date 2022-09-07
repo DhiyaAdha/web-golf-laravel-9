@@ -5,7 +5,7 @@
             <i class="zmdi zmdi-more"></i>
         </li>
         <li>
-                <a class="{{ Request::is('analisis-tamu') ? 'active' : '' }}" href="{{ route('analisis-tamu.index') }}">
+            <a class="{{ Request::is('analisis-tamu') ? 'active' : '' }}" href="{{ route('analisis-tamu.index') }}">
                 <div class="pull-left">
                     <i class="fa fa-bar-chart-o mr-20"></i>
                     <span class="right-nav-text">Analisis Tamu</span>
@@ -23,7 +23,6 @@
             </a>
         </li>
         <li>
-
             <a class="{{ Request::is('daftar-tamu') ? 'active' : '' }}" href="{{ route('daftar-tamu') }}">
                 <div class="pull-left">
                     <i class="fa fa-user mr-20"></i>
@@ -43,7 +42,7 @@
                     <div class="clearfix"></div>
                 </a>
             </li>
-            @endif
+        @endif
         <li>
             <a class="{{ Request::is('riwayat-invoice') ? 'active' : '' }}" href="{{ route('riwayat-invoice.index') }}">
                 <div class="pull-left">

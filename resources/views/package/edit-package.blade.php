@@ -7,7 +7,6 @@
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h5 class="txt-dark">Edit Paket</h5>
                 </div>
-
                 <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
@@ -17,7 +16,6 @@
                     </ol>
                 </div>
                 <!-- /Breadcrumb -->
-
             </div>
             <!-- /Title -->
 
@@ -68,14 +66,14 @@
                                             <div class="radio-list">
                                                 <div class="radio-inline pl-0">
                                                     <span class="radio radio-info"> <input type="radio" name="status"
-                                                            id="radio_11" value=0
+                                                            id="radio_11" value="0"
                                                             {{ $package->status == 0 ? 'checked' : '' }} required>
                                                         <label for="radio_11">ON</label>
                                                     </span>
                                                 </div>
                                                 <div class="radio-inline pl-0">
                                                     <span class="radio radio-info"> <input type="radio" name="status"
-                                                            id="radio_12" value=1
+                                                            id="radio_12" value="1"
                                                             {{ $package->status == 1 ? 'checked' : '' }} required>
                                                         <label for="radio_12">OFF</label>
                                                     </span>

@@ -13,13 +13,11 @@ class LogAdmin extends Model
     protected $fillable = [
         'user_id',
         'type',
-        'activities',
+        'activities'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
-    public $timestamps = false;
 }
