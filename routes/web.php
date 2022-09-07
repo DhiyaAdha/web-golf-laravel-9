@@ -52,7 +52,7 @@ Route::get('/logout', [AuthController::class, 'logout']);
 Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::get('/package/destroy/{id}', [PackageController::class,'destroy'])->name('package.destroy');
     Route::post('/package/store', [PackageController::class, 'store'])->name('package.store');
-    Route::get('/package/edit/{id}', [PackageController::class, 'edit'])->name('package.edit');
+    Route::get('/package/edit/{package}', [PackageController::class, 'edit'])->name('package.edit');
     Route::post('/package/update/{id}', [PackageController::class,'update'])->name('package.update');
     Route::resource('analisis-tamu', DashboardController::class);
     Route::resource('package', PackageController::class)->except(['show','update']);
