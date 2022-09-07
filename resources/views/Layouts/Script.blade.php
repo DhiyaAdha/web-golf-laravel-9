@@ -393,6 +393,51 @@
         ],
     });
 
+    /* delete admin */
+    $(document).on('click', '.delete-admin', function() {
+        id = $(this).attr('id');
+        swal({
+            title: "Anda yakin ingin menghapus tamu ini?",
+            imageUrl: "../img/Warning.svg",
+            showCancelButton: true,
+            confirmButtonColor: "#FF2A00",
+            confirmButtonText: "Hapus paket",
+            cancelButtonText: "Batal",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function(isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url: "/daftar-admin/destroy/" + id,
+                    beforeSend: function() {
+                        $('#ok_button').text('Hapus Data');
+                    },
+                    success: function(data) {
+                        setTimeout(function() {
+                            $('#confirmModal').modal('hide');
+                            $('#dt-tamu').DataTable().ajax.reload(null, false);
+                        });
+
+                        window.setTimeout(function() {
+                            $.toast({
+                                text: 'Data berhasil dihapus',
+                                position: 'top-right',
+                                loaderBg: '#fec107',
+                                icon: 'success',
+                                hideAfter: 2000,
+                                stack: 6
+                            });
+                        }, 1000);
+                        swal("Terhapus!", "", "success");
+                    }
+                })
+            } else {
+                swal("Dibatalkan", "akwoaokaokaokao", "error");
+            }
+        });
+        return false;
+    });
+    /* delete admin *
     /* delete tamu */
     $(document).on('click', '.delete-confirm', function() {
         id = $(this).attr('id');

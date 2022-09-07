@@ -66,7 +66,7 @@
                                     </label>
                                 </div>
                                 <div class="form-group text-left">
-                                    <button type="submit" class="btn btn-info">Selanjutnya</button>
+                                    <button type="submit" class="btn btn-info">Simpan</button>
                                 </div>
                             </form>
                         </div>

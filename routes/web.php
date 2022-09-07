@@ -63,6 +63,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
         'show',
         'update',
     ]);
+
     Route::get('/daftar-tamu', [TamuController::class, 'index'])->name(
         'daftar-tamu'
     );
@@ -85,9 +86,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::post('/update-tamu', [TamuController::class, 'update'])->name(
         'update-tamu'
     );
-    Route::get('/daftar-admin', [AdminController::class, 'daftar_admin'])->name(
-        'daftar-admin'
-    );
+
     Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name(
         'show'      
     );
@@ -203,8 +202,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::post('/update-tamu/{id}', [TamuController::class, 'update'])->name(
         'update-tamu'
     );
-    
-    // Route::resource('/Scan-tamu', ScanqrController::class);
+
     //Kartu Tamu
     Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name('show');
     Route::post('/tambah-deposit', [TamuController::class, 'insertdeposit'])->name(
@@ -218,6 +216,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/kartu-tamu', [ScanqrController::class, 'kartutamu'])->name(
         'kartu-tamu'
     );
+
     Route::get('/scan-tamu', [ScanqrController::class, 'scantamu'])->name(
         'scan-tamu'
     );
@@ -259,5 +258,6 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/detail_scan/{id}', [ScanqrController::class, 'detail_datapengunjung'])->name(
         'detail_scan'
     );
+
 });
 //Finish level admin dan superadmin
