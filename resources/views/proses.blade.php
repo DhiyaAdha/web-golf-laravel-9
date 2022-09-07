@@ -2,23 +2,24 @@
 @section('content')
     <div class="page-wrapper">
         <div class="container-fluid">
+            <!-- Title -->
             <div class="row heading-bg">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h5 class="txt-dark">Pilih Permainan</h5>
+                </div>
+
                 <!-- Breadcrumb -->
-                <div class="row">
-                    <div class="container-fluid">
-                        <div class="col-lg-8">
-                            <h5>Proses Invoice</h5>
-                        </div>
-                        <div class="col-lg-4 col-sm-8 col-md-8 col-xs-12">
-                            <ol class="breadcrumb">
-                                <li><a href="javascript:void(0)">Dashboard</a></li>
-                                <li class="active"><span>Proses</span></li>
-                            </ol>
-                        </div>
-                    </div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <ol class="breadcrumb">
+                        <li><a href="index.html">Dashboard</a></li>
+                        <li><a href="#"><span>Scan Tamu</span></a></li>
+                        <li class="active"><span>Pilih Permainan</span></li>
+                    </ol>
                 </div>
                 <!-- /Breadcrumb -->
+
             </div>
+            <!-- /Title -->
             <div class="row">
                 <div class="col-lg-8">
                     <div class="panel panel-default card-view" style="height: 900px;">
@@ -176,24 +177,7 @@
     function valueChanged(id) {
         if ($('.form-control-' + id).is(":checked"))
             $(".wrap-quantity-" + id).show();
-        else
-            $(".wrap-quantity-" + id).hide();
-    }
-
-    // $("#increment").click(function() {
-    //     alert("The Form has been Submitted.");
-    // });
-
-    $(document).ready(function() {
-        $('#isChecked').change(function() {
-            if ($(this.checked).length) {
-                $(".wrap-txt-" + id).show();
-            } else {
-                $(".wrap-txt-" + id).hide();
-            }
-        });
-    });
-       $(document).on('click', '.select-item', function () {
+            if ($('.select-item').is(":checked")){
             var radio = $(".selected-price:checked").val();
             var name = $(this).data('name');
             console.log(radio)
@@ -209,6 +193,44 @@
                                     </div>
                                 </div>`;
             $('.wrap-selected-item').append(html)
-        });
+            }
+        else
+            $(".wrap-quantity-" + id).hide();
+    }
+
+    // $("#increment").click(function() {
+    //     alert("The Form has been Submitted.");
+    // });
+
+    // $(document).ready(function() {
+    //     $('#isChecked').change(function() {
+    //         if ($(this.checked).length) {
+    //             $(".wrap-txt-" + id).show();
+    //         } else {
+    //             $(".wrap-txt-" + id).hide();
+    //         }
+    //     });
+    // });
+
+
+        // $(document).on('click', '.select-item', function () {
+        //     var radio = $(".selected-price:checked").val();
+        //     var name = $(this).data('name');
+        //     console.log(radio)
+        //     var price = (radio == 'weekdays') ? $(this).data('priceday') : $(this).data('priceend');
+            
+        //     var html = `<div class="row">
+        //                             <div class="col-lg-6 mt-5">
+        //                                 <p style="color: #7D7D7D; text-align:start;">${name}</p>
+        //                             </div>
+        //                             <div class="col-lg-6 mt-5">
+                                    
+        //                                 <p style="color: #7D7D7D; text-align:end;">RP ${price}</p>
+        //                             </div>
+        //                         </div>`;
+        //     $('.wrap-selected-item').append(html)
+        // });
+
+       
 </script>
 @endsection
