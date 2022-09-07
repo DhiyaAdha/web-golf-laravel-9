@@ -42,7 +42,12 @@ class Visitor extends Model
     {
         return $this->hasMany(Deposit::class);
     }
-
+    
+    public function deposit_history()
+    {
+        return $this->hasMany(DepositHistory::class);
+    }
+    
     public function transaction($visitorId)
     {
         return LogTransaction::where('visitor_id', $visitorId)

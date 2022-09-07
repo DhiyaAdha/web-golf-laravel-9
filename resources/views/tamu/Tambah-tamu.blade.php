@@ -127,6 +127,7 @@
                         </div>
                         <!-- /Basic Table -->
                     </div>
+                    <!-- /Basic Table -->
                 </div>
             </div>
         </div>

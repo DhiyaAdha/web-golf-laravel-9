@@ -136,6 +136,37 @@
                                 <hr class="h">
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-lg-6 mt-5">
+                                @foreach ($default as $item)
+                                    <p style="color: #7D7D7D; text-align:start;">
+                                        
+
+                                        <span class="wrap-txt-{{ $item->id }}" style="display: ">
+                                            {{ $item->name }}
+                                            <hr>
+                                        </span>
+                                    </p>
+                                @endforeach
+                                @foreach ($additional as $item2)
+                                    <p style="color: #7D7D7D; text-align:start;">
+
+
+                                        <span class="wrap-txt-{{ $item2->id }}" style="display: ">
+                                            {{ $item2->name }}
+                                            <hr>
+                                        </span>
+                                    </p>
+                                @endforeach
+                            </div>
+                            <div class="col-lg-6 mt-5">
+                                @foreach ($package as $data)
+                                    <p style="color: #7D7D7D; text-align:end;">Rp.
+                                        {{ formatrupiah($data->price_weekdays) }}
+                                        <hr>
+                                    </p>
+                                @endforeach
+                            </div>
                         <div class="wrap-selected-item">
                         </div>
                         <div class="row">
