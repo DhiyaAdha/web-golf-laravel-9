@@ -413,7 +413,7 @@
                 orderable: false
             },
             {
-                data: 'name',
+                data: 'role',
                 searchable: true,
                 orderable: false
             },
@@ -490,6 +490,7 @@
         return false;
     });
     /* delete admin *
+
     /* delete tamu */
     $(document).on('click', '.delete-confirm', function() {
         id = $(this).attr('id');

@@ -73,20 +73,19 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     route::get('qrcode/{id}', [ScanqrController::class, 'generate'])->name('generate');
     Route::get('/tambah-admin', [AdminController::class, 'tambahadmin'])->name('tambah-admin');
     Route::get('/daftar-tamu/destroy/{id}', [TamuController::class,'delete'])->name('daftar-tamu.delete');
-    Route::get('/tambah-admin', [AdminController::class, 'tambah_admin'])->name('tambah-admin');
-    Route::get('/edit-admin/{id}', [AdminController::class, 'edit'])->name('edit-admin');
+    Route::get('/admin-tambah-show', [AdminController::class, 'create'])->name('admin.show');
+    Route::get('/admin-tambah', [AdminController::class, 'store'])->name('admin.tambah');
+    Route::get('/edit-admin/{users}', [AdminController::class, 'edit'])->name('edit-admin');
+    Route::post('/edit-admin/{users}', [AdminController::class, 'update'])->name('admin.edit');
     Route::get('/daftar-admin/destroy/{id}', [AdminController::class,'delete',])->name('hapus-admin');
-    //route untuk order
     Route::resource('proses', OrderController::class);
     Route::get('/metode_pembayaran', [InvoiceController::class,'metode_pembayaran'])->name('metode_pembayaran');
-    // Tamu-controller
     Route::get('/daftar-tamu', [TamuController::class, 'index'])->name('daftar-tamu');
     Route::get('/daftar-tamu/destroy/{id}', [TamuController::class,'delete',])->name('hapus-tamu');
     Route::get('/tambah-tamu', [TamuController::class, 'tambahtamu'])->name('tambah-tamu');
     Route::post('/inserttamu', [TamuController::class, 'inserttamu'])->name('inserttamu');
     Route::get('/edit-tamu', [TamuController::class, 'edit'])->name('edit-tamu');
     Route::post('/update-tamu', [TamuController::class, 'update'])->name('update-tamu');
-    //Detail Scan
     Route::get('/detail_scan/{id}', [ScanqrController::class, 'detail_datapengunjung'])->name('detail_scan');
     Route::get('aktifitas', [AdminController::class, 'aktifitas'])->name('admin.aktifitas');
 });
@@ -115,7 +114,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     route::get('qrcode/{id}', [ScanqrController::class, 'generate'])->name('generate');
     Route::get('/tambah-deposit', [TamuController::class,'tambahdeposit'])->name('tambah-deposit');
     Route::get('/kartu-tamu', [ScanqrController::class, 'kartutamu'])->name('kartu-tamu');
-    Route::get('/tambah-admin', [AuthController::class, 'tambahadmin'])->name('tambah-admin');
+    // Route::get('/tambah-admin', [AuthController::class, 'tambahadmin'])->name('tambah-admin');
     Route::resource('proses', OrderController::class);
     Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name('show');
     Route::get('deposit/{id}', [TamuController::class, 'deposittamu'])->name('deposittamu');
