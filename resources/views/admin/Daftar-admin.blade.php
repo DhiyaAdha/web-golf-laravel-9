@@ -101,22 +101,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script type="text/javascript">
-        $('.delete-confirm').on('click', function(event) {
-            event.preventDefault();
-            const url = $(this).attr('href');
+        $('.delete').click(function(event) {
+            var daftaradmin = $(this).attr('')
             swal({
-                title: 'Are you sure?',
-                text: 'This record and it`s details will bes deleted!',
-                icon: '{{ asset("warning.png") }}',
-                buttons: ["Cancel", "Yes!"],
-            }).then(function(value) {
-                if (value) {
-                    window.location.href = url;
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                }
-            });
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover this imaginary file!",
+                    icon: "warning",
+                    buttons: true, 
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        swal("Poof! Your imaginary file has been deleted!", {
+                            icon: "success",
+                        });
+                    } else {
+                        swal("Your imaginary file is safe!");
+                    }
+                });
         });
     </script>
     @endsection
