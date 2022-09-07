@@ -92,7 +92,7 @@
 
                         window.setTimeout(function() {
                             $.toast({
-                                text: 'Paket bermain berhasil dihapus permanen',
+                                text: 'Paket bermain berhasil dihapus permanen :)',
                                 position: 'top-right',
                                 loaderBg: '#fec107',
                                 icon: 'success',
@@ -207,25 +207,24 @@
                 }
             },
             {
-                data: 'price_weekend',
+                data: 'price_weekdays',
                 render: $.fn.dataTable.render.number('.', ',', 0, 'Rp ')
             },
             {
-                "data": function(data) {
-                    return `<span class="head-font block text-warning font-16">Rp.${data.price_weekend}</span>`;
-                }
+                data: 'price_weekend',
+                render: $.fn.dataTable.render.number('.', ',', 0, 'Rp ')
             },
             {
                 "data": function(data) {
                     if (data.status == 0) {
                         return `<div class="checkbox checkbox-success checkbox-circle">
                                     <input id="checkbox-10" type="checkbox" disabled checked="">
-                                    <label for="checkbox-10"> </label>
+                                    <label for="checkbox-10"></label>
                                 </div>`;
                     } else {
                         return `<div class="checkbox checkbox-danger checkbox-circle">
                                     <input id="checkbox-12" type="checkbox" disabled checked="">
-                                    <label for="checkbox-12">  </label>
+                                    <label for="checkbox-12"></label>
                                 </div>`;
                     }
                 }

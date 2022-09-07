@@ -64,6 +64,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::get('/edit-tamu', [TamuController::class, 'edit'])->name('edit-tamu');
     Route::post('/update-tamu', [TamuController::class, 'update'])->name('update-tamu');
     Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
+
     Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name('show');
     Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name('scan-tamu');
     Route::get('/scan-tamu-berhasil', [ScanController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
