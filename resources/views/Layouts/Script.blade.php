@@ -207,9 +207,8 @@
                 }
             },
             {
-                "data": function(data) {
-                    return `<span class="head-font block text-warning font-16">Rp.${data.price_weekdays}</span>`;
-                }
+                data: 'price_weekend',
+                render: $.fn.dataTable.render.number('.', ',', 0, 'Rp ')
             },
             {
                 "data": function(data) {
