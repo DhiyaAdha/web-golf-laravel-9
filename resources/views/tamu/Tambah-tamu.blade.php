@@ -57,10 +57,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="">Nomer Hp</label>
-                                        {{-- <input type="number" name="phone" class="form-control" id="phone"
-                                            size="50px" placeholder="Masukan Nomer Hp" required autofocus> --}}
-                                            <input type="text" name="phone" min="0" onkeypress="return event.charCode >= 48 &amp;&amp; event.charCode <=57" class="form-control"placeholder="Masukan Nomer Hp" required="">
-
+                                        <input type="number" name="phone" class="form-control" id="phone"
+                                            size="50px" placeholder="Masukan Nomer Hp" required autofocus>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="">Perusahaan</label>
@@ -89,9 +87,12 @@
                             </div>
                             <!-- /Basic Table -->
                         </div>
+                        <!-- /Basic Table -->
                     </div>
+                    <!-- /Basic Table -->
                 </div>
             </div>
         </div>
-    @endsection
-    <script></script>
+    </div>
+@endsection
+<script></script>

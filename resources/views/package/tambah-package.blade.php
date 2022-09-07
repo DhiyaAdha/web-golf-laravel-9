@@ -64,13 +64,13 @@
                                             <div class="radio-list">
                                                 <div class="radio-inline pl-0">
                                                     <span class="radio radio-info"> <input type="radio" name="status"
-                                                            id="radio_11" value=0 required>
+                                                            id="radio_11" value="0" required>
                                                         <label for="radio_11">ON</label>
                                                     </span>
                                                 </div>
                                                 <div class="radio-inline pl-0">
                                                     <span class="radio radio-info"> <input type="radio" name="status"
-                                                            id="radio_12" value=1 required>
+                                                            id="radio_12" value="1" required>
                                                         <label for="radio_12">OFF</label>
                                                     </span>
                                                 </div>

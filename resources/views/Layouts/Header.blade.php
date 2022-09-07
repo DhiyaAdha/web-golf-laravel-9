@@ -49,6 +49,8 @@
     <!-- Custom CSS -->
     <link href="{{ asset('dist/css/style.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ asset('dist/css/custom.css') }}" type="text/css">
+    
+    <link rel="stylesheet" href="{{ asset('vendors/bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css') }}" type="text/css">
 
     {{-- Chartist JS --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">

@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use App\Models\Role;
 
 class User extends Authenticatable
 {
@@ -27,7 +27,6 @@ class User extends Authenticatable
         'password',
         'phone',
         'role_id',
-        // 'status',
     ];
 
 
@@ -80,4 +79,8 @@ class User extends Authenticatable
         return $this->belongsTo(Deposit::class);
     }  
 
+    public function role()
+    {
+        return $this->hasOne(Role::class, 'id');
+    }
 }
