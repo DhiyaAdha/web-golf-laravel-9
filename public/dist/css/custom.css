@@ -214,6 +214,10 @@ table#dt-tamu {
     font-size: revert;
 }
 
+b, strong {
+    font-weight: 700 !important;
+}
+
 .table > tbody > tr > td, .jsgrid-table > tbody > tr > td, .table > tbody > tr > th, .jsgrid-table > tbody > tr > th, .table > tfoot > tr > td, .jsgrid-table > tfoot > tr > td, .table > tfoot > tr > th, .jsgrid-table > tfoot > tr > th, .table > thead > tr > td, .jsgrid-table > thead > tr > td, .table > thead > tr > th, .jsgrid-table > thead > tr > th {
     padding: 16px 0px !important;
 }

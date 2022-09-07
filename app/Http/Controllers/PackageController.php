@@ -66,7 +66,7 @@ class PackageController extends Controller
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'CREATE',
-            'activities' => '<b>'.auth()->user()->name.'</b>Menambahkan package baru bernama <b>'.$request->name.'</b>',
+            'activities' => 'Menambahkan package baru bernama <b>'.$request->name.'</b>',
         ]);
 
         return redirect()
@@ -112,19 +112,17 @@ class PackageController extends Controller
         $package->price_weekend = $request->price_weekend;
         $package->status = $request->status;
         $package->updated_at = Carbon::now();
+
+        LogAdmin::create([
+            'user_id' => Auth::id(),
+            'type' => 'UPDATE',
+            'activities' => 'Mengubah package <b>'.$package->name.'</b> menjadi <b>'.$request->name.'</b>',
+        ]);
         
         $package->save();
         return redirect()
             ->route('package.index')
             ->with('toast_success', 'Paket berhasil diupdate');
-            
-        LogAdmin::create([
-            'user_id' => Auth::id(),
-            'type' => 'UPDATE',
-            'activities' => '<br>'.auth()->user()->name.'</br>Mengubah package <b>'.$package->name.'</b> menjadi <b>'.$request->name.'</b>'
-            // 'created_at' => Carbon::now(),
-        ]);
-
     }
 
     /**

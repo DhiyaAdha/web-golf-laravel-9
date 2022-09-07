@@ -92,7 +92,7 @@
 
                         window.setTimeout(function() {
                             $.toast({
-                                text: 'Paket bermain berhasil dihapus permanen :)',
+                                text: 'Paket bermain berhasil dihapus permanen',
                                 position: 'top-right',
                                 loaderBg: '#fec107',
                                 icon: 'success',
@@ -156,12 +156,12 @@
         language: {
             search: "",
             searchPlaceholder: "Cari",
-            emptyTable: "Tidak ada data yang sesuai",
+            emptyTable: "Tidak ada data pada tabel ini",
             info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
             infoFiltered: "(difilter dari _MAX_ total data)",
-            infoEmpty: "Tidak ada data yang sesuai",
+            infoEmpty: "Tidak ada data pada tabel ini",
             lengthMenu: "Menampilkan _MENU_ data",
-            zeroRecords: "Tidak ada data yang sesuai"
+            zeroRecords: "Tidak ada data pada tabel ini"
         },
         columnDefs: [{
                 className: 'text-left',
@@ -238,12 +238,12 @@
         language: {
             search: "",
             searchPlaceholder: "Cari",
-            emptyTable: "Tidak ada data yang sesuai",
+            emptyTable: "Tidak ada data pada tabel ini",
             info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
             infoFiltered: "(difilter dari _MAX_ total data)",
-            infoEmpty: "Tidak ada data yang sesuai",
+            infoEmpty: "Tidak ada data pada tabel ini",
             lengthMenu: "Menampilkan _MENU_ data",
-            zeroRecords: "Tidak ada data yang sesuai"
+            zeroRecords: "Tidak ada data pada tabel ini"
         },
         columnDefs: [{
             orderable: false,
@@ -252,7 +252,7 @@
     });
     /* data package */
 
-    //data tamu
+    /* data tamu */
     $('#dt-tamu').DataTable({
         "processing": true,
         "serverSide": true,
@@ -269,10 +269,7 @@
             "type": "GET",
             "datatype": "json"
         },
-
         "render": $.fn.dataTable.render.text(),
-
-
         "columns": [{
                 data: 'name',
                 searchable: true,
@@ -304,21 +301,84 @@
         language: {
             search: "",
             searchPlaceholder: "Cari",
-            emptyTable: "Tidak ada data yang sesuai",
+            emptyTable: "Tidak ada data pada tabel ini",
             info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
             infoFiltered: "(difilter dari _MAX_ total data)",
-            infoEmpty: "Tidak ada data yang sesuai",
+            infoEmpty: "Tidak ada data pada tabel ini",
             lengthMenu: "Menampilkan _MENU_ data",
-            zeroRecords: "Tidak ada data yang sesuai"
+            zeroRecords: "Tidak ada data pada tabel ini"
         },
         columnDefs: [{
-                className: 'text-left',
-                targets: [1, 2, 3, 4]
-            }
-
-        ],
+            className: 'text-left',
+            targets: [1, 2, 3, 4]
+        }],
     });
-    // data admin
+    /* data tamu */
+
+    /* data aktifitas */
+    $('#dt-aktifitas').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "lengthChange": false,
+        "searching": true,
+        "paginate": {
+            "first": "First",
+            "last": "Last",
+            "next": "Next",
+            "previous": "Previous"
+        },
+        "ajax": {
+            "url": "{{ route('admin.aktifitas') }}",
+            "type": "GET",
+            "datatype": "json"
+        },
+        "render": $.fn.dataTable.render.text(),
+        "columns": [{
+                data: 'role',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'user_name',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'information',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'status_action',
+                searchable: true,
+                orderable: false
+            },
+            {
+                data: 'date_activity',
+                searchable: true,
+                orderable: false
+            }
+        ],
+        order: [],
+        responsive: true,
+        language: {
+            search: "",
+            searchPlaceholder: "Cari",
+            emptyTable: "Tidak ada data pada tabel ini",
+            info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+            infoFiltered: "(difilter dari _MAX_ total data)",
+            infoEmpty: "Tidak ada data pada tabel ini",
+            lengthMenu: "Menampilkan _MENU_ data",
+            zeroRecords: "Tidak ada data pada tabel ini"
+        },
+        columnDefs: [{
+            className: 'text-left',
+            targets: [1, 2, 3, 4]
+        }],
+    });
+    /* data aktifitas */
+
+    /* daftar admin */
     $('#dt-admin').DataTable({
         "processing": true,
         "serverSide": true,
@@ -337,8 +397,6 @@
         },
 
         "render": $.fn.dataTable.render.text(),
-
-
         "columns": [{
                 data: 'name',
                 searchable: true,
@@ -355,7 +413,7 @@
                 orderable: false
             },
             {
-                data: 'role_id',
+                data: 'name',
                 searchable: true,
                 orderable: false
             },
@@ -364,48 +422,38 @@
                 searchable: false,
                 orderable: false
             },
-
-            // {
-            //     "data": function(data) {
-            //         if (data.visitor.tipe_member == 'VIP') {
-            //             return `<span class='label label-success'>${data.visitor.tipe_member}</span>`;
-            //         } else {
-            //             return `<span class='label label-warning'>${data.visitor.tipe_member}</span>`;
-            //         }
-            //     }
-            // },
-
-
         ],
         order: [],
         responsive: true,
         language: {
             search: "",
             searchPlaceholder: "Cari",
-            emptyTable: "Tidak ada data yang sesuai",
+            emptyTable: "Tidak ada data pada tabel ini",
             info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
             infoFiltered: "(difilter dari _MAX_ total data)",
-            infoEmpty: "Tidak ada data yang sesuai",
+            infoEmpty: "Tidak ada data pada tabel ini",
             lengthMenu: "Menampilkan _MENU_ data",
-            zeroRecords: "Tidak ada data yang sesuai"
+            zeroRecords: "Tidak ada data pada tabel ini"
         },
         columnDefs: [{
-                className: 'text-left',
-                targets: [1, 2, 3, 4]
-            }
-
-        ],
+            className: 'text-left',
+            targets: [0, 1, 2, 3]
+        }, {
+            orderable: false,
+            targets: [0, 1, 2, 3]
+        }],
     });
+    /* daftar admin */
 
     /* delete admin */
     $(document).on('click', '.delete-admin', function() {
         id = $(this).attr('id');
         swal({
-            title: "Anda yakin ingin menghapus tamu ini?",
+            title: "Anda yakin ingin menghapus admin ini?",
             imageUrl: "../img/Warning.svg",
             showCancelButton: true,
             confirmButtonColor: "#FF2A00",
-            confirmButtonText: "Hapus paket",
+            confirmButtonText: "Hapus admin",
             cancelButtonText: "Batal",
             closeOnConfirm: false,
             closeOnCancel: false
@@ -419,12 +467,12 @@
                     success: function(data) {
                         setTimeout(function() {
                             $('#confirmModal').modal('hide');
-                            $('#dt-tamu').DataTable().ajax.reload(null, false);
+                            $('#dt-admin').DataTable().ajax.reload(null, false);
                         });
 
                         window.setTimeout(function() {
                             $.toast({
-                                text: 'Data berhasil dihapus',
+                                text: 'Data admin berhasil dihapus',
                                 position: 'top-right',
                                 loaderBg: '#fec107',
                                 icon: 'success',
@@ -436,7 +484,7 @@
                     }
                 })
             } else {
-                swal("Dibatalkan", "akwoaokaokaokao", "error");
+                swal("Dibatalkan", "", "error");
             }
         });
         return false;
@@ -481,7 +529,7 @@
                     }
                 })
             } else {
-                swal("Dibatalkan", "akwoaokaokaokao", "error");
+                swal("Dibatalkan", "", "error");
             }
         });
         return false;
@@ -526,12 +574,12 @@
         language: {
             search: "",
             searchPlaceholder: "Cari",
-            emptyTable: "Tidak ada data yang sesuai",
+            emptyTable: "Tidak ada data pada tabel ini",
             info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
             infoFiltered: "(difilter dari _MAX_ total data)",
-            infoEmpty: "Tidak ada data yang sesuai",
+            infoEmpty: "Tidak ada data pada tabel ini",
             lengthMenu: "Menampilkan _MENU_ data",
-            zeroRecords: "Tidak ada data yang sesuai"
+            zeroRecords: "Tidak ada data pada tabel ini"
         },
         columnDefs: [{
             className: 'text-center',
@@ -589,12 +637,12 @@
         language: {
             search: "",
             searchPlaceholder: "Cari",
-            emptyTable: "Tidak ada data yang sesuai",
+            emptyTable: "Tidak ada data pada tabel ini",
             info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
             infoFiltered: "(difilter dari _MAX_ total data)",
-            infoEmpty: "Tidak ada data yang sesuai",
+            infoEmpty: "Tidak ada data pada tabel ini",
             lengthMenu: "Menampilkan _MENU_ data",
-            zeroRecords: "Tidak ada data yang sesuai"
+            zeroRecords: "Tidak ada data pada tabel ini"
         },
         columnDefs: [{
                 className: 'text-center',
@@ -645,25 +693,24 @@
             //     searchable: true,
             //     orderable: false
             // },
-            
+
         ],
         order: [],
         responsive: true,
         language: {
             search: "",
             searchPlaceholder: "Cari",
-            emptyTable: "Tidak ada data yang sesuai",
+            emptyTable: "Tidak ada data pada tabel ini",
             info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
             infoFiltered: "(difilter dari _MAX_ total data)",
-            infoEmpty: "Tidak ada data yang sesuai",
+            infoEmpty: "Tidak ada data pada tabel ini",
             lengthMenu: "Menampilkan _MENU_ data",
-            zeroRecords: "Tidak ada data yang sesuai"
+            zeroRecords: "Tidak ada data pada tabel ini"
         },
         columnDefs: [{
-                className: 'text-left',
-                targets: [1, 2, 3, ]
-            }
-        ],
+            className: 'text-left',
+            targets: [1, 2, 3, ]
+        }],
     });
 
 

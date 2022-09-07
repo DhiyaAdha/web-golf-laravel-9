@@ -50,7 +50,6 @@ class DashboardController extends Controller
         }
         // dd(array_values($month_new));
         foreach (array_values($month_new) as $key => $value) {
-
             $data['visitor'][$key]['period'] = $months[$value[0]];
             $data['visitor'][$key]['vvip'] = LogTransaction::where('payment_status', 1)->whereHas(
                 'visitor',
