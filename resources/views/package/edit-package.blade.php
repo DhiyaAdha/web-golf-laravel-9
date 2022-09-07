@@ -12,7 +12,7 @@
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
                         <li><a href="index.html">Dashboard</a></li>
-                        <li><a href="#"><span>Paket</span></a></li>
+                        <li><a href="#"><span>Daftar Paket</span></a></li>
                         <li class="active"><span>Edit paket bermain</span></li>
                     </ol>
                 </div>
@@ -59,6 +59,25 @@
                                                             {{ $package->category == 'additional' ? 'checked' : '' }}
                                                             required>
                                                         <label for="radio_10">Additional</label>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group mb-30">
+                                            <label class="control-label mb-10 text-left">Status Paket</label>
+                                            <div class="radio-list">
+                                                <div class="radio-inline pl-0">
+                                                    <span class="radio radio-info"> <input type="radio" name="status"
+                                                            id="radio_11" value=0
+                                                            {{ $package->status == 0 ? 'checked' : '' }} required>
+                                                        <label for="radio_11">ON</label>
+                                                    </span>
+                                                </div>
+                                                <div class="radio-inline pl-0">
+                                                    <span class="radio radio-info"> <input type="radio" name="status"
+                                                            id="radio_12" value=1
+                                                            {{ $package->status == 1 ? 'checked' : '' }} required>
+                                                        <label for="radio_12">OFF</label>
                                                     </span>
                                                 </div>
                                             </div>

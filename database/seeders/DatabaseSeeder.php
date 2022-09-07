@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DetailSeeder::class);
         $this->call(LogLimitSeeder::class);
         $this->call(DepositSeeder::class);
+        $this->call(DepositHistorySeeder::class);
         
     }
 }

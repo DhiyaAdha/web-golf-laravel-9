@@ -26,7 +26,7 @@ class AdminController extends Controller
         ])
             ->orderBy('created_at', 'desc')
             ->get();
-            // dd($visitor);
+        // dd($visitor);
         if ($request->ajax()) {
             return datatables()
                 ->of($visitor)
@@ -48,7 +48,7 @@ class AdminController extends Controller
                 // ->editColumn('tipe_member', function ($data) {
                 //     return $data->tipe_member;
                 // })
-                ->rawColumns([ 'action'])
+                ->rawColumns(['action'])
                 ->make(true);
         }
 
@@ -61,8 +61,7 @@ class AdminController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
-    {
-        {
+    { {
             return view('admin.tambah-admin');
         }
         //
@@ -195,16 +194,19 @@ class AdminController extends Controller
         return redirect()->route('daftar-admin');
     }
 
-    public function daftar_admin(){
+    public function daftar_admin()
+    {
 
         return view('admin.daftar-admin');
     }
 
-    public function tambahadmin(){
+    public function tambahadmin()
+    {
         return view('admin.tambah-admin');
     }
 
-    public function edit_admin(){
+    public function edit_admin()
+    {
         return view('admin.edit-admin');
     }
 }

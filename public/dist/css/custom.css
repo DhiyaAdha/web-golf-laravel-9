@@ -210,6 +210,17 @@ table#dt-tamu {
 .col-lg-6.p {
     padding: 0px !important;
 }
+.sweet-alert h2 {
+    font-size: revert;
+}
+
+.table > tbody > tr > td, .jsgrid-table > tbody > tr > td, .table > tbody > tr > th, .jsgrid-table > tbody > tr > th, .table > tfoot > tr > td, .jsgrid-table > tfoot > tr > td, .table > tfoot > tr > th, .jsgrid-table > tfoot > tr > th, .table > thead > tr > td, .jsgrid-table > thead > tr > td, .table > thead > tr > th, .jsgrid-table > thead > tr > th {
+    padding: 16px 0px !important;
+}
+
+.dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_info {
+    padding-left: 0px !important;
+}
 
 .btn-qr {
     border-radius: 10px;

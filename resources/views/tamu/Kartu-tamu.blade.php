@@ -1,21 +1,21 @@
 @extends('Layouts.Main', ['title' => 'TGCC | Daftar Tamu'])
 @section('content')
-<div class="page-wrapper">
-    @include('sweetalert::alert')
-    <div class="container-fluid">
-        <div class="row heading-bg">
-            <div class="row">
-                <div class="container-kartu">
-                    <div class="col-lg-8">
-                        <h5>Lihat Kartu</h5>
-                    </div>
-                    <div class="col-lg-4 col-sm-8 col-md-8 col-xs-12">
-                        <ol class="breadcrumb">
-                            <li><a href="javascript:void(0)">Dashboard</a></li>
-                            <li class="active"><span>Daftar-Tamu</span></li>
-                        </ol>
-                    </div>
+    <div class="page-wrapper">
+        @include('sweetalert::alert')
+        <div class="container-fluid">
+            <div class="row heading-bg">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h5 class="txt-dark">Detail tamu</h5>
                 </div>
+                <!-- Breadcrumb -->
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <ol class="breadcrumb">
+                        <li><a href="index.html">Dashboard</a></li>
+                        <li><a href="index.html">Daftar tamu</a></li>
+                        <li class="active"><span>Detail tamu</span></li>
+                    </ol>
+                </div>
+                <!-- /Breadcrumb -->
             </div>
             <div class="row">
                 <div class="col-lg-6 mt-20">
@@ -64,12 +64,12 @@
                 <div class="col-lg-3 col-md-4 col-sm-3 col-xs-12">
                     <div class="panel panel-default card-view p">
                         <div class="panel-heading">
-                            <h6 class="panel-title text-center">Limit Bulanan</h6>
+                            <h6 class="panel-title text-center">Limit bulanan</h6>
                             <div class="clearfix"></div>
                         </div>
                         <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
                             <img src="/dist/img/Golf.svg">
-                            <h6 class="text-center">4</h6>
+                            <h6 class="text-center">{{ $quota }}</h6>
                         </div>
                     </div>
                     <div class="panel panel-default card-view p">
@@ -96,16 +96,10 @@
                 </div>
             </div>
             <div class="row">
-                {{-- <div class="panel-heading l">
-                    <div class="pull-left">
-                        <h6 class="panel-title txt-dark">Kartu tamu</h6>
-                    </div>
-                    <div class="clearfix"></div>
-                </div> --}}
                 <div class="panel-heading tabs">
                     <div class="d-flex">
                         <div class="flex-grow-1 d-flex align-items-center">
-                            <h6 class="panel-title txt-dark">Kartu tamu</h6>
+                            <h6 class="panel-title txt-dark">Riwayat tamu</h6>
                         </div>
                         {{-- tab --}}
                         <ul role="tablist" class="nav nav-pills" id="myTabs_6">
@@ -184,39 +178,17 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach ($deposit as $item)
                                                 <tr>
-                                                    <td>#10021</td>
-                                                    <td>Transaksi berhasil ! Arya GP telah melakukan
-                                                        pembayaran sebesar Rp.1.500.000,00</td>
-                                                    <td style="text-align: center;">
-                                                        <span class="label label-success">Berhasil</span>
-                                                    </td>
-                                                    <td style="text-align: center;">
-                                                        <p>12 Jan 2022</p>
-                                                    </td>
+                                                    <td> {{ $item->id }}</td>
+                                                    <td>    {{ $item->balance }} </td>
+                                                    <td> {{ $item->payment_type }} </td>
+                                                    <td> {{ $item->updated_at }} </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>#10021</td>
-                                                    <td>Transaksi berhasil ! Arya GP telah melakukan
-                                                        pembayaran menggunakan Limit Gratis.</td>
-                                                    <td style="text-align: center;">
-                                                        <span class="label label-success">Berhasil</span>
-                                                    </td>
-                                                    <td style="text-align: center;">
-                                                        <p>12 Jan 2022</p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>#10021</td>
-                                                    <td>Transaksi dibatalkan ! Arya GP telah
-                                                        membatalkan transaksi Limit Gratis.</td>
-                                                    <td style="text-align: center;">
-                                                        <span class="label label-warning">Batal</span>
-                                                    </td>
-                                                    <td style="text-align: center;">
-                                                        <p>12 Jan 2022</p>
-                                                    </td>
-                                                </tr>
+                                                
+                                                
+                                            @endforeach
+                                              
                                             </tbody>
                                         </table>
                                     </div>

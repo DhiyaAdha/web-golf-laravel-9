@@ -93,7 +93,7 @@
                             <div class="col-lg-6 mt-5">
                                 @foreach ($default as $item)
                                     <p style="color: #7D7D7D; text-align:start;">
-
+                                        
 
                                         <span class="wrap-txt-{{ $item->id }}" style="display: ">
                                             {{ $item->name }}
@@ -150,13 +150,14 @@
     </div>
 @endsection
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
-<script type="text/javascript">
-    function valueChanged(id) {
-        if ($('.form-control-' + id).is(":checked"))
-            $(".wrap-quantity-" + id).show();
+    <script type="text/javascript">  
+    function valueChanged(id)
+    {
+        if($('.form-control-'+id).is(":checked"))   
+            $(".wrap-quantity-"+id).show();
         else
-            $(".wrap-quantity-" + id).hide();
-    }
+            $(".wrap-quantity-"+id).hide();
+    }   
 
     $(document).ready(function() {
         $('#isChecked').change(function() {
@@ -167,4 +168,4 @@
             }
         });
     });
-</script>
+    </script>

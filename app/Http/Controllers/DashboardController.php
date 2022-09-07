@@ -42,11 +42,16 @@ class DashboardController extends Controller
         ];
         $data['years'] = range(Carbon::now()->year - 3, Carbon::now()->year);
         $getyear = $request->year ? $request->year : Carbon::now()->year;
-        // dd($getyear);
 
-        foreach ($month as $key => $value) {
+        $month_period = CarbonPeriod::create(Carbon::now()->subMonths(11), Carbon::now());
+        // dd($monthPeriod);
+        foreach($month_period as $key => $value) {
+            $month_new[$value->format('m')] = [$value->format('n'), $value->format('Y')];
+        }
+        // dd(array_values($month_new));
+        foreach (array_values($month_new) as $key => $value) {
 
-            $data['visitor'][$key]['period'] = $months[$value];
+            $data['visitor'][$key]['period'] = $months[$value[0]];
             $data['visitor'][$key]['vvip'] = LogTransaction::where('payment_status', 1)->whereHas(
                 'visitor',
                 function (Builder $query) {
@@ -54,9 +59,11 @@ class DashboardController extends Controller
                 }
             )->whereMonth(
                 'created_at',
-                strlen($value) == 1 ? '0' . $value : $value
-            )->whereYear('created_at', $getyear)
-                // ->where('tipe_member', 'VVIP')
+                strlen($value[0]) == 1 ? '0' . $value[0] : $value[0]
+            )->whereYear(
+                'created_at', 
+                $value[1]
+            )
             ->count();
 
             $data['visitor'][$key]['vip'] = LogTransaction::where('payment_status', 1)->whereHas(
@@ -66,9 +73,11 @@ class DashboardController extends Controller
                 }
             )->whereMonth(
                 'created_at',
-                strlen($value) == 1 ? '0' . $value : $value
-            )->whereYear('created_at', $getyear)
-                // ->where('tipe_member', 'VIP')
+                strlen($value[0]) == 1 ? '0' . $value[0] : $value[0]
+            )->whereYear(
+                'created_at', 
+                $value[1]
+            )
             ->count();
         }
 
@@ -80,7 +89,6 @@ class DashboardController extends Controller
             ->endOfWeek()
             ->translatedFormat('Y-m-d');
         $date_period = CarbonPeriod::create($start_date, $end_date)->toArray();
-        // $getweek = $request->week ? $request->week : Carbon::now()->week;
         $now = Carbon::now()->translatedFormat('Y-m-d');
         $last7Days = Carbon::now()->subDays(6)
             ->translatedFormat('Y-m-d');
@@ -89,7 +97,7 @@ class DashboardController extends Controller
         foreach ($day_period as $key => $value) {
             $data['visitor_daily'][$key]['y'] = Carbon::create(
                 $day_period[$key]
-            )->translatedFormat('D');
+            )->translatedFormat('d/m/y');
 
             $data['visitor_daily'][$key]['a'] = LogTransaction::where('payment_status', 1)->whereHas(
                 'visitor',
@@ -97,7 +105,6 @@ class DashboardController extends Controller
                     $query->where('tipe_member', 'VVIP');
                 }
             )->whereDate('created_at', $day_period[$key])
-                // ->where('tipe_member', 'VVIP')
             ->count();
             $data['visitor_daily'][$key]['b'] = LogTransaction::where('payment_status', 1)->whereHas(
                 'visitor',
@@ -105,11 +112,10 @@ class DashboardController extends Controller
                     $query->where('tipe_member', 'VIP');
                 }
             )->whereDate('created_at', $day_period[$key])
-                    // ->where('tipe_member', 'VIP')
             ->count();
             }
 
-        // return
+
         // statistika mingguan & tanggal
         $data['now'] = Carbon::now()->translatedFormat('Y-m-d');
         $data['visitor_week'] = LogTransaction::where('payment_status', 1)->whereBetween('created_at', 
@@ -177,22 +183,6 @@ class DashboardController extends Controller
             }
         )->count();
         // dd($data['visitor_vip_male']);
-
-        // join function
-        // $visitor = Visitor::select(
-        //     'visitors.name as name',
-        //     'visitors.tipe_member as tipe_member',
-        //     'log_transactions.created_at'
-        // )
-        //     ->join(
-        //         'log_transactions',
-        //         'visitors.id',
-        //         '=',
-        //         'log_transactions.visitor_id'
-        //     )
-        //     ->get();
-        // dd($visitor);
-
         
         // data-table analisis tamu
         $visitor = Visitor::select([
