@@ -91,10 +91,9 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Package $package)
     {
-        $package = Package::find($id);
-        return view('package.edit-package', compact('package'));
+        return view('package.edit-package', \compact('package'));
     }
 
     /**

@@ -26,7 +26,8 @@
                             </div>
                             <div class="pull-right">
                                 <div class="dropdown  pull-left">
-                                    <a class="dropdown-toggle weight-500" id="examplePanelDropdown" data-toggle="dropdown" href="#" aria-expanded="false" role="button">
+                                    <a class="dropdown-toggle weight-500" id="examplePanelDropdown" data-toggle="dropdown"
+                                        href="#" aria-expanded="false" role="button">
                                         <a href="/dist/img/kartu-tamu.png"><i class="fa-solid fa-address-card"></i></a>
                                     </a>
                                 </div>
@@ -103,9 +104,12 @@
                         </div>
                         {{-- tab --}}
                         <ul role="tablist" class="nav nav-pills" id="myTabs_6">
-                            <li class="active" role="presentation"><a class="tabs-log" aria-expanded="true" data-toggle="tab" role="tab" href="#transaction_tabs">Transaksi</a></li>
-                            <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab" href="#deposit_tabs" aria-expanded="false">Deposit</a></li>
-                            <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab" href="#limit_tabs" aria-expanded="false">Limit</a></li>
+                            <li class="active" role="presentation"><a class="tabs-log" aria-expanded="true"
+                                    data-toggle="tab" role="tab" href="#transaction_tabs">Transaksi</a></li>
+                            <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
+                                    href="#deposit_tabs" aria-expanded="false">Deposit</a></li>
+                            <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
+                                    href="#limit_tabs" aria-expanded="false">Limit</a></li>
                         </ul>
                     </div>
                 </div>
@@ -253,8 +257,8 @@
             </div>
         </div>
     </div>
-</div>
-<div class="col-lg-12">
-    @include('Layouts.Footer')
-</div>
+    </div>
+    <div class="col-lg-12">
+        @include('Layouts.Footer')
+    </div>
 @endsection

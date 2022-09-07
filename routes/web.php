@@ -55,72 +55,25 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::get('/package/edit/{id}', [PackageController::class, 'edit'])->name('package.edit');
     Route::post('/package/update/{id}', [PackageController::class,'update'])->name('package.update');
     Route::resource('analisis-tamu', DashboardController::class);
-    Route::resource('package', PackageController::class)->except([
-        'show',
-        'update',
-    ]);
-    Route::resource('riwayat-invoice', InvoiceController::class)->except([
-        'show',
-        'update',
-    ]);
 
-    Route::get('/daftar-tamu', [TamuController::class, 'index'])->name(
-        'daftar-tamu'
-    );
-    Route::get('/daftar-admin', [AdminController::class, 'index'])->name(
-        'daftar-admin'
-    );
-    Route::get('/daftar-tamu/destroy/{id}', [TamuController::class,'delete',])->name('hapus-tamu');
-    Route::get('/tambah-tamu', [TamuController::class, 'tambahtamu'])->name(
-        'tambah-tamu'
-    );
-    Route::post('/inserttamu', [TamuController::class, 'inserttamu'])->name(
-        'inserttamu'
-    );
-    Route::post('/store', [AdminController::class, 'store'])->name(
-        'store'
-    );
-    Route::get('/edit-tamu', [TamuController::class, 'edit'])->name(
-        'edit-tamu'
-    );
-    Route::post('/update-tamu', [TamuController::class, 'update'])->name(
-        'update-tamu'
-    );
+    Route::resource('package', PackageController::class)->except(['show','update']);
+    Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
+    Route::get('/daftar-tamu', [TamuController::class, 'index'])->name('daftar-tamu');
+    Route::get('/daftar-tamu/destroy/{id}', [TamuController::class,'delete'])->name('hapus-tamu');
+    Route::get('/tambah-tamu', [TamuController::class, 'tambahtamu'])->name('tambah-tamu');
+    Route::post('/inserttamu', [TamuController::class, 'inserttamu'])->name('inserttamu');
+    Route::get('/edit-tamu', [TamuController::class, 'edit'])->name('edit-tamu');
+    Route::post('/update-tamu', [TamuController::class, 'update'])->name('update-tamu');
+    Route::get('/daftar-admin', [AuthController::class, 'daftar_admin'])->name('daftar-admin');
 
-    Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name(
-        'show'      
-    );
-    Route::get('/daftar-admin/{id}', [AdminController::class, 'show'])->name(
-        'show'
-    );
-    Route::get('/daftar-admin/{id}', [AdminController::class, 'index'])->name(
-        'index'
-    );
-    Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name(
-        'scan-tamu'
-    );
-
-    Route::get('/scan-tamu-berhasil', [
-        ScanController::class,
-        'scantamuberhasil',
-    ])->name('scan-tamu-berhasil');
-    route::get('qrcode/{id}', [ScanqrController::class, 'generate'])->name(
-        'generate'
-    );
-    Route::get('/tambah-admin', [AdminController::class, 'tambahadmin'])->name(
-        'tambah-admin'
-    );
-    Route::get('/daftar-tamu/destroy/{id}', [
-        TamuController::class,
-        'delete',
-    ])->name('daftar-tamu.delete');
-    Route::get('/tambah-admin', [AdminController::class, 'tambah_admin'])->name(
-        'tambah-admin'
-    );
-    Route::get('/edit-admin/{id}', [AdminController::class, 'edit'])->name(
-        'edit-admin'
-    );
-    Route::get('/daftar-admin/destroy/{id}', [AdminController::class,'delete',])->name('hapus-admin');
+    Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name('show');
+    Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name('scan-tamu');
+    Route::get('/scan-tamu-berhasil', [ScanController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
+    route::get('qrcode/{id}', [ScanqrController::class, 'generate'])->name('generate');
+    Route::get('/tambah-admin', [AuthController::class, 'tambahadmin'])->name('tambah-admin');
+    Route::get('/daftar-tamu/destroy/{id}', [TamuController::class,'delete',])->name('daftar-tamu.delete');
+    Route::get('/tambah-admin', [AuthController::class, 'tambah_admin'])->name('tambah-admin');
+    Route::get('/edit-admin', [AuthController::class, 'edit_admin'])->name('edit-admin');
     //route untuk order
     Route::resource('proses', OrderController::class);
     Route::get('/metode_pembayaran', [InvoiceController::class,'metode_pembayaran'])->name('metode_pembayaran');
@@ -150,109 +103,133 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
 
 //Level admin dan superadmin
 Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
-    Route::resource('package', PackageController::class)->except([
-        'show',
-        'update',
-    ]);
-    Route::resource('riwayat-invoice', InvoiceController::class)->except([
-        'show',
-        'update',
-    ]);
-    Route::resource('package', PackageController::class)->except([
-        'show',
-        'update',
-    ]);
-    Route::resource('riwayat-invoice', InvoiceController::class)->except([
-        'show',
-        'update',
-    ]);
-    Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name(
-        'show'
-    );
-    Route::resource('proses', OrderController::class);
 
-    Route::get('/tambah-admin', [AuthController::class, 'tambahadmin'])->name(
-        'tambah-admin'
-    );
+    // Route::resource('package', PackageController::class)->except([
+    //     'show',
+    //     'update',
+    // ]);
+    // Route::resource('riwayat-invoice', InvoiceController::class)->except([
+    //     'show',
+    //     'update',
+    // ]);
+    // Route::resource('package', PackageController::class)->except([
+    //     'show',
+    //     'update',
+    // ]);
+    // Route::resource('riwayat-invoice', InvoiceController::class)->except([
+    //     'show',
+    //     'update',
+    // ]);
+    // Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name(
+    //     'show'
+    // );
+    // Route::resource('proses', OrderController::class);
+
+    // Route::get('/tambah-admin', [AuthController::class, 'tambahadmin'])->name(
+    //     'tambah-admin'
+    // );
+
+    // Route::resource('analisis-tamu', DashboardController::class);
+    // // Tamu-Controller
+    // Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name('show');
+    // Route::get('deposit/{id}', [TamuController::class, 'deposittamu'])->name('deposittamu');
+    // Route::get('/tambah-deposit/{id}', [
+    //     TamuController::class,
+    //     'tambahdeposit',
+    // ])->name('tambah-deposit');
+    // Route::get('/daftar-tamu', [TamuController::class, 'index'])->name(
+    //     'daftar-tamu'
+    // );
+    // Route::get('/daftar-tamu/destroy/{id}', [
+    //     TamuController::class,
+    //     'delete',
+    // ])->name('hapus-tamu');
+    // Route::get('/tambah-tamu', [TamuController::class, 'tambahtamu'])->name(
+    //     'tambah-tamu'
+    // );
+    // Route::post('/inserttamu', [TamuController::class, 'inserttamu'])->name(
+    //     'inserttamu'
+    // );
+    // Route::get('/edit-tamu/{id}', [TamuController::class, 'edit'])->name(
+    //     'edit-tamu'
+    // );
+    // Route::post('/update-tamu/{id}', [TamuController::class, 'update'])->name(
+    //     'update-tamu'
+    // );
+
+    // //Kartu Tamu
+    // Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name('show');
+    // Route::post('/tambah-deposit', [TamuController::class, 'insertdeposit'])->name(
+    //     'insertdeposit'
+    // );
+
+    // //Detail Scan
+    // Route::get('/detail_scan/{id}', [ScanqrController::class, 'detail_datapengunjung'])->name(
+    //     'detail_scan'
+    // );
+    // Route::get('/kartu-tamu', [ScanqrController::class, 'kartutamu'])->name(
+    //     'kartu-tamu'
+    // );
+
+    // Route::get('/scan-tamu', [ScanqrController::class, 'scantamu'])->name(
+    //     'scan-tamu'
+    // );
+    // Route::get('/scan-tamu-berhasil', [
+    //     ScanqrController::class,
+    //     'scantamuberhasil',
+    // ])->name('scan-tamu-berhasil');
+    // Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name(
+    //     'scan-tamu'
+    // );
+    // route::get('qrcode/{id}', [ScanqrController::class, 'generate'])->name(
+    //     'generate'
+    // );
+    // Route::get('/tambah-deposit', [
+    //     TamuController::class,
+    //     'tambahdeposit',
+    // ])->name('tambah-deposit');
+    // Route::get('/kartu-tamu', [ScanqrController::class, 'kartutamu'])->name(
+    //     'kartu-tamu'
+    // );
+    // Route::get('/tambah-admin', [AdminController::class, 'tambahadmin'])->name(
+    //     'tambah-admin'
+    // );
+    // Route::post('/update-admin/{id}', [AdminController::class, 'update'])->name(
+    //     'update-admin'
+    // );
+    // Route::resource('proses', OrderController::class);
+
+
+    // // Route::get('limittamu/{id}', [TamuController::class, 'limittamu'])->name('limittamu');
+    // Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name(
+    //     'show'
+    // );
+    // Route::get('deposit/{id}', [TamuController::class, 'deposittamu'])->name(
+    //     'deposittamu'
+    // );
 
     Route::resource('analisis-tamu', DashboardController::class);
-    // Tamu-Controller
+    Route::resource('package', PackageController::class)->except(['show','update']);
+    Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
+    Route::resource('package', PackageController::class)->except(['show','update']);
+    Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
+    Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name('show');
+    Route::get('/daftar-tamu', [TamuController::class, 'index'])->name('daftar-tamu');
+    Route::get('/daftar-tamu/destroy/{id}', [TamuController::class,'delete'])->name('hapus-tamu');
+    Route::get('/tambah-tamu', [TamuController::class, 'tambahtamu'])->name('tambah-tamu');
+    Route::post('/inserttamu', [TamuController::class, 'inserttamu'])->name('inserttamu');
+    Route::get('/edit-tamu/{id}', [TamuController::class, 'edit'])->name('edit-tamu');
+    Route::post('/update-tamu/{id}', [TamuController::class, 'update'])->name('update-tamu');
+    Route::get('/scan-tamu', [ScanqrController::class, 'scantamu'])->name('scan-tamu');
+    Route::get('/scan-tamu-berhasil', [ScanqrController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
+    Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name('scan-tamu');
+    route::get('qrcode/{id}', [ScanqrController::class, 'generate'])->name('generate');
+    Route::get('/tambah-deposit', [TamuController::class,'tambahdeposit'])->name('tambah-deposit');
+    Route::get('/kartu-tamu', [ScanqrController::class, 'kartutamu'])->name('kartu-tamu');
+    Route::get('/tambah-admin', [AuthController::class, 'tambahadmin'])->name('tambah-admin');
+    Route::resource('proses', OrderController::class);
     Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name('show');
     Route::get('deposit/{id}', [TamuController::class, 'deposittamu'])->name('deposittamu');
-    Route::get('/tambah-deposit/{id}', [
-        TamuController::class,
-        'tambahdeposit',
-    ])->name('tambah-deposit');
-    Route::get('/daftar-tamu', [TamuController::class, 'index'])->name(
-        'daftar-tamu'
-    );
-    Route::get('/daftar-tamu/destroy/{id}', [
-        TamuController::class,
-        'delete',
-    ])->name('hapus-tamu');
-    Route::get('/tambah-tamu', [TamuController::class, 'tambahtamu'])->name(
-        'tambah-tamu'
-    );
-    Route::post('/inserttamu', [TamuController::class, 'inserttamu'])->name(
-        'inserttamu'
-    );
-    Route::get('/edit-tamu/{id}', [TamuController::class, 'edit'])->name(
-        'edit-tamu'
-    );
-    Route::post('/update-tamu/{id}', [TamuController::class, 'update'])->name(
-        'update-tamu'
-    );
-
-    //Kartu Tamu
-    Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name('show');
-    Route::post('/tambah-deposit', [TamuController::class, 'insertdeposit'])->name(
-        'insertdeposit'
-    );
-
-    //Detail Scan
-    Route::get('/detail_scan/{id}', [ScanqrController::class, 'detail_datapengunjung'])->name(
-        'detail_scan'
-    );
-    Route::get('/kartu-tamu', [ScanqrController::class, 'kartutamu'])->name(
-        'kartu-tamu'
-    );
-
-    Route::get('/scan-tamu', [ScanqrController::class, 'scantamu'])->name(
-        'scan-tamu'
-    );
-    Route::get('/scan-tamu-berhasil', [
-        ScanqrController::class,
-        'scantamuberhasil',
-    ])->name('scan-tamu-berhasil');
-    Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name(
-        'scan-tamu'
-    );
-    route::get('qrcode/{id}', [ScanqrController::class, 'generate'])->name(
-        'generate'
-    );
-    Route::get('/tambah-deposit', [
-        TamuController::class,
-        'tambahdeposit',
-    ])->name('tambah-deposit');
-    Route::get('/kartu-tamu', [ScanqrController::class, 'kartutamu'])->name(
-        'kartu-tamu'
-    );
-    Route::get('/tambah-admin', [AdminController::class, 'tambahadmin'])->name(
-        'tambah-admin'
-    );
-    Route::post('/update-admin/{id}', [AdminController::class, 'update'])->name(
-        'update-admin'
-    );
-    Route::resource('proses', OrderController::class);
-
-
-    // Route::get('limittamu/{id}', [TamuController::class, 'limittamu'])->name('limittamu');
-    Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name(
-        'show'
-    );
-    Route::get('deposit/{id}', [TamuController::class, 'deposittamu'])->name(
-        'deposittamu'
-    );
 
     //Detail Scan
     Route::get('/detail_scan/{id}', [ScanqrController::class, 'detail_datapengunjung'])->name(

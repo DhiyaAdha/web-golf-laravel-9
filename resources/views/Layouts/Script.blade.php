@@ -51,6 +51,8 @@
 <!-- Switchery JavaScript -->
 <script src="{{ asset('vendors/bower_components/switchery/dist/switchery.min.js') }}"></script>
 <script src="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.min.js') }}"></script>
+<script src="{{ asset('vendors/bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js') }}">
+</script>
 <!-- Init JavaScript -->
 <script src="{{ asset('/dist/js/init.js') }}"></script>
 <script src="{{ asset('/dist/js/dashboard-data.js') }}"></script>
@@ -59,7 +61,11 @@
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
 <script>
-    /* delete package */
+    $(".vertical-spin").TouchSpin({
+        verticalbuttons: true,
+        verticalupclass: 'ti-plus',
+        verticaldownclass: 'ti-minus'
+    });
     $(document).on('click', '.delete', function() {
         id = $(this).attr('id');
         swal({
