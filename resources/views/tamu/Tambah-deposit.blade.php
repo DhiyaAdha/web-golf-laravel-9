@@ -26,6 +26,7 @@
                                         @csrf
                                         <label class="control-label mb-10" for=""></label>
                                         <input type="hidden" name="visitor_id" value="{{ $id }}" class="form-control">
+                                        {{-- <input type="hidden" name="visitor_id" value="{{ $id }}" class="form-control"> --}}
                                         <label class="control-label mb-10" for="">Tambah Jumlah Deposit</label>
                                         <input type="number" class="form-control" name="balance" size="50px"
                                             placeholder="Masukan Jumlah Deposit">

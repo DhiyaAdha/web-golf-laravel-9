@@ -5,20 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Deposit extends Model
+class ReportLimit extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'id',
         'visitor_id',
-        // 'user_id',
-        'report_deposit_id',
-        'balance',
-        // 'payment_type',
+        'user_id',
+        'report_quota',
+        'report_quota_kupon',
         'status',
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     public function visitor()
@@ -31,8 +29,9 @@ class Deposit extends Model
         return $this->belongsTo(User::class);
     }  
 
-    public function ReportDeposit()
+    public function Limit()
     {
-        return $this->hasmany(ReportDeposit::class);
+        return $this->hasmany(Limit::class);
     }  
+
 }

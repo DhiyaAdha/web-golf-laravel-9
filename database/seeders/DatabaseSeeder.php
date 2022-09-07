@@ -31,9 +31,11 @@ class DatabaseSeeder extends Seeder
         $this->call(PackageSeeder::class);
         $this->call(InvoiceSeeder::class);
         $this->call(DetailSeeder::class);
-        $this->call(LogLimitSeeder::class);
+        // $this->call(DepositHistorySeeder::class);
+        $this->call(ReportDepositSeeder::class);
         $this->call(DepositSeeder::class);
-        $this->call(DepositHistorySeeder::class);
+        $this->call(ReportLimitSeeder::class);
+        $this->call(LogLimitSeeder::class);
         
     }
 }

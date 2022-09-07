@@ -148,8 +148,9 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     );
 
     Route::resource('analisis-tamu', DashboardController::class);
+    
     // Tamu-Controller
-    Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name('show');
+    // Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name('show');
     Route::get('deposit/{id}', [TamuController::class, 'deposittamu'])->name('deposittamu');
     Route::get('/tambah-deposit/{id}', [
         TamuController::class,

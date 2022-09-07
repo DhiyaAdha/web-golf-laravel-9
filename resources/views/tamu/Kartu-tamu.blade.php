@@ -182,14 +182,12 @@
                                                 @foreach ($deposit as $item)
                                                 <tr>
                                                     <td> {{ $item->id }}</td>
-                                                    <td>    {{ $item->balance }} </td>
-                                                    <td> {{ $item->payment_type }} </td>
+                                                    <td> telah {{ $item->status }} {{ $item->balance }} </td>
+                                                    {{-- <td> {{ $item->report_deposit->payment_type }} </td> --}}
+                                                    {{-- {{ $school->students->first_name }} --}}
                                                     <td> {{ $item->updated_at }} </td>
                                                 </tr>
-                                                
-                                                
                                             @endforeach
-                                              
                                             </tbody>
                                         </table>
                                     </div>
@@ -210,39 +208,15 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach ($limit as $item)
                                                 <tr>
-                                                    <td>#10021</td>
-                                                    <td>Transaksi berhasil ! Arya GP telah melakukan
-                                                        pembayaran sebesar Rp.1.500.000,00</td>
-                                                    <td style="text-align: center;">
-                                                        <span class="label label-success">Berhasil</span>
-                                                    </td>
-                                                    <td style="text-align: center;">
-                                                        <p>12 Jan 2022</p>
-                                                    </td>
+                                                    <td> {{ $item->id }}</td>
+                                                    <td> telah {{ $item->quota }}</td>
+                                                    {{-- <td> {{ $item->report_deposit->payment_type }} </td> --}}
+                                                    {{-- {{ $school->students->first_name }} --}}
+                                                    <td> {{ $item->updated_at }} </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>#10021</td>
-                                                    <td>Transaksi berhasil ! Arya GP telah melakukan
-                                                        pembayaran menggunakan Limit Gratis.</td>
-                                                    <td style="text-align: center;">
-                                                        <span class="label label-success">Berhasil</span>
-                                                    </td>
-                                                    <td style="text-align: center;">
-                                                        <p>12 Jan 2022</p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>#10021</td>
-                                                    <td>Transaksi dibatalkan ! Arya GP telah
-                                                        membatalkan transaksi Limit Gratis.</td>
-                                                    <td style="text-align: center;">
-                                                        <span class="label label-warning">Batal</span>
-                                                    </td>
-                                                    <td style="text-align: center;">
-                                                        <p>12 Jan 2022</p>
-                                                    </td>
-                                                </tr>
+                                            @endforeach 
                                             </tbody>
                                         </table>
                                     </div>
