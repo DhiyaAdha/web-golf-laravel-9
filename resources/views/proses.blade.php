@@ -75,7 +75,7 @@
                                             data-name="{{ $item->name }}" data-priceday="{{ $item->price_weekdays }}"
                                             data-priceend="{{ $item->price_weekend }}">-</button>
                                         <input name="input1" type="number" min="0" max="100" step="1"
-                                            value="0" id="my-input-{{ $item->id }}"
+                                            value="1" id="my-input-{{ $item->id }}"
                                             onchange="valuePackage({{ $item->id }})" readonly>
                                         <button type="button" id="increment"
                                             onclick="stepper('increment', {{ $item->id }})"
@@ -105,14 +105,14 @@
                                                     </div>
                                                 </div>
                                                 <span class="wrap-quantity-{{ $item2->id }}" style="display: none">
-                                                    {{-- <button id="decrement"
+                                                    <button id="decrement"
                                                         onclick="stepper('decrement', {{ $item2->id }})">-</button>
                                                     <input name="input2" type="number" min="0" max="100"
                                                         step="1" value="0" id="my-input-{{ $item2->id }}"
                                                         readonly>
                                                     <button id="increment"
                                                         onclick="stepper('increment', {{ $item2->id }})"
-                                                        data-id="{{ $item2->id }}">+</button> --}}
+                                                        data-id="{{ $item2->id }}">+</button>
                                                 </span>
                                                 <label for="">{{ $item2->name }}</label>
                                             </div>
@@ -121,6 +121,7 @@
                                 </div>
                             </div>
                         </div>
+                        <button id="btn_toggle" >Toggle</button>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -143,7 +144,7 @@
                                     <p style="color: #7D7D7D; text-align:start;">
                                         
 
-                                        <span class="wrap-txt-{{ $item->id }}" style="display: ">
+                                        <span id="isi-{{ $item->id }}" style="display: none">
                                             {{ $item->name }}
                                             <hr>
                                         </span>
@@ -153,7 +154,7 @@
                                     <p style="color: #7D7D7D; text-align:start;">
 
 
-                                        <span class="wrap-txt-{{ $item2->id }}" style="display: ">
+                                        <span class="wrap-txt-{{ $item2->id }}" style="display: none">
                                             {{ $item2->name }}
                                             <hr>
                                         </span>
@@ -199,6 +200,7 @@
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript">
         function valueChanged(id) {
             if ($('.form-control-' + id).is(":checked"))
@@ -235,5 +237,24 @@
     //             </div>`;
         // $('.wrap-selected-item').append(html)
         // })
+
+
+        // $(document).ready(function(){
+
+        //     $('.form-control-' + id).click(function(){
+        //         $(".isi-" + id).toggle();
+        //     })
+
+
+        // });
+
+        // function isi(id) {
+        //     if ($('#btn_toggle' + id).click(function){
+        //         $("#isi-" + id).toggle();
+        //         alert("success");
+        //     })
+        // };
+
+
     </script>
 @endsection
