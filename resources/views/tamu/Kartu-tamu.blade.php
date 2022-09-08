@@ -172,7 +172,7 @@
                             <div id="deposit_tabs" class="tab-pane fade" role="tabpanel">
                                 <div class="table-wrap">
                                     <div class="table-responsive">
-                                        <table class="table table-hover">
+                                        <table class="table table-hover" id="dt-tamu-deposit">
                                             <thead>
                                                 <tr>
                                                     <th>Order ID</th>
@@ -182,15 +182,6 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($deposit as $item)
-                                                <tr>
-                                                    <td> {{ $item->id }}</td>
-                                                    <td> telah {{ $item->status }} {{ $item->balance }} </td>
-                                                    {{-- <td> {{ $item->report_deposit->payment_type }} </td> --}}
-                                                    {{-- {{ $school->students->first_name }} --}}
-                                                    <td> {{ $item->updated_at }} </td>
-                                                </tr>
-                                            @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -200,7 +191,7 @@
                             <div id="limit_tabs" class="tab-pane fade" role="tabpanel">
                                 <div class="table-wrap">
                                     <div class="table-responsive">
-                                        <table class="table table-hover">
+                                        <table class="table table-hover" id="dt-tamu-limit">
                                             <thead>
                                                 {{-- Table head --}}
                                                 <tr>
@@ -211,15 +202,15 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($limit as $item)
+                                                {{-- @foreach ($limit as $item)
                                                 <tr>
                                                     <td> {{ $item->id }}</td>
                                                     <td> telah {{ $item->quota }}</td>
-                                                    {{-- <td> {{ $item->report_deposit->payment_type }} </td> --}}
-                                                    {{-- {{ $school->students->first_name }} --}}
+                                                    <td> {{ $item->report_deposit->payment_type }} </td>
+                                                    {{ $school->students->first_name }}
                                                     <td> {{ $item->updated_at }} </td>
                                                 </tr>
-                                            @endforeach 
+                                            @endforeach  --}}
                                             </tbody>
                                         </table>
                                     </div>

@@ -109,7 +109,7 @@ class TamuController extends Controller
         //
     }
     
-
+    // insert tamu
     public function inserttamu(Request $request)
     {
         $this->validate($request, [
@@ -155,7 +155,6 @@ class TamuController extends Controller
         $quota->save();
 
         return redirect('/tambah-deposit/'.$visitors->id)->with(
-        // return redirect('/daftar-tamu')->with(
             'sukses',
             'Company has been created successfully.'
         );
@@ -195,43 +194,22 @@ class TamuController extends Controller
         ]);
         $deposit->save();
         
-
-
-        // $visitors->address = $request->alamat;
         return redirect('/daftar-tamu')->with(
             'sukses',
             'Company has been created successfully.'
         );
-
-
     }
     
 
     //function tambahan deposit
     public function tambahdeposit(Request $request, $id)
     {
-        // $this->validate($request, [
-
-        // ]);
         $data['id'] = $id;
-
         return view('tamu.tambah-deposit', $data);
+        // dd($data['id']);
     }
 
-    public function limittamu($id){
-
-        // dd($data['loglimit']);
-        $limit = LogLimit::find($id);
-        $data = [
-            [
-                'id' => $limit->visitor_id,
-                'report_limit_id' => $limit->report_limit_id,
-                'quota' => $limit->quota,
-            ]
-        ];
-        DB::table('log_limits', 'quota')->get();
-
-    }
+    
 
     /**
      * Display the specified resource.
@@ -239,7 +217,7 @@ class TamuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $data['visitor'] = Visitor::find($id);
         $limit = LogLimit::where('visitor_id',$id)->first();
@@ -259,10 +237,171 @@ class TamuController extends Controller
             ->orderBy('created_at', 'desc')
             // ->limit(5)
             ->get();
-        
         // dd ($data['deposit_history']);
         return view('tamu.kartu-tamu', $data);
     }
+
+    /*Berhasil deposit */
+    public function berhasildeposit(Request $request, $id)
+    {
+
+        $this->validate($request, [
+            'visitor_id' => 'required',
+        ]);
+
+        // $id = Deposit::where('visitor_id',$id)->first();
+        // $data['visitor_id'] = $id->visitor_id;   
+        $id = Visitor::find($id);   
+        $visitor = Visitor::findorFail($id);
+        // $deposit = Deposit::where('visitor_id', $id)->first();
+        $visitor->name = $request->name;
+        $visitor->email = $request->email;
+        $visitor->address = $request->address;
+        $visitor->phone = $request->phone;
+        $visitor->company = $request->company;
+        $visitor->position = $request->position;
+        $visitor->tipe_member = $request->tipe_member;
+        // $visitor->role_id = $request->role_id;
+        $visitor->updated_at = Carbon::now();
+        
+
+        Deposit::create([
+            'visitor_id' => $request->visitor_id,
+            
+            'status' => 'BERHASIL',
+            'balance' => $request->balance,
+            'activities' => 'Deposit <b>'.$visitor->name.' sebesar <b>'.$request->balance.'</b>',
+        ]);
+
+        $visitor->save();
+        return redirect('/deposit-kartu-tamu/'.$visitor->id)
+            ->with('status', ' berhasil tambah deposit');
+    }
+    /* Brhasil Deposit */
+
+    /* data aktifitas tamu Deposit */
+    public function reportdeposit(Request $request)
+    {
+
+        $reportdeposit = Deposit::join('visitors', 'deposits.visitor_id', '=', 'visitors.id')
+        ->join('report_deposits', 'deposits.report_deposit_id', '=', 'report_deposits.id')
+        ->orderBy('deposits.id', 'desc')
+        ->get(['deposits.*',  'visitors.name as name', 'deposits.balance as balance']);
+
+        
+        if ($request->ajax()) {
+            return datatables()->of($reportdeposit)->addColumn('order_id', function ($data) {
+                    return '<p class="label" style="background-color: #5901C8;">'.$data->id.'<div>';
+                })->addColumn('information', function ($data) {
+                    if ($data->type == 'BERHASIL') {
+                        return '<p class="label label-danger">'.$data->type.'<div>';
+                    }  else {
+                        return '<p class="label " style="background-color: #607EAA;">'.$data->activities.'<div>';
+                        
+                    }
+                })->addColumn('status', function ($data) {
+                    return $data->status;
+                })->addColumn('tanggal', function ($data) {
+                    return $data->updated_at;
+                })
+                ->rawColumns(['order_id','name','information','status','tanggal'])->make(true);
+        }
+        return view('tamu.kartu-tamu');
+    }
+    /* end data aktifitas tamu Deposit */
+
+    /* limit tamu*/
+    public function limittamu($id){
+
+        // dd($data['loglimit']);
+        $limit = LogLimit::find($id);
+        $data = [
+            [
+                'id' => $limit->visitor_id,
+                'report_limit_id' => $limit->report_limit_id,
+                'quota' => $limit->quota,
+            ]
+        ];
+        DB::table('log_limits', 'quota')->get();
+
+    }
+    /* end limit tamu*/
+
+    /* data aktifitas tamu limit */
+    public function reportlimit(Request $request)
+    {
+        $reportlimit = LogLimit::join('visitors', 'log_limits.visitor_id', '=', 'visitors.id')
+        ->join('report_limits', 'log_limits.report_limit_id', '=', 'report_limits.id')
+        ->orderBy('log_limits.id', 'desc')
+        ->get(['log_limits.*',  'visitors.name as name', 'log_limits.quota as quota']);
+
+        if ($request->ajax()) {
+            return datatables()->of($reportlimit)->addColumn('information', function ($data) {
+
+                if ($data->type == 'BERHASIL') {
+                    return '<p class="label label-danger">'.$data->type.'<div>';
+                }  else {
+                    return '<p class="label " style="background-color: #607EAA;">'.$data->type.'<div>';
+                    
+                }
+                })->addColumn('status', function ($data) {
+                    return $data->status;
+                })->addColumn('tanggal', function ($data) {
+                    return $data->updated_at;
+                })
+                ->rawColumns(['information','status','tanggal'])
+                ->make(true);
+        }
+        return view('tamu.kartu-tamu');
+    }
+        
+    
+    /* end data aktifitas tamu limit */
+
+    /*Berhasil Limit */
+    public function berhasillimit(Request $request, $id)
+    {
+
+        $this->validate($request, [
+            'visitor_id' => 'required',
+        ]);
+
+        // $id = Deposit::where('visitor_id',$id)->first();
+        // $data['visitor_id'] = $id->visitor_id;   
+        $id = Visitor::find($id);   
+        $visitor = Visitor::findorFail($id);
+        // $deposit = Deposit::where('visitor_id', $id)->first();
+        $visitor->name = $request->name;
+        $visitor->email = $request->email;
+        $visitor->address = $request->address;
+        $visitor->phone = $request->phone;
+        $visitor->company = $request->company;
+        $visitor->position = $request->position;
+        $visitor->tipe_member = $request->tipe_member;
+        // $visitor->role_id = $request->role_id;
+        $visitor->updated_at = Carbon::now();
+        
+
+        // Deposit::create([
+        //     'visitor_id' => $request->visitor_id,
+            
+        //     'status' => 'BERHASIL',
+        //     'balance' => $request->balance,
+        //     'activities' => 'Deposit <b>'.$visitor->name.' sebesar <b>'.$request->balance.'</b>',
+        // ]);
+        LogLimit::create([
+            'visitor_id' => $request->visitor_id,
+            
+            'status' => 'BERHASIL',
+            'quota' => $request->quota,
+            'activities' => 'Limit <b>'.$visitor->name.' sebesar <b>'.$request->quota.'</b>',
+        ]);
+
+        $visitor->save();
+        return redirect('/deposit-kartu-tamu/'.$visitor->id)
+            ->with('status', ' berhasil tambah deposit');
+    }
+    /* Berhasil Limit */
 
     /**
      * Show the form for editing the specified resource.
@@ -301,24 +440,10 @@ class TamuController extends Controller
 
         return redirect()->route('daftar-tamu');
     }
-
-    
-
-    
-
     public function tambahtamu()
     {
         return view('tamu.tambah-tamu');
     }
-
-    
-
-    // public function deposittamu($id){
-    //     $deposit = Deposit::find($id);
-    //     $data['quota'] = Visitor::find($deposit->visitor_id);
-    //     return view('tamu.Kartu-tamu', $data);
-
-    // }
 
     /**
      * Remove the specified resource from storage.

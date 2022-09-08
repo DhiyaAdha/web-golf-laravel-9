@@ -20,6 +20,7 @@ class CreateDepositsTable extends Migration
             // $table->integer('user_id')->unsigned();
             $table->integer('report_deposit_id')->unsigned();
             $table->integer('balance');
+            $table->string('activities')->nullable();
             // $table->enum('payment_type',['cash', 'transfer']);
             $table->enum('status',['bertambah', 'berkurang']);
             $table->timestamps();

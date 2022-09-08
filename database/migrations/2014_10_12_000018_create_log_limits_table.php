@@ -21,6 +21,7 @@ class CreateLogLimitsTable extends Migration
             $table->enum('type', ['VIP','VVIP']);
             $table->integer('quota');
             $table->integer('quota_kupon')->nullable();
+            $table->string('activities')->nullable();
             $table->enum('status', ['bertambah', 'berkurang']);
             $table->timestamps();
 

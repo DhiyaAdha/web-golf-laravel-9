@@ -17,6 +17,7 @@ class Deposit extends Model
         'balance',
         // 'payment_type',
         'status',
+        'activities',
         'created_at',
         'updated_at'
     ];
