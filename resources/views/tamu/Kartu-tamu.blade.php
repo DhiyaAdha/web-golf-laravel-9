@@ -18,7 +18,7 @@
                 <!-- /Breadcrumb -->
             </div>
             <div class="row">
-                <div class="col-lg-6 mt-20">
+                <div class="col-lg-6">
                     <div class="panel panel-default panel-dropdown card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
@@ -183,16 +183,14 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($deposit as $item)
-                                                <tr>
-                                                    <td> {{ $item->id }}</td>
-                                                    <td>    {{ $item->balance }} </td>
-                                                    <td> {{ $item->payment_type }} </td>
-                                                    <td> {{ $item->updated_at }} </td>
-                                                </tr>
-                                                
-                                                
-                                            @endforeach
-                                              
+                                                    <tr>
+                                                        <td> {{ $item->id }}</td>
+                                                        <td> {{ $item->balance }} </td>
+                                                        <td> {{ $item->payment_type }} </td>
+                                                        <td> {{ $item->updated_at }} </td>
+                                                    </tr>
+                                                @endforeach
+
                                             </tbody>
                                         </table>
                                     </div>

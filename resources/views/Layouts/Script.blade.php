@@ -60,19 +60,12 @@
 
 {{-- Popper Js --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
-
-{{-- Tooltip --}}
+{{-- Font Awesome --}}
+<script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
 <script>
     $(function() {
         $('[data-toogle="tooltip"]').tooltip()
     })
-</script>
-
-
-{{-- Font Awesome --}}
-<script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
-
-<script>
     $(".vertical-spin").TouchSpin({
         verticalbuttons: true,
         verticalupclass: 'ti-plus',
@@ -730,11 +723,73 @@
 
 
     // scan
-    $(document).on("click", "#show-scan", function() {
-        $(".disabled-scan").css("display", "none");
+    // $(document).on("click", "#show-scan", function() {
+    //     $(".disabled-scan").css("display", "none");
+
+    //     function onScanSuccess(decodedText, decodedResult) {
+    //         $("#result").val(decodedText)
+    //     }
+
+    //     function onScanFailure(error) {
+    //         console.warn(`Code scan error = ${error}`);
+    //     }
+
+    //     let html5QrcodeScanner = new Html5QrcodeScanner(
+    //         "reader", {
+    //             fps: 10,
+    //             qrbox: {
+    //                 width: 250,
+    //                 height: 250
+    //             }
+    //         },
+    //         false);
+    //     html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    // });
+    $('#show-qr-scan').on('click', function() {
+        $('.disabled-scan').addClass('d-none');
 
         function onScanSuccess(decodedText, decodedResult) {
-            $("#result").val(decodedText)
+            $("#resultTEXT").val(decodedText)
+            $('#resultDECODE').val(JSON.stringify(decodedResult));
+            html5QrcodeScanner.clear();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('visitor.qrcode') }}",
+                data: {
+                    qrCode: decodedText
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === "VALID") {
+                        swal({
+                            title: "Verifikasi berhasil",
+                            type: "success",
+                            text: "Atas nama " + response.data.name,
+                            confirmButtonColor: "#01c853",
+                        });
+                    } else {
+                        swal({
+                            icon: 'error',
+                            title: response.status,
+                            text: response.message,
+                            allowOutsideClick: false
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                html5QrCode.resume();
+                            }
+                        });
+                    }
+
+                    $('#resultTEXT').val("");
+                    $('#resultDECODE').val("");
+                }
+            });
         }
 
         function onScanFailure(error) {
@@ -751,7 +806,7 @@
             },
             false);
         html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-    })
+    });
 </script>
 {{-- Input Stepper --}}
 <script>

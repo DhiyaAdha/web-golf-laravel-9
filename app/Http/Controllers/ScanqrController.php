@@ -12,6 +12,17 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ScanqrController extends Controller
 {
+    private $status;
+    private $message;
+    private $data;
+    private $user;
+
+    public function __construct()
+    {
+        $this->status = "INVALID";
+        $this->message = "Ada sesuatu yang salah!";
+        $this->data = [];
+    }
     /**
      * Display a listing of the resource.
      *
@@ -110,10 +121,6 @@ class ScanqrController extends Controller
         $visitor = Visitor::findOrFail($id);
         $qrcode = QrCode::size(180)->generate($visitor->id);
         $data['visitor'] =  Visitor::find($id);
-        // $data['email'] =$visitor->email;
-        // $data['phone'] =$visitor->phone;
-        // $data['gender'] =$visitor->gender;
-        // dd($data);
         return view('tamu.kartu-tamu',compact('qrcode'),$data);
         
     }
@@ -136,5 +143,51 @@ class ScanqrController extends Controller
 
         // $data_visitor = Visitor::all();
         // return view('detail_scan', compact('data_visitor'));
+    }
+
+    //private
+    private function checkUser($id)
+    {
+        $this->user = Visitor::find($id);
+        if (!$this->user) {
+            $this->setResponse('INVALID', "Invalid QR code");
+            throw new \Throwable();
+        }
+    }
+
+    public function checkQRCode(Request $request)
+    {
+        $qrCode = trim($request->get('qrCode'));
+        $get_visitor = Visitor::where("id", $qrCode)->first();
+        if($get_visitor == null) {
+            $this->setResponse('INVALID', "Invalid QR code");
+            return response()->json($this->getResponse());
+        } else {
+            try {
+                $this->setResponse('VALID', "Valid QR code", [
+                    'name' => $get_visitor->name,
+                    'email' => $get_visitor->email,
+                ]);
+                return response()->json($this->getResponse());
+            } catch (\Throwable $th) {
+                return response()->json($this->getResponse());
+            }
+        }
+    }
+
+    private function setResponse($status = "INVALID", $message = "Ada sesuatu yang salah!", $data = [])
+    {
+        $this->status = $status;
+        $this->message = $message;
+        $this->data = $data;
+    }
+
+    private function getResponse()
+    {
+        return [
+            'status' => $this->status,
+            'message' => $this->message,
+            'data' => $this->data ? $this->data : null
+        ];
     }
 }

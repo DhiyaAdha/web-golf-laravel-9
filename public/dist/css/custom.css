@@ -192,6 +192,22 @@ table#dt-tamu {
     padding: 0px !important;
 }
 
+.panel-scan-qr {
+    border-radius: 10px; 
+    border: 1.8px solid gray; 
+    width: 500px; 
+    height: 400px;
+}
+
+video {
+    width: 500px !important;
+    border: 1.8px solid gray;
+}
+
+.d-none {
+    display: none !important;
+}
+
 .table-td {
     padding-bottom: 0px !important;
 }
