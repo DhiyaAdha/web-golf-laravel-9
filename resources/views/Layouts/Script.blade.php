@@ -754,8 +754,7 @@
 
             $.ajaxSetup({
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                        'content')
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
 
@@ -776,7 +775,7 @@
                             backdrop: 'static'
                         });
                     } else {
-                        Swal.fire({
+                        swal({
                             icon: 'error',
                             title: response.status,
                             text: response.message,

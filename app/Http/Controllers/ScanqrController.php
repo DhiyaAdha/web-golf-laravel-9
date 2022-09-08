@@ -12,6 +12,17 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ScanqrController extends Controller
 {
+    private $status;
+    private $message;
+    private $data;
+    private $user;
+
+    public function __construct()
+    {
+        $this->status = "INVALID";
+        $this->message = "Ada sesuatu yang salah!";
+        $this->data = [];
+    }
     /**
      * Display a listing of the resource.
      *
@@ -169,7 +180,6 @@ class ScanqrController extends Controller
         try {
             $this->checkUser($qrCode[1]);
             $this->checkEmail($qrCode[2]);
-            // $this->checkExpire($qrCode[3]);
             $this->setResponse('VALID', "Valid QR code", [
                 'name' => $this->user->name,
                 'email' => $this->user->email,
