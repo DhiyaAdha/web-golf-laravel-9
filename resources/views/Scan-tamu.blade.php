@@ -38,46 +38,6 @@
                     <div id="reader" class="disabled-show-scan">
                     </div>
                 </div>
-                {{-- <div class="col-lg-8" style="position: relative;">
-                    <div style="height: 300px" class="panel panel-default card-view">
-                        <h6>Data Pengunjung</h6>
-                        <div class="col-sm-12">
-                            <div class="panel-body">
-                                <div class="ct-txt">
-                                    <p>Tidak ada data</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div style="height: 300px" class="panel panel-default card-view">
-                        <h6>Data Pengunjung</h6>
-                        <div class="kotak bg-white mt-10">
-                            <div id="reader" width="600px" class=""></div>
-                            <div class="gambar-qr">
-                                <div class="disabled-scan ">
-                                    <img src="/dist/img/qr.png" class="ml-20">
-                                    <div class="btn-scan mt-10">
-                                        <div class="btn-scan-qr">
-                                            <a href="#" id="show-scan">
-                                                <p>Scan Barcode</p>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <p>Hasil Scan</p>
-                        <input type="text" id="result" size="30px">
-                    </div>
-                </div> --}}
             </div>
         </div>
     </div>

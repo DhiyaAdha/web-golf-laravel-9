@@ -2,23 +2,24 @@
 @section('content')
     <div class="page-wrapper">
         <div class="container-fluid">
+            <!-- Title -->
             <div class="row heading-bg">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h5 class="txt-dark">Pilih Permainan</h5>
+                </div>
+
                 <!-- Breadcrumb -->
-                <div class="row">
-                    <div class="container-fluid">
-                        <div class="col-lg-8">
-                            <h5>Proses Invoice</h5>
-                        </div>
-                        <div class="col-lg-4 col-sm-8 col-md-8 col-xs-12">
-                            <ol class="breadcrumb">
-                                <li><a href="javascript:void(0)">Dashboard</a></li>
-                                <li class="active"><span>Proses</span></li>
-                            </ol>
-                        </div>
-                    </div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <ol class="breadcrumb">
+                        <li><a href="index.html">Dashboard</a></li>
+                        <li><a href="#"><span>Scan Tamu</span></a></li>
+                        <li class="active"><span>Pilih Permainan</span></li>
+                    </ol>
                 </div>
                 <!-- /Breadcrumb -->
+
             </div>
+            <!-- /Title -->
             <div class="row">
                 <div class="col-lg-8">
                     <div class="panel panel-default card-view" style="height: 900px;">

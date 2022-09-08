@@ -166,22 +166,22 @@ $(document).ready(function () {
     var elems = Array.prototype.slice.call(
         document.querySelectorAll(".js-switch")
     );
-    $("#morris_switch").each(function () {
-        new Switchery($(this)[0], $(this).data());
-    });
-    var swichMorris = function () {
-        if ($("#morris_switch").is(":checked")) {
-            lineChart.setData(data);
-            lineChart.redraw();
-        } else {
-            lineChart.setData(dataNewVisitor);
-            lineChart.redraw();
-        }
-    };
-    swichMorris();
-    $(document).on("change", "#morris_switch", function () {
-        swichMorris();
-    });
+    // $("#morris_switch").each(function () {
+    //     new Switchery($(this)[0], $(this).data());
+    // });
+    // var swichMorris = function () {
+    //     if ($("#morris_switch").is(":checked")) {
+    //         lineChart.setData(data);
+    //         lineChart.redraw();
+    //     } else {
+    //         lineChart.setData(dataNewVisitor);
+    //         lineChart.redraw();
+    //     }
+    // };
+    // swichMorris();
+    // $(document).on("change", "#morris_switch", function () {
+    //     swichMorris();
+    // });
 });
 /*****Ready function end*****/
 

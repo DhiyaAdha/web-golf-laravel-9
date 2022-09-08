@@ -38,7 +38,7 @@ class TamuController extends Controller
 
         if ($request->ajax()) {
             return datatables()->of($visitor)->addColumn('action', function ($visitor) {
-                    $button = '<a data-toggle="tooltip" data-placement="top" title="Detail Tamu" href="' .url('kartu-tamu/' . $visitor->id) .'"><img src="dist/img/Card-Tamu.svg" style="padding: 2px 7px 2px 2px;"></a>';
+                    $button = '<a data-toggle="tooltip" data-placement="top" title="Detail Tamu" href="' .url('kartu-tamu/' . $visitor->id) .'"><img src="dist/img/Card-Tamu.svg"></a>';
                     $button .= '&nbsp;&nbsp;';
                     $button .= '<a data-toggle="tooltip" data-placement="top" title="Edit" href="/edit-tamu/' .$visitor->id .'">
                                     <svg width="21" height="21";viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -151,7 +151,7 @@ class TamuController extends Controller
         // $$deposit_history->save();
 
 
-        return redirect('/tambah-deposit/'.$visitors->id)->with(
+        return redirect('/daftar-tamu/')->with(
         // return redirect('/daftar-tamu')->with(
             'sukses',
             'Company has been created successfully.'
@@ -177,12 +177,12 @@ class TamuController extends Controller
         $data['quota'] = $limit->quota;
         $data['balance'] = $deposit->balance;
 
-       $data['deposit_history'] = DepositHistory::where('visitor_id', $id)
+        $data['deposit_history'] = DepositHistory::where('visitor_id', $id)
             ->orderBy('created_at', 'desc')
             // ->limit(5)
             ->get();
 
-       $data['deposit'] = Deposit::where('visitor_id', $id)
+        $data['deposit'] = Deposit::where('visitor_id', $id)
             ->orderBy('created_at', 'desc')
             // ->limit(5)
             ->get();

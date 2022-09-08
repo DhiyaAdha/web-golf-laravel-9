@@ -12,7 +12,7 @@
                         <div class="col-lg-4 col-sm-8 col-md-8 col-xs-12">
                             <ol class="breadcrumb">
                                 <li><a href="javascript:void(0)">Dashboard</a></li>
-                                <li class="active"><span>Detail Scan</span></li>
+                                <li class="active"><span>Scan Tamu</span></li>
                             </ol>
                         </div>
                     </div>
