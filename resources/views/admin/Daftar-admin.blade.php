@@ -26,8 +26,8 @@
                                 </div>
                                 <div class="pull-right">
                                     <div class=" pull-left">
-                                        <a href="{{ route('admin.show') }}" class="btn btn-xs btn-success">Tambah
-                                            admin</a>
+                                        <a href="{{ route('tambah-admin') }}" class="btn btn-xs btn-success">Tambah
+                                            Admin</a>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
