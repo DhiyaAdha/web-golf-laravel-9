@@ -75,7 +75,7 @@ class PackageController extends Controller
 
         return redirect()
             ->route('package.index')
-            ->with('status', 'Berhasil Menambah Produk Baru');
+            ->with('success', 'Berhasil menambahkan produk baru');
     }
 
     /**
@@ -124,7 +124,7 @@ class PackageController extends Controller
         ]);
         
         $package->save();
-        return redirect()->route('package.index')->with('toast_success', 'Data Berhasil Diedit');
+        return redirect()->route('package.index')->with('success', 'Berhasil edit produk');
     }
 
     /**
@@ -144,29 +144,5 @@ class PackageController extends Controller
             // 'created_at' => Carbon::now(),
         ]);
         return redirect()->route('package.index');
-    }
-
-    public function insertpackage(Request $request)
-    {
-        dd($request->all());
-        // Package::create($request->all());
-        // $data[Package]::create($request->all());
-
-        $this->validate($request, [
-            'name' => 'required',
-            'category' => 'required',
-            'price_weekdays' => 'required',
-            'price_weekend' => 'required',
-        ]);
-
-        $package = Package::create([
-            'name' => $request->name,
-            'category' => $request->category,
-            'price_weekdays' => $request->price_weekdays,
-            'price_weekend' => $request->price_weekend,
-        ]);
-
-        $package->save();
-        return redirect('/package')->with('sukses simpen euy');
     }
 }

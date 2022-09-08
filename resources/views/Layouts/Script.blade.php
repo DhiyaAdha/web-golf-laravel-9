@@ -58,11 +58,21 @@
 <script src="{{ asset('/dist/js/dashboard-data.js') }}"></script>
 <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
 
-{{-- Popper Js --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
 <script>
+    @if (Session::has('success'))
+        window.setTimeout(function() {
+            $.toast({
+                text: '{{ Session('success') }}',
+                position: 'top-right',
+                loaderBg: '#fec107',
+                icon: 'success',
+                hideAfter: 2000,
+                stack: 6
+            });
+        }, 1000);
+    @endif
     $(function() {
         $('[data-toogle="tooltip"]').tooltip()
     })
@@ -97,7 +107,7 @@
 
                         window.setTimeout(function() {
                             $.toast({
-                                text: 'Paket bermain berhasil dihapus permanen :)',
+                                text: 'Product berhasil dihapus permanen',
                                 position: 'top-right',
                                 loaderBg: '#fec107',
                                 icon: 'success',
@@ -691,17 +701,6 @@
                 searchable: true,
                 orderable: false
             },
-            // {
-            //     data: 'action',
-            //     searchable: false,
-            //     orderable: false
-            // },
-            // {
-            //     data: 'updated_at',
-            //     searchable: true,
-            //     orderable: false
-            // },
-
         ],
         order: [],
         responsive: true,
@@ -721,30 +720,6 @@
         }],
     });
 
-
-    // scan
-    // $(document).on("click", "#show-scan", function() {
-    //     $(".disabled-scan").css("display", "none");
-
-    //     function onScanSuccess(decodedText, decodedResult) {
-    //         $("#result").val(decodedText)
-    //     }
-
-    //     function onScanFailure(error) {
-    //         console.warn(`Code scan error = ${error}`);
-    //     }
-
-    //     let html5QrcodeScanner = new Html5QrcodeScanner(
-    //         "reader", {
-    //             fps: 10,
-    //             qrbox: {
-    //                 width: 250,
-    //                 height: 250
-    //             }
-    //         },
-    //         false);
-    //     html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-    // });
     $('#show-qr-scan').on('click', function() {
         $('.disabled-scan').addClass('d-none');
 
