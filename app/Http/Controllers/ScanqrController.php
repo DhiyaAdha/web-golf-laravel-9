@@ -167,6 +167,12 @@ class ScanqrController extends Controller
                 $this->setResponse('VALID', "Valid QR code", [
                     'name' => $get_visitor->name,
                     'email' => $get_visitor->email,
+                    'phone' => $get_visitor->phone,
+                    'address' => $get_visitor->address,
+                    'position' => $get_visitor->position,
+                    'company' => $get_visitor->company,
+                    'gender' => $get_visitor->gender,
+                    'tipe_member' => $get_visitor->tipe_member,
                 ]);
                 return response()->json($this->getResponse());
             } catch (\Throwable $th) {

@@ -767,6 +767,7 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status === "VALID") {
+                        console.log(response.data)
                         swal({
                             title: "Verifikasi berhasil",
                             type: "success",
