@@ -151,7 +151,7 @@ class TamuController extends Controller
         // $$deposit_history->save();
 
 
-        return redirect('/tambah-deposit/'.$visitors->id)->with(
+        return redirect('/daftar-tamu/')->with(
         // return redirect('/daftar-tamu')->with(
             'sukses',
             'Company has been created successfully.'

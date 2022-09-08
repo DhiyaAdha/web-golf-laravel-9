@@ -43,7 +43,9 @@ class AdminController extends Controller
      */
     public function create(Request $request)
     {
-        return view('admin.tambah-admin');
+        // return view('admin.Tambah-admin');
+       
+            
     }
 
     /**
@@ -54,21 +56,21 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'phone' => $request->phone,
-            'role_id' => $request->role_id,
-        ]);
+        // User::create([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'password' => Hash::make($request->password),
+        //     'phone' => $request->phone,
+        //     'role_id' => $request->role_id,
+        // ]);
         // LogAdmin::create([
         //     'user_id' => Auth::id(),
         //     'type' => 'CREATE',
         //     'activities' => 'Menambahkan admin baru <b>'.$request->name.'</b>',
         // ]);
-        return redirect()
-            ->route('daftar-admin')
-            ->with('status', 'Berhasil Menambah Produk Baru');
+        // return redirect()
+        //     ->route('daftar-admin.index')
+        //     ->with('status', 'Berhasil Menambah Produk Baru');
     }
 
     /**
@@ -79,14 +81,14 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        $data['user'] = User::find($id);
-        $user = User::findOrFail($id);
+        // $data['user'] = User::find($id);
+        // $user = User::findOrFail($id);
         // $data['qrcode'] = $qrcode->qr;
 
         // $data['visitor'] =  Visitor::find($id);
         // return view('tamu.Kartu-tamu', $data);
 
-        return view('admin.daftar-admin', $data);
+        // return view('admin.daftar-admin', $data);
     }
 
     /**
@@ -157,6 +159,8 @@ class AdminController extends Controller
         return view('admin.tambah-admin');
     }
 
+
+
     public function edit_admin()
     {
         return view('admin.edit-admin');
@@ -193,5 +197,25 @@ class AdminController extends Controller
                 ->rawColumns(['role','user_name','information','status_action','date_activity'])->make(true);
         }
         return view('admin.daftar-admin');
+    }
+
+    public function insertadmin (Request $request) {
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+            'phone' => 'required',
+            'role_id' => 'required',
+        ]);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'phone' => $request->phone,
+            'role_id' => $request->role_id,
+            'created_at' => Carbon::now(),
+        ]);
+        $user->save();
+        return redirect('daftar-admin')->with('toast_sukses', 'Data admin telah ditambahkan');
     }
 }

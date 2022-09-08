@@ -75,6 +75,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::get('/daftar-tamu/destroy/{id}', [TamuController::class,'delete'])->name('daftar-tamu.delete');
     Route::get('/admin-tambah-show', [AdminController::class, 'create'])->name('admin.show');
     Route::get('/admin-tambah', [AdminController::class, 'store'])->name('admin.tambah');
+    Route::post('/insertadmin', [AdminController::class, 'insertadmin'])->name('insertadmin');
     Route::get('/edit-admin/{users}', [AdminController::class, 'edit'])->name('edit-admin');
     Route::post('/edit-admin/{users}', [AdminController::class, 'update'])->name('admin.edit');
     Route::get('/daftar-admin/destroy/{id}', [AdminController::class,'delete',])->name('hapus-admin');
