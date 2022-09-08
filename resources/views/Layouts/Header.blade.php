@@ -57,7 +57,7 @@
     <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
     {{-- HTML5-QRCODE --}}
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-    {{-- Bootstrap --}}
+
 
 
 

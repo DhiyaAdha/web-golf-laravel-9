@@ -53,10 +53,12 @@
 <script src="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.min.js') }}"></script>
 <script src="{{ asset('vendors/bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js') }}">
 </script>
+
 <!-- Init JavaScript -->
 <script src="{{ asset('/dist/js/init.js') }}"></script>
 <script src="{{ asset('/dist/js/dashboard-data.js') }}"></script>
 <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
+
 
 {{-- Popper Js --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
