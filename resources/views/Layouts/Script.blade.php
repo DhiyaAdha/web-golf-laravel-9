@@ -57,10 +57,15 @@
 <script src="{{ asset('/dist/js/init.js') }}"></script>
 <script src="{{ asset('/dist/js/dashboard-data.js') }}"></script>
 <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
-<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+{{-- Popper Js --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
 <script>
+    $(function() {
+        $('[data-toogle="tooltip"]').tooltip()
+    })
     $(".vertical-spin").TouchSpin({
         verticalbuttons: true,
         verticalupclass: 'ti-plus',
@@ -92,7 +97,7 @@
 
                         window.setTimeout(function() {
                             $.toast({
-                                text: 'Paket bermain berhasil dihapus permanen',
+                                text: 'Paket bermain berhasil dihapus permanen :)',
                                 position: 'top-right',
                                 loaderBg: '#fec107',
                                 icon: 'success',
@@ -104,12 +109,14 @@
                     }
                 })
             } else {
-                swal("Dibatalkan", "akwoaokaokaokao", "error");
+                swal("Dibatalkan", "Paket Tidak Dihapus", "error");
             }
         });
         return false;
     });
     /* delete package */
+
+    // Edit
 
     // data analisis
     $('#dt-analisis').DataTable({
@@ -218,12 +225,12 @@
                 "data": function(data) {
                     if (data.status == 0) {
                         return `<div class="checkbox checkbox-success checkbox-circle">
-                                    <input id="checkbox-10" type="checkbox" disabled checked="">
+                                    <input id="checkbox-10" type="checkbox" disabled checked="" data-toggle="tooltip" data-placement="top" title="ON">
                                     <label for="checkbox-10"></label>
                                 </div>`;
                     } else {
                         return `<div class="checkbox checkbox-danger checkbox-circle">
-                                    <input id="checkbox-12" type="checkbox" disabled checked="">
+                                    <input id="checkbox-12" type="checkbox" disabled checked=""data-toggle="tooltip" data-placement="top" title="OFF">
                                     <label for="checkbox-12"></label>
                                 </div>`;
                     }
@@ -827,3 +834,5 @@
         // console.log(id, min, max, step, val);
     }
 </script>
+
+{{-- Tooltip --}}
