@@ -137,4 +137,62 @@ class ScanqrController extends Controller
         // $data_visitor = Visitor::all();
         // return view('detail_scan', compact('data_visitor'));
     }
+
+    //private
+    private function checkUser($id)
+    {
+        $this->user = Visitor::find($id);
+        if (!$this->user) {
+            $this->setResponse('INVALID', "Invalid QR code");
+            throw new \Throwable();
+        }
+    }
+
+    private function checkEmail($email)
+    {
+        if (!hash_equals((string) $email, sha1($this->user->email))) {
+            $this->setResponse('INVALID', "Invalid QR code");
+            throw new \Throwable();
+        }
+    }
+
+    public function checkQRCode(Request $request)
+    {
+        $qrCode = [];
+        if (trim($request->get('qrCode'))) {
+            $qrCode = explode('/', trim($request->get('qrCode')));
+        } else {
+            $this->setResponse('VALID', 'Invalid QR code');
+            return response()->json($this->getResponse());
+        }
+
+        try {
+            $this->checkUser($qrCode[1]);
+            $this->checkEmail($qrCode[2]);
+            // $this->checkExpire($qrCode[3]);
+            $this->setResponse('VALID', "Valid QR code", [
+                'name' => $this->user->name,
+                'email' => $this->user->email,
+            ]);
+            return response()->json($this->getResponse());
+        } catch (\Throwable $th) {
+            return response()->json($this->getResponse());
+        }
+    }
+
+    private function setResponse($status = "INVALID", $message = "Ada sesuatu yang salah!", $data = [])
+    {
+        $this->status = $status;
+        $this->message = $message;
+        $this->data = $data;
+    }
+
+    private function getResponse()
+    {
+        return [
+            'status' => $this->status,
+            'message' => $this->message,
+            'data' => $this->data ? $this->data : null
+        ];
+    }
 }

@@ -57,7 +57,7 @@
 <script src="{{ asset('/dist/js/init.js') }}"></script>
 <script src="{{ asset('/dist/js/dashboard-data.js') }}"></script>
 <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
-
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
 <script>
@@ -716,11 +716,76 @@
 
 
     // scan
-    $(document).on("click", "#show-scan", function() {
-        $(".disabled-scan").css("display", "none");
+    // $(document).on("click", "#show-scan", function() {
+    //     $(".disabled-scan").css("display", "none");
+
+    //     function onScanSuccess(decodedText, decodedResult) {
+    //         $("#result").val(decodedText)
+    //     }
+
+    //     function onScanFailure(error) {
+    //         console.warn(`Code scan error = ${error}`);
+    //     }
+
+    //     let html5QrcodeScanner = new Html5QrcodeScanner(
+    //         "reader", {
+    //             fps: 10,
+    //             qrbox: {
+    //                 width: 250,
+    //                 height: 250
+    //             }
+    //         },
+    //         false);
+    //     html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    // });
+    $('#show-qr-scan').on('click', function() {
+        $('.disabled-scan').addClass('d-none');
 
         function onScanSuccess(decodedText, decodedResult) {
-            $("#result").val(decodedText)
+            $("#resultTEXT").val(decodedText)
+            $('#resultDECODE').val(JSON.stringify(decodedResult));
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                        'content')
+                }
+            });
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('visitor.qrcode') }}",
+                data: {
+                    qrCode: decodedText
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === "VALID") {
+                        $('#labelName').text(response.data.name);
+                        $('#labelEmail').text(response.data.email);
+                        ("#modalConfirmation").modal({
+                            show: true,
+                            keyboard: false,
+                            backdrop: 'static'
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: response.status,
+                            text: response.message,
+                            allowOutsideClick: false
+                        }).then((result) => {
+                            // when click OK button
+                            if (result.isConfirmed) {
+                                html5QrCode.resume();
+                            }
+                        });
+                    }
+
+                    $('#resultTEXT').val("");
+                    $('#resultDECODE').val("");
+                }
+            });
         }
 
         function onScanFailure(error) {
@@ -737,7 +802,7 @@
             },
             false);
         html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-    })
+    });
 </script>
 {{-- Input Stepper --}}
 <script>
