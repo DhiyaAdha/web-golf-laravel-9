@@ -16,7 +16,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-12" style="position: relative;">
-                    <div style="height: 900px" class="panel panel-default card-view">
+                    <div style="height: 1250px" class="panel panel-default card-view">
                         <h6 class="control-label mb-10">Tambah Tamu</h6>
                         <div class="panel-body">
                             <div class="form-wrap">
@@ -57,8 +57,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="">Nomer Hp</label>
-                                        <input type="number" name="phone" class="form-control" id="phone"
-                                            size="50px" placeholder="Masukan Nomer Hp" required autofocus>
+                                        <input type="text" min="0" name="phone" class="form-control"
+                                            id="phone" size="50px" placeholder="Masukan Nomer Hp" required autofocus>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="">Perusahaan</label>

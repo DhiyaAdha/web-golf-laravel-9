@@ -42,9 +42,6 @@
                                 <div class="table-wrap">
                                     <div class="table-responsive">
                                         <table class="table mb-0" id="dt-package">
-                                            <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" data-bs-title="Tooltip on top"> Tooltip on
-                                                top</button>
                                             <thead>
                                                 <tr>
                                                     <th class="table-th">Nama Produk</th>
