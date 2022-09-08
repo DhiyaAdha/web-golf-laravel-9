@@ -751,7 +751,7 @@
         function onScanSuccess(decodedText, decodedResult) {
             $("#resultTEXT").val(decodedText)
             $('#resultDECODE').val(JSON.stringify(decodedResult));
-
+            html5QrcodeScanner.clear();
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -767,12 +767,11 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status === "VALID") {
-                        $('#labelName').text(response.data.name);
-                        $('#labelEmail').text(response.data.email);
-                        ("#modalConfirmation").modal({
-                            show: true,
-                            keyboard: false,
-                            backdrop: 'static'
+                        swal({
+                            title: "Verifikasi berhasil",
+                            type: "success",
+                            text: "Atas nama " + response.data.name,
+                            confirmButtonColor: "#01c853",
                         });
                     } else {
                         swal({
@@ -781,7 +780,6 @@
                             text: response.message,
                             allowOutsideClick: false
                         }).then((result) => {
-                            // when click OK button
                             if (result.isConfirmed) {
                                 html5QrCode.resume();
                             }

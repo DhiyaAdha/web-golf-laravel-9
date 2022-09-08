@@ -80,57 +80,5 @@
                 </div> --}}
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <p>Hasil Scan</p>
-                <input type="text" id="resultTEXT" size="30px">
-            </div>
-            <div class="col-lg-12">
-                <p>Hasil Scan</p>
-                <input type="text" id="resultDECODE" size="30px">
-            </div>
-        </div>
     </div>
-    <!-- Modal:start -->
-    <div class="modal fade" id="modalConfirmation" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">User Verification</h5>
-                    <button id="closeButton" type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-borderless">
-                        <tr>
-                            <th>Name</th>
-                            <th>:</th>
-                            <td class="text-left">
-                                <label id="labelName"></label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Email</th>
-                            <th>:</th>
-                            <td class="text-left">
-                                <label id="labelEmail"></label>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button id="cancelButton" type="button" class="btn btn-secondary"
-                        data-bs-dismiss="modal">Cancel</button>
-                    <button id="confirmationButton" type="button" class="btn btn-primary">
-                        Confirmation
-                        <div id="progressBar" class="spinner-border spinner-border-sm d-none" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal:end -->
 @endsection
