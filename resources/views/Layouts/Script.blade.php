@@ -58,9 +58,14 @@
 <script src="{{ asset('/dist/js/dashboard-data.js') }}"></script>
 <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
 
+{{-- Popper Js --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
 <script>
+    $(function() {
+        $('[data-toogle="tooltip"]').tooltip()
+    })
     $(".vertical-spin").TouchSpin({
         verticalbuttons: true,
         verticalupclass: 'ti-plus',
@@ -92,7 +97,7 @@
 
                         window.setTimeout(function() {
                             $.toast({
-                                text: 'Paket bermain berhasil dihapus permanen',
+                                text: 'Paket bermain berhasil dihapus permanen :)',
                                 position: 'top-right',
                                 loaderBg: '#fec107',
                                 icon: 'success',
@@ -104,12 +109,14 @@
                     }
                 })
             } else {
-                swal("Dibatalkan", "akwoaokaokaokao", "error");
+                swal("Dibatalkan", "Paket Tidak Dihapus", "error");
             }
         });
         return false;
     });
     /* delete package */
+
+    // Edit
 
     // data analisis
     $('#dt-analisis').DataTable({
@@ -218,12 +225,12 @@
                 "data": function(data) {
                     if (data.status == 0) {
                         return `<div class="checkbox checkbox-success checkbox-circle">
-                                    <input id="checkbox-10" type="checkbox" disabled checked="">
+                                    <input id="checkbox-10" type="checkbox" disabled checked="" data-toggle="tooltip" data-placement="top" title="ON">
                                     <label for="checkbox-10"></label>
                                 </div>`;
                     } else {
                         return `<div class="checkbox checkbox-danger checkbox-circle">
-                                    <input id="checkbox-12" type="checkbox" disabled checked="">
+                                    <input id="checkbox-12" type="checkbox" disabled checked=""data-toggle="tooltip" data-placement="top" title="OFF">
                                     <label for="checkbox-12"></label>
                                 </div>`;
                     }
@@ -716,11 +723,75 @@
 
 
     // scan
-    $(document).on("click", "#show-scan", function() {
-        $(".disabled-scan").css("display", "none");
+    // $(document).on("click", "#show-scan", function() {
+    //     $(".disabled-scan").css("display", "none");
+
+    //     function onScanSuccess(decodedText, decodedResult) {
+    //         $("#result").val(decodedText)
+    //     }
+
+    //     function onScanFailure(error) {
+    //         console.warn(`Code scan error = ${error}`);
+    //     }
+
+    //     let html5QrcodeScanner = new Html5QrcodeScanner(
+    //         "reader", {
+    //             fps: 10,
+    //             qrbox: {
+    //                 width: 250,
+    //                 height: 250
+    //             }
+    //         },
+    //         false);
+    //     html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    // });
+    $('#show-qr-scan').on('click', function() {
+        $('.disabled-scan').addClass('d-none');
 
         function onScanSuccess(decodedText, decodedResult) {
-            $("#result").val(decodedText)
+            $("#resultTEXT").val(decodedText)
+            $('#resultDECODE').val(JSON.stringify(decodedResult));
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('visitor.qrcode') }}",
+                data: {
+                    qrCode: decodedText
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === "VALID") {
+                        $('#labelName').text(response.data.name);
+                        $('#labelEmail').text(response.data.email);
+                        ("#modalConfirmation").modal({
+                            show: true,
+                            keyboard: false,
+                            backdrop: 'static'
+                        });
+                    } else {
+                        swal({
+                            icon: 'error',
+                            title: response.status,
+                            text: response.message,
+                            allowOutsideClick: false
+                        }).then((result) => {
+                            // when click OK button
+                            if (result.isConfirmed) {
+                                html5QrCode.resume();
+                            }
+                        });
+                    }
+
+                    $('#resultTEXT').val("");
+                    $('#resultDECODE').val("");
+                }
+            });
         }
 
         function onScanFailure(error) {
@@ -737,7 +808,7 @@
             },
             false);
         html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-    })
+    });
 </script>
 {{-- Input Stepper --}}
 <script>
@@ -762,3 +833,5 @@
         // console.log(id, min, max, step, val);
     }
 </script>
+
+{{-- Tooltip --}}
