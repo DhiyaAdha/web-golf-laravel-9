@@ -121,10 +121,6 @@ class ScanqrController extends Controller
         $visitor = Visitor::findOrFail($id);
         $qrcode = QrCode::size(180)->generate($visitor->id);
         $data['visitor'] =  Visitor::find($id);
-        // $data['email'] =$visitor->email;
-        // $data['phone'] =$visitor->phone;
-        // $data['gender'] =$visitor->gender;
-        // dd($data);
         return view('tamu.kartu-tamu',compact('qrcode'),$data);
         
     }
@@ -159,34 +155,23 @@ class ScanqrController extends Controller
         }
     }
 
-    private function checkEmail($email)
-    {
-        if (!hash_equals((string) $email, sha1($this->user->email))) {
-            $this->setResponse('INVALID', "Invalid QR code");
-            throw new \Throwable();
-        }
-    }
-
     public function checkQRCode(Request $request)
     {
-        $qrCode = [];
-        if (trim($request->get('qrCode'))) {
-            $qrCode = explode('/', trim($request->get('qrCode')));
+        $qrCode = trim($request->get('qrCode'));
+        $get_visitor = Visitor::where("id", $qrCode)->first();
+        if($get_visitor == null) {
+            $this->setResponse('INVALID', "Invalid QR code");
+            return response()->json($this->getResponse());
         } else {
-            $this->setResponse('VALID', 'Invalid QR code');
-            return response()->json($this->getResponse());
-        }
-
-        try {
-            $this->checkUser($qrCode[1]);
-            $this->checkEmail($qrCode[2]);
-            $this->setResponse('VALID', "Valid QR code", [
-                'name' => $this->user->name,
-                'email' => $this->user->email,
-            ]);
-            return response()->json($this->getResponse());
-        } catch (\Throwable $th) {
-            return response()->json($this->getResponse());
+            try {
+                $this->setResponse('VALID', "Valid QR code", [
+                    'name' => $get_visitor->name,
+                    'email' => $get_visitor->email,
+                ]);
+                return response()->json($this->getResponse());
+            } catch (\Throwable $th) {
+                return response()->json($this->getResponse());
+            }
         }
     }
 
