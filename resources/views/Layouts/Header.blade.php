@@ -6,6 +6,7 @@
     <meta name="description" content="Aplikasi TGCC Member" />
     <meta name="author" content="tgcc" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
+
     <!-- PWA  -->
     <meta name="theme-color" content="#6777ef" />
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.PNG') }}">
@@ -57,8 +58,5 @@
     <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
     {{-- HTML5-QRCODE --}}
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-
-
-
-
+    {{-- Bootstrap --}}
 </head>

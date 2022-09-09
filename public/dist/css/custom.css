@@ -165,6 +165,77 @@ table#dt-tamu {
     padding: 5px 8px;
 }
 
+h6.panel-title.txt-dark.label-visitor {
+    font-size: 8px;
+    padding: 0px 10px;
+    line-height: 12px !important;
+    font-weight: 500;
+}
+.card-visitor {
+    width: 204.0188976378px;
+    height: 323.52755905512px;
+    padding: 0px;
+}
+
+.panel-body.card {
+    position: relative;
+}
+.panel-body img {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+@media (min-width: 992px) {
+    .col-md-card {
+        width: 204.0188976378px;
+        height: 323.52755905512px;
+        float: left;
+        position: relative;
+        min-height: 1px;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+}
+
+.box-footer {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top: 1px solid #f4f4f4;
+    padding: 10px;
+    background-color: #fff;
+}
+
+
+element.style {
+    font-size: 18px;
+    font-weight: bold;
+    font-color: #fff;
+    margin-bottom: 0px;
+}
+.widget-user .widget-user-username {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 25px;
+    font-weight: 300;
+    text-shadow: 0 1px 1px rgb(0 0 0 / 20%);
+}
+
+.modal-content.hidden-content {
+    background-color: transparent !important;
+    -webkit-box-shadow: none !important;
+}
+
+.download-kartu-tamu {
+    border-radius: 6px;
+    background-color: white;
+    color: #545151;
+    font-weight: 500;
+    border: none;
+}
+
 .panel-heding {
     border: none;
     color: inherit;

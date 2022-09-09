@@ -26,14 +26,79 @@
                             </div>
                             <div class="pull-right">
                                 <div class="dropdown  pull-left">
-                                    <a class="dropdown-toggle weight-500" id="examplePanelDropdown" data-toggle="dropdown"
-                                        href="#" aria-expanded="false" role="button">
-                                        <a href="/dist/img/kartu-tamu.png"><i class="fa-solid fa-address-card"></i></a>
+                                    <a class="weight-500" data-toggle="modal" href="javascript:void(0)"
+                                        data-target="#kartu-tamu">
+                                        <i class="fa-solid fa-address-card"></i>
                                     </a>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
                         </div>
+                        <!-- sample modal content -->
+                        <div class="modal fade" id="kartu-tamu" tabindex="-1" role="dialog"
+                            aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content hidden-content">
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-center align-items-center flex-column">
+                                            <div class="d-flex">
+                                                <div class="col-md-card d-flex justify-content-center mb-10">
+                                                    <div class="panel panel-default card-view card-visitor">
+                                                        <div class="panel-heading">
+                                                            <div class="pull-left">
+                                                                <div class="d-flex">
+                                                                    <img src="{{ asset('/dist/img/tgcc-icon-small.svg') }}">
+                                                                    <div class="d-flex flex-column">
+                                                                        <h6 class="panel-title txt-dark label-visitor">
+                                                                            tritih golf</h6>
+                                                                        <h6 class="panel-title txt-dark label-visitor">
+                                                                            country & club</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                        <div class="panel-wrapper collapse in">
+                                                            <div class="panel-body">
+                                                                <img src="{{ asset('/dist/img/golf-footer.svg') }}"
+                                                                    alt="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-card d-flex justify-content-center mb-10">
+                                                    <div class="panel panel-default card-view card-visitor">
+                                                        <div class="panel-heading">
+                                                            <div class="pull-left">
+                                                                <div class="d-flex">
+                                                                    <img src="{{ asset('/dist/img/tgcc-icon-small.svg') }}">
+                                                                    <div class="d-flex flex-column">
+                                                                        <h6 class="panel-title txt-dark label-visitor">
+                                                                            tritih golf</h6>
+                                                                        <h6 class="panel-title txt-dark label-visitor">
+                                                                            country & club</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                        <div class="panel-wrapper collapse in">
+                                                            <div class="panel-body">
+                                                                <img src="{{ asset('/dist/img/golf-footer.svg') }}"
+                                                                    alt="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="button" class="btn download-kartu-tamu"><i
+                                                    class="fa fa-download"></i> Download Kartu (PDF)</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.modal -->
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
                                 <div class="user-others-details">
