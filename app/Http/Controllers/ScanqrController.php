@@ -165,6 +165,7 @@ class ScanqrController extends Controller
         } else {
             try {
                 $this->setResponse('VALID', "Valid QR code", [
+                    'id' => $get_visitor->id,
                     'name' => $get_visitor->name,
                     'email' => $get_visitor->email,
                     'phone' => $get_visitor->phone,

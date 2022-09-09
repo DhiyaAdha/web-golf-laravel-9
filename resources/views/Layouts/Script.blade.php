@@ -628,7 +628,7 @@
         },
         "render": $.fn.dataTable.render.text(),
         "columns": [{
-                data: 'category',
+                data: 'name',
                 searchable: true,
                 orderable: false
             },
@@ -748,6 +748,13 @@
                             type: "success",
                             text: "Atas nama " + response.data.name,
                             confirmButtonColor: "#01c853",
+                            closeOnConfirm: false,
+                            closeOnCancel: false,
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            timer: 2000,
+                        }, function(){
+                            window.location.href = "/detail_scan/" + response.data.id;
                         });
                     } else {
                         swal({
@@ -755,10 +762,9 @@
                             title: response.status,
                             text: response.message,
                             allowOutsideClick: false
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                html5QrCode.resume();
-                            }
+                        }, function(){
+                            // Untuk reload Page jika gagal
+                            window.location.reload(true)
                         });
                     }
 
@@ -774,10 +780,10 @@
 
         let html5QrcodeScanner = new Html5QrcodeScanner(
             "reader", {
-                fps: 10,
+                fps: 144,
                 qrbox: {
-                    width: 250,
-                    height: 250
+                    width: 200,
+                    height: 200
                 }
             },
             false);
