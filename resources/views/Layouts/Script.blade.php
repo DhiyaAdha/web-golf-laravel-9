@@ -65,7 +65,7 @@
 <script>
     $('.download-kartu-tamu').on("click", function() {
         $('#cetak-kartu').printThis({
-            base: "https://jasonday.github.io/printThis/"
+            printContainer: true,
         });
     });
     @if (Session::has('success'))
