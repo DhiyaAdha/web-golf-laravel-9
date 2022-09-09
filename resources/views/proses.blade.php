@@ -175,7 +175,7 @@
                                 <hr class="h">
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" style="padding: 5px">
                             <div class="col-lg-6 mt-5">
                                 <p style="text-align:start;"><strong>Total</strong></p>
                             </div>
@@ -184,7 +184,7 @@
                                 {{-- <p style="text-align:end;">Rp. 1.000.000,00</p> --}}
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="text-center">
                             <div class="col-lg-12 mt-10">
                                 <div class="btn-proses">
                                     <a href="/metode_pembayaran">
@@ -263,7 +263,7 @@
                     $(".harga-" + id).show();
                     $(".garis-" + id).show();
 
-                    // event.preventDefault();
+                    
                 }
                 else{
                     $('.isi-' + id).hide();
@@ -271,6 +271,7 @@
                     $(".harga-" + id).hide();
                     $(".garis-" + id).hide();
                 }
+                event.preventDefault();
             });
             // $('.form-control-' + id).is(function(){
 

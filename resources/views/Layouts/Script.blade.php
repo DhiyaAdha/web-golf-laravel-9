@@ -618,7 +618,7 @@
         },
         "render": $.fn.dataTable.render.text(),
         "columns": [{
-                data: 'category',
+                data: 'name',
                 searchable: true,
                 orderable: false
             },
