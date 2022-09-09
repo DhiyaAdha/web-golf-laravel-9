@@ -91,32 +91,30 @@
                                 <strong>Pilih Item Tambahan</strong>
                                 <div class="row">
                                     <form class="form-inline">
-                                        @foreach ($additional as $item2)
-                                            <div>
-                                                <div class="checkbox checkbox-success">
-                                                    <div class="row">
-                                                        <input id="checkbox2" type="checkbox"
-                                                            class="form-control select-item form-control-{{ $item2->id }}"
-                                                            onchange="valueChanged({{ $item2->id }})"
-                                                            data-name="{{ $item2->name }}"
-                                                            data-priceday="{{ $item2->price_weekdays }}"
-                                                            data-priceend="{{ $item2->price_weekend }}">
-                                                        <label for=""></label>
-                                                    </div>
-                                                </div>
-                                                <span class="wrap-quantity-{{ $item2->id }}" style="display: none">
-                                                    <button id="decrement"
-                                                        onclick="stepper('decrement', {{ $item2->id }})">-</button>
-                                                    <input name="input2" type="number" min="1" max="100"
-                                                        step="1" value="1" id="my-input-{{ $item2->id }}"
-                                                        readonly>
-                                                    <button id="increment"
-                                                        onclick="stepper('increment', {{ $item2->id }})"
-                                                        data-id="{{ $item2->id }}">+</button>
-                                                </span>
-                                                <label for="">{{ $item2->name }}</label>
-                                            </div>
-                                        @endforeach
+                                @foreach ($additional as $item2)
+                                    <form class="form-inline">
+                                        <div class="checkbox checkbox-success">
+                                            <input id="checkbox" type="checkbox"
+                                                class="form-control select-item form-control-{{ $item2->id }}"
+                                                onchange="valueChanged({{ $item2->id }})">
+                                            <label></label>
+                                        </div>
+                                        <span class="wrap-quantity-{{ $item2->id }}" style="display: none">
+                                            <button type="button" id="decrement"
+                                                onclick="stepper('decrement', {{ $item2->id }})"
+                                                data-name="{{ $item2->name }}" data-priceday="{{ $item2->price_weekdays }}"
+                                                data-priceend="{{ $item2->price_weekend }}">-</button>
+                                            <input name="input1" type="number" min="1" max="100" step="1"
+                                                value="1" id="my-input-{{ $item2->id }}"
+                                                onchange="valuePackage({{ $item2->id }})" readonly>
+                                            <button type="button" id="increment"
+                                                onclick="stepper('increment', {{ $item2->id }})"
+                                                data-name="{{ $item2->name }}" data-priceday="{{ $item2->price_weekdays }}"
+                                                data-priceend="{{ $item2->price_weekend }}">+</button>
+                                        </span>
+                                        <label for="">{{ $item2->name }}</label>
+                                    </form>
+                                @endforeach
                                     </form>
                                 </div>
                             </div>
