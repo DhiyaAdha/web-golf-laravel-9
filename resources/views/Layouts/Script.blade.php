@@ -57,12 +57,29 @@
 <script src="{{ asset('/dist/js/init.js') }}"></script>
 <script src="{{ asset('/dist/js/dashboard-data.js') }}"></script>
 <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
-{{-- Popper Js --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+<script type="text/javascript" src="{{ asset('/dist/js/printThis.js') }}"></script>
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
 <script>
+    $('.download-kartu-tamu').on("click", function() {
+        $('#cetak-kartu').printThis({
+            base: "https://jasonday.github.io/printThis/"
+        });
+    });
+    @if (Session::has('success'))
+        window.setTimeout(function() {
+            $.toast({
+                text: '{{ Session('success') }}',
+                position: 'top-right',
+                loaderBg: '#fec107',
+                icon: 'success',
+                hideAfter: 2000,
+                stack: 6
+            });
+        }, 1000);
+    @endif
     $(function() {
         $('[data-toogle="tooltip"]').tooltip()
     })
@@ -97,7 +114,7 @@
 
                         window.setTimeout(function() {
                             $.toast({
-                                text: 'Paket bermain berhasil dihapus permanen :)',
+                                text: 'Product berhasil dihapus permanen',
                                 position: 'top-right',
                                 loaderBg: '#fec107',
                                 icon: 'success',
@@ -214,12 +231,14 @@
                 }
             },
             {
-                data: 'price_weekdays',
-                render: $.fn.dataTable.render.number('.', ',', 0, 'Rp ')
+                "data": function(data) {
+                    return `<p>Rp ${data.price_weekdays}</p>`;
+                }
             },
             {
-                data: 'price_weekend',
-                render: $.fn.dataTable.render.number('.', ',', 0, 'Rp ')
+                "data": function(data) {
+                    return `<p>Rp ${data.price_weekend}</p>`;
+                }
             },
             {
                 "data": function(data) {
@@ -691,17 +710,6 @@
                 searchable: true,
                 orderable: false
             },
-            // {
-            //     data: 'action',
-            //     searchable: false,
-            //     orderable: false
-            // },
-            // {
-            //     data: 'updated_at',
-            //     searchable: true,
-            //     orderable: false
-            // },
-
         ],
         order: [],
         responsive: true,
@@ -721,30 +729,6 @@
         }],
     });
 
-
-    // scan
-    // $(document).on("click", "#show-scan", function() {
-    //     $(".disabled-scan").css("display", "none");
-
-    //     function onScanSuccess(decodedText, decodedResult) {
-    //         $("#result").val(decodedText)
-    //     }
-
-    //     function onScanFailure(error) {
-    //         console.warn(`Code scan error = ${error}`);
-    //     }
-
-    //     let html5QrcodeScanner = new Html5QrcodeScanner(
-    //         "reader", {
-    //             fps: 10,
-    //             qrbox: {
-    //                 width: 250,
-    //                 height: 250
-    //             }
-    //         },
-    //         false);
-    //     html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-    // });
     $('#show-qr-scan').on('click', function() {
         $('.disabled-scan').addClass('d-none');
 
@@ -778,7 +762,7 @@
                             showCancelButton: false,
                             showConfirmButton: false,
                             timer: 2000,
-                        }, function(){
+                        }, function() {
                             window.location.href = "/detail_scan/" + response.data.id;
                         });
                     } else {
@@ -787,7 +771,7 @@
                             title: response.status,
                             text: response.message,
                             allowOutsideClick: false
-                        }, function(){
+                        }, function() {
                             // Untuk reload Page jika gagal
                             window.location.reload(true)
                         });

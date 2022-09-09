@@ -64,6 +64,7 @@
                 <!-- /Basic Table -->
             </div>
         </div>
+
         <!-- Footer -->
         @include('Layouts.Footer')
         <!-- /Footer -->
