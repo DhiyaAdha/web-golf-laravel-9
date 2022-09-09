@@ -188,7 +188,7 @@ class TamuController extends Controller
             ->get();
         
         // dd ($data['deposit_history']);
-        return view('tamu.kartu-tamu', $data);
+        return view('tamu.kartu-tamu', $data, compact(['visitor']));
     }
 
     /**

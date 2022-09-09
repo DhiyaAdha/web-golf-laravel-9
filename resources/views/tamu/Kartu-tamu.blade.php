@@ -41,12 +41,12 @@
                                 <div class="modal-content hidden-content">
                                     <div class="modal-body">
                                         <div class="d-flex justify-content-center align-items-center flex-column">
-                                            <div class="d-flex">
+                                            <div class="d-flex justify-content-center flex-wrap" id="cetak-kartu">
                                                 <div class="col-md-card d-flex justify-content-center mb-10">
                                                     <div class="panel panel-default card-view card-visitor">
                                                         <div class="panel-heading">
                                                             <div class="pull-left">
-                                                                <div class="d-flex">
+                                                                <div class="d-flex title-card">
                                                                     <img src="{{ asset('/dist/img/tgcc-icon-small.svg') }}">
                                                                     <div class="d-flex flex-column">
                                                                         <h6 class="panel-title txt-dark label-visitor">
@@ -59,18 +59,37 @@
                                                             <div class="clearfix"></div>
                                                         </div>
                                                         <div class="panel-wrapper collapse in">
-                                                            <div class="panel-body">
-                                                                <img src="{{ asset('/dist/img/golf-footer.svg') }}"
-                                                                    alt="">
+                                                            <div class="panel-body card">
+                                                                <div
+                                                                    class="d-flex justify-content-center align-items-center bg-front">
+                                                                    <div class="pull-left">
+                                                                        <img class="front-qr"
+                                                                            src="{{ asset('/dist/img/icon-golf1.svg') }}">
+                                                                    </div>
+                                                                    <div class="pull-right">
+                                                                        <img class="front-qr"
+                                                                            src="{{ asset('/dist/img/icon-golf2.svg') }}">
+                                                                    </div>
+                                                                </div>
+                                                                {{-- <div class="d-flex-justify-content-center">
+                                                                    <p class="text-center">{{ $visitor->name }}</p>
+                                                                    <p class="text-center">{{ $visitor->tipe_member }}</p>
+                                                                </div>
+                                                                <div class="d-flex-justify-content-center">
+                                                                    <p class="text-center">{{ $visitor->phone }}</p>
+                                                                    <p class="text-center">{{ $visitor->email }}</p>
+                                                                </div> --}}
+                                                                <img class="align-self-end img-footer"
+                                                                    src="{{ asset('/dist/img/golf-footer.svg') }}">
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-card d-flex justify-content-center mb-10">
                                                     <div class="panel panel-default card-view card-visitor">
-                                                        <div class="panel-heading">
+                                                        <div class="panel-heading wave">
                                                             <div class="pull-left">
-                                                                <div class="d-flex">
+                                                                <div class="d-flex title-card">
                                                                     <img src="{{ asset('/dist/img/tgcc-icon-small.svg') }}">
                                                                     <div class="d-flex flex-column">
                                                                         <h6 class="panel-title txt-dark label-visitor">
@@ -83,9 +102,17 @@
                                                             <div class="clearfix"></div>
                                                         </div>
                                                         <div class="panel-wrapper collapse in">
-                                                            <div class="panel-body">
-                                                                <img src="{{ asset('/dist/img/golf-footer.svg') }}"
-                                                                    alt="">
+                                                            <div class="panel-body card">
+                                                                <div
+                                                                    class="d-flex justify-content-center align-items-center flex-column">
+                                                                    <img class="back-qr"
+                                                                        src="{{ asset('/dist/img/icon-golf1.svg') }}">
+                                                                    <div class="qr-code-visitor">
+                                                                        {{ QrCode::size(120)->generate($visitor->id) }}
+                                                                    </div>
+                                                                </div>
+                                                                <img class="align-self-end img-footer"
+                                                                    src="{{ asset('/dist/img/golf-footer.svg') }}">
                                                             </div>
                                                         </div>
                                                     </div>

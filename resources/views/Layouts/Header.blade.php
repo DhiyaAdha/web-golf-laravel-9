@@ -13,7 +13,6 @@
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="favicon.ico">
     <link rel="icon" href="{{ asset('tgcc144.PNG') }}" type="image/x-icon">
 
     <!-- Morris Charts CSS -->
