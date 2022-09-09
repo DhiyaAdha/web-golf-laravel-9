@@ -224,12 +224,14 @@
                 }
             },
             {
-                data: 'price_weekdays',
-                render: $.fn.dataTable.render.number('.', ',', 0, 'Rp ')
+                "data": function(data) {
+                    return `<p>Rp ${data.price_weekdays}</p>`;
+                }
             },
             {
-                data: 'price_weekend',
-                render: $.fn.dataTable.render.number('.', ',', 0, 'Rp ')
+                "data": function(data) {
+                    return `<p>Rp ${data.price_weekend}</p>`;
+                }
             },
             {
                 "data": function(data) {
@@ -753,7 +755,7 @@
                             showCancelButton: false,
                             showConfirmButton: false,
                             timer: 2000,
-                        }, function(){
+                        }, function() {
                             window.location.href = "/detail_scan/" + response.data.id;
                         });
                     } else {
@@ -762,7 +764,7 @@
                             title: response.status,
                             text: response.message,
                             allowOutsideClick: false
-                        }, function(){
+                        }, function() {
                             // Untuk reload Page jika gagal
                             window.location.reload(true)
                         });
