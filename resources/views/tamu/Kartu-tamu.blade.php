@@ -233,7 +233,7 @@
                                 </div>
                             </div>
                             {{-- deposit --}}
-                            <div id="deposit_tabs" class="tab-pane fade" role="tabpanel">
+                            {{-- <div id="deposit_tabs" class="tab-pane fade" role="tabpanel">
                                 <div class="panel-heading r">
                                     <div class="pull-left">
                                         <h6 class="panel-title txt-dark">Riwayat Deposit</h6>
@@ -242,8 +242,37 @@
                                 </div>
                                 <div class="table-wrap">
                                     <div class="table-responsive">
-                                        <table class="table table-hover" style="margin: 10px;" id="dt-tamu-deposit">
+                                        <table width="100%" class="table table-hover" style="margin: 10px;" id="dt-tamu-deposit">
+                                            <thead>
+                                            <tr>
+                                                    <th>Saldo</th>
                                                     <th>Informasi</th>
+                                                    <th class="text-center">Status</th>
+                                                    <th class="text-center">Tanggal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div> --}}
+
+                            <div id="deposit_tabs" class="tab-pane fade" role="tabpanel"> <div class="panel-heading r">
+                                <div class="pull-left">
+                                    <h6 class="panel-title txt-dark">Riwayat Deposit</h6>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+
+                                <div class="table-wrap">
+                                    <div class="table-responsive">
+                                        <table width="100%" class="table table-hover" style="margin: 10px;" id="dt-tamu-deposit">
+                                            <thead>
+                                                <tr>
+                                                    <th>Saldo</th>
+                                                    <th>Informasi</th>
+                                                    <th style="text-align: center;">Status</th>
                                                     <th style="text-align: center;">Tanggal</th>
                                                 </tr>
                                             </thead>
@@ -253,6 +282,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             {{-- limit --}}
                             <div id="limit_tabs" class="tab-pane fade" role="tabpanel">
                                 <div class="panel-heading r">
@@ -310,7 +340,8 @@
             "processing": true,
             "serverSide": true,
             "lengthChange": false,
-            "searching": false,
+            "bDestroy": true,
+            "searching": true,
             "paginate": {
                 "first": "First",
                 "last": "Last",
