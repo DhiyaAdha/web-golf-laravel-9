@@ -26,7 +26,7 @@ use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class AuthController extends Controller {
 
-
+    //ini untuk route get pada web.php
     public function index(){
             return view('/Login');
         }
@@ -36,8 +36,8 @@ class AuthController extends Controller {
 
         }
 
-        public function password_baru(){
-        return view('/Reset-pasword');
+    public function password_baru(){
+            return view('/Reset-pasword');
         }
 
 
@@ -71,12 +71,12 @@ class AuthController extends Controller {
                 // return response(['message'=>'Invalid Credential'], 401);
                 // return response(['message'=>'Login Failed! Email atau Password yang anda masukkan Salah!'], 401);
             }
-            
+            //ini untuk menangkap error login
             $user = User::where('email', $request->email)->first();
             if(!Hash::check($request->password, $user->password, [])){
                 throw new Exception('Error in login');
             }
-            
+            //ini untuk function ketika dinyatakan data valid dan di redirect menuju dashboard
             $tokenResult = $user->createToken('token-auth')->plainTextToken;
             $respon = [
                 'status' => 'success',
@@ -105,29 +105,30 @@ class AuthController extends Controller {
     //     return redirect()->intended('/login');
     // }
 
+    //ini untuk function logout
     public function logout (Request $request) {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/');
     }
-    
+    //ini untuk function reset password, email yang di input akan dicek
     public function resetPassword(Request $request){
         $request->validate([
             'email'=>'required|email|exists:users,email',
             'password'=>'required|confirmed',
             'password_confirmation'=>'required',
         ]);
-        
+        //ini untuk function mengecek token dari database untuk mereset password
         $check_token = DB::table('password_resets')->where([
             'email'=>$request->email,
             'token'=>$request->token,
             ])->first();
-            
+            //ini untuk function jika token yang dicek tidak ada
             if(!$check_token){
                 return back()->withInput()->with('fail', 'Invalid token');
             }else{
-                
+                //ini untuk function jika token yang dicek ada
                 User::where('email', $request->email)->update([
                     'password'=> Hash::make($request->password)
             ]);
@@ -135,15 +136,15 @@ class AuthController extends Controller {
             DB::table('password_resets')->where([
                 'email'=>$request->email
             ])->delete();
-            
+            //ini untuk function jika semua proses selesai dan akan di redirect ke menu login 
             return redirect()->intended('login')->with('info', 'Your password has been changed! You can login with new password')->with('verifiedEmail', $request->email);
         }
     }
-    
+    //ini untuk route get di web.php memasukkan password baru
     public function showResetForm(Request $request, $token = null){
         return view('Reset-pasword')->with(['token'=>$token,'email'=>$request->email]);
     }
-    
+    //ini untuk route get di web.php memasukkan email yang akan dirubah passwordnya
     public function sendresetlink(Request $request){
         $request->validate([
             'email'=>'required|email|exists:users,email'
@@ -155,7 +156,7 @@ class AuthController extends Controller {
             'token'=>$token,
             'created_at'=>Carbon::now(),
         ]);
-        
+        //ini untuk isi pesan yang dikirim ke email reset password
         $action_link = route('Reset-pasword',['token'=>$token,'email'=>$request->email]);
         $body = "We are received a request to reset the password for <b>Golf Card </b> account associated with ".$request->email.". You can reset your password by clicking the link below";
         
