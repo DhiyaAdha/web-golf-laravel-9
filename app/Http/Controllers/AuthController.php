@@ -167,18 +167,4 @@ class AuthController extends Controller {
         
         return back()->with('resetSuccess', 'Reset Password sudah dikirim ke email anda! silahkan cek email');
     }
-    
-    // public function daftar_admin(){
-
-    //     return view('admin.daftar-admin');
-    // }
-
-    // public function tambahadmin(){
-    //     return view('admin.tambah-admin');
-    // }
-
-    // public function edit_admin(){
-    //     return view('admin.edit-admin');
-    // }
-
 }
