@@ -28,8 +28,8 @@
                                 <h6 class="panel-title txt-dark">Daftar Tamu</h6>
                             </div>
                             <div class="pull-right">
-                                <a href="{{ route('tambah-tamu') }}">
-                                    <i class="fa-2x fa-plus"></i></a>
+                                <a href="{{ route('tambah-tamu') }}" class="btn btn-xs btn-success">Tambah
+                                    Tamu</a>
                             </div>
                             <div class="clearfix"></div>
                         </div>
