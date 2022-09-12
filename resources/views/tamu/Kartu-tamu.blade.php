@@ -210,6 +210,12 @@
                         <div class="tab-content">
                             {{-- transactions --}}
                             <div id="transaction_tabs" class="tab-pane fade active in" role="tabpanel">
+                                <div class="panel-heading r">
+                                    <div class="pull-left">
+                                        <h6 class="panel-title txt-dark">Riwayat Transaksi</h6>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
                                 <div class="table-wrap">
                                     <div class="table-responsive">
                                         <table class="table table-hover" style="margin: 10px;">
@@ -262,6 +268,12 @@
                             </div>
                             {{-- deposit --}}
                             <div id="deposit_tabs" class="tab-pane fade" role="tabpanel">
+                                <div class="panel-heading r">
+                                    <div class="pull-left">
+                                        <h6 class="panel-title txt-dark">Riwayat Deposit</h6>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
                                 <div class="table-wrap">
                                     <div class="table-responsive">
                                         <table class="table table-hover" style="margin: 10px;">
@@ -290,6 +302,12 @@
                             </div>
                             {{-- limit --}}
                             <div id="limit_tabs" class="tab-pane fade" role="tabpanel">
+                                <div class="panel-heading r">
+                                    <div class="pull-left">
+                                        <h6 class="panel-title txt-dark">Riwayat Limit</h6>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
                                 <div class="table-wrap">
                                     <div class="table-responsive">
                                         <table class="table table-hover" style="margin: 10px;">

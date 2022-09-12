@@ -200,6 +200,10 @@ h6.panel-title.txt-dark.label-visitor {
     width: 1100px !important;
 }
 
+.panel-heading.r {
+    padding: 10px;
+}
+
 .title-card {
     padding: 5px 15px;
 }
