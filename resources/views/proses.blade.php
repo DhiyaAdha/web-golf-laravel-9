@@ -224,14 +224,14 @@
         // var price = (radio == 'weekdays') ? $(this).data('priceday') : $(this).data('priceend');
 
         // var html = `<div class="row">
-    //                 <div class="col-lg-6 mt-5">
-    //                     <p style="color: #7D7D7D; text-align:start;">${name}</p>
-    //                 </div>
-    //                 <div class="col-lg-6 mt-5">
+        //             <div class="col-lg-6 mt-5">
+        //                 <p style="color: #7D7D7D; text-align:start;">${name}</p>
+        //             </div>
+        //             <div class="col-lg-6 mt-5">
 
-    //                     <p style="color: #7D7D7D; text-align:end;">RP ${price}</p>
-    //                 </div>
-    //             </div>`;
+        //                 <p style="color: #7D7D7D; text-align:end;">RP ${price}</p>
+        //             </div>
+        //         </div>`;
         // $('.wrap-selected-item').append(html)
         // })
 
@@ -260,7 +260,6 @@
                     $(".wrap-quantity-" + id).show();
                     $(".harga-" + id).show();
                     $(".garis-" + id).show();
-
                     
                 }
                 else{
