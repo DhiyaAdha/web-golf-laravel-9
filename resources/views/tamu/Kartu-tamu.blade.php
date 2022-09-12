@@ -18,7 +18,7 @@
                 <!-- /Breadcrumb -->
             </div>
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6">
                     <div class="panel panel-default panel-dropdown card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
@@ -106,7 +106,7 @@
                                                                 <div
                                                                     class="d-flex justify-content-center align-items-center flex-column">
                                                                     <img class="back-qr"
-                                                                        src="{{ asset('/dist/img/icon-golf1.svg') }}">
+                                                                        src="{{ asset('/dist/img/icon-golf2.svg') }}">
                                                                     <div class="qr-code-visitor">
                                                                         {{ QrCode::size(120)->generate($visitor->id) }}
                                                                     </div>
@@ -119,7 +119,7 @@
                                                 </div>
                                             </div>
                                             <button type="button" class="btn download-kartu-tamu"><i
-                                                    class="fa fa-download"></i> Download Kartu (PDF)</button>
+                                                    class="fa fa-download"></i> Cetak Kartu</button>
                                         </div>
                                     </div>
                                 </div>
@@ -154,7 +154,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-sm-3 col-xs-12">
+                <div class="col-lg-3 col-md-3">
                     <div class="panel panel-default card-view p">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Limit bulanan</h6>
@@ -176,7 +176,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-sm-3 col-xs-12">
+                <div class="col-lg-3 col-md-3">
                     <div class="panel panel-default card-view b">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Barcode</h6>
@@ -212,7 +212,7 @@
                             <div id="transaction_tabs" class="tab-pane fade active in" role="tabpanel">
                                 <div class="table-wrap">
                                     <div class="table-responsive">
-                                        <table class="table table-hover">
+                                        <table class="table table-hover" style="margin: 10px;">
                                             <thead>
                                                 <tr>
                                                     <th>Order ID</th>
@@ -264,7 +264,7 @@
                             <div id="deposit_tabs" class="tab-pane fade" role="tabpanel">
                                 <div class="table-wrap">
                                     <div class="table-responsive">
-                                        <table class="table table-hover">
+                                        <table class="table table-hover" style="margin: 10px;">
                                             <thead>
                                                 <tr>
                                                     <th>Order ID</th>
@@ -292,7 +292,7 @@
                             <div id="limit_tabs" class="tab-pane fade" role="tabpanel">
                                 <div class="table-wrap">
                                     <div class="table-responsive">
-                                        <table class="table table-hover">
+                                        <table class="table table-hover" style="margin: 10px;">
                                             <thead>
                                                 {{-- Table head --}}
                                                 <tr>
@@ -352,3 +352,12 @@
         @include('Layouts.Footer')
     </div>
 @endsection
+@push('scripts')
+    <script>
+        $('.download-kartu-tamu').on("click", function() {
+            $('#cetak-kartu').printThis({
+                printContainer: true,
+            });
+        });
+    </script>
+@endpush

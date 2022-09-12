@@ -238,9 +238,78 @@
         <!-- /Footer -->
     </div>
     </div>
+@endsection
+@push('scripts')
     <script>
         // fungsi grafik-line & Grafik-bar
         var dataMingguan = {!! json_encode($visitor_daily) !!}
         var dataNewVisitor = {!! json_encode($visitor) !!}
+
+        /* data analisis */
+        $('#dt-analisis').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "lengthChange": false,
+            "searching": true,
+            "paginate": {
+                "first": "First",
+                "last": "Last",
+                "next": "Next",
+                "previous": "Previous"
+            },
+            "ajax": {
+                "url": "{{ route('analisis-tamu.index') }}",
+                "type": "GET",
+                "datatype": "json"
+            },
+
+            "render": $.fn.dataTable.render.text(),
+            "columns": [{
+                    data: 'name'
+                },
+                {
+                    data: 'updated_at'
+                },
+                {
+                    "data": function(data) {
+                        if (data.tipe_member == 'VIP') {
+                            return `<span class='label label-success'>${data.tipe_member}</span>`;
+                        } else {
+                            return `<span class='label label-warning'>${data.tipe_member}</span>`;
+                        }
+                    }
+                },
+                {
+                    data: 'times',
+                }
+            ],
+            order: [
+                [1, 'desc']
+            ],
+            responsive: true,
+            language: {
+                search: "",
+                searchPlaceholder: "Cari",
+                emptyTable: "Tidak ada data pada tabel ini",
+                info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+                infoFiltered: "(difilter dari _MAX_ total data)",
+                infoEmpty: "Tidak ada data pada tabel ini",
+                lengthMenu: "Menampilkan _MENU_ data",
+                zeroRecords: "Tidak ada data pada tabel ini"
+            },
+            columnDefs: [{
+                    className: 'text-left',
+                    targets: [0, 1, 2, 3, ]
+                }
+
+            ],
+            dom: "<'row mb-3'<'col-sm-12 col-md-8 pull-right'f><'toolbar col-sm-12 col-md-4 float-left'B>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+            initComplete: function() {
+                $('div.toolbar').html('<b>Daftar nama terakhir bermain</b>').appendTo('.float-left');
+            }
+        });
+        /* data analisis */
     </script>
-@endsection
+@endpush
