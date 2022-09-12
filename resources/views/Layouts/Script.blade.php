@@ -360,7 +360,7 @@
         },
         "render": $.fn.dataTable.render.text(),
         "columns": [{
-                data: 'order_id',
+                data: 'balance',
                 searchable: true,
                 orderable: false
             },
@@ -370,12 +370,12 @@
                 orderable: false
             },
             {
-                data: 'status',
+                data: 'status_action',
                 searchable: true,
                 orderable: false
             },
             {
-                data: 'tanggal',
+                data: 'date_activity',
                 searchable: true,
                 orderable: false
             }
@@ -394,7 +394,7 @@
         },
         columnDefs: [{
             className: 'text-left',
-            targets: [1, 2, 3, 4 ]
+            targets: [1, 2, 3]
         }],
     });
     /* data aktifitas tamu Deposit */
