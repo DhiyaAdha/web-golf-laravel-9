@@ -66,25 +66,19 @@ class TamuController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'address' => 'required',
             'gender' => 'required',
             'email' => 'required|email',
             'phone' => 'required',
-            'company' => 'required',
-            'position' => 'required',
             'tipe_member' => 'required',
         ]);
 
         $visitors = Visitor::create([
             'name' => $request->name,
-            'address' => $request->address,
             'gender' => $request->gender,
             'email' => $request->email,
             'phone' => $request->phone,
-            'company' => $request->company,
-            'position' => $request->position,
             'tipe_member' => $request->tipe_member,
-            'created_at' => Carbon::now(),
+            'created_at' => Carbon::now(),  
         ]);
 
         $visitors->save();

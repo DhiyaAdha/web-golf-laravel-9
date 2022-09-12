@@ -72,7 +72,7 @@
                                                                     <p class="text-center text-primary">{{ $visitor->tipe_member }}</p>
                                                                 </div>
                                                                 <br>
-                                                                <div class="d-flex-justify-content-center text-email">
+                                                                <div class="d-flex-justify-content-center ">
                                                                     <p class="text-center text-muted">{{ $visitor->phone }}</p>
                                                                     <p class="text-center text-muted text-lowercase">{{ $visitor->email }}</p>
                                                                 </div>
