@@ -399,7 +399,7 @@
     });
     /* data aktifitas tamu Deposit */
 
-    
+
     /* data aktifitas tamu limit */
     $('#dt-tamu-limit').DataTable({
         "processing": true,

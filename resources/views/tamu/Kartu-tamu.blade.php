@@ -212,7 +212,7 @@
                             <div id="transaction_tabs" class="tab-pane fade active in" role="tabpanel">
                                 <div class="table-wrap">
                                     <div class="table-responsive">
-                                        <table class="table table-hover" id="dt-tamu-transaksi">
+                                        <table width="100%" class="table table-hover" id="dt-tamu-transaksi">
                                             <thead>
                                                 <tr>
                                                     <th>Order ID</th>
@@ -231,12 +231,12 @@
                             <div id="deposit_tabs" class="tab-pane fade" role="tabpanel">
                                 <div class="table-wrap">
                                     <div class="table-responsive">
-                                        <table class="table table-hover" id="dt-tamu-deposit">
+                                        <table width="100%" class="table table-hover" id="dt-tamu-deposit">
                                             <thead>
                                                 <tr>
-                                                    <th>Order ID</th>
+                                                    <th>Balance</th>
                                                     <th>Informasi</th>
-                                                    <th style="text-align: center;">Status</th>
+                                                    <th style="text-align: center;">Jenis Pembayaran</th>
                                                     <th style="text-align: center;">Tanggal</th>
                                                 </tr>
                                             </thead>
@@ -250,7 +250,7 @@
                             <div id="limit_tabs" class="tab-pane fade" role="tabpanel">
                                 <div class="table-wrap">
                                     <div class="table-responsive">
-                                        <table class="table table-hover" id="dt-tamu-limit">
+                                        <table width="100%" class="table table-hover" id="dt-tamu-limit">
                                             <thead>
                                                 {{-- Table head --}}
                                                 <tr>
@@ -269,7 +269,7 @@
                                                     {{ $school->students->first_name }}
                                                     <td> {{ $item->updated_at }} </td>
                                                 </tr>
-                                            @endforeach  --}}
+                                            @endforeach --}}
                                             </tbody>
                                         </table>
                                     </div>

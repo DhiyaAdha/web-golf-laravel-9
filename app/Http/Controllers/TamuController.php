@@ -277,6 +277,9 @@ class TamuController extends Controller
                     } else {
                         return '<p class="label " style="background-color: #607EAA;">'.$data->type.'<div>';
                     }
+                
+                // })->addColumn('status_action', function ($data) {
+                //     return $data->payment_type;
                 })->addColumn('date_activity', function ($data) {
                     return $data->updated_at;
                 })
@@ -369,6 +372,8 @@ class TamuController extends Controller
                     return '<p class="label " style="background-color: #607EAA;">'.$data->activities.'<div>';
                 }
 
+                })->addColumn('information', function ($data) {
+                    return $data->activities;
                 })->addColumn('status', function ($data) {
                     return $data->status;
                 })->addColumn('tanggal', function ($data) {
