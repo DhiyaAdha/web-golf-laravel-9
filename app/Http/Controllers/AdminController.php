@@ -125,9 +125,7 @@ class AdminController extends Controller
         ]);
         
         $user->save();
-        return redirect()
-            ->route('daftar-admin')
-            ->with('status', 'Paket berhasil diupdate');
+        return redirect()->route('daftar-admin')->with('status', 'Paket berhasil diupdate');
     }
 
     /**
