@@ -590,6 +590,20 @@ b, strong {
     margin-left: 5px;
     margin-right: -9px;
 }
+.text-name-card{
+    margin-top: -121px;
+    height: 150px;
+    width: 200px;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    position: absolute;
+    /* font-size: 10px; */
+}
+.text-email{
+    text-align: 12px;
+}
+
 
 /* kartu-tamu */
 .panel-left {

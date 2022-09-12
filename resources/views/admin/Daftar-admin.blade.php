@@ -30,24 +30,6 @@
                                         Admin</a>
                                 </div>
                             </div>
-<<<<<<< HEAD
-                            <div class="panel-wrapper collapse in">
-                                <div class="panel-body">
-                                    <div class="table-wrap mt-40">
-                                        <div class="table-responsive">
-                                            <table class="table mb-0" id="dt-admin">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Nama</th>
-                                                        <th>Email</th>
-                                                        <th>Nomer hp</th>
-                                                        <th style="text-align: center;">Kategori Admin</th>
-                                                        <th style="text-align: center;">Aksi</th>
-                                                    </tr>
-                                                </thead>
-                                            </table>
-                                        </div>
-=======
                             <div class="clearfix"></div>
                         </div>
                         <div class="clearfix"></div>
@@ -68,7 +50,6 @@
                                             <tbody>
                                             </tbody>
                                         </table>
->>>>>>> dhany
                                     </div>
                                 </div>
                             </div>
