@@ -81,6 +81,23 @@ table#dt-tamu {
     justify-content: center !important;
 }
 
+.justify-content-between {
+    -webkit-box-pack: justify !important;
+    -ms-flex-pack: justify !important;
+    justify-content: space-between !important;
+}
+
+.justify-content-start {
+    -webkit-box-pack: flex-start !important;
+    -ms-flex-pack: flex-start !important;
+    justify-content: flex-start !important;
+}
+.justify-content-end {
+    -webkit-box-pack: flex-end !important;
+    -ms-flex-pack: flex-end !important;
+    justify-content: flex-end !important;
+}
+
 .align-items-center {
     -webkit-box-align: center !important;
     -ms-flex-align: center !important;
@@ -255,6 +272,10 @@ h6.panel-title.txt-dark.label-visitor {
     position: absolute;
 }
 
+.color-white {
+    color: #fff;
+}
+
 @media (min-width: 992px) {
     .col-md-card {
         width: 204.0188976378px;
@@ -265,6 +286,13 @@ h6.panel-title.txt-dark.label-visitor {
         /* padding-right: 15px;
         padding-left: 15px; */
         margin: 15px;
+    }
+    .col-medium-3 {
+        width: 25%;
+        float: left;
+        position: relative;
+        min-height: 1px;
+        padding-right: 15px;
     }
 }
 
@@ -1486,16 +1514,27 @@ div.switch5 > input.switch:focus ~ label:before {
     margin-bottom: 5px;
 }
 
-.label-pembayaran-hijau {
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* align-items: flex-start; */
-    padding: 10px 20px;
-    gap: 5px;
+.panel-heading.d-flex.justify-content-start.k {
+    padding-bottom: 12px;
+}
 
+.btn-outline-success {
+    color: #01c853;
+    border: 1.8px solid #01c853;
+}
+
+.panel-green {
+    padding: 10px 20px;
     width: auto;
     height: 75px;
     background: #01c853;
+    border-radius: 5px;
+}
+.panel-black {
+    padding: 10px 100px 10px 20px;
+    width: auto;
+    height: 75px;
+    background: #000000;
     border-radius: 5px;
 }
 .label-pembayaran-hitam {

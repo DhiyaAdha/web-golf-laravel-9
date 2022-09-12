@@ -164,10 +164,7 @@
             "type": "GET",
             "datatype": "json"
         },
-
         "render": $.fn.dataTable.render.text(),
-
-
         "columns": [{
                 data: 'id',
                 searchable: true,

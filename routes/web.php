@@ -79,7 +79,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::get('/edit-admin/{users}', [AdminController::class, 'edit'])->name('edit-admin');
     Route::post('/edit-admin/{users}', [AdminController::class, 'update'])->name('admin.edit');
     Route::get('/daftar-admin/destroy/{id}', [AdminController::class,'delete',])->name('hapus-admin');
-    Route::resource('proses', OrderController::class);
+    Route::resource('cart', OrderController::class);
     Route::get('/metode_pembayaran', [InvoiceController::class,'metode_pembayaran'])->name('metode_pembayaran');
     Route::get('/daftar-tamu', [TamuController::class, 'index'])->name('daftar-tamu');
     Route::get('/daftar-tamu/destroy/{id}', [TamuController::class,'delete',])->name('hapus-tamu');
@@ -116,7 +116,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/tambah-deposit', [TamuController::class,'tambahdeposit'])->name('tambah-deposit');
     Route::get('/kartu-tamu', [ScanqrController::class, 'kartutamu'])->name('kartu-tamu');
     // Route::get('/tambah-admin', [AuthController::class, 'tambahadmin'])->name('tambah-admin');
-    Route::resource('proses', OrderController::class);
+    Route::resource('cart', OrderController::class);
     Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name('show');
     Route::get('deposit/{id}', [TamuController::class, 'deposittamu'])->name('deposittamu');
     //Detail Scan

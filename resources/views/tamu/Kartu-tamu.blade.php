@@ -1,7 +1,6 @@
 @extends('Layouts.Main', ['title' => 'TGCC | Daftar Tamu'])
 @section('content')
     <div class="page-wrapper">
-        @include('sweetalert::alert')
         <div class="container-fluid">
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
@@ -10,8 +9,8 @@
                 <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
-                        <li><a href="index.html">Dashboard</a></li>
-                        <li><a href="index.html">Daftar tamu</a></li>
+                        <li><a href="javascript:void(0)">Dashboard</a></li>
+                        <li><a href="javascript:void(0)">Daftar tamu</a></li>
                         <li class="active"><span>Detail tamu</span></li>
                     </ol>
                 </div>
