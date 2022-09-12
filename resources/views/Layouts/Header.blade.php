@@ -5,6 +5,7 @@
     <title>{{ $title ?? 'TGCC' }}</title>
     <meta name="description" content="Aplikasi TGCC Member" />
     <meta name="author" content="tgcc" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <!-- PWA  -->
     <meta name="theme-color" content="#6777ef" />
@@ -12,7 +13,6 @@
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="favicon.ico">
     <link rel="icon" href="{{ asset('tgcc144.PNG') }}" type="image/x-icon">
 
     <!-- Morris Charts CSS -->
@@ -49,17 +49,13 @@
     <!-- Custom CSS -->
     <link href="{{ asset('dist/css/style.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ asset('dist/css/custom.css') }}" type="text/css">
-    
-    <link rel="stylesheet" href="{{ asset('vendors/bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css') }}" type="text/css">
-
+    <link rel="stylesheet"
+        href="{{ asset('vendors/bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css') }}"
+        type="text/css">
     {{-- Chartist JS --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
     <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
-
-
     {{-- HTML5-QRCODE --}}
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-
     {{-- Bootstrap --}}
-
 </head>

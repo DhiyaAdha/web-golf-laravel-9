@@ -46,7 +46,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>  
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -74,6 +74,68 @@
                     </div>
                 </div>
             </div>
+
+            {{-- Total tamu VIP & VVIP --}}
+            <div class="row">
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 ol-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    <div class="panel panel-default card-view panel-refresh">
+                        <h6>Total Tamu VVIP</h6>
+                        <hr class="light-grey-hr row mt-10 mb-15" />
+                        <div class="label-chatrs col-lg-6 mb-15">
+                            <span class="clabels-text inline-block txt-dark capitalize-font">
+                                <span class="block font-22 weight-500 mb-5">
+                                    <span class="counter-anim">{{ $visitor_vvip_male }}</span>
+                                </span>
+                                <span class="block txt-grey">Laki-laki</span>
+                            </span>
+                            <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-success"></i>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="label-chatrs col-lg-6 mb-15">
+                            <span class="clabels-text inline-block txt-dark capitalize-font">
+                                <span class="block font-22 weight-500 mb-5">
+                                    <span class="counter-anim">{{ $visitor_vvip_female }}</span>
+                                </span>
+                                <span class="block txt-grey">Perempuan</span>
+                            </span>
+                            <i class="big-rpsn-icon zmdi zmdi-female pull-right txt-warning"></i>
+                            <div class="clearfix"></div>
+                        </div>
+                        <hr class="light-grey-hr row mt-10 mb-15" />
+                    </div>
+                </div>
+                {{-- Total tamu VIP & VIP --}}
+                <div
+                    class="col-lg-6 col-md-12 col-sm-12 col-xs-12
+                                ol-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    <div class="panel panel-default card-view panel-refresh">
+                        <h6>Total Tamu VIP</h6>
+                        <hr class="light-grey-hr row mt-10 mb-15" />
+                        <div class="label-chatrs col-lg-6 mb-15">
+                            <span class="clabels-text inline-block txt-dark capitalize-font">
+                                <span class="block font-22 weight-500 mb-5">
+                                    <span class="counter-anim">{{ $visitor_vip_male }}</span>
+                                </span>
+                                <span class="block txt-grey">Laki-laki</span>
+                            </span>
+                            <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-success"></i>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="label-chatrs col-lg-6 mb-15">
+                            <span class="clabels-text inline-block txt-dark capitalize-font">
+                                <span class="block font-22 weight-500 mb-5">
+                                    <span class="counter-anim">{{ $visitor_vip_female }}</span>
+                                </span>
+                                <span class="block txt-grey">Perempuan</span>
+                            </span>
+                            <i class="big-rpsn-icon zmdi zmdi-female pull-right txt-warning"></i>
+                            <div class="clearfix"></div>
+                        </div>
+                        <hr class="light-grey-hr row mt-10 mb-15" />
+                    </div>
+                </div>
+            </div>
+
             {{-- Row Statistika Tamu --}}
             <div class="row">
                 <div class="col-lg-6">
@@ -97,8 +159,7 @@
                                     {{-- statistik pertahun --}}
                                     <li>
                                         <span class="block">Statistika Pertahun</span>
-                                        <span class="block txt-dark weight-500 font-18"><span
-                                                {{-- class="counter-anim">{{ $visitor_year }}</span></span> --}}
+                                        <span class="block txt-dark weight-500 font-18"><span {{-- class="counter-anim">{{ $visitor_year }}</span></span> --}}
                                                 class="counter-anim">{{ $visitor_year }}</span></span>
                                     </li>
                                 </ul>
@@ -106,6 +167,7 @@
                         </div>
                     </div>
                 </div>
+
                 {{-- Chart Rekap Harian --}}
                 <div class="col-lg-6">
                     <div class="panel panel-default card-view panel-refresh relative">
@@ -138,88 +200,6 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            {{-- Total tamu VIP & VVIP --}}
-            <div class="row">
-                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 ol-lg-6 col-md-12 col-sm-12 col-xs-12">
-                    <div class="panel panel-default card-view panel-refresh">
-                        <h6>Total Tamu VVIP</h6>
-                        <hr class="light-grey-hr row mt-10 mb-15" />
-                        <div class="label-chatrs col-lg-6 mb-15">
-                            <span class="clabels-text inline-block txt-dark capitalize-font">
-                                <span class="block font-22 weight-500 mb-5">
-                                    <span class="counter-anim">{{ $visitor_vvip_male }}</span>
-                                </span>
-                                <span class="block txt-grey">Laki-laki</span>
-                            </span>
-                            <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-success"></i>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="label-chatrs col-lg-6 mb-15">
-                            <span class="clabels-text inline-block txt-dark capitalize-font">
-                                <span class="block font-22 weight-500 mb-5">
-                                    <span class="counter-anim">{{ $visitor_vvip_female }}</span>
-                                </span>
-                                <span class="block txt-grey">Perempuan</span>
-                            </span>
-                            <i class="big-rpsn-icon zmdi zmdi-female pull-right txt-warning"></i>
-                            <div class="clearfix"></div>
-                        </div>
-                        <hr class="light-grey-hr row mt-10 mb-15" />
-                    </div>
-                </div>
-                {{-- Total tamu VIP & VIP --}}
-                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12
-					ol-lg-6 col-md-12 col-sm-12 col-xs-12">
-                    <div class="panel panel-default card-view panel-refresh">
-                        <h6>Total Tamu VIP</h6>
-                        <hr class="light-grey-hr row mt-10 mb-15" />
-                        <div class="label-chatrs col-lg-6 mb-15">
-                            <span class="clabels-text inline-block txt-dark capitalize-font">
-                                <span class="block font-22 weight-500 mb-5">
-                                    <span class="counter-anim">{{ $visitor_vip_male }}</span>
-                                </span>
-                                <span class="block txt-grey">Laki-laki</span>
-                            </span>
-                            <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-success"></i>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="label-chatrs col-lg-6 mb-15">
-                            <span class="clabels-text inline-block txt-dark capitalize-font">
-                                <span class="block font-22 weight-500 mb-5">
-                                    <span class="counter-anim">{{ $visitor_vip_female }}</span>
-                                </span>
-                                <span class="block txt-grey">Perempuan</span>
-                            </span>
-                            <i class="big-rpsn-icon zmdi zmdi-female pull-right txt-warning"></i>
-                            <div class="clearfix"></div>
-                        </div>
-                        <hr class="light-grey-hr row mt-10 mb-15" />
-                        {{-- <div class="label-chatrs col-lg-6">
-                            <span class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left">
-                                <span class="block font-22 weight-500 mb-5">
-                                    <span class="counter-anim">{{ $visitor_vip_male }}</span>
-                                </span>
-                                <span class="block txt-grey">Laki-laki</span>
-                            </span>
-                            <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-success"></i>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="label-chatrs">
-                            <div class="">
-                                <span class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left">
-                                    <span class="block font-22 weight-500 mb-5">
-                                        <span class="counter-anim">{{ $visitor_vip_female }}</span>
-                                    </span>
-                                    <span class="block txt-grey">Perempuan</span>
-                                </span>
-                                <i class="big-rpsn-icon zmdi zmdi-female pull-right txt-warning"></i>
-                                <div class="clearfix"></div>
-                                <hr class="light-grey-hr row mt-10 mb-15" />
-                            </div>
-                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -261,8 +241,6 @@
     <script>
         // fungsi grafik-line & Grafik-bar
         var dataMingguan = {!! json_encode($visitor_daily) !!}
-        console.log(dataMingguan);
         var dataNewVisitor = {!! json_encode($visitor) !!}
-        console.log(dataNewVisitor);
     </script>
 @endsection
