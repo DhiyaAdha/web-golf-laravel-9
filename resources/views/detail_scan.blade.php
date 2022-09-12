@@ -12,7 +12,7 @@
                         <div class="col-lg-4 col-sm-8 col-md-8 col-xs-12">
                             <ol class="breadcrumb">
                                 <li><a href="javascript:void(0)">Dashboard</a></li>
-                                <li class="active"><span>Detail Scan</span></li>
+                                <li class="active"><span>Scan Tamu</span></li>
                             </ol>
                         </div>
                     </div>
@@ -24,14 +24,14 @@
                     <div class="panel panel-default card-view" style="height: 550px;">
                         <div class="col-md-auto" style="font-size: 18px">
                             Data Pengunjung
-                            <div class="mt-30 d-flex">
+                            {{-- <div class="mt-30 d-flex">
                                 <div class="control-label col-lg-3" style="font-size: 16px">
                                     ID Tamu
                                 </div>
                                 <div class="" style="font-size: 16px">
                                     {{ $visitor->id }}
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="mt-30 d-flex">
                                 <div class="control-label col-lg-3" style="font-size: 16px">
                                     Nama Lengkap

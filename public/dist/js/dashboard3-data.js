@@ -34,33 +34,33 @@ $(document).ready(function(){
 			}]
 		};
 		
-		var doughnutChart = new Chart(ctx7, {
-			type: 'doughnut',
-			data: data7,
-			options: {
-				animation: {
-					duration:	2000
-				},
-				responsive: true,
-				maintainAspectRatio:false,
-				legend: {
-					labels: {
-					fontFamily: "Roboto",
-					fontColor:"#878787"
-					}
-				},
-				elements: {
-					arc: {
-						borderWidth: 0
-					}
-				},
-				tooltip: {
-					backgroundColor:'rgba(33,33,33,1)',
-					cornerRadius:0,
-					footerFontFamily:"'Roboto'"
-				}
-			}
-		});
+		// var doughnutChart = new Chart(ctx7, {
+		// 	type: 'doughnut',
+		// 	data: data7,
+		// 	options: {
+		// 		animation: {
+		// 			duration:	2000
+		// 		},
+		// 		responsive: true,
+		// 		maintainAspectRatio:false,
+		// 		legend: {
+		// 			labels: {
+		// 			fontFamily: "Roboto",
+		// 			fontColor:"#878787"
+		// 			}
+		// 		},
+		// 		elements: {
+		// 			arc: {
+		// 				borderWidth: 0
+		// 			}
+		// 		},
+		// 		tooltip: {
+		// 			backgroundColor:'rgba(33,33,33,1)',
+		// 			cornerRadius:0,
+		// 			footerFontFamily:"'Roboto'"
+		// 		}
+		// 	}
+		// });
 	}
 	if( $('#chart_6').length > 0 ){
 		var ctx6 = document.getElementById("chart_6").getContext("2d");
@@ -145,33 +145,33 @@ $(document).ready(function(){
 			// yLabelFormat: function(y){ return y != Math.round(y)?'':y; }
 		});
 		
-        var doughnutChart = new Chart(ctx7, {
-            type: "doughnut",
-            data: data7,
-            options: {
-                animation: {
-                    duration: 2000,
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-                legend: {
-                    labels: {
-                        fontFamily: "Roboto",
-                        fontColor: "#878787",
-                    },
-                },
-                elements: {
-                    arc: {
-                        borderWidth: 0,
-                    },
-                },
-                tooltip: {
-                    backgroundColor: "rgba(33,33,33,1)",
-                    cornerRadius: 0,
-                    footerFontFamily: "'Roboto'",
-                },
-            },
-        });
+        // var doughnutChart = new Chart(ctx7, {
+        //     type: "doughnut",
+        //     data: data7,
+        //     options: {
+        //         animation: {
+        //             duration: 2000,
+        //         },
+        //         responsive: true,
+        //         maintainAspectRatio: false,
+        //         legend: {
+        //             labels: {
+        //                 fontFamily: "Roboto",
+        //                 fontColor: "#878787",
+        //             },
+        //         },
+        //         elements: {
+        //             arc: {
+        //                 borderWidth: 0,
+        //             },
+        //         },
+        //         tooltip: {
+        //             backgroundColor: "rgba(33,33,33,1)",
+        //             cornerRadius: 0,
+        //             footerFontFamily: "'Roboto'",
+        //         },
+        //     },
+        // });
     }
     // ERORR
     if ($("#chart_6").length > 0) {

@@ -11,7 +11,6 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
-
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LogoutController;
@@ -50,6 +49,7 @@ Route::get('/', function () {
 
     //Level superadmin
 Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
+    Route::post('/visitor/qrcode', [ScanqrController::class, 'checkQRCode'])->name('visitor.qrcode');
     Route::get('/package/destroy/{id}', [PackageController::class,'destroy'])->name('package.destroy');
     Route::post('/package/store', [PackageController::class, 'store'])->name('package.store');
     Route::get('/package/edit/{package}', [PackageController::class, 'edit'])->name('package.edit');
@@ -74,6 +74,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::get('/tambah-admin', [AdminController::class, 'tambahadmin'])->name('tambah-admin');
     Route::get('/admin-tambah-show', [AdminController::class, 'create'])->name('admin.show');
     Route::get('/admin-tambah', [AdminController::class, 'store'])->name('admin.tambah');
+    Route::post('/insertadmin', [AdminController::class, 'insertadmin'])->name('insertadmin');
     Route::get('/edit-admin/{users}', [AdminController::class, 'edit'])->name('edit-admin');
     Route::post('/edit-admin/{users}', [AdminController::class, 'update'])->name('admin.edit');
     Route::get('/daftar-admin/destroy/{id}', [AdminController::class,'delete',])->name('hapus-admin');

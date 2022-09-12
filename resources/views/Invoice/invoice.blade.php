@@ -70,7 +70,7 @@
                             <table class="table table-condensed" id="dt-invoice">
                                 <thead>
                                     <tr>
-                                        <td><strong>Item</strong></td>
+                                        <td><strong>Nama</strong></td>
                                         <td class=""><strong>Harga</strong></td>
                                         <td class=""><strong>Jumlah</strong></td>
                                         <td class=""><strong>Total</strong></td>

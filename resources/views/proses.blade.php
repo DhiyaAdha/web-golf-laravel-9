@@ -2,23 +2,24 @@
 @section('content')
     <div class="page-wrapper">
         <div class="container-fluid">
+            <!-- Title -->
             <div class="row heading-bg">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h5 class="txt-dark">Pilih Permainan</h5>
+                </div>
+
                 <!-- Breadcrumb -->
-                <div class="row">
-                    <div class="container-fluid">
-                        <div class="col-lg-8">
-                            <h5>Proses Invoice</h5>
-                        </div>
-                        <div class="col-lg-4 col-sm-8 col-md-8 col-xs-12">
-                            <ol class="breadcrumb">
-                                <li><a href="javascript:void(0)">Dashboard</a></li>
-                                <li class="active"><span>Proses</span></li>
-                            </ol>
-                        </div>
-                    </div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <ol class="breadcrumb">
+                        <li><a href="index.html">Dashboard</a></li>
+                        <li><a href="#"><span>Scan Tamu</span></a></li>
+                        <li class="active"><span>Pilih Permainan</span></li>
+                    </ol>
                 </div>
                 <!-- /Breadcrumb -->
+
             </div>
+            <!-- /Title -->
             <div class="row">
                 <div class="col-lg-8">
                     <div class="panel panel-default card-view" style="height: 900px;">
@@ -50,7 +51,7 @@
                                         <input id="checkbox" type="checkbox"
                                             class="form-control select-item form-control-{{ $item->id }}"
                                             onchange="valueChanged({{ $item->id }})">
-                                        <label for=""></label>
+                                        <label></label>
                                     </div>
                                     <span class="wrap-quantity-{{ $item->id }}" style="display: none">
                                         {{-- <div class="input-group bootstrap-touchspin">
@@ -73,8 +74,8 @@
                                             onclick="stepper('decrement', {{ $item->id }})"
                                             data-name="{{ $item->name }}" data-priceday="{{ $item->price_weekdays }}"
                                             data-priceend="{{ $item->price_weekend }}">-</button>
-                                        <input name="input1" type="number" min="0" max="100" step="1"
-                                            value="0" id="my-input-{{ $item->id }}"
+                                        <input name="input1" type="number" min="1" max="100" step="1"
+                                            value="1" id="my-input-{{ $item->id }}"
                                             onchange="valuePackage({{ $item->id }})" readonly>
                                         <button type="button" id="increment"
                                             onclick="stepper('increment', {{ $item->id }})"
@@ -104,14 +105,14 @@
                                                     </div>
                                                 </div>
                                                 <span class="wrap-quantity-{{ $item2->id }}" style="display: none">
-                                                    {{-- <button id="decrement"
+                                                    <button id="decrement"
                                                         onclick="stepper('decrement', {{ $item2->id }})">-</button>
-                                                    <input name="input2" type="number" min="0" max="100"
-                                                        step="1" value="0" id="my-input-{{ $item2->id }}"
+                                                    <input name="input2" type="number" min="1" max="100"
+                                                        step="1" value="1" id="my-input-{{ $item2->id }}"
                                                         readonly>
                                                     <button id="increment"
                                                         onclick="stepper('increment', {{ $item2->id }})"
-                                                        data-id="{{ $item2->id }}">+</button> --}}
+                                                        data-id="{{ $item2->id }}">+</button>
                                                 </span>
                                                 <label for="">{{ $item2->name }}</label>
                                             </div>
@@ -142,9 +143,9 @@
                                     <p style="color: #7D7D7D; text-align:start;">
                                         
 
-                                        <span class="wrap-txt-{{ $item->id }}" style="display: ">
+                                        <span class="isi-{{ $item->id }}" style="display: none">
                                             {{ $item->name }}
-                                            <hr>
+                                            <hr class="garis-{{ $item->id }}" style="display: none">
                                         </span>
                                     </p>
                                 @endforeach
@@ -152,29 +153,29 @@
                                     <p style="color: #7D7D7D; text-align:start;">
 
 
-                                        <span class="wrap-txt-{{ $item2->id }}" style="display: ">
+                                        <span class="isi-{{ $item2->id }}" style="display: none">
                                             {{ $item2->name }}
-                                            <hr>
+                                            <hr class="garis-{{ $item2->id }}" style="display: none">
                                         </span>
                                     </p>
                                 @endforeach
                             </div>
                             <div class="col-lg-6 mt-5">
                                 @foreach ($package as $data)
-                                    <p style="color: #7D7D7D; text-align:end;">Rp.
+                                    <p class="harga-{{ $data->id }}" style="color: #7D7D7D; text-align:end; display: none">Rp.
                                         {{ formatrupiah($data->price_weekdays) }}
-                                        <hr>
+                                        <hr class="garis-{{ $data->id }}" style="display: none">
                                     </p>
                                 @endforeach
                             </div>
-                        <div class="wrap-selected-item">
-                        </div>
+                        {{-- <div class="wrap-selected-item">
+                        </div> --}}
                         <div class="row">
                             <div class="col-lg-12">
                                 <hr class="h">
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" style="padding: 5px">
                             <div class="col-lg-6 mt-5">
                                 <p style="text-align:start;"><strong>Total</strong></p>
                             </div>
@@ -183,7 +184,7 @@
                                 {{-- <p style="text-align:end;">Rp. 1.000.000,00</p> --}}
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="text-center">
                             <div class="col-lg-12 mt-10">
                                 <div class="btn-proses">
                                     <a href="/metode_pembayaran">
@@ -198,13 +199,14 @@
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript">
-        function valueChanged(id) {
-            if ($('.form-control-' + id).is(":checked"))
-                $(".wrap-quantity-" + id).show();
-            else
-                $(".wrap-quantity-" + id).hide();
-        };
+        // function valueChanged(id) {
+        //     if ($('.form-control-' + id).is(":checked"))
+        //         $(".wrap-quantity-" + id).show();
+        //     else
+        //         $(".wrap-quantity-" + id).hide();
+        // };
 
         function valuePackage(id) {
 
@@ -234,5 +236,56 @@
     //             </div>`;
         // $('.wrap-selected-item').append(html)
         // })
+
+
+        // $(document).ready(function(){
+
+        //     $('.form-control-' + id).click(function(){
+        //         $(".isi-" + id).toggle();
+        //     })
+
+
+        // });
+
+        // function isi(id) {
+        //     if ($('#btn_toggle' + id).click(function){
+        //         $("#isi-" + id).toggle();
+        //         alert("success");
+        //     })
+        // };
+
+        function valueChanged(id) {
+            //--------------Event---------
+            $('.form-control-' + id).change(function() {
+                if(this.checked) {
+                    $('.isi-' + id).show();
+                    $(".wrap-quantity-" + id).show();
+                    $(".harga-" + id).show();
+                    $(".garis-" + id).show();
+
+                    
+                }
+                else{
+                    $('.isi-' + id).hide();
+                    $(".wrap-quantity-" + id).hide();
+                    $(".harga-" + id).hide();
+                    $(".garis-" + id).hide();
+                }
+                event.preventDefault();
+            });
+            // $('.form-control-' + id).is(function(){
+
+            //     $('.cekbox-' + id).toggle();
+            //     $('.isi-' + id).toggle();
+            //     $(".wrap-quantity-" + id).toggle();
+            //     $(".harga-" + id).toggle();
+            //     $(".garis-" + id).toggle();
+
+            //     event.preventDefault();
+            // });
+            
+        };
+
+
     </script>
 @endsection

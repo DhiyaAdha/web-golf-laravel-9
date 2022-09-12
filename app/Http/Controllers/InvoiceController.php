@@ -46,7 +46,7 @@ class InvoiceController extends Controller
      */
     public function create(Request $request)
     {
-        $invoice = Detail::select(['packages.category', 'detail_transactions.harga', 'detail_transactions.quantity'])
+        $invoice = Detail::select(['packages.name', 'detail_transactions.harga', 'detail_transactions.quantity'])
         ->leftJoin('packages', 'packages.id', '=', 'detail_transactions.package_id')->get();
         if($request->ajax()){
             return datatables()->of($invoice)

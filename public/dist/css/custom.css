@@ -165,6 +165,143 @@ table#dt-tamu {
     padding: 5px 8px;
 }
 
+.align-self-end {
+    -ms-flex-item-align: end !important;
+    align-self: flex-end !important;
+}
+
+h6.panel-title.txt-dark.label-visitor {
+    font-size: 8px;
+    padding: 0px 10px;
+    line-height: 12px !important;
+    font-weight: 500;
+}
+.card-visitor {
+    width: 204.0188976378px;
+    height: 323.52755905512px;
+    padding: 0px;
+}
+
+.flex-wrap {
+    -ms-flex-wrap: wrap !important;
+    flex-wrap: wrap !important;
+}
+
+.panel-body.card {
+    position: relative;
+}
+.panel-body>.img-footer {
+    position: absolute;
+    bottom: -38px;
+    left: -1px;
+}
+
+#dt-invoice {
+    width: 1100px !important;
+}
+
+.title-card {
+    padding: 5px 15px;
+}
+.back-qr {
+    height: 200px;
+    position: relative;
+}
+.front-qr {
+    height: 160px;
+    position: relative;
+    padding: 0px 10px;
+    top: 32px;
+}
+
+/* .name-visitor {
+    padding: 15px;
+    text-align: center;
+    font-weight: 800;
+    font-size: 16px;
+    top: 76px;
+    position: absolute;
+}
+.type-visitor {
+    padding: 15px;
+    text-align: center;
+    font-weight: 800;
+    font-size: 16px;
+    top: 76px;
+    position: absolute;
+} */
+
+.bg-front{
+    padding: 15px;
+    height: 200px;
+}
+/* .bg-front.front-qr{
+    padding: 15px;
+}
+.bg-front.front-qr{
+    padding: 15px;
+} */
+
+.qr-code-visitor{
+    height: 150px;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+}
+
+@media (min-width: 992px) {
+    .col-md-card {
+        width: 204.0188976378px;
+        height: 323.52755905512px;
+        float: left;
+        position: relative;
+        min-height: 1px;
+        /* padding-right: 15px;
+        padding-left: 15px; */
+        margin: 15px;
+    }
+}
+
+.box-footer {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top: 1px solid #f4f4f4;
+    padding: 10px;
+    background-color: #fff;
+}
+
+
+element.style {
+    font-size: 18px;
+    font-weight: bold;
+    font-color: #fff;
+    margin-bottom: 0px;
+}
+.widget-user .widget-user-username {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 25px;
+    font-weight: 300;
+    text-shadow: 0 1px 1px rgb(0 0 0 / 20%);
+}
+
+.modal-content.hidden-content {
+    background-color: transparent !important;
+    -webkit-box-shadow: none !important;
+}
+
+.download-kartu-tamu {
+    border-radius: 6px;
+    background-color: white;
+    color: #545151;
+    font-weight: 500;
+    border: none;
+}
+
 .panel-heding {
     border: none;
     color: inherit;
@@ -190,6 +327,22 @@ table#dt-tamu {
 }
 .dataTables_wrapper .dataTables_filter {
     padding: 0px !important;
+}
+
+.panel-scan-qr {
+    border-radius: 10px; 
+    border: 1.8px solid gray; 
+    width: 500px; 
+    height: 400px;
+}
+
+video {
+    width: 500px !important;
+    border: 1.8px solid gray;
+}
+
+.d-none {
+    display: none !important;
 }
 
 .table-td {

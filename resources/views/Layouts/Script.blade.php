@@ -57,10 +57,32 @@
 <script src="{{ asset('/dist/js/init.js') }}"></script>
 <script src="{{ asset('/dist/js/dashboard-data.js') }}"></script>
 <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
+<script type="text/javascript" src="{{ asset('/dist/js/printThis.js') }}"></script>
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
 <script>
+    $('.download-kartu-tamu').on("click", function() {
+        $('#cetak-kartu').printThis({
+            printContainer: true,
+        });
+    });
+    @if (Session::has('success'))
+        window.setTimeout(function() {
+            $.toast({
+                text: '{{ Session('success') }}',
+                position: 'top-right',
+                loaderBg: '#fec107',
+                icon: 'success',
+                hideAfter: 2000,
+                stack: 6
+            });
+        }, 1000);
+    @endif
+    $(function() {
+        $('[data-toogle="tooltip"]').tooltip()
+    })
     $(".vertical-spin").TouchSpin({
         verticalbuttons: true,
         verticalupclass: 'ti-plus',
@@ -92,7 +114,7 @@
 
                         window.setTimeout(function() {
                             $.toast({
-                                text: 'Paket bermain berhasil dihapus permanen',
+                                text: 'Product berhasil dihapus permanen',
                                 position: 'top-right',
                                 loaderBg: '#fec107',
                                 icon: 'success',
@@ -110,6 +132,8 @@
         return false;
     });
     /* delete package */
+
+    // Edit
 
     // data analisis
     $('#dt-analisis').DataTable({
@@ -207,23 +231,25 @@
                 }
             },
             {
-                data: 'price_weekdays',
-                render: $.fn.dataTable.render.number('.', ',', 0, 'Rp ')
+                "data": function(data) {
+                    return `<p>Rp ${data.price_weekdays}</p>`;
+                }
             },
             {
-                data: 'price_weekend',
-                render: $.fn.dataTable.render.number('.', ',', 0, 'Rp ')
+                "data": function(data) {
+                    return `<p>Rp ${data.price_weekend}</p>`;
+                }
             },
             {
                 "data": function(data) {
                     if (data.status == 0) {
                         return `<div class="checkbox checkbox-success checkbox-circle">
-                                    <input id="checkbox-10" type="checkbox" disabled checked="">
+                                    <input id="checkbox-10" type="checkbox" disabled checked="" data-toggle="tooltip" data-placement="top" title="ON">
                                     <label for="checkbox-10"></label>
                                 </div>`;
                     } else {
                         return `<div class="checkbox checkbox-danger checkbox-circle">
-                                    <input id="checkbox-12" type="checkbox" disabled checked="">
+                                    <input id="checkbox-12" type="checkbox" disabled checked=""data-toggle="tooltip" data-placement="top" title="OFF">
                                     <label for="checkbox-12"></label>
                                 </div>`;
                     }
@@ -781,7 +807,7 @@
         },
         "render": $.fn.dataTable.render.text(),
         "columns": [{
-                data: 'category',
+                data: 'name',
                 searchable: true,
                 orderable: false
             },
@@ -854,17 +880,6 @@
                 searchable: true,
                 orderable: false
             },
-            // {
-            //     data: 'action',
-            //     searchable: false,
-            //     orderable: false
-            // },
-            // {
-            //     data: 'updated_at',
-            //     searchable: true,
-            //     orderable: false
-            // },
-
         ],
         order: [],
         responsive: true,
@@ -884,13 +899,58 @@
         }],
     });
 
-
-    // scan
-    $(document).on("click", "#show-scan", function() {
-        $(".disabled-scan").css("display", "none");
+    $('#show-qr-scan').on('click', function() {
+        $('.disabled-scan').addClass('d-none');
 
         function onScanSuccess(decodedText, decodedResult) {
-            $("#result").val(decodedText)
+            $("#resultTEXT").val(decodedText)
+            $('#resultDECODE').val(JSON.stringify(decodedResult));
+            html5QrcodeScanner.clear();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('visitor.qrcode') }}",
+                data: {
+                    qrCode: decodedText
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === "VALID") {
+                        console.log(response.data)
+                        swal({
+                            title: "Verifikasi berhasil",
+                            type: "success",
+                            text: "Atas nama " + response.data.name,
+                            confirmButtonColor: "#01c853",
+                            closeOnConfirm: false,
+                            closeOnCancel: false,
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            timer: 2000,
+                        }, function() {
+                            window.location.href = "/detail_scan/" + response.data.id;
+                        });
+                    } else {
+                        swal({
+                            icon: 'error',
+                            title: response.status,
+                            text: response.message,
+                            allowOutsideClick: false
+                        }, function() {
+                            // Untuk reload Page jika gagal
+                            window.location.reload(true)
+                        });
+                    }
+
+                    $('#resultTEXT').val("");
+                    $('#resultDECODE').val("");
+                }
+            });
         }
 
         function onScanFailure(error) {
@@ -899,15 +959,15 @@
 
         let html5QrcodeScanner = new Html5QrcodeScanner(
             "reader", {
-                fps: 10,
+                fps: 144,
                 qrbox: {
-                    width: 250,
-                    height: 250
+                    width: 200,
+                    height: 200
                 }
             },
             false);
         html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-    })
+    });
 </script>
 {{-- Input Stepper --}}
 <script>
@@ -934,7 +994,3 @@
 </script>
 
 {{-- Tooltip --}}
-<script>
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-</script>
