@@ -295,26 +295,16 @@
                                 </div>
                                 <div class="table-wrap">
                                     <div class="table-responsive">
-                                        <table class="table table-hover" style="margin: 10px;">
+                                        <table width="100%" class="table table-hover" style="margin: 10px;"
+                                            id="dt-tamu-limit">
                                             <thead>
-                                                {{-- Table head --}}
                                                 <tr>
-                                                    <th>Belance</th>
                                                     <th>Informasi</th>
-                                                    <th style="text-align: center;">Status</th>
+                                                    <th>Tipe</th>
                                                     <th style="text-align: center;">Tanggal</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {{-- @foreach ($limit as $item)
-                                                <tr>
-                                                    <td> {{ $item->id }}</td>
-                                                    <td> telah {{ $item->quota }}</td>
-                                                    <td> {{ $item->report_deposit->payment_type }} </td>
-                                                    {{ $school->students->first_name }}
-                                                    <td> {{ $item->updated_at }} </td>
-                                                </tr>
-                                            @endforeach --}}
                                             </tbody>
                                         </table>
                                     </div>
@@ -343,7 +333,7 @@
             "serverSide": true,
             "lengthChange": false,
             "bDestroy": true,
-            "searching": true,
+            "searching": false,
             "paginate": {
                 "first": "First",
                 "last": "Last",
@@ -394,5 +384,57 @@
                 targets: [1, 2, 3]
             }]
         });
+
+        // Limit Activity
+        $('#dt-tamu-limit').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "lengthChange": false,
+            "bDestroy": true,
+            "searching": false,
+            "paginate": {
+                "first": "First",
+                "last": "Last",
+                "next": "Next",
+                "previous": "Previous"
+            },
+            "ajax": {
+                "url": "{{ route('limit.report.data', Request::segment(2)) }}",
+                "type": "GET",
+                "datatype": "json"
+            },
+            "render": $.fn.dataTable.render.text(),
+            "columns": [{
+                    data: 'information',
+                    searchable: true,
+                    orderable: false
+                },
+                {
+                    data: 'status',
+                    searchable: true,
+                    orderable: false
+                },
+                {
+                    data: 'created_at',
+                    searchable: true,
+                    orderable: false
+                }
+            ],
+            order: [],
+            responsive: true,
+            language: {
+                emptyTable: "Tidak ada data pada tabel ini",
+                info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+                infoFiltered: "(difilter dari _MAX_ total data)",
+                infoEmpty: "Tidak ada data pada tabel ini",
+                lengthMenu: "Menampilkan _MENU_ data",
+                zeroRecords: "Tidak ada data pada tabel ini"
+            },
+            columnDefs: [{
+                className: 'text-left',
+                targets: [0, 1, 2]
+            }]
+        });
+        // End Of Limit Activity
     </script>
 @endpush
