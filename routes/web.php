@@ -91,7 +91,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::get('/detail_scan/{id}', [ScanqrController::class, 'detail_datapengunjung'])->name('detail_scan');
     Route::get('aktifitas', [AdminController::class, 'aktifitas'])->name('admin.aktifitas');
     // deposit.aktifitas
-    Route::get('reportdeposit', [TamuController::class, 'reportdeposit'])->name('deposit.report');
+    Route::get('reportdeposit/{id}', [TamuController::class, 'reportdeposit'])->name('deposit.report.data');
     Route::resource('kartu-tamu', TamuController::class);
 
 });
@@ -114,6 +114,21 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/scan-tamu-berhasil', [ScanqrController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
     Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name('scan-tamu');
     route::get('qrcode/{id}', [ScanqrController::class, 'generate'])->name('generate');
+    Route::get('/kartu-tamu', [ScanqrController::class, 'kartutamu'])->name('kartu-tamu');
+    // Route::get('/tambah-admin', [AuthController::class, 'tambahadmin'])->name('tambah-admin');
+    Route::resource('proses', OrderController::class);
+    /* Tamu Controller */
+    Route::get('/daftar-tamu', [TamuController::class, 'index'])->name('daftar-tamu');
+    Route::get('/daftar-tamu/destroy/{id}', [TamuController::class,'delete'])->name('hapus-tamu');
+    Route::get('/tambah-tamu', [TamuController::class, 'tambahtamu'])->name('tambah-tamu');
+    Route::post('/inserttamu', [TamuController::class, 'inserttamu'])->name('inserttamu');
+    Route::get('/edit-tamu/{id}', [TamuController::class, 'edit'])->name('edit-tamu');
+    Route::post('/update-tamu/{id}', [TamuController::class, 'update'])->name('update-tamu');
+    Route::get('/scan-tamu', [ScanqrController::class, 'scantamu'])->name('scan-tamu');
+    Route::get('/scan-tamu-berhasil', [ScanqrController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
+    Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name('scan-tamu');
+    route::get('qrcode/{id}', [ScanqrController::class, 'generate'])->name('generate');
+    Route::get('/tambah-deposit', [TamuController::class,'tambahdeposit'])->name('tambah-deposit');
     Route::get('/kartu-tamu', [ScanqrController::class, 'kartutamu'])->name('kartu-tamu');
     // Route::get('/tambah-admin', [AuthController::class, 'tambahadmin'])->name('tambah-admin');
     Route::resource('cart', OrderController::class);

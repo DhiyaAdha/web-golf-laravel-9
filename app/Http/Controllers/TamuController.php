@@ -256,37 +256,29 @@ class TamuController extends Controller
     }
 
     /* data aktifitas tamu Deposit */
-    public function reportdeposit(Request $request)
+    public function reportdeposit(Request $request, $id)
     {
-
-        $aktifitas_deposit = Deposit::join('visitors', 'deposits.visitor_id', '=', 'visitors.id')
-        ->join('report_deposits', 'deposits.report_deposit_id', '=', 'report_deposits.id')
-        ->orderBy('deposits.id', 'desc')
-        ->get(['deposits.*',  'visitors.name as name', 'deposits.balance as balance', 'deposits.id as order id']);
+        // $data['visitor'] = Visitor::find($id);
+        // // $deposit = Deposit::where('visitor_id',$id)->first();
+        // $aktifitas_deposit = Deposit::where('visitor_id', $id)->
+        // join('visitors', 'deposits.visitor_id', '=', 'visitors.id')
+        // ->join('report_deposits', 'deposits.report_deposit_id', '=', 'report_deposits.id')
+        // ->orderBy('deposits.id', 'desc')
+        // ->get(['deposits.*',  'visitors.name as name', 'deposits.balance as balance', 'deposits.balance as balance']);
+        $aktifitas_deposit = ReportDeposit::select('id', 'report_balance', 'payment_type', 'visitor_id', 'user_id', 'created_at')->where('visitor_id', $id)
+            ->orderBy('created_at', 'desc') 
+            ->get();
 
         if ($request->ajax()) {
-            return datatables()->of($aktifitas_deposit)->addColumn('order id', function ($data) {
-                    return '<p class="label" style="background-color: #5901C8;">'.$data->id.'<div>';
-                })->addColumn('information', function ($data) {
-                    return $data->activities;
-                })->addColumn('status_action', function ($data) {
-                    if ($data->type == 'UPDATE') {
-                        return '<p class="label label-danger">'.$data->type.'<div>';
-                    }  else if ($data->type == 'CREATE') {
-                        return '<p class="label label-primary">'.$data->type.'<div>';
-                    } else {
-                        return '<p class="label " style="background-color: #607EAA;">'.$data->type.'<div>';
-                    }
-                
-                // })->addColumn('status_action', function ($data) {
-                //     return $data->payment_type;
-                })->addColumn('date_activity', function ($data) {
-                    return $data->updated_at;
+            return datatables()->of($aktifitas_deposit)
+                ->editColumn('report_balance', function ($data) {
+                    return number_format($data->report_balance, 0, ',', '.');
                 })
-                ->rawColumns(['balance','information','status_action','date_activity'])->make(true);
+                ->addColumn('information', function ($data) {
+                    return $data->visitor->name.' melakukan deposit sebesar '.number_format($data->report_balance, 0, ',', '.');
+                })
+                ->make(true);
         }
-        return view('tamu.kartu-tamu');
-        // return view('tamu.kartu-tamu'.$request->visitor_id );
     }
     /* end data aktifitas tamu Deposit */
 

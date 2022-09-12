@@ -30,6 +30,8 @@
     </div>
     {{-- Script --}}
     @include('Layouts.Script')
+    @stack('scripts')
+
     {{-- /Script --}}
 
 </body>
