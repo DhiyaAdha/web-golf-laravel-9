@@ -212,7 +212,8 @@
                             <div id="transaction_tabs" class="tab-pane fade active in" role="tabpanel">
                                 <div class="table-wrap">
                                     <div class="table-responsive">
-                                        <table class="table table-hover" id="dt-tamu-transaksi">
+                                        <table class="table table-hover" >
+                                        {{-- <table class="table table-hover" id="dt-tamu-transaksi"> --}}
                                             <thead>
                                                 <tr>
                                                     <th>Order ID</th>
@@ -231,10 +232,10 @@
                             <div id="deposit_tabs" class="tab-pane fade" role="tabpanel">
                                 <div class="table-wrap">
                                     <div class="table-responsive">
-                                        <table class="table table-hover" id="dt-tamu-deposit">
+                                        <table width="100%" class="table table-hover" id="dt-tamu-deposit">
                                             <thead>
                                                 <tr>
-                                                    <th>Order ID</th>
+                                                    <th>Saldo</th>
                                                     <th>Informasi</th>
                                                     <th style="text-align: center;">Status</th>
                                                     <th style="text-align: center;">Tanggal</th>
@@ -250,11 +251,12 @@
                             <div id="limit_tabs" class="tab-pane fade" role="tabpanel">
                                 <div class="table-wrap">
                                     <div class="table-responsive">
-                                        <table class="table table-hover" id="dt-tamu-limit">
+                                        {{-- <table class="table table-hover" id="dt-tamu-limit"> --}}
+                                        <table class="table table-hover">
                                             <thead>
                                                 {{-- Table head --}}
                                                 <tr>
-                                                    <th>Order ID</th>
+                                                    <th>Belance</th>
                                                     <th>Informasi</th>
                                                     <th style="text-align: center;">Status</th>
                                                     <th style="text-align: center;">Tanggal</th>
@@ -286,3 +288,67 @@
         @include('Layouts.Footer')
     </div>
 @endsection
+
+@push('scripts')
+    {{-- aktifitas deposit tamu --}}
+    <script>
+        // $(document).ready(function() {
+        $('#dt-tamu-deposit').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "lengthChange": false,
+            "searching": false,
+            "paginate": {
+                "first": "First",
+                "last": "Last",
+                "next": "Next",
+                "previous": "Previous"
+            },
+            "ajax": {
+                "url": "{{ route('deposit.report.data', Request::segment(2)) }}",
+                "type": "GET",
+                "datatype": "json"
+            },
+            "render": $.fn.dataTable.render.text(),
+            "columns": [{
+                    data: 'report_balance',
+                    searchable: true,
+                    orderable: false
+                },
+                {
+                    data: 'information',
+                    searchable: true,
+                    orderable: false
+                },
+                {
+                    data: 'payment_type',
+                    searchable: true,
+                    orderable: false
+                },
+                {
+                    data: 'created_at',
+                    searchable: true,
+                    orderable: false
+                }
+            ],
+            order: [],
+            responsive: true,
+            language: {
+                // search: "",
+                // searchPlaceholder: "Cari",
+                emptyTable: "Tidak ada data pada tabel ini",
+                info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+                infoFiltered: "(difilter dari _MAX_ total data)",
+                infoEmpty: "Tidak ada data pada tabel ini",
+                lengthMenu: "Menampilkan _MENU_ data",
+                zeroRecords: "Tidak ada data pada tabel ini"
+            },
+            columnDefs: [{
+                className: 'text-left',
+                targets: [1, 2, 3]
+            }]
+        });
+    </script>
+    {{-- End aktifitas deposit tamu --}}
+    
+@endpush

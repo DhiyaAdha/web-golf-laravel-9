@@ -22,7 +22,7 @@ class ReportDeposit extends Model
 
     public function visitor()
     {
-        return $this->hasMany(Visitor::class);
+        return $this->belongsTo(Visitor::class);
     }   
 
     public function User()
