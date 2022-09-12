@@ -188,7 +188,7 @@ class AdminController extends Controller
                         return '<p class="label " style="background-color: #607EAA;">'.$data->type.'<div>';
                     }
                 })->addColumn('date_activity', function ($data) {
-                    return $data->created_at;
+                    return Carbon::parse($data->created_at)->diffForHumans();
                 })
                 ->rawColumns(['role','user_name','information','status_action','date_activity'])->make(true);
         }
