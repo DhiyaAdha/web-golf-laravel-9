@@ -946,9 +946,6 @@
                             window.location.reload(true)
                         });
                     }
-
-                    $('#resultTEXT').val("");
-                    $('#resultDECODE').val("");
                 }
             });
         }
