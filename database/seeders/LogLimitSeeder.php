@@ -25,34 +25,12 @@ class LogLimitSeeder extends Seeder
             for($i = 1; $i <= 30; $i++) {        
             $faker = Faker::create('id_ID');
             $visitor = Visitor::pluck('id');
-            // $user = User::pluck('id');
-            $data = 
-            [ 
-                [
+            DB::table('log_limits')->insert([
                 'visitor_id' => $faker->randomElement($visitor),
-                // 'user_id' => User::all()->random()->id,
                 'report_limit_id' => ReportLimit::all()->random()->id,
-                
-                // 'quota' => $limit,
-                'type' => $faker->randomElement(['VIP','VVIP']),
-                'status' => $faker->randomElement(['bertambah','berkurang']),
-                'quota_kupon' => $faker-> randomDigit(1),
-                // 'activities' => '1',
-                // 'quota' => $data,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-                ]
-        ];
-                foreach($data as $key=>$type){
-                    if( $type['type'] == 'VIP' ){
-                        $data[$key]['quota'] = '4' ;        
-                    }
-                    else{
-                        $data[$key]['quota'] = '10' ;
-                    }
-            }
-            DB::table('log_limits')->insert($data);
-            
+                ]);
         }
             
     }

@@ -16,7 +16,9 @@ class LogTransaction extends Model
         'id',
         'order_number',
         'visitor_id',
+        'user_id',
         'total',
+        'activities',
         'created_at',
     ];
 
@@ -24,4 +26,11 @@ class LogTransaction extends Model
     {
         return $this->belongsTo(Visitor::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
 }

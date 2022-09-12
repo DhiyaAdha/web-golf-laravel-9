@@ -17,21 +17,18 @@ class CreateReportLimitsTable extends Migration
             $table->increments('id');
             $table->integer('visitor_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->integer('report_quota');
+            $table->integer('report_quota')->nullable();
             $table->integer('report_quota_kupon')->nullable();
-            $table->enum('type', ['VIP','VVIP']);
-            $table->enum('status', ['bertambah', 'berkurang', 'reset']);
             $table->timestamps();
-
+            
             $table->foreign('visitor_id')
-                ->references('id')
-                ->on('visitors')
-                ->onDelete('cascade');
+            ->references('id')
+            ->on('visitors')
+            ->onDelete('cascade');
             $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
-
+            ->references('id')
+            ->on('users')
+            ->onDelete('cascade');
         });
     }
 

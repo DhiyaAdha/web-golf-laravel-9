@@ -64,19 +64,16 @@ class User extends Authenticatable
     {
         return $this->belongsTo(ReportLimit::class);
     }  
-    public function Limit()
-    {
-        return $this->belongsTo(Limit::class);
-    }  
 
     //Deposit
     public function ReportDeposit()
     {
         return $this->belongsTo(ReportDeposit::class);
     }  
-    public function Deposit()
+    
+    public function logtransaction()
     {
-        return $this->belongsTo(Deposit::class);
+        return $this->hasMany(LogTransaction::class);
     }  
 
     public function role()

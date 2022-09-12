@@ -23,32 +23,15 @@ class ReportLimitSeeder extends Seeder
         for($i = 1; $i <= 30; $i++) {        
             $faker = Faker::create('id_ID');
             $visitor = Visitor::pluck('id');
-            $data = 
-            [ 
-                [
+            
+            
+            DB::table('report_limits')->insert([
                 'visitor_id' => $faker->randomElement($visitor),
                 'user_id' => User::all()->random()->id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                ]);
 
-                // 'quota' => $limit,
-                'type' => $faker->randomElement(['VIP','VVIP']),
-                'status' => $faker->randomElement(['berkurang','reset']),
-                'report_quota_kupon' => $faker-> randomDigit(1),
-                // 'activities' => '1',
-                // 'quota' => $data,
-                'created_at' => Carbon::now(),
-                'created_at' => Carbon::now(),
-                ]
-        ];
-                foreach($data as $key=>$type){
-                    if( $type['type'] == 'VIP' ){
-                        $data[$key]['report_quota'] = '4' ;        
-                    }
-                    else{
-                        $data[$key]['report_quota'] = '10' ;
-                    }
-            }
-            DB::table('report_limits')->insert($data);
-            
         }
     }
 }

@@ -13,11 +13,9 @@ class LogLimit extends Model
 
     protected $fillable = [
         'visitor_id',
-        // 'user_id',`
         'report_limit_id',
         'quota',
         'quota_kupon',
-        'status',
         'created_at',
         'updated_at',
     ];
@@ -27,17 +25,8 @@ class LogLimit extends Model
         return $this->belongsTo(Visitor::class);
     }   
 
-    // public function User()
-    // {
-    //     return $this->belongsTo(User::class);
-    // }  
-
     public function ReportLimit()
     {
         return $this->hasmany(ReportLimit::class);
     }  
-
-    // public $timestamps = false;
-    
-
 }

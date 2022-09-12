@@ -17,26 +17,19 @@ class CreateDepositsTable extends Migration
         Schema::create('deposits', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('visitor_id')->unsigned();
-            // $table->integer('user_id')->unsigned();
             $table->integer('report_deposit_id')->unsigned();
-            $table->integer('balance');
+            $table->integer('balance')->nullable();
             $table->string('activities')->nullable();
-            // $table->enum('payment_type',['cash', 'transfer']);
-            $table->enum('status',['bertambah', 'berkurang']);
             $table->timestamps();
-
+            
             $table->foreign('visitor_id')
-                ->references('id')
-                ->on('visitors')
-                ->onDelete('cascade');
-            // $table->foreign('user_id')
-            //     ->references('id')
-            //     ->on('users')
-            //     ->onDelete('cascade');
+            ->references('id')
+            ->on('visitors')
+            ->onDelete('cascade');
             $table->foreign('report_deposit_id')
-                ->references('id')
-                ->on('report_deposits')
-                ->onDelete('cascade');
+            ->references('id')
+            ->on('report_deposits')
+            ->onDelete('cascade');
         });
     }
 

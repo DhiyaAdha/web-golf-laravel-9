@@ -21,28 +21,18 @@ class CreateLogTransactionsTable extends Migration
             $table->enum('payment_type',['deposit', 'cash', 'transfer', 'limit bulanan', 'limit kupon']);
             $table->integer('payment_status')->default(1);
             $table->integer('total');
-            $table->integer('status');
-            
+            $table->string('activities')->nullable();
             $table->timestamp('created_at');
-            // $table->integer('visitor_id');
 
             $table->foreign('visitor_id')
                 ->references('id')
                 ->on('visitors')
                 ->onDelete('cascade');
-
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
-
-
         });
-        
-        // Schema::table('log_transactions', function($table) {
-        //     $table->foreign('visitor_id')->references('id')->on('visitors');
-        //     $table->foreign('user_id')->references('id')->on('users');
-        // });
     }
     /**
      * Reverse the migrations.

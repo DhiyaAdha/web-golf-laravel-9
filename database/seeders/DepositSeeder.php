@@ -26,15 +26,10 @@ class DepositSeeder extends Seeder
         for($i = 1; $i <= 30; $i++) {
             DB::table('deposits')->insert([
             'visitor_id' => $faker->randomElement($visitor),
-            // 'user_id' => User::all()->random()->id,
             'report_deposit_id' => ReportDeposit::all()->random()->id,
             'balance' => $faker->randomFloat(2, 0, 10000000),
-            'status' => $faker->randomElement(['bertambah', 'berkurang']),
-            // 'payment_type' => $faker->randomElement(['Cash','Transfer']),
-            
             'created_at' => Carbon::now(),
-            'updated_at' => \Carbon\Carbon::now()->addMinutes(rand(0,
-                60 * 23))->addSeconds(rand(0, 60))
+            'updated_at' => Carbon::now(),
             ]);
         }
 

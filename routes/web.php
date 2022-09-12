@@ -127,15 +127,23 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/edit-tamu/{id}', [TamuController::class, 'edit'])->name('edit-tamu');
     Route::post('/update-tamu/{id}', [TamuController::class, 'update'])->name('update-tamu');
     Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name('show');
-    Route::get('/deposit-kartu-tamu/{id}', [TamuController::class, 'berhasildeposit'])->name('berhasildeposit');
-    Route::get('depositaktifitas', [TamuController::class, 'berhasildeposit'])->name('deposit.aktifitas');
+    // deposit.aktifitas
+    Route::get('reportdeposit', [TamuController::class, 'reportdeposit'])->name('deposit.report');
+    Route::get('/aktifitas-kartu-tamu/{id}', [TamuController::class, 'updatedeposit'])->name('updatedeposit');
+    Route::get('/aktifitas-kartu-tamu/{id}', [TamuController::class, 'createdeposit'])->name('createdeposit');
     Route::get('deposit/{id}', [TamuController::class, 'deposittamu'])->name('deposittamu');
     Route::get('/tambah-deposit/{id}', [TamuController::class,'tambahdeposit',])->name('tambah-deposit');
     Route::post('/tambah-deposit', [TamuController::class, 'insertdeposit'])->name(
         'insertdeposit');
-    Route::get('reportdeposit', [TamuController::class, 'reportdeposit'])->name('deposit.report');
+    // limit.aktifitas 
     Route::get('reportlimit', [TamuController::class, 'reportlimit'])->name('limit.report');
-    
+    Route::get('reporttransaksi', [TamuController::class, 'reporttransaksi'])->name('transaksi.report');
+    Route::get('createlimitvip', [TamuController::class, 'createlimitvip'])->name('createlimitvip');
+    Route::get('createlimitvvip', [TamuController::class, 'createlimitvvip'])->name('createlimitvvip');
+    Route::get('updatelimit', [TamuController::class, 'updatelimit'])->name('updatelimit');
+    // transaksi-deposit-limit-cash
+    Route::get('transaksideposit', [TamuController::class, 'transaksideposit'])->name('transaksideposit');
+    Route::get('transaksilimit', [TamuController::class, 'transaksilimit'])->name('transaksilimit');
     
 
     //Detail Scan

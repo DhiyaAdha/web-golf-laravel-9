@@ -60,4 +60,5 @@ class Visitor extends Model
             ->orderBy('created_at', 'desc')
             ->first();
     }
+    
 }
