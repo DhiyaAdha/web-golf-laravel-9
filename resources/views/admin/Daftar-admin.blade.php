@@ -37,7 +37,7 @@
                                 </div>
                             </div>
                             <div class="panel-wrapper collapse in">
-                                <div class="panel-bodi">
+                                <div class="panel-body">
                                     <div class="table-wrap mt-40">
                                         <div class="table-responsive">
                                             <table class="table mb-0" id="dt-admin">
