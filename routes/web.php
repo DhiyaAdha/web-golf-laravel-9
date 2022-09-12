@@ -89,6 +89,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::post('/update-tamu', [TamuController::class, 'update'])->name('update-tamu');
     Route::get('/detail_scan/{id}', [ScanqrController::class, 'detail_datapengunjung'])->name('detail_scan');
     Route::get('aktifitas', [AdminController::class, 'aktifitas'])->name('admin.aktifitas');
+    Route::get('/proses', [OrderController::class, 'index'])->name('proses');
 });
 
 //Level admin dan superadmin
@@ -121,5 +122,6 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('deposit/{id}', [TamuController::class, 'deposittamu'])->name('deposittamu');
     //Detail Scan
     Route::get('/detail_scan/{id}', [ScanqrController::class, 'detail_datapengunjung'])->name('detail_scan');
+    Route::get('/proses', [OrderController::class, 'index'])->name('proses');
 });
 //Finish level admin dan superadmin
