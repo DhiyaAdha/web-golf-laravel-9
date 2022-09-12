@@ -25,10 +25,8 @@
                                 <h6 class="panel-title txt-dark">Daftar Paket</h6>
                             </div>
                             <div class="pull-right">
-                                <div class=" pull-left">
-                                    <a href="{{ route('tambah-admin') }}" class="btn btn-xs btn-success">Tambah
-                                        Admin</a>
-                                </div>
+                                <a href="{{ route('tambah-admin') }}" class="btn btn-xs btn-success">Tambah
+                                    Admin</a>
                             </div>
                             <div class="clearfix"></div>
                         </div>
