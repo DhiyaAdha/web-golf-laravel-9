@@ -1,7 +1,6 @@
 @extends('Layouts.Main', ['title' => 'TGCC | Daftar Tamu'])
 @section('content')
     <div class="page-wrapper">
-        @include('sweetalert::alert')
         <div class="container-fluid">
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
@@ -10,15 +9,15 @@
                 <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
-                        <li><a href="index.html">Dashboard</a></li>
-                        <li><a href="index.html">Daftar tamu</a></li>
+                        <li><a href="javascript:void(0)">Dashboard</a></li>
+                        <li><a href="javascript:void(0)">Daftar tamu</a></li>
                         <li class="active"><span>Detail tamu</span></li>
                     </ol>
                 </div>
                 <!-- /Breadcrumb -->
             </div>
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6">
                     <div class="panel panel-default panel-dropdown card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
@@ -106,7 +105,7 @@
                                                                 <div
                                                                     class="d-flex justify-content-center align-items-center flex-column">
                                                                     <img class="back-qr"
-                                                                        src="{{ asset('/dist/img/icon-golf1.svg') }}">
+                                                                        src="{{ asset('/dist/img/icon-golf2.svg') }}">
                                                                     <div class="qr-code-visitor">
                                                                         {{ QrCode::size(120)->generate($visitor->id) }}
                                                                     </div>
@@ -119,7 +118,7 @@
                                                 </div>
                                             </div>
                                             <button type="button" class="btn download-kartu-tamu"><i
-                                                    class="fa fa-download"></i> Download Kartu (PDF)</button>
+                                                    class="fa fa-download"></i> Cetak Kartu</button>
                                         </div>
                                     </div>
                                 </div>
@@ -154,7 +153,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-sm-3 col-xs-12">
+                <div class="col-lg-3 col-md-3">
                     <div class="panel panel-default card-view p">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Limit bulanan</h6>
@@ -176,7 +175,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-sm-3 col-xs-12">
+                <div class="col-lg-3 col-md-3">
                     <div class="panel panel-default card-view b">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Barcode</h6>
@@ -210,10 +209,15 @@
                         <div class="tab-content">
                             {{-- transactions --}}
                             <div id="transaction_tabs" class="tab-pane fade active in" role="tabpanel">
+                                <div class="panel-heading r">
+                                    <div class="pull-left">
+                                        <h6 class="panel-title txt-dark">Riwayat Transaksi</h6>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
                                 <div class="table-wrap">
                                     <div class="table-responsive">
-                                        <table class="table table-hover" >
-                                        {{-- <table class="table table-hover" id="dt-tamu-transaksi"> --}}
+                                        <table class="table table-hover" style="margin: 10px;">
                                             <thead>
                                                 <tr>
                                                     <th>Order ID</th>
@@ -230,14 +234,16 @@
                             </div>
                             {{-- deposit --}}
                             <div id="deposit_tabs" class="tab-pane fade" role="tabpanel">
+                                <div class="panel-heading r">
+                                    <div class="pull-left">
+                                        <h6 class="panel-title txt-dark">Riwayat Deposit</h6>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
                                 <div class="table-wrap">
                                     <div class="table-responsive">
-                                        <table width="100%" class="table table-hover" id="dt-tamu-deposit">
-                                            <thead>
-                                                <tr>
-                                                    <th>Saldo</th>
+                                        <table class="table table-hover" style="margin: 10px;" id="dt-tamu-deposit">
                                                     <th>Informasi</th>
-                                                    <th style="text-align: center;">Status</th>
                                                     <th style="text-align: center;">Tanggal</th>
                                                 </tr>
                                             </thead>
@@ -249,10 +255,15 @@
                             </div>
                             {{-- limit --}}
                             <div id="limit_tabs" class="tab-pane fade" role="tabpanel">
+                                <div class="panel-heading r">
+                                    <div class="pull-left">
+                                        <h6 class="panel-title txt-dark">Riwayat Limit</h6>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
                                 <div class="table-wrap">
                                     <div class="table-responsive">
-                                        {{-- <table class="table table-hover" id="dt-tamu-limit"> --}}
-                                        <table class="table table-hover">
+                                        <table class="table table-hover" style="margin: 10px;">
                                             <thead>
                                                 {{-- Table head --}}
                                                 <tr>
@@ -288,11 +299,13 @@
         @include('Layouts.Footer')
     </div>
 @endsection
-
 @push('scripts')
-    {{-- aktifitas deposit tamu --}}
     <script>
-        // $(document).ready(function() {
+        $('.download-kartu-tamu').on("click", function() {
+            $('#cetak-kartu').printThis({
+                printContainer: true,
+            });
+        });
         $('#dt-tamu-deposit').DataTable({
             "processing": true,
             "serverSide": true,
@@ -348,7 +361,6 @@
                 targets: [1, 2, 3]
             }]
         });
+
     </script>
-    {{-- End aktifitas deposit tamu --}}
-    
 @endpush
