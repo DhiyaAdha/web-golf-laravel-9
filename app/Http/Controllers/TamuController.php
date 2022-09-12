@@ -200,10 +200,10 @@ class TamuController extends Controller
         $visitors = Visitor::where('id', $request->id)->first();
         $report_deposit = ReportDeposit::create([
             'visitor_id' => $request->visitor_id,
-            'user_id' =>    Auth::user()->id,
+            'user_id' => Auth::user()->id,
             'report_balance' => $request->balance,
             'created_at' => Carbon::now(),
-            // 'updated_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
         $report_deposit->save();    
 
@@ -212,9 +212,9 @@ class TamuController extends Controller
             'user_id' =>    Auth::user()->id,
             'report_deposit_id' => $report_deposit->id,
             // request()->user()->id;
-            'status' => 'CREATE',
+            'type' => 'CREATE',
             'balance' => $request->balance,
-            'activities' => 'Deposit <b>'.$request->name.' bertambah sebesar <b>'.$request->balance.'</b>',
+            'activities' => 'Deposit <b>'.$request->name.' bertambah menjadi <b>'.$request->balance.'</b>',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -226,7 +226,6 @@ class TamuController extends Controller
         );
     }
     /* insert deposit && BERTAMBAH(create) deposit */
-
 
     /**
      * Display the specified resource.
@@ -256,34 +255,32 @@ class TamuController extends Controller
         return view('tamu.kartu-tamu', $data);
     }
 
-    
     /* data aktifitas tamu Deposit */
     public function reportdeposit(Request $request)
     {
 
-        $reportdeposit = Deposit::join('visitors', 'deposits.visitor_id', '=', 'visitors.id')
+        $aktifitas_deposit = Deposit::join('visitors', 'deposits.visitor_id', '=', 'visitors.id')
         ->join('report_deposits', 'deposits.report_deposit_id', '=', 'report_deposits.id')
         ->orderBy('deposits.id', 'desc')
         ->get(['deposits.*',  'visitors.name as name', 'deposits.balance as balance', 'deposits.id as order id']);
 
         if ($request->ajax()) {
-            return datatables()->of($reportdeposit)->addColumn('order id', function ($data) {
+            return datatables()->of($aktifitas_deposit)->addColumn('order id', function ($data) {
                     return '<p class="label" style="background-color: #5901C8;">'.$data->id.'<div>';
                 })->addColumn('information', function ($data) {
+                    return $data->activities;
+                })->addColumn('status_action', function ($data) {
                     if ($data->type == 'UPDATE') {
                         return '<p class="label label-danger">'.$data->type.'<div>';
                     }  else if ($data->type == 'CREATE') {
                         return '<p class="label label-primary">'.$data->type.'<div>';
                     } else {
-                        return '<p class="label " style="background-color: #607EAA;">'.$data->activities.'<div>';
+                        return '<p class="label " style="background-color: #607EAA;">'.$data->type.'<div>';
                     }
-
-                })->addColumn('status', function ($data) {
-                    return $data->status;
-                })->addColumn('tanggal', function ($data) {
+                })->addColumn('date_activity', function ($data) {
                     return $data->updated_at;
                 })
-                ->rawColumns(['order_id','name','information','status','tanggal'])->make(true);
+                ->rawColumns(['balance','information','status_action','date_activity'])->make(true);
         }
         return view('tamu.kartu-tamu');
         // return view('tamu.kartu-tamu'.$request->visitor_id );
@@ -328,15 +325,13 @@ class TamuController extends Controller
             'status' => 'UPDATE',
             'balance' => $request->balance,
             'activities' => 'Deposit <b>'.$visitor->name.' berkurang sebesar <b>'.$request->balance.'</b>',
-            
         ]);
 
         $visitor->save();
-        return redirect('/aktifitas-kartu-tamu/'.$visitor->id);
+        return redirect()->route('/aktifitas-kartu-tamu/'.$visitor->id)
+        ->with('status', 'Data Tamu Berhasil Diupdate');
     }
     /* END UPDATE BERKURANG deposit */
-
-    
 
     /* limit tamu*/
     public function limittamu($id){

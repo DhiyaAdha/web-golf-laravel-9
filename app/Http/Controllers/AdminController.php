@@ -188,8 +188,6 @@ class AdminController extends Controller
                         return '<p class="label " style="background-color: #5901C8;">'.$data->type.'<div>';
                     } else {
                         return '<p class="label " style="background-color: #607EAA;">'.$data->type.'<div>';
-
-
                     }
                 })->addColumn('date_activity', function ($data) {
                     return $data->created_at;
