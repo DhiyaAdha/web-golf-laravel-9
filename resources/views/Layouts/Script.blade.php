@@ -62,6 +62,35 @@
 <script type="text/javascript" src="{{ asset('/dist/js/printThis.js') }}"></script>
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
+
+{{-- Confirm Password --}}
+{{-- <script>
+    function checkPassword(){
+    let Password = document.getElementById
+    ("password").value;
+
+    let ConfirmPassword = document.getElementById
+    ("confirm_password").value;
+    consol.log(password, confirm_password);
+    let message = document.getElementById
+    ('message');
+
+    if(password.length !=0){
+        if(password == confirm_password){
+            message.innerHTML = "Password Matched";
+            message.style.color = "green";
+    }
+    else{
+        message.textContent = "Password Not Matched";
+    }
+}
+</script> --}}
+
+
+
+
+
+
 @stack('scripts')
 <script>
     @if (Session::has('success'))
