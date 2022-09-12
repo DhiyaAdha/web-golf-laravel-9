@@ -60,3 +60,61 @@
     </div>
     <!-- /Main Content -->
 @endsection
+@push('scripts')
+    <script>
+        /* daftar invoice */
+        $('#dt-riwayat').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "lengthChange": false,
+            "searching": true,
+            "paginate": {
+                "first": "First",
+                "last": "Last",
+                "next": "Next",
+                "previous": "Previous"
+            },
+            "ajax": {
+                "url": "{{ route('riwayat-invoice.index') }}",
+                "type": "GET",
+                "datatype": "json"
+            },
+            "render": $.fn.dataTable.render.text(),
+            "columns": [{
+                    data: 'name'
+                },
+                {
+                    "data": function(data) {
+                        return `<span class="label ${data.tipe_member == 'VIP' ? 'label-success' : 'label-warning'}">${data.tipe_member}</span>`;
+                    }
+                },
+                {
+                    data: 'total'
+                },
+                {
+                    data: 'created_at'
+                },
+            ],
+            order: [],
+            responsive: true,
+            language: {
+                search: "",
+                searchPlaceholder: "Cari",
+                emptyTable: "Tidak ada data pada tabel ini",
+                info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+                infoFiltered: "(difilter dari _MAX_ total data)",
+                infoEmpty: "Tidak ada data pada tabel ini",
+                lengthMenu: "Menampilkan _MENU_ data",
+                zeroRecords: "Tidak ada data pada tabel ini"
+            },
+            columnDefs: [{
+                className: 'text-center',
+                targets: [1, 2, 3]
+            }, {
+                orderable: false,
+                targets: [0, 1, 2, 3]
+            }],
+        });
+        /* daftar invoice */
+    </script>
+@endpush

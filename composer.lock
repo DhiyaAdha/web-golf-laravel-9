@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "de63590f4d13bb14bab49a5a3781d924",
+    "content-hash": "6cd068fd6a664b4beee809a2d433a8a1",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1204,6 +1204,58 @@
                 }
             ],
             "time": "2022-06-20T21:43:11+00:00"
+        },
+        {
+            "name": "haruncpi/laravel-user-activity",
+            "version": "v1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/haruncpi/laravel-user-activity.git",
+                "reference": "148e034aa92e02886da17c7fd6173ba960cac1af"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/haruncpi/laravel-user-activity/zipball/148e034aa92e02886da17c7fd6173ba960cac1af",
+                "reference": "148e034aa92e02886da17c7fd6173ba960cac1af",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Haruncpi\\LaravelUserActivity\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Haruncpi\\LaravelUserActivity\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "cc-by-4.0"
+            ],
+            "authors": [
+                {
+                    "name": "MD.HARUN-UR-RASHID",
+                    "email": "harun.cox@gmail.com"
+                }
+            ],
+            "description": "Monitor user activity easily!",
+            "keywords": [
+                "activity",
+                "laravel",
+                "user"
+            ],
+            "support": {
+                "issues": "https://github.com/haruncpi/laravel-user-activity/issues",
+                "source": "https://github.com/haruncpi/laravel-user-activity/tree/v1.0.5"
+            },
+            "time": "2021-11-11T05:27:04+00:00"
         },
         {
             "name": "ladumor/laravel-pwa",
@@ -8680,5 +8732,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }

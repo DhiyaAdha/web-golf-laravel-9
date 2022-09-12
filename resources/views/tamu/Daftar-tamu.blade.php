@@ -28,8 +28,8 @@
                                 <h6 class="panel-title txt-dark">Daftar Tamu</h6>
                             </div>
                             <div class="pull-right">
-                                <a href="{{ route('tambah-tamu') }}">
-                                    <i class="fa-2x fa-plus"></i></a>
+                                <a href="{{ route('tambah-tamu') }}" class="btn btn-xs btn-success">Tambah
+                                    Tamu</a>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -59,9 +59,6 @@
                 </div>
                 <!-- /Basic Table -->
             </div>
-
-
-
         </div>
         <!-- Footer -->
         @include('Layouts.Footer')
@@ -69,3 +66,115 @@
     </div>
     <!-- /Main Content -->
 @endsection
+@push('scripts')
+    <script>
+        /* data tamu */
+        $('#dt-tamu').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "lengthChange": false,
+            "searching": true,
+            "paginate": {
+                "first": "First",
+                "last": "Last",
+                "next": "Next",
+                "previous": "Previous"
+            },
+            "ajax": {
+                "url": "{{ route('daftar-tamu') }}",
+                "type": "GET",
+                "datatype": "json"
+            },
+            "render": $.fn.dataTable.render.text(),
+            "columns": [{
+                    data: 'name',
+                    searchable: true,
+                    orderable: false
+                },
+                {
+                    data: 'email',
+                    searchable: true,
+                    orderable: false
+                },
+                {
+                    data: 'phone',
+                    searchable: true,
+                    orderable: false
+                },
+                {
+                    data: 'tipe_member',
+                    searchable: true,
+                    orderable: false
+                },
+                {
+                    data: 'action',
+                    searchable: false,
+                    orderable: false
+                },
+            ],
+            order: [],
+            responsive: true,
+            language: {
+                search: "",
+                searchPlaceholder: "Cari",
+                emptyTable: "Tidak ada data pada tabel ini",
+                info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+                infoFiltered: "(difilter dari _MAX_ total data)",
+                infoEmpty: "Tidak ada data pada tabel ini",
+                lengthMenu: "Menampilkan _MENU_ data",
+                zeroRecords: "Tidak ada data pada tabel ini"
+            },
+            columnDefs: [{
+                className: 'text-left',
+                targets: [1, 2, 3, 4]
+            }],
+        });
+        /* data tamu */
+
+        /* delete tamu */
+        $(document).on('click', '.delete-confirm', function() {
+            id = $(this).attr('id');
+            swal({
+                title: "Anda yakin ingin menghapus tamu ini?",
+                imageUrl: "../img/Warning.svg",
+                showCancelButton: true,
+                confirmButtonColor: "#FF2A00",
+                confirmButtonText: "Hapus paket",
+                cancelButtonText: "Batal",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function(isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        url: "/daftar-tamu/destroy/" + id,
+                        beforeSend: function() {
+                            $('#ok_button').text('Hapus Data');
+                        },
+                        success: function(data) {
+                            setTimeout(function() {
+                                $('#confirmModal').modal('hide');
+                                $('#dt-tamu').DataTable().ajax.reload(null, false);
+                            });
+
+                            window.setTimeout(function() {
+                                $.toast({
+                                    text: 'Data berhasil dihapus',
+                                    position: 'top-right',
+                                    loaderBg: '#fec107',
+                                    icon: 'success',
+                                    hideAfter: 2000,
+                                    stack: 6
+                                });
+                            }, 1000);
+                            swal("Terhapus!", "", "success");
+                        }
+                    })
+                } else {
+                    swal("Dibatalkan", "", "error");
+                }
+            });
+            return false;
+        });
+        /* delete tamu */
+    </script>
+@endpush
