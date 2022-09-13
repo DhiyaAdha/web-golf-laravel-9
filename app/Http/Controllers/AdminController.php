@@ -125,9 +125,7 @@ class AdminController extends Controller
         ]);
         
         $user->save();
-        return redirect()
-            ->route('daftar-admin')
-            ->with('status', 'Paket berhasil diupdate');
+        return redirect()->route('daftar-admin')->with('status', 'Paket berhasil diupdate');
     }
 
     /**
@@ -188,8 +186,6 @@ class AdminController extends Controller
                         return '<p class="label " style="background-color: #5901C8;">'.$data->type.'<div>';
                     } else {
                         return '<p class="label " style="background-color: #607EAA;">'.$data->type.'<div>';
-
-
                     }
                 })->addColumn('date_activity', function ($data) {
                     return Carbon::parse($data->created_at)->diffForHumans();
@@ -198,6 +194,7 @@ class AdminController extends Controller
         }
         return view('admin.daftar-admin');
     }
+    
 
     public function insertadmin (Request $request) {
         $this->validate($request, [

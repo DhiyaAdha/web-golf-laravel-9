@@ -30,17 +30,32 @@
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="">Nama Lengkap</label>
                                         <input type="text" class="form-control" id="result" size="50px"
-                                            placeholder="Masukan Nama" required name="name">
+                                            placeholder="Masukan Nama" name="name">
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="">Email</label>
                                         <input type="email" name="email" class="form-control" id="email"
-                                            placeholder="Masukan Email" required>
+                                            placeholder="Masukan Email">
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label mb-10" for="">Password</label>
+                                        <label class="control-label mb-10" for="password">Password</label>
                                         <input type="password" name="password" class="form-control" id="password"
                                             placeholder="Masukan Password" required>
+                                        <span class="show-hide1" onclick="myfunction()">
+                                            <i id="hide1" class="fa fa-eye"></i>
+                                            <i id="hide2" class="fa fa-eye-slash"></i>
+                                        </span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label mb-10" for="confirm-password">Konfirmasi
+                                            Password</label>
+                                        <input type="password" name="password" class="form-control" id="confirm_password"
+                                            placeholder="Masukan Ulang Password" required>
+                                        <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
+                                        <span class="show-hide2" onclick="myfunction2()">
+                                            <i id="hide3" class="fa fa-eye"></i>
+                                            <i id="hide4" class="fa fa-eye-slash"></i>
+                                        </span>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="">Nomer Hp</label>
@@ -54,20 +69,20 @@
                                         <div class="radio-list">
                                             <div class="radio-inline pl-0">
                                                 <span class="radio radio-info"> <input type="radio" name="role_id"
-                                                        id="radio_11" value="1" required>
+                                                        id="radio_11" value="1">
                                                     <label for="radio_11">Admin</label>
                                                 </span>
                                             </div>
                                             <div class="radio-inline pl-0">
                                                 <span class="radio radio-info"> <input type="radio" name="role_id"
-                                                        id="radio_12" value="2" required>
+                                                        id="radio_12" value="2">
                                                     <label for="radio_12">Super Admin</label>
                                                 </span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group text-left">
-                                        <button type="submit" class="btn btn-info">Tambah Admin</button>
+                                        <button type="" class="btn btn-info" id="gd">Tambah Admin</button>
                                     </div>
                                 </form>
                             </div>
@@ -76,4 +91,49 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            function myfunction() {
+                var x = document.getElementById("password");
+                var y = document.getElementById("hide1");
+                var z = document.getElementById("hide2");
+                if (x.type === 'password') {
+                    x.type = "text";
+                    y.style.display = "block";
+                    z.style.display = "none";
+                } else {
+                    x.type = "password";
+                    y.style.display = "none";
+                    z.style.display = "block";
+                }
+            }
+
+            function myfunction2() {
+                var x = document.getElementById("confirm_password");
+                var y = document.getElementById("hide3");
+                var z = document.getElementById("hide4");
+                if (x.type === 'password') {
+                    x.type = "text";
+                    y.style.display = "block";
+                    z.style.display = "none";
+                } else {
+                    x.type = "password";
+                    y.style.display = "none";
+                    z.style.display = "block";
+                }
+            }
+        </script>
     @endsection
+    {{-- confirm password --}}
+    @push('scripts')
+        <script>
+            $("#confirm_password").on('keyup', function() {
+                var password = $("#password").val();
+                var confirmPassword = $("#confirm_password").val();
+                if (password != confirmPassword)
+                    $("#CheckPasswordMatch").html("Password does not match !").css("color", "red");
+                else
+                    $("#CheckPasswordMatch").html("Password match !").css("color", "green");
+            });
+        </script>
+    @endpush

@@ -62,6 +62,7 @@
 <script type="text/javascript" src="{{ asset('/dist/js/printThis.js') }}"></script>
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
+
 @stack('scripts')
 <script>
     @if (Session::has('success'))
@@ -85,12 +86,40 @@
         verticaldownclass: 'ti-minus'
     });
     // Edit
+    // show hide pasword
+
+    $('.download-kartu-tamu').on("click", function() {
+        $('#cetak-kartu').printThis({
+            printContainer: true,
+        });
+    });
+    @if (Session::has('success'))
+        window.setTimeout(function() {
+            $.toast({
+                text: '{{ Session('success') }}',
+                position: 'top-right',
+                loaderBg: '#fec107',
+                icon: 'success',
+                hideAfter: 2000,
+                stack: 6
+            });
+        }, 1000);
+    @endif
+    $(function() {
+        $('[data-toogle="tooltip"]').tooltip()
+    })
+    $(".vertical-spin").TouchSpin({
+        verticalbuttons: true,
+        verticalupclass: 'ti-plus',
+        verticaldownclass: 'ti-minus'
+    });
 
     // invoice detail
     $('#dt-invoice').DataTable({
         "processing": true,
         "serverSide": true,
         "lengthChange": false,
+        "bDestroy": true,
         "searching": false,
         "paginate": {
             "first": "First",
@@ -148,53 +177,57 @@
     });
 
     // kartu-tamu(transaksi)
-    $('#transaksi').DataTable({
-        "processing": true,
-        "serverSide": true,
-        "lengthChange": false,
-        "searching": true,
-        "paginate": {
-            "first": "First",
-            "last": "Last",
-            "next": "Next",
-            "previous": "Previous"
-        },
-        "ajax": {
-            "url": "{{ route('kartu-tamu') }}",
-            "type": "GET",
-            "datatype": "json"
-        },
-        "render": $.fn.dataTable.render.text(),
-        "columns": [{
-                data: 'id',
-                searchable: true,
-                orderable: false
-            },
-            {
-                data: 'status',
-                searchable: true,
-                orderable: false
-            },
-        ],
-        order: [],
-        responsive: true,
-        language: {
-            search: "",
-            searchPlaceholder: "Cari",
-            emptyTable: "Tidak ada data pada tabel ini",
-            info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
-            infoFiltered: "(difilter dari _MAX_ total data)",
-            infoEmpty: "Tidak ada data pada tabel ini",
-            lengthMenu: "Menampilkan _MENU_ data",
-            zeroRecords: "Tidak ada data pada tabel ini"
-        },
-        columnDefs: [{
-            className: 'text-left',
-            targets: [1, 2, 3, ]
-        }],
-    });
+    // $('#transaksi').DataTable({
+    //     "processing": true,
+    //     "serverSide": true,
+    //     "lengthChange": false,
+    //     "searching": true,
+    //     "paginate": {
+    //         "first": "First",
+    //         "last": "Last",
+    //         "next": "Next",
+    //         "previous": "Previous"
+    //     },
+    //     "ajax": {
+    //         "url": "{{ route('kartu-tamu') }}",
+    //         "type": "GET",
+    //         "datatype": "json"
+    //     },
+    //     "render": $.fn.dataTable.render.text(),
+    //     "columns": [{
+    //             data: 'id',
+    //             searchable: true,
+    //             orderable: false
+    //         },
+    //         {
+    //             data: 'status',
+    //             searchable: true,
+    //             orderable: false
+    //         },
+    //     ],
+    //     order: [],
+    //     responsive: true,
+    //     language: {
+    //         search: "",
+    //         searchPlaceholder: "Cari",
+    //         emptyTable: "Tidak ada data pada tabel ini",
+    //         info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+    //         infoFiltered: "(difilter dari _MAX_ total data)",
+    //         infoEmpty: "Tidak ada data pada tabel ini",
+    //         lengthMenu: "Menampilkan _MENU_ data",
+    //         zeroRecords: "Tidak ada data pada tabel ini"
+    //     },
+    //     columnDefs: [{
+    //         className: 'text-left',
+    //         targets: [1, 2, 3, ]
+    //     }],
+    // });
+    // end kartu-tamu(transaksi)
 </script>
-{{-- Input Stepper --}}
+
+
+
+{{-- Input Stepper -- v}}
 <script>
     function stepper(btn, ids) {
         let myInput = document.getElementById("my-input-" + ids);

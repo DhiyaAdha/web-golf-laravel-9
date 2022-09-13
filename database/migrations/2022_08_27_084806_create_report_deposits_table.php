@@ -1,11 +1,10 @@
-
 <?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDepositsTable extends Migration
+class CreateReportDepositsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,22 +13,24 @@ class CreateDepositsTable extends Migration
      */
     public function up()
     {
-        Schema::create('deposits', function (Blueprint $table) {
+        Schema::create('report_deposits', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('visitor_id')->unsigned();
-            $table->integer('report_deposit_id')->unsigned();
-            $table->integer('balance')->nullable();
-            $table->string('activities')->nullable();
+            $table->integer('user_id')->unsigned();
+            $table->integer('report_balance')->nullable();
+            $table->enum('payment_type',['cash', 'transfer']);
             $table->timestamps();
             
             $table->foreign('visitor_id')
             ->references('id')
             ->on('visitors')
             ->onDelete('cascade');
-            $table->foreign('report_deposit_id')
+            $table->foreign('user_id')
             ->references('id')
-            ->on('report_deposits')
+            ->on('users')
             ->onDelete('cascade');
+            
+            // $table->enum('status',['tambah', 'kurang']);
         });
     }
 
@@ -40,6 +41,6 @@ class CreateDepositsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('deposits');
+        Schema::dropIfExists('report_deposits');
     }
 }

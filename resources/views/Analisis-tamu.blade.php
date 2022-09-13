@@ -250,6 +250,7 @@
             "processing": true,
             "serverSide": true,
             "lengthChange": false,
+            "bDestroy": true,
             "searching": true,
             "paginate": {
                 "first": "First",

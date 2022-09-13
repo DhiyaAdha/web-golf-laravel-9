@@ -3,10 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Deposit;
 use App\Models\Visitor;
-use App\Models\LogTransaction;
 
+use App\Models\LogLimit;
 use Faker\Factory as Faker;
+use App\Models\LogTransaction;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
@@ -21,22 +23,18 @@ class InvoiceSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create('id_ID');
-        // LogTransaction::truncate();
         $visitor = Visitor::pluck('id');
-        for($i = 1; $i <= 250; $i++) {
+        for($i = 1; $i <= 100; $i++) {
             DB::table('log_transactions')->insert([
-                
-                // 'region_id' => Region::all()->random()->id,
                 'order_number' => $faker->unique()->numberBetween,
                 'visitor_id' => $faker->randomElement($visitor),
                 'user_id' => User::all()->random()->id,
-
-                'payment_type' => $faker->randomElement(['Cash','Transfer']),
+                'payment_type' => $faker->randomElement(['deposit', 'cash/transfer', 'limit bulanan', 'limit kupon']),
                 'payment_status' => $faker->randomElement([1]),
                 'total' => $faker->randomFloat(2, 0, 10000000),
-                'status' => $faker->randomElement([0, 1]),
                 'created_at' => \Carbon\Carbon::now()->addMinutes(rand(0,
                 60 * 23))->addSeconds(rand(0, 60))
+                
             ]);
         }
     }

@@ -12,8 +12,9 @@ class Deposit extends Model
     protected $fillable = [
         'id',
         'visitor_id',
-        'user_id',
+        'report_deposit_id',
         'balance',
+        'activities',
         'created_at',
         'updated_at'
     ];
@@ -23,4 +24,15 @@ class Deposit extends Model
         return $this->belongsTo(Visitor::class);
     }   
 
+    public function User()
+    {
+        return $this->belongsTo(User::class);
+    }  
+
+    public function ReportDeposit()
+    {
+        return $this->hasmany(ReportDeposit::class);
+    }  
+
+    
 }

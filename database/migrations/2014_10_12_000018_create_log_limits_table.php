@@ -16,24 +16,21 @@ class CreateLogLimitsTable extends Migration
         Schema::create('log_limits', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('visitor_id')->unsigned();
-            $table->string('type')->nullable();
-            $table->string('activities')->nullable();
+            $table->integer('report_limit_id')->unsigned();
             $table->integer('quota')->nullable();
-            $table->timestamp('created_at');
-
+            $table->integer('quota_kupon')->nullable();
+            $table->string('activities')->nullable();
+            $table->timestamps();
+            
             $table->foreign('visitor_id')
-                ->references('id')
-                ->on('visitors')
-                ->onDelete('cascade');
-
-
+            ->references('id')
+            ->on('visitors')
+            ->onDelete('cascade');
+            $table->foreign('report_limit_id')
+            ->references('id')
+            ->on('report_limits')
+            ->onDelete('cascade');
         });
-
-        // Schema::table('log_limits', function($table) {
-        //     $table->foreign('visitor_id')->references('id')->on('visitors');
-        // });
-
-
     }
 
     /**

@@ -42,7 +42,7 @@ class VisitorSeeder extends Seeder
         // Visitor::truncate();
         
         $faker = Faker::create('id_ID');
-        for ($i=0; $i < 250; $i++) { 
+        for ($i=0; $i < 150; $i++) { 
             Visitor::create([
                 'name' => $faker->name(),
                 'email' => $faker->email(),

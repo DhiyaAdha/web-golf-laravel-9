@@ -59,6 +59,23 @@ class User extends Authenticatable
         return $this->belongsTo(LogAdmin::class);
     }
 
+    // limit
+    public function ReportLimit()
+    {
+        return $this->belongsTo(ReportLimit::class);
+    }  
+
+    //Deposit
+    public function ReportDeposit()
+    {
+        return $this->belongsTo(ReportDeposit::class);
+    }  
+    
+    public function logtransaction()
+    {
+        return $this->hasMany(LogTransaction::class);
+    }  
+
     public function role()
     {
         return $this->hasOne(Role::class, 'id');

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDepositHistoriesTable extends Migration
+class CreateLogTransactionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,16 @@ class CreateDepositHistoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('deposit_histories', function (Blueprint $table) {
+        Schema::create('log_transactions', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('order_number')->unique();
             $table->integer('visitor_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->integer('balance')->default(0);
-            $table->string('activities');
-            $table->enum('payment_type',['deposit', 'cash', 'transfer']);
-
-            $table->timestamps();
+            $table->enum('payment_type',['deposit', 'cash/transfer', 'limit bulanan', 'limit kupon']);
+            $table->integer('payment_status')->default(1);
+            $table->integer('total');
+            $table->string('activities')->nullable();
+            $table->timestamp('created_at');
 
             $table->foreign('visitor_id')
                 ->references('id')
@@ -31,15 +32,8 @@ class CreateDepositHistoriesTable extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
-
         });
-
-        // Schema::table('deposit_histories', function($table) {
-        //     $table->foreign('visitor_id')->references('id')->on('visitors');
-        // });
-
     }
-
     /**
      * Reverse the migrations.
      *
@@ -47,6 +41,7 @@ class CreateDepositHistoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('deposit_histories');
+        Schema::dropIfExists('log_transactions');
     }
+
 }

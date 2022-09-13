@@ -3,16 +3,14 @@
 namespace Database\Seeders;
 
 use Carbon\Carbon;
+
 use App\Models\User;
 use App\Models\Visitor;
-use App\Models\LogLimit;
-use App\Models\ReportLimit;
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Query\Builder;
 
-class LogLimitSeeder extends Seeder
+class ReportLimitSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -22,16 +20,19 @@ class LogLimitSeeder extends Seeder
     public function run()
     {
         
-            for($i = 1; $i <= 30; $i++) {        
+        for($i = 1; $i <= 30; $i++) {        
             $faker = Faker::create('id_ID');
             $visitor = Visitor::pluck('id');
-            DB::table('log_limits')->insert([
+            
+            
+            DB::table('report_limits')->insert([
                 'visitor_id' => $faker->randomElement($visitor),
-                'report_limit_id' => ReportLimit::all()->random()->id,
+                'user_id' => User::all()->random()->id,
+                'status' => $faker->randomElement(['reset', 'berkurang']),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 ]);
+
         }
-            
     }
 }

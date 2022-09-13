@@ -4,35 +4,34 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class LogTransaction extends Model
+class ReportLimit extends Model
 {
     use HasFactory;
 
-    protected $table = 'log_transactions';
-
     protected $fillable = [
-        'id',
-        'order_number',
         'visitor_id',
         'user_id',
-        'payment_type',
-        'payment_status',
-        'total',
-        'activities',
+        'report_quota',
+        'report_quota_kupon',
+        'status',
         'created_at',
+        'updated_at', 
     ];
 
     public function visitor()
     {
         return $this->belongsTo(Visitor::class);
-    }
+    }   
 
-    public function user()
+    public function User()
     {
         return $this->belongsTo(User::class);
-    }
+    }  
 
+    public function Limit()
+    {
+        return $this->hasmany(Limit::class);
+    }  
 
 }

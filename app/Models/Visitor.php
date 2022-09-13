@@ -33,20 +33,26 @@ class Visitor extends Model
         return $this->hasMany(LogTransaction::class);
     }
     
-    public function loglimit()
-    {
-        return $this->hasMany(LogLimit::class);
-    }
-
+    // deposit
     public function deposit()
     {
         return $this->hasMany(Deposit::class);
     }
     
-    public function deposit_history()
+    public function repordtdeposit()
     {
-        return $this->hasMany(DepositHistory::class);
+        return $this->hasMany(ReportDeposit::class);
     }
+    
+    // limit
+    public function loglimit()
+    {
+        return $this->hasMany(LogLimit::class);
+    }
+    public function ReportLimit()
+    {
+        return $this->hasMany(ReportLimit::class);
+    }  
     
     public function transaction($visitorId)
     {
@@ -54,4 +60,5 @@ class Visitor extends Model
             ->orderBy('created_at', 'desc')
             ->first();
     }
+    
 }

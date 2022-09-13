@@ -506,6 +506,37 @@ b, strong {
     order: 0;
     flex-grow: 1;
 }
+/* tamu */
+.show-hide1{
+    position: absolute;
+    right: 20px;
+    top: 30%;
+    transform: translate(-50%);
+}
+.show-hide1 i{
+    font-size: 19px;
+    color: #000000;
+    cursor: pointer;
+}
+#hide1{
+    display: none;
+}
+
+.show-hide2{
+    position: absolute;
+    right: 20px;
+    top: 40%;
+    transform: translate(-50%);
+}
+.show-hide2 i{
+    font-size: 19px;
+    color: #000000;
+    cursor: pointer;
+}
+#hide3{
+    display: none;
+}
+
 
 /* kartu-tamu */
 .container-fluid {
@@ -626,6 +657,20 @@ b, strong {
     margin-left: 5px;
     margin-right: -9px;
 }
+.text-name-card{
+    margin-top: -121px;
+    height: 150px;
+    width: 200px;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    position: absolute;
+    /* font-size: 10px; */
+}
+.text-email{
+    text-align: 12px;
+}
+
 
 /* kartu-tamu */
 .panel-left {
