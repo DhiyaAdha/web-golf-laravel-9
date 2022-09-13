@@ -77,6 +77,7 @@
                                 showConfirmButton: false,
                                 timer: 2000,
                             }, function() {
+                                //untuk nge direct jika verifikasi data berhasil
                                 window.location.href = "/detail_scan/" + response.data.id;
                             });
                         } else {
