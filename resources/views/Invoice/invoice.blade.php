@@ -66,8 +66,9 @@
                                 </address>
                             </div>
                         </div>
+                        <div class="clearfix"></div>
                         <div class="table-responsive">
-                            <table class="table table-condensed" id="dt-invoice">
+                            <table class="table table-hover mb-0" id="dt-invoice">
                                 <thead>
                                     <tr>
                                         <td><strong>Nama</strong></td>
