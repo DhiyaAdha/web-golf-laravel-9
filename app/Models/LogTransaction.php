@@ -17,6 +17,8 @@ class LogTransaction extends Model
         'order_number',
         'visitor_id',
         'user_id',
+        'payment_type',
+        'payment_status',
         'total',
         'activities',
         'created_at',

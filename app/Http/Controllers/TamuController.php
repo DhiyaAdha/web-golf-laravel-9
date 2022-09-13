@@ -453,32 +453,26 @@ class TamuController extends Controller
     /* END UPDATE BERKURANG LIMIT tamu*/
 
     /* data aktifitas tamu transaksi*/
-    public function reporttransaksi(Request $request)
+    public function reporttransaksi(Request $request, $id)
     {
 
-        $reporttransaksi = LogTransaction::join('visitors', 'log_transactions.visitor_id', '=', 'visitors.id')
-        ->join('deposits', 'log_transactions.deposit_id', '=', 'deposits.id')
-        ->orderBy('log_transactions.id', 'desc')
-        ->get(['log_transactions.*',  'visitors.name as name', 'deposits.quota as quota']);
+        $reporttransaksi = LogTransaction::select('id', 'payment_type', 'payment_status', 'total', 'visitor_id', 'user_id', 'created_at')
+        ->where('visitor_id', $id)
+        ->orderBy('created_at', 'desc')
+        ->get();
 
         if ($request->ajax()) {
-            return datatables()->of($reporttransaksi)->addColumn('order_id', function ($data) {
+            return datatables()->of($reporttransaksi)
+                ->addColumn('order_id', function ($data) {
                     return '<p class="label" style="background-color: #5901C8;">'.$data->id.'<div>';
                 })->addColumn('information', function ($data) {
-                    if ($data->type == '#') {
-                        return '<p class="label label-danger">'.$data->type.'<div>';
-                    }  else {
-                        return '<p class="label " style="background-color: #607EAA;">'.$data->activities.'<div>';
-                        
-                    }
+                    return 'Transaksi berhasil! '.$data->visitor->name.' telah melakukan pembayaran '.$data->total;
                 })->addColumn('status', function ($data) {
-                    return $data->status;
+                    return $data->payment_status;
                 })->addColumn('tanggal', function ($data) {
-                    return $data->updated_at;
-                })
-                ->rawColumns(['order_id','name','information','status','tanggal'])->make(true);
+                    return $data->created_at;
+                })->make(true);
         }
-        return view('tamu.kartu-tamu');
     }
     /* END data aktifitas tamu transaksi*/
 
