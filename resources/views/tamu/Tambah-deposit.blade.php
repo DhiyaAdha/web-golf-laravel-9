@@ -15,7 +15,7 @@
                 <!-- /Breadcrumb -->
             </div>
             <div class="row">
-                <div class="col-lg-8" style="position: relative;">
+                <div class="col-lg-12" style="position: relative;">
                     <div style="height: 900px" class="panel panel-default-card">
                         <h6 class="control-label mb-10">Tambah Tamu</h6>
                         <div class="panel-body">

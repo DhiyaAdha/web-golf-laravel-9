@@ -39,7 +39,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="password">Password</label>
-                                        <input type="password" name="password" class="form-control" id="password"
+                                        <input type="password" name="password" class="form-control" id="password1"
                                             placeholder="Masukan Password" required>
                                         <span class="show-hide1" onclick="myfunction()">
                                             <i id="hide1" class="fa fa-eye"></i>
@@ -49,7 +49,7 @@
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="confirm-password">Konfirmasi
                                             Password</label>
-                                        <input type="password" name="password" class="form-control" id="confirm_password"
+                                        <input type="password" name="password2" class="form-control" id="confirm_password"
                                             placeholder="Masukan Ulang Password" required>
                                         <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
                                         <span class="show-hide2" onclick="myfunction2()">
