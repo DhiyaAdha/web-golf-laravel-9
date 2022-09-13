@@ -94,7 +94,7 @@
 
         <script>
             function myfunction() {
-                var x = document.getElementById("password");
+                var x = document.getElementById("password1");
                 var y = document.getElementById("hide1");
                 var z = document.getElementById("hide2");
                 if (x.type === 'password') {
