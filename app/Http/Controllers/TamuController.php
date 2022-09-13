@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-
+use App\Jobs\SendMailJob;
 class TamuController extends Controller
 {
     /**
@@ -21,6 +21,9 @@ class TamuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function fgf(){
+        return view('emails.sendemail');
+    }
     public function index(Request $request)
     {
         //Paginasi
@@ -138,21 +141,9 @@ class TamuController extends Controller
             'created_at' => Carbon::now(),
         ]);
         $quota->save();
-
-        // return $deposit = Deposit::create([
-        //     'visitor_id' => $visitors->id,
-        //     'user_id' => Auth::user()->id,
-        //     // 'quota' => $request->tipe_member == 'VIP' ? '4' : '10',
-        //     'balance' =>  ,
-        //     'activities' => 'berhasil',
-        //     'created_at' => Carbon::now(),
-        //     'updated_at' => Carbon::now()
-        // ]);
-        // $$deposit_history->save();
-
-
+        $data = $request->all();
+        dispatch(new SendMailJob($data));
         return redirect('/daftar-tamu/')->with(
-        // return redirect('/daftar-tamu')->with(
             'sukses',
             'Company has been created successfully.'
         );

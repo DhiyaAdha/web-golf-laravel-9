@@ -1,22 +1,25 @@
 <?php
 
+use App\Mail\SendEmail;
+use App\Jobs\SendMailJob;
 use GuzzleHttp\Middleware;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ScanController;
 use App\Http\Controllers\TamuController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\ScanqrController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ForgotPasswordController;
-use App\Http\Controllers\InvoiceController;
-use App\Http\Controllers\LogoutController;
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ResetPasswordController;
-use App\Http\Controllers\ScanqrController;
+use App\Http\Controllers\ForgotPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +52,7 @@ Route::get('/', function () {
 
     //Level superadmin
 Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
+    // Route::get('/f', [TamuController::class, 'fgf']);
     Route::post('/visitor/qrcode', [ScanqrController::class, 'checkQRCode'])->name('visitor.qrcode');
     Route::get('/package/destroy/{id}', [PackageController::class,'destroy'])->name('package.destroy');
     Route::post('/package/store', [PackageController::class, 'store'])->name('package.store');
