@@ -433,7 +433,7 @@
             "processing": true,
             "serverSide": true,
             "lengthChange": false,
-            "bDestroy": false,
+            "bDestroy": true,
             "searching": false,
             "paginate": {
                 "first": "First",
