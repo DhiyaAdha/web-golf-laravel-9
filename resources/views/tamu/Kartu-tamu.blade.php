@@ -371,55 +371,7 @@
             }]
         });
         // Limit Activity
-        $('#dt-tamu-limit').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "lengthChange": false,
-            "bDestroy": true,
-            "searching": false,
-            "paginate": {
-                "first": "First",
-                "last": "Last",
-                "next": "Next",
-                "previous": "Previous"
-            },
-            "ajax": {
-                "url": "{{ route('limit.report.data', Request::segment(2)) }}",
-                "type": "GET",
-                "datatype": "json"
-            },
-            "render": $.fn.dataTable.render.text(),
-            "columns": [{
-                    data: 'information',
-                    searchable: true,
-                    orderable: false
-                },
-                {
-                    data: 'status',
-                    searchable: true,
-                    orderable: false
-                },
-                {
-                    data: 'created_at',
-                    searchable: true,
-                    orderable: false
-                }
-            ],
-            order: [],
-            responsive: true,
-            language: {
-                emptyTable: "Tidak ada data pada tabel ini",
-                info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
-                infoFiltered: "(difilter dari _MAX_ total data)",
-                infoEmpty: "Tidak ada data pada tabel ini",
-                lengthMenu: "Menampilkan _MENU_ data",
-                zeroRecords: "Tidak ada data pada tabel ini"
-            },
-            columnDefs: [{
-                className: 'text-left',
-                targets: [  1, 2 ]
-            }]
-        });
+        
         // End Of Limit Activity
     </script>
 @endpush
