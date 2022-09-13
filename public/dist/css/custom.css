@@ -1627,3 +1627,5 @@ button {
 #increment {
     padding: 15px 25px 15px 5px;
 }
+.odd:hover {background-color: rgb(215, 250, 187);}
+.even:hover {background-color: rgb(215, 250, 187);}

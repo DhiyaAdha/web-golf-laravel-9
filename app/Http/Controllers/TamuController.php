@@ -464,12 +464,12 @@ class TamuController extends Controller
         if ($request->ajax()) {
             return datatables()->of($reporttransaksi)
                 ->addColumn('order_id', function ($data) {
-                    return '<p class="label" style="background-color: #5901C8;">'.$data->id.'<div>';
-                })->addColumn('information', function ($data) {
-                    return 'Transaksi berhasil! '.$data->visitor->name.' telah melakukan pembayaran '.$data->total;
+                    return $data->id;
+                })->editColumn('information', function ($data) {
+                    return 'Transaksi berhasil! '.$data->visitor->name.' telah melakukan pembayaran Rp.'.number_format($data->total, 0, ',', '.');;
                 })->addColumn('status', function ($data) {
                     return $data->payment_status;
-                })->addColumn('tanggal', function ($data) {
+                })->addColumn('created_at', function ($data) {
                     return $data->created_at;
                 })->make(true);
         }

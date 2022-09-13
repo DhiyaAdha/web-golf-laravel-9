@@ -23,7 +23,7 @@ class InvoiceController extends Controller
         if($request->ajax()){
             return datatables()->of($riwayat_invoice)
             ->editColumn('name', function ($data) {
-                    return '<a href="
+                    return '<a data-toggle="tooltip" title="klik untuk melihat detail invoice" href="
                     '.url('invoice/'.$data->id).'
                     ">'
                     .$data->name.
