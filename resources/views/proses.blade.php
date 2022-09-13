@@ -163,7 +163,7 @@
                             <div class="col-lg-6 mt-5">
                                 @foreach ($package as $data)
                                     <p class="harga-{{ $data->id }}" style="color: #7D7D7D; text-align:end; display: none">Rp.
-                                        {{ formatrupiah($data->price_weekdays) }}
+                                        {{ formatrupiah($data->price_weekend) }}
                                         <hr class="garis-{{ $data->id }}" style="display: none">
                                     </p>
                                 @endforeach
@@ -259,7 +259,7 @@
             $(document).on('change','.form-control-' + id, function() {
 
                 // $('.form-control-' + id).change(function() {
-                    console.log('hello')
+                    // console.log('hello')
                     if(this.checked) {
                         $('.isi-' + id).show();
                         $(".wrap-quantity-" + id).show();
