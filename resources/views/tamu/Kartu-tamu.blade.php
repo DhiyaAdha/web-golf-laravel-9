@@ -411,7 +411,7 @@
                     orderable: false
                 }
             ],
-            order: [0, 1, 2, 3],
+            order: [],
             responsive: true,
             language: {
                 // search: "",
@@ -425,7 +425,7 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [1, 2, 3]
+                targets: [0, 1, 2, 3]
             }]
         });
         // Limit Activity
