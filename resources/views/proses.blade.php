@@ -253,7 +253,7 @@
         // };
 
         function valueChanged(id) {
-            //--------------Event---------
+            //-------------------Event-------------------
             $('.form-control-' + id).change(function() {
                 if(this.checked) {
                     $('.isi-' + id).show();
