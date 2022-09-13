@@ -86,9 +86,9 @@
         verticaldownclass: 'ti-minus'
     });
     // Edit
-// show hide pasword
+    // show hide pasword
 
-$('.download-kartu-tamu').on("click", function() {
+    $('.download-kartu-tamu').on("click", function() {
         $('#cetak-kartu').printThis({
             printContainer: true,
         });
@@ -119,6 +119,7 @@ $('.download-kartu-tamu').on("click", function() {
         "processing": true,
         "serverSide": true,
         "lengthChange": false,
+        "bDestroy": true,
         "searching": false,
         "paginate": {
             "first": "First",
@@ -222,7 +223,6 @@ $('.download-kartu-tamu').on("click", function() {
         }],
     });
     // end kartu-tamu(transaksi)
-
 </script>
 
 

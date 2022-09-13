@@ -41,7 +41,7 @@
                             <div class="panel-body">
                                 <div class="table-wrap">
                                     <div class="table-responsive">
-                                        <table class="table mb-0" id="dt-package">
+                                        <table class="table table-hover mb-0" id="dt-package">
                                             <thead>
                                                 <tr>
                                                     <th class="table-th">Nama Produk</th>
@@ -78,6 +78,7 @@
             "processing": true,
             "serverSide": true,
             "lengthChange": false,
+            "bDestroy": true,
             "searching": true,
             "paginate": {
                 "first": "First",

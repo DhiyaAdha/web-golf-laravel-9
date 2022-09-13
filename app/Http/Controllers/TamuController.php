@@ -279,7 +279,7 @@ class TamuController extends Controller
         if ($request->ajax()) {
             return datatables()->of($aktifitas_limit)
                 ->addColumn('information', function ($data) {
-                    return 'limit'.$data->visitor->name.' bertambah menjadi'.$data->report_quota;
+                    return 'Limit '.$data->visitor->name.' bertambah menjadi '.$data->report_quota;
 
                 })->addColumn('status', function ($data) {
                     return $data->status;
