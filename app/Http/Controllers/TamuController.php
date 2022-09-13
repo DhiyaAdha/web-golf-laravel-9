@@ -252,13 +252,6 @@ class TamuController extends Controller
     /* data aktifitas tamu Deposit */
     public function reportdeposit(Request $request, $id)
     {
-        // $data['visitor'] = Visitor::find($id);
-        // // $deposit = Deposit::where('visitor_id',$id)->first();
-        // $aktifitas_deposit = Deposit::where('visitor_id', $id)->
-        // join('visitors', 'deposits.visitor_id', '=', 'visitors.id')
-        // ->join('report_deposits', 'deposits.report_deposit_id', '=', 'report_deposits.id')
-        // ->orderBy('deposits.id', 'desc')
-        // ->get(['deposits.*',  'visitors.name as name', 'deposits.balance as balance', 'deposits.balance as balance']);
         $aktifitas_deposit = ReportDeposit::select('id', 'report_balance', 'payment_type', 'visitor_id', 'user_id', 'created_at')->where('visitor_id', $id)
             ->orderBy('created_at', 'desc') 
             ->get();
@@ -275,6 +268,25 @@ class TamuController extends Controller
         }
     }
     /* end data aktifitas tamu Deposit */
+
+        /* data aktifitas tamu limit */
+    public function reportlimit(Request $request, $id)
+    {
+        $aktifitas_limit = ReportLimit::select('id', 'report_quota', 'status', 'visitor_id', 'user_id', 'created_at')->where('visitor_id', $id)
+            ->orderBy('created_at', 'desc') 
+            ->get();
+
+        if ($request->ajax()) {
+            return datatables()->of($aktifitas_limit)
+                ->addColumn('information', function ($data) {
+                    return 'limit'.$data->visitor->name.' bertambah menjadi'.$data->report_quota;
+
+                })->addColumn('status', function ($data) {
+                    return $data->status;
+                })->make(true);
+        }
+    }
+        /* end data aktifitas tamu limit */
 
     /*UPDATE BERKURANG deposit */
     public function updatedeposit(Request $request, $id)
@@ -339,37 +351,6 @@ class TamuController extends Controller
     }
     /* end limit tamu*/
 
-    /* data aktifitas tamu limit */
-    public function reportlimit(Request $request)
-    {
-        $reportlimit = LogLimit::join('visitors', 'log_limits.visitor_id', '=', 'visitors.id')
-        ->join('report_limits', 'log_limits.report_limit_id', '=', 'report_limits.id')
-        ->orderBy('log_limits.id', 'desc')
-        ->get(['log_limits.*',  'visitors.name as name', 'log_limits.quota as quota']);
-
-        if ($request->ajax()) {
-            return datatables()->of($reportlimit)->addColumn('information', function ($data) {
-
-                if ($data->type == 'UPDATE') {
-                    return '<p class="label label-danger">'.$data->type.'<div>';
-                }  else if ($data->type == 'CREATE') {
-                    return '<p class="label label-primary">'.$data->type.'<div>';
-                } else {
-                    return '<p class="label " style="background-color: #607EAA;">'.$data->activities.'<div>';
-                }
-
-                })->addColumn('status', function ($data) {
-                    return $data->status;
-                })->addColumn('tanggal', function ($data) {
-                    return $data->updated_at;
-                })
-                ->rawColumns(['information','status','tanggal'])
-                ->make(true);
-        }
-        return view('tamu.kartu-tamu');
-    }
-    /* end data aktifitas tamu limit */
-    
     /* CREATE BERHASIL RESET limit VIP */
     public function createlimitvip (Request $request, $id){
             

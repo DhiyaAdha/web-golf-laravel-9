@@ -93,6 +93,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::get('aktifitas', [AdminController::class, 'aktifitas'])->name('admin.aktifitas');
     // deposit.aktifitas
     Route::get('reportdeposit/{id}', [TamuController::class, 'reportdeposit'])->name('deposit.report.data');
+    Route::get('reportlimit/{id}', [TamuController::class, 'reportlimit'])->name('limit.report.data');
     Route::resource('kartu-tamu', TamuController::class);
 
 });
@@ -151,7 +152,8 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     // transaksi-deposit-limit-cash
     Route::get('transaksideposit', [TamuController::class, 'transaksideposit'])->name('transaksideposit');
     Route::get('transaksilimit', [TamuController::class, 'transaksilimit'])->name('transaksilimit');
-    
+    Route::get('reportdeposit/{id}', [TamuController::class, 'reportdeposit'])->name('deposit.report.data');
+    Route::get('reportlimit/{id}', [TamuController::class, 'reportlimit'])->name('limit.report.data');
 
     //Detail Scan
     Route::get('/detail_scan/{id}', [ScanqrController::class, 'detail_datapengunjung'])->name('detail_scan');
