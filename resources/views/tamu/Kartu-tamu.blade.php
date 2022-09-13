@@ -370,13 +370,12 @@
                 targets: [1, 2, 3]
             }]
         });
-
         // Limit Activity
         $('#dt-tamu-limit').DataTable({
             "processing": true,
             "serverSide": true,
             "lengthChange": false,
-            // "bDestroy": true,
+            "bDestroy": true,
             "searching": false,
             "paginate": {
                 "first": "First",
@@ -418,7 +417,7 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [0, 1, 2, ]
+                targets: [  1, 2 ]
             }]
         });
         // End Of Limit Activity
