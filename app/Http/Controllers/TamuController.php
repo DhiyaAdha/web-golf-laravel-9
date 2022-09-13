@@ -18,9 +18,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Cache\RateLimiting\Limit;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-
-use function GuzzleHttp\Promise\all;
-
+use App\Jobs\SendMailJob;
 class TamuController extends Controller
 {
     /**
@@ -28,6 +26,9 @@ class TamuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function fgf(){
+        return view('emails.sendemail');
+    }
     public function index(Request $request)
     {
         //Paginasi
