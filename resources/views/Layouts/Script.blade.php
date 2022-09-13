@@ -63,34 +63,6 @@
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
 
-{{-- Confirm Password --}}
-{{-- <script>
-    function checkPassword(){
-    let Password = document.getElementById
-    ("password").value;
-
-    let ConfirmPassword = document.getElementById
-    ("confirm_password").value;
-    consol.log(password, confirm_password);
-    let message = document.getElementById
-    ('message');
-
-    if(password.length !=0){
-        if(password == confirm_password){
-            message.innerHTML = "Password Matched";
-            message.style.color = "green";
-    }
-    else{
-        message.textContent = "Password Not Matched";
-    }
-}
-</script> --}}
-
-
-
-
-
-
 @stack('scripts')
 <script>
     @if (Session::has('success'))
@@ -116,7 +88,31 @@
     // Edit
 // show hide pasword
 
-
+$('.download-kartu-tamu').on("click", function() {
+        $('#cetak-kartu').printThis({
+            printContainer: true,
+        });
+    });
+    @if (Session::has('success'))
+        window.setTimeout(function() {
+            $.toast({
+                text: '{{ Session('success') }}',
+                position: 'top-right',
+                loaderBg: '#fec107',
+                icon: 'success',
+                hideAfter: 2000,
+                stack: 6
+            });
+        }, 1000);
+    @endif
+    $(function() {
+        $('[data-toogle="tooltip"]').tooltip()
+    })
+    $(".vertical-spin").TouchSpin({
+        verticalbuttons: true,
+        verticalupclass: 'ti-plus',
+        verticaldownclass: 'ti-minus'
+    });
 
     // invoice detail
     $('#dt-invoice').DataTable({
@@ -225,8 +221,13 @@
             targets: [1, 2, 3, ]
         }],
     });
+    // end kartu-tamu(transaksi)
+
 </script>
-{{-- Input Stepper --}}
+
+
+
+{{-- Input Stepper -- v}}
 <script>
     function stepper(btn, ids) {
         let myInput = document.getElementById("my-input-" + ids);
