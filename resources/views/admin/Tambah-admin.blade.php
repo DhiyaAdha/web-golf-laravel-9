@@ -94,7 +94,7 @@
 
         <script>
             function myfunction() {
-                var x = document.getElementById("password1");
+                var x = document.getElementById("password");
                 var y = document.getElementById("hide1");
                 var z = document.getElementById("hide2");
                 if (x.type === 'password') {
@@ -109,7 +109,7 @@
             }
 
             function myfunction2() {
-                var x = document.getElementsByTagName("password2");
+                var x = document.getElementById("confirm_password");
                 var y = document.getElementById("hide3");
                 var z = document.getElementById("hide4");
                 if (x.type === 'password') {
