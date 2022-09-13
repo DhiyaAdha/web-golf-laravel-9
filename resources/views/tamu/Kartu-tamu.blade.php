@@ -386,31 +386,18 @@
                 targets: [1, 2, 3]
             }]
         });
-        //  End of Deposit Activity
-
-    // Limit Activity
-    $('#dt-tamu-limit').DataTable({
-        "processing": true,
-        "serverSide": true,
-        "lengthChange": false,
-        "bDestroy": true,
-        "searching": false,
-        "paginate": {
-            "first": "First",
-            "last": "Last",
-            "next": "Next",
-            "previous": "Previous"
-        },
-        "ajax": {
-            "url": "{{ route('limit.report.data', Request::segment(2)) }}",
-            "type": "GET",
-            "datatype": "json"
-        },
-        "render": $.fn.dataTable.render.text(),
-        "columns": [{
-                data: 'information',
-                searchable: true,
-                orderable: false
+        // Limit Activity
+        $('#dt-tamu-limit').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "lengthChange": false,
+            "bDestroy": true,
+            "searching": false,
+            "paginate": {
+                "first": "First",
+                "last": "Last",
+                "next": "Next",
+                "previous": "Previous"
             },
             {
                 data: 'status',
