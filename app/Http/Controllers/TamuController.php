@@ -466,7 +466,7 @@ class TamuController extends Controller
                 ->addColumn('order_id', function ($data) {
                     return $data->id;
                 })->editColumn('information', function ($data) {
-                    return 'Transaksi berhasil! '.$data->visitor->name.' telah melakukan pembayaran '.$data->total;
+                    return 'Transaksi berhasil! '.$data->visitor->name.' telah melakukan pembayaran Rp.'.number_format($data->total, 0, ',', '.');;
                 })->addColumn('status', function ($data) {
                     return $data->payment_status;
                 })->addColumn('created_at', function ($data) {

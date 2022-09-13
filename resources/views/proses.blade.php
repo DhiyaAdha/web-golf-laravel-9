@@ -91,32 +91,30 @@
                                 <strong>Pilih Item Tambahan</strong>
                                 <div class="row">
                                     <form class="form-inline">
-                                        @foreach ($additional as $item2)
-                                            <div>
-                                                <div class="checkbox checkbox-success">
-                                                    <div class="row">
-                                                        <input id="checkbox2" type="checkbox"
-                                                            class="form-control select-item form-control-{{ $item2->id }}"
-                                                            onchange="valueChanged({{ $item2->id }})"
-                                                            data-name="{{ $item2->name }}"
-                                                            data-priceday="{{ $item2->price_weekdays }}"
-                                                            data-priceend="{{ $item2->price_weekend }}">
-                                                        <label for=""></label>
-                                                    </div>
-                                                </div>
-                                                <span class="wrap-quantity-{{ $item2->id }}" style="display: none">
-                                                    <button id="decrement"
-                                                        onclick="stepper('decrement', {{ $item2->id }})">-</button>
-                                                    <input name="input2" type="number" min="1" max="100"
-                                                        step="1" value="1" id="my-input-{{ $item2->id }}"
-                                                        readonly>
-                                                    <button id="increment"
-                                                        onclick="stepper('increment', {{ $item2->id }})"
-                                                        data-id="{{ $item2->id }}">+</button>
-                                                </span>
-                                                <label for="">{{ $item2->name }}</label>
-                                            </div>
-                                        @endforeach
+                                @foreach ($additional as $item2)
+                                    <form class="form-inline">
+                                        <div class="checkbox checkbox-success">
+                                            <input id="checkbox" type="checkbox"
+                                                class="form-control select-item form-control-{{ $item2->id }}"
+                                                onchange="valueChanged({{ $item2->id }})">
+                                            <label></label>
+                                        </div>
+                                        <span class="wrap-quantity-{{ $item2->id }}" style="display: none">
+                                            <button type="button" id="decrement"
+                                                onclick="stepper('decrement', {{ $item2->id }})"
+                                                data-name="{{ $item2->name }}" data-priceday="{{ $item2->price_weekdays }}"
+                                                data-priceend="{{ $item2->price_weekend }}">-</button>
+                                            <input name="input1" type="number" min="1" max="100" step="1"
+                                                value="1" id="my-input-{{ $item2->id }}"
+                                                onchange="valuePackage({{ $item2->id }})" readonly>
+                                            <button type="button" id="increment"
+                                                onclick="stepper('increment', {{ $item2->id }})"
+                                                data-name="{{ $item2->name }}" data-priceday="{{ $item2->price_weekdays }}"
+                                                data-priceend="{{ $item2->price_weekend }}">+</button>
+                                        </span>
+                                        <label for="">{{ $item2->name }}</label>
+                                    </form>
+                                @endforeach
                                     </form>
                                 </div>
                             </div>
@@ -148,6 +146,7 @@
                                             <hr class="garis-{{ $item->id }}" style="display: none">
                                         </span>
                                     </p>
+                                    {{-- <input type="hidden" name="default[]" value="{{ $item->id }}"> --}}
                                 @endforeach
                                 @foreach ($additional as $item2)
                                     <p style="color: #7D7D7D; text-align:start;">
@@ -158,6 +157,7 @@
                                             <hr class="garis-{{ $item2->id }}" style="display: none">
                                         </span>
                                     </p>
+                                    {{-- <input type="hidden" name="additional[]" value="{{ $item2->id }}"> --}}
                                 @endforeach
                             </div>
                             <div class="col-lg-6 mt-5">
@@ -226,14 +226,14 @@
         // var price = (radio == 'weekdays') ? $(this).data('priceday') : $(this).data('priceend');
 
         // var html = `<div class="row">
-    //                 <div class="col-lg-6 mt-5">
-    //                     <p style="color: #7D7D7D; text-align:start;">${name}</p>
-    //                 </div>
-    //                 <div class="col-lg-6 mt-5">
+        //             <div class="col-lg-6 mt-5">
+        //                 <p style="color: #7D7D7D; text-align:start;">${name}</p>
+        //             </div>
+        //             <div class="col-lg-6 mt-5">
 
-    //                     <p style="color: #7D7D7D; text-align:end;">RP ${price}</p>
-    //                 </div>
-    //             </div>`;
+        //                 <p style="color: #7D7D7D; text-align:end;">RP ${price}</p>
+        //             </div>
+        //         </div>`;
         // $('.wrap-selected-item').append(html)
         // })
 
@@ -255,14 +255,16 @@
         // };
 
         function valueChanged(id) {
-            //--------------Event---------
-            $('.form-control-' + id).change(function() {
-                if(this.checked) {
-                    $('.isi-' + id).show();
-                    $(".wrap-quantity-" + id).show();
-                    $(".harga-" + id).show();
-                    $(".garis-" + id).show();
+            //-------------------Event-------------------
+            $(document).on('change','.form-control-' + id, function() {
 
+                // $('.form-control-' + id).change(function() {
+                    console.log('hello')
+                    if(this.checked) {
+                        $('.isi-' + id).show();
+                        $(".wrap-quantity-" + id).show();
+                        $(".harga-" + id).show();
+                        $(".garis-" + id).show();
                     
                 }
                 else{
@@ -272,7 +274,8 @@
                     $(".garis-" + id).hide();
                 }
                 event.preventDefault();
-            });
+            // });
+        })
             // $('.form-control-' + id).is(function(){
 
             //     $('.cekbox-' + id).toggle();

@@ -158,5 +158,6 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
 
     //Detail Scan
     Route::get('/detail_scan/{id}', [ScanqrController::class, 'detail_datapengunjung'])->name('detail_scan');
+    Route::get('/proses', [OrderController::class, 'index'])->name('proses');
 });
 //Finish level admin dan superadmin
