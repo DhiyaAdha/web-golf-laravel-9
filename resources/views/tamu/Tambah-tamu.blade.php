@@ -21,7 +21,7 @@
                         <div class="panel-body">
                             <div class="form-wrap">
                                 {{-- Insert Tamu --}}
-                                <form action="/inserttamu" method="POST" enctype="multipart/form-data">
+                                <form action="/inserttamu" method="POST">
                                     @csrf
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="">Nama Lengkap</label>
@@ -47,8 +47,8 @@
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="">Email</label>
                                         <input type="email" name="email" class="form-control" id="email"
-                                            placeholder="Masukan Email" @error('email') is-invalid @enderror autofocus
-                                            required value="{{ old('email') }}">
+                                            placeholder="Masukan Email" @error('email') is-invalid @enderror required
+                                            value="{{ old('email') }}">
                                         @error('email')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -58,17 +58,17 @@
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="">Nomer Hp</label>
                                         <input type="text" min="0" name="phone" class="form-control"
-                                            id="phone" size="50px" placeholder="Masukan Nomer Hp" required autofocus>
+                                            id="phone" size="50px" placeholder="Masukan Nomer Hp" required>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="">Perusahaan</label>
                                         <input type="text" name="company" class="form-control" id="company"
-                                            size="50px" placeholder="Masukan Nama Perusahaan" required autofocus>
+                                            size="50px" placeholder="Masukan Nama Perusahaan" required>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="">Jabatan</label>
                                         <input type="text" name="position" class="form-control" id="position"
-                                            size="50px" placeholder="Masukan Jabatan" required autofocus>
+                                            size="50px" placeholder="Masukan Jabatan" required>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="">Tamu Ini Adalah Tamu VIP
