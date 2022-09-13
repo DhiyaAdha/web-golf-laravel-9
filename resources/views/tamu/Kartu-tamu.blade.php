@@ -366,7 +366,7 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [1, 2, 3]
+                targets: [0, 1, 2, 3]
             }]
         });
         // End Of Transaction Activity
@@ -411,7 +411,7 @@
                     orderable: false
                 }
             ],
-            order: [],
+            order: [0, 1, 2, 3],
             responsive: true,
             language: {
                 // search: "",
