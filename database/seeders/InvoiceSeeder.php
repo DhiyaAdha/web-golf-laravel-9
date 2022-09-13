@@ -29,7 +29,7 @@ class InvoiceSeeder extends Seeder
                 'order_number' => $faker->unique()->numberBetween,
                 'visitor_id' => $faker->randomElement($visitor),
                 'user_id' => User::all()->random()->id,
-                'payment_type' => $faker->randomElement(['deposit', 'cash', 'transfer', 'limit bulanan', 'limit kupon']),
+                'payment_type' => $faker->randomElement(['deposit', 'cash/transfer', 'limit bulanan', 'limit kupon']),
                 'payment_status' => $faker->randomElement([1]),
                 'total' => $faker->randomFloat(2, 0, 10000000),
                 'created_at' => \Carbon\Carbon::now()->addMinutes(rand(0,

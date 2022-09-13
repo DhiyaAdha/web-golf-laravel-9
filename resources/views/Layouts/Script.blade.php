@@ -62,6 +62,7 @@
 <script type="text/javascript" src="{{ asset('/dist/js/printThis.js') }}"></script>
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
+
 @stack('scripts')
 <script>
     @if (Session::has('success'))
@@ -85,6 +86,33 @@
         verticaldownclass: 'ti-minus'
     });
     // Edit
+// show hide pasword
+
+$('.download-kartu-tamu').on("click", function() {
+        $('#cetak-kartu').printThis({
+            printContainer: true,
+        });
+    });
+    @if (Session::has('success'))
+        window.setTimeout(function() {
+            $.toast({
+                text: '{{ Session('success') }}',
+                position: 'top-right',
+                loaderBg: '#fec107',
+                icon: 'success',
+                hideAfter: 2000,
+                stack: 6
+            });
+        }, 1000);
+    @endif
+    $(function() {
+        $('[data-toogle="tooltip"]').tooltip()
+    })
+    $(".vertical-spin").TouchSpin({
+        verticalbuttons: true,
+        verticalupclass: 'ti-plus',
+        verticaldownclass: 'ti-minus'
+    });
 
     // invoice detail
     $('#dt-invoice').DataTable({
@@ -193,8 +221,13 @@
             targets: [1, 2, 3, ]
         }],
     });
+    // end kartu-tamu(transaksi)
+
 </script>
-{{-- Input Stepper --}}
+
+
+
+{{-- Input Stepper -- v}}
 <script>
     function stepper(btn, ids) {
         let myInput = document.getElementById("my-input-" + ids);

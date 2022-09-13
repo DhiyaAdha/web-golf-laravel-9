@@ -60,6 +60,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::get('/daftar-tamu', [TamuController::class, 'index'])->name('daftar-tamu');
     Route::get('/daftar-admin', [AdminController::class, 'index'])->name('daftar-admin');
     Route::get('/daftar-tamu/destroy/{id}', [TamuController::class,'delete',])->name('hapus-tamu');
+
     Route::get('/tambah-tamu', [TamuController::class, 'tambahtamu'])->name('tambah-tamu');
     Route::post('/inserttamu', [TamuController::class, 'inserttamu'])->name('inserttamu');
     Route::post('/store', [AdminController::class, 'store'])->name('store');

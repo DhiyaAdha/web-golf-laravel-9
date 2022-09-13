@@ -194,6 +194,7 @@ class AdminController extends Controller
         }
         return view('admin.daftar-admin');
     }
+    
 
     public function insertadmin (Request $request) {
         $this->validate($request, [
