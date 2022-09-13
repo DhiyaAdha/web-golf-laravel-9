@@ -146,6 +146,7 @@
                                             <hr class="garis-{{ $item->id }}" style="display: none">
                                         </span>
                                     </p>
+                                    {{-- <input type="hidden" name="default[]" value="{{ $item->id }}"> --}}
                                 @endforeach
                                 @foreach ($additional as $item2)
                                     <p style="color: #7D7D7D; text-align:start;">
@@ -156,6 +157,7 @@
                                             <hr class="garis-{{ $item2->id }}" style="display: none">
                                         </span>
                                     </p>
+                                    {{-- <input type="hidden" name="additional[]" value="{{ $item2->id }}"> --}}
                                 @endforeach
                             </div>
                             <div class="col-lg-6 mt-5">
@@ -254,12 +256,15 @@
 
         function valueChanged(id) {
             //-------------------Event-------------------
-            $('.form-control-' + id).change(function() {
-                if(this.checked) {
-                    $('.isi-' + id).show();
-                    $(".wrap-quantity-" + id).show();
-                    $(".harga-" + id).show();
-                    $(".garis-" + id).show();
+            $(document).on('change','.form-control-' + id, function() {
+
+                // $('.form-control-' + id).change(function() {
+                    console.log('hello')
+                    if(this.checked) {
+                        $('.isi-' + id).show();
+                        $(".wrap-quantity-" + id).show();
+                        $(".harga-" + id).show();
+                        $(".garis-" + id).show();
                     
                 }
                 else{
@@ -269,7 +274,8 @@
                     $(".garis-" + id).hide();
                 }
                 event.preventDefault();
-            });
+            // });
+        })
             // $('.form-control-' + id).is(function(){
 
             //     $('.cekbox-' + id).toggle();
