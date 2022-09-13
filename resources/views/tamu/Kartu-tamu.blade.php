@@ -313,6 +313,7 @@
                 printContainer: true,
             });
         });
+        // Deposit Activity
         $('#dt-tamu-deposit').DataTable({
             "processing": true,
             "serverSide": true,
@@ -375,7 +376,7 @@
             "processing": true,
             "serverSide": true,
             "lengthChange": false,
-            "bDestroy": true,
+            // "bDestroy": true,
             "searching": false,
             "paginate": {
                 "first": "First",
@@ -417,7 +418,7 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [0, 1, 2]
+                targets: [0, 1, 2, ]
             }]
         });
         // End Of Limit Activity
