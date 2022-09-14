@@ -144,7 +144,6 @@ class ScanqrController extends Controller
     public function checkQRCode(Request $request)
     {
         $qrCode = trim($request->get('qrCode'));
-        dd($qrCode);
         $get_visitor = Visitor::where("id", $qrCode)->first();
         if($get_visitor == null) {
             $this->setResponse('INVALID', "Invalid QR code");

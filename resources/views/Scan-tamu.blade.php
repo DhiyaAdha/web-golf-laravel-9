@@ -106,7 +106,7 @@
                         height: 200
                     }
                 },
-                false);
+                true);
             html5QrcodeScanner.render(onScanSuccess, onScanFailure);
         });
     </script>

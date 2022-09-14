@@ -183,7 +183,7 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="d-flex justify-content-center p">
-                            {{ QrCode::size(180)->generate($visitor->unique_qr) }}
+                            {{ QrCode::size(180)->generate($visitor->id) }}
                         </div>
                     </div>
                 </div>

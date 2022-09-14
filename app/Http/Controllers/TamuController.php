@@ -115,7 +115,7 @@ class TamuController extends Controller
     public function show_detail(Request $request, $email = null){
         // return view('Reset-password')->with(['token'=>$token,'email'=>$request->email]);
         $dekrip = Crypt::decryptString($email);
-        dd($request->session()->put('key', 'value'));
+        dd($dekrip);
     }
     
     /* insert tamu(store) */
