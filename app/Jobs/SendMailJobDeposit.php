@@ -10,9 +10,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendEmailDeposit;
-use App\Mail\SendEmail;
 
-class SendMailJob implements ShouldQueue
+class SendMailJobDeposit implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     public $data;
@@ -33,7 +32,7 @@ class SendMailJob implements ShouldQueue
      */
     public function handle()
     {
-        $email = new SendEmail($this->data);
+        $email = new SendEmailDeposit($this->data);
         Mail::to($this->data['email'])->send($email);
     }
 }

@@ -79,8 +79,7 @@
                                             onchange="valuePackage({{ $item->id }})" readonly>
                                         <button type="button" id="increment"
                                             onclick="stepper('increment', {{ $item->id }})"
-                                            data-name="{{ $item->name }}" data-priceday="{{ $item->price_weekdays }}"
-                                            data-priceend="{{ $item->price_weekend }}">+</button>
+                                            data-name="{{ $item->name }}">+</button>
                                     </span>
                                     <label for="">{{ $item->name }}</label>
                                 </form>
@@ -91,30 +90,32 @@
                                 <strong>Pilih Item Tambahan</strong>
                                 <div class="row">
                                     <form class="form-inline">
-                                @foreach ($additional as $item2)
-                                    <form class="form-inline">
-                                        <div class="checkbox checkbox-success">
-                                            <input id="checkbox" type="checkbox"
-                                                class="form-control select-item form-control-{{ $item2->id }}"
-                                                onchange="valueChanged({{ $item2->id }})">
-                                            <label></label>
-                                        </div>
-                                        <span class="wrap-quantity-{{ $item2->id }}" style="display: none">
-                                            <button type="button" id="decrement"
-                                                onclick="stepper('decrement', {{ $item2->id }})"
-                                                data-name="{{ $item2->name }}" data-priceday="{{ $item2->price_weekdays }}"
-                                                data-priceend="{{ $item2->price_weekend }}">-</button>
-                                            <input name="input1" type="number" min="1" max="100" step="1"
-                                                value="1" id="my-input-{{ $item2->id }}"
-                                                onchange="valuePackage({{ $item2->id }})" readonly>
-                                            <button type="button" id="increment"
-                                                onclick="stepper('increment', {{ $item2->id }})"
-                                                data-name="{{ $item2->name }}" data-priceday="{{ $item2->price_weekdays }}"
-                                                data-priceend="{{ $item2->price_weekend }}">+</button>
-                                        </span>
-                                        <label for="">{{ $item2->name }}</label>
-                                    </form>
-                                @endforeach
+                                        @foreach ($additional as $item2)
+                                            <form class="form-inline">
+                                                <div class="checkbox checkbox-success">
+                                                    <input id="checkbox" type="checkbox"
+                                                        class="form-control select-item form-control-{{ $item2->id }}"
+                                                        onchange="valueChanged({{ $item2->id }})">
+                                                    <label></label>
+                                                </div>
+                                                <span class="wrap-quantity-{{ $item2->id }}" style="display: none">
+                                                    <button type="button" id="decrement"
+                                                        onclick="stepper('decrement', {{ $item2->id }})"
+                                                        data-name="{{ $item2->name }}"
+                                                        data-priceday="{{ $item2->price_weekdays }}"
+                                                        data-priceend="{{ $item2->price_weekend }}">-</button>
+                                                    <input name="input1" type="number" min="1" max="100"
+                                                        step="1" value="1" id="my-input-{{ $item2->id }}"
+                                                        onchange="valuePackage({{ $item2->id }})" readonly>
+                                                    <button type="button" id="increment"
+                                                        onclick="stepper('increment', {{ $item2->id }})"
+                                                        data-name="{{ $item2->name }}"
+                                                        data-priceday="{{ $item2->price_weekdays }}"
+                                                        data-priceend="{{ $item2->price_weekend }}">+</button>
+                                                </span>
+                                                <label for="">{{ $item2->name }}</label>
+                                            </form>
+                                        @endforeach
                                     </form>
                                 </div>
                             </div>
@@ -139,7 +140,7 @@
                             <div class="col-lg-6 mt-5">
                                 @foreach ($default as $item)
                                     <p style="color: #7D7D7D; text-align:start;">
-                                        
+
 
                                         <span class="isi-{{ $item->id }}" style="display: none">
                                             {{ $item->name }}
@@ -162,34 +163,36 @@
                             </div>
                             <div class="col-lg-6 mt-5">
                                 @foreach ($package as $data)
-                                    <p class="harga-{{ $data->id }}" style="color: #7D7D7D; text-align:end; display: none">Rp.
-                                        {{ formatrupiah($data->price_weekdays) }}
+                                    <p class="harga-{{ $data->id }}"
+                                        style="color: #7D7D7D; text-align:end; display: none">Rp.
+                                        {{ formatrupiah($data->price_weekend) }}
                                         <hr class="garis-{{ $data->id }}" style="display: none">
                                     </p>
                                 @endforeach
                             </div>
-                        {{-- <div class="wrap-selected-item">
+                            {{-- <div class="wrap-selected-item">
                         </div> --}}
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <hr class="h">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <hr class="h">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row" style="padding: 5px">
-                            <div class="col-lg-6 mt-5">
-                                <p style="text-align:start;"><strong>Total</strong></p>
+                            <div class="row" style="padding: 5px">
+                                <div class="col-lg-6 mt-5">
+                                    <p style="text-align:start;"><strong>Total</strong></p>
+                                </div>
+                                <div class="col-lg-6 mt-5">
+                                    <p style="text-align:end;"></p>
+                                    {{-- <p style="text-align:end;">Rp. 1.000.000,00</p> --}}
+                                </div>
                             </div>
-                            <div class="col-lg-6 mt-5">
-                                <p style="text-align:end;"></p>
-                                {{-- <p style="text-align:end;">Rp. 1.000.000,00</p> --}}
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <div class="col-lg-12 mt-10">
-                                <div class="btn-proses">
-                                    <a href="/metode_pembayaran">
-                                        <h6 style="color: #ffffff;">Checkout</h6>
-                                    </a>
+                            <div class="text-center">
+                                <div class="col-lg-12 mt-10">
+                                    <div class="btn-proses">
+                                        <a href="/metode_pembayaran">
+                                            <h6 style="color: #ffffff;">Checkout</h6>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -197,98 +200,94 @@
                 </div>
             </div>
         </div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script type="text/javascript">
-        // function valueChanged(id) {
-        //     if ($('.form-control-' + id).is(":checked"))
-        //         $(".wrap-quantity-" + id).show();
-        //     else
-        //         $(".wrap-quantity-" + id).hide();
-        // };
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script type="text/javascript">
+            // function valueChanged(id) {
+            //     if ($('.form-control-' + id).is(":checked"))
+            //         $(".wrap-quantity-" + id).show();
+            //     else
+            //         $(".wrap-quantity-" + id).hide();
+            // };
 
-        function valuePackage(id) {
+            function valuePackage(id) {
 
-        };
+            };
 
-        $(document).on('input', '#increment', function() {
-            let jumlah = parseInt($(this).val());
-            console.log(jumlah)
-        });
+            $(document).on('input', '#increment', function() {
+                let jumlah = parseInt($(this).val());
+                console.log(jumlah)
+            });
 
-        // $(document).on('click', '#increment', function() {
-        //     let id = $(this).data('id');
-        //     console.log
-        //     let jumlah = parseInt($(this).val());
-        // var radio = $(".selected-price:checked").val();
-        // var name = $(this).data('name');
-        // var price = (radio == 'weekdays') ? $(this).data('priceday') : $(this).data('priceend');
+            // $(document).on('click', '#increment', function() {
+            //     let id = $(this).data('id');
+            //     console.log
+            //     let jumlah = parseInt($(this).val());
+            // var radio = $(".selected-price:checked").val();
+            // var name = $(this).data('name');
+            // var price = (radio == 'weekdays') ? $(this).data('priceday') : $(this).data('priceend');
 
-        // var html = `<div class="row">
-        //             <div class="col-lg-6 mt-5">
-        //                 <p style="color: #7D7D7D; text-align:start;">${name}</p>
-        //             </div>
-        //             <div class="col-lg-6 mt-5">
+            // var html = `<div class="row">
+    //             <div class="col-lg-6 mt-5">
+    //                 <p style="color: #7D7D7D; text-align:start;">${name}</p>
+    //             </div>
+    //             <div class="col-lg-6 mt-5">
 
-        //                 <p style="color: #7D7D7D; text-align:end;">RP ${price}</p>
-        //             </div>
-        //         </div>`;
-        // $('.wrap-selected-item').append(html)
-        // })
-
-
-        // $(document).ready(function(){
-
-        //     $('.form-control-' + id).click(function(){
-        //         $(".isi-" + id).toggle();
-        //     })
+    //                 <p style="color: #7D7D7D; text-align:end;">RP ${price}</p>
+    //             </div>
+    //         </div>`;
+            // $('.wrap-selected-item').append(html)
+            // })
 
 
-        // });
+            // $(document).ready(function(){
 
-        // function isi(id) {
-        //     if ($('#btn_toggle' + id).click(function){
-        //         $("#isi-" + id).toggle();
-        //         alert("success");
-        //     })
-        // };
+            //     $('.form-control-' + id).click(function(){
+            //         $(".isi-" + id).toggle();
+            //     })
 
-        function valueChanged(id) {
-            //-------------------Event-------------------
-            $(document).on('change','.form-control-' + id, function() {
 
-                // $('.form-control-' + id).change(function() {
-                    console.log('hello')
-                    if(this.checked) {
+            // });
+
+            // function isi(id) {
+            //     if ($('#btn_toggle' + id).click(function){
+            //         $("#isi-" + id).toggle();
+            //         alert("success");
+            //     })
+            // };
+
+            function valueChanged(id) {
+                //-------------------Event-------------------
+                $(document).on('change', '.form-control-' + id, function() {
+
+                    // $('.form-control-' + id).change(function() {
+                    // console.log('hello')
+                    if (this.checked) {
                         $('.isi-' + id).show();
                         $(".wrap-quantity-" + id).show();
                         $(".harga-" + id).show();
                         $(".garis-" + id).show();
-                    
-                }
-                else{
-                    $('.isi-' + id).hide();
-                    $(".wrap-quantity-" + id).hide();
-                    $(".harga-" + id).hide();
-                    $(".garis-" + id).hide();
-                }
-                event.preventDefault();
-            // });
-        })
-            // $('.form-control-' + id).is(function(){
 
-            //     $('.cekbox-' + id).toggle();
-            //     $('.isi-' + id).toggle();
-            //     $(".wrap-quantity-" + id).toggle();
-            //     $(".harga-" + id).toggle();
-            //     $(".garis-" + id).toggle();
+                    } else {
+                        $('.isi-' + id).hide();
+                        $(".wrap-quantity-" + id).hide();
+                        $(".harga-" + id).hide();
+                        $(".garis-" + id).hide();
+                    }
+                    event.preventDefault();
+                    // });
+                })
+                // $('.form-control-' + id).is(function(){
 
-            //     event.preventDefault();
-            // });
-            
-        };
+                //     $('.cekbox-' + id).toggle();
+                //     $('.isi-' + id).toggle();
+                //     $(".wrap-quantity-" + id).toggle();
+                //     $(".harga-" + id).toggle();
+                //     $(".garis-" + id).toggle();
 
+                //     event.preventDefault();
+                // });
 
-    </script>
-@endsection
+            };
+        </script>
+    @endsection

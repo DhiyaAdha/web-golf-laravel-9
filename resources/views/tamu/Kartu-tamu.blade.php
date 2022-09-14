@@ -108,7 +108,7 @@
                                                                     <img class="back-qr"
                                                                         src="{{ asset('/dist/img/icon-golf1.svg') }}">
                                                                     <div class="qr-code-visitor">
-                                                                        {{ QrCode::size(120)->generate($visitor->id) }}
+                                                                        {{ QrCode::size(120)->generate($visitor->unique_qr) }}
                                                                     </div>
                                                                 </div>
                                                                 <img class="align-self-end img-footer"
@@ -183,7 +183,7 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="d-flex justify-content-center p">
-                            {!! $qrcode !!}
+                            {{ QrCode::size(180)->generate($visitor->id) }}
                         </div>
                     </div>
                 </div>
@@ -366,7 +366,7 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [1, 2, 3]
+                targets: [0, 1, 2, 3]
             }]
         });
         // End Of Transaction Activity
@@ -425,7 +425,7 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [1, 2, 3]
+                targets: [0, 1, 2, 3]
             }]
         });
         // Limit Activity

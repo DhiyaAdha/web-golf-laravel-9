@@ -16,6 +16,7 @@ class Visitor extends Model
     // protected $guarded = [];
     protected $fillable = [
         'id',
+        'unique_qr',
         'name',
         'email',
         'address',
