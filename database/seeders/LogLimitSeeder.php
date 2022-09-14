@@ -26,7 +26,8 @@ class LogLimitSeeder extends Seeder
             $faker = Faker::create('id_ID');
             $visitor = Visitor::pluck('id');
             DB::table('log_limits')->insert([
-                'visitor_id' => $faker->randomElement($visitor),
+                // 'visitor_id' => $faker->randomElement($visitor),
+                'visitor_id' => $faker->unique()->randomElement($visitor),
                 'report_limit_id' => ReportLimit::all()->random()->id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

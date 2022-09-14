@@ -171,6 +171,77 @@
             }
         ],
     });
+
+    // scan QR
+        $('#show-qr-scan').on('click', function() {
+            $('.disabled-scan').addClass('d-none');
+
+            function onScanSuccess(decodedText, decodedResult) {
+                $("#resultTEXT").val(decodedText)
+                $('#resultDECODE').val(JSON.stringify(decodedResult));
+                html5QrcodeScanner.clear();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('visitor.qrcode') }}",
+                    data: {
+                        qrCode: decodedText
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.status === "VALID") {
+                            console.log(response.data)
+                            swal({
+                                title: "Verifikasi berhasil",
+                                type: "success",
+                                text: "Atas nama " + response.data.name,
+                                confirmButtonColor: "#01c853",
+                                closeOnConfirm: false,
+                                closeOnCancel: false,
+                                showCancelButton: false,
+                                showConfirmButton: false,
+                                timer: 2000,
+                            }, function() {
+                                //untuk nge direct jika verifikasi data berhasil
+                                window.location.href = "/detail_scan/" + response.data.id;
+                            });
+                        } else {
+                            swal({
+                                icon: 'error',
+                                title: response.status,
+                                text: response.message,
+                                allowOutsideClick: false
+                            }, function() {
+                                // Untuk reload Page jika gagal
+                                window.location.reload(true)
+                            });
+                        }
+                    }
+                });
+            }
+
+            function onScanFailure(error) {
+                console.warn(`Code scan error = ${error}`);
+            }
+
+            let html5QrcodeScanner = new Html5QrcodeScanner(
+                "reader", {
+                    fps: 144,
+                    qrbox: {
+                        width: 200,
+                        height: 200
+                    }
+                },
+                false);
+            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+        });
+        
+
     // kartu-tamu(transaksi)
     // $('#transaksi').DataTable({
     //     "processing": true,
@@ -219,7 +290,6 @@
     // });
     // end kartu-tamu(transaksi)
 </script>
-
 
 
 {{-- Input Stepper -- v}}
