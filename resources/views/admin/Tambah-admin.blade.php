@@ -39,7 +39,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="password">Password</label>
-                                        <input type="password" name="password" class="form-control" id="password1"
+                                        <input type="password" name="password" class="form-control" id="password"
                                             placeholder="Masukan Password" required>
                                         <span class="show-hide1" onclick="myfunction()">
                                             <i id="hide1" class="fa fa-eye"></i>
