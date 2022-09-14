@@ -72,28 +72,28 @@ class TamuController extends Controller
      */
     public function create(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'gender' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required',
-            'tipe_member' => 'required',
-        ]);
+        // $this->validate($request, [
+        //     'name' => 'required',
+        //     'gender' => 'required',
+        //     'email' => 'required|email',
+        //     'phone' => 'required',
+        //     'tipe_member' => 'required',
+        // ]);
 
-        $visitors = Visitor::create([
-            'name' => $request->name,
-            'gender' => $request->gender,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'tipe_member' => $request->tipe_member,
-            'created_at' => Carbon::now(),  
-        ]);
+        // $visitors = Visitor::create([
+        //     'name' => $request->name,
+        //     'gender' => $request->gender,
+        //     'email' => $request->email,
+        //     'phone' => $request->phone,
+        //     'tipe_member' => $request->tipe_member,
+        //     'created_at' => Carbon::now(),  
+        // ]);
 
-        $visitors->save();
-        return redirect('tamu.tambah-tamu')->with(
-            'sukses',
-            'Company has been created successfully.'
-        );
+        // $visitors->save();
+        // return redirect('tamu.tambah-tamu')->with(
+        //     'sukses',
+        //     'Company has been created successfully.'
+        // );
     }
 
     /**
