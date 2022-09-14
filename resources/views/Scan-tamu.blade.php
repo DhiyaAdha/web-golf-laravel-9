@@ -37,9 +37,6 @@
                     <div id="reader" class="disabled-show-scan">
                     </div>
                 </div>
-                <div class="row d-flex justify-content-center">
-                    <input type="text" class="col-lg-12" id="resultTEXT">
-                </div>
             </div>
         </div>
     </div>
@@ -60,7 +57,7 @@
                 });
 
                 $.ajax({
-                    type: 'POST',
+                    type: 'GET',
                     url: "{{ route('visitor.qrcode') }}",
                     data: {
                         qrCode: decodedText

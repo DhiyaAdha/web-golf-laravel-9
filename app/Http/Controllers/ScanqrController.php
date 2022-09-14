@@ -143,38 +143,15 @@ class ScanqrController extends Controller
 
     public function checkQRCode(Request $request, $id = null)
     {
-        // if($id == null) {
-        //     $this->setResponse('INVALID', "Data tidak ditemukan!");
-        //     return response()->json($this->getResponse());
-        // } else {
-        //     try {
-        //         $visitor = Visitor::find($id);
-        //         $this->setResponse('VALID', "Valid QR code", [
-        //             'name' => $visitor->name,
-        //         ]);
-        //         return response()->json($this->getResponse());
-        //     } catch (\Throwable $th) {
-        //         $this->setResponse('INVALID', "Invalid QR code");
-        //         return response()->json($this->getResponse());
-        //     }
-        // }
-        $qrCode = $request->get('qrCode');
-        $get_visitor = Visitor::where("id", $qrCode->id)->first();
+        $url_qr = explode("/", parse_url($request->get('qrCode'), PHP_URL_PATH));
+        $get_visitor = Visitor::where("id", $url_qr[2])->first();
         if($get_visitor == null) {
-            $this->setResponse('INVALID', "Invalid QR code");
+            $this->setResponse('INVALID', "Data tidak ditemukan!");
             return response()->json($this->getResponse());
         } else {
             try {
                 $this->setResponse('VALID', "Valid QR code", [
-                    'id' => $get_visitor->id,
                     'name' => $get_visitor->name,
-                    'email' => $get_visitor->email,
-                    'phone' => $get_visitor->phone,
-                    'address' => $get_visitor->address,
-                    'position' => $get_visitor->position,
-                    'company' => $get_visitor->company,
-                    'gender' => $get_visitor->gender,
-                    'tipe_member' => $get_visitor->tipe_member,
                 ]);
                 return response()->json($this->getResponse());
             } catch (\Throwable $th) {
