@@ -79,8 +79,7 @@
                                             onchange="valuePackage({{ $item->id }})" readonly>
                                         <button type="button" id="increment"
                                             onclick="stepper('increment', {{ $item->id }})"
-                                            data-name="{{ $item->name }}" data-priceday="{{ $item->price_weekdays }}"
-                                            data-priceend="{{ $item->price_weekend }}">+</button>
+                                            data-name="{{ $item->name }}">+</button>
                                     </span>
                                     <label for="">{{ $item->name }}</label>
                                 </form>

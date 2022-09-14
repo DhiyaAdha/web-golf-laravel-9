@@ -110,7 +110,7 @@
                                             </div>
                                             <div class="pull-right">
                                                 <strong>
-                                                    {{ formatrupiah($deposit->balance) }}
+                                                    {{ formatrupiah($deposit->balance) ?? 'None'}}
                                                 </strong>
                                             </div>
                                         </div>
@@ -122,7 +122,9 @@
                                             Limit Kupon
                                             <div class="mt-15">
                                                 <div class="pull-left">
-                                                    <strong>Rp</strong>
+                                                    <strong>
+                                                        {{ $log_limit->quota_kupon ?? 'None' }}
+                                                    </strong>
                                                 </div>
                                             </div>
                                         </div>
@@ -132,7 +134,9 @@
                                             Limit Bulanan
                                             <div class="mt-15">
                                                 <div class="pull-left">
-                                                    <strong>{{ $log_limit->quota }}</strong>
+                                                    <strong>
+                                                        {{ $log_limit->quota ?? 'None' }}
+                                                    </strong>
                                                 </div>
                                             </div>
                                         </div>
