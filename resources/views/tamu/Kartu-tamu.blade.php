@@ -353,7 +353,7 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [1, 2, 3]
+                targets: [0, 1, 2, 3]
             }]
         });
         // End Of Transaction Activity
@@ -383,7 +383,7 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [1, 2, 3]
+                targets: [0, 1, 2, 3]
             }]
         });
         // Limit Activity
