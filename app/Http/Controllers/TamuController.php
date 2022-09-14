@@ -8,20 +8,20 @@ use App\Models\Deposit;
 use App\Models\Visitor;
 use App\Models\LogLimit;
 use App\Models\ReportLimit;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\ReportDeposit;
 use App\Models\DepositHistory;
 use App\Models\LogTransaction;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Cache\RateLimiting\Limit;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-
 use App\Jobs\SendMailJob;
 use App\Jobs\SendMailJobDeposit;
-
 class TamuController extends Controller
 {
     /**
@@ -109,6 +109,11 @@ class TamuController extends Controller
     {
         //
     }
+
+    public function show_detail(Request $request, $token = null){
+        // return view('Reset-password')->with(['token'=>$token,'email'=>$request->email]);
+        dd($request);
+    }
     
     /* insert tamu(store) */
     public function inserttamu(Request $request)
@@ -124,8 +129,13 @@ class TamuController extends Controller
             'tipe_member' => 'required',
         ]);
 
+        $random = Str::random(15);
+        $random_unique = Carbon::now()->format('Y-m');
+        $token = $random_unique.'-'.$random;
+        $link_qr = URL::signedRoute('detail-scan',['qr'=>$token, 'e'=>$request->email]);
         $visitors = Visitor::create([
             'name' => $request->name,
+            'unique_qr' => $link_qr,
             'address' => $request->address,
             'gender' => $request->gender,
             'email' => $request->email,
