@@ -51,8 +51,9 @@ Route::get('/', function () {
     Route::get('/logout', [AuthController::class, 'logout']);
 
     //Level superadmin
-Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
+    Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::get('/f', [TamuController::class, 'fgf']);
+    Route::get('/detail/{qr}', [TamuController::class, 'show_detail'])->name('detail-scan')->middleware('signed');
     Route::post('/visitor/qrcode', [ScanqrController::class, 'checkQRCode'])->name('visitor.qrcode');
     Route::get('/package/destroy/{id}', [PackageController::class,'destroy'])->name('package.destroy');
     Route::post('/package/store', [PackageController::class, 'store'])->name('package.store');
