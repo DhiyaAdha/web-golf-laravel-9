@@ -67,8 +67,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="">Jabatan</label>
-                                        <input type="text" name="position" class="form-control" id="position"
-                                            size="50px" placeholder="Masukan Jabatan" required>
+                                        <input type="text" name="position" class="form-control" id="position" <<<<<<<
+                                            HEAD size="50px" placeholder="Masukan Jabatan" required autofocus>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="">Tamu Ini Adalah Tamu VIP
