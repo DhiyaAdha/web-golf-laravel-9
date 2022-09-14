@@ -167,7 +167,7 @@
                         </div>
                         <div style="display:flex;">
                             <p style="margin: 0;">Sisa Deposit : </p>
-                            <p style="margin: 0;">50000000</p>
+                            <p style="margin: 0;">1000000</p>
                         </div>
                         <div style="display:flex;">
                             <p style="margin: 0;">Sisa Limit Bulanan : </p>
