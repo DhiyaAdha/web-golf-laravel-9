@@ -8,13 +8,11 @@ use App\Models\Deposit;
 use App\Models\Visitor;
 use App\Models\LogLimit;
 use App\Models\ReportLimit;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\ReportDeposit;
 use App\Models\DepositHistory;
 use App\Models\LogTransaction;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
@@ -30,7 +28,7 @@ class TamuController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function fgf(){
-        return view('emails.sample');
+        return view('emails.sendemail');
     }
     public function index(Request $request)
     {
@@ -75,28 +73,28 @@ class TamuController extends Controller
      */
     public function create(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'gender' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required',
-            'tipe_member' => 'required',
-        ]);
+        // $this->validate($request, [
+        //     'name' => 'required',
+        //     'gender' => 'required',
+        //     'email' => 'required|email',
+        //     'phone' => 'required',
+        //     'tipe_member' => 'required',
+        // ]);
 
-        $visitors = Visitor::create([
-            'name' => $request->name,
-            'gender' => $request->gender,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'tipe_member' => $request->tipe_member,
-            'created_at' => Carbon::now(),  
-        ]);
+        // $visitors = Visitor::create([
+        //     'name' => $request->name,
+        //     'gender' => $request->gender,
+        //     'email' => $request->email,
+        //     'phone' => $request->phone,
+        //     'tipe_member' => $request->tipe_member,
+        //     'created_at' => Carbon::now(),  
+        // ]);
 
-        $visitors->save();
-        return redirect('tamu.tambah-tamu')->with(
-            'sukses',
-            'Company has been created successfully.'
-        );
+        // $visitors->save();
+        // return redirect('tamu.tambah-tamu')->with(
+        //     'sukses',
+        //     'Company has been created successfully.'
+        // );
     }
 
     /**
@@ -108,11 +106,6 @@ class TamuController extends Controller
     public function store(Request $request)
     {
         //
-    }
-
-    public function show_detail(Request $request, $token = null){
-        // return view('Reset-password')->with(['token'=>$token,'email'=>$request->email]);
-        dd($request);
     }
     
     /* insert tamu(store) */
@@ -129,13 +122,8 @@ class TamuController extends Controller
             'tipe_member' => 'required',
         ]);
 
-        $random = Str::random(15);
-        $random_unique = Carbon::now()->format('Y-m');
-        $token = $random_unique.'-'.$random;
-        $link_qr = URL::signedRoute('detail-scan',['qr'=>$token, 'e'=>$request->email]);
         $visitors = Visitor::create([
             'name' => $request->name,
-            'unique_qr' => $link_qr,
             'address' => $request->address,
             'gender' => $request->gender,
             'email' => $request->email,
@@ -167,7 +155,6 @@ class TamuController extends Controller
 
         $data = $request->all();
         dispatch(new SendMailJob($data));
-        dispatch(new SendMailJobDeposit($data));
         return redirect('/tambah-deposit/'.$visitors->id)->with(
             'sukses',
             'Company has been created successfully.'
@@ -230,9 +217,6 @@ class TamuController extends Controller
             'updated_at' => Carbon::now(),
         ]);
         $deposit->save();
-        $data = $request->all();
-        dispatch(new SendMailJobDeposit($data));
-
 
         return redirect('/daftar-tamu')->with(
             'sukses',

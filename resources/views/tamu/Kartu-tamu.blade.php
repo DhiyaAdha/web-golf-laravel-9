@@ -107,7 +107,7 @@
                                                                     <img class="back-qr"
                                                                         src="{{ asset('/dist/img/icon-golf1.svg') }}">
                                                                     <div class="qr-code-visitor">
-                                                                        {{ QrCode::size(120)->generate($visitor->unique_qr) }}
+                                                                        {{ QrCode::size(120)->generate($visitor->id) }}
                                                                     </div>
                                                                 </div>
                                                                 <img class="align-self-end img-footer"
@@ -312,7 +312,6 @@
                 printContainer: true,
             });
         });
-
         // Transaction Activity
         $('#dt-tamu-transaksi').DataTable({
             "processing": true,
@@ -365,11 +364,10 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [0, 1, 2, 3]
+                targets: [1, 2, 3]
             }]
         });
         // End Of Transaction Activity
-
         //  Deposit Activity
         $('#dt-tamu-deposit').DataTable({
             "processing": true,
@@ -424,7 +422,7 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [0, 1, 2, 3]
+                targets: [1, 2, 3]
             }]
         });
         // Limit Activity

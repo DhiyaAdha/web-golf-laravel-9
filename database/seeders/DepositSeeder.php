@@ -26,6 +26,7 @@ class DepositSeeder extends Seeder
         for($i = 1; $i <= 30; $i++) {
             DB::table('deposits')->insert([
             'visitor_id' => $faker->randomElement($visitor),
+            // 'visitor_id' => $faker->create(Visitor::class)->id,
             'report_deposit_id' => ReportDeposit::all()->random()->id,
             'balance' => $faker->randomFloat(2, 0, 10000000),
             'created_at' => Carbon::now(),

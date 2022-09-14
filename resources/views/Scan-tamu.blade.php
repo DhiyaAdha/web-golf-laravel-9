@@ -47,8 +47,8 @@
             $('.disabled-scan').addClass('d-none');
 
             function onScanSuccess(decodedText, decodedResult) {
-                $("#resultTEXT").val(decodedText)
-                $('#resultDECODE').val(JSON.stringify(decodedResult));
+                // $("#resultTEXT").val(decodedText)
+                // $('#resultDECODE').val(JSON.stringify(decodedResult));
                 html5QrcodeScanner.clear();
                 $.ajaxSetup({
                     headers: {
@@ -65,7 +65,6 @@
                     dataType: 'json',
                     success: function(response) {
                         if (response.status === "VALID") {
-                            console.log(response.data)
                             swal({
                                 title: "Verifikasi berhasil",
                                 type: "success",
@@ -107,7 +106,7 @@
                         height: 200
                     }
                 },
-                false);
+                true);
             html5QrcodeScanner.render(onScanSuccess, onScanFailure);
         });
     </script>

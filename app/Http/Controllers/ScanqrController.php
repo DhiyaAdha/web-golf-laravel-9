@@ -115,7 +115,6 @@ class ScanqrController extends Controller
             return view('proses');
     }
 
-
     public function kartutamu($id){
 
         $visitor = Visitor::findOrFail($id);
@@ -133,26 +132,16 @@ class ScanqrController extends Controller
     //penghubung method dengan view yang akan ditampilkan
     public function detail_datapengunjung($id){
         $visitor = Visitor::find($id);
-        $deposit = Deposit::find($id);
-        $log_limit = LogLimit::find($id);
+        // $deposit = Deposit::find($id);
+        $deposit = Deposit::where('visitor_id', $id)->first();
+        $log_limit = LogLimit::where('visitor_id', $id)->first();
+        // $log_limit = LogLimit::find($id);
         $data['visitor'] = $visitor;
         $data['deposit'] = $deposit;
         $data['log_limit'] = $log_limit;
+        
 
         return view('detail_scan', $data);
-
-        // $data_visitor = Visitor::all();
-        // return view('detail_scan', compact('data_visitor'));
-    }
-
-    //private
-    private function checkUser($id)
-    {
-        $this->user = Visitor::find($id);
-        if (!$this->user) {
-            $this->setResponse('INVALID', "Invalid QR code");
-            throw new \Throwable();
-        }
     }
 
     public function checkQRCode(Request $request)

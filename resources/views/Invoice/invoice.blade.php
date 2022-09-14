@@ -140,3 +140,66 @@
         @include('Layouts.Footer')
     </div>
 @endsection
+@push('scripts')
+    <script>
+        // invoice detail
+        $('#dt-invoice').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "lengthChange": false,
+            "bDestroy": true,
+            "searching": false,
+            "paginate": {
+                "first": "First",
+                "last": "Last",
+                "next": "Next",
+                "previous": "Previous"
+            },
+            "ajax": {
+                "url": "{{ route('riwayat-invoice.create') }}",
+                "type": "GET",
+                "datatype": "json"
+            },
+            "render": $.fn.dataTable.render.text(),
+            "columns": [{
+                    data: 'name',
+                    searchable: true,
+                    orderable: false
+                },
+                {
+                    data: 'harga',
+                    searchable: true,
+                    orderable: false
+                },
+                {
+                    data: 'quantity',
+                    searchable: true,
+                    orderable: false
+                },
+                {
+                    data: 'total',
+                    searchable: true,
+                    orderable: false,
+                    className: 'text-right'
+                },
+            ],
+            order: [],
+            responsive: true,
+            language: {
+                search: "",
+                searchPlaceholder: "Cari",
+                emptyTable: "Tidak ada data pada tabel ini",
+                info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+                infoFiltered: "(difilter dari _MAX_ total data)",
+                infoEmpty: "Tidak ada data pada tabel ini",
+                lengthMenu: "Menampilkan _MENU_ data",
+                zeroRecords: "Tidak ada data pada tabel ini"
+            },
+            columnDefs: [{
+                    className: 'text-center',
+                    targets: [1, 2]
+                }
+            ],
+        });  
+    </script>
+@endpush
