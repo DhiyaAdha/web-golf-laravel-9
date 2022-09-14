@@ -428,9 +428,6 @@
                 targets: [1, 2, 3]
             }]
         });
-        //  End of Deposit Activity
-
-
         // Limit Activity
         $('#dt-tamu-limit').DataTable({
             "processing": true,

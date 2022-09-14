@@ -657,7 +657,6 @@
                 orderable: false,
                 className: 'text-right'
             },
-
         ],
         order: [],
         responsive: true,
@@ -675,10 +674,8 @@
                 className: 'text-center',
                 targets: [1, 2]
             }
-
         ],
     });
-
     // kartu-tamu(transaksi)
     $('#transaksi').DataTable({
         "processing": true,
@@ -814,13 +811,10 @@
         let calcStep = (id == "increment") ? (step * 1) :
             (step * -1);
         let newValue = parseInt(val) + calcStep;
-
         if (newValue >= min && newValue <= max) {
             myInput.setAttribute("value", newValue);
         }
-
         // console.log(id, min, max, step, val);
     }
 </script>
-
 {{-- Tooltip --}}
