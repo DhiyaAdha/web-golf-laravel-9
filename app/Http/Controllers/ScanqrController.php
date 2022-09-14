@@ -141,29 +141,16 @@ class ScanqrController extends Controller
         return view('detail_scan', $data);
     }
 
-    public function checkQRCode(Request $request, $email = null)
+    public function checkQRCode(Request $request, $id = null)
     {
-        return redirect('/detail/'.$email)->with(
-            'success',
-            'Verifikasi berhasil'
-        );
-        // $qrCode = trim($email);
-        // $get_visitor = Visitor::where("email", $qrCode)->first();
-        // if($get_visitor == null) {
-        //     $this->setResponse('INVALID', "Invalid QR code");
+        // if($id == null) {
+        //     $this->setResponse('INVALID', "Data tidak ditemukan!");
         //     return response()->json($this->getResponse());
         // } else {
         //     try {
+        //         $visitor = Visitor::find($id);
         //         $this->setResponse('VALID', "Valid QR code", [
-        //             'id' => $get_visitor->id,
-        //             'name' => $get_visitor->name,
-        //             'email' => $get_visitor->email,
-        //             'phone' => $get_visitor->phone,
-        //             'address' => $get_visitor->address,
-        //             'position' => $get_visitor->position,
-        //             'company' => $get_visitor->company,
-        //             'gender' => $get_visitor->gender,
-        //             'tipe_member' => $get_visitor->tipe_member,
+        //             'name' => $visitor->name,
         //         ]);
         //         return response()->json($this->getResponse());
         //     } catch (\Throwable $th) {
@@ -171,6 +158,29 @@ class ScanqrController extends Controller
         //         return response()->json($this->getResponse());
         //     }
         // }
+        $qrCode = $request->get('qrCode');
+        $get_visitor = Visitor::where("id", $qrCode->id)->first();
+        if($get_visitor == null) {
+            $this->setResponse('INVALID', "Invalid QR code");
+            return response()->json($this->getResponse());
+        } else {
+            try {
+                $this->setResponse('VALID', "Valid QR code", [
+                    'id' => $get_visitor->id,
+                    'name' => $get_visitor->name,
+                    'email' => $get_visitor->email,
+                    'phone' => $get_visitor->phone,
+                    'address' => $get_visitor->address,
+                    'position' => $get_visitor->position,
+                    'company' => $get_visitor->company,
+                    'gender' => $get_visitor->gender,
+                    'tipe_member' => $get_visitor->tipe_member,
+                ]);
+                return response()->json($this->getResponse());
+            } catch (\Throwable $th) {
+                return response()->json($this->getResponse());
+            }
+        }
     }
 
     private function setResponse($status = "INVALID", $message = "Ada sesuatu yang salah!", $data = [])

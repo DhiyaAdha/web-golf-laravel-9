@@ -63,34 +63,34 @@
                     type: 'POST',
                     url: "{{ route('visitor.qrcode') }}",
                     data: {
-                        email: decodedText
+                        qrCode: decodedText
                     },
                     dataType: 'json',
                     success: function(response) {
-                        // if (response.status === "VALID") {
-                        //     swal({
-                        //         title: "Verifikasi berhasil",
-                        //         type: "success",
-                        //         text: "Atas nama " + response.data.name,
-                        //         confirmButtonColor: "#01c853",
-                        //         closeOnConfirm: false,
-                        //         closeOnCancel: false,
-                        //         showCancelButton: false,
-                        //         showConfirmButton: false,
-                        //         timer: 2000,
-                        //     }, function() {
-                        //         window.location.href = "/detail_scan/" + response.data.id;
-                        //     });
-                        // } else {
-                        //     swal({
-                        //         icon: 'error',
-                        //         title: response.status,
-                        //         text: response.message,
-                        //         allowOutsideClick: false
-                        //     }, function() {
-                        //         window.location.reload(true)
-                        //     });
-                        // }
+                        if (response.status === "VALID") {
+                            swal({
+                                title: "Verifikasi berhasil",
+                                type: "success",
+                                text: "Atas nama " + response.data.name,
+                                confirmButtonColor: "#01c853",
+                                closeOnConfirm: false,
+                                closeOnCancel: false,
+                                showCancelButton: false,
+                                showConfirmButton: false,
+                                timer: 2000,
+                            }, function() {
+                                window.location.href = decodedText;
+                            });
+                        } else {
+                            swal({
+                                icon: 'error',
+                                title: response.status,
+                                text: response.message,
+                                allowOutsideClick: false
+                            }, function() {
+                                window.location.reload(true)
+                            });
+                        }
                     }
                 });
             }
