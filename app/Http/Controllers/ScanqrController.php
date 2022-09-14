@@ -8,6 +8,7 @@ use App\Models\LogLimit;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use illuminate\support\facades\DB;
+use Illuminate\Support\Facades\Crypt;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ScanqrController extends Controller
@@ -130,24 +131,24 @@ class ScanqrController extends Controller
     }
     
     //penghubung method dengan view yang akan ditampilkan
-    public function detail_datapengunjung($id){
-        $visitor = Visitor::find($id);
-        // $deposit = Deposit::find($id);
-        $deposit = Deposit::where('visitor_id', $id)->first();
-        $log_limit = LogLimit::where('visitor_id', $id)->first();
-        // $log_limit = LogLimit::find($id);
+    public function show_detail($email = null){
+        $visitor = Visitor::find($email);
+        // $deposit = Deposit::where('visitor_id', $id)->first();
+        // $log_limit = LogLimit::where('visitor_id', $id)->first();
         $data['visitor'] = $visitor;
-        $data['deposit'] = $deposit;
-        $data['log_limit'] = $log_limit;
-        
-
+        // $data['deposit'] = $deposit;
+        // $data['log_limit'] = $log_limit;
         return view('detail_scan', $data);
     }
 
-    public function checkQRCode(Request $request)
+    public function checkQRCode(Request $request, $email = null)
     {
-        $qrCode = trim($request->get('qrCode'));
-        $get_visitor = Visitor::where("id", $qrCode)->first();
+        // return redirect('/detail/'.$email)->with(
+        //     'success',
+        //     'Verifikasi berhasil'
+        // );
+        $qrCode = trim($email);
+        $get_visitor = Visitor::where("email", $qrCode)->first();
         if($get_visitor == null) {
             $this->setResponse('INVALID', "Invalid QR code");
             return response()->json($this->getResponse());
@@ -166,6 +167,7 @@ class ScanqrController extends Controller
                 ]);
                 return response()->json($this->getResponse());
             } catch (\Throwable $th) {
+                $this->setResponse('INVALID', "Invalid QR code");
                 return response()->json($this->getResponse());
             }
         }

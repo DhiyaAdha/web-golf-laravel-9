@@ -110,12 +110,6 @@ class TamuController extends Controller
     {
         //
     }
-
-    public function show_detail(Request $request, $email = null){
-        // return view('Reset-password')->with(['token'=>$token,'email'=>$request->email]);
-        $dekrip = Crypt::decryptString($email);
-        dd($dekrip);
-    }
     
     /* insert tamu(store) */
     public function inserttamu(Request $request)
@@ -134,7 +128,7 @@ class TamuController extends Controller
         $random = Str::random(15);
         $random_unique = Carbon::now()->format('Y-m');
         $token = $random_unique.'-'.$random;
-        $link_qr = URL::signedRoute('detail-scan',['qr'=>$token, 'e'=> Crypt::encryptString($request->email)]);
+        $link_qr = URL::signedRoute('detail-scan',['qr'=>$token, 'e'=> $request->email]);
         $visitors = Visitor::create([
             'name' => $request->name,
             'unique_qr' => $link_qr,

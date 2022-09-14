@@ -110,7 +110,7 @@
                                             </div>
                                             <div class="pull-right">
                                                 <strong>
-                                                    {{ formatrupiah($deposit->balance) ?? 'None'}}
+                                                    {{-- {{ formatrupiah($deposit->balance) ?? 'None'}} --}}
                                                 </strong>
                                             </div>
                                         </div>
@@ -123,7 +123,7 @@
                                             <div class="mt-15">
                                                 <div class="pull-left">
                                                     <strong>
-                                                        {{ $log_limit->quota_kupon ?? 'None' }}
+                                                        {{-- {{ $log_limit->quota_kupon ?? 'None' }} --}}
                                                     </strong>
                                                 </div>
                                             </div>
@@ -135,7 +135,7 @@
                                             <div class="mt-15">
                                                 <div class="pull-left">
                                                     <strong>
-                                                        {{ $log_limit->quota ?? 'None' }}
+                                                        {{-- {{ $log_limit->quota ?? 'None' }} --}}
                                                     </strong>
                                                 </div>
                                             </div>
