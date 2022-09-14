@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Cache\RateLimiting\Limit;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Jobs\SendMailJob;
+use App\Jobs\SendMailJobDeposit;
+
 class TamuController extends Controller
 {
     /**
@@ -27,7 +29,7 @@ class TamuController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function fgf(){
-        return view('emails.sendemail');
+        return view('emails.sample');
     }
     public function index(Request $request)
     {
@@ -151,7 +153,9 @@ class TamuController extends Controller
             // 'updated_at' => Carbon::now(),
         ]);
         $quota->save();
-
+        $data = $request->all();
+        dispatch(new SendMailJob($data));
+        dispatch(new SendMailJobDeposit($data));
         return redirect('/tambah-deposit/'.$visitors->id)->with(
             'sukses',
             'Company has been created successfully.'
@@ -214,6 +218,9 @@ class TamuController extends Controller
             'updated_at' => Carbon::now(),
         ]);
         $deposit->save();
+        $data = $request->all();
+        dispatch(new SendMailJobDeposit($data));
+
 
         return redirect('/daftar-tamu')->with(
             'sukses',
