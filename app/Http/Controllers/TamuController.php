@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Cache\RateLimiting\Limit;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -111,9 +112,10 @@ class TamuController extends Controller
         //
     }
 
-    public function show_detail(Request $request, $token = null){
+    public function show_detail(Request $request, $email = null){
         // return view('Reset-password')->with(['token'=>$token,'email'=>$request->email]);
-        dd($request);
+        $dekrip = Crypt::decryptString($email);
+        dd($request->session()->put('key', 'value'));
     }
     
     /* insert tamu(store) */
@@ -133,7 +135,7 @@ class TamuController extends Controller
         $random = Str::random(15);
         $random_unique = Carbon::now()->format('Y-m');
         $token = $random_unique.'-'.$random;
-        $link_qr = URL::signedRoute('detail-scan',['qr'=>$token, 'e'=>$request->email]);
+        $link_qr = URL::signedRoute('detail-scan',['qr'=>$token, 'e'=> Crypt::encryptString($request->email)]);
         $visitors = Visitor::create([
             'name' => $request->name,
             'unique_qr' => $link_qr,

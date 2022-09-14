@@ -142,6 +142,7 @@ class AuthController extends Controller {
     }
     //ini untuk route get di web.php memasukkan password baru
     public function showResetForm(Request $request, $token = null){
+        dd($token);
         return view('Reset-pasword')->with(['token'=>$token,'email'=>$request->email]);
     }
     //ini untuk route get di web.php memasukkan email yang akan dirubah passwordnya
