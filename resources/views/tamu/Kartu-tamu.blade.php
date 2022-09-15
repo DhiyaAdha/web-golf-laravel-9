@@ -106,7 +106,7 @@
                                                                 <div
                                                                     class="d-flex justify-content-center align-items-center flex-column">
                                                                     <img class="back-qr"
-                                                                        src="{{ asset('/dist/img/icon-golf1.svg') }}">
+                                                                        src="{{ asset('/dist/img/icon-golf2.svg') }}">
                                                                     <div class="qr-code-visitor">
                                                                         {{ QrCode::size(120)->generate($visitor->unique_qr) }}
                                                                     </div>
@@ -223,6 +223,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+
                                                 </tbody>
                                             </table>
                                     </div>

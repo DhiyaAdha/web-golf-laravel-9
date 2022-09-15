@@ -43,7 +43,7 @@ Route::get('/', function () {
 
     //Level superadmin
 Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
-    Route::get('/detail/{e}', [ScanqrController::class, 'show_detail'])->name('detail-scan')->middleware('signed');
+    Route::get('/kartu-member/{e}', [ScanqrController::class, 'show_detail'])->name('detail-scan')->middleware('signed');
     Route::get('/daftar-admin', [AdminController::class, 'index'])->name('daftar-admin');
     Route::post('/store', [AdminController::class, 'store'])->name('store');
     Route::get('/daftar-admin/{id}', [AdminController::class, 'show'])->name('show');
