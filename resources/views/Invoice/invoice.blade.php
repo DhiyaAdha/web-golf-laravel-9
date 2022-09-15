@@ -71,12 +71,18 @@
                         <div class="clearfix"></div>
                         <div class="table-responsive">
                             <table class="mb-0" id="dt-invoice">
-                                <thead>
+                                <thead style="text-align: center">
                                     <tr>
-                                        <td><strong>Nama</strong></td>
+                                        <td style="text-align: left"><strong>Nama</strong></td>
                                         <td class=""><strong>Harga</strong></td>
                                         <td class=""><strong>Jumlah</strong></td>
-                                        <td class=""><strong>Total</strong></td>
+                                        <td style="text-align: right"><strong>Total</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left">{{ $visitor->name }}</td>
+                                        <td>Rp.{{ formatrupiah($package->price_weekdays) }}</td>
+                                        <td class="">{{ $detail->quantity }}</td>
+                                        <td style="text-align: right">Rp.{{ formatrupiah($transaction->total) }}</td>
                                     </tr>
                                 </thead>
                                 <tr></tr>

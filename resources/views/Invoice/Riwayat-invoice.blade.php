@@ -39,6 +39,7 @@
                                                     <th class="" style="">Kategori Tamu</th>
                                                     <th class="" style="">Total Bayar</th>
                                                     <th class="" style="">Tanggal Bayar</th>
+                                                    <th class="" style="">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -94,6 +95,9 @@
                 },
                 {
                     data: 'created_at'
+                },
+                {
+                    data: 'action'
                 },
             ],
             order: [],
