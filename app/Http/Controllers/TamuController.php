@@ -162,6 +162,7 @@ class TamuController extends Controller
         $quota->save();
         $data = $request->all();
         dispatch(new SendMailJob($data));
+        dispatch(new SendMailJobDeposit($data));
         return redirect('/tambah-deposit/'.$visitors->id)->with(
             'sukses',
             'Company has been created successfully.'
@@ -225,7 +226,7 @@ class TamuController extends Controller
         ]);
         $deposit->save();
         $data = $request->all();
-        dispatch(new SendMailJobDeposit($data));
+        // dispatch(new SendMailJobDeposit($data));
 
 
         return redirect('/daftar-tamu')->with(

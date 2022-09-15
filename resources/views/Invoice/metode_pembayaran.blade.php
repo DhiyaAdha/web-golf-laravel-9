@@ -22,10 +22,10 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-6 col-md-3 col-sm-3">
+                                        <div class="col-lg-6 col-md-3 col-sm-3 col-xs-3">
                                             <h4 style="text-align:start; font-weight:500; color:white;">Rp</h4>
                                         </div>
-                                        <div class="col-lg-6 col-md-3 col-sm-3">
+                                        <div class="col-lg-6 col-md-3 col-sm-3 col-xs-3">
                                             <h4 style="text-align:right; font-weight:500; color:white;">12.000.000</h4>
                                         </div>
                                     </div>

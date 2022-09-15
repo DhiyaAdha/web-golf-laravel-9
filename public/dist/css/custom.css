@@ -310,7 +310,7 @@ h6.panel-title.txt-dark.label-visitor {
 element.style {
     font-size: 18px;
     font-weight: bold;
-    font-color: #fff;
+    color: #fff;
     margin-bottom: 0px;
 }
 .widget-user .widget-user-username {
@@ -323,7 +323,7 @@ element.style {
 
 .modal-content.hidden-content {
     background-color: transparent !important;
-    -webkit-box-shadow: none !important;
+    /* -webkit-box-shadow: none !important; */
 }
 
 .download-kartu-tamu {

@@ -132,7 +132,8 @@ class ScanqrController extends Controller
     
     //penghubung method dengan view yang akan ditampilkan
     public function show_detail($email = null){
-        $visitor = Visitor::find($email);
+        $visitor = Visitor::where('email', $email);
+        dd($visitor);
         // $deposit = Deposit::where('visitor_id', $id)->first();
         // $log_limit = LogLimit::where('visitor_id', $id)->first();
         $data['visitor'] = $visitor;
