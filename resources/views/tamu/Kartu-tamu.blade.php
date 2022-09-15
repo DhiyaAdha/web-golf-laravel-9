@@ -42,49 +42,48 @@
                                     <div class="modal-body">
                                         <div class="d-flex justify-content-center align-items-center flex-column">
                                             <div class="d-flex justify-content-center flex-wrap" id="cetak-kartu">
-                                                <div class="col-md-card d-flex justify-content-center mb-10">
-                                                    <div class="panel panel-default card-view card-visitor">
-                                                        <div class="panel-heading">
-                                                            <div class="pull-left">
-                                                                <div class="d-flex title-card">
-                                                                    <img src="{{ asset('/dist/img/tgcc-icon-small.svg') }}">
-                                                                    <div class="d-flex flex-column">
-                                                                        <h6 class="panel-title txt-dark label-visitor">
-                                                                            tritih golf</h6>
-                                                                        <h6 class="panel-title txt-dark label-visitor">
-                                                                            country & club</h6>
-                                                                    </div>
+                                            <div class="col-md-card d-flex justify-content-center mb-10">
+                                                <div class="panel panel-default card-view card-visitor">
+                                                    <div class="panel-heading">
+                                                        <div class="pull-left">
+                                                            <div class="d-flex title-card">
+                                                                <img src="{{ asset('/dist/img/tgcc-icon-small.svg') }}">
+                                                                <div class="d-flex flex-column">
+                                                                    <h6 class="panel-title txt-dark label-visitor">
+                                                                        tritih golf</h6>
+                                                                    <h6 class="panel-title txt-dark label-visitor">
+                                                                        country & club</h6>
                                                                 </div>
                                                             </div>
-                                                            <div class="clearfix"></div>
                                                         </div>
-                                                        <div class="panel-wrapper collapse in">
-                                                            <div class="panel-body card">
-                                                                <div
-                                                                    class="d-flex justify-content-center align-items-center bg-front">
-                                                                    <div class="pull-left">
-                                                                        <img class="front-qr"
-                                                                            src="{{ asset('/dist/img/icon-golf1.svg') }}">
-                                                                    </div>
-                                                                    <div class="pull-right">
-                                                                        <img class="front-qr"
-                                                                            src="{{ asset('/dist/img/icon-golf2.svg') }}">
-                                                                    </div>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <div class="panel-wrapper collapse in">
+                                                        <div class="panel-body card">
+                                                            <div class="d-flex justify-content-center align-items-center bg-front">
+                                                                <div class="pull-left">
+                                                                    <img class="front-qr" src="{{ asset('/dist/img/icon-golf1.svg') }}">
                                                                 </div>
-                                                                {{-- <div class="d-flex-justify-content-center">
-                                                                    <p class="text-center">{{ $visitor->name }}</p>
-                                                                    <p class="text-center">{{ $visitor->tipe_member }}</p>
+                                                                <div class="pull-right">
+                                                                    <img class="front-qr" src="{{ asset('/dist/img/icon-golf2.svg') }}">
                                                                 </div>
-                                                                <div class="d-flex-justify-content-center">
-                                                                    <p class="text-center">{{ $visitor->phone }}</p>
-                                                                    <p class="text-center">{{ $visitor->email }}</p>
-                                                                </div> --}}
-                                                                <img class="align-self-end img-footer"
-                                                                    src="{{ asset('/dist/img/golf-footer.svg') }}">
                                                             </div>
+                                                            <div class=" text-name-card">
+                                                                <div class="d-flex-justify-content-center">
+                                                                    <strong><p class="text-center">{{ $visitor->name }}</p></strong>
+                                                                    <p class="text-center text-primary">{{ $visitor->tipe_member }}</p>
+                                                                </div>
+                                                                <br>
+                                                                <div class="d-flex-justify-content-center ">
+                                                                    <p class="text-center text-muted">{{ $visitor->phone }}</p>
+                                                                    <p class="text-center text-muted text-lowercase">{{ $visitor->email }}</p>
+                                                                </div>
+                                                            </div>
+                                                            <img class="align-self-end img-footer" src="{{ asset('/dist/img/golf-footer.svg') }}">
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
                                                 <div class="col-md-card d-flex justify-content-center mb-10">
                                                     <div class="panel panel-default card-view card-visitor">
                                                         <div class="panel-heading wave">
@@ -357,10 +356,10 @@
             responsive: true,
             language: {
                 emptyTable: "Tidak ada data pada tabel ini",
-                info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
-                infoFiltered: "(difilter dari _MAX_ total data)",
+                info: "Menampilkan START s/d END dari TOTAL data",
+                infoFiltered: "(difilter dari MAX total data)",
                 infoEmpty: "Tidak ada data pada tabel ini",
-                lengthMenu: "Menampilkan _MENU_ data",
+                lengthMenu: "Menampilkan MENU data",
                 zeroRecords: "Tidak ada data pada tabel ini"
             },
             columnDefs: [{
@@ -415,10 +414,10 @@
                 // search: "",
                 // searchPlaceholder: "Cari",
                 emptyTable: "Tidak ada data pada tabel ini",
-                info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
-                infoFiltered: "(difilter dari _MAX_ total data)",
+                info: "Menampilkan START s/d END dari TOTAL data",
+                infoFiltered: "(difilter dari MAX total data)",
                 infoEmpty: "Tidak ada data pada tabel ini",
-                lengthMenu: "Menampilkan _MENU_ data",
+                lengthMenu: "Menampilkan MENU data",
                 zeroRecords: "Tidak ada data pada tabel ini"
             },
             columnDefs: [{
@@ -465,10 +464,10 @@
             responsive: true,
             language: {
                 emptyTable: "Tidak ada data pada tabel ini",
-                info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
-                infoFiltered: "(difilter dari _MAX_ total data)",
+                info: "Menampilkan START s/d END dari TOTAL data",
+                infoFiltered: "(difilter dari MAX total data)",
                 infoEmpty: "Tidak ada data pada tabel ini",
-                lengthMenu: "Menampilkan _MENU_ data",
+                lengthMenu: "Menampilkan MENU data",
                 zeroRecords: "Tidak ada data pada tabel ini"
             },
             columnDefs: [{

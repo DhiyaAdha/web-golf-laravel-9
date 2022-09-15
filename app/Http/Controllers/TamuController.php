@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Cache\RateLimiting\Limit;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-
+use App\Jobs\SendMailJobDeposit;
 class TamuController extends Controller
 {
     /**
@@ -123,7 +123,6 @@ class TamuController extends Controller
             'position' => 'required',
             'tipe_member' => 'required',
         ]);
-
         $random = Str::random(15);
         $random_unique = Carbon::now()->format('Y-m');
         $token = $random_unique.'-'.$random;
@@ -161,6 +160,7 @@ class TamuController extends Controller
             // 'updated_at' => Carbon::now(),
         ]);
         $quota->save();
+
         $data = $request->all();
         dispatch(new SendMailJob($data));
         return redirect('/tambah-deposit/'.$visitors->id)->with(
