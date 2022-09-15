@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Cache\RateLimiting\Limit;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\URL;
 use App\Jobs\SendMailJob;
 use App\Jobs\SendMailJobDeposit;
 class TamuController extends Controller
