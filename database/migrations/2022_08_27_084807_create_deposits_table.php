@@ -18,7 +18,7 @@ class CreateDepositsTable extends Migration
             $table->increments('id');
             $table->integer('visitor_id')->unsigned();
             $table->integer('report_deposit_id')->unsigned();
-            $table->integer('balance')->nullable();
+            $table->integer('balance')->default(0);
             $table->string('activities')->nullable();
             $table->timestamps();
             
