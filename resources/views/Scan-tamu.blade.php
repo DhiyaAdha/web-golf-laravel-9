@@ -47,8 +47,8 @@
             $('.disabled-scan').addClass('d-none');
 
             function onScanSuccess(decodedText, decodedResult) {
-                // $("#resultTEXT").val(decodedText)
-                // $('#resultDECODE').val(JSON.stringify(decodedResult));
+                $("#resultTEXT").val(decodedText)
+                $('#resultDECODE').val(JSON.stringify(decodedResult));
                 html5QrcodeScanner.clear();
                 $.ajaxSetup({
                     headers: {
@@ -57,7 +57,7 @@
                 });
 
                 $.ajax({
-                    type: 'POST',
+                    type: 'GET',
                     url: "{{ route('visitor.qrcode') }}",
                     data: {
                         qrCode: decodedText
@@ -76,8 +76,7 @@
                                 showConfirmButton: false,
                                 timer: 2000,
                             }, function() {
-                                //untuk nge direct jika verifikasi data berhasil
-                                window.location.href = "/detail_scan/" + response.data.id;
+                                window.location.href = decodedText;
                             });
                         } else {
                             swal({
@@ -86,7 +85,6 @@
                                 text: response.message,
                                 allowOutsideClick: false
                             }, function() {
-                                // Untuk reload Page jika gagal
                                 window.location.reload(true)
                             });
                         }

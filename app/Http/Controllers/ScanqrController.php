@@ -8,6 +8,7 @@ use App\Models\LogLimit;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use illuminate\support\facades\DB;
+use Illuminate\Support\Facades\Crypt;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ScanqrController extends Controller
@@ -130,39 +131,27 @@ class ScanqrController extends Controller
     }
     
     //penghubung method dengan view yang akan ditampilkan
-    public function detail_datapengunjung($id){
+    public function show_detail($id = null){
         $visitor = Visitor::find($id);
-        // $deposit = Deposit::find($id);
         $deposit = Deposit::where('visitor_id', $id)->first();
         $log_limit = LogLimit::where('visitor_id', $id)->first();
-        // $log_limit = LogLimit::find($id);
         $data['visitor'] = $visitor;
         $data['deposit'] = $deposit;
         $data['log_limit'] = $log_limit;
-        
-
         return view('detail_scan', $data);
     }
 
-    public function checkQRCode(Request $request)
+    public function checkQRCode(Request $request, $id = null)
     {
-        $qrCode = trim($request->get('qrCode'));
-        $get_visitor = Visitor::where("id", $qrCode)->first();
+        $url_qr = explode("/", parse_url($request->get('qrCode'), PHP_URL_PATH));
+        $get_visitor = Visitor::where("id", $url_qr[2])->first();
         if($get_visitor == null) {
-            $this->setResponse('INVALID', "Invalid QR code");
+            $this->setResponse('INVALID', "Data tidak ditemukan!");
             return response()->json($this->getResponse());
         } else {
             try {
                 $this->setResponse('VALID', "Valid QR code", [
-                    'id' => $get_visitor->id,
                     'name' => $get_visitor->name,
-                    'email' => $get_visitor->email,
-                    'phone' => $get_visitor->phone,
-                    'address' => $get_visitor->address,
-                    'position' => $get_visitor->position,
-                    'company' => $get_visitor->company,
-                    'gender' => $get_visitor->gender,
-                    'tipe_member' => $get_visitor->tipe_member,
                 ]);
                 return response()->json($this->getResponse());
             } catch (\Throwable $th) {

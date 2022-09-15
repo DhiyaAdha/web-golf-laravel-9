@@ -81,7 +81,8 @@
                                             <span class="txt-muted">Kategori Tamu</span>
                                         </div>
                                         <div class="col-lg-12 col-md-12">
-                                            <span>{{ $visitor->tipe_member }}</span>
+                                            <span
+                                                class="{{ $visitor->tipe_member == 'VIP' ? 'label label-success' : 'label label-warning' }}">{{ $visitor->tipe_member }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -110,7 +111,7 @@
                                             </div>
                                             <div class="pull-right">
                                                 <strong>
-                                                    {{ formatrupiah($deposit->balance) ?? 'None'}}
+                                                    {{ formatrupiah($deposit->balance) ?? 'None' }}
                                                 </strong>
                                             </div>
                                         </div>

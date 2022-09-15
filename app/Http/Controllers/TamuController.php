@@ -7,18 +7,21 @@ use App\Models\User;
 use App\Models\Deposit;
 use App\Models\Visitor;
 use App\Models\LogLimit;
+use App\Jobs\SendMailJob;
 use App\Models\ReportLimit;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\ReportDeposit;
 use App\Models\DepositHistory;
 use App\Models\LogTransaction;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Cache\RateLimiting\Limit;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use App\Jobs\SendMailJob;
+
 class TamuController extends Controller
 {
     /**
@@ -121,6 +124,9 @@ class TamuController extends Controller
             'tipe_member' => 'required',
         ]);
 
+        $random = Str::random(15);
+        $random_unique = Carbon::now()->format('Y-m');
+        $token = $random_unique.'-'.$random;
         $visitors = Visitor::create([
             'name' => $request->name,
             'address' => $request->address,
@@ -132,6 +138,10 @@ class TamuController extends Controller
             'tipe_member' => $request->tipe_member,
             'created_at' => Carbon::now(),
         ]);
+        $get_visitor = Visitor::where('id', $visitors->id)->latest()->first();
+        $link_qr = URL::signedRoute('detail-scan',['qr'=>$token, 'e'=> $visitors->id]);
+        $get_visitor->unique_qr = $link_qr;
+        $get_visitor->save();
         
         // ReportLimit::create($request->all);
         $report_quota = ReportLimit :: create([
