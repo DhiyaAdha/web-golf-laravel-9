@@ -21,9 +21,10 @@
             <!-- /Title -->
 
 
-            <div class="row">
+            <div class="row" id="cetak-invoice">
                 <div class="col-md-12">
                     <div class="panel panel-default card-view" data-size="A4">
+                        <i class="fa fa-print pull-right"></i>
                         <div class="row">
                             <div class="col-md-2">
                                 <h2 class="invoice">INVOICE</h2>
@@ -54,11 +55,8 @@
                             <div class="col-md-6 mt-20">
                                 <address>
                                     <strong>Katagori Tamu:</strong><br>
-                                    @if ($visitor->tipe_member == 'VIP')
-                                        <span class="label label-success">{{ $visitor->tipe_member }}</span>
-                                    @else
-                                        <span class="label label-warning">{{ $visitor->tipe_member }}</span>
-                                    @endif
+                                    <p style="color: #616161">{{ $visitor->tipe_member }}</p><br>
+
                                 </address>
                             </div>
                             <div class="col-md-6 text-right">
@@ -74,25 +72,14 @@
                         <div class="table-responsive">
                             <table class="mb-0" id="dt-invoice">
                                 <thead>
-                                    <tr class="" style="text-align: center">
-                                        <td class="" style="text-align: left"><strong>Nama</strong></td>
+                                    <tr>
+                                        <td><strong>Nama</strong></td>
                                         <td class=""><strong>Harga</strong></td>
                                         <td class=""><strong>Jumlah</strong></td>
-                                        <td class="" style="text-align: right"><strong>Total</strong></td>
+                                        <td class=""><strong>Total</strong></td>
                                     </tr>
                                 </thead>
                                 <tr></tr>
-                                <thead>
-                                    <tr class="" style="text-align: center">
-                                        <td class="" style="text-align: left">
-                                            {{ $package->name }}
-                                        </td>
-                                        <td class="">Rp. {{ formatrupiah($package->price_weekdays) }}</td>
-                                        <td class="">{{ $detail->quantity }}</td>
-                                        <td class="" style="text-align: right">Rp.
-                                            {{ formatrupiah($transaction->total) }}</td>
-                                    </tr>
-                                </thead>
                                 <tbody>
                                     <tr>
                                         <td class="thick-line"></td>
@@ -127,15 +114,20 @@
                             {{-- <div class="row">
                                 <div class="col-lg-7">
                                 </div>
-                                <div class="btn-cetak-invoice">
-                                    <div class="col-md-12">
-                                        <div class="btn-print">
-                                            <a href="printpdf">
-                                                <i class="fa-regular fa-file-lines flex" style="color: white">
-                                                    <p>Cetak</p>
-                                                </i>
-                                            </a>
-                                        </div>
+                                <div class="col-lg-3 col-md-12">
+                                    <div class="btn-selesai">
+                                        <a href="/riwayat-invoice">
+                                            <p style="color: white">Selesai</p>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-12">
+                                    <div class="btn-print">
+                                        <a href="printpdf">
+                                            <i class="fa-regular fa-file-lines">
+                                                Print Struct
+                                            </i>
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="form-group text-right">
@@ -149,3 +141,12 @@
         @include('Layouts.Footer')
     </div>
 @endsection
+@push('scripts')
+    <script>
+        $('.fa-print').on("click", function() {
+            $('#cetak-invoice').printThis({
+                printContainer: true,
+            });
+        });
+    </script>
+@endpush
