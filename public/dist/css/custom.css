@@ -367,6 +367,25 @@ element.style {
     width: 500px; 
     height: 400px;
 }
+.card-img-absolute {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+}
+
+.sm-data-box.today{
+    background: -webkit-gradient(linear, left top, right top, from(#82eee5), to(#01C853)) !important;
+    background: linear-gradient(to right, #82eee5, #01C853) !important;
+}
+.sm-data-box.vvip{
+    background: -webkit-gradient(linear, left top, right top, from(#f3e18c), to(#FFDE32)) !important;
+    background: linear-gradient(to right, #f3e18c, #FFDE32) !important;
+}
+.sm-data-box.vip{
+    background: -webkit-gradient(linear, left top, right top, from(#81efce), to(#32FFC1)) !important;
+    background: linear-gradient(to right, #81efce, #32FFC1) !important;
+}
 
 video {
     width: 500px !important;

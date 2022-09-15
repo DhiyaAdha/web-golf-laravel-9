@@ -131,98 +131,86 @@
                     <tr>
                         <td bgcolor="#ffffff" align="center" valign="top"
                             style="justify-content: center; padding: 0px 20px 0px 20px; border-radius: 4px 4px 0px 0px; color: #01C853; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 25px; font-weight: 600; letter-spacing: 4px; line-height: 48px;">
-                            {{-- <div style="display:flex;justify-content: center;">
+                            <div style="display:flex;justify-content: center;">
                                 <img class="brand-img" src="{{ asset('dist/img/tgcc_icon.svg') }}" alt="brand"
                                     width="30" height="30">
                                 <span class="brand-text" style="color: #111111">TGGC</span>
 
-                            </div> --}}
-                            {{-- <div style="display:flex;justify-content: center;">
-                                <img src="{{ env('APP_URL') . 'img/success.svg' }}" width="50" height="50"
-                                    style="display: block; border: 0px; margin: 15px;" />
-                            </div> --}}
-                            <p style="margin: 0;text-align: center;">Member Terdaftar</p>
+                            </div>
                         </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td bgcolor="#f4f4f4" align="center" style="padding: 0px 10px 0px 10px;">
-                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                     <tr>
                         <td bgcolor="#ffffff" align="center"
                             style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;text-align: center;">Hallo, <strong>{{ $data['name'] }}</strong></p>
+                            <p style="margin: 0;text-align: center;">Hallo, <strong>Yudistira Ramadan
+                                    Kalimasada</strong></p>
                         </td>
                     </tr>
-                    <tr>
-                        <td bgcolor="#ffffff" align="left"
-                            style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16x; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">Anda telah terdaftar sebagai membership TGGC : </p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td bgcolor="#ffffff" align="left"
-                            style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                            <div style="display:flex;">
-                                <p style="margin: 0;">Alamat : </p>
-                                <p style="margin: 0;">{{ $data['address'] }}</p>
-                            </div>
-                            <div style="display:flex;">
-                                <p style="margin: 0;">Jenis Kelamin : </p>
-                                <p style="margin: 0;">{{ $data['gender'] }}</p>
-                            </div>
-                            <div style="display:flex;">
-                                <p style="margin: 0;">Phone : </p>
-                                <p style="margin: 0;">{{ $data['phone'] }}</p>
-                            </div>
-                            <div style="display:flex;">
-                                <p style="margin: 0;">Perusahaan : </p>
-                                <p style="margin: 0;">{{ $data['company'] }}</p>
-                            </div>
-                            <div style="display:flex;">
-                                <p style="margin: 0;">Jabatan:</p>
-                                <p style="margin: 0;">{{ $data['position'] }}</p>
-                            </div>
-                            <div style="display:flex;">
-                                <p style="margin: 0;">Tipe Member:</p>
-                                <p style="margin: 0;">{{ $data['tipe_member'] }}</< /p>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td bgcolor="#ffffff" align="justify"
-                            style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">Apabila Anda membutuhkan informasi lebih lanjut, Silahkan menghubungi
-                                kami Selamat Bermain.</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td bgcolor="#ffffff" align="justify"
-                            style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">Email ini dihasilkan secara otomatis oleh sistem dan mohon untuk tidak
-                                membalas email ini. Informasi lebih lanjut hubungi Admin Kami.</p>
-                        </td>
-                    </tr>
-                </table>
-            </td>
         </tr>
-        <tr>
-            <td bgcolor="#f4f4f4" align="center">
-                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-                    <tr>
-                        <td bgcolor="#FFE600" align="justify"
-                            style="padding: 20px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">Disclaimer : Berhati-hatilah dengan lampiran ini. Pesan ini berisi 1
-                                lampiran terenkripsi yang tidak dapat dipindai untuk mengetahui adanya konten berbahaya.
-                                Jangan download lampiran tersebut kecuali Anda mengenal pengirimnya dan yakin email
-                                tersebut sah.</p>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
+    </table>
+    </td>
+    </tr>
+    <tr>
+        <td bgcolor="#f4f4f4" align="center" style="padding: 0px 10px 0px 10px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                <tr>
+                    <td bgcolor="#ffffff" align="center"
+                        style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
+                        <p style="margin: 0;text-align: left;">Terimakasih telah bermain Golf di <strong>Tritih
+                                Golf Country & Club. </strong>Berikut detail kartu anda :</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#ffffff" align="left"
+                        style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
+                        <div style="display:flex;">
+                            <p style="margin: 0;">ID Tamu : </p>
+                            <p style="margin: 0;">00987</p>
+                        </div>
+                        <div style="display:flex;">
+                            <p style="margin: 0;">Sisa Deposit : </p>
+                            <p style="margin: 0;">Rp. 4.500.000</p>
+                        </div>
+                        <div style="display:flex;">
+                            <p style="margin: 0;">Sisa Limit Bulanan : </p>
+                            <p style="margin: 0;">4 Kali</p>
+                        </div>
+                        <div style="display:flex;">
+                            <p style="margin: 0;">Sisa Limit Kupon : </p>
+                            <p style="margin: 0;">0 Kali</p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#ffffff" align="justify"
+                        style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
+                        <p style="margin: 0;">Demikian kami sampaikan, Stay Healty dan jangan lupa luangkan waktu
+                            untuk bermain Golf.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#ffffff" align="justify"
+                        style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
+                        <p style="margin: 0;">TGGC Group.</p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td bgcolor="#f4f4f4" align="center">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                <tr>
+                    <td bgcolor="#FFE600" align="justify"
+                        style="padding: 20px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
+                        <p style="margin: 0;">Disclaimer : Berhati-hatilah dengan lampiran ini. Pesan ini berisi 1
+                            lampiran terenkripsi yang tidak dapat dipindai untuk mengetahui adanya konten berbahaya.
+                            Jangan download lampiran tersebut kecuali Anda mengenal pengirimnya dan yakin email
+                            tersebut sah.</p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
     </table>
 </body>
 
