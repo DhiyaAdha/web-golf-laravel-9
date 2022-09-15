@@ -147,7 +147,8 @@
                                     </div>
                                     <div class="mb-15 d-flex flex-column">
                                         <span class="txt-muted">Kategori Tamu</span>
-                                        <span>{{ $visitor->tipe_member }}</span>
+                                        <span
+                                            class="{{ $visitor->tipe_member == 'VIP' ? 'label label-success' : 'label label-warning' }}">{{ $visitor->tipe_member }}</span>
                                     </div>
                                 </div>
                             </div>

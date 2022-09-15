@@ -10,7 +10,7 @@
                 <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
-                        <li><a href="javascript:void(0)">Dashboard</a></li>
+                        <li><a href="{{ url('daftar-admin') }}">Dashboard</a></li>
                         <li class="active"><span>Daftar Admin</span></li>
                     </ol>
                 </div>
