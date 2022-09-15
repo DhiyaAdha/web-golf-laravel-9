@@ -27,7 +27,7 @@ class InvoiceSeeder extends Seeder
         for($i = 1; $i <= 30; $i++) {
             DB::table('log_transactions')->insert([
                 'order_number' => $faker->unique()->numberBetween,
-                'visitor_id' => $faker->randomElement($visitor),
+                'visitor_id' => $i,
                 'user_id' => User::all()->random()->id,
                 'payment_type' => $faker->randomElement(['deposit', 'cash/transfer', 'limit bulanan', 'limit kupon']),
                 'payment_status' => $faker->randomElement([1]),
