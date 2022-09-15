@@ -43,6 +43,7 @@ Route::get('/', function () {
 
     //Level superadmin
 Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
+    Route::get('/detail/{e}', [ScanqrController::class, 'show_detail'])->name('detail-scan')->middleware('signed');
     Route::get('/daftar-admin', [AdminController::class, 'index'])->name('daftar-admin');
     Route::post('/store', [AdminController::class, 'store'])->name('store');
     Route::get('/daftar-admin/{id}', [AdminController::class, 'show'])->name('show');
@@ -60,11 +61,10 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
 //Level admin dan superadmin
 Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::resource('analisis-tamu', DashboardController::class);
-    Route::post('/visitor/qrcode', [ScanqrController::class, 'checkQRCode'])->name('visitor.qrcode');
+    Route::get('/visitor/qrcode', [ScanqrController::class, 'checkQRCode'])->name('visitor.qrcode');
     Route::get('/scan-tamu-berhasil', [ScanController::class,'scantamuberhasil',])->name('scan-tamu-berhasil');
     Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name('scan-tamu');
     Route::get('qrcode/{id}', [ScanqrController::class, 'generate'])->name('generate');
-    Route::get('/detail_scan/{id}', [ScanqrController::class, 'detail_datapengunjung'])->name('detail_scan');
     Route::get('/scan-tamu-berhasil', [ScanqrController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
     Route::get('/kartu-tamu', [ScanqrController::class, 'kartutamu'])->name('kartu-tamu');
     Route::get('/daftar-tamu', [TamuController::class, 'index'])->name('daftar-tamu');

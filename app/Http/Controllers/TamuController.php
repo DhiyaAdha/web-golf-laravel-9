@@ -121,7 +121,9 @@ class TamuController extends Controller
             'position' => 'required',
             'tipe_member' => 'required',
         ]);
-
+        $random = Str::random(15);
+        $random_unique = Carbon::now()->format('Y-m');
+        $token = $random_unique.'-'.$random;
         $visitors = Visitor::create([
             'name' => $request->name,
             'address' => $request->address,
@@ -133,6 +135,10 @@ class TamuController extends Controller
             'tipe_member' => $request->tipe_member,
             'created_at' => Carbon::now(),
         ]);
+        $get_visitor = Visitor::where('id', $visitors->id)->latest()->first();
+        $link_qr = URL::signedRoute('detail-scan',['qr'=>$token, 'e'=> $visitors->id]);
+        $get_visitor->unique_qr = $link_qr;
+        $get_visitor->save();
         
         // ReportLimit::create($request->all);
         $report_quota = ReportLimit :: create([
