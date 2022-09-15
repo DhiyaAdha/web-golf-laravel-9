@@ -23,10 +23,10 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="panel panel-default card-view">
+                    <div class="panel panel-default card-view" data-size="A4">
                         <div class="row">
                             <div class="col-md-2">
-                                <h2 style="font-size: 16px;"><strong>Invoice</strong></h2>
+                                <h2 class="invoice">INVOICE</h2>
                             </div>
                             <div class="col-md-10 text-right">
                                 <h3 class="float-right" style="font-size: 16px;"><strong>Order
@@ -64,14 +64,15 @@
                             <div class="col-md-6 text-right">
                                 <address>
                                     <strong>Order Date:</strong><br>
-                                    <p style="color: #616161">{{ $transaction->created_at->format('d F Y | H:i:s') }}</p>
+                                    <p style="color: #616161">{{ $transaction->created_at->format('d F Y | H:i:s') }}
+                                    </p>
                                     <br><br>
                                 </address>
                             </div>
                         </div>
                         <div class="clearfix"></div>
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="mb-0" id="dt-invoice">
                                 <thead>
                                     <tr class="" style="text-align: center">
                                         <td class="" style="text-align: left"><strong>Nama</strong></td>
@@ -123,7 +124,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-lg-7">
                                 </div>
                                 <div class="btn-cetak-invoice">
@@ -138,9 +139,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group text-right">
-                                    {{-- <button type="submit" class="btn btn-info">Selesai</button> --}}
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>

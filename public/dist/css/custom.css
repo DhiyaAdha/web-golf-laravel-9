@@ -387,6 +387,24 @@ element.style {
     background: linear-gradient(to right, #81efce, #32FFC1) !important;
 }
 
+div[data-size="A4"] {
+    background: #EDF2F9;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 0.5cm;
+    background: url(/img/pattern-1.svg) no-repeat center bottom;
+    background-size: cover;
+    position: relative;
+}
+.invoice {
+    font-size: 2.5rem;
+    font-weight: 500;
+    background: -webkit-linear-gradient(45deg, #82eee5, #01C853 80%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #00000021;
+    margin: 0;
+}
+
 video {
     width: 500px !important;
     border: 1.8px solid gray;
