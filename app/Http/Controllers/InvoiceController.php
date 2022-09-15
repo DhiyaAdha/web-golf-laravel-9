@@ -32,6 +32,9 @@ class InvoiceController extends Controller
             ->editColumn('created_at', function ($data) {
                 return $data->created_at->format('d F Y');
             })
+            ->editColumn('total', function ($data) {
+                return  ('Rp. ' .formatrupiah($data->total));
+            })
             ->rawColumns(['name','action'])
             ->make(true);
         }
@@ -45,20 +48,20 @@ class InvoiceController extends Controller
      */
     public function create(Request $request)
     {
-        $invoice = Detail::select(['packages.name', 'detail_transactions.harga', 'detail_transactions.quantity'])
-        ->leftJoin('packages', 'packages.id', '=', 'detail_transactions.package_id')->get();
-        if($request->ajax()){
-            return datatables()->of($invoice)
-            ->editColumn('harga', function ($data) {
-                return  ('Rp. ' .formatrupiah($data->harga));
-            })
-            ->editColumn('total', function ($data) {
-                return  ('Rp. ' .formatrupiah($data->harga * $data->quantity));
-            })
-            ->make(true);
+        // $invoice = Detail::select(['packages.name', 'detail_transactions.harga', 'detail_transactions.quantity'])
+        // ->leftJoin('packages', 'packages.id', '=', 'detail_transactions.package_id')->get();
+        // if($request->ajax()){
+        //     return datatables()->of($invoice)
+        //     ->editColumn('harga', function ($data) {
+        //         return  ('Rp. ' .formatrupiah($data->harga));
+        //     })
+        //     ->editColumn('total', function ($data) {
+        //         return  ('Rp. ' .formatrupiah($data->harga * $data->quantity));
+        //     })
+        //     ->make(true);
 
-        }
-        return view('invoice.invoice');
+        // }
+        // return view('invoice.invoice');
     }
 
     /**

@@ -1500,15 +1500,16 @@ div.switch5 > input.switch:focus ~ label:before {
     /* margin-right: 30px; */
 }
 
+
 .btn-print {
+    float: right;
     text-align: center;
-    background-color: white;
-    width: auto;
-    height: 40px;
-    border: 2.3px solid #01c853;
+    background-color: #01c853;
+    height: 50px;
+    width: 10%;
+    border: 2.3px solid black;
     padding-top: 6px;
-    /* margin-left: 30px;
-    margin-right: 15px; */
+    margin-left: 0px;
 }
 
 .ct-txt {

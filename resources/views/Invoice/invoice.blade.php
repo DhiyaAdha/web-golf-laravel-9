@@ -54,8 +54,11 @@
                             <div class="col-md-6 mt-20">
                                 <address>
                                     <strong>Katagori Tamu:</strong><br>
-                                    <p style="color: #616161">{{ $visitor->tipe_member }}</p><br>
-
+                                    @if ($visitor->tipe_member == 'VIP')
+                                        <span class="label label-success">{{ $visitor->tipe_member }}</span>
+                                    @else
+                                        <span class="label label-warning">{{ $visitor->tipe_member }}</span>
+                                    @endif
                                 </address>
                             </div>
                             <div class="col-md-6 text-right">
@@ -68,16 +71,27 @@
                         </div>
                         <div class="clearfix"></div>
                         <div class="table-responsive">
-                            <table class="table table-hover mb-0" id="dt-invoice">
+                            <table class="table">
                                 <thead>
-                                    <tr>
-                                        <td><strong>Nama</strong></td>
+                                    <tr class="" style="text-align: center">
+                                        <td class="" style="text-align: left"><strong>Nama</strong></td>
                                         <td class=""><strong>Harga</strong></td>
                                         <td class=""><strong>Jumlah</strong></td>
-                                        <td class=""><strong>Total</strong></td>
+                                        <td class="" style="text-align: right"><strong>Total</strong></td>
                                     </tr>
                                 </thead>
                                 <tr></tr>
+                                <thead>
+                                    <tr class="" style="text-align: center">
+                                        <td class="" style="text-align: left">
+                                            {{ $package->name }}
+                                        </td>
+                                        <td class="">Rp. {{ formatrupiah($package->price_weekdays) }}</td>
+                                        <td class="">{{ $detail->quantity }}</td>
+                                        <td class="" style="text-align: right">Rp.
+                                            {{ formatrupiah($transaction->total) }}</td>
+                                    </tr>
+                                </thead>
                                 <tbody>
                                     <tr>
                                         <td class="thick-line"></td>
@@ -112,20 +126,15 @@
                             <div class="row">
                                 <div class="col-lg-7">
                                 </div>
-                                <div class="col-lg-3 col-md-12">
-                                    <div class="btn-selesai">
-                                        <a href="/riwayat-invoice">
-                                            <p style="color: white">Selesai</p>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-md-12">
-                                    <div class="btn-print">
-                                        <a href="printpdf">
-                                            <i class="fa-regular fa-file-lines">
-                                                Print Struct
-                                            </i>
-                                        </a>
+                                <div class="btn-cetak-invoice">
+                                    <div class="col-md-12">
+                                        <div class="btn-print">
+                                            <a href="printpdf">
+                                                <i class="fa-regular fa-file-lines flex" style="color: white">
+                                                    <p>Cetak</p>
+                                                </i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group text-right">
@@ -140,66 +149,3 @@
         @include('Layouts.Footer')
     </div>
 @endsection
-@push('scripts')
-    <script>
-        // invoice detail
-        $('#dt-invoice').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "lengthChange": false,
-            "bDestroy": true,
-            "searching": false,
-            "paginate": {
-                "first": "First",
-                "last": "Last",
-                "next": "Next",
-                "previous": "Previous"
-            },
-            "ajax": {
-                "url": "{{ route('riwayat-invoice.create') }}",
-                "type": "GET",
-                "datatype": "json"
-            },
-            "render": $.fn.dataTable.render.text(),
-            "columns": [{
-                    data: 'name',
-                    searchable: true,
-                    orderable: false
-                },
-                {
-                    data: 'harga',
-                    searchable: true,
-                    orderable: false
-                },
-                {
-                    data: 'quantity',
-                    searchable: true,
-                    orderable: false
-                },
-                {
-                    data: 'total',
-                    searchable: true,
-                    orderable: false,
-                    className: 'text-right'
-                },
-            ],
-            order: [],
-            responsive: true,
-            language: {
-                search: "",
-                searchPlaceholder: "Cari",
-                emptyTable: "Tidak ada data pada tabel ini",
-                info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
-                infoFiltered: "(difilter dari _MAX_ total data)",
-                infoEmpty: "Tidak ada data pada tabel ini",
-                lengthMenu: "Menampilkan _MENU_ data",
-                zeroRecords: "Tidak ada data pada tabel ini"
-            },
-            columnDefs: [{
-                    className: 'text-center',
-                    targets: [1, 2]
-                }
-            ],
-        });  
-    </script>
-@endpush
