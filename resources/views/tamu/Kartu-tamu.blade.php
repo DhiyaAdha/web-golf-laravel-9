@@ -107,7 +107,7 @@
                                                                     <img class="back-qr"
                                                                         src="{{ asset('/dist/img/icon-golf1.svg') }}">
                                                                     <div class="qr-code-visitor">
-                                                                        {{ QrCode::size(120)->generate($visitor->id) }}
+                                                                        {{ QrCode::size(120)->generate($visitor->unique_qr) }}
                                                                     </div>
                                                                 </div>
                                                                 <img class="align-self-end img-footer"
