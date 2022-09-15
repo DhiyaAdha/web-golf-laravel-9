@@ -35,9 +35,6 @@ class TamuController extends Controller
     }
     public function index(Request $request)
     {
-        //Paginasi
-        // $visitor = DB::table('visitors')->orderBy('created_at', 'desc')->whereNull('deleted_at')->paginate(20);
-
         $visitor = Visitor::select([
             'id',
             'name',
@@ -50,9 +47,9 @@ class TamuController extends Controller
 
         if ($request->ajax()) {
             return datatables()->of($visitor)->addColumn('action', function ($visitor) {
-                    $button = '<div class="d-flex align-items-center"><a data-toggle="tooltip" data-placement="top" title="Detail Tamu" href="' .url('kartu-tamu/' . $visitor->id) .'"><img src="dist/img/Card-Tamu.svg"></a>';
+                    $button = '<div class="d-flex align-items-center"><a data-toggle="tooltip" data-placement="top" title="Detail Tamu" href="' .url('kartu-tamu/' . Crypt::encryptString($visitor->id)) .'"><img src="dist/img/Card-Tamu.svg"></a>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<a data-toggle="tooltip" data-placement="top" title="Edit" href="/edit-tamu/' .$visitor->id .'">
+                    $button .= '<a data-toggle="tooltip" data-placement="top" title="Edit" href="'.url('edit-tamu/' . Crypt::encryptString($visitor->id)) .'">
                                     <svg width="21" height="21";viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M20 3.26645L17.5333 0.799784C17.3213 0.597635 17.0396 0.484863 16.7467 0.484863C16.4537 0.484863 16.172 0.597635 15.96 0.799784L13.7667 2.99978H1.99999C1.64637 2.99978 1.30723 3.14026 1.05718 3.39031C0.807132 3.64036 0.666656 3.9795 0.666656 4.33312V18.9998C0.666656 19.3534 0.807132 19.6925 1.05718 19.9426C1.30723 20.1926 1.64637 20.3331 1.99999 20.3331H16.6667C17.0203 20.3331 17.3594 20.1926 17.6095 19.9426C17.8595 19.6925 18 19.3534 18 18.9998V6.83978L20 4.83978C20.2084 4.63104 20.3255 4.34811 20.3255 4.05312C20.3255 3.75813 20.2084 3.47519 20 3.26645ZM10.5533 12.4198L7.75999 13.0398L8.42666 10.2731L14.7933 3.89312L16.9467 6.04645L10.5533 12.4198ZM17.6667 5.28645L15.5133 3.13312L16.7467 1.89978L18.9 4.05312L17.6667 5.28645Z" fill="#787878"/>
                                     </svg>
@@ -203,7 +200,6 @@ class TamuController extends Controller
     /* insert deposit && BERTAMBAH(create) deposit */
     public function insertdeposit(Request $request)
     {
-
         $visitors = Visitor::where('id', $request->id)->first();
         $report_deposit = ReportDeposit::create([
             'visitor_id' => $request->visitor_id,
@@ -243,24 +239,25 @@ class TamuController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $data['visitor'] = Visitor::find($id);
-        $limit = LogLimit::where('visitor_id',$id)->first();
-        $deposit = Deposit::where('visitor_id',$id)->first();
-        $visitor = Visitor::findOrFail($id);
-        $data['qrcode'] = QrCode::size(180)->generate($visitor->id);
-        $data['quota'] = $limit->quota;
-        $data['balance'] = $deposit->balance;
-        $data['deposit'] = Deposit::where('visitor_id', $id)
-            ->orderBy('created_at', 'desc')
-            // ->limit(5)
-            ->get();
-        $data['limit'] = LogLimit::where('visitor_id', $id)
-            ->orderBy('created_at', 'desc')
-            // ->limit(5)
-            ->get();
-        // dd ($data['deposit_history']);
-
-        return view('tamu.kartu-tamu', $data);
+        try {
+            $decrypt_id = Crypt::decryptString($id);
+            $data['visitor'] = Visitor::find($decrypt_id);
+            $limit = LogLimit::where('visitor_id',$decrypt_id)->first();
+            $deposit = Deposit::where('visitor_id',$decrypt_id)->first();
+            $visitor = Visitor::findOrFail($decrypt_id);
+            $data['qrcode'] = QrCode::size(180)->generate($visitor->id);
+            $data['quota'] = $limit->quota;
+            $data['balance'] = $deposit->balance;
+            $data['deposit'] = Deposit::where('visitor_id', $decrypt_id)
+                ->orderBy('created_at', 'desc')
+                ->get();
+            $data['limit'] = LogLimit::where('visitor_id', $decrypt_id)
+                ->orderBy('created_at', 'desc')
+                ->get();
+            return view('tamu.kartu-tamu', $data);
+        } catch (\Throwable $th) {
+            return redirect()->route('daftar-tamu');
+        }
     }
 
     /* data aktifitas tamu Deposit */
@@ -555,8 +552,8 @@ class TamuController extends Controller
      */
     public function edit($id)
     {
-        // get the shark
-        $visitor = Visitor::find($id);
+        $decrypt_id = Crypt::decryptString($id);
+        $visitor = Visitor::find($decrypt_id);
         return view('tamu.edit-tamu', compact('visitor'));
     }
 
