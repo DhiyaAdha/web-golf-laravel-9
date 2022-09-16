@@ -7,7 +7,10 @@ use App\Models\Package;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
 use App\Models\LogTransaction;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
@@ -23,7 +26,7 @@ class InvoiceController extends Controller
         if($request->ajax()){
             return datatables()->of($riwayat_invoice)->addColumn('action', function ($data) {
                 $button = 
-                    '<div class="align-items-center"><a href="javascript:void(0)" name="pdf" data-toggle="tooltip" data-placement="top" title="download pdf"><img src="dist/img/pdf.svg" width="20px" height="20px">
+                    '<div class="align-items-center"><a href="'.url('invoice_cetakpdf/'.$data->id).'" name="pdf" data-toggle="tooltip" data-placement="top" title="download pdf"><img src="dist/img/pdf.svg" width="20px" height="20px">
                         </a></div>';
                 
                 return $button;
@@ -140,6 +143,24 @@ class InvoiceController extends Controller
 
     public function metode_pembayaran () {
         return view('Invoice.metode_pembayaran');
+    }
+    public function cetak_pdf($id)
+    {
+        $transaction = LogTransaction::find($id);
+        $package = Package::find($id);
+        $detail = Detail::find($id);
+        $data['transaction'] = $transaction;
+        $data['visitor'] = Visitor::find($transaction->visitor_id);
+        $data['package'] = Package::find($package->id);
+        $data['detail'] = Detail::find($detail->id);
+
+        
+        $pdf = PDF::loadView('invoice.coba' , $data);
+
+        return $pdf->download('invoice.pdf');
+        
+    	// $pdf = PDF::loadView('invoice.invoice', ['cetak_invoice' => $riwayat_invoice])->setpaper('A4','potrait');
+    	// return $pdf->stream('laporan_invoice_pdf');
     }
     
 }
