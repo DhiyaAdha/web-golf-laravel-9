@@ -1,4 +1,4 @@
-<div class="fixed-sidebar-left mt-10">
+<div class="fixed-sidebar-left">
     <ul class="nav navbar-nav side-nav nicescroll-bar">
         <li class="navigation-header">
             <span>Admin Dashboard</span>

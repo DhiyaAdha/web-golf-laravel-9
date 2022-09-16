@@ -3,25 +3,29 @@
 @section('content')
     <div class="page-wrapper">
         <div class="container-fluid">
+            <!-- Title -->
             <div class="row heading-bg">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h5 class="txt-dark">Tambah Tamu</h5>
+                </div>
                 <!-- Breadcrumb -->
-                <div class="row">
-                    <div class="container-fluid">
-                        <div class="col-lg-8">
-                            <h5>Tambah Tamu</h5>
-                        </div>
-                    </div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <ol class="breadcrumb">
+                        <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
+                        <li><a href="{{ url('daftar-tamu') }}">Daftar Tamu</a></li>
+                        <li class="active"><span>Tambah Tamu</span></li>
+                    </ol>
                 </div>
                 <!-- /Breadcrumb -->
             </div>
+            <!-- /Title -->
             <div class="row">
                 <div class="col-lg-12" style="position: relative;">
-                    <div style="height: 1250px" class="panel panel-default card-view">
+                    <div class="panel panel-default card-view">
                         <h6 class="control-label mb-10">Tambah Tamu</h6>
                         <div class="panel-body">
                             <div class="form-wrap">
-                                {{-- Insert Tamu --}}
-                                <form action="/inserttamu" method="POST">
+                                <form action="{{ route('inserttamu') }}" method="POST">
                                     @csrf
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="">Nama Lengkap</label>
@@ -34,14 +38,20 @@
                                             size="50px" placeholder="Masukan Alamat" required autofocus>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label mb-10" for="gender">Jenis Kelamin</label>
-                                        <div class="form-check">
-                                            <label class="radio-inline">
-                                                <input type="radio" name="gender" id="gender" value="laki-laki">Pria
-                                            </label>
-                                            <label class="radio-inline">
-                                                <input type="radio" name="gender" id="gender" value="perempuan">Wanita
-                                            </label>
+                                        <label class="control-label mb-10 text-left">Jenis Kelamin</label>
+                                        <div class="radio-list">
+                                            <div class="radio-inline pl-0">
+                                                <span class="radio radio-info"> <input type="radio" name="gender"
+                                                        id="gender-m" value="laki-laki">
+                                                    <label for="gender-m">Laki-laki</label>
+                                                </span>
+                                            </div>
+                                            <div class="radio-inline pl-0">
+                                                <span class="radio radio-info"> <input type="radio" name="gender"
+                                                        id="gender-w" value="perempuan">
+                                                    <label for="gender-w">Perempuan</label>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -57,8 +67,10 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="">Nomer Hp</label>
-                                        <input type="text" min="0" name="phone" class="form-control"
-                                            id="phone" size="50px" placeholder="Masukan Nomer Hp" required>
+                                        <input type="text" min="0"
+                                            onkeypress="return event.charCode >= 48 && event.charCode <=57" name="phone"
+                                            class="form-control" id="phone" size="50px"
+                                            placeholder="Masukan Nomer Hp" required>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="">Perusahaan</label>
@@ -85,14 +97,11 @@
                                     </div>
                                 </form>
                             </div>
-                            <!-- /Basic Table -->
                         </div>
-                        <!-- /Basic Table -->
                     </div>
-                    <!-- /Basic Table -->
                 </div>
             </div>
+            @include('Layouts.Footer')
         </div>
     </div>
 @endsection
-<script></script>

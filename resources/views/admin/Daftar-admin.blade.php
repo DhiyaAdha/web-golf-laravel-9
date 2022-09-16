@@ -89,8 +89,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- /Basic Table -->
             </div>
+            @include('Layouts.Footer')
         </div>
     </div>
 @endsection
@@ -167,6 +167,8 @@
         /* delete admin */
         $(document).on('click', '.delete-admin', function() {
             id = $(this).attr('id');
+            var url = "{{ route('hapus-admin', ':id') }}";
+            url = url.replace(':id', id);
             swal({
                 title: "Anda yakin ingin menghapus admin ini?",
                 imageUrl: "../img/Warning.svg",
@@ -179,7 +181,7 @@
             }, function(isConfirm) {
                 if (isConfirm) {
                     $.ajax({
-                        url: "/daftar-admin/destroy/" + id,
+                        url: url,
                         beforeSend: function() {
                             $('#ok_button').text('Hapus Data');
                         },
@@ -187,6 +189,7 @@
                             setTimeout(function() {
                                 $('#confirmModal').modal('hide');
                                 $('#dt-admin').DataTable().ajax.reload(null, false);
+                                $('#dt-aktifitas').DataTable().ajax.reload(null, false);
                             });
 
                             window.setTimeout(function() {

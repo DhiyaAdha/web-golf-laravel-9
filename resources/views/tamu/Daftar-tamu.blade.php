@@ -11,8 +11,8 @@
                 <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
-                        <li><a href="javascript:void(0)">Dashboard</a></li>
-                        <li class="active"><span>Paket Bermain</span></li>
+                        <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
+                        <li class="active"><span>Daftar Tamu</span></li>
                     </ol>
                 </div>
                 <!-- /Breadcrumb -->
@@ -60,10 +60,8 @@
                 </div>
                 <!-- /Basic Table -->
             </div>
+            @include('Layouts.Footer')
         </div>
-        <!-- Footer -->
-        @include('Layouts.Footer')
-        <!-- /Footer -->
     </div>
     <!-- /Main Content -->
 @endsection
@@ -140,6 +138,8 @@
         /* delete tamu */
         $(document).on('click', '.delete-confirm', function() {
             id = $(this).attr('id');
+            var url = "{{ route('hapus-tamu', ':id') }}";
+            url = url.replace(':id', id);
             swal({
                 title: "Anda yakin ingin menghapus tamu ini?",
                 imageUrl: "../img/Warning.svg",
@@ -152,7 +152,7 @@
             }, function(isConfirm) {
                 if (isConfirm) {
                     $.ajax({
-                        url: "/daftar-tamu/destroy/" + id,
+                        url: url,
                         beforeSend: function() {
                             $('#ok_button').text('Hapus Data');
                         },

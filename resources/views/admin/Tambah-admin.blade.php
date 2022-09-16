@@ -1,5 +1,4 @@
 @extends('Layouts.Main')
-
 @section('content')
     <div class="page-wrapper">
         <div class="container-fluid">
@@ -21,11 +20,11 @@
             <!-- /Title -->
             <div class="row">
                 <div class="col-lg-12" style="position: relative;">
-                    <div style="height: 900px" class="panel panel-default card-view">
+                    <div class="panel panel-default card-view">
                         <h6 class="control-label mb-10">Tambah Admin</h6>
                         <div class="panel-body">
                             <div class="form-wrap">
-                                <form action="/insertadmin" method="POST">
+                                <form action="{{ route('insertadmin') }}" method="POST">
                                     @csrf
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="">Nama Lengkap</label>
@@ -90,50 +89,49 @@
                     </div>
                 </div>
             </div>
+            @include('Layouts.Footer')
         </div>
-
-        <script>
-            function myfunction() {
-                var x = document.getElementById("password1");
-                var y = document.getElementById("hide1");
-                var z = document.getElementById("hide2");
-                if (x.type === 'password') {
-                    x.type = "text";
-                    y.style.display = "block";
-                    z.style.display = "none";
-                } else {
-                    x.type = "password";
-                    y.style.display = "none";
-                    z.style.display = "block";
-                }
+    </div>
+@endsection
+@push('scripts')
+    <script>
+        function myfunction() {
+            var x = document.getElementById("password1");
+            var y = document.getElementById("hide1");
+            var z = document.getElementById("hide2");
+            if (x.type === 'password') {
+                x.type = "text";
+                y.style.display = "block";
+                z.style.display = "none";
+            } else {
+                x.type = "password";
+                y.style.display = "none";
+                z.style.display = "block";
             }
+        }
 
-            function myfunction2() {
-                var x = document.getElementById("confirm_password");
-                var y = document.getElementById("hide3");
-                var z = document.getElementById("hide4");
-                if (x.type === 'password') {
-                    x.type = "text";
-                    y.style.display = "block";
-                    z.style.display = "none";
-                } else {
-                    x.type = "password";
-                    y.style.display = "none";
-                    z.style.display = "block";
-                }
+        function myfunction2() {
+            var x = document.getElementById("confirm_password");
+            var y = document.getElementById("hide3");
+            var z = document.getElementById("hide4");
+            if (x.type === 'password') {
+                x.type = "text";
+                y.style.display = "block";
+                z.style.display = "none";
+            } else {
+                x.type = "password";
+                y.style.display = "none";
+                z.style.display = "block";
             }
-        </script>
-    @endsection
-    {{-- confirm password --}}
-    @push('scripts')
-        <script>
-            $("#confirm_password").on('keyup', function() {
-                var password = $("#password").val();
-                var confirmPassword = $("#confirm_password").val();
-                if (password != confirmPassword)
-                    $("#CheckPasswordMatch").html("Password does not match !").css("color", "red");
-                else
-                    $("#CheckPasswordMatch").html("Password match !").css("color", "green");
-            });
-        </script>
-    @endpush
+        }
+
+        $("#confirm_password").on('keyup', function() {
+            var password = $("#password").val();
+            var confirmPassword = $("#confirm_password").val();
+            if (password != confirmPassword)
+                $("#CheckPasswordMatch").html("Password does not match !").css("color", "red");
+            else
+                $("#CheckPasswordMatch").html("Password match !").css("color", "green");
+        });
+    </script>
+@endpush

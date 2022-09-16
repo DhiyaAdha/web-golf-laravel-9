@@ -11,13 +11,12 @@
                 <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
-                        <li><a href="index.html">Dashboard</a></li>
-                        <li><a href="#"><span>Tambah paket</span></a></li>
+                        <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
+                        <li><a href="{{ url('package') }}"><span>Tambah paket</span></a></li>
                         <li class="active"><span>Tambah paket bermain</span></li>
                     </ol>
                 </div>
                 <!-- /Breadcrumb -->
-
             </div>
             <!-- /Title -->
 
@@ -98,7 +97,6 @@
                                                     placeholder="Masukan harga weekend" required>
                                             </div>
                                         </div>
-
                                         <button type="submit" class="btn btn-success">Submit</button>
                                     </form>
                                 </div>
@@ -109,7 +107,6 @@
             </div>
             <!-- /Row -->
         </div>
-
         <!-- Footer -->
         @include('Layouts.Footer')
         <!-- /Footer -->

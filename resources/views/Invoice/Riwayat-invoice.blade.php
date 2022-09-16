@@ -114,10 +114,10 @@
             },
             columnDefs: [{
                 className: 'text-center',
-                targets: [1, 2, 3]
+                targets: [1, 2, 3, 4]
             }, {
                 orderable: false,
-                targets: [0, 1, 2, 3]
+                targets: [0, 1, 2, 3, 4]
             }],
         });
         /* daftar invoice */
