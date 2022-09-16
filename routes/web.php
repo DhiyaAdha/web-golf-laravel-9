@@ -56,6 +56,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::post('/edit-admin/{users}', [AdminController::class, 'update'])->name('admin.edit');
     Route::get('/daftar-admin/destroy/{id}', [AdminController::class,'delete',])->name('hapus-admin');
     Route::get('aktifitas', [AdminController::class, 'aktifitas'])->name('admin.aktifitas');
+    Route::post('update/deposit/{id}', [ScanqrController::class, 'update_deposit'])->name('update.deposit')->middleware('signed');
 });
 
 //Level admin dan superadmin

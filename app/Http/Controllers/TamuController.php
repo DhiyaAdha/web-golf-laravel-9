@@ -159,8 +159,6 @@ class TamuController extends Controller
             'visitor_id' => $request->visitor_id,
             'user_id' => Auth::user()->id,
             'report_balance' => $request->balance,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
         ]);
         $report_deposit->save();    
         $deposit = Deposit::create([
@@ -170,8 +168,6 @@ class TamuController extends Controller
             'type' => 'CREATE',
             'balance' => $request->balance,
             'activities' => 'Deposit <b>'.$request->name.' bertambah menjadi <b>'.$request->balance.'</b>',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
         ]);
         $deposit->save();
         $data = $request->all();
