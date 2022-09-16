@@ -27,12 +27,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->call(function () {
-            // User::where('tipe_member', 'VVIP')->update(['quota'=>10]);
-            // User::where('tipe_member', 'VIP')->update(['quota'=>4]);
-
-            // Limit
-            // $schedule->command('quota:reset')->monthlyOn(1, '00:00');
-
+        
             LogLimit::whereHas('visitor', function($query) {
                 $query->where('tipe_member', 'VVIP');
             })->update(['quota'=>10]);
@@ -52,6 +47,7 @@ class Kernel extends ConsoleKernel
 
 
         })->everyMinute();
+        // ->monthly();
     }
 
     /**
