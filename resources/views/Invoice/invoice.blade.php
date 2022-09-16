@@ -23,7 +23,7 @@
 
             <!-- /Ini untuk Tampilan Cetak Invoice -->
 
-            <i class="fa fa-print pull-right"></i>
+            <a href="#"><i class="fa fa-print pull-right"></i></a>
             <div class="row" id="cetak-invoice">
                 <style>
                     .invoice {
