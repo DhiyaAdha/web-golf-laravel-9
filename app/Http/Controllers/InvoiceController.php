@@ -155,7 +155,7 @@ class InvoiceController extends Controller
         $data['detail'] = Detail::find($detail->id);
 
         
-        $pdf = PDF::loadView('invoice.coba' , $data);
+        $pdf = PDF::loadView('invoice.cetak_invoice' , $data);
 
         return $pdf->download('invoice.pdf');
         
