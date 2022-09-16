@@ -1,5 +1,4 @@
 @extends('Layouts.Main')
-
 @section('content')
     <div class="page-wrapper">
         <div class="container-fluid">
@@ -25,7 +24,7 @@
                         <h6 class="control-label mb-10">Tambah Admin</h6>
                         <div class="panel-body">
                             <div class="form-wrap">
-                                <form action="/insertadmin" method="POST">
+                                <form action="{{ route('insertadmin') }}" method="POST">
                                     @csrf
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="">Nama Lengkap</label>

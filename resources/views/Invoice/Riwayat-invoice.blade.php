@@ -39,6 +39,7 @@
                                                     <th class="" style="">Kategori Tamu</th>
                                                     <th class="" style="">Total Bayar</th>
                                                     <th class="" style="">Tanggal Bayar</th>
+                                                    <th class="" style="">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -95,6 +96,9 @@
                 {
                     data: 'created_at'
                 },
+                {
+                    data: 'action'
+                },
             ],
             order: [],
             responsive: true,
@@ -110,10 +114,10 @@
             },
             columnDefs: [{
                 className: 'text-center',
-                targets: [1, 2, 3]
+                targets: [1, 2, 3, 4]
             }, {
                 orderable: false,
-                targets: [0, 1, 2, 3]
+                targets: [0, 1, 2, 3, 4]
             }],
         });
         /* daftar invoice */

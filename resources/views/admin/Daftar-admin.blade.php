@@ -187,6 +187,7 @@
                             setTimeout(function() {
                                 $('#confirmModal').modal('hide');
                                 $('#dt-admin').DataTable().ajax.reload(null, false);
+                                $('#dt-aktifitas').DataTable().ajax.reload(null, false);
                             });
 
                             window.setTimeout(function() {

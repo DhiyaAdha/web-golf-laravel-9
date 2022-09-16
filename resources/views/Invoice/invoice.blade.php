@@ -21,8 +21,9 @@
             <!-- /Title -->
 
 
-            <div class="row">
+            <div class="row" id="cetak-invoice">
                 <div class="panel panel-default card-view" data-size="A4">
+                    <a href="javascript:void(0)"><i class="fa fa-print pull-right"></i></a>
                     <div class="row">
                         <div class="col-md-2">
                             <h2 class="invoice">INVOICE</h2>
@@ -69,42 +70,48 @@
                     <div class="clearfix"></div>
                     <div class="table-responsive">
                         <table class="mb-15" id="dt-invoice">
-                            <thead>
+                            <thead style="text-align: center">
                                 <tr>
-                                    <td class="text-left"><strong>Paket bermain</strong></td>
+                                    <td class="text-left"><strong>Paket Bermain</strong></td>
                                     <td class="text-left"><strong>Harga</strong></td>
                                     <td class="text-left"><strong>Jumlah</strong></td>
-                                    <td class="text-left"><strong>Total</strong></td>
+                                    <td class="text-right"><strong>Total</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left">{{ $visitor->name }}</td>
+                                    <td class="text-left">Rp.{{ formatrupiah($package->price_weekdays) }}</td>
+                                    <td class="text-left">{{ $detail->quantity }}</td>
+                                    <td class="text-right">Rp.{{ formatrupiah($transaction->total) }}</td>
                                 </tr>
                             </thead>
                             <tr></tr>
                             <tbody>
                                 <tr>
-                                    <td class="thick-line"></td>
-                                    <td class="thick-line"></td>
-                                    <td class="thick-line text-right">Subtotal</td>
-                                    <td class="thick-line text-right">
-                                        <span>Rp. {{ formatrupiah($detail->harga * $detail->quantity * 2) }}</span>
+                                    <td class="text-left"></td>
+                                    <td class="text-left"></td>
+                                    <td class="text-left">Subtotal</td>
+                                    <td class="text-right">
+                                        Rp. {{ formatrupiah($detail->harga * $detail->quantity * 2) }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="no-line"></td>
-                                    <td class="no-line"></td>
-                                    <td class="no-line text-right">Limit Bulanan</td>
-                                    <td class="no-line text-right">Rp. -</td>
+                                    <td class="text-left"></td>
+                                    <td class="text-left"></td>
+                                    <td class="text-left">Limit Bulanan</td>
+                                    <td class="text-right">Rp. -</td>
                                 </tr>
                                 <tr>
-                                    <td class="no-line"></td>
-                                    <td class="no-line"></td>
-                                    <td class="no-line text-right">Deposit</td>
-                                    <td class="no-line text-right">Rp. -</td>
+                                    <td class="text-left"></td>
+                                    <td class="text-left"></td>
+                                    <td class="text-left">Deposit</td>
+                                    <td class="text-right">Rp. -</td>
                                 </tr>
                                 <tr>
-                                    <td class="no-line"></td>
-                                    <td class="no-line"></td>
-                                    <td class="no-line text-right"><strong>Total Bayar</strong></td>
-                                    <td class="no-line text-right">
-                                        <span>Rp. {{ formatrupiah($transaction->total) }}</span>
+                                    <td class="text-left"></td>
+                                    <td class="text-left"></td>
+                                    <td class="text-left"><strong>Total Bayar</strong></td>
+                                    <td class="text-right">
+                                        Rp. {{ formatrupiah($transaction->total) }}
                                     </td>
                                 </tr>
                             </tbody>
@@ -116,3 +123,12 @@
         @include('Layouts.Footer')
     </div>
 @endsection
+@push('scripts')
+    <script>
+        $('.fa-print').on("click", function() {
+            $('#cetak-invoice').printThis({
+                printContainer: true,
+            });
+        });
+    </script>
+@endpush
