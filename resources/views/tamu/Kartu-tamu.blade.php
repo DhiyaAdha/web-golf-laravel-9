@@ -1,7 +1,6 @@
 @extends('Layouts.Main', ['title' => 'TGCC | Daftar Tamu'])
 @section('content')
     <div class="page-wrapper">
-        @include('sweetalert::alert')
         <div class="container-fluid">
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
@@ -10,8 +9,8 @@
                 <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
-                        <li><a href="index.html">Dashboard</a></li>
-                        <li><a href="index.html">Daftar tamu</a></li>
+                        <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
+                        <li><a href="{{ url('daftar-tamu') }}">Daftar tamu</a></li>
                         <li class="active"><span>Detail tamu</span></li>
                     </ol>
                 </div>
@@ -148,7 +147,7 @@
                                     <div class="mb-15 d-flex flex-column">
                                         <span class="txt-muted">Kategori Tamu</span>
                                         <span
-                                            class="{{ $visitor->tipe_member == 'VIP' ? 'label label-success' : 'label label-warning' }}">{{ $visitor->tipe_member }}</span>
+                                            class="{{ $visitor->tipe_member == 'VIP' ? 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-success' : 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-warning' }}">{{ $visitor->tipe_member }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -258,7 +257,6 @@
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
-
                                 <div class="table-wrap">
                                     <div class="table-responsive">
                                         <table width="100%" class="table table-hover" style="margin: 10px;"
@@ -300,11 +298,8 @@
                     </div>
                 </div>
             </div>
+            @include('Layouts.Footer')
         </div>
-    </div>
-    </div>
-    <div class="col-lg-12">
-        @include('Layouts.Footer')
     </div>
 @endsection
 
