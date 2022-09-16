@@ -135,7 +135,7 @@ class TamuController extends Controller
 
         $data = $request->all();
         dispatch(new SendMailJob($data));
-        dispatch(new SendMailJobDeposit($data));
+        // dispatch(new SendMailJobDeposit($data));
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'CREATE',
@@ -156,6 +156,11 @@ class TamuController extends Controller
     /* insert deposit && BERTAMBAH(create) deposit */
     public function insertdeposit(Request $request)
     {
+        $this->validate($request, [
+            'visitor_id' => 'required',
+        'balance' => 'required',
+        ]);
+
         $visitors = Visitor::where('id', $request->id)->first();
         $report_deposit = ReportDeposit::create([
             'visitor_id' => $request->visitor_id,

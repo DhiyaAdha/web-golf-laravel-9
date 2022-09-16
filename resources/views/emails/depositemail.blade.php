@@ -163,31 +163,11 @@
                         style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
                         <div style="display:flex;">
                             <p style="margin: 0;">ID Tamu : </p>
-                            <p style="margin: 0;">{{ $data['name'] }}</p>
+                            <p style="margin: 0;">{{ $data['visitor_'] }}</p>
                         </div>
                         <div style="display:flex;">
                             <p style="margin: 0;">Sisa Deposit : </p>
-                            <p style="margin: 0;">{{ $data['address'] }}</p>
-                        </div>
-                        <div style="display:flex;">
-                            <p style="margin: 0;">Sisa Deposit : </p>
-                            <p style="margin: 0;">{{ $data['gender'] }}</p>
-                        </div>
-                        <div style="display:flex;">
-                            <p style="margin: 0;">Sisa Deposit : </p>
-                            <p style="margin: 0;">{{ $data['phone'] }}</p>
-                        </div>
-                        <div style="display:flex;">
-                            <p style="margin: 0;">Sisa Deposit : </p>
-                            <p style="margin: 0;">{{ $data['company'] }}</p>
-                        </div>
-                        <div style="display:flex;">
-                            <p style="margin: 0;">Sisa Deposit : </p>
-                            <p style="margin: 0;">{{ $data['position'] }}</p>
-                        </div>
-                        <div style="display:flex;">
-                            <p style="margin: 0;">Sisa Deposit : </p>
-                            <p style="margin: 0;">{{ $data['tipe_member'] }}</p>
+                            <p style="margin: 0;">{{ $data[''] }}</p>
                         </div>
                         {{-- <div style="display:flex;">
                             <p style="margin: 0;">Sisa Limit Bulanan : </p>
