@@ -165,34 +165,8 @@ class InvoiceController extends Controller
     	// $pdf = PDF::loadView('invoice.invoice', ['cetak_invoice' => $riwayat_invoice])->setpaper('A4','potrait');
     	// return $pdf->stream('laporan_invoice_pdf');
     }
-    public function export_excel(Request $request)
+    public function export_excel()
     {
-        $riwayat_invoice = LogTransaction::select(['log_transactions.id', 'log_transactions.total', 'visitors.name', 'visitors.tipe_member', 'log_transactions.created_at'])
-        ->leftJoin('visitors', 'visitors.id', '=', 'log_transactions.visitor_id')->get();
-        if($request->ajax()){
-            return datatables()->of($riwayat_invoice)->addColumn('action', function ($data) {
-                $button = 
-                    '<div class="align-items-center"><a href="'.url('invoice_cetakpdf/'.$data->id).'" name="pdf" data-toggle="tooltip" data-placement="top" title="download pdf"><img src="dist/img/pdf.svg" width="20px" height="20px">
-                        </a></div>';
-                
-                return $button;
-            })
-            ->editColumn('name', function ($data) {
-                    return '<a data-toggle="tooltip" title="klik untuk melihat detail invoice" href="
-                    '.url('invoice/'.$data->id).'
-                    ">'
-                    .$data->name.
-                    "</a>";
-            })
-            ->editColumn('created_at', function ($data) {
-                return $data->created_at->format('d F Y');
-            })
-            ->editColumn('total', function ($data) {
-                return  ('Rp. ' .formatrupiah($data->total));
-            })
-            ->rawColumns(['name','action'])
-            ->make(true);
-        }
         return Excel::download(new LogTransactionExport, 'riwayat_invoice.xlsx');
 
         // Excel::create();
