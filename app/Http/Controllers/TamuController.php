@@ -209,7 +209,7 @@ class TamuController extends Controller
             'user_id' => Auth::user()->id,
             'report_balance' => $request->balance,
             'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
+            'updated_at' => Carbon::now(), 
         ]);
         $report_deposit->save();    
 
@@ -226,7 +226,7 @@ class TamuController extends Controller
         ]);
         $deposit->save();
         $data = $request->all();
-        // dispatch(new SendMailJobDeposit($data));
+        dispatch(new SendMailJobDeposit($data));
 
 
         return redirect('/daftar-tamu')->with(
