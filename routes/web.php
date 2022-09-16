@@ -101,4 +101,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/package/edit/{package}', [PackageController::class, 'edit'])->name('package.edit');
     Route::post('/package/update/{id}', [PackageController::class,'update'])->name('package.update');
     Route::resource('package', PackageController::class)->except(['show','update']);
+
+    // Testing
+    Route::get('/f', [TamuController::class, 'fgf']);
 });
