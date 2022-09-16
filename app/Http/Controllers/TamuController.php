@@ -14,15 +14,14 @@ use Illuminate\Http\Request;
 use App\Models\ReportDeposit;
 use App\Models\DepositHistory;
 use App\Models\LogTransaction;
-use App\Jobs\SendMailJobDeposit;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Cache\RateLimiting\Limit;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use App\Jobs\SendMailJobDeposit;
 class TamuController extends Controller
 {
     /**
@@ -31,7 +30,7 @@ class TamuController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function fgf(){
-        return view('emails.sample');
+        return view('emails.sendemail');
     }
     public function index(Request $request)
     {
@@ -124,14 +123,11 @@ class TamuController extends Controller
             'position' => 'required',
             'tipe_member' => 'required',
         ]);
-
         $random = Str::random(15);
         $random_unique = Carbon::now()->format('Y-m');
         $token = $random_unique.'-'.$random;
-        $link_qr = URL::signedRoute('detail-scan',['qr'=>$token, 'e'=> $request->email]);
         $visitors = Visitor::create([
             'name' => $request->name,
-            'unique_qr' => $link_qr,
             'address' => $request->address,
             'gender' => $request->gender,
             'email' => $request->email,
@@ -141,6 +137,10 @@ class TamuController extends Controller
             'tipe_member' => $request->tipe_member,
             'created_at' => Carbon::now(),
         ]);
+        $get_visitor = Visitor::where('id', $visitors->id)->latest()->first();
+        $link_qr = URL::signedRoute('detail-scan',['qr'=>$token, 'e'=> $visitors->id]);
+        $get_visitor->unique_qr = $link_qr;
+        $get_visitor->save();
         
         // ReportLimit::create($request->all);
         $report_quota = ReportLimit :: create([
@@ -160,6 +160,7 @@ class TamuController extends Controller
             // 'updated_at' => Carbon::now(),
         ]);
         $quota->save();
+
         $data = $request->all();
         dispatch(new SendMailJob($data));
         dispatch(new SendMailJobDeposit($data));
@@ -225,9 +226,6 @@ class TamuController extends Controller
             'updated_at' => Carbon::now(),
         ]);
         $deposit->save();
-        $data = $request->all();
-        dispatch(new SendMailJobDeposit($data));
-
 
         return redirect('/daftar-tamu')->with(
             'sukses',

@@ -25,8 +25,8 @@ class ReportDepositSeeder extends Seeder
         $visitor = Visitor::pluck('id');
         for($i = 1; $i <= 30; $i++) {
             DB::table('report_deposits')->insert([
-            'visitor_id' => $faker->randomElement($visitor),
-            'user_id' => User::all()->random()->id,
+            'visitor_id' => $i,
+            'user_id' => $faker->randomElement([1,2]),
             'report_balance' => $faker->randomFloat(2, 0, 10000000),
             'payment_type' => $faker->randomElement(['Cash','Transfer']),
             'created_at' => Carbon::now(),

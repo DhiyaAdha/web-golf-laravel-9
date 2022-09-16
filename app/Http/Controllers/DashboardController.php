@@ -131,6 +131,7 @@ class DashboardController extends Controller
             'created_at',
             now()->month
         )->count(); 
+        
         $data['visitor_year'] = LogTransaction::whereYear(
             'created_at',
             $request->year ? $request->year : date('Y')

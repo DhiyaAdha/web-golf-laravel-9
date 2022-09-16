@@ -2,11 +2,21 @@
 
 namespace App\Console;
 
+use Carbon\Carbon;
+
+use App\Models\User;
+use App\Models\Visitor;
+use App\Models\LogLimit;
+use App\Models\ReportLimit;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
+
     /**
      * Define the application's command schedule.
      *
@@ -16,6 +26,28 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+        
+            LogLimit::whereHas('visitor', function($query) {
+                $query->where('tipe_member', 'VVIP');
+            })->update(['quota'=>10]);
+            LogLimit::whereHas('visitor', function($query) {
+                $query->where('tipe_member', 'VIP');
+            })->update(['quota'=>4]);
+
+            $visitor = Visitor::all();
+            foreach($visitor as $value){
+                ReportLimit::create([
+                    'visitor_id' => $value->id,
+                    'user_id' => 1,
+                    'report_quota' => $value->tipe_member == 'VIP' ? '4' : '10',
+                    'created_at' => Carbon::now(),
+                ]);
+            }
+
+
+        })->everyMinute();
+        // ->monthly();
     }
 
     /**
@@ -25,7 +57,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

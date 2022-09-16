@@ -8,7 +8,7 @@
                     <div class="panel panel-default card-view pa-0">
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body pa-0">
-                                <div class="sm-data-box" style="background-color:#01C853;">
+                                <div class="sm-data-box today" style="background-color:#01C853;">
                                     <div class="container-fluid">
                                         <div class="row p-2">
                                             <div class="col-xs-7 text-left data-wrap-left">
@@ -20,6 +20,8 @@
                                             <div class="col-xs-5 text-right data-wrap-right">
                                                 <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i>
                                             </div>
+                                            <img src="{{ asset('/img/circle.svg') }}" class="card-img-absolute"
+                                                alt="circle-image">
                                         </div>
                                     </div>
                                 </div>
@@ -31,7 +33,7 @@
                     <div class="panel panel-default card-view pa-0">
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body pa-0">
-                                <div class="sm-data-box" style="background-color: #FFDE32;">
+                                <div class="sm-data-box vvip">
                                     <div class="container-fluid">
                                         <div class="row p-2">
                                             <div class="col-xs-6 text-left data-wrap-left">
@@ -43,6 +45,8 @@
                                             <div class="col-xs-6 text-right data-wrap-right">
                                                 <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i>
                                             </div>
+                                            <img src="{{ asset('/img/circle.svg') }}" class="card-img-absolute"
+                                                alt="circle-image">
                                         </div>
                                     </div>
                                 </div>
@@ -54,7 +58,7 @@
                     <div class="panel panel-default card-view pa-0">
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body pa-0">
-                                <div class="sm-data-box" style="background-color: #32FFC1;">
+                                <div class="sm-data-box vip" style="background-color: #32FFC1;">
                                     <div class="container-fluid">
                                         <div class="row p-2">
                                             <div class="col-xs-6 text-left data-wrap-left">
@@ -66,6 +70,8 @@
                                             <div class="col-xs-6 text-right data-wrap-right">
                                                 <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i>
                                             </div>
+                                            <img src="{{ asset('/img/circle.svg') }}" class="card-img-absolute"
+                                                alt="circle-image">
                                         </div>
                                     </div>
                                 </div>
@@ -159,7 +165,7 @@
                                     {{-- statistik pertahun --}}
                                     <li>
                                         <span class="block">Statistika Pertahun</span>
-                                        <span class="block txt-dark weight-500 font-18"><span {{-- class="counter-anim">{{ $visitor_year }}</span></span> --}}
+                                        <span class="block txt-dark weight-500 font-18"><span
                                                 class="counter-anim">{{ $visitor_year }}</span></span>
                                     </li>
                                 </ul>
