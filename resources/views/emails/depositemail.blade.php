@@ -140,7 +140,8 @@
                     <tr>
                         <td bgcolor="#ffffff" align="center"
                             style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;text-align: center;">Hallo, <strong>{{ $data->visitor_id }}</strong></p>
+                            <p style="margin: 0;text-align: center;">Hallo, <strong>{{ $data['visitor_id'] }}</strong>
+                            </p>
                         </td>
                     </tr>
         </tr>
@@ -162,19 +163,19 @@
                         style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
                         <div style="display:flex;">
                             <p style="margin: 0;">ID Tamu : </p>
-                            <p style="margin: 0;">{{ $data->visitor_id }}</p>
+                            <p style="margin: 0;">{{ $data['visitor_id'] }}</p>
                         </div>
                         <div style="display:flex;">
                             <p style="margin: 0;">Sisa Deposit : </p>
-                            <p style="margin: 0;">{{ $data->balance }}</p>
+                            <p style="margin: 0;">{{ $data['balance'] }}</p>
                         </div>
                         <div style="display:flex;">
                             <p style="margin: 0;">Sisa Limit Bulanan : </p>
-                            <p style="margin: 0;">{{ $data->balance }}</p>
+                            <p style="margin: 0;">{{ $data['balance'] }}</p>
                         </div>
                         <div style="display:flex;">
                             <p style="margin: 0;">Sisa Limit Kupon : </p>
-                            <p style="margin: 0;">{{ $data->balance }}</p>
+                            <p style="margin: 0;">{{ $data['balance'] }}</p>
                         </div>
                     </td>
                 </tr>
