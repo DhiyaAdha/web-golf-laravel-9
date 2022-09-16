@@ -14,6 +14,9 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
+        if (! $request->hasValidSignature()) {
+            return \redirect('/analisis-tamu');
+        }
         $package = Package::get();
         $default = Package::where('category', 'default')->get();
         $additional = Package::where('category', 'additional')->get();

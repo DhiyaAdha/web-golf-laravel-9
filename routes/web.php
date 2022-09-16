@@ -94,9 +94,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
     Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name('show');
     Route::get('/metode_pembayaran', [InvoiceController::class,'metode_pembayaran'])->name('metode_pembayaran');
-    route::get('/invoice_cetakpdf/{id}', [InvoiceController::class, 'cetak_pdf'])->name('cetak_pdf');
-    Route::resource('cart', OrderController::class);
-    Route::get('/proses', [OrderController::class, 'index'])->name('proses');
+    Route::get('/cart/{id}', [OrderController::class, 'index'])->name('order.cart');
     Route::get('/package/destroy/{id}', [PackageController::class,'destroy'])->name('package.destroy');
     Route::post('/package/store', [PackageController::class, 'store'])->name('package.store');
     Route::get('/package/edit/{package}', [PackageController::class, 'edit'])->name('package.edit');

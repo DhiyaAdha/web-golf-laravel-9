@@ -145,7 +145,8 @@
                                 </div>
                                 <a href="javascript:void(0)" class="btn btn-block btn-outline-success btn-sm"
                                     data-toggle="modal" data-target="#myModal">Deposit</a>
-                                <a href="{{ url('cart') }}" class="btn btn-block btn-success btn-sm">Proses</a>
+                                <a href="{{ URL::temporarySignedRoute('order.cart', now()->addMinutes(10), ['id' => $visitor->id]) }}"
+                                    class="btn btn-block btn-success btn-sm" target="_blank">Proses</a>
                             </div>
                             <div id="myModal" class="modal fade" tabindex="-1" role="dialog"
                                 aria-labelledby="myModalLabel" aria-hidden="true">
