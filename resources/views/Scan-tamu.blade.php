@@ -38,6 +38,7 @@
                     </div>
                 </div>
             </div>
+            @include('Layouts.Footer')
         </div>
     </div>
 @endsection
