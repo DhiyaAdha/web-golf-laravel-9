@@ -18,9 +18,11 @@ class OrderController extends Controller
             return \redirect('/analisis-tamu');
         }
         $package = Package::get();
-        $default = Package::where('category', 'default')->get();
-        $additional = Package::where('category', 'additional')->get();
-        return view('proses', compact('package','default','additional'));
+        $default = Package::where('category', 'default')->where('status', 0)->get();
+        $count_default = count($default);
+        $additional = Package::where('category', 'additional')->where('status', 0)->get();
+        $count_additional = count($additional);
+        return view('proses', compact('package','default','additional', 'count_default', 'count_additional'));
     }
 
     /**
@@ -87,5 +89,21 @@ class OrderController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function qty_plus(Request $request)
+    {
+        $id = $request->get('id');
+        $qty_plus = $request->get('qty_plus');
+        $price = $request->get('price');
+        return response()->json(['id' => $id, 'plus' => $qty_plus, 'price' => $price], 200);
+    }
+
+    public function qty_minus(Request $request)
+    {
+        $id = $request->get('id');
+        $qty_minus = $request->get('qty_minus');
+        $price = $request->get('price');
+        return response()->json(['id' => $id, 'minus' => $qty_minus, 'price' => $price], 200);
     }
 }

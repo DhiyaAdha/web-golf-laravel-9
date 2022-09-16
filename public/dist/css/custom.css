@@ -217,6 +217,15 @@ h6.panel-title.txt-dark.label-visitor {
     width: 100% !important;
 }
 
+.card-view.panel.panel-default.border-panel > .panel-heading, .card-view.panel.panel-default.panel-tabs > .panel-heading {
+    border-bottom: 1px solid rgb(124 239 150 / 58%) !important;
+}
+
+h6.panel-title.text-center {
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
 .panel-heading.r {
     padding: 10px;
 }

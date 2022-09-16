@@ -1,5 +1,6 @@
-@extends('Layouts.main', ['title' => 'TGCC | Proses'])
+@extends('Layouts.main', ['title' => 'TGCC | Pilih Permainan'])
 @section('content')
+    <!-- Main Content -->
     <div class="page-wrapper">
         <div class="container-fluid">
             <!-- Title -->
@@ -7,287 +8,188 @@
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h5 class="txt-dark">Pilih Permainan</h5>
                 </div>
-
                 <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
-                        <li><a href="index.html">Dashboard</a></li>
-                        <li><a href="#"><span>Scan Tamu</span></a></li>
+                        <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
+                        <li><a href="{{ url('scan-tamu') }}">Scan Tamu</a></li>
                         <li class="active"><span>Pilih Permainan</span></li>
                     </ol>
                 </div>
                 <!-- /Breadcrumb -->
-
             </div>
             <!-- /Title -->
             <div class="row">
-                <div class="col-lg-8">
-                    <div class="panel panel-default card-view" style="height: 900px;">
-                        <div class="form-group mt-10 ml-20">
-                            <strong>
-                                Pilih Paket Bermain
-                            </strong>
-                            {{-- Radio Button --}}
-                            <div class="pull-right">
-                                <div class="radio radio-success">
-                                    <input type="radio" name="GameType" id="radio1" class="selected-price"
-                                        value="weekdays" checked>
-                                    <label for="radio1">
-                                        <strong class="text-muted">Price Weekdays</strong>
-                                    </label>
-                                </div>
-                                <br>
-                                <div class="radio radio-success">
-                                    <input type="radio" name="GameType" id="radio2" class="selected-price"
-                                        value="weekend">
-                                    <label for="radio2">
-                                        <strong class="text-muted">Price Weekends</strong>
-                                    </label>
-                                </div>
+                <div class="col-lg-7">
+                    <div style="height: 350px;" class="panel panel-default card-view">
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <h6 class="panel-title txt-dark">Pilih paket bermain</h6>
                             </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="d-flex flex-wrap">
                             @foreach ($default as $item)
-                                <form class="form-inline">
-                                    <div class="checkbox checkbox-success">
-                                        <input id="checkbox" type="checkbox"
+                                <div class="d-flex">
+                                    <div class="checkbox checkbox-success mr-15">
+                                        <input id="checkbox3" type="checkbox"
                                             class="form-control select-item form-control-{{ $item->id }}"
-                                            onchange="valueChanged({{ $item->id }})">
-                                        <label></label>
+                                            onchange="valueChanged({{ $item->id }}, {{ $item->price_weekdays }})">
+                                        <label for="checkbox3">
+                                            {{ $item->name }}
+                                        </label>
                                     </div>
-                                    <span class="wrap-quantity-{{ $item->id }}" style="display: none">
-                                        {{-- <div class="input-group bootstrap-touchspin">
-                                            <span class="input-group-addon bootstrap-touchspin-prefix"
-                                                style="display: none;"></span>
-                                            <input class="vertical-spin form-control" type="text"
-                                                data-bts-button-down-class="btn btn-default"
-                                                data-bts-button-up-class="btn btn-default"
-                                                value="20"name="vertical-spin" style="display: block;">
-                                            <span class="input-group-addon bootstrap-touchspin-postfix"
-                                                style="display: none;"></span>
-                                            <span class="input-group-btn-vertical">
-                                                <button class="btn btn-default bootstrap-touchspin-up" type="button"><i
-                                                        class="ti-plus"></i></button>
-                                                <button class="btn btn-default bootstrap-touchspin-down" type="button"><i
-                                                        class="ti-minus"></i></button>
-                                            </span>
-                                        </div> --}}
-                                        <button type="button" id="decrement"
-                                            onclick="stepper('decrement', {{ $item->id }})"
-                                            data-name="{{ $item->name }}" data-priceday="{{ $item->price_weekdays }}"
-                                            data-priceend="{{ $item->price_weekend }}">-</button>
-                                        <input name="input1" type="number" min="1" max="100" step="1"
-                                            value="1" id="my-input-{{ $item->id }}"
-                                            onchange="valuePackage({{ $item->id }})" readonly>
-                                        <button type="button" id="increment"
-                                            onclick="stepper('increment', {{ $item->id }})"
-                                            data-name="{{ $item->name }}">+</button>
-                                    </span>
-                                    <label for="">{{ $item->name }}</label>
-                                </form>
+                                </div>
                             @endforeach
                         </div>
-                        <div class="col-lg-8">
-                            <div class="form-group">
-                                <strong>Pilih Item Tambahan</strong>
-                                <div class="row">
-                                    <form class="form-inline">
-                                        @foreach ($additional as $item2)
-                                            <form class="form-inline">
-                                                <div class="checkbox checkbox-success">
-                                                    <input id="checkbox" type="checkbox"
-                                                        class="form-control select-item form-control-{{ $item2->id }}"
-                                                        onchange="valueChanged({{ $item2->id }})">
-                                                    <label></label>
-                                                </div>
-                                                <span class="wrap-quantity-{{ $item2->id }}" style="display: none">
-                                                    <button type="button" id="decrement"
-                                                        onclick="stepper('decrement', {{ $item2->id }})"
-                                                        data-name="{{ $item2->name }}"
-                                                        data-priceday="{{ $item2->price_weekdays }}"
-                                                        data-priceend="{{ $item2->price_weekend }}">-</button>
-                                                    <input name="input1" type="number" min="1" max="100"
-                                                        step="1" value="1" id="my-input-{{ $item2->id }}"
-                                                        onchange="valuePackage({{ $item2->id }})" readonly>
-                                                    <button type="button" id="increment"
-                                                        onclick="stepper('increment', {{ $item2->id }})"
-                                                        data-name="{{ $item2->name }}"
-                                                        data-priceday="{{ $item2->price_weekdays }}"
-                                                        data-priceend="{{ $item2->price_weekend }}">+</button>
-                                                </span>
-                                                <label for="">{{ $item2->name }}</label>
-                                            </form>
-                                        @endforeach
-                                    </form>
-                                </div>
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <h6 class="panel-title txt-dark">Pilih item tambahan</h6>
                             </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="d-flex flex-wrap">
+                            @foreach ($additional as $item2)
+                                <div class="d-flex">
+                                    <div class="checkbox checkbox-success mr-15">
+                                        <input id="checkbox3" type="checkbox"
+                                            class="form-control select-item form-control-{{ $item2->id }}"
+                                            onchange="valueChanged({{ $item2->id }})">
+                                        <label for="checkbox3">
+                                            {{ $item2->name }}
+                                        </label>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="panel panel-default card-view" style="height: 900px;">
-                        <h5 style="text-align: center;" class="mt-15 mb-5"><strong>DAFTAR ORDER</strong></h5>
-                        <div class="col-lg-6 mt-5">
-                            <p style="color: #7D7D7D; text-align:left;" class="ml-12">Product</p>
+                <div class="col-lg-5">
+                    <div style="height: 350px;" class="panel panel-default border-panel card-view">
+                        <div class="panel-heading">
+                            <h6 class="panel-title text-center">Daftar Order</h6>
+                            <div class="clearfix"></div>
                         </div>
-                        <div class="col-lg-6 mt-5">
-                            <p style="color: #7D7D7D; text-align:end;">Sub-Total</p>
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <p class="text-muted">Produk</p>
+                            </div>
+                            <div class="pull-right">
+                                <p class="text-muted">Sub total</p>
+                            </div>
+                            <div class="clearfix"></div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <hr class="h">
+                        @foreach ($default as $item)
+                            <div class="panel-heading d-none isi-{{ $item->id }}">
+                                <div class="pull-left d-flex align-items-center">
+                                    <p class="text-muted mr-5">
+                                        {{ $item->name }}</p>
+                                    <button class="cart-qty-minus-{{ $item->id }}" type="button" value="-"><i
+                                            class="fa fa-minus-square"></i></button>
+                                    <input type="text" min="1"
+                                        onkeypress="return event.charCode >= 48 && event.charCode <=57" name="qty"
+                                        class="qty-{{ $item->id }}" data-price="{{ $item->price_weekdays }}"
+                                        maxlength="10" style="width: 30px;" />
+                                    <button class="cart-qty-plus-{{ $item->id }}" type="button" value="+"><i
+                                            class="fa fa-plus-square"></i></button>
+                                </div>
+                                <div class="pull-right">
+                                    <p class="text-muted price-{{ $item->id }}">Rp.
+                                        {{ number_format($item->price_weekdays, 0, ',', '.') }}</p>
+                                </div>
+                                <div class="clearfix"></div>
                             </div>
+                        @endforeach
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <strong class="txt-dark">Total</strong>
+                            </div>
+                            <div class="pull-right">
+                                <strong class="txt-dark">Rp. </strong>
+                            </div>
+                            <div class="clearfix"></div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-6 mt-5">
-                                @foreach ($default as $item)
-                                    <p style="color: #7D7D7D; text-align:start;">
-
-
-                                        <span class="isi-{{ $item->id }}" style="display: none">
-                                            {{ $item->name }}
-                                            <hr class="garis-{{ $item->id }}" style="display: none">
-                                        </span>
-                                    </p>
-                                    {{-- <input type="hidden" name="default[]" value="{{ $item->id }}"> --}}
-                                @endforeach
-                                @foreach ($additional as $item2)
-                                    <p style="color: #7D7D7D; text-align:start;">
-
-
-                                        <span class="isi-{{ $item2->id }}" style="display: none">
-                                            {{ $item2->name }}
-                                            <hr class="garis-{{ $item2->id }}" style="display: none">
-                                        </span>
-                                    </p>
-                                    {{-- <input type="hidden" name="additional[]" value="{{ $item2->id }}"> --}}
-                                @endforeach
-                            </div>
-                            <div class="col-lg-6 mt-5">
-                                @foreach ($package as $data)
-                                    <p class="harga-{{ $data->id }}"
-                                        style="color: #7D7D7D; text-align:end; display: none">Rp.
-                                        {{ formatrupiah($data->price_weekend) }}
-                                        <hr class="garis-{{ $data->id }}" style="display: none">
-                                    </p>
-                                @endforeach
-                            </div>
-                            {{-- <div class="wrap-selected-item">
-                        </div> --}}
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <hr class="h">
-                                </div>
-                            </div>
-                            <div class="row" style="padding: 5px">
-                                <div class="col-lg-6 mt-5">
-                                    <p style="text-align:start;"><strong>Total</strong></p>
-                                </div>
-                                <div class="col-lg-6 mt-5">
-                                    <p style="text-align:end;"></p>
-                                    {{-- <p style="text-align:end;">Rp. 1.000.000,00</p> --}}
-                                </div>
-                            </div>
-                            <div class="text-center">
-                                <div class="col-lg-12 mt-10">
-                                    <div class="btn-proses">
-                                        <a href="/metode_pembayaran">
-                                            <h6 style="color: #ffffff;">Checkout</h6>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <button type="submit" class="mt-15 btn-sm btn btn-success btn-block btn-anim">
+                            <i class="icon-rocket"></i>
+                            <span class="btn-text">Checkout</span>
+                        </button>
                     </div>
                 </div>
             </div>
+            @include('Layouts.Footer')
         </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script type="text/javascript">
-            // function valueChanged(id) {
-            //     if ($('.form-control-' + id).is(":checked"))
-            //         $(".wrap-quantity-" + id).show();
-            //     else
-            //         $(".wrap-quantity-" + id).hide();
-            // };
-
-            function valuePackage(id) {
-
-            };
-
-            $(document).on('input', '#increment', function() {
-                let jumlah = parseInt($(this).val());
-                console.log(jumlah)
+    </div>
+@endsection
+@push('scripts')
+    <script>
+        function valueChanged(id, price) {
+            var incrementPlus;
+            var incrementMinus;
+            var buttonPlus = $(".cart-qty-plus-" + id);
+            var buttonMinus = $(".cart-qty-minus-" + id);
+            $(document).on('change', '.form-control-' + id, function(e) {
+                e.preventDefault();
+                if (this.checked) {
+                    $('.isi-' + id).removeClass('d-none');
+                    $(".qty-" + id).val(1);
+                } else {
+                    $('.isi-' + id).addClass('d-none');
+                    $(".qty-" + id).val(0);
+                }
+            });
+            var incrementPlus = buttonPlus.click(function() {
+                var $n = $(".qty-" + id);
+                $n.val(Number($n.val()) + 1);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('qty.plus') }}",
+                    data: {
+                        id: id,
+                        qty_plus: parseInt($n.val()),
+                        price: price
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        var total = response.plus * response.price;
+                        var output = parseInt(total).toLocaleString();
+                        $('.price-' + response.id).text('Rp ' + output);
+                    }
+                });
             });
 
-            // $(document).on('click', '#increment', function() {
-            //     let id = $(this).data('id');
-            //     console.log
-            //     let jumlah = parseInt($(this).val());
-            // var radio = $(".selected-price:checked").val();
-            // var name = $(this).data('name');
-            // var price = (radio == 'weekdays') ? $(this).data('priceday') : $(this).data('priceend');
-
-            // var html = `<div class="row">
-    //             <div class="col-lg-6 mt-5">
-    //                 <p style="color: #7D7D7D; text-align:start;">${name}</p>
-    //             </div>
-    //             <div class="col-lg-6 mt-5">
-
-    //                 <p style="color: #7D7D7D; text-align:end;">RP ${price}</p>
-    //             </div>
-    //         </div>`;
-            // $('.wrap-selected-item').append(html)
-            // })
-
-
-            // $(document).ready(function(){
-
-            //     $('.form-control-' + id).click(function(){
-            //         $(".isi-" + id).toggle();
-            //     })
-
-
-            // });
-
-            // function isi(id) {
-            //     if ($('#btn_toggle' + id).click(function){
-            //         $("#isi-" + id).toggle();
-            //         alert("success");
-            //     })
-            // };
-
-            function valueChanged(id) {
-                //-------------------Event-------------------
-                $(document).on('change', '.form-control-' + id, function() {
-
-                    // $('.form-control-' + id).change(function() {
-                    // console.log('hello')
-                    if (this.checked) {
-                        $('.isi-' + id).show();
-                        $(".wrap-quantity-" + id).show();
-                        $(".harga-" + id).show();
-                        $(".garis-" + id).show();
-
-                    } else {
-                        $('.isi-' + id).hide();
-                        $(".wrap-quantity-" + id).hide();
-                        $(".harga-" + id).hide();
-                        $(".garis-" + id).hide();
-                    }
-                    event.preventDefault();
-                    // });
-                })
-                // $('.form-control-' + id).is(function(){
-
-                //     $('.cekbox-' + id).toggle();
-                //     $('.isi-' + id).toggle();
-                //     $(".wrap-quantity-" + id).toggle();
-                //     $(".harga-" + id).toggle();
-                //     $(".garis-" + id).toggle();
-
-                //     event.preventDefault();
-                // });
-
-            };
-        </script>
-    @endsection
+            var incrementMinus = buttonMinus.click(function() {
+                var $n = $(".qty-" + id);
+                var amount = Number($n.val());
+                if (amount > 0) {
+                    $n.val(amount - 1);
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ route('qty.minus') }}",
+                        data: {
+                            id: id,
+                            qty_minus: parseInt($n.val()),
+                            price: price
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            var total = response.minus * response.price;
+                            var minus = total - response.price;
+                            var output = parseInt(minus).toLocaleString();
+                            $('.price-' + response.id).text('Rp ' + output);
+                        }
+                    });
+                }
+            });
+        };
+    </script>
+@endpush

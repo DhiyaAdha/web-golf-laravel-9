@@ -61,15 +61,10 @@
                         </div>
                     </div>
                 </div>
-                <!-- /Basic Table -->
             </div>
+            @include('Layouts.Footer')
         </div>
-
-        <!-- Footer -->
-        @include('Layouts.Footer')
-        <!-- /Footer -->
     </div>
-    <!-- /Main Content -->
 @endsection
 @push('scripts')
     <script>
