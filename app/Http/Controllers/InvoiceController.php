@@ -18,22 +18,20 @@ class InvoiceController extends Controller
      */
     public function index(Request $request)
     {
-        $riwayat_invoice = LogTransaction::select(['log_transactions.id', 'log_transactions.total', 'visitors.name', 'visitors.tipe_member', 'log_transactions.created_at'])
-        ->leftJoin('visitors', 'visitors.id', '=', 'log_transactions.visitor_id')->get();
+        $riwayat_invoice = LogTransaction::select(['log_transactions.id', 'log_transactions.total', 'visitors.name', 'visitors.tipe_member', 'log_transactions.created_at'])->leftJoin('visitors', 'visitors.id', '=', 'log_transactions.visitor_id')->get();
         if($request->ajax()){
-            return datatables()->of($riwayat_invoice)
-            ->editColumn('name', function ($data) {
-                    return '<a data-toggle="tooltip" title="klik untuk melihat detail invoice" href="
-                    '.url('invoice/'.$data->id).'
-                    ">'
-                    .$data->name.
-                    "</a>";
-            })
-            ->editColumn('created_at', function ($data) {
+            return datatables()->of($riwayat_invoice)->addColumn('action', function ($data) {
+                $button = '<div class="align-items-center">
+                                <a href="javascript:void(0)" name="pdf" data-toggle="tooltip" data-placement="top" title="download pdf"><img src="'. url('/dist/img/pdf.svg').'" width="20" height="20"></a>
+                            </div>';
+                return $button;
+            })->editColumn('name', function ($data) {
+                return '<a data-toggle="tooltip" title="klik untuk melihat detail invoice" href="'.url('invoice/'.$data->id).'">'.$data->name."</a>";
+            })->editColumn('created_at', function ($data) {
                 return $data->created_at->format('d F Y');
-            })
-            ->rawColumns(['name','action'])
-            ->make(true);
+            })->editColumn('total', function ($data) {
+                return  ('Rp. ' .formatrupiah($data->total));
+            })->rawColumns(['name','action'])->make(true);
         }
         return view('invoice.riwayat-invoice');
     }
@@ -45,20 +43,7 @@ class InvoiceController extends Controller
      */
     public function create(Request $request)
     {
-        $invoice = Detail::select(['packages.name', 'detail_transactions.harga', 'detail_transactions.quantity'])
-        ->leftJoin('packages', 'packages.id', '=', 'detail_transactions.package_id')->get();
-        if($request->ajax()){
-            return datatables()->of($invoice)
-            ->editColumn('harga', function ($data) {
-                return  ('Rp. ' .formatrupiah($data->harga));
-            })
-            ->editColumn('total', function ($data) {
-                return  ('Rp. ' .formatrupiah($data->harga * $data->quantity));
-            })
-            ->make(true);
-
-        }
-        return view('invoice.invoice');
+        //
     }
 
     /**
@@ -87,7 +72,6 @@ class InvoiceController extends Controller
         $data['visitor'] = Visitor::find($transaction->visitor_id);
         $data['package'] = Package::find($package->id);
         $data['detail'] = Detail::find($detail->id);
-        // $data['detail'] = Detail::where('transaction_id', $id)->get();
         return view('invoice.invoice', $data);
     }
 

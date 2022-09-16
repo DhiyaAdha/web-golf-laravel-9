@@ -11,8 +11,8 @@
                 <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
-                        <li><a href="index.html">Dashboard</a></li>
-                        <li><a href="#"><span>Daftar Admin</span></a></li>
+                        <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
+                        <li><a href="{{ url('daftar-admin') }}"><span>Daftar Admin</span></a></li>
                         <li class="active"><span>Edit detail admin</span></li>
                     </ol>
                 </div>
@@ -21,7 +21,7 @@
             <!-- /Title -->
             <div class="row">
                 <div class="col-lg-12" style="position: relative;">
-                    <div style="height: 900px" class="panel panel-default card-view">
+                    <div class="panel panel-default card-view">
                         <h6 class="control-label mb-10">Edit Admin</h6>
                         <div class="panel-body">
                             <div class="form-wrap">
@@ -72,5 +72,7 @@
                     </div>
                 </div>
             </div>
+            @include('Layouts.Footer')
         </div>
-    @endsection
+    </div>
+@endsection
