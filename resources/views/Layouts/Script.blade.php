@@ -89,8 +89,6 @@
         verticalupclass: 'ti-plus',
         verticaldownclass: 'ti-minus'
     });
-<<<<<<< HEAD
-=======
 
     // kartu-tamu(transaksi)
     $('#transaksi').DataTable({
@@ -141,7 +139,6 @@
             targets: [1, 2, 3, ]
         }],
     });
->>>>>>> dhany
 </script>
 {{-- Input Stepper --}}
 <script>
