@@ -9,8 +9,8 @@
                 <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
-                        <li><a href="javascript:void(0)">Dashboard</a></li>
-                        <li><a href="javascript:void(0)">Scan Tamu</a></li>
+                        <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
+                        <li><a href="{{ url('scan-tamu') }}">Scan Tamu</a></li>
                         <li class="active"><span>Detail Tamu</span></li>
                     </ol>
                 </div>
@@ -143,8 +143,40 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a href="javascript:void(0)" class="btn btn-block btn-outline-success btn-sm">Deposit</a>
+                                <a href="javascript:void(0)" class="btn btn-block btn-outline-success btn-sm"
+                                    data-toggle="modal" data-target="#myModal">Deposit</a>
                                 <a href="{{ url('cart') }}" class="btn btn-block btn-success btn-sm">Proses</a>
+                            </div>
+                            <div id="myModal" class="modal fade" tabindex="-1" role="dialog"
+                                aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-hidden="true">×</button>
+                                            <h5 class="modal-title" id="myModalLabel">
+                                                {{ $deposit->balance == 0 ? 'Tambah Deposit' : 'Update Deposit' }}</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ URL::signedRoute('update.deposit', ['id' => $visitor->id]) }}"
+                                                method="POST">
+                                                @csrf
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon">Rp</div>
+                                                        <input type="text" min="0"
+                                                            onkeypress="return event.charCode >= 48 && event.charCode <=57"
+                                                            class="form-control" name="balance"
+                                                            placeholder="Masukan jumlah deposit" required>
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-success">Submit</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
                             </div>
                         </div>
                     </div>

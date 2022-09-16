@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Deposit;
 use App\Models\Visitor;
+use App\Models\LogAdmin;
 use App\Models\LogLimit;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use App\Models\ReportDeposit;
+use Illuminate\Support\Carbon;
+use App\Jobs\SendMailJobDeposit;
 use illuminate\support\facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -174,5 +179,29 @@ class ScanqrController extends Controller
             'message' => $this->message,
             'data' => $this->data ? $this->data : null
         ];
+    }
+
+    public function update_deposit(Request $request, $id)
+    {
+        try {
+            $get_uri = explode("/", parse_url($request->getRequestUri(), PHP_URL_PATH));
+            $visitor = Deposit::join('visitors', 'deposits.visitor_id', '=', 'visitors.id')->where('deposits.visitor_id', $get_uri[3])->first();
+            $deposit = Deposit::where('visitor_id', $get_uri[3])->first();
+            $deposit->balance = $request->balance + $deposit->balance;
+            
+            $report_deposit = ReportDeposit::where('visitor_id', $get_uri[3])->first();
+            $report_deposit->report_balance = $request->balance + $report_deposit->report_balance;
+            $deposit->save();
+            $report_deposit->save();
+
+            LogAdmin::create([
+                'user_id' => Auth::id(),
+                'type' => 'CREATE',
+                'activities' => 'Berhasil menambah deposit <b>'.$request->balance.'</b> atas nama <b>'.$visitor->name.'</b>',
+            ]);
+            return redirect()->back()->with('success','Berhasil menambah deposit');
+        } catch (\Throwable $th) {
+            return response()->json($this->getResponse());
+        }
     }
 }
