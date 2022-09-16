@@ -62,7 +62,7 @@
 <script type="text/javascript" src="{{ asset('/dist/js/printThis.js') }}"></script>
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
-@stack('scripts')
+
 <script>
     $('.download-kartu-tamu').on("click", function() {
         $('#cetak-kartu').printThis({
