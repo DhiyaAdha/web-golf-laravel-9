@@ -71,10 +71,10 @@
                         <table class="mb-15" id="dt-invoice">
                             <thead>
                                 <tr>
-                                    <td><strong>Nama</strong></td>
-                                    <td class=""><strong>Harga</strong></td>
-                                    <td class=""><strong>Jumlah</strong></td>
-                                    <td class=""><strong>Total</strong></td>
+                                    <td class="text-left"><strong>Paket bermain</strong></td>
+                                    <td class="text-left"><strong>Harga</strong></td>
+                                    <td class="text-left"><strong>Jumlah</strong></td>
+                                    <td class="text-left"><strong>Total</strong></td>
                                 </tr>
                             </thead>
                             <tr></tr>
@@ -109,28 +109,6 @@
                                 </tr>
                             </tbody>
                         </table>
-                        {{-- <div class="row">
-                                <div class="col-lg-7">
-                                </div>
-                                <div class="col-lg-3 col-md-12">
-                                    <div class="btn-selesai">
-                                        <a href="/riwayat-invoice">
-                                            <p style="color: white">Selesai</p>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-md-12">
-                                    <div class="btn-print">
-                                        <a href="printpdf">
-                                            <i class="fa-regular fa-file-lines">
-                                                Print Struct
-                                            </i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="form-group text-right">
-                                </div>
-                            </div> --}}
                     </div>
                 </div>
             </div>
