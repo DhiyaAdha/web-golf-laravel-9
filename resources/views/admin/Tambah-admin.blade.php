@@ -1,5 +1,4 @@
 @extends('Layouts.Main')
-
 @section('content')
     <div class="page-wrapper">
         <div class="container-fluid">
@@ -11,8 +10,8 @@
                 <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
-                        <li><a href="index.html">Dashboard</a></li>
-                        <li><a href="#"><span>Daftar Admin</span></a></li>
+                        <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
+                        <li><a href="{{ url('daftar-admin') }}"><span>Daftar Admin</span></a></li>
                         <li class="active"><span>Tambah admin</span></li>
                     </ol>
                 </div>
@@ -25,7 +24,7 @@
                         <h6 class="control-label mb-10">Tambah Admin</h6>
                         <div class="panel-body">
                             <div class="form-wrap">
-                                <form action="/insertadmin" method="POST">
+                                <form action="{{ route('insertadmin') }}" method="POST">
                                     @csrf
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="">Nama Lengkap</label>

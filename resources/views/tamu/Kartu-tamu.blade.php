@@ -105,7 +105,7 @@
                                                                 <div
                                                                     class="d-flex justify-content-center align-items-center flex-column">
                                                                     <img class="back-qr"
-                                                                        src="{{ asset('/dist/img/icon-golf1.svg') }}">
+                                                                        src="{{ asset('/dist/img/icon-golf2.svg') }}">
                                                                     <div class="qr-code-visitor">
                                                                         {{ QrCode::size(120)->generate($visitor->unique_qr) }}
                                                                     </div>
@@ -146,7 +146,8 @@
                                     </div>
                                     <div class="mb-15 d-flex flex-column">
                                         <span class="txt-muted">Kategori Tamu</span>
-                                        <span>{{ $visitor->tipe_member }}</span>
+                                        <span
+                                            class="{{ $visitor->tipe_member == 'VIP' ? 'label label-success' : 'label label-warning' }}">{{ $visitor->tipe_member }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -222,6 +223,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+
                                                 </tbody>
                                             </table>
                                     </div>

@@ -11,7 +11,7 @@
                 <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
-                        <li><a href="javascript:void(0)">Dashboard</a></li>
+                        <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
                         <li class="active"><span>Daftar invoice</span></li>
                     </ol>
                 </div>
@@ -39,6 +39,7 @@
                                                     <th class="" style="">Kategori Tamu</th>
                                                     <th class="" style="">Total Bayar</th>
                                                     <th class="" style="">Tanggal Bayar</th>
+                                                    <th class="" style="">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -95,6 +96,9 @@
                 {
                     data: 'created_at'
                 },
+                {
+                    data: 'action'
+                },
             ],
             order: [],
             responsive: true,
@@ -110,10 +114,10 @@
             },
             columnDefs: [{
                 className: 'text-center',
-                targets: [1, 2, 3]
+                targets: [1, 2, 3, 4]
             }, {
                 orderable: false,
-                targets: [0, 1, 2, 3]
+                targets: [0, 1, 2, 3, 4]
             }],
         });
         /* daftar invoice */
