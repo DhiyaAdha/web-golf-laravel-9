@@ -56,6 +56,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::post('/edit-admin/{users}', [AdminController::class, 'update'])->name('admin.edit');
     Route::get('/daftar-admin/destroy/{id}', [AdminController::class,'delete',])->name('hapus-admin');
     Route::get('aktifitas', [AdminController::class, 'aktifitas'])->name('admin.aktifitas');
+    Route::post('update/deposit/{id}', [ScanqrController::class, 'update_deposit'])->name('update.deposit')->middleware('signed');
 });
 
 //Level admin dan superadmin
@@ -93,11 +94,13 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
     Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name('show');
     Route::get('/metode_pembayaran', [InvoiceController::class,'metode_pembayaran'])->name('metode_pembayaran');
-    Route::resource('cart', OrderController::class);
-    Route::get('/proses', [OrderController::class, 'index'])->name('proses');
+    Route::get('/cart/{id}', [OrderController::class, 'index'])->name('order.cart');
     Route::get('/package/destroy/{id}', [PackageController::class,'destroy'])->name('package.destroy');
     Route::post('/package/store', [PackageController::class, 'store'])->name('package.store');
     Route::get('/package/edit/{package}', [PackageController::class, 'edit'])->name('package.edit');
     Route::post('/package/update/{id}', [PackageController::class,'update'])->name('package.update');
     Route::resource('package', PackageController::class)->except(['show','update']);
+
+    // Testing
+    Route::get('/f', [TamuController::class, 'fgf']);
 });

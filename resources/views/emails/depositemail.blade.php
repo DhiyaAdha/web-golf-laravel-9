@@ -140,8 +140,8 @@
                     <tr>
                         <td bgcolor="#ffffff" align="center"
                             style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;text-align: center;">Hallo, <strong>Yudistira Ramadan
-                                    Kalimasada</strong></p>
+                            <p style="margin: 0;text-align: center;">Hallo, <strong></strong>
+                            </p>
                         </td>
                     </tr>
         </tr>
@@ -163,20 +163,20 @@
                         style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
                         <div style="display:flex;">
                             <p style="margin: 0;">ID Tamu : </p>
-                            <p style="margin: 0;">05185</p>
+                            <p style="margin: 0;">{{ $data['visitor_'] }}</p>
                         </div>
                         <div style="display:flex;">
                             <p style="margin: 0;">Sisa Deposit : </p>
-                            <p style="margin: 0;">1000000</p>
+                            <p style="margin: 0;">{{ $data[''] }}</p>
                         </div>
-                        <div style="display:flex;">
+                        {{-- <div style="display:flex;">
                             <p style="margin: 0;">Sisa Limit Bulanan : </p>
-                            <p style="margin: 0;">1 Kali</p>
+                            <p style="margin: 0;"></p>
                         </div>
                         <div style="display:flex;">
                             <p style="margin: 0;">Sisa Limit Kupon : </p>
-                            <p style="margin: 0;">4 Kali</p>
-                        </div>
+                            <p style="margin: 0;"></p>
+                        </div> --}}
                     </td>
                 </tr>
                 <tr>

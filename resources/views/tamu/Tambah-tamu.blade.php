@@ -1,4 +1,3 @@
-
 @extends('Layouts.main')
 @section('content')
     <div class="page-wrapper" style="min-height: 259px;">
@@ -16,6 +15,9 @@
                         <li class="active"><span>Tambah Tamu</span></li>
                     </ol>
                 </div>
+
+                <!-- Breadcrumb -->
+
                 <!-- /Breadcrumb -->
 
             </div>
@@ -39,17 +41,18 @@
                                             size="50px" placeholder="Masukan Alamat" required autofocus>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label mb-10 text-left">Jenis Kelamin</label>
+                                        <label class="control-label mb-10 text-left">Jenis
+                                            Kelamin</label>
                                         <div class="radio-list">
                                             <div class="radio-inline pl-0">
-                                                <span class="radio radio-info"> <input type="radio" name="gender"
-                                                        id="gender-m" value="laki-laki">
+                                                <span class="radio radio-info">
+                                                    <input type="radio" name="gender" id="gender-m" value="laki-laki">
                                                     <label for="gender-m">Laki-laki</label>
                                                 </span>
                                             </div>
                                             <div class="radio-inline pl-0">
-                                                <span class="radio radio-info"> <input type="radio" name="gender"
-                                                        id="gender-w" value="perempuan">
+                                                <span class="radio radio-info">
+                                                    <input type="radio" name="gender" id="gender-w" value="perempuan">
                                                     <label for="gender-w">Perempuan</label>
                                                 </span>
                                             </div>
@@ -102,11 +105,7 @@
                     </div>
                 </div>
             </div>
-            @include('Layouts.Footer')
         </div>
-
-        <!-- Footer -->
         @include('Layouts.Footer')
-        <!-- /Footer -->
     </div>
 @endsection

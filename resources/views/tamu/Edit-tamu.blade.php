@@ -15,6 +15,9 @@
                         <li class="active"><span>Paket Bermain</span></li>
                     </ol>
                 </div>
+
+                <!-- Breadcrumb -->
+
                 <!-- /Breadcrumb -->
             </div>
             <!-- /Title -->
