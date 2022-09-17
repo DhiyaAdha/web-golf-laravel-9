@@ -23,12 +23,20 @@ table#dt-tamu {
 .txt-muted {
     color: #868e96 !important;
 }
+.panel.panel-default.card-view.l{
+    position: sticky;
+    top: 0;
+}
 .panel.panel-default.card-view.p{
     padding: 23px !important;
 }
 
 .panel.panel-default.card-view.b {
     height: 23.5rem;
+}
+
+.panel-heading.g {
+    padding: 10px 15px 10px 0px;
 }
 
 .d-flex.justify-content-center.p {

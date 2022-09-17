@@ -20,11 +20,17 @@
             </div>
             <!-- /Title -->
             <div class="row">
-                <div class="col-lg-7">
-                    <div style="height: 350px;" class="panel panel-default card-view">
+                <div class="col-lg-8">
+                    <div style="height: 373px;" class="panel panel-default card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
                                 <h6 class="panel-title txt-dark">Pilih paket bermain</h6>
+                            </div>
+                            <div class="pull-right">
+                                <div class='time-frame'>
+                                    <div class="text-right" id='date-part'></div>
+                                    <div class="label label-default" id='time-part' style="float: right;"></div>
+                                </div>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -48,15 +54,15 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <div class="d-flex flex-wrap">
-                            @foreach ($additional as $item2)
+                        <div class="d-flex flex-wrap mb-15">
+                            @foreach ($additional as $item)
                                 <div class="d-flex">
                                     <div class="checkbox checkbox-success mr-15">
                                         <input id="checkbox3" type="checkbox"
-                                            class="form-control select-item form-control-{{ $item2->id }}"
-                                            onchange="valueChanged({{ $item2->id }})">
+                                            class="form-control select-item form-control-{{ $item->id }}"
+                                            onchange="valueChanged({{ $item->id }}, {{ $item->price_weekdays }})">
                                         <label for="checkbox3">
-                                            {{ $item2->name }}
+                                            {{ $item->name }}
                                         </label>
                                     </div>
                                 </div>
@@ -64,11 +70,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-5">
-                    <div style="height: 350px;" class="panel panel-default border-panel card-view">
+                <div class="col-lg-4">
+                    <div class="panel panel-default border-panel card-view">
                         <div class="panel-heading">
-                            <h6 class="panel-title text-center">Daftar Order</h6>
-                            <div class="clearfix"></div>
+                            <div class="d-flex">
+                                <h6 class="panel-title flex-grow-1" style="font-weight: 500">Daftar Order</h6>
+                                <h6 class="panel-title"><i class="fa fa-shopping-cart"></i></h6>
+                                <div class="clearfix"></div>
+                            </div>
                         </div>
                         <div class="panel-heading">
                             <div class="pull-left">
@@ -79,27 +88,57 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        @foreach ($default as $item)
-                            <div class="panel-heading d-none isi-{{ $item->id }}">
-                                <div class="pull-left d-flex align-items-center">
-                                    <p class="text-muted mr-5">
-                                        {{ $item->name }}</p>
-                                    <button class="cart-qty-minus-{{ $item->id }}" type="button" value="-"><i
-                                            class="fa fa-minus-square"></i></button>
-                                    <input type="text" min="1"
-                                        onkeypress="return event.charCode >= 48 && event.charCode <=57" name="qty"
-                                        class="qty-{{ $item->id }}" data-price="{{ $item->price_weekdays }}"
-                                        maxlength="10" style="width: 30px;" />
-                                    <button class="cart-qty-plus-{{ $item->id }}" type="button" value="+"><i
-                                            class="fa fa-plus-square"></i></button>
+                        <div style="overflow-x: scroll; height: 150px;">
+                            @foreach ($default as $item)
+                                <div class="panel-heading g isi-{{ $item->id }}">
+                                    <div class="pull-left d-flex align-items-center">
+                                        <p class="text-muted mr-5">
+                                            {{ $item->name }}</p>
+                                    </div>
+                                    <div class="pull-right d-flex">
+                                        <p class="text-muted price-{{ $item->id }}">Rp.
+                                            {{ number_format($today == 'Sabtu' && 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}
+                                        </p>
+                                        <button class="cart-qty-minus-{{ $item->id }}" type="button" value="-"><i
+                                                class="fa fa-minus-square"></i></button>
+                                        <input type="text" min="0"
+                                            onkeypress="return event.charCode >= 48 && event.charCode <=57" name="qty"
+                                            class="qty-{{ $item->id }}"
+                                            data-price="{{ $today == 'Sabtu' && 'Minggu' ? $item->price_weekend : $item->price_weekdays }}"
+                                            maxlength="10" style="width: 30px;" />
+                                        <button class="cart-qty-plus-{{ $item->id }}" type="button" value="+"><i
+                                                class="fa fa-plus-square"></i></button>
+                                    </div>
+                                    <div class="clearfix"></div>
                                 </div>
-                                <div class="pull-right">
-                                    <p class="text-muted price-{{ $item->id }}">Rp.
-                                        {{ number_format($item->price_weekdays, 0, ',', '.') }}</p>
+                            @endforeach
+
+                            @foreach ($additional as $item)
+                                <div class="panel-heading g d-none isi-{{ $item->id }}">
+                                    <div class="pull-left d-flex align-items-center">
+                                        <p class="text-muted mr-5">
+                                            {{ $item->name }}</p>
+                                    </div>
+                                    <div class="pull-right">
+                                        <div class="pull-right d-flex">
+                                            <p class="text-muted price-{{ $item->id }}">Rp.
+                                                {{ number_format($today == 'Sabtu' && 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}
+                                            </p>
+                                            <button class="cart-qty-minus-{{ $item->id }}" type="button"
+                                                value="-"><i class="fa fa-minus-square"></i></button>
+                                            <input type="text" min="0"
+                                                onkeypress="return event.charCode >= 48 && event.charCode <=57"
+                                                name="qty" class="qty-{{ $item->id }}"
+                                                data-price="{{ $today == 'Sabtu' && 'Minggu' ? $item->price_weekend : $item->price_weekdays }}"
+                                                maxlength="10" style="width: 30px;" />
+                                            <button class="cart-qty-plus-{{ $item->id }}" type="button"
+                                                value="+"><i class="fa fa-plus-square"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
                                 </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
                         <div class="panel-heading">
                             <div class="pull-left">
                                 <strong class="txt-dark">Total</strong>
@@ -109,7 +148,7 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <button type="submit" class="mt-15 btn-sm btn btn-success btn-block btn-anim">
+                        <button type="submit" class="mt-15 mb-15 btn-xs btn btn-success btn-block btn-anim">
                             <i class="icon-rocket"></i>
                             <span class="btn-text">Checkout</span>
                         </button>
@@ -129,7 +168,7 @@
             var buttonMinus = $(".cart-qty-minus-" + id);
             $(document).on('change', '.form-control-' + id, function(e) {
                 e.preventDefault();
-                if (this.checked) {
+                if ($(this).is(':checked')) {
                     $('.isi-' + id).removeClass('d-none');
                     $(".qty-" + id).val(1);
                 } else {
@@ -191,5 +230,11 @@
                 }
             });
         };
+
+        var interval = setInterval(function() {
+            var momentNow = moment().locale('fr');
+            $('#date-part').html(momentNow.format('dddd, Do MMMM YYYY'));
+            $('#time-part').html(momentNow.format('hh:mm:ss A'));
+        }, 100);
     </script>
 @endpush
