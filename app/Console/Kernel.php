@@ -39,15 +39,13 @@ class Kernel extends ConsoleKernel
             foreach($visitor as $value){
                 ReportLimit::create([
                     'visitor_id' => $value->id,
-                    'user_id' => 1,
+                    'user_id' => Auth::user()->id,
                     'report_quota' => $value->tipe_member == 'VIP' ? '4' : '10',
                     'created_at' => Carbon::now(),
                 ]);
             }
-
-
-        })->everyMinute();
-        // ->monthly();
+        // })->everyMinute();
+    })->monthly();
     }
 
     /**
