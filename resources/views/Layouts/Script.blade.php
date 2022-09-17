@@ -135,8 +135,10 @@
             targets: [1, 2, 3, ]
         }],
     });
+
     $('#show-qr-scan').on('click', function() {
             $('.disabled-scan').addClass('d-none');
+
             function onScanSuccess(decodedText, decodedResult) {
                 $("#resultTEXT").val(decodedText)
                 $('#resultDECODE').val(JSON.stringify(decodedResult));
@@ -181,9 +183,11 @@
                     }
                 });
             }
+
             function onScanFailure(error) {
                 console.warn(`Code scan error = ${error}`);
             }
+
             let html5QrcodeScanner = new Html5QrcodeScanner(
                 "reader", {
                     fps: 144,
