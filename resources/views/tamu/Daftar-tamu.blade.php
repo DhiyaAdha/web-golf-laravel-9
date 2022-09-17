@@ -28,6 +28,8 @@
                                 <h6 class="panel-title txt-dark">Daftar Tamu</h6>
                             </div>
                             <div class="pull-right">
+                                <a href="{{ url('export_excel_tamu') }}">
+                                        <i data-toggle="tooltip" title="Download Excell" class="fa fa-file-excel-o pull-left"></i></a>
                                 <a href="{{ route('tambah-tamu') }}" class="btn btn-xs btn-success">Tambah
                                     Tamu</a>
                             </div>

@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\DaftarTamuExport;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -483,6 +485,20 @@ class TamuController extends Controller
     {
         return view('tamu.tambah-tamu');
     }
+
+    /* export exel analisi*/
+    
+    public function export_excel_tamu()
+    {
+        return Excel::download(new DaftarTamuExport, 'daftar_tamu.xlsx');
+
+        // Excel::create();
+        // $riwayat_invoice = Excel::loadView('invoice.export_excel');
+        // $export = new Excel();
+        // return $export->download(new LogTransactionExport, 'riwayat_invoice.xlsx');
+    }
+
+    /* end export exel analisi*/
 
     /**
      * Remove the specified resource from storage.

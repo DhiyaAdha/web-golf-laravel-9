@@ -34,10 +34,6 @@
                         -webkit-text-fill-color: #00000021;
                         margin: 0;
                     }
-<<<<<<< HEAD
-=======
-
->>>>>>> imas
                     .invoice-box {
                         max-width: 800px;
                         margin: auto;
@@ -49,10 +45,6 @@
                         font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
                         color: #555;
                     }
-<<<<<<< HEAD
-=======
-
->>>>>>> imas
                     .invoice-box table {
                         width: 100%;
                         line-height: inherit;

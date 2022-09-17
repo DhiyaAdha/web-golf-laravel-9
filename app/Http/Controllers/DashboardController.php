@@ -12,8 +12,9 @@ use PhpParser\Node\Stmt\Foreach_;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use CreatePersonalAccessTokensTable;
-use Illuminate\Mail\Transport\LogTransport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Mail\Transport\LogTransport;
 
 class DashboardController extends Controller
 {
@@ -219,7 +220,7 @@ class DashboardController extends Controller
         }
         // dd($visitor);
         return view('/Analisis-tamu', $data);
-    }
+    }  
 
     /**
      * Show the form for creating a new resource.
