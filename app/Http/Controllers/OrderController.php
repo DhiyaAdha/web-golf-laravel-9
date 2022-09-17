@@ -22,9 +22,8 @@ class OrderController extends Controller
         $default = Package::where('category', 'default')->where('status', 0)->get();
         $additional = Package::where('category', 'additional')->where('status', 0)->get();
         $today = Carbon::now()->isoFormat('dddd');
-        $count_default = count($default);
-        $count_additional = count($additional);
-        return view('proses', compact('package','default','additional', 'count_default', 'count_additional','today'));
+        $date_now = Carbon::now()->translatedFormat('d F Y');
+        return view('proses', compact('package','default','additional', 'date_now', 'today'));
     }
 
     /**
