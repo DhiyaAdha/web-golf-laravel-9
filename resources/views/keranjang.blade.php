@@ -20,100 +20,131 @@
             </div>
             <!-- /Title -->
             <div class="row">
-                <div class="col-lg-8">
-                    <div style="height: 373px;" class="panel panel-default card-view">
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                <h6 class="panel-title txt-dark">Default</h6>
-                            </div>
-                            <div class="pull-right">
-                                <div class='d-flex '>
-                                    <span class="text-muted mr-15" style="float: right;">{{ $date_now }}, </span>
-                                    <span class="label label-default" id='time-part' style="float: right;"></span>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
+                <div class="col-lg-12">
+                    <div class="panel panel-default border-panel card-view jt">
+                        <div class="icon-tgcc">
+                            <img src="{{ asset('dist/img/tgcc_icon.svg') }}" alt="">
                         </div>
-                        <div class="d-flex flex-wrap">
-                            @foreach ($default as $item)
-                                <div class="d-flex">
-                                    <div class="checkbox checkbox-success mr-15">
-                                        <input name="price[]" type="checkbox"
-                                            class="form-control select-item form-control-{{ $item->id }}"
-                                            data-name="{{ $item->name }}" data-today="{{ $today }}"
-                                            onclick="totalIt()"
-                                            value="{{ $today == ('Sabtu' && 'Minggu') ? $item->price_weekend : $item->price_weekdays }}"
-                                            onchange="valueChanged({{ $item->id }}, {{ $today == ('Sabtu' && 'Minggu') ? $item->price_weekend : $item->price_weekdays }})">
-                                        <label for="checkbox3">
-                                            {{ $item->name }}
-                                        </label>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                <h6 class="panel-title txt-dark">Tambahan</h6>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="d-flex flex-wrap mb-15">
-                            @foreach ($additional as $item)
-                                <div class="d-flex">
-                                    <div class="checkbox checkbox-success mr-15">
-                                        <input name="price[]" type="checkbox"
-                                            class="form-control select-item form-control-{{ $item->id }}"
-                                            data-name="{{ $item->name }}" data-today="{{ $today }}"
-                                            onclick="totalIt()"
-                                            value="{{ $today == ('Sabtu' && 'Minggu') ? $item->price_weekend : $item->price_weekdays }}"
-                                            onchange="valueChanged({{ $item->id }}, {{ $today == ('Sabtu' && 'Minggu') ? $item->price_weekend : $item->price_weekdays }})">
-                                        <label for="checkbox3">
-                                            {{ $item->name }}
-                                        </label>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
+                        <img src="{{ asset('img/lapangan-golf.jpg') }}" style="width: 100%;">
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="panel panel-default border-panel card-view">
-                        <div class="panel-heading">
-                            <div class="d-flex">
-                                <h6 class="panel-title flex-grow-1" style="font-weight: 500">Daftar Order</h6>
-                                <a href="javascript:void(0)" style="position: relative">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    <span class="top-nav-icon-badge" style="position: absolute" id="qty">0</span>
-                                </a>
+            </div>
+            <div class="row">
+                <div class="d-flex">
+                    <div class="d-flex flex-column">
+                        <div class="col-lg-8" style="width: 100%;">
+                            <div style="height: 373px;" class="panel panel-default card-view">
+                                <div class="panel-heading">
+                                    <div class="pull-left">
+                                        <h6 class="panel-title txt-dark">Default</h6>
+                                    </div>
+                                    <div class="pull-right">
+                                        <div class='d-flex '>
+                                            <span class="text-muted mr-15" style="float: right;">{{ $date_now }},
+                                            </span>
+                                            <span class="label label-default" id='time-part' style="float: right;"></span>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="d-flex flex-wrap">
+                                    @foreach ($default as $item)
+                                        <div class="d-flex">
+                                            <div class="checkbox checkbox-success mr-15">
+                                                <input name="price[]" type="checkbox"
+                                                    class="form-control select-item form-control-{{ $item->id }}"
+                                                    data-name="{{ $item->name }}" data-today="{{ $today }}"
+                                                    onclick="totalIt()"
+                                                    value="{{ $today == ('Sabtu' && 'Minggu') ? $item->price_weekend : $item->price_weekdays }}"
+                                                    onchange="valueChanged({{ $item->id }}, {{ $today == ('Sabtu' && 'Minggu') ? $item->price_weekend : $item->price_weekdays }})">
+                                                <label for="checkbox3">
+                                                    {{ $item->name }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="panel-heading">
+                                    <div class="pull-left">
+                                        <h6 class="panel-title txt-dark">Tambahan</h6>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="d-flex flex-wrap mb-15">
+                                    @foreach ($additional as $item)
+                                        <div class="d-flex">
+                                            <div class="checkbox checkbox-success mr-15">
+                                                <input name="price[]" type="checkbox"
+                                                    class="form-control select-item form-control-{{ $item->id }}"
+                                                    data-name="{{ $item->name }}" data-today="{{ $today }}"
+                                                    onclick="totalIt()"
+                                                    value="{{ $today == ('Sabtu' && 'Minggu') ? $item->price_weekend : $item->price_weekdays }}"
+                                                    onchange="valueChanged({{ $item->id }}, {{ $today == ('Sabtu' && 'Minggu') ? $item->price_weekend : $item->price_weekdays }})">
+                                                <label for="checkbox3">
+                                                    {{ $item->name }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="panel-heading fk d-flex align-items-center">
+                                    <div class="d-flex align-items-center justify-content-between" style="width: 100%">
+                                        <span class="text-size">Terbilang</span>
+                                        <span class="counted">-</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" style="position: sticky; width: 45%;">
+                        <div class="panel panel-default border-panel card-view">
+                            <div class="panel-heading">
+                                <div class="d-flex">
+                                    <h6 class="panel-title flex-grow-1" style="font-weight: 500">Daftar Order</h6>
+                                    <a href="javascript:void(0)" style="position: relative">
+                                        <i class="fa fa-shopping-cart"></i>
+                                        <span class="top-nav-icon-badge" style="position: absolute" id="qty">0</span>
+                                    </a>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="panel-heading">
+                                <div class="pull-left">
+                                    <p class="text-muted">Produk</p>
+                                </div>
+                                <div class="pull-right">
+                                    <p class="text-muted">Sub total</p>
+                                </div>
                                 <div class="clearfix"></div>
                             </div>
-                        </div>
-                        <div class="panel-heading">
+                            <div style="overflow-x: scroll; height: 170px;"
+                                class="d-flex justify-content-center align-items-center text-center isi-">
+                                <span class="not-found text-muted">Keranjang masih kosong</span>
+                            </div>
+                            <div class="panel-heading gu">
+                                <div class="pull-left">
+                                    <strong class="txt-dark">Total</strong>
+                                </div>
+                                <div class="pull-right">
+                                    <strong class="txt-dark" id="total-pay">Rp. 0</strong>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
                             <div class="pull-left">
-                                <p class="text-muted">Produk</p>
+                                <button type="button" class="mt-15 mb-15 btn-xs btn btn-primary btn-anim"
+                                    id="reset-qty">
+                                    <i class="icon-rocket"></i>
+                                    <span class="btn-text">Reset</span>
+                                </button>
                             </div>
                             <div class="pull-right">
-                                <p class="text-muted">Sub total</p>
+                                <button type="submit" class="mt-15 mb-15 btn-xs btn btn-success btn-anim">
+                                    <i class="icon-rocket"></i>
+                                    <span class="btn-text">Checkout</span>
+                                </button>
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <div style="overflow-x: scroll; height: 150px;"
-                            class="d-flex justify-content-center align-items-center text-center isi-">
-                            <span class="not-found text-muted">Keranjang masih kosong</span>
-                        </div>
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                <strong class="txt-dark">Total</strong>
-                            </div>
-                            <div class="pull-right">
-                                <strong class="txt-dark" id="total-pay">Rp. 0</strong>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <button type="submit" class="mt-15 mb-15 btn-xs btn btn-success btn-block btn-anim">
-                            <i class="icon-rocket"></i>
-                            <span class="btn-text">Checkout</span>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -150,7 +181,7 @@
 @endsection
 @push('scripts')
     <script>
-        function updateTotal(id) {
+        function updateTotal(id, price) {
             var buttonPlus = $(".cart-qty-plus-" + id);
             var buttonMinus = $(".cart-qty-minus-" + id);
 
@@ -214,6 +245,7 @@
             var len = $("input[name='price[]']:checked").length;
             if (len > 0) {
                 $("#qty").text(len);
+                resetQTY(len);
             } else {
                 $("#qty").text('0');
             }
@@ -228,6 +260,22 @@
                 }
             }
             $("#total-pay").text('Rp. ' + formatIDR(total));
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('qty.price') }}",
+                data: {
+                    total: total
+                },
+                dataType: 'json',
+                success: function(response) {
+                    $('.counted').text(response.counted);
+                }
+            });
         }
 
         function formatIDR(price) {
@@ -243,9 +291,31 @@
             return split[1] != undefined ? idr + ',' + split[1] : idr;
         }
 
+        function resetQTY(len) {
+            $(document).on('click', '#reset-qty', function() {
+                swal({
+                    title: "Anda yakin ingin menghapus paket ini?",
+                    imageUrl: "../img/Warning.svg",
+                    showCancelButton: true,
+                    confirmButtonColor: "#FF2A00",
+                    confirmButtonText: "Hapus paket",
+                    cancelButtonText: "Batal",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                }, function(isConfirm) {
+                    if (len > 0) {
+                        if (isConfirm) {
+                            location.reload();
+                        } else {
+                            swal("Dibatalkan");
+                        }
+                    }
+                });
+            });
+        }
+
         function valueChanged(id, price) {
             $(document).on('change', '.form-control-' + id, function() {
-                updateCounter();
                 var today = $(this).data('today');
                 var name = $(this).data('name');
                 if (this.checked) {
@@ -263,10 +333,10 @@
                                         </div>`).removeClass(
                         'd-flex justify-content-center align-items-center text-center');
                     $('.not-found').remove();
-                    updateTotal(id);
+                    updateTotal(id, price);
+                    updateCounter();
                 } else {
                     $('.remove-' + id).remove();
-                    // location.reload();
                 }
             });
         };

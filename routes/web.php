@@ -59,6 +59,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::post('update/deposit/{id}', [ScanqrController::class, 'update_deposit'])->name('update.deposit')->middleware('signed');
     Route::post('qty/plus', [OrderController::class, 'qty_plus'])->name('qty.plus');
     Route::post('qty/minus', [OrderController::class, 'qty_minus'])->name('qty.minus');
+    Route::post('qty/price', [OrderController::class, 'qty_price'])->name('qty.price');
 });
 
 //Level admin dan superadmin

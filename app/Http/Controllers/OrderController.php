@@ -107,4 +107,12 @@ class OrderController extends Controller
         $price = $request->get('price');
         return response()->json(['id' => $id, 'minus' => $qty_minus, 'price' => $price], 200);
     }
+
+    public function qty_price(Request $request)
+    {
+        $data  = [
+            'counted' => ucwords(counted($request->get('total')). ' Rupiah')
+        ];
+        return response()->json($data);
+    }
 }

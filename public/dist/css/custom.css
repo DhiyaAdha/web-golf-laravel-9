@@ -15,6 +15,20 @@ table#dt-analisis {
 table#dt-tamu {
     width: auto !important;
 }
+.panel-heading.fk {
+    position: absolute;
+    bottom: 0;
+    left: 21px;
+    right: 0;
+    height: 100px;
+    width: 98.4%;
+    top: 287px;
+    background-color: #777777 !important;
+    color: #fff !important;
+    border-bottom: 1px solid rgba(33, 33, 33, 0.1) !important;
+    border-left: 1px solid rgba(33, 33, 33, 0.1) !important;
+    border-right: 1px solid rgba(33, 33, 33, 0.1) !important;
+}
 
 .top-nav-icon-badge{
     position: absolute;
@@ -48,7 +62,36 @@ table#dt-tamu {
 }
 
 .panel-heading.g {
-    padding: 10px 15px 10px 0px;
+    padding: 8px 0px 8px 0px;
+}
+
+.icon-tgcc {
+    position: absolute;
+    padding: 10px;
+    right: 12px;
+}
+
+.panel-heading.gu{
+    padding: 0px 15px 20px 15px !important;
+}
+
+.card-view.jt{
+    padding: 0px !important;
+    position: relative;
+    border: none !important;
+}
+
+.counted{
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.label, .jvectormap-tip {
+    padding: 5px 6px 3px !important;
+}
+
+.text-size{
+    font-size: 15px;
 }
 
 .d-flex.justify-content-center.p {
