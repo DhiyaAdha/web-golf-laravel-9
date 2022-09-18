@@ -38,12 +38,12 @@
                             @foreach ($default as $item)
                                 <div class="d-flex">
                                     <div class="checkbox checkbox-success mr-15">
-                                        <input name="price" type="checkbox"
+                                        <input name="price[]" type="checkbox"
                                             class="form-control select-item form-control-{{ $item->id }}"
                                             data-name="{{ $item->name }}" data-today="{{ $today }}"
                                             onclick="totalIt()"
-                                            value="{{ $today == 'Sabtu' && 'Minggu' ? $item->price_weekend : $item->price_weekdays }}"
-                                            onchange="valueChanged({{ $item->id }}, {{ $today == 'Sabtu' && 'Minggu' ? $item->price_weekend : $item->price_weekdays }})">
+                                            value="{{ $today == ('Sabtu' && 'Minggu') ? $item->price_weekend : $item->price_weekdays }}"
+                                            onchange="valueChanged({{ $item->id }}, {{ $today == ('Sabtu' && 'Minggu') ? $item->price_weekend : $item->price_weekdays }})">
                                         <label for="checkbox3">
                                             {{ $item->name }}
                                         </label>
@@ -61,12 +61,12 @@
                             @foreach ($additional as $item)
                                 <div class="d-flex">
                                     <div class="checkbox checkbox-success mr-15">
-                                        <input name="price" type="checkbox"
+                                        <input name="price[]" type="checkbox"
                                             class="form-control select-item form-control-{{ $item->id }}"
                                             data-name="{{ $item->name }}" data-today="{{ $today }}"
                                             onclick="totalIt()"
-                                            value="{{ $today == 'Sabtu' && 'Minggu' ? $item->price_weekend : $item->price_weekdays }}"
-                                            onchange="valueChanged({{ $item->id }}, {{ $today == 'Sabtu' && 'Minggu' ? $item->price_weekend : $item->price_weekdays }})">
+                                            value="{{ $today == ('Sabtu' && 'Minggu') ? $item->price_weekend : $item->price_weekdays }}"
+                                            onchange="valueChanged({{ $item->id }}, {{ $today == ('Sabtu' && 'Minggu') ? $item->price_weekend : $item->price_weekdays }})">
                                         <label for="checkbox3">
                                             {{ $item->name }}
                                         </label>
@@ -81,7 +81,10 @@
                         <div class="panel-heading">
                             <div class="d-flex">
                                 <h6 class="panel-title flex-grow-1" style="font-weight: 500">Daftar Order</h6>
-                                <h6 class="panel-title"><i class="fa fa-shopping-cart"></i></h6>
+                                <a href="javascript:void(0)" style="position: relative">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    <span class="top-nav-icon-badge" style="position: absolute" id="qty">0</span>
+                                </a>
                                 <div class="clearfix"></div>
                             </div>
                         </div>
@@ -147,8 +150,77 @@
 @endsection
 @push('scripts')
     <script>
+        function updateTotal(id) {
+            var buttonPlus = $(".cart-qty-plus-" + id);
+            var buttonMinus = $(".cart-qty-minus-" + id);
+
+            buttonPlus.click(function(e) {
+                e.preventDefault();
+                var $n = $(".qty-" + id);
+                $n.val(Number($n.val()) + 1);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('qty.plus') }}",
+                    data: {
+                        id: id,
+                        qty_plus: parseInt($n.val()),
+                        price: price
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        var total = response.plus * response.price;
+                        var output = parseInt(total).toLocaleString();
+                        $('.price-' + response.id).text('Rp ' + output);
+                    }
+                });
+            });
+
+            buttonMinus.click(function() {
+                var $n = $(".qty-" + id);
+                var amount = Number($n.val());
+                if (amount > 0) {
+                    $n.val(amount - 1);
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ route('qty.minus') }}",
+                        data: {
+                            id: id,
+                            qty_minus: parseInt($n.val()),
+                            price: price
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            var total = response.minus * response.price;
+                            var minus = total - response.price;
+                            var output = parseInt(minus).toLocaleString();
+                            $('.price-' + response.id).text('Rp ' + output);
+                        }
+                    });
+                }
+            });
+        }
+
+        function updateCounter() {
+            var len = $("input[name='price[]']:checked").length;
+            if (len > 0) {
+                $("#qty").text(len);
+            } else {
+                $("#qty").text('0');
+            }
+        }
+
         function totalIt() {
-            var input = $("input[name='price']");
+            var input = $("input[name='price[]']");
             var total = 0;
             for (var i = 0; i < input.length; i++) {
                 if (input[i].checked) {
@@ -162,17 +234,18 @@
             var number_string = price.toString(),
                 split = number_string.split(','),
                 remainder = split[0].length % 3,
-                rupiah = split[0].substr(0, remainder),
-                ribuan = split[0].substr(remainder).match(/\d{1,3}/gi);
-            if (ribuan) {
+                idr = split[0].substr(0, remainder),
+                thousand = split[0].substr(remainder).match(/\d{1,3}/gi);
+            if (thousand) {
                 separator = remainder ? '.' : '';
-                rupiah += separator + ribuan.join('.');
+                idr += separator + thousand.join('.');
             }
-            return split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return split[1] != undefined ? idr + ',' + split[1] : idr;
         }
 
         function valueChanged(id, price) {
             $(document).on('change', '.form-control-' + id, function() {
+                updateCounter();
                 var today = $(this).data('today');
                 var name = $(this).data('name');
                 if (this.checked) {
@@ -190,65 +263,7 @@
                                         </div>`).removeClass(
                         'd-flex justify-content-center align-items-center text-center');
                     $('.not-found').remove();
-                    let a = $('.form-control-' + id).data('id');
-
-                    var buttonPlus = $(".cart-qty-plus-" + id);
-                    var buttonMinus = $(".cart-qty-minus-" + id);
-
-                    buttonPlus.click(function(e) {
-                        e.preventDefault();
-                        var $n = $(".qty-" + id);
-                        $n.val(Number($n.val()) + 1);
-                        $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-                        $.ajax({
-                            type: 'POST',
-                            url: "{{ route('qty.plus') }}",
-                            data: {
-                                id: id,
-                                qty_plus: parseInt($n.val()),
-                                price: price
-                            },
-                            dataType: 'json',
-                            success: function(response) {
-                                var total = response.plus * response.price;
-                                var output = parseInt(total).toLocaleString();
-                                $('.price-' + response.id).text('Rp ' + output);
-                            }
-                        });
-                    });
-
-                    buttonMinus.click(function() {
-                        var $n = $(".qty-" + id);
-                        var amount = Number($n.val());
-                        if (amount > 0) {
-                            $n.val(amount - 1);
-                            $.ajaxSetup({
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                }
-                            });
-                            $.ajax({
-                                type: 'POST',
-                                url: "{{ route('qty.minus') }}",
-                                data: {
-                                    id: id,
-                                    qty_minus: parseInt($n.val()),
-                                    price: price
-                                },
-                                dataType: 'json',
-                                success: function(response) {
-                                    var total = response.minus * response.price;
-                                    var minus = total - response.price;
-                                    var output = parseInt(minus).toLocaleString();
-                                    $('.price-' + response.id).text('Rp ' + output);
-                                }
-                            });
-                        }
-                    });
+                    updateTotal(id);
                 } else {
                     $('.remove-' + id).remove();
                     // location.reload();

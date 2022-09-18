@@ -16,6 +16,18 @@ table#dt-tamu {
     width: auto !important;
 }
 
+.top-nav-icon-badge{
+    position: absolute;
+    bottom: 16px;
+    background: #e91e63;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 10px;
+    left: 10px;
+    text-align: center;
+    width: 16px;
+}
+
 .float-left {
     float: left !important;
 }

@@ -23,7 +23,7 @@ class OrderController extends Controller
         $additional = Package::where('category', 'additional')->where('status', 0)->get();
         $today = Carbon::now()->isoFormat('dddd');
         $date_now = Carbon::now()->translatedFormat('d F Y');
-        return view('proses', compact('package','default','additional', 'date_now', 'today'));
+        return view('keranjang', compact('package','default','additional', 'date_now', 'today'));
     }
 
     /**
