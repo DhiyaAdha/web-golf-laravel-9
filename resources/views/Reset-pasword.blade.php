@@ -20,6 +20,27 @@
     <!-- Custom CSS -->
     <link href="/dist/css/style.css" rel="stylesheet" type="text/css">
     <link href="/dist/css/custom.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+    <style>
+        .password-container{
+        width: 400px;
+        position: relative;
+        }
+        .password-container input[type="password"],
+        .password-container input[type="text"]{
+        width: 100%;
+        padding: 12px 36px 12px 12px;
+        box-sizing: border-box;
+        }
+        .fa-eye{
+        position: absolute;
+        top: 60%;
+        right: 4%;
+        cursor: pointer;
+        color: lightgray;
+        }
+    </style>
 </head>
 
 <body>
@@ -57,6 +78,15 @@
                                                 </button>
                                             </div>
                                         @endif
+
+                                        @if (session()->has('resetError'))
+                                            <div class="alert alert-danger">{!! session('loginError') !!}
+                                                <button type="button" class="close" data-dismiss="alert"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="mb-30">
                                         <h5 class="text-center txt-dark mb-10">Lupa Password Tritih Golf & Country Club
@@ -77,20 +107,22 @@
                                                     value="{{ $email ?? old('email') }}">
                                                 <span class="text-danger">
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group password-container">
                                                 <label class="pull-left control-label mb-10" for="password">Password
                                                     Baru</label>
                                                 <input type="password" name="password" class="form-control"
                                                     id="password" placeholder="Masukan Password Baru"
                                                     value="{{ old('password') }}">
+                                                    <i class="fa-solid fa-eye" id="eye"></i>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group password-container">
                                                 <label class="pull-left control-label mb-10"
                                                     for="password_confirmation">Ulangi Password</label>
                                                 <div class="clearfix"></div>
                                                 <input type="password" name="password_confirmation" class="form-control"
                                                     id="password_confirmation" placeholder="Masukan Password Baru"
                                                     value="{{ old('password_confirmation') }}"required>
+                                                    <i class="fa-solid fa-eye" id="eyee"></i>
                                             </div>
                                             <div class="form-group text-center">
                                                 <button type="submit" class="btn btn-info btn-rounded">Update
@@ -126,6 +158,24 @@
 
     <!-- Init JavaScript -->
     <script src="/dist/js/init.js"></script>
+
+    <script>
+        const passwordField = document.querySelector("#password");
+        const passwordCon = document.querySelector("#password_confirmation");
+        const eyeIcon= document.querySelector("#eye");
+        const eyeeIcon= document.querySelector("#eyee");
+
+        eye.addEventListener("click", function(){
+        this.classList.toggle("fa-eye-slash");
+        const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+        passwordField.setAttribute("type", type);
+        })
+        eyee.addEventListener("click", function(){
+        this.classList.toggle("fa-eye-slash");
+        const typee = passwordCon.getAttribute("type") === "password" ? "text" : "password";
+        passwordCon.setAttribute("type", typee);
+        })
+    </script>
 </body>
 
 </html>

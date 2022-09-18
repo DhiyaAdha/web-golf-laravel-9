@@ -92,6 +92,7 @@ class AuthController extends Controller {
             // dd(session()->all());
         }
     }
+
     // public function logout(Request $request){
         //     $user = $request->user();
         //     $user->currentAccessToken()->delete();
@@ -104,6 +105,8 @@ class AuthController extends Controller {
     //     // return response()->json($respon, 200);
     //     return redirect()->intended('/login');
     // }
+
+    
 
     //ini untuk function logout
     public function logout (Request $request) {
@@ -142,7 +145,7 @@ class AuthController extends Controller {
     }
     //ini untuk route get di web.php memasukkan password baru
     public function showResetForm(Request $request, $token = null){
-        dd($token);
+        // dd($token);
         return view('Reset-pasword')->with(['token'=>$token,'email'=>$request->email]);
     }
     //ini untuk route get di web.php memasukkan email yang akan dirubah passwordnya

@@ -4,6 +4,7 @@
             <span>Admin Dashboard</span>
             <i class="zmdi zmdi-more"></i>
         </li>
+        @if (auth()->user()->role_id == '2')
         <li>
             <a class="{{ Request::is('analisis-tamu') ? 'active' : '' }}" href="{{ route('analisis-tamu.index') }}">
                 <div class="pull-left">
@@ -13,6 +14,7 @@
                 <div class="clearfix"></div>
             </a>
         </li>
+        @endif
         <li>
             <a class="{{ Request::is('scan-tamu') ? 'active' : '' }}" href="{{ route('scan-tamu') }}">
                 <div class="pull-left">
@@ -32,7 +34,7 @@
             </a>
         </li>
         {{-- hideadmin --}}
-        @if (auth()->user()->role_id == '1')
+        @if (auth()->user()->role_id == '2')
             <li>
                 <a class="{{ Request::is('daftar-admin') ? 'active' : '' }}" href="{{ route('daftar-admin') }}">
                     <div class="pull-left">
@@ -43,6 +45,7 @@
                 </a>
             </li>
         @endif
+        @if(Auth::user()->role_id== '2')
         <li>
             <a class="{{ Request::is('riwayat-invoice') ? 'active' : '' }}" href="{{ route('riwayat-invoice.index') }}">
                 <div class="pull-left">
@@ -52,13 +55,16 @@
                 <div class="clearfix"></div>
             </a>
         </li>
+        @endif
         <li>
             <hr class="light-grey-hr mb-10" />
         </li>
+        @if(Auth::user()->role_id== '2')
         <li class="navigation-header">
             <span>PRODUK</span>
             <i class="zmdi zmdi-more"></i>
         </li>
+        
         <li>
             <a class="{{ Request::is('package') ? 'active' : '' }}" href="{{ route('package.index') }}">
                 <div class="pull-left">
@@ -68,6 +74,7 @@
                 <div class="clearfix"></div>
             </a>
         </li>
+        @endif
     </ul>
 </div>
 <!-- /Left Sidebar Menu -->

@@ -42,8 +42,7 @@ Route::get('/', function () {
     Route::get('/logout', [AuthController::class, 'logout']);
 
     //Level superadmin
-Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
-    Route::get('/kartu-member/{e}', [ScanqrController::class, 'show_detail'])->name('detail-scan')->middleware('signed');
+Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     Route::get('/daftar-admin', [AdminController::class, 'index'])->name('daftar-admin');
     Route::post('/store', [AdminController::class, 'store'])->name('store');
     Route::get('/daftar-admin/{id}', [AdminController::class, 'show'])->name('show');
@@ -56,7 +55,17 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::post('/edit-admin/{users}', [AdminController::class, 'update'])->name('admin.edit');
     Route::get('/daftar-admin/destroy/{id}', [AdminController::class,'delete',])->name('hapus-admin');
     Route::get('aktifitas', [AdminController::class, 'aktifitas'])->name('admin.aktifitas');
-    Route::post('update/deposit/{id}', [ScanqrController::class, 'update_deposit'])->name('update.deposit')->middleware('signed');
+    Route::get('/package/destroy/{id}', [PackageController::class,'destroy'])->name('package.destroy');
+    Route::post('/package/store', [PackageController::class, 'store'])->name('package.store');
+    Route::get('/package/edit/{package}', [PackageController::class, 'edit'])->name('package.edit');
+    Route::post('/package/update/{id}', [PackageController::class,'update'])->name('package.update');
+    Route::resource('package', PackageController::class)->except(['show','update']);
+    Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
+    Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name('show');
+    Route::get('/metode_pembayaran', [InvoiceController::class,'metode_pembayaran'])->name('metode_pembayaran');
+    route::get('/invoice_cetakpdf/{id}', [InvoiceController::class, 'cetak_pdf'])->name('cetak_pdf');
+    route::get('/export_excel', [InvoiceController::class, 'export_excel'])->name('export_excel');
+    
 });
 
 //Level admin dan superadmin
@@ -68,6 +77,8 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('qrcode/{id}', [ScanqrController::class, 'generate'])->name('generate');
     Route::get('/scan-tamu-berhasil', [ScanqrController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
     Route::get('/kartu-tamu', [ScanqrController::class, 'kartutamu'])->name('kartu-tamu');
+    Route::get('/kartu-member/{e}', [ScanqrController::class, 'show_detail'])->name('detail-scan')->middleware('signed');
+    Route::post('update/deposit/{id}', [ScanqrController::class, 'update_deposit'])->name('update.deposit')->middleware('signed');
     Route::get('/daftar-tamu', [TamuController::class, 'index'])->name('daftar-tamu');
     Route::get('/daftar-tamu/destroy/{id}', [TamuController::class,'delete'])->name('hapus-tamu');
     Route::get('/tambah-tamu', [TamuController::class, 'tambahtamu'])->name('tambah-tamu');
@@ -91,16 +102,6 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('reportlimit/{id}', [TamuController::class, 'reportlimit'])->name('limit.report.data');
     Route::get('reporttransaksi/{id}', [TamuController::class, 'reporttransaksi'])->name('transaksi.report.data');
     Route::post('/tambah-deposit', [TamuController::class, 'insertdeposit'])->name('insertdeposit');
-    Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
-    Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name('show');
-    Route::get('/metode_pembayaran', [InvoiceController::class,'metode_pembayaran'])->name('metode_pembayaran');
-    route::get('/invoice_cetakpdf/{id}', [InvoiceController::class, 'cetak_pdf'])->name('cetak_pdf');
-    route::get('/export_excel', [InvoiceController::class, 'export_excel'])->name('export_excel');
     Route::resource('cart', OrderController::class);
     Route::get('/proses', [OrderController::class, 'index'])->name('proses');
-    Route::get('/package/destroy/{id}', [PackageController::class,'destroy'])->name('package.destroy');
-    Route::post('/package/store', [PackageController::class, 'store'])->name('package.store');
-    Route::get('/package/edit/{package}', [PackageController::class, 'edit'])->name('package.edit');
-    Route::post('/package/update/{id}', [PackageController::class,'update'])->name('package.update');
-    Route::resource('package', PackageController::class)->except(['show','update']);
 });
