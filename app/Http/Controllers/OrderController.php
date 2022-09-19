@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Package;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class OrderController extends Controller
 {
@@ -18,9 +19,11 @@ class OrderController extends Controller
             return \redirect('/analisis-tamu');
         }
         $package = Package::get();
-        $default = Package::where('category', 'default')->get();
-        $additional = Package::where('category', 'additional')->get();
-        return view('proses', compact('package','default','additional'));
+        $default = Package::where('category', 'default')->where('status', 0)->get();
+        $additional = Package::where('category', 'additional')->where('status', 0)->get();
+        $today = Carbon::now()->isoFormat('dddd');
+        $date_now = Carbon::now()->translatedFormat('d F Y');
+        return view('keranjang', compact('package','default','additional', 'date_now', 'today'));
     }
 
     /**
@@ -87,5 +90,31 @@ class OrderController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function qty_plus(Request $request)
+    {
+        $id = $request->get('id');
+        $qty_plus = $request->get('qty_plus');
+        $price = $request->get('price');
+        $counted = ucwords(counted($qty_plus * $price));
+        return response()->json(['id' => $id, 'plus' => $qty_plus, 'price' => $price, 'counted' => $counted], 200);
+    }
+
+    public function qty_minus(Request $request)
+    {
+        $id = $request->get('id');
+        $qty_minus = $request->get('qty_minus');
+        $price = $request->get('price');
+        $counted = ucwords(counted($qty_minus * $price));
+        return response()->json(['id' => $id, 'minus' => $qty_minus, 'price' => $price, 'counted' => $counted], 200);
+    }
+
+    public function qty_price(Request $request)
+    {
+        $data  = [
+            'counted' => ucwords(counted($request->get('total')). ' Rupiah')
+        ];
+        return response()->json($data);
     }
 }

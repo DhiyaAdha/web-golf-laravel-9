@@ -15,6 +15,32 @@ table#dt-analisis {
 table#dt-tamu {
     width: auto !important;
 }
+.panel-heading.fk {
+    position: absolute;
+    bottom: 0;
+    left: 21px;
+    right: 0;
+    height: 100px;
+    width: 98.4%;
+    top: 287px;
+    background-color: #777777 !important;
+    color: #fff !important;
+    border-bottom: 1px solid rgba(33, 33, 33, 0.1) !important;
+    border-left: 1px solid rgba(33, 33, 33, 0.1) !important;
+    border-right: 1px solid rgba(33, 33, 33, 0.1) !important;
+}
+
+.top-nav-icon-badge{
+    position: absolute;
+    bottom: 16px;
+    background: #e91e63;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 10px;
+    left: 10px;
+    text-align: center;
+    width: 16px;
+}
 
 .float-left {
     float: left !important;
@@ -23,12 +49,49 @@ table#dt-tamu {
 .txt-muted {
     color: #868e96 !important;
 }
+.panel.panel-default.card-view.l{
+    position: sticky;
+    top: 0;
+}
 .panel.panel-default.card-view.p{
     padding: 23px !important;
 }
 
 .panel.panel-default.card-view.b {
     height: 23.5rem;
+}
+
+.panel-heading.g {
+    padding: 8px 0px 8px 0px;
+}
+
+.icon-tgcc {
+    position: absolute;
+    padding: 10px;
+    right: 12px;
+}
+
+.panel-heading.gu{
+    padding: 8px 15px !important;
+}
+
+.card-view.jt{
+    padding: 0px !important;
+    position: relative;
+    border: none !important;
+}
+
+.counted{
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.label, .jvectormap-tip {
+    padding: 5px 6px 3px !important;
+}
+
+.text-size{
+    font-size: 15px;
 }
 
 .d-flex.justify-content-center.p {
@@ -215,6 +278,15 @@ h6.panel-title.txt-dark.label-visitor {
 
 #dt-invoice {
     width: 100% !important;
+}
+
+.card-view.panel.panel-default.border-panel > .panel-heading, .card-view.panel.panel-default.panel-tabs > .panel-heading {
+    border-bottom: 1px solid rgb(124 239 150 / 58%) !important;
+}
+
+h6.panel-title.text-center {
+    font-weight: 700;
+    text-transform: uppercase;
 }
 
 .panel-heading.r {

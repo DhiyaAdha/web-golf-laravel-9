@@ -16,6 +16,7 @@
     <link rel="icon" href="{{ asset('tgcc144.PNG') }}" type="image/x-icon">
 
     <!-- Morris Charts CSS -->
+    <script src="{{ asset('vendors/bower_components/jquery/dist/jquery.min.js') }}"></script>
     <link href="{{ asset('vendors/bower_components/morris.js/morris.css') }}" rel="stylesheet" type="text/css" />
     <link
         href="{{ asset('vendors/bower_components/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css') }}"
