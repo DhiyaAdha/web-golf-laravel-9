@@ -616,10 +616,13 @@ b, strong {
     flex-grow: 1;
 }
 /* tamu */
+
+/* ADMIN */
+/* tambah admin */
 .show-hide1{
     position: absolute;
     right: 20px;
-    top: 30%;
+    top: 41%;
     transform: translate(-50%);
 }
 .show-hide1 i{
@@ -634,7 +637,7 @@ b, strong {
 .show-hide2{
     position: absolute;
     right: 20px;
-    top: 40%;
+    top: 54%;
     transform: translate(-50%);
 }
 .show-hide2 i{
