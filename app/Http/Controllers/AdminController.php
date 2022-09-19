@@ -177,7 +177,7 @@ class AdminController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
             'phone' => $request->phone,
             'role_id' => $request->role_id,
             'created_at' => Carbon::now(),

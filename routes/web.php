@@ -68,7 +68,6 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     Route::get('/metode_pembayaran', [InvoiceController::class,'metode_pembayaran'])->name('metode_pembayaran');
     route::get('/invoice_cetakpdf/{id}', [InvoiceController::class, 'cetak_pdf'])->name('cetak_pdf');
     route::get('/export_excel', [InvoiceController::class, 'export_excel'])->name('export_excel');
-    
 });
 
 //Level admin dan superadmin
@@ -78,7 +77,6 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/scan-tamu-berhasil', [ScanController::class,'scantamuberhasil',])->name('scan-tamu-berhasil');
     Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name('scan-tamu');
     Route::get('qrcode/{id}', [ScanqrController::class, 'generate'])->name('generate');
-    Route::get('/scan-tamu-berhasil', [ScanqrController::class,'scantamuberhasil'])->name('scan-tamu-berhasil');
     Route::get('/kartu-tamu', [ScanqrController::class, 'kartutamu'])->name('kartu-tamu');
     Route::get('/kartu-member/{e}', [ScanqrController::class, 'show_detail'])->name('detail-scan')->middleware('signed');
     Route::post('update/deposit/{id}', [ScanqrController::class, 'update_deposit'])->name('update.deposit')->middleware('signed');
@@ -107,4 +105,10 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::post('/tambah-deposit', [TamuController::class, 'insertdeposit'])->name('insertdeposit');
     Route::resource('cart', OrderController::class);
     Route::get('/proses', [OrderController::class, 'index'])->name('proses');
+    Route::get('/cart/{id}', [OrderController::class, 'index'])->name('order.cart');
+    Route::post('qty/plus', [OrderController::class, 'qty_plus'])->name('qty.plus');
+    Route::post('qty/minus', [OrderController::class, 'qty_minus'])->name('qty.minus');
+    Route::post('qty/price', [OrderController::class, 'qty_price'])->name('qty.price');
+    Route::post('update/deposit/{id}', [ScanqrController::class, 'update_deposit'])->name('update.deposit')->middleware('signed');
 });
+//Finish level admin dan superadmin

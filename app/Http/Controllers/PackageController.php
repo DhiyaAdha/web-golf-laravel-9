@@ -61,7 +61,7 @@ class PackageController extends Controller
      */
     public function store(Request $request)
     {
-        Package::create([
+        $tes = Package::create([
             'name' => $request->name,
             'category' => $request->category,
             'price_weekdays' => $request->price_weekdays,

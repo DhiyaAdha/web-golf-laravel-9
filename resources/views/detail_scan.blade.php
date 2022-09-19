@@ -145,7 +145,8 @@
                                 </div>
                                 <a href="javascript:void(0)" class="btn btn-block btn-outline-success btn-sm"
                                     data-toggle="modal" data-target="#myModal">Deposit</a>
-                                <a href="{{ url('cart') }}" class="btn btn-block btn-success btn-sm">Proses</a>
+                                <a href="{{ URL::temporarySignedRoute('order.cart', now()->addMinutes(10), ['id' => $visitor->id]) }}"
+                                    class="btn btn-block btn-success btn-sm" target="_blank">Pilih paket bermain</a>
                             </div>
                             <div id="myModal" class="modal fade" tabindex="-1" role="dialog"
                                 aria-labelledby="myModalLabel" aria-hidden="true">
@@ -170,7 +171,10 @@
                                                             placeholder="Masukan jumlah deposit" required>
                                                     </div>
                                                 </div>
-                                                <button type="submit" class="btn btn-success">Submit</button>
+                                                <button type="submit" class="btn btn-success btn-anim">
+                                                    <i class="icon-rocket"></i>
+                                                    <span class="btn-text">submit</span>
+                                                </button>
                                             </form>
                                         </div>
                                     </div>
@@ -182,9 +186,7 @@
                     </div>
                 </div>
             </div>
+            @include('Layouts.Footer')
         </div>
-        @include('Layouts.Footer')
-    </div>
-    </div>
     </div>
 @endsection

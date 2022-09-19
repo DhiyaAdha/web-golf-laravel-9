@@ -4,7 +4,6 @@
 
     <div class="page-wrapper">
         <div class="container-fluid pt-25">
-            {{-- Row Kalkulasi Tamu --}}
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                     <div class="panel panel-default card-view pa-0">
