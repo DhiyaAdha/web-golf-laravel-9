@@ -34,7 +34,7 @@
                     <div style="height: 373px;" class="panel panel-default card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
-                                <h6 class="panel-title txt-dark">Default</h6>
+                                <strong class="panel-title txt-dark">Default</strong>
                             </div>
                             <div class="pull-right">
                                 <div class='d-flex '>
@@ -64,7 +64,7 @@
                         </div>
                         <div class="panel-heading">
                             <div class="pull-left">
-                                <h6 class="panel-title txt-dark">Tambahan</h6>
+                                <strong class="panel-title txt-dark">Tambahan</strong>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -97,7 +97,7 @@
                     <div class="panel panel-default border-panel card-view">
                         <div class="panel-heading">
                             <div class="d-flex">
-                                <h6 class="panel-title flex-grow-1" style="font-weight: 500">Daftar Order</h6>
+                                <h6 class="panel-title flex-grow-1" style="font-weight: 600">Daftar Order</h6>
                                 <a href="javascript:void(0)" style="position: relative">
                                     <i class="fa fa-shopping-cart"></i>
                                     <span class="top-nav-icon-badge" style="position: absolute" id="qty">0</span>
@@ -105,16 +105,17 @@
                                 <div class="clearfix"></div>
                             </div>
                         </div>
-                        <div class="panel-heading">
+                        <div class="panel-heading"
+                            style="background-color: #d9edf7;padding: 8px 15px;border-bottom: none !important;">
                             <div class="pull-left">
-                                <p class="text-muted">Produk</p>
+                                <strong>Produk</strong>
                             </div>
                             <div class="pull-right">
-                                <p class="text-muted">Sub total</p>
+                                <strong>Sub total</strong>
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <div style="overflow-x: scroll; height: 170px;"
+                        <div style="overflow-x: scroll; height: 203px;"
                             class="d-flex justify-content-center align-items-center text-center isi-">
                             <span class="not-found text-muted">Keranjang masih kosong</span>
                         </div>
@@ -201,7 +202,10 @@
                     success: function(response) {
                         var total = response.plus * response.price;
                         var output = parseInt(total).toLocaleString();
-                        $('.price-' + response.id).text('Rp ' + output);
+                        var qty = 0;
+                        $('.price-' + response.id).text('Rp. ' + output);
+                        $('.counted').text(response.counted);
+                        $("#total-pay").text('Rp. ' + output);
                     }
                 });
             });
@@ -209,7 +213,7 @@
             buttonMinus.click(function() {
                 var $n = $(".qty-" + id);
                 var amount = Number($n.val());
-                if (amount > 0) {
+                if (amount > 1) {
                     $n.val(amount - 1);
                     $.ajaxSetup({
                         headers: {
@@ -221,17 +225,24 @@
                         url: "{{ route('qty.minus') }}",
                         data: {
                             id: id,
-                            qty_minus: parseInt($n.val()),
+                            qty_minus: $n.val(),
                             price: price
                         },
                         dataType: 'json',
                         success: function(response) {
-                            var total = response.minus * response.price;
-                            var minus = total - response.price;
-                            var output = parseInt(minus).toLocaleString();
-                            $('.price-' + response.id).text('Rp ' + output);
+                            if (response.minus == 0) {
+                                location.reload();
+                            } else {
+                                var total = response.minus * response.price;
+                                var output = parseInt(total).toLocaleString();
+                                $('.price-' + response.id).text('Rp. ' + output);
+                                $('.counted').text(response.counted);
+                                $("#total-pay").text('Rp. ' + output);
+                            }
                         }
                     });
+                } else {
+                    return false;
                 }
             });
         }
@@ -246,7 +257,7 @@
             }
         }
 
-        function totalIt() {
+        function totalIt(price) {
             var input = $("input[name='price[]']");
             var total = 0;
             for (var i = 0; i < input.length; i++) {
@@ -289,11 +300,11 @@
         function resetQTY(len) {
             $(document).on('click', '#reset-qty', function() {
                 swal({
-                    title: "Anda yakin ingin menghapus paket ini?",
+                    title: "Anda yakin ingin reset keranjang?",
                     imageUrl: "../img/Warning.svg",
                     showCancelButton: true,
                     confirmButtonColor: "#FF2A00",
-                    confirmButtonText: "Hapus paket",
+                    confirmButtonText: "Reset",
                     cancelButtonText: "Batal",
                     closeOnConfirm: false,
                     closeOnCancel: false
@@ -317,11 +328,11 @@
                     $('.isi-').append(`<div class="panel-heading g remove-${id}">
                                         <div class="pull-left d-flex align-items-center">
                                             <p class="text-muted mr-5">${name}</p>
-                                        </div>
-                                        <div class="pull-right d-flex">
-                                            <p class="text-muted price-${id}">Rp.${formatIDR(price)}</p>
-                                            <button class="cart-qty-minus-${id}" type="button" value="-"><i class="fa fa-minus-square"></i></button>
-                                            <input type="number" min="0" value="1" name="qty" class="qty-${id}" data-price="${price}" maxlength="10" style="width: 30px;" />
+                                            </div>
+                                            <div class="pull-right d-flex">
+                                                <p class="text-muted price-${id}">Rp.${formatIDR(price)}</p>
+                                                <button class="cart-qty-minus-${id}" type="button" value="-"><i class="fa fa-minus-square"></i></button>
+                                                <input type="number" min="0" value="1" name="qty[]" class="qty-${id}" data-name="${name}" data-price="${price}" maxlength="10" style="width: 30px;" readonly/>
                                             <button class="cart-qty-plus-${id}" type="button" value="+"><i class="fa fa-plus-square"></i></button>
                                         </div>
                                         <div class="clearfix"></div>
@@ -330,6 +341,15 @@
                     $('.not-found').remove();
                     updateTotal(id, price);
                     updateCounter();
+                    $('.form-control-' + id).attr("disabled", true);
+                    $.toast({
+                        text: 'Data berhasil ditambah',
+                        position: 'top-right',
+                        loaderBg: '#fec107',
+                        icon: 'success',
+                        hideAfter: 700,
+                        stack: 6
+                    });
                 } else {
                     $('.remove-' + id).remove();
                 }

@@ -97,7 +97,8 @@ class OrderController extends Controller
         $id = $request->get('id');
         $qty_plus = $request->get('qty_plus');
         $price = $request->get('price');
-        return response()->json(['id' => $id, 'plus' => $qty_plus, 'price' => $price], 200);
+        $counted = ucwords(counted($qty_plus * $price));
+        return response()->json(['id' => $id, 'plus' => $qty_plus, 'price' => $price, 'counted' => $counted], 200);
     }
 
     public function qty_minus(Request $request)
@@ -105,7 +106,8 @@ class OrderController extends Controller
         $id = $request->get('id');
         $qty_minus = $request->get('qty_minus');
         $price = $request->get('price');
-        return response()->json(['id' => $id, 'minus' => $qty_minus, 'price' => $price], 200);
+        $counted = ucwords(counted($qty_minus * $price));
+        return response()->json(['id' => $id, 'minus' => $qty_minus, 'price' => $price, 'counted' => $counted], 200);
     }
 
     public function qty_price(Request $request)

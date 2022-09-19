@@ -72,7 +72,7 @@ table#dt-tamu {
 }
 
 .panel-heading.gu{
-    padding: 0px 15px 20px 15px !important;
+    padding: 8px 15px !important;
 }
 
 .card-view.jt{
@@ -82,7 +82,7 @@ table#dt-tamu {
 }
 
 .counted{
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 500;
 }
 
