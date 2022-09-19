@@ -88,7 +88,9 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label mb-10" for="">Tamu Ini Adalah Tamu VIP
+                                    <label class="control-label mb-10" for="">Tamu Ini Adalah Tamu
+                                        <span class="slot__label">vip</span>
+                                        <span class="slot__label">vvip</span>
                                         <div class="switch">
                                             <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" value="VVIP" name="tipe_member">
                                             <input id="cmn-toggle-4" class="cmn-toggle cmn-toggle-round-flat" name="tipe_member" type="checkbox" value="VIP">

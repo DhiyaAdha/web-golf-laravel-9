@@ -175,7 +175,7 @@ class AdminController extends Controller
                 'name' => 'required|unique:users,name',
                 'email' => 'required|unique:users,name',
                 'password' => 'required|min:8',
-                'phone' => 'required|numeric|min:12',
+                'phone' => 'required|min:12',
                 'role_id' => 'required',
             ],
             [

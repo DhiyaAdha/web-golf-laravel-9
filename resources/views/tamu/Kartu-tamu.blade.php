@@ -112,10 +112,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button type="button" class="btn download-kartu-tamu">
-                                                <i class="fa fa-download">
-                                                </i> Download Kartu (PDF)
-                                            </button>
                                         </div>
                                         <button type="button" class="btn download-kartu-tamu"><i class="fa fa-download"></i> Download Kartu (PDF)</button>
                                     </div>

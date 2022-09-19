@@ -73,6 +73,10 @@ class PackageController extends Controller
             [
                 'name.required' => 'Nama package masih kosong.',
                 'name.unique' => 'Nama package sudah ada',
+                'category.required' => 'Kategori Paket masih kosong.',
+                'status.required' => 'Status Paket masih kosong.',
+                'price_weekdays.required' => 'Harga Weekdays masih kosong.',
+                'price_weekend.required' => 'Harga Weekend masih kosong.',
             ]
         );
         $tes = Package::create([
