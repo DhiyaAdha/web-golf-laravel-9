@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PackageController;
+use App\Mail\SendEmailReset;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,12 +31,14 @@ Route::get('/', function () {
     return view('Login');
 });
 
+Route::post('/lupa-pasword',[AuthController::class, 'email_test'])->name('email_test');
+
 //untuk route login
     Route::get('/login', [AuthController::class, 'index'])->Middleware('guest')->name('login');
     Route::post('/login', [AuthController::class, 'login']);
     //Route untuk sebelum Login
     Route::get('/lupa-pasword', [AuthController::class, 'forgot_password'])->middleware('guest')->name('Lupa-pasword');
-    Route::post('/lupa-pasword', [AuthController::class, 'sendresetlink'])->name('Lupa-pasword.link');
+    // Route::post('/lupa-pasword', [AuthController::class, 'sendresetlink'])->name('Lupa-pasword.link');
     Route::get('/reset-pasword/{token}', [AuthController::class,'showResetForm'])->name('Reset-pasword');
     Route::post('/reset-pasword', [AuthController::class, 'resetPassword'])     ->name('Reset-pasword.update');
     //untuk route logout

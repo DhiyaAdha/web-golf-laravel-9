@@ -137,7 +137,7 @@
                                                 <label class="pull-left control-label mb-10"
                                                     for="password">Password</label>
                                                 <input type="password" name="password" class="form-control"
-                                                id="password" placeholder="Masukan Password" required data-toggle="password">
+                                                id="password" placeholder="Masukan Password" required>
                                                 <i class="fa-solid fa-eye" id="eye"></i>
                                             </div>
 

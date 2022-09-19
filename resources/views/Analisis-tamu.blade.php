@@ -324,10 +324,7 @@
         /* data analisis */
     </script>
 @endpush
-
-@endif
-
-@if (auth()->user()->role_id == '1')
+@else
 <!DOCTYPE HTML>
 <html lang="en-US">
     <head>
