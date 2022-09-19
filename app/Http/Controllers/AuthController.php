@@ -149,28 +149,28 @@ class AuthController extends Controller {
         return view('Reset-pasword')->with(['token'=>$token,'email'=>$request->email]);
     }
     //ini untuk route get di web.php memasukkan email yang akan dirubah passwordnya
-    public function sendresetlink(Request $request){
-        $request->validate([
-            'email'=>'required|email|exists:users,email'
-        ]);
+    // public function sendresetlink(Request $request){
+    //     $request->validate([
+    //         'email'=>'required|email|exists:users,email'
+    //     ]);
         
-        $token = Str::random(64);
-        DB::table('password_resets')->insert([
-            'email'=>$request->email,
-            'token'=>$token,
-            'created_at'=>Carbon::now(),
-        ]);
-        //ini untuk isi pesan yang dikirim ke email reset password
-        $data['action_link'] = route('Reset-pasword',['token'=>$token,'email'=>$request->email]);
-        $data['body'] = "Kami telah menerima permintaan untuk mengatur ulang kata sandi akun yang terkait dengan ".$request->email." pada <b>Tritih Golf & Country Club</b>. Anda dapat mengatur ulang kata sandi dengan mengklik tautan di bawah ini";
+    //     $token = Str::random(64);
+    //     DB::table('password_resets')->insert([
+    //         'email'=>$request->email,
+    //         'token'=>$token,
+    //         'created_at'=>Carbon::now(),
+    //     ]);
+    //     //ini untuk isi pesan yang dikirim ke email reset password
+    //     $data['action_link'] = route('Reset-pasword',['token'=>$token,'email'=>$request->email]);
+    //     $data['body'] = "Kami telah menerima permintaan untuk mengatur ulang kata sandi akun yang terkait dengan ".$request->email." pada <b>Tritih Golf & Country Club</b>. Anda dapat mengatur ulang kata sandi dengan mengklik tautan di bawah ini";
         
-        Mail::send('email-forgot',['action_link'=>$data['action_link'],'body'=>$data['body']], function($message) use ($request){
-            $message->from('imasnurdianto.stu@pnc.ac.id','Imas Nurdianto');
-            $message->to($request->email, '')->subject('Reset Password');
-        });
+    //     Mail::send('email-forgot',['action_link'=>$data['action_link'],'body'=>$data['body']], function($message) use ($request){
+    //         $message->from('imasnurdianto.stu@pnc.ac.id','Imas Nurdianto');
+    //         $message->to($request->email, '')->subject('Reset Password');
+    //     });
         
-        return back()->with('resetSuccess', 'Reset Password sudah dikirim ke email anda! silahkan cek email');
-    }
+    //     return back()->with('resetSuccess', 'Reset Password sudah dikirim ke email anda! silahkan cek email');
+    // }
 
     public function email_test(Request $request){
         $request->validate([
