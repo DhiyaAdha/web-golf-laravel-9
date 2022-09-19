@@ -187,10 +187,10 @@ class AuthController extends Controller {
         $data['action_link'] = route('Reset-pasword',['token'=>$token,'email'=>$request->email]);
         $data['body'] = "Kami telah menerima permintaan untuk mengatur ulang kata sandi akun yang terkait dengan ".$request->email." pada <b>Tritih Golf & Country Club</b>. Anda dapat mengatur ulang kata sandi dengan mengklik tautan di bawah ini";
 
-            Mail::send('email-forgot',['action_link'=>$data['action_link'],'body'=>$data['body']], function($message) use ($request){
-            $message->from('imasnurdianto.stu@pnc.ac.id','Imas Nurdianto');
-            $message->to($request->email, '')->subject('Reset Password');
-        });
+            // Mail::send('email-test',['action_link'=>$data['action_link'],'body'=>$data['body']], function($message) use ($request){
+            // $message->from('imasnurdianto.stu@pnc.ac.id','Imas Nurdianto');
+            // $message->to($request->email, '')->subject('Reset Password');
+        // });
         
 
         $data['email'] = $request->email;
