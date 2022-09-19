@@ -194,6 +194,10 @@ class ScanqrController extends Controller
             $deposit->save();
             $report_deposit->save();
 
+            
+            dd($deposit);
+            dispatch(new SendMailJobDeposit($deposit));
+            
             LogAdmin::create([
                 'user_id' => Auth::id(),
                 'type' => 'CREATE',

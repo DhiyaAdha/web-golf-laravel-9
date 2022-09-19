@@ -163,19 +163,11 @@
                         style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
                         <div style="display:flex;">
                             <p style="margin: 0;">ID Tamu : </p>
-                            <p style="margin: 0;">05185</p>
+                            <p style="margin: 0;">{{ $deposit['visitor_id'] }}</p>
                         </div>
                         <div style="display:flex;">
                             <p style="margin: 0;">Sisa Deposit : </p>
-                            <p style="margin: 0;">1000000</p>
-                        </div>
-                        <div style="display:flex;">
-                            <p style="margin: 0;">Sisa Limit Bulanan : </p>
-                            <p style="margin: 0;">1 Kali</p>
-                        </div>
-                        <div style="display:flex;">
-                            <p style="margin: 0;">Sisa Limit Kupon : </p>
-                            <p style="margin: 0;">4 Kali</p>
+                            <p style="margin: 0;">{{ $deposit['balance'] }}</p>
                         </div>
                     </td>
                 </tr>

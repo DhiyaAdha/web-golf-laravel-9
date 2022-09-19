@@ -134,6 +134,7 @@ class TamuController extends Controller
         $quota->save();
         $data = $request->all();
         dispatch(new SendMailJob($data));
+        // dispatch(new SendMailJobDeposit($data));
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'CREATE',
@@ -154,7 +155,7 @@ class TamuController extends Controller
     /* insert deposit && BERTAMBAH(create) deposit */
     public function insertdeposit(Request $request)
     {
-        $visitors = Visitor::where('id', $request->id)->first();
+        $visitors = Deposit::join('visitors', 'deposits.visitor_id', '=', 'visitors.id')->where('deposits.visitor_id', $request->visitor_id)->first();
         $report_deposit = ReportDeposit::create([
             'visitor_id' => $request->visitor_id,
             'user_id' => Auth::user()->id,
@@ -170,8 +171,19 @@ class TamuController extends Controller
             'activities' => 'Deposit <b>'.$request->name.' bertambah menjadi <b>'.$request->balance.'</b>',
         ]);
         $deposit->save();
-        $data = $request->all();
-        dispatch(new SendMailJobDeposit($data));
+        // $data_deposit = array ([
+        //     "balance" => $deposit->balance,
+        //     "name" => $visitors->name,
+        //     "address" => $visitors->address,
+        //     "gender" => $visitors->gender,
+        //     "email" => $visitors->email,
+        //     "phone" => $visitors->phone,
+        //     "company" => $visitors->company,
+        //     "position" => $visitors->position,
+        //     "tipe_member" => $visitors->tipe_member
+        // ]);
+        // dd($data_deposit);
+        // dispatch(new SendMailJobDeposit($data_deposit));
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'CREATE',
