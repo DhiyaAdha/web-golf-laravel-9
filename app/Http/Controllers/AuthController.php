@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\LogTransaction;
 use Illuminate\Support\Facades\Auth;
-
+use App\Jobs\SendEmaiResetlJob;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -92,6 +92,7 @@ class AuthController extends Controller {
             // dd(session()->all());
         }
     }
+
     // public function logout(Request $request){
         //     $user = $request->user();
         //     $user->currentAccessToken()->delete();
@@ -104,6 +105,8 @@ class AuthController extends Controller {
     //     // return response()->json($respon, 200);
     //     return redirect()->intended('/login');
     // }
+
+    
 
     //ini untuk function logout
     public function logout (Request $request) {
@@ -142,30 +145,56 @@ class AuthController extends Controller {
     }
     //ini untuk route get di web.php memasukkan password baru
     public function showResetForm(Request $request, $token = null){
-        dd($token);
+        // dd($token);
         return view('Reset-pasword')->with(['token'=>$token,'email'=>$request->email]);
     }
     //ini untuk route get di web.php memasukkan email yang akan dirubah passwordnya
-    public function sendresetlink(Request $request){
+    // public function sendresetlink(Request $request){
+    //     $request->validate([
+    //         'email'=>'required|email|exists:users,email'
+    //     ]);
+        
+    //     $token = Str::random(64);
+    //     DB::table('password_resets')->insert([
+    //         'email'=>$request->email,
+    //         'token'=>$token,
+    //         'created_at'=>Carbon::now(),
+    //     ]);
+    //     //ini untuk isi pesan yang dikirim ke email reset password
+    //     $data['action_link'] = route('Reset-pasword',['token'=>$token,'email'=>$request->email]);
+    //     $data['body'] = "Kami telah menerima permintaan untuk mengatur ulang kata sandi akun yang terkait dengan ".$request->email." pada <b>Tritih Golf & Country Club</b>. Anda dapat mengatur ulang kata sandi dengan mengklik tautan di bawah ini";
+        
+    //     Mail::send('email-forgot',['action_link'=>$data['action_link'],'body'=>$data['body']], function($message) use ($request){
+    //         $message->from('imasnurdianto.stu@pnc.ac.id','Imas Nurdianto');
+    //         $message->to($request->email, '')->subject('Reset Password');
+    //     });
+        
+    //     return back()->with('resetSuccess', 'Reset Password sudah dikirim ke email anda! silahkan cek email');
+    // }
+
+    public function email_test(Request $request){
         $request->validate([
             'email'=>'required|email|exists:users,email'
         ]);
-        
+
         $token = Str::random(64);
         DB::table('password_resets')->insert([
             'email'=>$request->email,
             'token'=>$token,
             'created_at'=>Carbon::now(),
         ]);
-        //ini untuk isi pesan yang dikirim ke email reset password
-        $action_link = route('Reset-pasword',['token'=>$token,'email'=>$request->email]);
-        $body = "We are received a request to reset the password for <b>Golf Card </b> account associated with ".$request->email.". You can reset your password by clicking the link below";
+
+        $data['action_link'] = route('Reset-pasword',['token'=>$token,'email'=>$request->email]);
+        $data['body'] = "Kami telah menerima permintaan untuk mengatur ulang kata sandi akun yang terkait dengan ".$request->email." pada <b>Tritih Golf & Country Club</b>. Anda dapat mengatur ulang kata sandi dengan mengklik tautan di bawah ini";
+
         
-        Mail::send('email-forgot',['action_link'=>$action_link,'body'=>$body], function($message) use ($request){
-            $message->from('imasnurdianto.stu@pnc.ac.id','Imas Nurdianto');
-            $message->to($request->email, '')->subject('Reset Password');
-        });
         
+
+        $data['email'] = $request->email;
+  
+        dispatch(new SendEmaiResetlJob($data));
+        // dd(session()->all());
+    
         return back()->with('resetSuccess', 'Reset Password sudah dikirim ke email anda! silahkan cek email');
     }
 }

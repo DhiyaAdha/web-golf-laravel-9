@@ -26,7 +26,7 @@ class DetailSeeder extends Seeder
             DB::table('detail_transactions')->insert([
 
                 'log_transaction_id' => LogTransaction::all()->random()->id,
-                'package_id' => Package::all()->random()->id,
+                'package_id' => $faker->randomElement([1,2,3,4,5,6,7,8]),
                 'quantity' => $faker->numberBetween(1, 10),
                 'harga' => $faker->randomFloat(2, 0, 1000000)
             ]);
