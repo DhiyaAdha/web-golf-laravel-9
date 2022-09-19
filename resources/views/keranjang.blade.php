@@ -341,7 +341,6 @@
             $('#time-part').html(momentNow.format('hh:mm:ss A'));
         }, 100);
 
-        /* data package */
         $('#dt-package').DataTable({
             "processing": true,
             "serverSide": true,
@@ -419,6 +418,5 @@
                 $('div.toolbar').html('<h6>Daftar Paket Harga</h6>').appendTo('.float-left');
             }
         });
-        /* data package */
     </script>
 @endpush
