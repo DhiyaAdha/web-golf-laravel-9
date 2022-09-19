@@ -616,7 +616,6 @@ b, strong {
     flex-grow: 1;
 }
 /* tamu */
-
 /* ADMIN */
 /* tambah admin */
 .show-hide1{
@@ -1323,7 +1322,7 @@ input.cmn-toggle-round-flat + label {
     padding: 2px;
     width: 75px;
     height: 30px;
-    background-color: #dddddd;
+    background-color: #ffd336;
     -webkit-border-radius: 60px;
     -moz-border-radius: 60px;
     -ms-border-radius: 60px;
@@ -1364,7 +1363,7 @@ input.cmn-toggle-round-flat + label:after {
     left: 4px;
     bottom: 4px;
     width: 22px;
-    background-color: #dddddd;
+    background-color: #ffd336;
     -webkit-border-radius: 52px;
     -moz-border-radius: 52px;
     -ms-border-radius: 52px;
