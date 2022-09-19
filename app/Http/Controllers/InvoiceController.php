@@ -29,8 +29,7 @@ class InvoiceController extends Controller
         if($request->ajax()){
             return datatables()->of($riwayat_invoice)->addColumn('action', function ($data) {
                 $button = 
-                    '<div class="align-items-center"><a href="'.url('invoice_cetakpdf/'.$data->id).'" name="pdf" data-toggle="tooltip" data-placement="top" title="download pdf"><img src="dist/img/pdf.svg" width="20px" height="20px">
-                        </a></div>';
+                    '<div class="align-items-center"><a href="'.url('invoice_cetakpdf/'.$data->id).'" target="_blank" name="pdf" data-toggle="tooltip" data-placement="top" title="download pdf"><img src="dist/img/pdf.svg" width="20px" height="20px"></a></div>';
                 
                 return $button;
             })
@@ -140,9 +139,9 @@ class InvoiceController extends Controller
         //
     }
 
-    public function exportpdf () {
-        return 'berhasil';
-    }
+    // public function exportpdf () {
+    //     return 'berhasil';
+    // }
 
     public function metode_pembayaran () {
         return view('Invoice.metode_pembayaran');
@@ -161,6 +160,7 @@ class InvoiceController extends Controller
         $pdf = PDF::loadView('invoice.cetak_invoice' , $data);
 
         return $pdf->download('invoice.pdf');
+        // return view('invoice.cetak_invoice' ,$data);
         
     	// $pdf = PDF::loadView('invoice.invoice', ['cetak_invoice' => $riwayat_invoice])->setpaper('A4','potrait');
     	// return $pdf->stream('laporan_invoice_pdf');
@@ -168,18 +168,5 @@ class InvoiceController extends Controller
     public function export_excel()
     {
         return Excel::download(new LogTransactionExport, 'riwayat_invoice.xlsx');
-
-        // Excel::create();
-        // $riwayat_invoice = Excel::loadView('invoice.export_excel');
-        // $export = new Excel();
-        // return $export->download(new LogTransactionExport, 'riwayat_invoice.xlsx');
     }
-
-        // public function view(): View
-        // {
-        //     return view('invoice.export_excel', [
-        //         'export_excel' => LogTransaction::all()
-        //     ]);
-        // }
-
 }
