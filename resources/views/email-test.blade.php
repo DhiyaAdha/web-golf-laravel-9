@@ -508,7 +508,7 @@
                                                 align="left">Reset Password</h1>
                                             <p
                                                 style="font-size: 16px; line-height: 1.625; color: #51545E; margin: .4em 0 1.1875em;">
-                                                {!! $body !!}</p>
+                                                {!! $data['body'] !!}</p>
                                             <!-- Action -->
                                             <table class="body-action" align="center" width="100%" cellpadding="0"
                                                 cellspacing="0" role="presentation"
@@ -523,7 +523,7 @@
                                                             <tr>
                                                                 <td align="center"
                                                                     style="word-break: break-word; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif; font-size: 16px;">
-                                                                    <a target="_blank" href="{{ $action_link }}"
+                                                                    <a target="_blank" href="{{ $data['action_link'] }}"
                                                                         class="f-fallback button button--green"
                                                                         target="_blank"
                                                                         style="color: #FFF; border-color: #22bc66; border-style: solid; border-width: 10px 18px; background-color: #22BC66; display: inline-block; text-decoration: none; border-radius: 3px; box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16); -webkit-text-size-adjust: none; box-sizing: border-box;">Atur
@@ -546,7 +546,7 @@
                                                             Jika Anda mengalami masalah dengan tombol di atas, salin dan tempel URL di bawah ini ke browser web Anda.</p>
                                                         <p class="f-fallback sub"
                                                             style="font-size: 13px; line-height: 1.625; color: #51545E; margin: .4em 0 1.1875em;">
-                                                            {!! $action_link !!}</p>
+                                                            {!! $data['action_link'] !!}</p>
                                                     </td>
                                                 </tr>
                                             </table>

@@ -23,6 +23,7 @@
                 <!-- Basic Table -->
                 <div class="col-sm-12">
                     <div class="panel panel-default card-view">
+                        <a href="{{ url('export_excel') }}"><i data-toggle="tooltip" title="Download Excell" class="fa fa-file-excel-o pull-right"></i></a>
                         <div class="pull-left">
                             <h6 class="panel-title txt-dark">Invoice</h6>
                         </div>

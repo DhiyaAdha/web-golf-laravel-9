@@ -30,121 +30,116 @@
                 </div>
             </div>
             <div class="row">
-                <div class="d-flex">
-                    <div class="d-flex flex-column">
-                        <div class="col-lg-8" style="width: 100%;">
-                            <div style="height: 373px;" class="panel panel-default card-view">
-                                <div class="panel-heading">
-                                    <div class="pull-left">
-                                        <h6 class="panel-title txt-dark">Default</h6>
-                                    </div>
-                                    <div class="pull-right">
-                                        <div class='d-flex '>
-                                            <span class="text-muted mr-15" style="float: right;">{{ $date_now }},
-                                            </span>
-                                            <span class="label label-default" id='time-part' style="float: right;"></span>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="d-flex flex-wrap">
-                                    @foreach ($default as $item)
-                                        <div class="d-flex">
-                                            <div class="checkbox checkbox-success mr-15">
-                                                <input name="price[]" type="checkbox"
-                                                    class="form-control select-item form-control-{{ $item->id }}"
-                                                    data-name="{{ $item->name }}" data-today="{{ $today }}"
-                                                    onclick="totalIt()"
-                                                    value="{{ $today == ('Sabtu' && 'Minggu') ? $item->price_weekend : $item->price_weekdays }}"
-                                                    onchange="valueChanged({{ $item->id }}, {{ $today == ('Sabtu' && 'Minggu') ? $item->price_weekend : $item->price_weekdays }})">
-                                                <label for="checkbox3">
-                                                    {{ $item->name }}
-                                                </label>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                                <div class="panel-heading">
-                                    <div class="pull-left">
-                                        <h6 class="panel-title txt-dark">Tambahan</h6>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="d-flex flex-wrap mb-15">
-                                    @foreach ($additional as $item)
-                                        <div class="d-flex">
-                                            <div class="checkbox checkbox-success mr-15">
-                                                <input name="price[]" type="checkbox"
-                                                    class="form-control select-item form-control-{{ $item->id }}"
-                                                    data-name="{{ $item->name }}" data-today="{{ $today }}"
-                                                    onclick="totalIt()"
-                                                    value="{{ $today == ('Sabtu' && 'Minggu') ? $item->price_weekend : $item->price_weekdays }}"
-                                                    onchange="valueChanged({{ $item->id }}, {{ $today == ('Sabtu' && 'Minggu') ? $item->price_weekend : $item->price_weekdays }})">
-                                                <label for="checkbox3">
-                                                    {{ $item->name }}
-                                                </label>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                                <div class="panel-heading fk d-flex align-items-center">
-                                    <div class="d-flex align-items-center justify-content-between" style="width: 100%">
-                                        <span class="text-size">Terbilang</span>
-                                        <span class="counted">-</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4" style="position: sticky; width: 45%;">
-                        <div class="panel panel-default border-panel card-view">
-                            <div class="panel-heading">
-                                <div class="d-flex">
-                                    <h6 class="panel-title flex-grow-1" style="font-weight: 500">Daftar Order</h6>
-                                    <a href="javascript:void(0)" style="position: relative">
-                                        <i class="fa fa-shopping-cart"></i>
-                                        <span class="top-nav-icon-badge" style="position: absolute" id="qty">0</span>
-                                    </a>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                            <div class="panel-heading">
-                                <div class="pull-left">
-                                    <p class="text-muted">Produk</p>
-                                </div>
-                                <div class="pull-right">
-                                    <p class="text-muted">Sub total</p>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div style="overflow-x: scroll; height: 170px;"
-                                class="d-flex justify-content-center align-items-center text-center isi-">
-                                <span class="not-found text-muted">Keranjang masih kosong</span>
-                            </div>
-                            <div class="panel-heading gu">
-                                <div class="pull-left">
-                                    <strong class="txt-dark">Total</strong>
-                                </div>
-                                <div class="pull-right">
-                                    <strong class="txt-dark" id="total-pay">Rp. 0</strong>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
+                <div class="col-lg-8">
+                    <div style="height: 373px;" class="panel panel-default card-view">
+                        <div class="panel-heading">
                             <div class="pull-left">
-                                <button type="button" class="mt-15 mb-15 btn-xs btn btn-primary btn-anim"
-                                    id="reset-qty">
-                                    <i class="icon-rocket"></i>
-                                    <span class="btn-text">Reset</span>
-                                </button>
+                                <h6 class="panel-title txt-dark">Default</h6>
                             </div>
                             <div class="pull-right">
-                                <button type="submit" class="mt-15 mb-15 btn-xs btn btn-success btn-anim">
-                                    <i class="icon-rocket"></i>
-                                    <span class="btn-text">Checkout</span>
-                                </button>
+                                <div class='d-flex '>
+                                    <span class="text-muted mr-15" style="float: right;">{{ $date_now }},
+                                    </span>
+                                    <span class="label label-default" id='time-part' style="float: right;"></span>
+                                </div>
                             </div>
                             <div class="clearfix"></div>
                         </div>
+                        <div class="d-flex flex-wrap">
+                            @foreach ($default as $item)
+                                <div class="d-flex">
+                                    <div class="checkbox checkbox-success mr-15">
+                                        <input name="price[]" type="checkbox"
+                                            class="form-control select-item form-control-{{ $item->id }}"
+                                            data-name="{{ $item->name }}" data-today="{{ $today }}"
+                                            onclick="totalIt()"
+                                            value="{{ $today === ('Sabtu' || 'Minggu') ? $item->price_weekend : $item->price_weekdays }}"
+                                            onchange="valueChanged({{ $item->id }}, {{ $today === ('Sabtu' || 'Minggu') ? $item->price_weekend : $item->price_weekdays }})">
+                                        <label for="checkbox3">
+                                            {{ $item->name }}
+                                        </label>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <h6 class="panel-title txt-dark">Tambahan</h6>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="d-flex flex-wrap mb-15">
+                            @foreach ($additional as $item)
+                                <div class="d-flex">
+                                    <div class="checkbox checkbox-success mr-15">
+                                        <input name="price[]" type="checkbox"
+                                            class="form-control select-item form-control-{{ $item->id }}"
+                                            data-name="{{ $item->name }}" data-today="{{ $today }}"
+                                            onclick="totalIt()"
+                                            value="{{ $today === ('Sabtu' || 'Minggu') ? $item->price_weekend : $item->price_weekdays }}"
+                                            onchange="valueChanged({{ $item->id }}, {{ $today === ('Sabtu' || 'Minggu') ? $item->price_weekend : $item->price_weekdays }})">
+                                        <label for="checkbox3">
+                                            {{ $item->name }}
+                                        </label>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="panel-heading fk d-flex align-items-center">
+                            <div class="d-flex align-items-center justify-content-between" style="width: 100%">
+                                <span class="text-size">Terbilang</span>
+                                <span class="counted">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" style="position: sticky; top: 0;">
+                    <div class="panel panel-default border-panel card-view">
+                        <div class="panel-heading">
+                            <div class="d-flex">
+                                <h6 class="panel-title flex-grow-1" style="font-weight: 500">Daftar Order</h6>
+                                <a href="javascript:void(0)" style="position: relative">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    <span class="top-nav-icon-badge" style="position: absolute" id="qty">0</span>
+                                </a>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <p class="text-muted">Produk</p>
+                            </div>
+                            <div class="pull-right">
+                                <p class="text-muted">Sub total</p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div style="overflow-x: scroll; height: 170px;"
+                            class="d-flex justify-content-center align-items-center text-center isi-">
+                            <span class="not-found text-muted">Keranjang masih kosong</span>
+                        </div>
+                        <div class="panel-heading gu">
+                            <div class="pull-left">
+                                <strong class="txt-dark">Total</strong>
+                            </div>
+                            <div class="pull-right">
+                                <strong class="txt-dark" id="total-pay">Rp. 0</strong>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="pull-left">
+                            <button type="button" class="mt-15 mb-15 btn-xs btn btn-primary btn-anim" id="reset-qty">
+                                <i class="icon-rocket"></i>
+                                <span class="btn-text">Reset</span>
+                            </button>
+                        </div>
+                        <div class="pull-right">
+                            <button type="submit" class="mt-15 mb-15 btn-xs btn btn-success btn-anim">
+                                <i class="icon-rocket"></i>
+                                <span class="btn-text">Checkout</span>
+                            </button>
+                        </div>
+                        <div class="clearfix"></div>
                     </div>
                 </div>
             </div>
@@ -346,7 +341,6 @@
             $('#time-part').html(momentNow.format('hh:mm:ss A'));
         }, 100);
 
-        /* data package */
         $('#dt-package').DataTable({
             "processing": true,
             "serverSide": true,
@@ -424,6 +418,5 @@
                 $('div.toolbar').html('<h6>Daftar Paket Harga</h6>').appendTo('.float-left');
             }
         });
-        /* data package */
     </script>
 @endpush
