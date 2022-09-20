@@ -174,6 +174,7 @@ class TamuController extends Controller
         ]);
         $deposit->save();
         $data_deposit = array (
+            "visitor_id" => $request->visitor_id,
             "balance" => $request->balance,
             "name" => $visitor->name,
             "address" => $visitor->address,

@@ -24,6 +24,7 @@ use App\Mail\SendEmailReset;
 |
 */
 
+
 Route::get('/', function () {
     if (Auth::user()) {
         return redirect('/analisis-tamu');
@@ -109,5 +110,9 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::post('qty/minus', [OrderController::class, 'qty_minus'])->name('qty.minus');
     Route::post('qty/price', [OrderController::class, 'qty_price'])->name('qty.price');
     Route::get('/metode_pembayaran', [InvoiceController::class,'metode_pembayaran'])->name('metode_pembayaran');
+
+    Route::get('/f', [TamuController::class, 'fgf']);
+
+
 });
 //Finish level admin dan superadmin
