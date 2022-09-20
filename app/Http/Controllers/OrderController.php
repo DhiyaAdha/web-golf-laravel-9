@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Package;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
 {
@@ -23,7 +25,14 @@ class OrderController extends Controller
         $additional = Package::where('category', 'additional')->where('status', 0)->get();
         $today = Carbon::now()->isoFormat('dddd');
         $date_now = Carbon::now()->translatedFormat('d F Y');
-        return view('keranjang', compact('package','default','additional', 'date_now', 'today'));
+        $oldCart= Session::get('cart');
+        $cart= new Cart($oldCart);
+        $orders = $cart->items;
+        $totalPrice = $cart->totalPrice;
+        $totalQuantity= $cart->totalQuantity;
+        $counted = ucwords(counted($totalPrice). ' Rupiah');
+        // dd($oldCart);
+        return view('keranjang', compact('orders','oldCart', 'counted', 'totalPrice', 'totalQuantity', 'default','additional', 'date_now', 'today'));
     }
 
     /**
@@ -92,27 +101,13 @@ class OrderController extends Controller
         //
     }
 
-    public function qty_plus(Request $request)
-    {
-        $id = $request->get('id');
-        $qty_plus = $request->get('qty_plus');
-        $price = $request->get('price');
-        return response()->json(['id' => $id, 'plus' => $qty_plus, 'price' => $price], 200);
-    }
-
-    public function qty_minus(Request $request)
-    {
-        $id = $request->get('id');
-        $qty_minus = $request->get('qty_minus');
-        $price = $request->get('price');
-        return response()->json(['id' => $id, 'minus' => $qty_minus, 'price' => $price], 200);
-    }
-
-    public function qty_price(Request $request)
-    {
-        $data  = [
-            'counted' => ucwords(counted($request->get('total')). ' Rupiah')
-        ];
-        return response()->json($data);
+    public function add(Request $request, $id)
+    { 
+        $package = Package::find($id);
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->add($package,$package->id);
+        $request->session()->put('cart',$cart);
+        return redirect()->back()->with('success', 'Data berhasil ditambah');
     }
 }
