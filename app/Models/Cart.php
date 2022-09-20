@@ -11,6 +11,9 @@ class Cart extends Model
     public $items =[];
     public $totalQuantity = 0;
     public $totalPrice = 0;
+    public $orderPayment = '';
+    public $orderDate = '';
+    public $paymentType = '';
 
     public function __construct($oldCart){
         if($oldCart){
@@ -34,11 +37,14 @@ class Cart extends Model
         $this->items[$item_id]=$storedItem;
         $this->totalPrice += $price;
         $this->totalQuantity++;
+        $this->orderPayment;
+        $this->orderDate;
+        $this->paymentType;
     }
 
-    public function remove($id){
-        $this->totalPrice -= $this->items[$id]['item']['price'];
-        unset($this->items[$id]);
-        $this->totalQuantity--;
-    }
+    // public function remove($id){
+    //     $this->totalPrice -= $this->items[$id]['item']['price'];
+    //     unset($this->items[$id]);
+    //     $this->totalQuantity--;
+    // }
 }
