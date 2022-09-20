@@ -42,9 +42,9 @@ class Cart extends Model
         $this->paymentType;
     }
 
-    // public function remove($id){
-    //     $this->totalPrice -= $this->items[$id]['item']['price'];
-    //     unset($this->items[$id]);
-    //     $this->totalQuantity--;
-    // }
+    public function remove($id){
+        $this->totalPrice -= $this->items[$id]['item']['price'];
+        unset($this->items[$id]);
+        $this->totalQuantity--;
+    }
 }
