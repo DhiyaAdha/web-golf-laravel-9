@@ -6,7 +6,7 @@
     <meta name="description" content="Aplikasi TGCC Member" />
     <meta name="author" content="tgcc" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    
+    @routes
     <!-- PWA  -->
     <meta name="theme-color" content="#6777ef" />
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.PNG') }}">
