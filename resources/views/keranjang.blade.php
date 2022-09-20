@@ -77,7 +77,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4" style="position: sticky; top: 0;">
+                <div class="col-lg-4" style="position: sticky; top: 80px;">
                     <div class="panel panel-default border-panel card-view">
                         <div class="panel-heading">
                             <div class="d-flex">
