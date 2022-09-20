@@ -67,8 +67,7 @@
     @if (Session::has('success'))
         window.setTimeout(function() {
             $.toast({
-                text: '{{ Session('
-                            success ') }}',
+                text: '{{ Session(' success ') }}',
                 position: 'top-right',
                 loaderBg: '#fec107',
                 icon: 'success',
