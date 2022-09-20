@@ -35,6 +35,10 @@ table#dt-tamu {
     top: 80px;
 }
 
+i.fa.fa-trash-o {
+    font-size: 14px !important;
+}
+
 @media screen and (max-width: 1112px) {
     .sticky{
         position: static; 
