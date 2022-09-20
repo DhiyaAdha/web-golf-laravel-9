@@ -184,7 +184,7 @@ class TamuController extends Controller
             "position" => $visitor->position,
             "tipe_member" => $visitor->tipe_member
         );
-        // dd($data_deposit['emai']);
+        // dd($data_deposit);
         // $data_deposit = $request->all();
         // dispatch(new SendMailJob($data));
         dispatch(new SendMailJobDeposit($data_deposit));
