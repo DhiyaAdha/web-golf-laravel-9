@@ -77,7 +77,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4" style="position: sticky; top: 80px;">
+                <div class="col-lg-4 sticky">
                     <div class="panel panel-default border-panel card-view">
                         <div class="panel-heading">
                             <div class="d-flex">
@@ -131,20 +131,22 @@
                         </div>
                         @if (Session::has('cart'))
                             <div class="pull-left">
-                                <a href="{{ route('cart.remove', ['package' => key($orders)]) }}"
+                                <a href="javascript:void(0)" id="reset-order"
                                     class="mt-15 mb-15 btn-xs btn btn-primary btn-anim">
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Reset</span>
                                 </a>
                             </div>
                             <div class="pull-right">
-                                <button type="submit" class="mt-15 mb-15 btn-xs btn btn-success btn-anim">
+                                <a href="javascript:void(0)" onclick="checkout('{{ route('checkout') }}', 'Checkout')"
+                                    type="submit" class="mt-15 mb-15 btn-xs btn btn-success btn-anim">
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Checkout</span>
-                                </button>
+                                </a>
                             </div>
                         @else
-                            <button type="submit" class="mt-15 mb-15 btn-xs btn-block btn btn-success btn-anim">
+                            <button type="submit" class="mt-15 mb-15 btn-xs btn-block btn btn-success btn-anim"
+                                id="disabled-pay">
                                 <i class="icon-rocket"></i>
                                 <span class="btn-text">Checkout</span>
                             </button>
@@ -187,6 +189,74 @@
 @endsection
 @push('scripts')
     <script>
+        function checkout(url, title) {
+            popupCenter(url, title, 625, 500);
+        }
+
+        function popupCenter(url, title, w, h) {
+            const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+            const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+
+            const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document
+                .documentElement.clientWidth : screen.width;
+            const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document
+                .documentElement.clientHeight : screen.height;
+
+            const systemZoom = width / window.screen.availWidth;
+            const left = (width - w) / 2 / systemZoom + dualScreenLeft
+            const top = (height - h) / 2 / systemZoom + dualScreenTop
+            const newWindow = window.open(url, title,
+                `
+            scrollbars=yes,
+            width  = ${w / systemZoom}, 
+            height = ${h / systemZoom}, 
+            top    = ${top}, 
+            left   = ${left}
+        `
+            );
+
+            if (window.focus) newWindow.focus();
+        }
+
+        $(document).on('click', '#reset-order', function() {
+            swal({
+                title: "Anda yakin reset?",
+                imageUrl: "../img/Warning.svg",
+                showCancelButton: true,
+                confirmButtonColor: "#FF2A00",
+                confirmButtonText: "Hapus paket",
+                cancelButtonText: "Batal",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function(isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        url: "{{ route('cart.remove_all') }}",
+                        beforeSend: function() {
+                            $('#ok_button').text('Hapus Data');
+                        },
+                        success: function(data) {
+                            swal("Data order terhapus!", "", "success");
+                            window.location.reload();
+                        }
+                    })
+                } else {
+                    swal("Dibatalkan", "", "error");
+                }
+            });
+            return false;
+        });
+
+        $(document).on('click', '#disabled-pay', function() {
+            swal({
+                title: "",
+                type: "error",
+                text: "silakan pilih setidaknya satu item produk",
+                confirmButtonColor: "#01c853",
+            });
+            return false;
+        });
+
         var interval = setInterval(function() {
             var momentNow = moment().locale('fr');
             $('#time-part').html(momentNow.format('hh:mm:ss A'));

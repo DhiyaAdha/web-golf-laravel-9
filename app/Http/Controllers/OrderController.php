@@ -25,7 +25,6 @@ class OrderController extends Controller
                 })->editColumn('price_weekend', function ($data) {
                     return formatrupiah($data->price_weekend);
                 })
-                ->rawColumns(['action'])
                 ->addIndexColumn()
                 ->make(true);
         }
@@ -43,7 +42,7 @@ class OrderController extends Controller
         $totalPrice = $cart->totalPrice;
         $totalQuantity= $cart->totalQuantity;
         $counted = ucwords(counted($totalPrice). ' Rupiah');
-        // dd($oldCart);
+        // dd($orders);
         return view('keranjang', compact('orders','oldCart', 'counted', 'totalPrice', 'totalQuantity', 'default','additional', 'date_now', 'today'));
     }
 
@@ -123,16 +122,31 @@ class OrderController extends Controller
         return redirect()->back()->with('success', 'Data berhasil ditambah');
     }
 
-    public function remove($id)
-    {
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
-        $cart = new Cart($oldCart);
-        $cart->remove($id);
+    // public function remove($id)
+    // {
+    //     $oldCart = Session::has('cart') ? Session::get('cart') : null;
+    //     $cart = new Cart($oldCart);
+    //     $cart->remove($id);
     
-        Session::put('cart',$cart);
-        if($cart->totalQuantity<=0){
-            Session::forget('cart');
+    //     Session::put('cart',$cart);
+    //     if($cart->totalQuantity<=0){
+    //         Session::forget('cart');
+    //     }
+    //     return redirect()->back();
+    // }
+
+    public function remove_all()
+    {
+        if(Session::has('cart')){
+            foreach (Session::get('cart') as $key => $value) {
+                Session::forget('cart', $key);
+            }
         }
         return redirect()->back();
+    }
+
+    public function checkout()
+    {
+        return view('coba');
     }
 }
