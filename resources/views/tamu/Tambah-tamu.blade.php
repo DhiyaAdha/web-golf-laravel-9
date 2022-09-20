@@ -27,21 +27,15 @@
                         <div class="form-wrap">
                             <form action="{{ route('inserttamu') }}" method="POST">
                                 @csrf
-                                <div class="form-group @error('name') has-error @enderror">
+                                <div class="form-group">
                                     <label class="control-label mb-10" for="">Nama Lengkap</label>
-                                    <input type="text" name="name" class="form-control" id="name" size="50px" placeholder="Masukan Nama" autofocus value="{{ old('name') }}">
-                                    @error('name')
-                                    <div class="text-danger"> {{ $message }}</div>
-                                    @enderror
+                                    <input type="text" name="name" class="form-control" id="name" size="50px" placeholder="Masukan Nama" required autofocus>
                                 </div>
-                                <div class="form-group @error('address') has-error @enderror">
+                                <div class="form-group">
                                     <label class="control-label mb-10" for="address">Alamat</label>
-                                    <input type="text" class="form-control" name="address" id="address" size="50px" placeholder="Masukan Alamat" autofocus value="{{ old('address') }}">
-                                    @error('address')
-                                    <div class="text-danger"> {{ $message }}</div>
-                                    @enderror
+                                    <input type="text" class="form-control" name="address" id="address" size="50px" placeholder="Masukan Alamat" required autofocus>
                                 </div>
-                                <div class="form-group @error('gender') has-error @enderror">
+                                <div class="form-group">
                                     <label class="control-label mb-10 text-left">Jenis Kelamin</label>
                                     <div class="radio-list">
                                         <div class="radio-inline pl-0">
@@ -55,42 +49,30 @@
                                             </span>
                                         </div>
                                     </div>
-                                    @error('gender')
-                                    <div class="text-danger"> {{ $message }}</div>
-                                    @enderror
                                 </div>
-                                <div class="form-group @error('email') has-error @enderror">
+                                <div class="form-group">
                                     <label class="control-label mb-10" for="">Email</label>
-                                    <input type="email" name="email" class="form-control" id="email" placeholder="Masukan Email" value="{{ old('email') }}">
+                                    <input type="email" name="email" class="form-control" id="email" placeholder="Masukan Email" @error('email') is-invalid @enderror required value="{{ old('email') }}">
                                     @error('email')
-                                    <div class="text-danger"> {{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="form-group @error('phone') has-error @enderror">
-                                    <label class="control-label mb-10" for="">Nomer Hp</label>
-                                    <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" name="phone" class="form-control" id="phone" size="50px" placeholder="Masukan Nomer Hp" value="{{ old('phone') }}">
-                                    @error('phone')
-                                    <div class="text-danger"> {{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="form-group @error('company') has-error @enderror">
-                                    <label class="control-label mb-10" for="">Perusahaan</label>
-                                    <input type="text" name="company" class="form-control" id="company" size="50px" placeholder="Masukan Nama Perusahaan" value="{{ old('company') }}">
-                                    @error('company')
-                                    <div class="text-danger"> {{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="form-group @error('position') has-error @enderror">
-                                    <label class="control-label mb-10" for="">Jabatan</label>
-                                    <input type="text" name="position" class="form-control" id="position" size="50px" placeholder="Masukan Jabatan" value="{{ old('position') }}">
-                                    @error('position')
-                                    <div class="text-danger"> {{ $message }}</div>
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label mb-10" for="">Tamu Ini Adalah Tamu
-                                        <span class="slot__label">vip</span>
-                                        <span class="slot__label">vvip</span>
+                                    <label class="control-label mb-10" for="">Nomer Hp</label>
+                                    <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" name="phone" class="form-control" id="phone" size="50px" placeholder="Masukan Nomer Hp" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label mb-10" for="">Perusahaan</label>
+                                    <input type="text" name="company" class="form-control" id="company" size="50px" placeholder="Masukan Nama Perusahaan" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label mb-10" for="">Jabatan</label>
+                                    <input type="text" name="position" class="form-control" id="position" size="50px" placeholder="Masukan Jabatan" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label mb-10" for="">Tamu Ini Adalah Tamu VIP
                                         <div class="switch">
                                             <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" value="VVIP" name="tipe_member">
                                             <input id="cmn-toggle-4" class="cmn-toggle cmn-toggle-round-flat" name="tipe_member" type="checkbox" value="VIP">
