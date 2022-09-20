@@ -16,10 +16,10 @@ class SendEmailDeposit extends Mailable
      *
      * @return void
      */
-    public $deposit;
-    public function __construct($deposit)
+    public $data;
+    public function __construct($data)
     {
-        $this->data = $deposit;
+        $this->data = $data;
     }
 
     /**

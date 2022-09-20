@@ -14,15 +14,15 @@ use App\Mail\SendEmailDeposit;
 class SendMailJobDeposit implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    public $deposit;
+    public $data;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($deposit)
+    public function __construct($data)
     {
-        $this->data = $deposit;
+        $this->data = $data;
     }
 
     /**

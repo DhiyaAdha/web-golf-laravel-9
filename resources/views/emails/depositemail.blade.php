@@ -163,11 +163,11 @@
                         style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
                         <div style="display:flex;">
                             <p style="margin: 0;">ID Tamu : </p>
-                            <p style="margin: 0;">{{ $deposit['visitor_id'] }}</p>
+                            <p style="margin: 0;"></p>
                         </div>
                         <div style="display:flex;">
                             <p style="margin: 0;">Sisa Deposit : </p>
-                            <p style="margin: 0;">{{ $deposit['balance'] }}</p>
+                            <p style="margin: 0;">50000</p>
                         </div>
                     </td>
                 </tr>
