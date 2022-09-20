@@ -34,7 +34,8 @@
 <script src="{{ asset('vendors/chart.js/Chart.min.js') }}"></script>
 
 <!-- Bootstrap Switches CSS -->
-<script src="{{ asset('vendors/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') }}"></script>
+<script src="{{ asset('vendors/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') }}">
+</script>
 <!-- <link href="{{ asset('vendors/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') }}" rel="stylesheet" type="text/css" /> -->
 
 <!-- Morris Charts JavaScript -->
@@ -63,18 +64,18 @@
             base: "https://jasonday.github.io/printThis/"
         });
     });
-    @if(Session::has('success'))
-    window.setTimeout(function() {
-        $.toast({
-            text: '{{ Session('
-            success ') }}',
-            position: 'top-right',
-            loaderBg: '#fec107',
-            icon: 'success',
-            hideAfter: 2000,
-            stack: 6
-        });
-    }, 1000);
+    @if (Session::has('success'))
+        window.setTimeout(function() {
+            $.toast({
+                text: '{{ Session('
+                            success ') }}',
+                position: 'top-right',
+                loaderBg: '#fec107',
+                icon: 'success',
+                hideAfter: 2000,
+                stack: 6
+            });
+        }, 1000);
     @endif
     $(function() {
         $('[data-toogle="tooltip"]').tooltip()
