@@ -632,10 +632,12 @@ b, strong {
     flex-grow: 1;
 }
 /* tamu */
+/* ADMIN */
+/* tambah admin */
 .show-hide1{
     position: absolute;
     right: 20px;
-    top: 30%;
+    top: 41%;
     transform: translate(-50%);
 }
 .show-hide1 i{
@@ -650,7 +652,7 @@ b, strong {
 .show-hide2{
     position: absolute;
     right: 20px;
-    top: 40%;
+    top: 54%;
     transform: translate(-50%);
 }
 .show-hide2 i{
@@ -1315,6 +1317,7 @@ b, strong {
     right: 0px;
 }
 
+
 .cmn-toggle {
     position: absolute;
     margin-left: -9999px;
@@ -1336,7 +1339,7 @@ input.cmn-toggle-round-flat + label {
     padding: 2px;
     width: 75px;
     height: 30px;
-    background-color: #dddddd;
+    background-color: #ffd336;
     -webkit-border-radius: 60px;
     -moz-border-radius: 60px;
     -ms-border-radius: 60px;
@@ -1377,7 +1380,7 @@ input.cmn-toggle-round-flat + label:after {
     left: 4px;
     bottom: 4px;
     width: 22px;
-    background-color: #dddddd;
+    background-color: #ffd336;
     -webkit-border-radius: 52px;
     -moz-border-radius: 52px;
     -ms-border-radius: 52px;

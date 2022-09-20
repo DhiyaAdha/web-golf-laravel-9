@@ -32,7 +32,8 @@ class TamuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function fgf(){
+    public function fgf()
+    {
         return view('emails.sample');
     }
     public function index(Request $request)
@@ -90,23 +91,42 @@ class TamuController extends Controller
     {
         //
     }
-    
+
     /* insert tamu(store) */
     public function inserttamu(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'address' => 'required',
-            'gender' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required',
-            'company' => 'required',
-            'position' => 'required',
-            'tipe_member' => 'required',
-        ]);
+        $this->validate(
+            $request,
+            [
+                'name' => 'required',
+                'address' => 'required',
+                'gender' => 'required',
+                'email' => 'required|email|unique:visitors,name',
+                'phone' => 'required|min:12',
+                'company' => 'required',
+                'position' => 'required',
+                'tipe_member' => 'required',
+            ],
+            [
+                'name.required' => 'Nama Lengkap masih kosong.',
+                'name.unique' => 'Nama Lengkap sudah ada',
+                'address.required' => 'Alamat masih kosong.',
+                'address.unique' => 'Alamat sudah ada',
+                'gender.required' => 'Jenis Kelamin masih kosong.',
+                'gender.unique' => 'Jenis Kelamin sudah ada',
+                'email.required' => 'Email masih kosong.',
+                'email.unique' => 'Email sudah ada',
+                'phone.required' => 'Nomer Hp masih kosong.',
+                'phone.unique' => 'Nomer Hp sudah ada',
+                'company.required' => 'Perusahaan masih kosong.',
+                'company.unique' => 'Perusahaan sudah ada',
+                'position.required' => 'Jabatan masih kosong.',
+                'position.unique' => 'Jabatan sudah ada',
+            ]
+        );
         $random = Str::random(15);
         $random_unique = Carbon::now()->format('Y-m');
-        $token = $random_unique.'-'.$random;
+        $token = $random_unique . '-' . $random;
         $visitors = Visitor::create([
             'name' => $request->name,
             'address' => $request->address,
@@ -119,11 +139,11 @@ class TamuController extends Controller
             'created_at' => Carbon::now(),
         ]);
         $get_visitor = Visitor::where('id', $visitors->id)->latest()->first();
-        $link_qr = URL::signedRoute('detail-scan',['qr'=>$token, 'e'=> $visitors->id]);
+        $link_qr = URL::signedRoute('detail-scan', ['qr' => $token, 'e' => $visitors->id]);
         $get_visitor->unique_qr = $link_qr;
         $get_visitor->save();
-        
-        $report_quota = ReportLimit :: create([
+
+        $report_quota = ReportLimit::create([
             'visitor_id' => $visitors->id,
             'user_id' =>    Auth::user()->id,
             'report_quota' => $request->tipe_member == 'VIP' ? '4' : '10',
@@ -142,9 +162,9 @@ class TamuController extends Controller
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'CREATE',
-            'activities' => 'Menambah member <b>'.$visitors->name.'</b>',
+            'activities' => 'Menambah member <b>' . $visitors->name . '</b>',
         ]);
-        return redirect('/tambah-deposit/'.$visitors->id)->with('success','Berhasil menambah tamu');
+        return redirect('/tambah-deposit/' . $visitors->id)->with('success', 'Berhasil menambah tamu');
     }
     /* end insert tamu */
 
@@ -165,14 +185,14 @@ class TamuController extends Controller
             'user_id' => Auth::user()->id,
             'report_balance' => $request->balance,
         ]);
-        $report_deposit->save();    
+        $report_deposit->save();
         $deposit = Deposit::create([
             'visitor_id' => $request->visitor_id,
             'user_id' =>    Auth::user()->id,
             'report_deposit_id' => $report_deposit->id,
             'type' => 'CREATE',
             'balance' => $request->balance,
-            'activities' => 'Deposit <b>'.$request->name.' bertambah menjadi <b>'.$request->balance.'</b>',
+            'activities' => 'Deposit <b>' . $request->name . ' bertambah menjadi <b>' . $request->balance . '</b>',
         ]);
         $deposit->save();
         $data = $request->all();
@@ -182,7 +202,7 @@ class TamuController extends Controller
             'type' => 'CREATE',
             'activities' => 'Berhasil menambah deposit ',
         ]);
-        return redirect('/daftar-tamu')->with('success','Berhasil menambah deposit');
+        return redirect('/daftar-tamu')->with('success', 'Berhasil menambah deposit');
     }
     /* insert deposit && BERTAMBAH(create) deposit */
 
@@ -197,8 +217,8 @@ class TamuController extends Controller
         try {
             $decrypt_id = Crypt::decryptString($id);
             $data['visitor'] = Visitor::find($decrypt_id);
-            $limit = LogLimit::where('visitor_id',$decrypt_id)->first();
-            $deposit = Deposit::where('visitor_id',$decrypt_id)->first();
+            $limit = LogLimit::where('visitor_id', $decrypt_id)->first();
+            $deposit = Deposit::where('visitor_id', $decrypt_id)->first();
             $visitor = Visitor::findOrFail($decrypt_id);
             $data['qrcode'] = QrCode::size(180)->generate($visitor->id);
             $data['quota'] = $limit->quota;
@@ -214,30 +234,30 @@ class TamuController extends Controller
     /* data aktifitas tamu Deposit */
     public function reportdeposit(Request $request, $id)
     {
-        $aktifitas_deposit = ReportDeposit::select('id', 'report_balance', 'payment_type', 'visitor_id', 'user_id', 'created_at')->where('visitor_id', $id)->orderBy('created_at', 'desc') ->get();
+        $aktifitas_deposit = ReportDeposit::select('id', 'report_balance', 'payment_type', 'visitor_id', 'user_id', 'created_at')->where('visitor_id', $id)->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
             return datatables()->of($aktifitas_deposit)->editColumn('report_balance', function ($data) {
-                    return number_format($data->report_balance, 0, ',', '.');
-                })->addColumn('information', function ($data) {
-                    return $data->visitor->name.' melakukan deposit sebesar '.number_format($data->report_balance, 0, ',', '.');
-                })->make(true);
+                return number_format($data->report_balance, 0, ',', '.');
+            })->addColumn('information', function ($data) {
+                return $data->visitor->name . ' melakukan deposit sebesar ' . number_format($data->report_balance, 0, ',', '.');
+            })->make(true);
         }
     }
     /* end data aktifitas tamu Deposit */
 
-        /* data aktifitas tamu limit */
+    /* data aktifitas tamu limit */
     public function reportlimit(Request $request, $id)
     {
-        $aktifitas_limit = ReportLimit::select('id', 'report_quota', 'status', 'visitor_id', 'user_id', 'created_at')->where('visitor_id', $id)->orderBy('created_at', 'desc') ->get();
+        $aktifitas_limit = ReportLimit::select('id', 'report_quota', 'status', 'visitor_id', 'user_id', 'created_at')->where('visitor_id', $id)->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
             return datatables()->of($aktifitas_limit)->addColumn('information', function ($data) {
-                return 'Limit '.$data->visitor->name.' bertambah menjadi '.$data->report_quota;
+                return 'Limit ' . $data->visitor->name . ' bertambah menjadi ' . $data->report_quota;
             })->addColumn('status', function ($data) {
                 return $data->status;
             })->make(true);
         }
     }
-        /* end data aktifitas tamu limit */
+    /* end data aktifitas tamu limit */
 
     /*UPDATE BERKURANG deposit */
     public function updatedeposit(Request $request, $id)
@@ -246,7 +266,7 @@ class TamuController extends Controller
             'visitor_id' => 'required',
         ]);
 
-        $visitor = Visitor::find($id);   
+        $visitor = Visitor::find($id);
         $visitor->name = $request->name;
         $visitor->email = $request->email;
         $visitor->address = $request->address;
@@ -270,10 +290,10 @@ class TamuController extends Controller
             'visitor_id' => $request->visitor_id,
             'status' => 'UPDATE',
             'balance' => $request->balance,
-            'activities' => 'Deposit <b>'.$visitor->name.' berkurang sebesar <b>'.$request->balance.'</b>',
+            'activities' => 'Deposit <b>' . $visitor->name . ' berkurang sebesar <b>' . $request->balance . '</b>',
         ]);
         $visitor->save();
-        return redirect()->route('/aktifitas-kartu-tamu/'.$visitor->id)->with('status', 'Data Tamu Berhasil Diupdate');
+        return redirect()->route('/aktifitas-kartu-tamu/' . $visitor->id)->with('status', 'Data Tamu Berhasil Diupdate');
     }
     /* END UPDATE BERKURANG deposit */
 
@@ -281,7 +301,8 @@ class TamuController extends Controller
     public function limittamu($id)
     {
         $limit = LogLimit::find($id);
-        $data = [[
+        $data = [
+            [
                 'id' => $limit->visitor_id,
                 'report_limit_id' => $limit->report_limit_id,
                 'quota' => $limit->quota,
@@ -292,12 +313,12 @@ class TamuController extends Controller
     /* end limit tamu*/
 
     /* CREATE BERHASIL RESET limit VIP */
-    public function createlimitvip (Request $request, $id)
+    public function createlimitvip(Request $request, $id)
     {
         $this->validate($request, [
             'visitor_id' => 'required',
         ]);
-        $visitor = Visitor::find($id);   
+        $visitor = Visitor::find($id);
         $visitor->name = $request->name;
         $visitor->email = $request->email;
         $visitor->address = $request->address;
@@ -310,21 +331,21 @@ class TamuController extends Controller
             'visitor_id' => $request->visitor_id,
             'status' => 'CREATE',
             'quota' => $request->quota,
-            'activities' => 'Limit <b>'.$visitor->name.' sebesar <b>'.$request->quota.'</b>',
+            'activities' => 'Limit <b>' . $visitor->name . ' sebesar <b>' . $request->quota . '</b>',
         ]);
 
         $visitor->save();
-        return redirect('/aktifitas-kartu-tamu/'.$visitor->id)->with('status', ' berhasil tambah deposit');
+        return redirect('/aktifitas-kartu-tamu/' . $visitor->id)->with('status', ' berhasil tambah deposit');
     }
     /* END CREATE BERHASIL RESET limit VIP */
 
     /* CREATE BERHASIL RESET limit VVIP */
-    public function createlimitvvip (Request $request, $id)
+    public function createlimitvvip(Request $request, $id)
     {
         $this->validate($request, [
             'visitor_id' => 'required',
         ]);
-        $visitor = Visitor::find($id);   
+        $visitor = Visitor::find($id);
         $visitor->name = $request->name;
         $visitor->email = $request->email;
         $visitor->address = $request->address;
@@ -337,17 +358,17 @@ class TamuController extends Controller
             'visitor_id' => $request->visitor_id,
             'status' => 'CREATE',
             'quota' => $request->quota,
-            'activities' => 'Limit <b>'.$visitor->name.' reset <b>'.$request->quota.'</b>',
+            'activities' => 'Limit <b>' . $visitor->name . ' reset <b>' . $request->quota . '</b>',
         ]);
         $visitor->save();
-        return redirect('/aktifitas-kartu-tamu/'.$visitor->id)->with('toast_success', ' berhasil reset limit');
+        return redirect('/aktifitas-kartu-tamu/' . $visitor->id)->with('toast_success', ' berhasil reset limit');
     }
     /* END CREATE BERHASIL RESET limit VVIP */
 
     /* UPDATE BERKURANG LIMIT tamu*/
     public function updatelimit(Request $request, $id)
     {
-        $visitor = Visitor::find($id);   
+        $visitor = Visitor::find($id);
         $visitor->name = $request->name;
         $visitor->email = $request->email;
         $visitor->address = $request->address;
@@ -360,9 +381,9 @@ class TamuController extends Controller
             'visitor_id' => $request->visitor_id,
             'user_id' => Auth::id(),
             'type' => 'UPDATE',
-            'activities' => 'Limit <b>'.$visitor->name.' berkurang menjadi <b>'.$request->quota.'</b>',
+            'activities' => 'Limit <b>' . $visitor->name . ' berkurang menjadi <b>' . $request->quota . '</b>',
         ]);
-        return redirect('/aktifitas-kartu-tamu/'.$visitor->id)->with('toast_success', 'Paket berhasil diupdate');
+        return redirect('/aktifitas-kartu-tamu/' . $visitor->id)->with('toast_success', 'Paket berhasil diupdate');
     }
     /* END UPDATE BERKURANG LIMIT tamu*/
 
@@ -374,7 +395,7 @@ class TamuController extends Controller
             return datatables()->of($reporttransaksi)->addColumn('order_id', function ($data) {
                 return $data->id;
             })->editColumn('information', function ($data) {
-                return 'Transaksi berhasil! '.$data->visitor->name.' telah melakukan pembayaran Rp.'.number_format($data->total, 0, ',', '.');
+                return 'Transaksi berhasil! ' . $data->visitor->name . ' telah melakukan pembayaran Rp.' . number_format($data->total, 0, ',', '.');
             })->addColumn('status', function ($data) {
                 return $data->payment_status;
             })->addColumn('created_at', function ($data) {
@@ -402,10 +423,10 @@ class TamuController extends Controller
             'visitor_id' => $request->visitor_id,
             'status' => 'SUCCEED',
             'balance' => $request->balance,
-            'activities' => 'Transaksi Berhasil! <b>'.$visitors->name.' telah melakukan pembayaran sebesar <b>'.$request->balance.'</b>',
+            'activities' => 'Transaksi Berhasil! <b>' . $visitors->name . ' telah melakukan pembayaran sebesar <b>' . $request->balance . '</b>',
         ]);
 
-        return redirect('/aktifitas-kartu-tamu/'.$visitors->id)->with('toast_success', 'Transaksi Berhasil!');
+        return redirect('/aktifitas-kartu-tamu/' . $visitors->id)->with('toast_success', 'Transaksi Berhasil!');
     }
     /* END SUCCEED TRANSAKSI deposit */
 
@@ -428,11 +449,11 @@ class TamuController extends Controller
             'visitor_id' => $request->visitor_id,
             'user_id' => Auth::id(),
             'type' => 'SUCCEED',
-            'activities' => 'Transaksi berhasil! <b>'.$visitors->name.' telah melakkan pembayaran menggunakan <b>'.$request->quota.'</b>',
-                // cTransaksi berhasil ! Arya GP telah melakukan pembayaran menggunakan Limit Gratis.
+            'activities' => 'Transaksi berhasil! <b>' . $visitors->name . ' telah melakkan pembayaran menggunakan <b>' . $request->quota . '</b>',
+            // cTransaksi berhasil ! Arya GP telah melakukan pembayaran menggunakan Limit Gratis.
         ]);
 
-        return redirect('/aktifitas-kartu-tamu/'.$visitors->id)
+        return redirect('/aktifitas-kartu-tamu/' . $visitors->id)
             ->with('toast_success', 'Transaksi Berhasil!');
     }
     /* END SUCCEED TRANSAKSI limit */
@@ -474,7 +495,7 @@ class TamuController extends Controller
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'UPDATE',
-            'activities' => 'Mengubah member <b>'.$visitor->name.'</b>',
+            'activities' => 'Mengubah member <b>' . $visitor->name . '</b>',
         ]);
         return redirect()->route('daftar-tamu')->with('success', 'Berhasil edit tamu');
     }
@@ -495,7 +516,7 @@ class TamuController extends Controller
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'DELETE',
-            'activities' => 'Menghapus member <b>'.$visitor->name.'</b>',
+            'activities' => 'Menghapus member <b>' . $visitor->name . '</b>',
         ]);
         $visitor->delete();
         return redirect()->route('daftar-tamu');
