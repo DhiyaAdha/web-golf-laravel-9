@@ -17,6 +17,18 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
+        $products = Package::orderBy('id', 'desc')->get();
+        if ($request->ajax()) {
+            return datatables()
+                ->of($products)->editColumn('price_weekdays', function ($data) {
+                    return formatrupiah($data->price_weekdays);
+                })->editColumn('price_weekend', function ($data) {
+                    return formatrupiah($data->price_weekend);
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
+        }
         if (! $request->hasValidSignature()) {
             return \redirect('/analisis-tamu');
         }
@@ -109,5 +121,18 @@ class OrderController extends Controller
         $cart->add($package,$package->id);
         $request->session()->put('cart',$cart);
         return redirect()->back()->with('success', 'Data berhasil ditambah');
+    }
+
+    public function remove($id)
+    {
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->remove($id);
+    
+        Session::put('cart',$cart);
+        if($cart->totalQuantity<=0){
+            Session::forget('cart');
+        }
+        return redirect()->back();
     }
 }

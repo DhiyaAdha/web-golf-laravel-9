@@ -48,7 +48,7 @@
                         <div class="d-flex flex-wrap">
                             @foreach ($default as $item)
                                 <a href="{{ route('cart.add', ['package' => $item->id]) }}"
-                                    class="btn btn-default mr-15 mb-15">{{ $item->name }}</a>
+                                    class="btn btn-default txt-success mr-15 mb-15">{{ $item->name }}</a>
                             @endforeach
                         </div>
                         <div class="panel-heading">
@@ -60,7 +60,7 @@
                         <div class="d-flex flex-wrap mb-15">
                             @foreach ($additional as $item)
                                 <a href="{{ route('cart.add', ['package' => $item->id]) }}"
-                                    class="btn btn-default mr-15 mb-15">{{ $item->name }}</a>
+                                    class="btn btn-default txt-success mr-15 mb-15">{{ $item->name }}</a>
                             @endforeach
                         </div>
                         <div class="panel-heading fk d-flex align-items-center">
@@ -93,19 +93,19 @@
                         <div class="panel-heading"
                             style="background-color: #d9edf7;padding: 8px 15px;border-bottom: none !important;">
                             <div class="pull-left">
-                                <strong>Produk</strong>
+                                <p class="text-muted">Produk</p>
                             </div>
                             <div class="pull-right">
-                                <strong>Sub total</strong>
+                                <p class="text-muted">Sub total</p>
                             </div>
                             <div class="clearfix"></div>
                         </div>
                         @if (!Session::has('cart'))
-                            <div style="height: 203px;" class="d-flex justify-content-center align-items-center isi-">
+                            <div style="height: 242px;" class="d-flex justify-content-center align-items-center isi-">
                                 <span class="not-found text-muted">Keranjang masih kosong</span>
                             </div>
                         @else
-                            <div style="overflow-x: scroll; height: 203px;" class="isi-">
+                            <div style="overflow-x: scroll; height: 242px;" class="isi-">
                                 @foreach ($orders as $item)
                                     <div class="panel-heading g">
                                         <div class="pull-left d-flex align-items-center">
@@ -129,18 +129,26 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <div class="pull-left">
-                            <button type="button" class="mt-15 mb-15 btn-xs btn btn-primary btn-anim" id="reset-qty">
-                                <i class="icon-rocket"></i>
-                                <span class="btn-text">Reset</span>
-                            </button>
-                        </div>
-                        <div class="pull-right">
-                            <button type="submit" class="mt-15 mb-15 btn-xs btn btn-success btn-anim">
+                        @if (Session::has('cart'))
+                            <div class="pull-left">
+                                <a href="{{ route('cart.remove', ['package' => key($orders)]) }}"
+                                    class="mt-15 mb-15 btn-xs btn btn-primary btn-anim">
+                                    <i class="icon-rocket"></i>
+                                    <span class="btn-text">Reset</span>
+                                </a>
+                            </div>
+                            <div class="pull-right">
+                                <button type="submit" class="mt-15 mb-15 btn-xs btn btn-success btn-anim">
+                                    <i class="icon-rocket"></i>
+                                    <span class="btn-text">Checkout</span>
+                                </button>
+                            </div>
+                        @else
+                            <button type="submit" class="mt-15 mb-15 btn-xs btn-block btn btn-success btn-anim">
                                 <i class="icon-rocket"></i>
                                 <span class="btn-text">Checkout</span>
                             </button>
-                        </div>
+                        @endif
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -197,7 +205,7 @@
                 "previous": "Previous"
             },
             "ajax": {
-                "url": "{{ route('package.index') }}",
+                "url": "{{ route('order.cart', Request::segment(2)) }}",
                 "type": "GET",
                 "datatype": "json"
             },
