@@ -183,6 +183,10 @@ class AdminController extends Controller
                 'name.unique' => 'Nama admin sudah ada',
                 'email.required' => 'Nama admin masih kosong.',
                 'email.unique' => 'Nama admin sudah ada',
+                'phone.required' => 'Nomer Hp admin masih kosong.',
+                'phone.unique' => 'Nomer Hp admin sudah ada',
+                'password.required' => 'password admin masih kosong.',
+                'role_id.required' => 'role_id admin masih kosong.',
             ]
         );
         $user = User::create([
