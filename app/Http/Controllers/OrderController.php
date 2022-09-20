@@ -122,25 +122,15 @@ class OrderController extends Controller
         return redirect()->back()->with('success', 'Data berhasil ditambah');
     }
 
-    // public function remove($id)
-    // {
-    //     $oldCart = Session::has('cart') ? Session::get('cart') : null;
-    //     $cart = new Cart($oldCart);
-    //     $cart->remove($id);
-    
-    //     Session::put('cart',$cart);
-    //     if($cart->totalQuantity<=0){
-    //         Session::forget('cart');
-    //     }
-    //     return redirect()->back();
-    // }
-
-    public function remove_all()
+    public function remove($id)
     {
-        if(Session::has('cart')){
-            foreach (Session::get('cart') as $key => $value) {
-                Session::forget('cart', $key);
-            }
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->remove($id);
+    
+        Session::put('cart',$cart);
+        if($cart->totalQuantity<=0){
+            Session::forget('cart');
         }
         return redirect()->back();
     }
