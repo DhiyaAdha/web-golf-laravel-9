@@ -105,7 +105,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/proses', [OrderController::class, 'index'])->name('proses');
     Route::get('/cart/{id}', [OrderController::class, 'index'])->name('order.cart');
     Route::resource('cart', OrderController::class);
-    Route::post('qty/plus', [OrderController::class, 'qty_plus'])->name('qty.plus');
+    Route::get('cart/add/{package}', [OrderController::class, 'add'])->name('cart.add');
     Route::post('qty/minus', [OrderController::class, 'qty_minus'])->name('qty.minus');
     Route::post('qty/price', [OrderController::class, 'qty_price'])->name('qty.price');
     Route::get('/metode_pembayaran', [InvoiceController::class,'metode_pembayaran'])->name('metode_pembayaran');
