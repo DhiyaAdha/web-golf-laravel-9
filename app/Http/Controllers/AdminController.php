@@ -92,7 +92,7 @@ class AdminController extends Controller
             $request,
             [
                 'name' => 'required|unique:users,name',
-                'email' => 'required|unique:users,name',
+                'email' => 'required|unique:users,email',
                 'password' => 'required|min:8',
                 'phone' => 'required|min:12',
                 'role_id' => 'required',
@@ -193,7 +193,7 @@ class AdminController extends Controller
             $request,
             [
                 'name' => 'required|unique:users,name',
-                'email' => 'required|unique:users,name',
+                'email' => 'required|unique:users,email',
                 'password' => 'required|min:8',
                 'phone' => 'required|min:12',
                 'role_id' => 'required',
