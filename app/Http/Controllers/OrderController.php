@@ -17,6 +17,17 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
+        $products = Package::orderBy('id', 'desc')->get();
+        if ($request->ajax()) {
+            return datatables()
+                ->of($products)->editColumn('price_weekdays', function ($data) {
+                    return formatrupiah($data->price_weekdays);
+                })->editColumn('price_weekend', function ($data) {
+                    return formatrupiah($data->price_weekend);
+                })
+                ->addIndexColumn()
+                ->make(true);
+        }
         if (! $request->hasValidSignature()) {
             return \redirect('/analisis-tamu');
         }
@@ -31,7 +42,7 @@ class OrderController extends Controller
         $totalPrice = $cart->totalPrice;
         $totalQuantity= $cart->totalQuantity;
         $counted = ucwords(counted($totalPrice). ' Rupiah');
-        // dd($oldCart);
+        // dd($orders);
         return view('keranjang', compact('orders','oldCart', 'counted', 'totalPrice', 'totalQuantity', 'default','additional', 'date_now', 'today'));
     }
 
@@ -109,5 +120,33 @@ class OrderController extends Controller
         $cart->add($package,$package->id);
         $request->session()->put('cart',$cart);
         return redirect()->back()->with('success', 'Data berhasil ditambah');
+    }
+
+    // public function remove($id)
+    // {
+    //     $oldCart = Session::has('cart') ? Session::get('cart') : null;
+    //     $cart = new Cart($oldCart);
+    //     $cart->remove($id);
+    
+    //     Session::put('cart',$cart);
+    //     if($cart->totalQuantity<=0){
+    //         Session::forget('cart');
+    //     }
+    //     return redirect()->back();
+    // }
+
+    public function remove_all()
+    {
+        if(Session::has('cart')){
+            foreach (Session::get('cart') as $key => $value) {
+                Session::forget('cart', $key);
+            }
+        }
+        return redirect()->back();
+    }
+
+    public function checkout()
+    {
+        return view('coba');
     }
 }
