@@ -34,17 +34,11 @@ class Cart extends Model
                 break;
             }
         }
-        $this->items[$item_id]=$storedItem;
+        $this->items[]=$storedItem;
         $this->totalPrice += $price;
         $this->totalQuantity++;
         $this->orderPayment;
         $this->orderDate;
         $this->paymentType;
-    }
-
-    public function remove($id){
-        $this->totalPrice -= $this->items[$id]['item']['price'];
-        unset($this->items[$id]);
-        $this->totalQuantity--;
     }
 }
