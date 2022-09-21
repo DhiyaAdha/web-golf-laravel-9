@@ -41,28 +41,20 @@
                                     <div class="text-danger"> {{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="form-group @error('password') has-error @enderror">
-                                    <label class="control-label mb-10" for="password">Password</label>
+                                <div class="form-group password-container @error('password') has-error @enderror">
+                                    <label class="pull-left control-label mb-10" for="password">Password</label>
                                     <input type="password" name="password" class="form-control" id="password" placeholder="Masukan Password">
-                                    <span class="show-hide1" onclick="myfunction()">
-                                        <i id="hide1" class="fa fa-eye"></i>
-                                        <i id="hide2" class="fa fa-eye-slash"></i>
-                                    </span>
+                                    <i class="fa-solid fa-eye fa-eye-slash" id="eye"></i>
                                     @error('password')
-                                    <div class="text-danger"> {{ $message }}</div>
+                                    <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="form-group @error('password2') has-error @enderror">
-                                    <label class="control-label mb-10" for="confirm-password">Konfirmasi
-                                        Password</label>
-                                    <input type="password" name="password" class="form-control" id="confirm_password" placeholder="Masukan Ulang Password">
-                                    <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
-                                    <span class="show-hide2" onclick="myfunction2()">
-                                        <i id="hide3" class="fa fa-eye"></i>
-                                        <i id="hide4" class="fa fa-eye-slash"></i>
-                                    </span>
-                                    @error('password2')
-                                    <div class="text-danger"> {{ $message }}</div>
+                                <div class="form-group password-container @error('password') has-error @enderror">
+                                    <label class="pull-left control-label mb-10" for="password">Konfirmasi Password</label>
+                                    <input type="password" name="password" class="form-control" id="confirm_password" placeholder="Masukan Ulang Password" required>
+                                    <i class="fa-solid fa-eye fa-eye-slash" id="eye2"></i>
+                                    @error('password')
+                                    <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group @error('phone') has-error @enderror">
@@ -143,5 +135,23 @@
         else
             $("#CheckPasswordMatch").html("Password match !").css("color", "green");
     });
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+<script>
+    const passwordField = document.querySelector("#password");
+    const eyeIcon = document.querySelector("#eye");
+    const passwordField2 = document.querySelector("#confirm_password");
+    const eyeIcon2 = document.querySelector("#eye2");
+
+    eye.addEventListener("click", function() {
+        this.classList.toggle("fa-eye-slash");
+        const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+        passwordField.setAttribute("type", type);
+    })
+    eye2.addEventListener("click", function() {
+        this.classList.toggle("fa-eye-slash");
+        const type2 = passwordField2.getAttribute("type") === "password" ? "text" : "password";
+        passwordField2.setAttribute("type", type2);
+    })
 </script>
 @endpush
