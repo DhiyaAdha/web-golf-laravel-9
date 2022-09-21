@@ -119,7 +119,7 @@ class AuthController extends Controller {
     public function resetPassword(Request $request){
         $request->validate([
             'email'=>'required|email|exists:users,email',
-            'password'=>'required|confirmed',
+            'password'=>'required|confirmed|min:8',
             'password_confirmation'=>'required',
         ]);
         //ini untuk function mengecek token dari database untuk mereset password
