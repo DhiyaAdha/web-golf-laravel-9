@@ -31,7 +31,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-8">
-                    <div style="height: 373px;" class="panel panel-default card-view">
+                    <div style="height: 387px;" class="panel panel-default card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
                                 <strong class="panel-title txt-dark">Default</strong>
@@ -47,19 +47,8 @@
                         </div>
                         <div class="d-flex flex-wrap">
                             @foreach ($default as $item)
-                                <div class="d-flex">
-                                    <div class="checkbox checkbox-success mr-15">
-                                        <input name="price[]" type="checkbox"
-                                            class="form-control select-item form-control-{{ $item->id }}"
-                                            data-name="{{ $item->name }}" data-today="{{ $today }}"
-                                            onclick="totalIt()"
-                                            value="{{ $today === ('Sabtu' || 'Minggu') ? $item->price_weekend : $item->price_weekdays }}"
-                                            onchange="valueChanged({{ $item->id }}, {{ $today === ('Sabtu' || 'Minggu') ? $item->price_weekend : $item->price_weekdays }})">
-                                        <label for="checkbox3">
-                                            {{ $item->name }}
-                                        </label>
-                                    </div>
-                                </div>
+                                <a href="{{ route('cart.add', ['package' => $item->id]) }}"
+                                    class="btn btn-default txt-success mr-15 mb-15">{{ $item->name }}</a>
                             @endforeach
                         </div>
                         <div class="panel-heading">
@@ -70,37 +59,33 @@
                         </div>
                         <div class="d-flex flex-wrap mb-15">
                             @foreach ($additional as $item)
-                                <div class="d-flex">
-                                    <div class="checkbox checkbox-success mr-15">
-                                        <input name="price[]" type="checkbox"
-                                            class="form-control select-item form-control-{{ $item->id }}"
-                                            data-name="{{ $item->name }}" data-today="{{ $today }}"
-                                            onclick="totalIt()"
-                                            value="{{ $today === ('Sabtu' || 'Minggu') ? $item->price_weekend : $item->price_weekdays }}"
-                                            onchange="valueChanged({{ $item->id }}, {{ $today === ('Sabtu' || 'Minggu') ? $item->price_weekend : $item->price_weekdays }})">
-                                        <label for="checkbox3">
-                                            {{ $item->name }}
-                                        </label>
-                                    </div>
-                                </div>
+                                <a href="{{ route('cart.add', ['package' => $item->id]) }}"
+                                    class="btn btn-default txt-success mr-15 mb-15">{{ $item->name }}</a>
                             @endforeach
                         </div>
                         <div class="panel-heading fk d-flex align-items-center">
                             <div class="d-flex align-items-center justify-content-between" style="width: 100%">
                                 <span class="text-size">Terbilang</span>
-                                <span class="counted">-</span>
+                                <span class="counted">
+                                    @if (!Session::has('cart'))
+                                        -
+                                    @else
+                                        {{ $counted }}
+                                    @endif
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4" style="position: sticky; top: 0;">
+                <div class="col-lg-4 sticky">
                     <div class="panel panel-default border-panel card-view">
                         <div class="panel-heading">
                             <div class="d-flex">
                                 <h6 class="panel-title flex-grow-1" style="font-weight: 600">Daftar Order</h6>
                                 <a href="javascript:void(0)" style="position: relative">
                                     <i class="fa fa-shopping-cart"></i>
-                                    <span class="top-nav-icon-badge" style="position: absolute" id="qty">0</span>
+                                    <span class="top-nav-icon-badge" style="position: absolute"
+                                        id="qty">{{ $totalQuantity }}</span>
                                 </a>
                                 <div class="clearfix"></div>
                             </div>
@@ -108,44 +93,63 @@
                         <div class="panel-heading"
                             style="background-color: #d9edf7;padding: 8px 15px;border-bottom: none !important;">
                             <div class="pull-left">
-                                <strong>Produk</strong>
+                                <p class="text-muted">Produk</p>
                             </div>
                             <div class="pull-right">
-                                <strong>Sub total</strong>
+                                <p class="text-muted">Sub total</p>
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <div style="overflow-x: scroll; height: 203px;"
-                            class="d-flex justify-content-center align-items-center text-center isi-">
-                            <span class="not-found text-muted">Keranjang masih kosong</span>
-                        </div>
+                        @if (!Session::has('cart'))
+                            <div style="height: 242px;" class="d-flex justify-content-center align-items-center isi-">
+                                <span class="not-found text-muted">Keranjang masih kosong</span>
+                            </div>
+                        @else
+                            <div style="overflow-x: scroll; height: 242px;" class="isi-">
+                                @foreach ($orders as $item)
+                                    <div class="panel-heading g">
+                                        <div class="pull-left d-flex align-items-center">
+                                            <p class="text-muted">{{ $item['item']['name'] }}</p>
+                                        </div>
+                                        <div class="pull-right mr-5">
+                                            <div class="d-flex">
+                                                <p class="text-muted mr-15">{{ $item['price'] }}</p>
+                                                <a href="{{ route('cart.remove', ['package' => key($orders)]) }}"><i
+                                                        class="fa fa-trash-o"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+
                         <div class="panel-heading gu">
                             <div class="pull-left">
                                 <strong class="txt-dark">Total</strong>
                             </div>
                             <div class="pull-right">
-                                <strong class="txt-dark" id="total-pay">Rp. 0</strong>
+                                <strong class="txt-dark" id="total-pay">Rp. {{ $totalPrice }}</strong>
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <div class="pull-left">
-                            <button type="button" class="mt-15 mb-15 btn-xs btn btn-primary btn-anim" id="reset-qty">
-                                <i class="icon-rocket"></i>
-                                <span class="btn-text">Reset</span>
-                            </button>
-                        </div>
-                        <div class="pull-right">
-                            <button type="submit" class="mt-15 mb-15 btn-xs btn btn-success btn-anim">
+                        @if (Session::has('cart'))
+                            <button type="button" onclick="checkout('{{ route('checkout') }}', 'Checkout')" type="submit"
+                                class="mt-15 mb-15 btn-xs btn btn-block btn-success btn-anim">
                                 <i class="icon-rocket"></i>
                                 <span class="btn-text">Checkout</span>
                             </button>
-                        </div>
+                        @else
+                            <button type="submit" class="mt-15 mb-15 btn-xs btn-block btn btn-success btn-anim"
+                                id="disabled-pay">
+                                <i class="icon-rocket"></i>
+                                <span class="btn-text">Checkout</span>
+                            </button>
+                        @endif
                         <div class="clearfix"></div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
+                <div class="col-lg-8">
                     <div class="panel panel-default card-view">
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
@@ -171,190 +175,53 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+
+            </div>
             @include('Layouts.Footer')
         </div>
     </div>
 @endsection
 @push('scripts')
     <script>
-        function updateTotal(id, price) {
-            var buttonPlus = $(".cart-qty-plus-" + id);
-            var buttonMinus = $(".cart-qty-minus-" + id);
-
-            buttonPlus.click(function(e) {
-                e.preventDefault();
-                var $n = $(".qty-" + id);
-                $n.val(Number($n.val()) + 1);
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ route('qty.plus') }}",
-                    data: {
-                        id: id,
-                        qty_plus: parseInt($n.val()),
-                        price: price
-                    },
-                    dataType: 'json',
-                    success: function(response) {
-                        var total = response.plus * response.price;
-                        var output = parseInt(total).toLocaleString();
-                        var qty = 0;
-                        $('.price-' + response.id).text('Rp. ' + output);
-                        $('.counted').text(response.counted);
-                        $("#total-pay").text('Rp. ' + output);
-                    }
-                });
-            });
-
-            buttonMinus.click(function() {
-                var $n = $(".qty-" + id);
-                var amount = Number($n.val());
-                if (amount > 1) {
-                    $n.val(amount - 1);
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $.ajax({
-                        type: 'POST',
-                        url: "{{ route('qty.minus') }}",
-                        data: {
-                            id: id,
-                            qty_minus: $n.val(),
-                            price: price
-                        },
-                        dataType: 'json',
-                        success: function(response) {
-                            if (response.minus == 0) {
-                                location.reload();
-                            } else {
-                                var total = response.minus * response.price;
-                                var output = parseInt(total).toLocaleString();
-                                $('.price-' + response.id).text('Rp. ' + output);
-                                $('.counted').text(response.counted);
-                                $("#total-pay").text('Rp. ' + output);
-                            }
-                        }
-                    });
-                } else {
-                    return false;
-                }
-            });
+        function checkout(url, title) {
+            popupCenter(url, title, 625, 500);
         }
 
-        function updateCounter() {
-            var len = $("input[name='price[]']:checked").length;
-            if (len > 0) {
-                $("#qty").text(len);
-                resetQTY(len);
-            } else {
-                $("#qty").text('0');
-            }
+        function popupCenter(url, title, w, h) {
+            const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+            const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+
+            const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document
+                .documentElement.clientWidth : screen.width;
+            const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document
+                .documentElement.clientHeight : screen.height;
+
+            const systemZoom = width / window.screen.availWidth;
+            const left = (width - w) / 2 / systemZoom + dualScreenLeft
+            const top = (height - h) / 2 / systemZoom + dualScreenTop
+            const newWindow = window.open(url, title,
+                `
+            scrollbars=yes,
+            width  = ${w / systemZoom}, 
+            height = ${h / systemZoom}, 
+            top    = ${top}, 
+            left   = ${left}
+        `
+            );
+
+            if (window.focus) newWindow.focus();
         }
 
-        function totalIt(price) {
-            var input = $("input[name='price[]']");
-            var total = 0;
-            for (var i = 0; i < input.length; i++) {
-                if (input[i].checked) {
-                    total += parseFloat(input[i].value);
-                }
-            }
-            $("#total-pay").text('Rp. ' + formatIDR(total));
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
+        $(document).on('click', '#disabled-pay', function() {
+            swal({
+                title: "",
+                type: "error",
+                text: "silakan pilih setidaknya satu item produk",
+                confirmButtonColor: "#01c853",
             });
-            $.ajax({
-                type: 'POST',
-                url: "{{ route('qty.price') }}",
-                data: {
-                    total: total
-                },
-                dataType: 'json',
-                success: function(response) {
-                    $('.counted').text(response.counted);
-                }
-            });
-        }
-
-        function formatIDR(price) {
-            var number_string = price.toString(),
-                split = number_string.split(','),
-                remainder = split[0].length % 3,
-                idr = split[0].substr(0, remainder),
-                thousand = split[0].substr(remainder).match(/\d{1,3}/gi);
-            if (thousand) {
-                separator = remainder ? '.' : '';
-                idr += separator + thousand.join('.');
-            }
-            return split[1] != undefined ? idr + ',' + split[1] : idr;
-        }
-
-        function resetQTY(len) {
-            $(document).on('click', '#reset-qty', function() {
-                swal({
-                    title: "Anda yakin ingin reset keranjang?",
-                    imageUrl: "../img/Warning.svg",
-                    showCancelButton: true,
-                    confirmButtonColor: "#FF2A00",
-                    confirmButtonText: "Reset",
-                    cancelButtonText: "Batal",
-                    closeOnConfirm: false,
-                    closeOnCancel: false
-                }, function(isConfirm) {
-                    if (len > 0) {
-                        if (isConfirm) {
-                            location.reload();
-                        } else {
-                            swal("Dibatalkan");
-                        }
-                    }
-                });
-            });
-        }
-
-        function valueChanged(id, price) {
-            $(document).on('change', '.form-control-' + id, function() {
-                var today = $(this).data('today');
-                var name = $(this).data('name');
-                if (this.checked) {
-                    $('.isi-').append(`<div class="panel-heading g remove-${id}">
-                                        <div class="pull-left d-flex align-items-center">
-                                            <p class="text-muted mr-5">${name}</p>
-                                            </div>
-                                            <div class="pull-right d-flex">
-                                                <p class="text-muted price-${id}">Rp.${formatIDR(price)}</p>
-                                                <button class="cart-qty-minus-${id}" type="button" value="-"><i class="fa fa-minus-square"></i></button>
-                                                <input type="number" min="0" value="1" name="qty[]" class="qty-${id}" data-name="${name}" data-price="${price}" maxlength="10" style="width: 30px;" readonly/>
-                                            <button class="cart-qty-plus-${id}" type="button" value="+"><i class="fa fa-plus-square"></i></button>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        </div>`).removeClass(
-                        'd-flex justify-content-center align-items-center text-center');
-                    $('.not-found').remove();
-                    updateTotal(id, price);
-                    updateCounter();
-                    $('.form-control-' + id).attr("disabled", true);
-                    $.toast({
-                        text: 'Data berhasil ditambah',
-                        position: 'top-right',
-                        loaderBg: '#fec107',
-                        icon: 'success',
-                        hideAfter: 700,
-                        stack: 6
-                    });
-                } else {
-                    $('.remove-' + id).remove();
-                }
-            });
-        };
+            return false;
+        });
 
         var interval = setInterval(function() {
             var momentNow = moment().locale('fr');
@@ -374,7 +241,7 @@
                 "previous": "Previous"
             },
             "ajax": {
-                "url": "{{ route('package.index') }}",
+                "url": "{{ route('order.cart', Request::segment(2)) }}",
                 "type": "GET",
                 "datatype": "json"
             },

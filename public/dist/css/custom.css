@@ -22,12 +22,28 @@ table#dt-tamu {
     right: 0;
     height: 100px;
     width: 98.4%;
-    top: 287px;
+    top: 302px;
     background-color: #777777 !important;
     color: #fff !important;
     border-bottom: 1px solid rgba(33, 33, 33, 0.1) !important;
     border-left: 1px solid rgba(33, 33, 33, 0.1) !important;
     border-right: 1px solid rgba(33, 33, 33, 0.1) !important;
+}
+
+.sticky {
+    position: sticky; 
+    top: 80px;
+}
+
+i.fa.fa-trash-o {
+    font-size: 14px !important;
+}
+
+@media screen and (max-width: 1112px) {
+    .sticky{
+        position: static; 
+        top: 0;
+    }
 }
 
 .top-nav-icon-badge{
@@ -616,10 +632,12 @@ b, strong {
     flex-grow: 1;
 }
 /* tamu */
+/* ADMIN */
+/* tambah admin */
 .show-hide1{
     position: absolute;
     right: 20px;
-    top: 30%;
+    top: 41%;
     transform: translate(-50%);
 }
 .show-hide1 i{
@@ -634,7 +652,7 @@ b, strong {
 .show-hide2{
     position: absolute;
     right: 20px;
-    top: 40%;
+    top: 54%;
     transform: translate(-50%);
 }
 .show-hide2 i{
@@ -1301,6 +1319,7 @@ b, strong {
     right: 0px;
 }
 
+
 .cmn-toggle {
     position: absolute;
     margin-left: -9999px;
@@ -1322,7 +1341,7 @@ input.cmn-toggle-round-flat + label {
     padding: 2px;
     width: 75px;
     height: 30px;
-    background-color: #dddddd;
+    background-color: #ffd336;
     -webkit-border-radius: 60px;
     -moz-border-radius: 60px;
     -ms-border-radius: 60px;
@@ -1363,7 +1382,7 @@ input.cmn-toggle-round-flat + label:after {
     left: 4px;
     bottom: 4px;
     width: 22px;
-    background-color: #dddddd;
+    background-color: #ffd336;
     -webkit-border-radius: 52px;
     -moz-border-radius: 52px;
     -ms-border-radius: 52px;

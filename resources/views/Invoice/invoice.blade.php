@@ -11,8 +11,8 @@
                 <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
-                        <li><a href="javascript:void(0)">Dashboard</a></li>
-                        <li><a href="javascript:void(0)">Daftar invoice</a></li>
+                        <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
+                        <li><a href="{{ url('riwayat-invoice') }}">Daftar invoice</a></li>
                         <li class="active"><span>Detail invoice</span></li>
                     </ol>
                 </div>
@@ -23,7 +23,7 @@
 
             <!-- /Ini untuk Tampilan Cetak Invoice -->
 
-            <a href="#"><i class="fa fa-print pull-right"></i></a>
+            <a href="javascript:void(0)"><i class="fa fa-print pull-right" target="_blank" data-toggle="tooltip" title="Klik untuk Cetak"></i></a>
             <div class="row" id="cetak-invoice">
                 <style>
                     .invoice {
