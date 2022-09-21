@@ -61,7 +61,7 @@
                                         <i id="hide4" class="fa fa-eye-slash"></i>
                                     </span>
                                     @error('password')
-                                    <div class="text-danger"> {{ $message }}</div>
+                                    <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group @error('phone') has-error @enderror">
