@@ -44,7 +44,7 @@
         top: 60%;
         right: 4%;
         cursor: pointer;
-        color: lightgray;
+        color: rgb(114, 114, 114);
         }
     </style>
 </head>
@@ -138,7 +138,7 @@
                                                     for="password">Password</label>
                                                 <input type="password" name="password" class="form-control"
                                                 id="password" placeholder="Masukan Password" required>
-                                                <i class="fa-solid fa-eye" id="eye"></i>
+                                                <i class="fa-solid fa-eye fa-eye-slash" id="eye"></i>
                                             </div>
 
 
