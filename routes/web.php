@@ -105,5 +105,6 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::resource('cart', OrderController::class);
     Route::get('/cart/add/{package}', [OrderController::class, 'add'])->name('cart.add');
     Route::get('/cart/remove/{package}',[OrderController::class, 'remove'])->name('cart.remove');
+    Route::get('/cart/remove/all/{package}',[OrderController::class, 'remove_all'])->name('cart.remove_all');
     Route::get('/checkout', [OrderController::class,'checkout'])->name('checkout');
 });
