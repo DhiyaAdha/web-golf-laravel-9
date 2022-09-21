@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Cache\RateLimiting\Limit;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
+
 class TamuController extends Controller
 {
     /**
@@ -167,14 +168,16 @@ class TamuController extends Controller
             'type' => 'CREATE',
             'activities' => 'Menambah member <b>' . $visitors->name . '</b>',
         ]);
-        return redirect('/tambah-deposit/' . $visitors->id)->with('success', 'Berhasil menambah tamu');
+        
+        $encrypt = Crypt::encrypt($visitors->id);
+        return redirect('/tambah-deposit/' . $encrypt)->with('success', 'Berhasil menambah tamu');
     }
     /* end insert tamu */
 
     /* function tambahan deposit */
     public function tambahdeposit(Request $request, $id)
     {
-        $data['id'] = $id;
+        $data['id'] = Crypt::decrypt($id);
         return view('tamu.tambah-deposit', $data);
     }
     /* END function tambahan deposit */
