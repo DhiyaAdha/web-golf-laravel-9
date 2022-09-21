@@ -196,7 +196,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
     <script>
         function checkout(url, title) {
-            popupCenter(url, title, 625, 500);
+            popupCenter(url, title, 1000, 500);
         }
 
         function popupCenter(url, title, w, h) {
@@ -314,10 +314,14 @@
                             $('#ok_button').text('Hapus Order');
                         },
                         success: function(data) {
-                            swal("Terhapus!", "", "success");
-                            window.setTimeout(function() {
+                            swal({
+                                title: "",
+                                type: "success",
+                                text: "Order berhasil dihapus",
+                                confirmButtonColor: "#01c853",
+                            }, function(isConfirm) {
                                 location.reload();
-                            }, 1200);
+                            });
                         }
                     })
                 } else {
