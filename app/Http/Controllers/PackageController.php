@@ -136,7 +136,7 @@ class PackageController extends Controller
     {
         $this->validate($request,
             [
-                'name' => 'required|unique:packages,name',
+                'name' => 'required',
                 'category' => 'required',
                 'price_weekdays' => 'required',
                 'price_weekend' => 'required',
