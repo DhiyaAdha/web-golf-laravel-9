@@ -27,17 +27,23 @@
                         <div class="form-wrap">
                             <form action="{{ route('admin.edit', $users->id) }}" method="POST">
                                 @csrf
-                                <div class="form-group">
-                                    <label class="control-label mb-10" for="">Nama Lengkap</label>
-                                    <input type="text" class="form-control" id="result" size="50px" placeholder="Masukan Nama" required name="name" value="{{ $users->name }}">
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-10" for="">Email</label>
-                                    <input type="email" name="email" class="form-control" id="email" placeholder="Masukan Email" required value="{{ $users->email }}">
-                                </div>
                                 <div class="form-group @error('name') has-error @enderror">
+                                    <label class="control-label mb-10" for="">Nama Lengkap</label>
+                                    <input type="text" class="form-control" id="result" size="50px" placeholder="Masukan Nama" name="name" value="{{ $users->name }}">
+                                    @error('name')
+                                    <div class="text-danger"> {{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group @error('email') has-error @enderror">
+                                    <label class="control-label mb-10" for="">Email</label>
+                                    <input type="email" name="email" class="form-control" id="email" placeholder="Masukan Email" value="{{ $users->email }}">
+                                    @error('email')
+                                    <div class="text-danger"> {{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group @error('password') has-error @enderror">
                                     <label class="control-label mb-10" for="password">Password</label>
-                                    <input type="password" name="password" class="form-control" id="password" placeholder="Masukan Password" required>
+                                    <input type="password" name="password" class="form-control" id="password" placeholder="Masukan Password">
                                     <span class="show-hide1" onclick="myfunction()">
                                         <i id="hide1" class="fa fa-eye"></i>
                                         <i id="hide2" class="fa fa-eye-slash"></i>
@@ -46,7 +52,7 @@
                                     <div class="text-danger"> {{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="form-group @error('name') has-error @enderror">
+                                <div class="form-group @error('password2') has-error @enderror">
                                     <label class="control-label mb-10" for="confirm-password">Konfirmasi
                                         Password</label>
                                     <input type="password" name="password" class="form-control" id="confirm_password" placeholder="Masukan Ulang Password">
@@ -55,28 +61,34 @@
                                         <i id="hide3" class="fa fa-eye"></i>
                                         <i id="hide4" class="fa fa-eye-slash"></i>
                                     </span>
-                                    @error('password')
+                                    @error('password2')
                                     <div class="text-danger"> {{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group @error('phone') has-error @enderror">
                                     <label class="control-label mb-10" for="">Nomer Hp</label>
-                                    <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" name="phone" class="form-control" id="result" size="50px" placeholder="Masukan Nomer Hp" required value="{{ $users->phone }}">
+                                    <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" name="phone" class="form-control" id="result" size="50px" placeholder="Masukan Nomer Hp" value="{{ $users->phone }}">
+                                    @error('phone')
+                                    <div class="text-danger"> {{ $message }}</div>
+                                    @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group @error('role') has-error @enderror">
                                     <label class="control-label mb-10 text-left">Role</label>
                                     <div class="radio-list">
                                         <div class="radio-inline pl-0">
-                                            <span class="radio radio-info"> <input type="radio" name="role_id" id="radio_11" value="1" {{ $users->role_id == 1 ? 'checked' : '' }} required>
+                                            <span class="radio radio-info"> <input type="radio" name="role_id" id="radio_11" value="1" {{ $users->role_id == 1 ? 'checked' : '' }}>
                                                 <label for="radio_11">Admin</label>
                                             </span>
                                         </div>
                                         <div class="radio-inline pl-0">
-                                            <span class="radio radio-info"> <input type="radio" name="role_id" id="radio_12" value="2" {{ $users->role_id == 2 ? 'checked' : '' }} required>
+                                            <span class="radio radio-info"> <input type="radio" name="role_id" id="radio_12" value="2" {{ $users->role_id == 2 ? 'checked' : '' }}>
                                                 <label for="radio_12">Super Admin</label>
                                             </span>
                                         </div>
                                     </div>
+                                    @error('role')
+                                    <div class="text-danger"> {{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group text-left">
                                     <button type="submit" class="btn btn-info">Edit Admin</button>
