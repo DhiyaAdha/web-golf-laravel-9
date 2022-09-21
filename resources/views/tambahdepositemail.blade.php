@@ -160,21 +160,21 @@
                 <tr>
                     <td bgcolor="#ffffff" align="left"
                         style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                        <div style="display:flex;">
+                        {{-- <div style="display:flex;">
                             <p style="margin: 0;">Nama: </p>
                             <p style="margin: 0;">&nbsp; {!! $data['name'] !!}</p>
                         </div>
                         <div style="display:flex;">
                             <p style="margin: 0;">Saldo Deposit Sebelumnya: </p>
                             <p style="margin: 0;">&nbsp; Rp. {!! formatrupiah($data['sebelumdeposit']) !!}</p>
-                        </div>
+                        </div> --}}
                         <div style="display:flex;">
-                            <p style="margin: 0;">Saldo Deposit Setelah Ditambah: </p>
-                            <p style="margin: 0;">&nbsp; Rp. {!! formatrupiah($data['setelahdeposit']) !!}</p>
-                        </div>
-                        <div style="display:flex;">
-                            <p style="margin: 0;">Jumlah Deposit Yang Ditambah: </p>
+                            <p style="margin: 0;">Anda Menambah Deposit Sejumlah: </p>
                             <p style="margin: 0;">&nbsp; Rp. {!! formatrupiah($data['tambahdeposit']) !!}</p>
+                        </div>
+                        <div style="display:flex;">
+                            <p style="margin: 0;">Total Deposit Anda: </p>
+                            <p style="margin: 0;">&nbsp; Rp. {!! formatrupiah($data['setelahdeposit']) !!}</p>
                         </div>
                         <div style="display:flex;">
                             <p style="margin: 0;">Sisa Limit Bulanan: </p>
