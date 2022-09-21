@@ -41,10 +41,4 @@ class Cart extends Model
         $this->orderDate;
         $this->paymentType;
     }
-
-    public function remove($id){
-        $this->totalPrice -= $this->items[$id]['item']['price'];
-        unset($this->items[$id]);
-        $this->totalQuantity--;
-    }
 }
