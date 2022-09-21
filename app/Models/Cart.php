@@ -34,7 +34,7 @@ class Cart extends Model
                 break;
             }
         }
-        $this->items[$item_id]=$storedItem;
+        $this->items[$item]=$storedItem;
         $this->totalPrice += $price;
         $this->totalQuantity++;
         $this->orderPayment;
