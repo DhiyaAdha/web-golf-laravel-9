@@ -88,6 +88,26 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate(
+            $request,
+            [
+                'name' => 'required|unique:users,name',
+                'email' => 'required|unique:users,email',
+                'password' => 'required|min:8',
+                'phone' => 'required|min:12',
+                'role_id' => 'required',
+            ],
+            [
+                'name.required' => 'Nama admin masih kosong.',
+                'name.unique' => 'Nama admin sudah ada',
+                'email.required' => 'Nama admin masih kosong.',
+                'email.unique' => 'Nama admin sudah ada',
+                'phone.required' => 'Nomer Hp admin masih kosong.',
+                'phone.unique' => 'Nomer Hp admin sudah ada',
+                'password.required' => 'password admin masih kosong.',
+                'role_id.required' => 'role_id admin masih kosong.',
+            ]
+        );
         $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
@@ -173,7 +193,7 @@ class AdminController extends Controller
             $request,
             [
                 'name' => 'required|unique:users,name',
-                'email' => 'required|unique:users,name',
+                'email' => 'required|unique:users,email',
                 'password' => 'required|min:8',
                 'phone' => 'required|min:12',
                 'role_id' => 'required',

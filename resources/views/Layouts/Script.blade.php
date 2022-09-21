@@ -37,6 +37,8 @@
 <script src="{{ asset('vendors/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') }}">
 </script>
 <!-- <link href="{{ asset('vendors/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') }}" rel="stylesheet" type="text/css" /> -->
+<script src="{{ asset('vendors/bower_components/bootstrap-switch/dist/js/bootstrap-switch.js') }}"></script>
+
 
 <!-- Morris Charts JavaScript -->
 <script src="{{ asset('vendors/bower_components/raphael/raphael.min.js') }}"></script>
@@ -67,7 +69,7 @@
     @if (Session::has('success'))
         window.setTimeout(function() {
             $.toast({
-                text: '{{ Session(' success ') }}',
+                text: '{{ Session('success') }}',
                 position: 'top-right',
                 loaderBg: '#fec107',
                 icon: 'success',

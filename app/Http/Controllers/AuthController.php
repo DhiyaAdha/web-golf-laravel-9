@@ -119,7 +119,7 @@ class AuthController extends Controller {
     public function resetPassword(Request $request){
         $request->validate([
             'email'=>'required|email|exists:users,email',
-            'password'=>'required|confirmed',
+            'password'=>'required|confirmed|min:8',
             'password_confirmation'=>'required',
         ]);
         //ini untuk function mengecek token dari database untuk mereset password
@@ -140,7 +140,7 @@ class AuthController extends Controller {
                 'email'=>$request->email
             ])->delete();
             //ini untuk function jika semua proses selesai dan akan di redirect ke menu login 
-            return redirect()->intended('login')->with('info', 'Your password has been changed! You can login with new password')->with('verifiedEmail', $request->email);
+            return redirect()->intended('login')->with('success', 'Your password has been changed! You can login with new password')->with('verifiedEmail', $request->email);
         }
     }
     //ini untuk route get di web.php memasukkan password baru
@@ -198,6 +198,7 @@ class AuthController extends Controller {
         dispatch(new SendEmailResetJob($data));
         // dd(session()->all());
     
-        return back()->with('resetSuccess', 'Reset Password sudah dikirim ke email anda! silahkan cek email');
+        // return back()->with('success', 'Reset Password sudah dikirim ke email anda! silahkan cek email');
+        return redirect()->route('login')->with('success', 'Reset Password sudah dikirim ke email anda! silahkan cek email');
     }
 }

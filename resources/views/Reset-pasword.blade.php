@@ -12,7 +12,7 @@
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="favicon.ico">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="{{ asset('tgcc144.PNG') }}" type="image/x-icon">
 
     <!-- vector map CSS -->
     <link href="../../vendors/bower_components/jasny-bootstrap/dist/css/jasny-bootstrap.min.css" rel="stylesheet"
@@ -23,22 +23,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
     <style>
-        .password-container{
-        width: 400px;
-        position: relative;
+        .password-container {
+            width: 400px;
+            position: relative;
         }
+
         .password-container input[type="password"],
-        .password-container input[type="text"]{
-        width: 100%;
-        padding: 12px 36px 12px 12px;
-        box-sizing: border-box;
+        .password-container input[type="text"] {
+            width: 100%;
+            padding: 12px 36px 12px 12px;
+            box-sizing: border-box;
         }
-        .fa-eye{
-        position: absolute;
-        top: 60%;
-        right: 4%;
-        cursor: pointer;
-        color: lightgray;
+
+        .fa-eye {
+            position: absolute;
+            margin-top: -27px;
+            margin-left: 90%;
+            /* top: 15px;
+            right: 30px; */
+            cursor: pointer;
+            color: lightgray;
         }
     </style>
 </head>
@@ -110,19 +114,26 @@
                                             <div class="form-group password-container">
                                                 <label class="pull-left control-label mb-10" for="password">Password
                                                     Baru</label>
-                                                <input type="password" name="password" class="form-control"
+                                                <input type="password" name="password"
+                                                    class="form-control @error('password') has-error @enderror"
                                                     id="password" placeholder="Masukan Password Baru"
-                                                    value="{{ old('password') }}">
-                                                    <i class="fa-solid fa-eye" id="eye"></i>
+                                                    value="{{ old('password') }}" autocomplete="current-password">
+                                                <i class="fa-solid fa-eye fa-eye-slash" id="eye"></i>
+
+                                                @error('password')
+                                                    <div class="text-danger"> {{ $message }}</div>
+                                                @enderror
                                             </div>
                                             <div class="form-group password-container">
                                                 <label class="pull-left control-label mb-10"
                                                     for="password_confirmation">Ulangi Password</label>
                                                 <div class="clearfix"></div>
-                                                <input type="password" name="password_confirmation" class="form-control"
+                                                <input type="password" name="password_confirmation"
+                                                    class="form-control @error('password') is-invalid @enderror"
                                                     id="password_confirmation" placeholder="Masukan Password Baru"
-                                                    value="{{ old('password_confirmation') }}"required>
-                                                    <i class="fa-solid fa-eye" id="eyee"></i>
+                                                    value="{{ old('password_confirmation') }}"
+                                                    autocomplete="current-password">
+                                                <i class="fa-solid fa-eye fa-eye-slash" id="eyee"></i>
                                             </div>
                                             <div class="form-group text-center">
                                                 <button type="submit" class="btn btn-info btn-rounded">Update
@@ -162,18 +173,18 @@
     <script>
         const passwordField = document.querySelector("#password");
         const passwordCon = document.querySelector("#password_confirmation");
-        const eyeIcon= document.querySelector("#eye");
-        const eyeeIcon= document.querySelector("#eyee");
+        const eyeIcon = document.querySelector("#eye");
+        const eyeeIcon = document.querySelector("#eyee");
 
-        eye.addEventListener("click", function(){
-        this.classList.toggle("fa-eye-slash");
-        const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
-        passwordField.setAttribute("type", type);
+        eye.addEventListener("click", function() {
+            this.classList.toggle("fa-eye-slash");
+            const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+            passwordField.setAttribute("type", type);
         })
-        eyee.addEventListener("click", function(){
-        this.classList.toggle("fa-eye-slash");
-        const typee = passwordCon.getAttribute("type") === "password" ? "text" : "password";
-        passwordCon.setAttribute("type", typee);
+        eyee.addEventListener("click", function() {
+            this.classList.toggle("fa-eye-slash");
+            const typee = passwordCon.getAttribute("type") === "password" ? "text" : "password";
+            passwordCon.setAttribute("type", typee);
         })
     </script>
 </body>

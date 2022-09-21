@@ -134,6 +134,24 @@ class PackageController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request,
+            [
+                'name' => 'required',
+                'category' => 'required',
+                'price_weekdays' => 'required',
+                'price_weekend' => 'required',
+                'status' => 'required',
+            ],
+            [
+                'name.required' => 'Nama package masih kosong.',
+                'name.unique' => 'Nama package sudah ada',
+                'category.required' => 'Kategori Paket masih kosong.',
+                'status.required' => 'Status Paket masih kosong.',
+                'price_weekdays.required' => 'Harga Weekdays masih kosong.',
+                'price_weekend.required' => 'Harga Weekend masih kosong.',
+            ]
+        );
+
         $package = Package::findOrFail($id);
         $package->name = $request->name;
         $package->category = $request->category;
