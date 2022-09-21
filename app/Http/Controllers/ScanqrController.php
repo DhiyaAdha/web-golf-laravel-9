@@ -14,6 +14,7 @@ use App\Jobs\SendMailJobDeposit;
 use illuminate\support\facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use App\Jobs\SendMailJobDepositTambah;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ScanqrController extends Controller
@@ -194,10 +195,19 @@ class ScanqrController extends Controller
             $deposit->save();
             $report_deposit->save();
 
-            
-            dd($deposit);
-            dispatch(new SendMailJobDeposit($deposit));
-            
+            //notifikasi email
+            $log_limit = LogLimit::where('visitor_id', $id)->first();
+            $data = $request->all();
+            $datav = Visitor::find($id);
+            $data['name'] = $datav->name;
+            $data['tambahdeposit'] = $request->balance;
+            $data['sebelumdeposit'] = $deposit->balance - $request->balance;
+            $data['setelahdeposit'] = $report_deposit->report_balance;
+            $data['quota'] = $log_limit->quota;
+            $data['quota_kupon'] = $log_limit->quota_kupon;
+            $data['email'] = $visitor->email;
+            dispatch(new SendMailJobDepositTambah($data));
+
             LogAdmin::create([
                 'user_id' => Auth::id(),
                 'type' => 'CREATE',

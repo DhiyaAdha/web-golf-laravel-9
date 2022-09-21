@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="form-group @error('name') has-error @enderror">
                                     <label class="control-label mb-10" for="password">Password</label>
-                                    <input type="password" name="password" class="form-control" id="password" placeholder="Masukan Password" required>
+                                    <input type="password" name="password" class="form-control" id="password" placeholder="Masukan Password">
                                     <span class="show-hide1" onclick="myfunction()">
                                         <i id="hide1" class="fa fa-eye"></i>
                                         <i id="hide2" class="fa fa-eye-slash"></i>

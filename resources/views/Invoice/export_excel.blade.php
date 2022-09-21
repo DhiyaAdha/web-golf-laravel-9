@@ -21,7 +21,7 @@
             <tr>
                 <td>{{ $item->name }}</td>
                 <td style="text-align: center">{{ $item->tipe_member }}</td>
-                <td>Rp.{{ formatrupiah($item->total) }}</td>
+                <td>{{ $item->total }}</td>
                 <td>{{ $item->created_at->format('d F Y | H:i:s') }}</td>
             </tr>
         @endforeach
