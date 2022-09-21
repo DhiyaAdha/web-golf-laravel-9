@@ -130,7 +130,7 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [1, 2, 3, 4]
+                targets: [0, 1, 2, 3, 4]
             }],
         });
         /* data tamu */
