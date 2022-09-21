@@ -298,7 +298,6 @@
             printContainer: true,
         });
     });
-
     // Transaction Activity
     $('#dt-tamu-transaksi').DataTable({
         "processing": true,
@@ -355,7 +354,6 @@
         }]
     });
     // End Of Transaction Activity
-
     //  Deposit Activity
     $('#dt-tamu-deposit').DataTable({
         "processing": true,

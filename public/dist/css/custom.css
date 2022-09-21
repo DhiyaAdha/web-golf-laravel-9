@@ -398,7 +398,7 @@ h6.panel-title.text-center {
 element.style {
     font-size: 18px;
     font-weight: bold;
-    color: #fff;
+    font-color: #fff;
     margin-bottom: 0px;
 }
 .widget-user .widget-user-username {
@@ -411,7 +411,7 @@ element.style {
 
 .modal-content.hidden-content {
     background-color: transparent !important;
-    /* -webkit-box-shadow: none !important; */
+    -webkit-box-shadow: none !important;
 }
 
 .download-kartu-tamu {
@@ -791,10 +791,8 @@ b, strong {
     /* display: flex; */
     /* justify-content: center; */
     /* align-items: center; */
-    /* position: absolute; */
+    position: absolute;
     /* font-size: 10px; */
-    position: relative;
-    bottom: 15px;
 }
 .text-email{
     text-align: 12px;
@@ -1402,7 +1400,6 @@ input.cmn-toggle-round-flat:checked + label:after {
     margin-left: 45px;
     background-color: #01c853;
 }
-
 
 div.switch5 {
     clear: both;
