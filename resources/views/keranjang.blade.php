@@ -114,7 +114,8 @@
                                         <div class="pull-right mr-5">
                                             <div class="d-flex">
                                                 <p class="text-muted mr-15">{{ $item['price'] }}</p>
-                                                <a href="{{ route('cart.remove', ['package' => key($orders)]) }}"><i
+                                                <a href="javascript:void(0)" data-item-name="{{ $item['item']['name'] }}"
+                                                    data-item="{{ key($orders) }}" id="remove-item"><i
                                                         class="fa fa-trash-o"></i></a>
                                             </div>
                                         </div>
@@ -134,11 +135,20 @@
                             <div class="clearfix"></div>
                         </div>
                         @if (Session::has('cart'))
-                            <button type="button" onclick="checkout('{{ route('checkout') }}', 'Checkout')" type="submit"
-                                class="mt-15 mb-15 btn-xs btn btn-block btn-success btn-anim">
-                                <i class="icon-rocket"></i>
-                                <span class="btn-text">Checkout</span>
-                            </button>
+                            <div class="pull-left">
+                                <a href="javascript:void(0)" data-order="{{ key($orders) }}" id="reset-order"
+                                    class="mt-15 mb-15 btn-xs btn btn-primary btn-anim">
+                                    <i class="icon-rocket"></i>
+                                    <span class="btn-text">Reset</span>
+                                </a>
+                            </div>
+                            <div class="pull-right">
+                                <a href="javascript:void(0)" id="checkout"
+                                    class="mt-15 mb-15 btn-xs btn btn-success btn-anim">
+                                    <i class="icon-rocket"></i>
+                                    <span class="btn-text">Checkout</span>
+                                </a>
+                            </div>
                         @else
                             <button type="submit" class="mt-15 mb-15 btn-xs btn-block btn btn-success btn-anim"
                                 id="disabled-pay">
@@ -176,16 +186,17 @@
                 </div>
             </div>
             <div class="row">
-
             </div>
             @include('Layouts.Footer')
+            <div id="lds-facebook"></div>
         </div>
     </div>
 @endsection
 @push('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
     <script>
         function checkout(url, title) {
-            popupCenter(url, title, 625, 500);
+            popupCenter(url, title, 1000, 500);
         }
 
         function popupCenter(url, title, w, h) {
@@ -212,6 +223,113 @@
 
             if (window.focus) newWindow.focus();
         }
+
+        $(document).on('click', '#remove-item', function() {
+            var key = $(this).data('item');
+            var name = $(this).data('item-name');
+            var url = "{{ route('cart.remove', [':package']) }}";
+            url = url.replace(':package', key);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function(response) {
+                    $.toast({
+                        text: 'Item ' + name + ' terhapus',
+                        position: 'top-right',
+                        loaderBg: '#fec107',
+                        icon: 'success',
+                        hideAfter: 1000,
+                        stack: 6
+                    });
+                    window.setTimeout(function() {
+                        location.reload();
+                    }, 1200);
+                }
+            });
+        });
+
+        $(document).on('click', '#checkout', function() {
+            var url = "{{ route('checkout') }}";
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                async: true,
+                type: 'GET',
+                url: "{{ route('checkout') }}",
+                beforeSend: function(request) {
+                    $.blockUI({
+                        css: {
+                            backgroundColor: 'transparent',
+                            border: 'none'
+                        },
+                        message: '<img src="../img/rolling.svg">',
+                        baseZ: 1500,
+                        overlayCSS: {
+                            backgroundColor: '#7C7C7C',
+                            opacity: 0.4,
+                            cursor: 'wait'
+                        }
+                    });
+                },
+                success: function(response) {
+                    $.unblockUI();
+                    swal({
+                        title: "",
+                        type: "success",
+                        text: "Order berhasil dibuat",
+                        confirmButtonColor: "#01c853",
+                    }, function(isConfirm) {
+                        checkout(url, 'testing');
+                    });
+                }
+            });
+        });
+
+        $(document).on('click', '#reset-order', function() {
+            var key = $(this).data('order');
+            var url = "{{ route('cart.remove_all', [':package']) }}";
+            url = url.replace(':package', key);
+            swal({
+                title: "Anda yakin reset order semua?",
+                imageUrl: "../img/Warning.svg",
+                showCancelButton: true,
+                confirmButtonColor: "#FF2A00",
+                confirmButtonText: "Hapus order",
+                cancelButtonText: "Batal",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function(isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        url: url,
+                        beforeSend: function() {
+                            $('#ok_button').text('Hapus Order');
+                        },
+                        success: function(data) {
+                            swal({
+                                title: "",
+                                type: "success",
+                                text: "Order berhasil dihapus",
+                                confirmButtonColor: "#01c853",
+                            }, function(isConfirm) {
+                                location.reload();
+                            });
+                        }
+                    })
+                } else {
+                    swal("Dibatalkan", "", "error");
+                }
+            });
+            return false;
+        });
 
         $(document).on('click', '#disabled-pay', function() {
             swal({
