@@ -88,7 +88,11 @@ class AuthController extends Controller {
                 ],
             ];
             //  return response()->json($respon, 200);
-            return redirect()->intended('/analisis-tamu');
+            if($user->role_id == 2){
+                return redirect()->intended('/analisis-tamu')->with('success', 'Selamat Datang Admin '.$user->name.'');
+            }else {
+                return redirect()->intended('/scan-tamu')->with('success', 'Selamat Datang Admin '.$user->name.''); 
+            }
             // dd(session()->all());
         }
     }

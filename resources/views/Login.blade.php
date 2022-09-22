@@ -30,6 +30,13 @@
 
     {{-- toastr --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+    
+    {{-- font roboto --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,400;1,500&display=swap" rel="stylesheet">
+    <style>
+    </style>
 
     <style>
         .password-container {
@@ -50,6 +57,11 @@
             right: 4%;
             cursor: pointer;
             color: rgb(114, 114, 114);
+        }
+
+        #toast-container > .toast-success {
+        background-color: #01C853;
+        font-family: Arial;
         }
     </style>
 </head>
