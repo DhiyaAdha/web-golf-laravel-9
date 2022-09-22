@@ -102,28 +102,44 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label mb-10" for="">Tamu Ini Adalah Tamu VIP
-                                        <div class="switch">
+                                        {{-- <div class="switch">
                                             <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" value="VVIP"
                                                 name="tipe_member">
                                             <input id="cmn-toggle-4" class="cmn-toggle cmn-toggle-round-flat"
                                                 name="tipe_member" type="checkbox" value="VIP">
                                             <label for="cmn-toggle-4"></label>
-                                        </div>
+                                        </div> --}}
                                         @error('gender')
                                             <div class="text-danger"> {{ $message }}</div>
                                         @enderror
                                 </div>
+                                <label class="switcher">
+                                    <input type="checkbox" id="togBtn" value="VIP" name="tipe_member">
+                                    <div class="slider round">
+                                        <!--ADDED HTML -->
+                                        <span class="on">VIP</span>
+                                        <span class="off">VVIP</span>
+                                        <!--END-->
+                                        <!--ADDED HTML -->
+                                        <input type="checkbox" id="togBtn2" value="VVIP" name="tipe_member">
+                                        <span class="on">VIP</span>
+                                        <span class="off">VVIP</span>
+                                        <!--END-->
 
-                                <div class="form-group text-left">
-                                    <button type="submit" class="btn btn-info">Selanjutnya</button>
-                                </div>
-                            </form>
+                                    </div>
                         </div>
+                        </label>
+
+                        <div class="form-group text-left">
+                            <button type="submit" class="btn btn-info">Selanjutnya</button>
+                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        @include('Layouts.Footer')
+    </div>
+    @include('Layouts.Footer')
     </div>
     </div>
 @endsection
