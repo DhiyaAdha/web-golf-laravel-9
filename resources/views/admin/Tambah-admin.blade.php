@@ -75,12 +75,12 @@
                                     <label class="control-label mb-10 text-left">Role</label>
                                     <div class="radio-list">
                                         <div class="radio-inline pl-0">
-                                            <span class="radio radio-info"> <input type="radio" name="role_id" id="radio_11" value="1">
+                                            <span class="radio radio-info"> <input type="radio" name="role_id" id="radio_11" value="1" {{ old('role_id') == "1" ? 'checked' : '' }}>
                                                 <label for="radio_11">Admin</label>
                                             </span>
                                         </div>
                                         <div class="radio-inline pl-0">
-                                            <span class="radio radio-info"> <input type="radio" name="role_id" id="radio_12" value="2">
+                                            <span class="radio radio-info"> <input type="radio" name="role_id" id="radio_12" value="2" {{ old('role_id') == "2" ? 'checked' : '' }}>
                                                 <label for="radio_12">Super Admin</label>
                                             </span>
                                         </div>
