@@ -67,7 +67,7 @@
                                 </div> -->
                                 <div class="form-group password-container @error('password') has-error @enderror">
                                     <label class="pull-left control-label mb-10" for="password">Password</label>
-                                    <input type="password" name="password" class="form-control" id="password" placeholder="Masukan Password" required>
+                                    <input type="password" name="password" class="form-control" id="password" placeholder="Masukan Password">
                                     <i class="fa-solid fa-eye fa-eye-slash" id="eye"></i>
                                     @error('password')
                                     <div class="text-danger">{{ $message }}</div>
@@ -75,7 +75,7 @@
                                 </div>
                                 <div class="form-group password-container @error('password') has-error @enderror">
                                     <label class="pull-left control-label mb-10" for="password">Konfirmasi Password</label>
-                                    <input type="password" name="password" class="form-control" id="confirm_password" placeholder="Masukan Ulang Password" required>
+                                    <input type="password" name="password" class="form-control" id="confirm_password" placeholder="Masukan Ulang Password">
                                     <i class="fa-solid fa-eye fa-eye-slash" id="eye2"></i>
                                     @error('password')
                                     <div class="text-danger">{{ $message }}</div>
