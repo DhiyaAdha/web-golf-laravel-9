@@ -177,11 +177,11 @@
                             <p style="margin: 0;">&nbsp; Rp. {!! formatrupiah($data['sebelumdeposit']) !!}</p>
                         </div> --}}
                         <div style="display:flex;">
-                            <p style="margin: 0;">Anda Menambah Deposit Sejumlah: </p>
+                            <p style="margin: 0;">Deposit ditambah: </p>
                             <p style="margin: 0;">&nbsp; Rp. {!! formatrupiah($data['tambahdeposit']) !!}</p>
                         </div>
                         <div style="display:flex;">
-                            <p style="margin: 0;">Total Deposit Anda: </p>
+                            <p style="margin: 0;">Deposit saat ini: </p>
                             <p style="margin: 0;">&nbsp; Rp. {!! formatrupiah($data['setelahdeposit']) !!}</p>
                         </div>
                         <div style="display:flex;">
@@ -201,12 +201,6 @@
                             untuk bermain Golf.</p>
                     </td>
                 </tr>
-                <tr>
-                    <td bgcolor="#ffffff" align="justify"
-                        style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                        <p style="margin: 0;">TGGC Group.</p>
-                    </td>
-                </tr>
             </table>
         </td>
     </tr>
@@ -223,6 +217,14 @@
                     </td>
                 </tr>
             </table>
+        </td>
+    </tr>
+    <tr>
+        <td class="content-cell" align="center"
+            style="word-break: break-word; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif; font-size: 16px; padding: 45px;">
+            <p class="f-fallback sub align-center"
+                style="font-size: 13px; line-height: 1.625; text-align: center; color: #A8AAAF; margin: .4em 0 1.1875em;"
+                align="center">© 2022 Tritih Golf & Country Club. Cilacap.</p>
         </td>
     </tr>
     </table>

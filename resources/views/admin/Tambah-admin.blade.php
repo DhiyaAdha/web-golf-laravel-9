@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="form-group @error('phone') has-error @enderror">
                                     <label class="control-label mb-10" for="">Nomer Hp</label>
-                                    <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" name="phone" class="form-control" id="result" size="50px" placeholder="Masukan Nomer Hp" value="{{ old('phone') }}">
+                                    <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <=57" name="phone" class="form-control" id="result" size="50px" placeholder="Masukan Nomer Hp" value="{{ old('phone') }}">
                                     @error('phone')
                                     <div class="text-danger"> {{ $message }}</div>
                                     @enderror
