@@ -21,6 +21,8 @@
     <!-- Custom CSS -->
     <link href="dist/css/style.css" rel="stylesheet" type="text/css">
     <link href="dist/css/custom.css" rel="stylesheet" type="text/css">
+
+
 </head>
 
 <body>
@@ -63,7 +65,7 @@
                                         <h3 class="text-center txt-dark mb-10">Anda Lupa Password?</h3>
                                     </div>
                                     <div class="form-wrap">
-                                        <form action="{{ route('Lupa-pasword') }}" method="post">
+                                        <form action="{{ route('email_test') }}" method="post">
 
                                             @csrf
                                             <div class="form-group">

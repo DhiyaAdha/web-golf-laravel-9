@@ -1,8 +1,9 @@
+@if (auth()->user()->role_id == '2')
 @extends('Layouts.Main', ['title' => 'TGCC | Analisis Tamu'])
 @section('content')
+
     <div class="page-wrapper">
         <div class="container-fluid pt-25">
-            {{-- Row Kalkulasi Tamu --}}
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                     <div class="panel panel-default card-view pa-0">
@@ -244,7 +245,9 @@
         <!-- /Footer -->
     </div>
     </div>
+
 @endsection
+
 @push('scripts')
     <script>
         // fungsi grafik-line & Grafik-bar
@@ -320,3 +323,18 @@
         /* data analisis */
     </script>
 @endpush
+@else
+<!DOCTYPE HTML>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="refresh" content="0; url=/scan-tamu">
+        <script type="text/javascript">
+            window.location.href = "/scan-tamu"
+        </script>
+    </head>
+    <body>
+        Halaman Tidak Ada <a href='/scan-tamu'>Kembali</a>.
+    </body>
+</html>
+@endif

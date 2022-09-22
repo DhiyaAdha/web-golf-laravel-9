@@ -61,15 +61,10 @@
                         </div>
                     </div>
                 </div>
-                <!-- /Basic Table -->
             </div>
+            @include('Layouts.Footer')
         </div>
-
-        <!-- Footer -->
-        @include('Layouts.Footer')
-        <!-- /Footer -->
     </div>
-    <!-- /Main Content -->
 @endsection
 @push('scripts')
     <script>
@@ -153,6 +148,8 @@
         /* delete package */
         $(document).on('click', '.delete', function() {
             id = $(this).attr('id');
+            var url = "{{ route('package.destroy', ':id') }}";
+            url = url.replace(':id', id);
             swal({
                 title: "Anda yakin ingin menghapus paket ini?",
                 imageUrl: "../img/Warning.svg",
@@ -165,7 +162,7 @@
             }, function(isConfirm) {
                 if (isConfirm) {
                     $.ajax({
-                        url: "package/destroy/" + id,
+                        url: url,
                         beforeSend: function() {
                             $('#ok_button').text('Hapus Data');
                         },

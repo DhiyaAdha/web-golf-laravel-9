@@ -1,15 +1,5 @@
-<!-- /#wrapper -->
-
-<!-- JavaScript -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
-</script>
-
 <!-- jQuery -->
-<script src="{{ asset('vendors/bower_components/jquery/dist/jquery.min.js') }}"></script>
+
 
 <!-- Bootstrap Core JavaScript -->
 <script src="{{ asset('vendors/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
@@ -42,6 +32,13 @@
 
 <!-- ChartJS JavaScript -->
 <script src="{{ asset('vendors/chart.js/Chart.min.js') }}"></script>
+
+<!-- Bootstrap Switches CSS -->
+<script src="{{ asset('vendors/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') }}">
+</script>
+<!-- <link href="{{ asset('vendors/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') }}" rel="stylesheet" type="text/css" /> -->
+<script src="{{ asset('vendors/bower_components/bootstrap-switch/dist/js/bootstrap-switch.js') }}"></script>
+
 
 <!-- Morris Charts JavaScript -->
 <script src="{{ asset('vendors/bower_components/raphael/raphael.min.js') }}"></script>
@@ -138,6 +135,74 @@
             targets: [1, 2, 3, ]
         }],
     });
+<<<<<<< HEAD
+=======
+
+    $('#show-qr-scan').on('click', function() {
+        $('.disabled-scan').addClass('d-none');
+
+        function onScanSuccess(decodedText, decodedResult) {
+            $("#resultTEXT").val(decodedText)
+            $('#resultDECODE').val(JSON.stringify(decodedResult));
+            html5QrcodeScanner.clear();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ route('visitor.qrcode') }}",
+                data: {
+                    qrCode: decodedText
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === "VALID") {
+                        swal({
+                            title: "Verifikasi berhasil",
+                            type: "success",
+                            text: "Atas nama " + response.data.name,
+                            confirmButtonColor: "#01c853",
+                            closeOnConfirm: false,
+                            closeOnCancel: false,
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            timer: 2000,
+                        }, function() {
+                            window.location.href = decodedText;
+                        });
+                    } else {
+                        swal({
+                            icon: 'error',
+                            title: response.status,
+                            text: response.message,
+                            allowOutsideClick: false
+                        }, function() {
+                            window.location.reload(true)
+                        });
+                    }
+                }
+            });
+        }
+
+        function onScanFailure(error) {
+            console.warn(`Code scan error = ${error}`);
+        }
+
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader", {
+                fps: 144,
+                qrbox: {
+                    width: 200,
+                    height: 200
+                }
+            },
+            true);
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    });
+>>>>>>> a8eef89822c6ca97533ec1d2ed7a169cd848f1bf
 </script>
 {{-- Input Stepper --}}
 <script>

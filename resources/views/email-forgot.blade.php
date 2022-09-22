@@ -505,7 +505,7 @@
                                         style="word-break: break-word; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif; font-size: 16px; padding: 45px;">
                                         <div class="f-fallback">
                                             <h1 style="margin-top: 0; color: #333333; font-size: 22px; font-weight: bold; text-align: left;"
-                                                align="left">Forgot password Email</h1>
+                                                align="left">Reset Password</h1>
                                             <p
                                                 style="font-size: 16px; line-height: 1.625; color: #51545E; margin: .4em 0 1.1875em;">
                                                 {!! $body !!}</p>
@@ -526,8 +526,8 @@
                                                                     <a target="_blank" href="{{ $action_link }}"
                                                                         class="f-fallback button button--green"
                                                                         target="_blank"
-                                                                        style="color: #FFF; border-color: #22bc66; border-style: solid; border-width: 10px 18px; background-color: #22BC66; display: inline-block; text-decoration: none; border-radius: 3px; box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16); -webkit-text-size-adjust: none; box-sizing: border-box;">Reset
-                                                                        your password</a>
+                                                                        style="color: #FFF; border-color: #22bc66; border-style: solid; border-width: 10px 18px; background-color: #22BC66; display: inline-block; text-decoration: none; border-radius: 3px; box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16); -webkit-text-size-adjust: none; box-sizing: border-box;">Atur
+                                                                        ulang password kamu</a>
                                                                 </td>
                                                             </tr>
                                                         </table>
@@ -543,8 +543,7 @@
                                                         style="word-break: break-word; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif; font-size: 16px;">
                                                         <p class="f-fallback sub"
                                                             style="font-size: 13px; line-height: 1.625; color: #51545E; margin: .4em 0 1.1875em;">
-                                                            If you’re having trouble with the button above, copy and
-                                                            paste the URL below into your web browser.</p>
+                                                            Jika Anda mengalami masalah dengan tombol di atas, salin dan tempel URL di bawah ini ke browser web Anda.</p>
                                                         <p class="f-fallback sub"
                                                             style="font-size: 13px; line-height: 1.625; color: #51545E; margin: .4em 0 1.1875em;">
                                                             {!! $action_link !!}</p>
@@ -568,14 +567,7 @@
                                         style="word-break: break-word; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif; font-size: 16px; padding: 45px;">
                                         <p class="f-fallback sub align-center"
                                             style="font-size: 13px; line-height: 1.625; text-align: center; color: #A8AAAF; margin: .4em 0 1.1875em;"
-                                            align="center">© 2022 [App Name]. All rights reserved.</p>
-                                        <p class="f-fallback sub align-center"
-                                            style="font-size: 13px; line-height: 1.625; text-align: center; color: #A8AAAF; margin: .4em 0 1.1875em;"
-                                            align="center">
-                                            [App Name, LLC]
-                                            <br />1234 Street Rd.
-                                            <br />Suite 1234
-                                        </p>
+                                            align="center">© 2022 Tritih Golf & Country Club. Cilacap.</p>
                                     </td>
                                 </tr>
                             </table>

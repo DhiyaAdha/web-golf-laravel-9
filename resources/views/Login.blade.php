@@ -26,6 +26,32 @@
     <!-- Custom CSS -->
     <link href="dist/css/style.css" rel="stylesheet" type="text/css">
     <link href="dist/css/custom.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+    {{-- toastr --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+
+    <style>
+        .password-container {
+            width: 400px;
+            position: relative;
+        }
+
+        .password-container input[type="password"],
+        .password-container input[type="text"] {
+            width: 100%;
+            padding: 12px 36px 12px 12px;
+            box-sizing: border-box;
+        }
+
+        .fa-eye {
+            position: absolute;
+            top: 60%;
+            right: 4%;
+            cursor: pointer;
+            color: rgb(114, 114, 114);
+        }
+    </style>
 </head>
 
 <body>
@@ -96,15 +122,35 @@
                                                     </div>
                                                 @enderror
                                             </div>
-                                            <div class="form-group">
+                                            {{-- <div class="form-group">
                                                 <label class="pull-left control-label mb-10"
                                                     for="password">Password</label>
                                                 <a class="capitalize-font txt-primary block mb-10 pull-right font-12"
                                                     href="{{ route('Lupa-pasword') }}">Lupa Password?</a>
                                                 <div class="clearfix"></div>
                                                 <input type="password" name="password" class="form-control"
+                                                    id="password" placeholder="Masukan Password" required data-toggle="password">
+                                            </div> --}}
+
+
+
+                                            <div class="clearfix"></div>
+
+                                            <div class="form-group password-container">
+                                                <a class="capitalize-font txt-primary block mb-10 pull-right font-12"
+                                                    href="{{ route('Lupa-pasword') }}">Lupa Password?</a>
+                                                <label class="pull-left control-label mb-10"
+                                                    for="password">Password</label>
+                                                <input type="password" name="password" class="form-control"
                                                     id="password" placeholder="Masukan Password" required>
+                                                <i class="fa-solid fa-eye fa-eye-slash" id="eye"></i>
                                             </div>
+
+
+                                            {{-- <div class="password-container">
+                                                <input type="password" placeholder="Password..." id="password">
+                                                <i class="fa-solid fa-eye" id="eye"></i>
+                                           </div> --}}
                                             <div class="form-group text-center">
                                                 <button type="submit" class="btn btn-info btn-rounded">sign in</button>
                                             </div>
@@ -138,6 +184,28 @@
 
     <!-- Init JavaScript -->
     <script src="dist/js/init.js"></script>
+
+    <script>
+        const passwordField = document.querySelector("#password");
+        const eyeIcon = document.querySelector("#eye");
+
+        eye.addEventListener("click", function() {
+            this.classList.toggle("fa-eye-slash");
+            const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+            passwordField.setAttribute("type", type);
+        })
+    </script>
+    {{-- toastr js --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            toastr.options.timeOut = 5000;
+            @if (Session::has('success'))
+                toastr.success('{{ Session::get('success') }}');
+            @endif
+        });
+    </script>
 </body>
 
 </html>

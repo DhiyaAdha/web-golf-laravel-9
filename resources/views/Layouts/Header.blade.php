@@ -6,7 +6,7 @@
     <meta name="description" content="Aplikasi TGCC Member" />
     <meta name="author" content="tgcc" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-
+    @routes
     <!-- PWA  -->
     <meta name="theme-color" content="#6777ef" />
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.PNG') }}">
@@ -16,6 +16,7 @@
     <link rel="icon" href="{{ asset('tgcc144.PNG') }}" type="image/x-icon">
 
     <!-- Morris Charts CSS -->
+    <script src="{{ asset('vendors/bower_components/jquery/dist/jquery.min.js') }}"></script>
     <link href="{{ asset('vendors/bower_components/morris.js/morris.css') }}" rel="stylesheet" type="text/css" />
     <link
         href="{{ asset('vendors/bower_components/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css') }}"
@@ -58,4 +59,6 @@
     {{-- HTML5-QRCODE --}}
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     {{-- Bootstrap --}}
+
+
 </head>
