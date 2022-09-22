@@ -123,7 +123,7 @@
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                     <tr>
                         <td bgcolor="#ffffff" align="center" valign="top"
-                            style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #111111; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; letter-spacing: 4px; line-height: 48px;">
+                            style="padding: 1px 20px 20px 20px; border-radius: 1px 4px 0px 0px; color: #111111; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 1px; font-weight: 10; letter-spacing: 4px; line-height: 1px;">
                             {{-- <img src="{{ $message->embed(public_path() . '/img/icon-logo.svg') }}" width="90"
                                 height="90" style="display: block; border: 0px;" /> --}}
                         </td>
@@ -137,6 +137,14 @@
                                 <span class="brand-text" style="color: #111111">TGGC</span>
                             </div> --}}
                         </td>
+                        <tr>
+                            <td bgcolor="#ffffff" align="center"
+                            style="padding: 
+                            1.1px 0px 50px 1.11px; color: #000000; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
+                                <img src="{{ $message->embed(public_path().'/tgcc144.PNG') }}" height="
+                                60px" width="30px"> <strong style="vertical-align:25%; font-size: 25px;">TGCC</strong>
+                            </td>
+                        </tr>
                     <tr>
                         <td bgcolor="#ffffff" align="center"
                             style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
