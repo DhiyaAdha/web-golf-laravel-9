@@ -117,7 +117,7 @@ class AuthController extends Controller {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
+        return redirect('/')->with('success','Anda Berhasil Logout');
     }
     //ini untuk function reset password, email yang di input akan dicek
     public function resetPassword(Request $request){

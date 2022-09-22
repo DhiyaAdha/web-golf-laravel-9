@@ -45,30 +45,30 @@
                                     @enderror
                                 </div>
                                 <!-- <div class="form-group @error('name') has-error @enderror">
-                                        <label class="control-label mb-10" for="password">Password</label>
-                                        <input type="password" name="password" class="form-control" id="password" placeholder="Masukan Password" required>
-                                        <span class="show-hide1" onclick="myfunction()">
-                                            <i id="hide1" class="fa fa-eye"></i>
-                                            <i id="hide2" class="fa fa-eye-slash"></i>
-                                        </span>
-                                        @error('password')
+                                            <label class="control-label mb-10" for="password">Password</label>
+                                            <input type="password" name="password" class="form-control" id="password" placeholder="Masukan Password" required>
+                                            <span class="show-hide1" onclick="myfunction()">
+                                                <i id="hide1" class="fa fa-eye"></i>
+                                                <i id="hide2" class="fa fa-eye-slash"></i>
+                                            </span>
+                                            @error('password')
         <div class="text-danger"> {{ $message }}</div>
     @enderror
-                                    </div> -->
+                                        </div> -->
                                 <!-- <div class="form-group @error('name') has-error @enderror">
-                                        <label class="control-label mb-10" for="confirm-password">Konfirmasi
-                                            Password</label>
-                                        <input type="password" name="password" class="form-control" id="confirm_password" placeholder="Masukan Ulang Password">
-                                        <i class="fa-solid fa-eye" id="eye"></i>
-                                        <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
-                                        <span class="show-hide2" onclick="myfunction2()">
-                                            <i id="hide3" class="fa fa-eye"></i>
-                                            <i id="hide4" class="fa fa-eye-slash"></i>
-                                        </span>
-                                        @error('password')
+                                            <label class="control-label mb-10" for="confirm-password">Konfirmasi
+                                                Password</label>
+                                            <input type="password" name="password" class="form-control" id="confirm_password" placeholder="Masukan Ulang Password">
+                                            <i class="fa-solid fa-eye" id="eye"></i>
+                                            <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
+                                            <span class="show-hide2" onclick="myfunction2()">
+                                                <i id="hide3" class="fa fa-eye"></i>
+                                                <i id="hide4" class="fa fa-eye-slash"></i>
+                                            </span>
+                                            @error('password')
         <div class="text-danger">{{ $message }}</div>
     @enderror
-                                    </div> -->
+                                        </div> -->
                                 <div class="form-group password-container @error('password') has-error @enderror">
                                     <label class="pull-left control-label mb-10" for="password">Password</label>
                                     <input type="password" name="password" class="form-control" id="password"
@@ -102,13 +102,15 @@
                                     <div class="radio-list">
                                         <div class="radio-inline pl-0">
                                             <span class="radio radio-info"> <input type="radio" name="role_id"
-                                                    id="radio_11" value="1">
+                                                    id="radio_11" value="1"
+                                                    {{ old('role_id') == '1' ? 'checked' : '' }}>
                                                 <label for="radio_11">Admin</label>
                                             </span>
                                         </div>
                                         <div class="radio-inline pl-0">
                                             <span class="radio radio-info"> <input type="radio" name="role_id"
-                                                    id="radio_12" value="2">
+                                                    id="radio_12" value="2"
+                                                    {{ old('role_id') == '2' ? 'checked' : '' }}>
                                                 <label for="radio_12">Super Admin</label>
                                             </span>
                                         </div>
