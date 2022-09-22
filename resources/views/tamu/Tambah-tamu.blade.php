@@ -1,4 +1,5 @@
-@extends('Layouts.main')
+@extends('Layouts.Main')
+
 @section('content')
 <div class="page-wrapper">
     <div class="container-fluid">
@@ -26,15 +27,21 @@
                         <div class="form-wrap">
                             <form action="{{ route('inserttamu') }}" method="POST">
                                 @csrf
-                                <div class="form-group">
+                                <div class="form-group @error('name') has-error @enderror">
                                     <label class="control-label mb-10" for="">Nama Lengkap</label>
-                                    <input type="text" name="name" class="form-control" id="name" size="50px" placeholder="Masukan Nama" required autofocus>
+                                    <input type="text" name="name" class="form-control" id="name" size="50px" placeholder="Masukan Nama" value="{{ old('name') }}" autofocus>
+                                    @error('name')
+                                    <div class="text-danger"> {{ $message }}</div>
+                                    @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group @error('address') has-error @enderror">
                                     <label class="control-label mb-10" for="address">Alamat</label>
-                                    <input type="text" class="form-control" name="address" id="address" size="50px" placeholder="Masukan Alamat" required autofocus>
+                                    <input type="text" class="form-control" name="address" id="address" size="50px" placeholder="Masukan Alamat" value="{{ old('address') }}" autofocus>
+                                    @error('address')
+                                    <div class="text-danger"> {{ $message }}</div>
+                                    @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group @error('gender') has-error @enderror">
                                     <label class="control-label mb-10 text-left">Jenis Kelamin</label>
                                     <div class="radio-list">
                                         <div class="radio-inline pl-0">
@@ -48,27 +55,37 @@
                                             </span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-10" for="">Email</label>
-                                    <input type="email" name="email" class="form-control" id="email" placeholder="Masukan Email" @error('email') is-invalid @enderror required value="{{ old('email') }}">
-                                    @error('email')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
+                                    @error('gender')
+                                    <div class="text-danger"> {{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group @error('email') has-error @enderror">
+                                    <label class="control-label mb-10" for="">Email</label>
+                                    <input type="email" name="email" class="form-control" id="email" placeholder="Masukan Email" value="{{ old('email') }}">
+                                    @error('email')
+                                    <div class="text-danger"> {{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group @error('phone') has-error @enderror">
                                     <label class="control-label mb-10" for="">Nomer Hp</label>
-                                    <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" name="phone" class="form-control" id="phone" size="50px" placeholder="Masukan Nomer Hp" required>
+                                    <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" name="phone" class="form-control" id="phone" size="50px" value="{{ old('phone') }}" placeholder="Masukan Nomer Hp">
+                                    @error('phone')
+                                    <div class="text-danger"> {{ $message }}</div>
+                                    @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group @error('company') has-error @enderror">
                                     <label class="control-label mb-10" for="">Perusahaan</label>
-                                    <input type="text" name="company" class="form-control" id="company" size="50px" placeholder="Masukan Nama Perusahaan" required>
+                                    <input type="text" name="company" class="form-control" id="company" size="50px"  value="{{ old('name') }}" placeholder="Masukan Nama Perusahaan">
+                                    @error('company')
+                                    <div class="text-danger"> {{ $message }}</div>
+                                    @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group @error('position') has-error @enderror">
                                     <label class="control-label mb-10" for="">Jabatan</label>
-                                    <input type="text" name="position" class="form-control" id="position" size="50px" placeholder="Masukan Jabatan" required>
+                                    <input type="text" name="position" class="form-control" id="position" size="50px"  value="{{ old('position') }}" placeholder="Masukan Jabatan">
+                                    @error('position')
+                                    <div class="text-danger"> {{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label mb-10" for="">Tamu Ini Adalah Tamu VIP
@@ -78,15 +95,6 @@
                                             <label for="cmn-toggle-4"></label>
                                         </div>
                                     </label>
-                                    {{-- <label class="switcher">
-                                        <input type="checkbox" id="togBtn"  value="VIP" name="tipe_member">
-                                        <div class="slider round">
-                                        <!--ADDED HTML -->
-                                        <span class="on">VIP</span>
-                                        <span class="off">VVIP</span>
-                                        <!--END-->
-                                        </div>
-                                    </label> --}}
                                 </div>
                                 <div class="form-group text-left">
                                     <button type="submit" class="btn btn-info">Selanjutnya</button>

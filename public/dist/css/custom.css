@@ -67,18 +67,10 @@ i.fa.fa-trash-o {
 .txt-muted {
     color: #868e96 !important;
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> yudis
 .panel.panel-default.card-view.l {
     position: sticky;
     top: 0;
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> yudis
 .panel.panel-default.card-view.p {
     padding: 23px !important;
 }
@@ -264,26 +256,14 @@ i.fa.fa-trash-o {
 
 .label.label-tambah {
     background: #2879ff;
-<<<<<<< HEAD
-=======
-
->>>>>>> yudis
 }
 
 .label.label-update {
     background: #5901c8;
-<<<<<<< HEAD
-=======
-
->>>>>>> yudis
 }
 
 .label.label-hapus {
     background: #ff2a00;
-<<<<<<< HEAD
-=======
-
->>>>>>> yudis
 }
 
 .label.label-sa {
@@ -1514,7 +1494,6 @@ input:checked + .slider:before {
     transform: translateX(55px);
 }
 
-/*------ ADDED CSS ---------*/
 .on {
     display: none;
 }
@@ -1538,7 +1517,6 @@ input:checked + .slider .off {
     display: none;
 }
 
-/*--------- END --------*/
 
 /* Rounded sliders */
 .slider.round {
@@ -1722,6 +1700,10 @@ div.switch5>input.switch:focus~label:before {
     height: 100%;
     padding: 0px;
 }
+/*--------- END --------*/
+
+/*------ ADDED CSS ---------*/
+
 
 .btn-scan-qr {
     display: flex;
