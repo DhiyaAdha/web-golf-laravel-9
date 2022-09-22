@@ -24,11 +24,15 @@
                 <div class="col-sm-12">
                     <div class="panel panel-default card-view">
                         <div class="panel-heading">
+                            <div class="pull-right" >
+                                <a href="{{ url('export_excel_tamu') }}" target="_blank" name="excel" data-toggle="tooltip" data-placement="top" title="Download Excel">
+                                    <img src="dist/img/excel2.svg" width="25px" height="25px">
+                                </a>
+                            </div>
                             <div class="pull-left">
                                 <h6 class="panel-title txt-dark">Daftar Tamu</h6>
                             </div>
                             <div class="pull-right">
-                                <a href="{{ url('export_excel_tamu') }}" target="_blank" name="excel" data-toggle="tooltip" data-placement="top" title="Download Excel"><img src="dist/img/excel2.svg" width="25px" height="25px"></a>
                                 <a href="{{ route('tambah-tamu') }}" class="btn btn-xs btn-success">Tambah
                                     Tamu</a>
                             </div>
