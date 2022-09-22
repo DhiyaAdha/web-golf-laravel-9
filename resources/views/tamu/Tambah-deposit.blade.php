@@ -38,6 +38,8 @@
                                     <div class="form-group text-left">
                                         <a href="daftar-tamu"><button type="submit"
                                                 class="btn btn-info">Submit</button></a>
+                                        <a href="daftar-tamu"><button class="btn btn-info">Lewati</button></a>
+
                                     </div>
                                 </form>
 

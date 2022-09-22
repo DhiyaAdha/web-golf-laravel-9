@@ -12,9 +12,11 @@
 table#dt-analisis {
     width: auto !important;
 }
+
 table#dt-tamu {
     width: auto !important;
 }
+
 .panel-heading.fk {
     position: absolute;
     bottom: 0;
@@ -65,10 +67,18 @@ i.fa.fa-trash-o {
 .txt-muted {
     color: #868e96 !important;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> yudis
 .panel.panel-default.card-view.l {
     position: sticky;
     top: 0;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> yudis
 .panel.panel-default.card-view.p {
     padding: 23px !important;
 }
@@ -114,9 +124,11 @@ i.fa.fa-trash-o {
 .d-flex.justify-content-center.p {
     padding: 50px 0px;
 }
+
 .panel-heading.l {
     padding: 10px 7px !important;
 }
+
 .panel-heading.tabs {
     padding: 0px 10px 10px 7px !important;
 }
@@ -172,6 +184,7 @@ i.fa.fa-trash-o {
     -ms-flex-pack: flex-start !important;
     justify-content: flex-start !important;
 }
+
 .justify-content-end {
     -webkit-box-pack: flex-end !important;
     -ms-flex-pack: flex-end !important;
@@ -209,6 +222,7 @@ i.fa.fa-trash-o {
     height: 100%;
     vertical-align: middle;
 }
+
 .search {
     border: none;
     height: 100%;
@@ -219,6 +233,7 @@ i.fa.fa-trash-o {
     color: #424242;
     font-weight: 500;
 }
+
 .search:focus {
     outline: none;
 }
@@ -234,6 +249,7 @@ i.fa.fa-trash-o {
     padding: 9px 50px;
     font-size: 14px;
 }
+
 .label.label-admin {
     color: #000000;
     padding: 9px 50px;
@@ -245,15 +261,31 @@ i.fa.fa-trash-o {
     padding: 9px 50px;
     font-size: 14px;
 }
+
 .label.label-tambah {
     background: #2879ff;
+<<<<<<< HEAD
+=======
+
+>>>>>>> yudis
 }
+
 .label.label-update {
     background: #5901c8;
+<<<<<<< HEAD
+=======
+
+>>>>>>> yudis
 }
+
 .label.label-hapus {
     background: #ff2a00;
+<<<<<<< HEAD
+=======
+
+>>>>>>> yudis
 }
+
 .label.label-sa {
     background: #5901c8;
     padding: 5px 8px;
@@ -270,6 +302,7 @@ h6.panel-title.txt-dark.label-visitor {
     line-height: 12px !important;
     font-weight: 500;
 }
+
 .card-visitor {
     width: 204.0188976378px;
     height: 323.52755905512px;
@@ -311,10 +344,12 @@ h6.panel-title.text-center {
 .title-card {
     padding: 5px 15px;
 }
+
 .back-qr {
     height: 200px;
     position: relative;
 }
+
 .front-qr {
     height: 160px;
     position: relative;
@@ -343,6 +378,7 @@ h6.panel-title.text-center {
     padding: 15px;
     height: 200px;
 }
+
 /* .bg-front.front-qr{
     padding: 15px;
 }
@@ -374,6 +410,7 @@ h6.panel-title.text-center {
         padding-left: 15px; */
         margin: 15px;
     }
+
     .col-medium-3 {
         width: 25%;
         float: left;
@@ -399,6 +436,7 @@ element.style {
     font-color: #fff;
     margin-bottom: 0px;
 }
+
 .widget-user .widget-user-username {
     margin-top: 0;
     margin-bottom: 5px;
@@ -427,6 +465,7 @@ element.style {
     margin: -25px -10px -55px;
     padding: 20px 10px;
 }
+
 .panel.panel-default-card {
     background: #fff;
     margin-bottom: 12px;
@@ -443,6 +482,7 @@ element.style {
 .dataTables_wrapper .dataTables_filter input {
     padding: 15px !important;
 }
+
 .dataTables_wrapper .dataTables_filter {
     padding: 0px !important;
 }
@@ -453,6 +493,7 @@ element.style {
     width: 500px;
     height: 400px;
 }
+
 .card-img-absolute {
     position: absolute;
     top: 0;
@@ -500,6 +541,7 @@ div[data-size="A4"] {
     background-size: cover;
     position: relative;
 }
+
 .invoice {
     font-size: 2.5rem;
     font-weight: 500;
@@ -521,6 +563,7 @@ video {
 .table-td {
     padding-bottom: 0px !important;
 }
+
 .table-th {
     padding-left: 0px !important;
 }
@@ -536,6 +579,7 @@ video {
 .col-lg-6.p {
     padding: 0px !important;
 }
+
 .sweet-alert h2 {
     font-size: revert;
 }
@@ -636,6 +680,7 @@ strong {
     order: 0;
     flex-grow: 1;
 }
+
 .box-limit-bulanan-rev {
     /* Auto layout */
 
@@ -660,6 +705,7 @@ strong {
     order: 0;
     flex-grow: 1;
 }
+
 /* tamu */
 /* ADMIN */
 /* tambah admin */
@@ -708,6 +754,7 @@ strong {
     margin: -35px -30px -45px 15px;
     padding: 10px 15px 3px 15px;
 }
+
 .panel-hiding {
     border: none;
     color: inherit;
@@ -715,6 +762,7 @@ strong {
     margin: -35px -30px -3px 15px;
     padding: 7px 47px 9px 0px;
 }
+
 .panel-hading {
     background: #fff;
     margin-bottom: 12px;
@@ -783,20 +831,25 @@ strong {
     /* margin-left: -9px; */
     /* margin-right: -9px; */
 }
+
 .label.label-berhasil {
     background: #01c853;
 }
+
 .label.label-batal {
     background: #fec107;
 }
+
 .label.label-riwayat {
     color: #000000;
     padding: 9px 50px;
     font-size: 14px;
 }
+
 .label.label-reset {
     background: #000000;
 }
+
 .label.label-berkurang {
     background: #000000;
 }
@@ -923,11 +976,11 @@ strong {
     transition: all 0.3s ease-in 0s;
 }
 
-.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+.onoffswitch-checkbox:checked+.onoffswitch-label .onoffswitch-inner {
     margin-left: 0;
 }
 
-.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+.onoffswitch-checkbox:checked+.onoffswitch-label .onoffswitch-switch {
     right: 0px;
 }
 
@@ -1012,34 +1065,26 @@ strong {
     -webkit-transition: all 0.3s ease-in 0s;
     -o-transition: all 0.3s ease-in 0s;
     transition: all 0.3s ease-in 0s;
-    background-image: -moz-linear-gradient(
-        center top,
-        rgba(0, 0, 0, 0.1) 0%,
-        rgba(0, 0, 0, 0) 80%
-    );
-    background-image: -webkit-linear-gradient(
-        center top,
-        rgba(0, 0, 0, 0.1) 0%,
-        rgba(0, 0, 0, 0) 80%
-    );
-    background-image: -o-linear-gradient(
-        center top,
-        rgba(0, 0, 0, 0.1) 0%,
-        rgba(0, 0, 0, 0) 80%
-    );
-    background-image: linear-gradient(
-        center top,
-        rgba(0, 0, 0, 0.1) 0%,
-        rgba(0, 0, 0, 0) 80%
-    );
+    background-image: -moz-linear-gradient(center top,
+            rgba(0, 0, 0, 0.1) 0%,
+            rgba(0, 0, 0, 0) 80%);
+    background-image: -webkit-linear-gradient(center top,
+            rgba(0, 0, 0, 0.1) 0%,
+            rgba(0, 0, 0, 0) 80%);
+    background-image: -o-linear-gradient(center top,
+            rgba(0, 0, 0, 0.1) 0%,
+            rgba(0, 0, 0, 0) 80%);
+    background-image: linear-gradient(center top,
+            rgba(0, 0, 0, 0.1) 0%,
+            rgba(0, 0, 0, 0) 80%);
     box-shadow: 0 1px 1px white inset;
 }
 
-.onoffswitch1-checkbox:checked + .onoffswitch1-label .onoffswitch1-inner {
+.onoffswitch1-checkbox:checked+.onoffswitch1-label .onoffswitch1-inner {
     margin-left: 0;
 }
 
-.onoffswitch1-checkbox:checked + .onoffswitch1-label .onoffswitch1-switch {
+.onoffswitch1-checkbox:checked+.onoffswitch1-label .onoffswitch1-switch {
     right: 0px;
 }
 
@@ -1120,33 +1165,25 @@ strong {
     -webkit-transition: all 0.3s ease-in 0s;
     -o-transition: all 0.3s ease-in 0s;
     transition: all 0.3s ease-in 0s;
-    background-image: -moz-linear-gradient(
-        center top,
-        rgba(0, 0, 0, 0.1) 0%,
-        rgba(0, 0, 0, 0) 100%
-    );
-    background-image: -webkit-linear-gradient(
-        center top,
-        rgba(0, 0, 0, 0.1) 0%,
-        rgba(0, 0, 0, 0) 100%
-    );
-    background-image: -o-linear-gradient(
-        center top,
-        rgba(0, 0, 0, 0.1) 0%,
-        rgba(0, 0, 0, 0) 100%
-    );
-    background-image: linear-gradient(
-        center top,
-        rgba(0, 0, 0, 0.1) 0%,
-        rgba(0, 0, 0, 0) 100%
-    );
+    background-image: -moz-linear-gradient(center top,
+            rgba(0, 0, 0, 0.1) 0%,
+            rgba(0, 0, 0, 0) 100%);
+    background-image: -webkit-linear-gradient(center top,
+            rgba(0, 0, 0, 0.1) 0%,
+            rgba(0, 0, 0, 0) 100%);
+    background-image: -o-linear-gradient(center top,
+            rgba(0, 0, 0, 0.1) 0%,
+            rgba(0, 0, 0, 0) 100%);
+    background-image: linear-gradient(center top,
+            rgba(0, 0, 0, 0.1) 0%,
+            rgba(0, 0, 0, 0) 100%);
 }
 
-.onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-inner {
+.onoffswitch2-checkbox:checked+.onoffswitch2-label .onoffswitch2-inner {
     margin-left: 0;
 }
 
-.onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-switch {
+.onoffswitch2-checkbox:checked+.onoffswitch2-label .onoffswitch2-switch {
     right: 0px;
 }
 
@@ -1180,7 +1217,7 @@ strong {
     transition: margin 0.3s ease-in 0s;
 }
 
-.onoffswitch3-inner > span {
+.onoffswitch3-inner>span {
     display: block;
     float: left;
     position: relative;
@@ -1221,10 +1258,12 @@ strong {
     top: 0;
     bottom: 0;
 }
+
 .onoffswitch3-active .onoffswitch3-switch {
     background: #01c853;
     left: 0;
 }
+
 .onoffswitch3-inactive .onoffswitch3-switch {
     background: #a1a1a1;
     right: 0;
@@ -1250,7 +1289,7 @@ strong {
     border-width: 15px 9px;
 }
 
-.onoffswitch3-checkbox:checked + .onoffswitch3-label .onoffswitch3-inner {
+.onoffswitch3-checkbox:checked+.onoffswitch3-label .onoffswitch3-inner {
     margin-left: 0;
 }
 
@@ -1333,11 +1372,11 @@ strong {
     transition: all 0.3s ease-in 0s;
 }
 
-.onoffswitch4-checkbox:checked + .onoffswitch4-label .onoffswitch4-inner {
+.onoffswitch4-checkbox:checked+.onoffswitch4-label .onoffswitch4-inner {
     margin-left: 0;
 }
 
-.onoffswitch4-checkbox:checked + .onoffswitch4-label .onoffswitch4-switch {
+.onoffswitch4-checkbox:checked+.onoffswitch4-label .onoffswitch4-switch {
     right: 0px;
 }
 
@@ -1347,7 +1386,7 @@ strong {
     visibility: hidden;
 }
 
-.cmn-toggle + label {
+.cmn-toggle+label {
     display: block;
     position: relative;
     cursor: pointer;
@@ -1358,7 +1397,7 @@ strong {
     user-select: none;
 }
 
-input.cmn-toggle-round-flat + label {
+input.cmn-toggle-round-flat+label {
     padding: 2px;
     width: 75px;
     height: 30px;
@@ -1374,14 +1413,14 @@ input.cmn-toggle-round-flat + label {
     transition: background 0.4s;
 }
 
-input.cmn-toggle-round-flat + label:before,
-input.cmn-toggle-round-flat + label:after {
+input.cmn-toggle-round-flat+label:before,
+input.cmn-toggle-round-flat+label:after {
     display: block;
     position: absolute;
     content: "";
 }
 
-input.cmn-toggle-round-flat + label:before {
+input.cmn-toggle-round-flat+label:before {
     top: 2px;
     left: 2px;
     bottom: 2px;
@@ -1398,7 +1437,7 @@ input.cmn-toggle-round-flat + label:before {
     transition: background 0.4s;
 }
 
-input.cmn-toggle-round-flat + label:after {
+input.cmn-toggle-round-flat+label:after {
     top: 4px;
     left: 4px;
     bottom: 4px;
@@ -1415,11 +1454,11 @@ input.cmn-toggle-round-flat + label:after {
     transition: margin 0.4s, background 0.4s;
 }
 
-input.cmn-toggle-round-flat:checked + label {
+input.cmn-toggle-round-flat:checked+label {
     background-color: #01c853;
 }
 
-input.cmn-toggle-round-flat:checked + label:after {
+input.cmn-toggle-round-flat:checked+label:after {
     margin-left: 45px;
     background-color: #01c853;
 }
@@ -1514,10 +1553,12 @@ div.switch5 {
     clear: both;
     margin: 0px 0px;
 }
-div.switch5 > input.switch:empty {
+
+div.switch5>input.switch:empty {
     margin-left: -999px;
 }
-div.switch5 > input.switch:empty ~ label {
+
+div.switch5>input.switch:empty~label {
     position: relative;
     float: left;
     line-height: 1.6em;
@@ -1526,8 +1567,9 @@ div.switch5 > input.switch:empty ~ label {
     cursor: pointer;
     /* -moz-user-select: none; */
 }
-div.switch5 > input.switch:empty ~ label:before,
-input.switch:empty ~ label:after {
+
+div.switch5>input.switch:empty~label:before,
+input.switch:empty~label:after {
     position: absolute;
     display: block;
     top: 0px;
@@ -1542,7 +1584,8 @@ input.switch:empty ~ label:after {
     border-radius: 0.3em;
     box-shadow: 0px 0.2em 0px rgba(0, 0, 0, 0.3) inset;
 }
-div.switch5 > input.switch:empty ~ label:after {
+
+div.switch5>input.switch:empty~label:after {
     content: " ";
     width: 1.4em;
     height: 1.5em;
@@ -1557,20 +1600,24 @@ div.switch5 > input.switch:empty ~ label:after {
     box-shadow: 0px -0.2em 0px rgba(0, 0, 0, 0.2) inset;
     transition: all 100ms ease-in 0s;
 }
-div.switch5 > input.switch:checked ~ label:before {
+
+div.switch5>input.switch:checked~label:before {
     content: "on";
     text-indent: 0.5em;
     color: rgb(102, 255, 102);
     background-color: rgb(51, 153, 51);
 }
-div.switch5 > input.switch:checked ~ label:after {
+
+div.switch5>input.switch:checked~label:after {
     margin-left: 2.1em;
     color: rgb(102, 204, 102);
 }
-div.switch5 > input.switch:focus ~ label {
+
+div.switch5>input.switch:focus~label {
     color: rgb(0, 0, 0);
 }
-div.switch5 > input.switch:focus ~ label:before {
+
+div.switch5>input.switch:focus~label:before {
     box-shadow: 0px 0px 0px 3px rgb(153, 153, 153);
 }
 
@@ -1578,10 +1625,12 @@ div.switch5 > input.switch:focus ~ label:before {
     max-width: 17em;
     margin: 0 auto;
 }
-.switch6-light > span,
-.switch-toggle > span {
+
+.switch6-light>span,
+.switch-toggle>span {
     color: #000000;
 }
+
 .switch6-light span span,
 .switch6-light label,
 .switch-toggle span span,
@@ -1602,16 +1651,18 @@ div.switch5 > input.switch:focus ~ label:before {
     padding: 0px;
     margin-left: 0px;
 }
+
 .switch6-light * {
     box-sizing: border-box;
 }
+
 .switch6-light a {
     display: block;
     transition: all 0.3s ease-out 0s;
 }
 
 .switch6-light label,
-.switch6-light > span {
+.switch6-light>span {
     line-height: 30px;
     vertical-align: middle;
 }
@@ -1622,19 +1673,22 @@ div.switch5 > input.switch:focus ~ label:before {
     max-width: 100%;
 }
 
-.switch6-light input:focus ~ a,
-.switch6-light input:focus + label {
+.switch6-light input:focus~a,
+.switch6-light input:focus+label {
     outline: 1px dotted rgb(136, 136, 136);
 }
+
 .switch6-light input {
     position: absolute;
     opacity: 0;
     z-index: 5;
 }
-.switch6-light input:checked ~ a {
+
+.switch6-light input:checked~a {
     right: 0%;
 }
-.switch6-light > span {
+
+.switch6-light>span {
     position: absolute;
     left: -100px;
     width: 100%;
@@ -1642,7 +1696,8 @@ div.switch5 > input.switch:focus ~ label:before {
     padding-right: 100px;
     text-align: left;
 }
-.switch6-light > span span {
+
+.switch6-light>span span {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -1652,9 +1707,11 @@ div.switch5 > input.switch:focus ~ label:before {
     margin-left: 100px;
     text-align: center;
 }
-.switch6-light > span span:last-child {
+
+.switch6-light>span span:last-child {
     left: 50%;
 }
+
 .switch6-light a {
     position: absolute;
     right: 50%;
@@ -1692,6 +1749,7 @@ div.switch5 > input.switch:focus ~ label:before {
     border: 2.3px solid #01c853;
     padding-top: 6px;
 }
+
 .btn-proses {
     text-align: center;
     background-color: #01c853;
@@ -1764,13 +1822,17 @@ div.switch5 > input.switch:focus ~ label:before {
         /* left: 48px; */
         margin-left: 24px;
     }
+
     .gambar-qr {
         position: absolute;
         top: 30px;
         left: 100px;
         width: 80px;
     }
+
+    `
 }
+
 @media only screen and (max-width: 300px) {
     .kotak {
         width: 160px;
@@ -1782,6 +1844,7 @@ div.switch5 > input.switch:focus ~ label:before {
         /* left: 52px; */
         margin-left: 12;
     }
+
     .gambar-qr {
         position: absolute;
         top: 15px;
@@ -1812,6 +1875,7 @@ div.switch5 > input.switch:focus ~ label:before {
     background: #01c853;
     border-radius: 5px;
 }
+
 .panel-black {
     padding: 10px 100px 10px 20px;
     width: auto;
@@ -1819,6 +1883,7 @@ div.switch5 > input.switch:focus ~ label:before {
     background: #000000;
     border-radius: 5px;
 }
+
 .label-pembayaran-hijau {
     /* display: flex; */
     /* flex-direction: column; */
@@ -1832,6 +1897,7 @@ div.switch5 > input.switch:focus ~ label:before {
     background: #01c853;
     border-radius: 5px;
 }
+
 .label-pembayaran-hitam {
     /* display: flex; */
     /* flex-direction: column; */
@@ -1874,6 +1940,7 @@ button {
 #decrement {
     padding: 15px 5px 15px 25px;
 }
+
 #increment {
     padding: 15px 25px 15px 5px;
 }
