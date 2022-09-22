@@ -372,6 +372,29 @@ h6.panel-title.text-center {
     padding: 15px;
 } */
 
+/* pasword tambah admin */
+.password-container {
+    width: 100%;
+    position: relative;
+}
+
+.password-container input[type="password"],
+.password-container input[type="text"] {
+    width: 100%;
+    padding: 12px 36px 12px 12px;
+    box-sizing: border-box;
+}
+
+.fa-eye {
+    position: absolute;
+    top: 60%;
+    right: 1%;
+    cursor: pointer;
+    color: rgb(114, 114, 114);
+}
+
+/* pasword tambah admin */
+
 .qr-code-visitor {
     height: 150px;
     width: 150px;
@@ -1737,7 +1760,7 @@ div.switch5>input.switch:focus~label:before {
         width: 80px;
     }
 
-    `
+
 }
 
 @media only screen and (max-width: 300px) {
