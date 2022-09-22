@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Deposit;
 use App\Models\Package;
+use App\Models\Visitor;
+use App\Models\LogLimit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
@@ -15,6 +19,19 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    private $status;
+    private $message;
+    private $data;
+    private $user;
+
+    public function __construct()
+    {
+        $this->status = "INVALID";
+        $this->message = "Ada sesuatu yang salah!";
+        $this->data = [];
+    }
+
     public function index(Request $request)
     {
         $products = Package::orderBy('id', 'desc')->get();
@@ -37,36 +54,34 @@ class OrderController extends Controller
         $today = Carbon::now()->isoFormat('dddd');
         $date_now = Carbon::now()->translatedFormat('d F Y');
         $oldCart= Session::get('cart');
-        // dd($oldCart);
         $cart= new Cart($oldCart);
         $orders = $cart->items;
         $totalPrice = $cart->totalPrice;
         $totalQuantity= $cart->totalQuantity;
         $counted = ucwords(counted($totalPrice). ' Rupiah');
-        return view('keranjang', compact('orders','oldCart', 'counted', 'totalPrice', 'totalQuantity', 'default','additional', 'date_now', 'today'));
+        $visitor = request()->segment(2);
+        $url_checkout = URL::temporarySignedRoute('checkout', now()->addMinutes(7), ['id' => $visitor]);
+        return view('keranjang', compact(
+            'orders',
+            'url_checkout', 
+            'oldCart', 
+            'counted', 
+            'totalPrice', 
+            'totalQuantity', 
+            'default',
+            'additional', 
+            'date_now', 
+            'today'
+        ));
     }
 
     public function add(Request $request, $id)
     { 
         $package = Package::find($id);
         $oldCart = Session::has('cart') ? Session::get('cart',[]) : null;
-        
         $cart = new Cart($oldCart);
-        $cart->add($package,$package->id);
+        $cart->add($package);
         $request->session()->put('cart',$cart); 
-
-        // if($oldCart->items['quantity'] > 1){
-        //     foreach($oldCart->items as $item) {
-        //         if ($item['product_id'] == $package->id) {
-        //             $item['quantity'] = $item['quantity'] + 1;
-        //             $item['price'] = $item['price'] * 2;
-        //             $oldCart->totalPrice *= $item['quantity'];
-        //             break;
-        //         }
-        //     }
-        //     $request->session()->put('cart',$oldCart); 
-        // } else {
-        // }
         return redirect()->back()->with('success', 'Data berhasil ditambah');
     }
 
@@ -74,14 +89,6 @@ class OrderController extends Controller
     {
         $oldCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = new Cart($oldCart);
-        foreach($cart->items as $item) {
-            for ($x=0; $x<=count($item);$x++){
-                if(!array_key_exists($x, $item)){
-                    $item_id=$x;
-                    break;
-                }
-            }
-        }
         $cart->totalPrice -= $cart->items[$id]['item']['price'];
         unset($cart->items[$id]);
         $cart->totalQuantity--;
@@ -103,11 +110,92 @@ class OrderController extends Controller
         return redirect()->back();
     }
 
-    public function checkout(Request $request)
+    public function checkout(Request $request, $id)
     {
+        $url_qr = request()->segment(2);
+        $visitor = Visitor::find($url_qr);
+
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart= new Cart($oldCart);
+        $orders = $cart->items;
+        $totalPrice = $cart->totalPrice;
+        $totalQuantity= $cart->totalQuantity;
         $time = Carbon::now();
-        $order_number = 'INV/'.$time->format('Ymd').'/'.'VIP'.'/'.$time->format('his');
-        return view("checkout", compact('order_number'))->render();
+        // $order_number = 'INV/'.$time->format('Ymd').'/'.$visitor->tipe_member.'/'.$time->format('his');
+        
+        $deposit = Deposit::where('visitor_id', $url_qr)->first();
+        $log_limit = LogLimit::where('visitor_id', $url_qr)->first();
+        return view("checkout", compact('log_limit', 'deposit','totalPrice', 'totalQuantity', 'orders'))->render();
+    }
+
+    public function select(Request $request)
+    {
+        $type = $request->get('type');
+        $param = $request->get('param');
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart= new Cart($oldCart);
+        $totalPrice = $cart->totalPrice;
+        $deposit = Deposit::where('visitor_id', $param)->first();
+        $log_limit = LogLimit::where('visitor_id', $param)->first();
+        if($type == 4) {
+            $resultPrice =  $deposit->balance - $totalPrice;
+            if($resultPrice > 0) {
+                try {
+                    return response(['limit' => $log_limit->quota, 'price' => $resultPrice, 'kupon' => $log_limit->quota_kupon, 'VALID' => 'Deposit telah dipilih']);
+                } catch (\Throwable $th) {
+                    return response()->json($this->getResponse());
+                }
+            } else {
+                $this->setResponse('INVALID', "Deposit tidak terpenuhi");
+                return response()->json($this->getResponse());
+            }
+        } else if ($type == 3) {
+            try {
+                return response(['limit' => $log_limit->quota, 'price' => $deposit->balance, 'kupon' => $log_limit->quota_kupon, 'VALID' => 'Deposit telah dipilih']);
+            } catch (\Throwable $th) {
+                return response()->json($this->getResponse());
+            }
+        } else if($type == 2) {
+            $resultLimit =  $log_limit->quota_kupon - 1;
+            if($resultLimit > 0){
+                try {
+                    return response(['kupon' => $resultLimit, 'limit' => $log_limit->quota, 'price' => $deposit->balance, 'VALID' => 'Kupon telah dipilih']);
+                } catch (\Throwable $th) {
+                    return response()->json($this->getResponse());
+                }
+            } else {
+                $this->setResponse('INVALID', "Limit tidak terpenuhi");
+                return response()->json($this->getResponse());
+            }
+        } else if ($type == 1) {
+            $resultLimit =  $log_limit->quota - 1;
+            if($log_limit > '0') {
+                try {
+                    return response(['price' => $deposit->balance, 'limit' => $resultLimit, 'kupon' => $log_limit->quota_kupon, 'VALID' => 'Limit telah dipilih']);
+                } catch (\Throwable $th) {
+                    return response()->json($this->getResponse());
+                }
+            } else {
+                $this->setResponse('INVALID', "Limit tidak terpenuhi");
+                return response()->json($this->getResponse());
+            }
+        }
+    }
+
+    private function setResponse($status = "INVALID", $message = "Ada sesuatu yang salah!", $data = [])
+    {
+        $this->status = $status;
+        $this->message = $message;
+        $this->data = $data;
+    }
+
+    private function getResponse()
+    {
+        return [
+            'status' => $this->status,
+            'message' => $this->message,
+            'data' => $this->data ? $this->data : null
+        ];
     }
 
     /**
