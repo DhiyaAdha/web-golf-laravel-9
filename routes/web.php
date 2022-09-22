@@ -29,6 +29,14 @@ Route::get('/', function () {
     }
     return view('Login');
 });
+// Route::get('/', function () {
+//     if (Auth::user('role_id') == '2') {
+//         return redirect('/analisis-tamu');
+//     }else {
+//         return redirect('/scan-tamu');
+//     }
+//     return view('Login');
+// });
 
 Route::post('/lupa-pasword',[AuthController::class, 'email_test'])->name('email_test');
 
@@ -71,8 +79,8 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
 //Level admin dan superadmin
 Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::resource('analisis-tamu', DashboardController::class);
-    Route::get('/visitor/qrcode', [ScanqrController::class, 'checkQRCode'])->name('visitor.qrcode');
     Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name('scan-tamu');
+    Route::get('/visitor/qrcode', [ScanqrController::class, 'checkQRCode'])->name('visitor.qrcode');
     Route::get('qrcode/{id}', [ScanqrController::class, 'generate'])->name('generate');
     Route::get('/kartu-tamu', [ScanqrController::class, 'kartutamu'])->name('kartu-tamu');
     Route::get('/kartu-member/{e}', [ScanqrController::class, 'show_detail'])->name('detail-scan')->middleware('signed');
