@@ -185,11 +185,11 @@
                             <p style="margin: 0;">&nbsp; Rp. {!! formatrupiah($data['setelahdeposit']) !!}</p>
                         </div>
                         <div style="display:flex;">
-                            <p style="margin: 0;">Sisa Limit Bulanan: </p>
+                            <p style="margin: 0;">Sisa limit bulanan: </p>
                             <p style="margin: 0;">&nbsp; {!! $data['quota']  ?? '-' !!}</p>
                         </div>
                         <div style="display:flex;">
-                            <p style="margin: 0;">Sisa Limit Kupon: </p>
+                            <p style="margin: 0;">Sisa limit kupon: </p>
                             <p style="margin: 0;">&nbsp; {!! $data['quota_kupon']  ?? '-' !!}</p>
                         </div>
                     </td>
