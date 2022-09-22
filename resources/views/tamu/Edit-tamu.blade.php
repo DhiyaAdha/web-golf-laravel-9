@@ -1,5 +1,4 @@
-@extends('Layouts.Main', ['title' => 'TGCC | Edit Tamu'])
-
+@extends('Layouts.main')
 @section('content')
     <div class="page-wrapper">
         <div class="container-fluid">
@@ -16,6 +15,9 @@
                         <li class="active"><span>Paket Bermain</span></li>
                     </ol>
                 </div>
+
+                <!-- Breadcrumb -->
+
                 <!-- /Breadcrumb -->
             </div>
             <!-- /Title -->

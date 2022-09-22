@@ -37,13 +37,77 @@ class OrderController extends Controller
         $today = Carbon::now()->isoFormat('dddd');
         $date_now = Carbon::now()->translatedFormat('d F Y');
         $oldCart= Session::get('cart');
+        // dd($oldCart);
         $cart= new Cart($oldCart);
         $orders = $cart->items;
         $totalPrice = $cart->totalPrice;
         $totalQuantity= $cart->totalQuantity;
         $counted = ucwords(counted($totalPrice). ' Rupiah');
-        // dd($orders);
         return view('keranjang', compact('orders','oldCart', 'counted', 'totalPrice', 'totalQuantity', 'default','additional', 'date_now', 'today'));
+    }
+
+    public function add(Request $request, $id)
+    { 
+        $package = Package::find($id);
+        $oldCart = Session::has('cart') ? Session::get('cart',[]) : null;
+        
+        $cart = new Cart($oldCart);
+        $cart->add($package,$package->id);
+        $request->session()->put('cart',$cart); 
+
+        // if($oldCart->items['quantity'] > 1){
+        //     foreach($oldCart->items as $item) {
+        //         if ($item['product_id'] == $package->id) {
+        //             $item['quantity'] = $item['quantity'] + 1;
+        //             $item['price'] = $item['price'] * 2;
+        //             $oldCart->totalPrice *= $item['quantity'];
+        //             break;
+        //         }
+        //     }
+        //     $request->session()->put('cart',$oldCart); 
+        // } else {
+        // }
+        return redirect()->back()->with('success', 'Data berhasil ditambah');
+    }
+
+    public function remove($id)
+    {
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        foreach($cart->items as $item) {
+            for ($x=0; $x<=count($item);$x++){
+                if(!array_key_exists($x, $item)){
+                    $item_id=$x;
+                    break;
+                }
+            }
+        }
+        $cart->totalPrice -= $cart->items[$id]['item']['price'];
+        unset($cart->items[$id]);
+        $cart->totalQuantity--;
+    
+        Session::put('cart',$cart);
+        if($cart->totalQuantity<=0){
+            Session::forget('cart');
+        }
+        return redirect()->back();
+    }
+
+    public function remove_all($id)
+    {
+        if(Session::has('cart')){
+            foreach (Session::get('cart') as $key => $value) {
+                Session::forget('cart', $id);
+            }
+        }
+        return redirect()->back();
+    }
+
+    public function checkout(Request $request)
+    {
+        $time = Carbon::now();
+        $order_number = 'INV/'.$time->format('Ymd').'/'.'VIP'.'/'.$time->format('his');
+        return view("checkout", compact('order_number'))->render();
     }
 
     /**
@@ -110,33 +174,5 @@ class OrderController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function add(Request $request, $id)
-    { 
-        $package = Package::find($id);
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
-        $cart = new Cart($oldCart);
-        $cart->add($package,$package->id);
-        $request->session()->put('cart',$cart);
-        return redirect()->back()->with('success', 'Data berhasil ditambah');
-    }
-
-    public function remove($id)
-    {
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
-        $cart = new Cart($oldCart);
-        $cart->remove($id);
-    
-        Session::put('cart',$cart);
-        if($cart->totalQuantity<=0){
-            Session::forget('cart');
-        }
-        return redirect()->back();
-    }
-
-    public function checkout()
-    {
-        return view('coba');
     }
 }

@@ -85,7 +85,6 @@
         verticalupclass: 'ti-plus',
         verticaldownclass: 'ti-minus'
     });
-
     // kartu-tamu(transaksi)
     $('#transaksi').DataTable({
         "processing": true,
@@ -103,10 +102,7 @@
             "type": "GET",
             "datatype": "json"
         },
-
         "render": $.fn.dataTable.render.text(),
-
-
         "columns": [{
                 data: 'id',
                 searchable: true,

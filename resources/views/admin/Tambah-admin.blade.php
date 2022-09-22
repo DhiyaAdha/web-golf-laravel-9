@@ -1,19 +1,21 @@
 @extends('Layouts.Main')
 @section('content')
-<div class="page-wrapper">
-    <div class="container-fluid">
-        <!-- Title -->
-        <div class="row heading-bg">
-            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h5 class="txt-dark">Tambah Admin</h5>
-            </div>
-            <!-- Breadcrumb -->
-            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                <ol class="breadcrumb">
-                    <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
-                    <li><a href="{{ url('daftar-admin') }}"><span>Daftar Admin</span></a></li>
-                    <li class="active"><span>Tambah admin</span></li>
-                </ol>
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <!-- Title -->
+            <div class="row heading-bg">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h5 class="txt-dark">Tambah Admin</h5>
+                </div>
+                <!-- Breadcrumb -->
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <ol class="breadcrumb">
+                        <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
+                        <li><a href="{{ url('daftar-admin') }}"><span>Daftar Admin</span></a></li>
+                        <li class="active"><span>Tambah admin</span></li>
+                    </ol>
+                </div>
+                <!-- /Breadcrumb -->
             </div>
             <!-- /Breadcrumb -->
         </div>
@@ -101,49 +103,62 @@
                                                 <label for="radio_12">Super Admin</label>
                                             </span>
                                         </div>
+                                        @error('role_id')
+                                            <div class="text-danger"> {{ $message }}</div>
+                                        @enderror
                                     </div>
-                                    @error('role_id')
-                                    <div class="text-danger"> {{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="form-group text-left">
-                                    <button type="" class="btn btn-info" id="gd">Tambah Admin</button>
-                                </div>
-                            </form>
+                                    <div class="form-group text-left">
+                                        <button type="" class="btn btn-info" id="gd">Tambah Admin</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            @include('Layouts.Footer')
         </div>
-        @include('Layouts.Footer')
     </div>
-</div>
 @endsection
 @push('scripts')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-<script>
-    $("#confirm_password").on('keyup', function() {
-        var password = $("#password").val();
-        var confirmPassword = $("#confirm_password").val();
-        if (password != confirmPassword)
-            $("#CheckPasswordMatch").html("Password does not match !").css("color", "red");
-        else
-            $("#CheckPasswordMatch").html("Password match !").css("color", "green");
-    });
-    const passwordField = document.querySelector("#password");
-    const eyeIcon = document.querySelector("#eye");
-    const passwordField2 = document.querySelector("#confirm_password");
-    const eyeIcon2 = document.querySelector("#eye2");
+    <script>
+        function myfunction() {
+            var x = document.getElementById("password");
+            var y = document.getElementById("hide1");
+            var z = document.getElementById("hide2");
+            if (x.type === 'password') {
+                x.type = "text";
+                y.style.display = "block";
+                z.style.display = "none";
+            } else {
+                x.type = "password";
+                y.style.display = "none";
+                z.style.display = "block";
+            }
+        }
 
-    eye.addEventListener("click", function() {
-        this.classList.toggle("fa-eye-slash");
-        const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
-        passwordField.setAttribute("type", type);
-    })
-    eye2.addEventListener("click", function() {
-        this.classList.toggle("fa-eye-slash");
-        const type2 = passwordField2.getAttribute("type") === "password" ? "text" : "password";
-        passwordField2.setAttribute("type", type2);
-    })
-</script>
+        function myfunction2() {
+            var x = document.getElementById("confirm_password");
+            var y = document.getElementById("hide3");
+            var z = document.getElementById("hide4");
+            if (x.type === 'password') {
+                x.type = "text";
+                y.style.display = "block";
+                z.style.display = "none";
+            } else {
+                x.type = "password";
+                y.style.display = "none";
+                z.style.display = "block";
+            }
+        }
+
+        $("#confirm_password").on('keyup', function() {
+            var password = $("#password").val();
+            var confirmPassword = $("#confirm_password").val();
+            if (password != confirmPassword)
+                $("#CheckPasswordMatch").html("Password does not match !").css("color", "red");
+            else
+                $("#CheckPasswordMatch").html("Password match !").css("color", "green");
+        });
+    </script>
 @endpush
