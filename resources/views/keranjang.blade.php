@@ -136,18 +136,19 @@
                         </div>
                         @if (Session::has('cart'))
                             <div class="pull-left">
-                                <a href="javascript:void(0)" data-order="{{ key($orders) }}" id="reset-order"
+                                <button type="reset" data-order="{{ key($orders) }}" id="reset-order"
                                     class="mt-15 mb-15 btn-xs btn btn-primary btn-anim">
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Reset</span>
-                                </a>
+                                </button>
                             </div>
                             <div class="pull-right">
-                                <a href="javascript:void(0)" id="checkout"
+                                <button type="button" id="checkout" data-checkout="{{ $url_checkout }}"
+                                    data-url="{{ \Request::segment(2) }}"
                                     class="mt-15 mb-15 btn-xs btn btn-success btn-anim">
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Checkout</span>
-                                </a>
+                                </button>
                             </div>
                         @else
                             <button type="submit" class="mt-15 mb-15 btn-xs btn-block btn btn-success btn-anim"
@@ -212,15 +213,8 @@
             const left = (width - w) / 2 / systemZoom + dualScreenLeft
             const top = (height - h) / 2 / systemZoom + dualScreenTop
             const newWindow = window.open(url, title,
-                `
-            scrollbars=yes,
-            width  = ${w / systemZoom}, 
-            height = ${h / systemZoom}, 
-            top    = ${top}, 
-            left   = ${left}
-        `
+                `scrollbars=yes,width  = ${w / systemZoom}, height = ${h / systemZoom}, top    = ${top}, left   = ${left}`
             );
-
             if (window.focus) newWindow.focus();
         }
 
@@ -254,7 +248,8 @@
         });
 
         $(document).on('click', '#checkout', function() {
-            var url = "{{ route('checkout') }}";
+            const current_url = $(this).data('url');
+            const check = $(this).data('checkout');
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -263,7 +258,7 @@
             $.ajax({
                 async: true,
                 type: 'GET',
-                url: "{{ route('checkout') }}",
+                url: check,
                 beforeSend: function(request) {
                     $.blockUI({
                         css: {
@@ -287,7 +282,8 @@
                         text: "Order berhasil dibuat",
                         confirmButtonColor: "#01c853",
                     }, function(isConfirm) {
-                        checkout(url, 'testing');
+                        checkout(check, 'testing');
+                        $('#checkout').attr('disabled', true);
                     });
                 }
             });

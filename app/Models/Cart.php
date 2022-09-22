@@ -37,8 +37,5 @@ class Cart extends Model
         $this->items[]=$storedItem;
         $this->totalPrice += $price;
         $this->totalQuantity++;
-        $this->orderPayment;
-        $this->orderDate;
-        $this->paymentType;
     }
 }
