@@ -37,6 +37,10 @@ Route::get('/', function () {
 //     }
 //     return view('Login');
 // });
+Route::get('/test', function ()
+{
+    return view('emails.sample');
+});
 
 Route::post('/lupa-pasword',[AuthController::class, 'email_test'])->name('email_test');
 
