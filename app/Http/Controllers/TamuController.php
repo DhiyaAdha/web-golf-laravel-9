@@ -139,7 +139,6 @@ class TamuController extends Controller
             'created_at' => Carbon::now(),
         ]);
 
-        dd($visitors);
         $get_visitor = Visitor::where('id', $visitors->id)->latest()->first();
         $link_qr = URL::signedRoute('detail-scan', ['qr' => $token, 'e' => $visitors->id]);
         $get_visitor->unique_qr = $link_qr;
