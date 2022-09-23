@@ -11,17 +11,18 @@ use App\Models\LogLimit;
 use App\Jobs\SendMailJob;
 use App\Models\ReportLimit;
 use Illuminate\Support\Str;
+use FontLib\Table\Type\post;
 use Illuminate\Http\Request;
 use App\Models\ReportDeposit;
 use App\Models\DepositHistory;
 use App\Models\LogTransaction;
 use App\Jobs\SendMailJobDeposit;
+use App\Exports\DaftarTamuExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\DaftarTamuExport;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -492,7 +493,7 @@ class TamuController extends Controller
      * @param  \App\Models\Visitor  $visitor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, Loglimit $limit)
     {
         $request->validate([
             'name' => 'required',
@@ -503,15 +504,65 @@ class TamuController extends Controller
             'company' => 'required',
             'position' => 'required',
             'tipe_member' => 'required',
+            'quota' => 'required',
         ]);
         $visitor = Visitor::find($id);
         $visitor->fill($request->post())->save();
+        $limit = LogLimit::find($id);
+        $limit->fill($request->post())->save();
         LogAdmin::create([
             'user_id' => Auth::id(),
+            'quota' => $request->quota,
             'type' => 'UPDATE',
             'activities' => 'Mengubah member <b>' . $visitor->name . '</b>',
         ]);
+        // $limit['limit'] = LogLimit::where('quota', $request->quota)->first();
+        // $limit['quota'] = $request->quota;
+
+        // $visitor_report = LogLimit::findOrFail($visitor->id);
+        // $visitor_report->update([
+        //     'quota' => $request->tipe_member == 'VIP' ? '4' : '10',
+        // ]);
+
+        // update quota (percobaan)
+        // $visitor_report = LogLimit::find($visitor->id);
+        // if($request['tipe_member'] && $visitor['tipe_member'] == 'VIP'){
+        //         $visitor_report->update([
+        //         'quota' => $request->tipe_member == 'VIP' ? '4' : '10',
+                
+        //     ]);
+        // }else{
+        //     // $visitor_report->update([
+        //     //     'quota' => $visitor_report->quota,
+        //     // ]);
+        // }
+
+        
+        $visitor_report = LogLimit::find($visitor->id);
+        if($visitor['tipe_member'] === $request['tipe_member']){
+            $visitor_report->update([
+                'quota' => $request->tipe_member == 'VIP' ? '4' : '10',
+                'created_at' => Carbon::now(),
+            ]);
+        }
+        else {
+            LogLimit::where('quota', $request->visitor_id->tipe_member)->get();
+        //     LogLimit::where('quota', $request->visitor_id->tipe_member)
+        //     ->get();
+            
+        }
+
+            // $report_quota = ReportLimit::findOrFail($visitor->id);
+            // $report_quota = ReportLimit::create([
+            //     'visitor_id' => $visitor->id,
+            //     'user_id' =>    Auth::user()->id,
+            //     'report_quota' => $request->tipe_member == 'VIP' ? '4' : '10',
+            //     'created_at' => Carbon::now(),
+            // ]);
+
         return redirect()->route('daftar-tamu')->with('success', 'Berhasil edit tamu');
+
+        
     }
     public function tambahtamu()
     {

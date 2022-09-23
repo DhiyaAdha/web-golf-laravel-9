@@ -45,7 +45,7 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <div class="d-flex flex-wrap">
+                        {{-- <div class="d-flex flex-wrap">
                             @foreach ($default as $item)
                                 <a href="{{ route('cart.add', ['package' => $item->id]) }}"
                                     class="btn btn-default txt-success mr-15 mb-15">{{ $item->name }}</a>
@@ -74,7 +74,7 @@
                                     @endif
                                 </span>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="col-lg-4 sticky">
