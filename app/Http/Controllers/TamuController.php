@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Cache\RateLimiting\Limit;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Twig\NodeVisitor\NodeVisitorInterface;
 
 class TamuController extends Controller
 {
@@ -468,7 +469,8 @@ class TamuController extends Controller
     {
         $decrypt_id = Crypt::decryptString($id);
         $visitor = Visitor::find($decrypt_id);
-        return view('tamu.edit-tamu', compact('visitor'));
+        $limit = LogLimit::where('visitor_id', $decrypt_id)->first();
+        return view('tamu.edit-tamu', compact('visitor','limit'));
     }
 
     /**
@@ -513,12 +515,13 @@ class TamuController extends Controller
     public function delete($id)
     {
         $visitor = Visitor::find($id);
+        $visitor->name;
+        Visitor::destroy($id);
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'DELETE',
             'activities' => 'Menghapus member <b>' . $visitor->name . '</b>',
         ]);
-        $visitor->delete();
-        return redirect()->route('daftar-tamu');
+        return redirect()->route('daftar-tamu.index');
     }
 }

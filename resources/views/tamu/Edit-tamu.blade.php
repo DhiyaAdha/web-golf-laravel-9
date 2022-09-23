@@ -99,6 +99,12 @@
                                                     <label for="cmn-toggle-4"></label>
                                                 </div>
                                         </div>
+                                        <div class="form-group">
+                                            <input type="hidden" name="quota" value="{{ $limit->quota }}"
+                                                class="form-control" id="quota" placeholder="Masukan quota"
+                                                autofocus required
+                                                value="{{ old('quota') }}">
+                                        </div>
                                         <div class="form-group text-left">
                                             <button type="submit" class="btn btn-info">Simpan</button></a>
                                         </div>

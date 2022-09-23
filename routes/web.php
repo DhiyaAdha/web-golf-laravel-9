@@ -93,7 +93,6 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::post('/update-tamu', [TamuController::class, 'update'])->name('update-tamu');
     Route::get('/daftar-tamu/destroy/{id}', [TamuController::class,'delete'])->name('daftar-tamu.delete');
     Route::get('/edit-tamu/{id}', [TamuController::class, 'edit'])->name('edit-tamu');
-    Route::get('/daftar-tamu/destroy/{id}', [TamuController::class,'delete'])->name('hapus-tamu');
     Route::post('/update-tamu/{id}', [TamuController::class, 'update'])->name('update-tamu');
     Route::get('/tambah-deposit/{id}', [TamuController::class,'tambahdeposit'])->name('tambah-deposit');
     Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name('show');
