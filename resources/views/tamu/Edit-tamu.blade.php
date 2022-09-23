@@ -76,6 +76,7 @@
                                                 id="phone" size="50px" placeholder="Masukan Nomer Hp" required
                                                 autofocus>
                                         </div>
+                                        
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
@@ -100,6 +101,13 @@
                                                         {{ $visitor->tipe_member == 'VIP' ? ' checked' : '' }}>
                                                     <label for="cmn-toggle-4"></label>
                                                 </div>
+                                        </div>
+                                        <div class="form-group">
+                                            {{-- <label class="control-label mb-10" for="">quota</label> --}}
+                                            <input type="quota  " name="quota" value="{{ $limit->quota }}"
+                                            class="form-control" id="quota" placeholder="Masukan quota"
+                                            autofocus required
+                                            value="{{ old('quota') }}">
                                         </div>
                                         <div class="form-group text-left">
                                             <button type="submit" class="btn btn-info">Simpan</button></a>
