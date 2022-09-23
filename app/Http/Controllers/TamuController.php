@@ -101,10 +101,10 @@ class TamuController extends Controller
         $this->validate(
             $request,
             [
-                'name' => 'required',
+                'name' => 'required|unique:visitors,name',
                 'address' => 'required',
                 'gender' => 'required',
-                'email' => 'required|email|unique:visitors,name',
+                'email' => 'required|email|unique:visitors,email',
                 'phone' => 'required|min:12',
                 'company' => 'required',
                 'position' => 'required',

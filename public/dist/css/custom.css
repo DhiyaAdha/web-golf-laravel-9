@@ -801,7 +801,6 @@ strong {
     color: black;
     cursor: pointer;
 }
-<
 .btn3 {
     background-color: #01c853;
     border-color: #0fe016;
@@ -1846,7 +1845,6 @@ div.switch5>input.switch:focus~label:before {
         width: 80px;
     }
 
-    `
 }
 
 @media only screen and (max-width: 300px) {
