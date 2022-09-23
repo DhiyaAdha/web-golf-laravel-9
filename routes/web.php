@@ -86,13 +86,13 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/kartu-member/{e}', [ScanqrController::class, 'show_detail'])->name('detail-scan')->middleware('signed');
     Route::post('update/deposit/{id}', [ScanqrController::class, 'update_deposit'])->name('update.deposit')->middleware('signed');
     Route::get('/daftar-tamu', [TamuController::class, 'index'])->name('daftar-tamu');
-    Route::get('/daftar-tamu/destroy/{id}', [TamuController::class,'delete'])->name('hapus-tamu');
     Route::get('/tambah-tamu', [TamuController::class, 'tambahtamu'])->name('tambah-tamu');
     Route::post('/inserttamu', [TamuController::class, 'inserttamu'])->name('inserttamu');
     Route::get('/edit-tamu', [TamuController::class, 'edit'])->name('edit-tamu');
     Route::post('/update-tamu', [TamuController::class, 'update'])->name('update-tamu');
     Route::get('/daftar-tamu/destroy/{id}', [TamuController::class,'delete'])->name('daftar-tamu.delete');
     Route::get('/edit-tamu/{id}', [TamuController::class, 'edit'])->name('edit-tamu');
+    Route::get('/daftar-tamu/destroy/{id}', [TamuController::class,'delete'])->name('hapus-tamu');
     Route::post('/update-tamu/{id}', [TamuController::class, 'update'])->name('update-tamu');
     Route::get('/tambah-deposit/{id}', [TamuController::class,'tambahdeposit'])->name('tambah-deposit');
     Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name('show');
