@@ -69,6 +69,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     Route::get('/package/edit/{package}', [PackageController::class, 'edit'])->name('package.edit');
     Route::post('/package/update/{id}', [PackageController::class,'update'])->name('package.update');
     Route::resource('package', PackageController::class)->except(['show','update']);
+    Route::get('/package/destroy/{id}', [PackageController::class,'destroy'])->name('package.destroy');
     Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
     Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name('show');
     route::get('/invoice_cetakpdf/{id}', [InvoiceController::class, 'cetak_pdf'])->name('cetak_pdf');
@@ -113,7 +114,6 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/cart/add/{package}', [OrderController::class, 'add'])->name('cart.add');
     Route::get('/cart/remove/{package}',[OrderController::class, 'remove'])->name('cart.remove');
     Route::get('/cart/remove/all/{package}',[OrderController::class, 'remove_all'])->name('cart.remove_all');
-    Route::get('/package/destroy/{id}', [PackageController::class,'destroy'])->name('package.destroy');
     Route::get('/checkout/{id}', [OrderController::class,'checkout'])->name('checkout')->middleware('signed');
     Route::get('/select', [OrderController::class,'select'])->name('select.type');
 });
