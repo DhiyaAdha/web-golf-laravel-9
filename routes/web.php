@@ -112,6 +112,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('reportlimit/{id}', [TamuController::class, 'reportlimit'])->name('limit.report.data');
     Route::get('reporttransaksi/{id}', [TamuController::class, 'reporttransaksi'])->name('transaksi.report.data');
     Route::post('/tambah-deposit', [TamuController::class, 'insertdeposit'])->name('insertdeposit');
+    route::get('/export_excel_tamu', [TamuController::class, 'export_excel_tamu'])->name('export_excel_tamu');
     Route::get('/proses', [OrderController::class, 'index'])->name('proses');
     Route::get('/cart/{id}', [OrderController::class, 'index'])->name('order.cart');
     Route::resource('cart', OrderController::class);
@@ -120,4 +121,5 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/cart/remove/all/{package}',[OrderController::class, 'remove_all'])->name('cart.remove_all');
     Route::get('/checkout/{id}', [OrderController::class,'checkout'])->name('checkout')->middleware('signed');
     Route::get('/select', [OrderController::class,'select'])->name('select.type');
+    Route::get('/checkout', [OrderController::class,'checkout'])->name('checkout');
 });
