@@ -44,7 +44,7 @@
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
                                 <div style="position: absolute; padding-top: 5px">
-                                    <h6 class="panel-title txt-dark">Daftar Paket</h6>
+                                    <h6 class="panel-title txt-dark">Daftar Tamu</h6>
                                 </div>
                                 <div class="table-wrap">
                                     <div class="table-responsive">

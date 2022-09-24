@@ -590,12 +590,19 @@ class TamuController extends Controller
     public function delete($id)
     {
         $visitor = Visitor::find($id);
+        $visitor->name = $visitor->name;
+
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'DELETE',
             'activities' => 'Menghapus member <b>' . $visitor->name . '</b>',
         ]);
-        $visitor->delete();
+        // $visitor->delete($id);
+        Visitor::destroy($id);
         return redirect()->route('daftar-tamu');
     }
+
+
+
+
 }

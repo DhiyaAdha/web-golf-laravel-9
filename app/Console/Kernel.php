@@ -34,7 +34,7 @@ class Kernel extends ConsoleKernel
             LogLimit::whereHas('visitor', function($query) {
                 $query->where('tipe_member', 'VIP');
             })->update(['quota'=>4]);
-
+            
             $visitor = Visitor::all();
             foreach($visitor as $value){
                 ReportLimit::create([
@@ -44,8 +44,8 @@ class Kernel extends ConsoleKernel
                     'created_at' => Carbon::now(),
                 ]);
             }
-        // })->everyMinute();
-    })->monthly();
+        })->everyMinute();
+    // })->monthly();
     }
 
     /**
