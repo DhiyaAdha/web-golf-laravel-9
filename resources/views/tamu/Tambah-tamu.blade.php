@@ -45,12 +45,12 @@
                                     <label class="control-label mb-10 text-left">Jenis Kelamin</label>
                                     <div class="radio-list">
                                         <div class="radio-inline pl-0">
-                                            <span class="radio radio-info"> <input type="radio" name="gender" id="gender-m" value="laki-laki">
+                                            <span class="radio radio-info"> <input type="radio" name="gender" id="gender-m" value="Laki-laki">
                                                 <label for="gender-m">Laki-laki</label>
                                             </span>
                                         </div>
                                         <div class="radio-inline pl-0">
-                                            <span class="radio radio-info"> <input type="radio" name="gender" id="gender-w" value="perempuan">
+                                            <span class="radio radio-info"> <input type="radio" name="gender" id="gender-w" value="Perempuan">
                                                 <label for="gender-w">Perempuan</label>
                                             </span>
                                         </div>
