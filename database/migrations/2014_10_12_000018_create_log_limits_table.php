@@ -19,7 +19,6 @@ class CreateLogLimitsTable extends Migration
             $table->integer('report_limit_id')->unsigned();
             $table->integer('quota')->default(0);
             $table->integer('quota_kupon')->default(0);
-            $table->string('activities')->nullable();
             $table->timestamps();
             
             $table->foreign('visitor_id')

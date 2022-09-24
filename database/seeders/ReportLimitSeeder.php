@@ -28,7 +28,7 @@ class ReportLimitSeeder extends Seeder
             DB::table('report_limits')->insert([
                 'visitor_id' => $i,
                 'user_id' => User::all()->random()->id,
-                'status' => $faker->randomElement(['reset', 'berkurang']),
+                'status' => $faker->randomElement(['Reset', 'Bertambah','Berkurang']),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 ]);

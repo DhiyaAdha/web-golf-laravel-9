@@ -14,7 +14,6 @@ class Deposit extends Model
         'visitor_id',
         'report_deposit_id',
         'balance',
-        'activities',
         'created_at',
         'updated_at'
     ];

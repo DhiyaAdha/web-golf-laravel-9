@@ -260,7 +260,7 @@
                                             <tr>
                                                 <th>Saldo</th>
                                                 <th>Informasi</th>
-                                                <th class="text-center">Status</th>
+                                                <th class="text-center">Tipe Pembayaran</th>
                                                 <th class="text-center">Tanggal</th>
                                             </tr>
                                         </thead>

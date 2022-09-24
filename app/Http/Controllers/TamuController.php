@@ -158,6 +158,7 @@ class TamuController extends Controller
             'visitor_id' => $visitors->id,
             'report_limit_id' => $report_quota->id,
             'quota' => $request->tipe_member == 'VIP' ? '4' : '10',
+            'status' => 'bertambah',
             'created_at' => Carbon::now(),
         ]);
         $quota->save();
@@ -193,12 +194,39 @@ class TamuController extends Controller
         ]);
 
         $visitors = Visitor::where('id', $request->id)->first();
-        $report_deposit = ReportDeposit::create([
+        // $report_deposit = ReportDeposit::create([
+        //     'payment_type' => $request->payment_type,
+        //     'visitor_id' => $request->visitor_id,
+        //     'user_id' => Auth::user()->id,
+        //     'report_balance' => $request->balance,
+            
+        // ]);
+        if ($request->payment_type == 'Cash') {
+            $report_deposit = ReportDeposit::create([
             'payment_type' => $request->payment_type,
             'visitor_id' => $request->visitor_id,
             'user_id' => Auth::user()->id,
+            'activities' => 'Deposit <b>' . $request->name . ' bertambah menjadi <b>Rp.' .number_format($request->balance, 0, ',', '.') . '</b>',
+            'report_balance' => $request->balance,
+            ]);
+        } elseif ($request->payment_type == 'Transfer') {
+            $report_deposit = ReportDeposit::create([
+            'payment_type' => $request->payment_type,
+            'visitor_id' => $request->visitor_id,
+            'user_id' => Auth::user()->id,
+            'activities' => 'Deposit <b>' . $request->name . ' bertambah menjadi <b>Rp.' .number_format($request->balance, 0, ',', '.') . '</b>',
+            'report_balance' => $request->balance,
+            ]);
+        }else {
+            $report_deposit = ReportDeposit::create([
+            'payment_type' => $request->payment_type,
+            'visitor_id' => $request->visitor_id,
+            'user_id' => Auth::user()->id,
+            'activities' => '<b>Tidak ada deposit</b>',
             'report_balance' => $request->balance,
         ]);
+        }
+
         $report_deposit->save();
         $deposit = Deposit::create([
             'visitor_id' => $request->visitor_id,
@@ -206,7 +234,6 @@ class TamuController extends Controller
             'report_deposit_id' => $report_deposit->id,
             'type' => 'CREATE',
             'balance' => $request->balance,
-            'activities' => 'Deposit <b>' . $request->name . ' bertambah menjadi <b>' . $request->balance . '</b>',
         ]);
         $deposit->save();
         $data = $request->all();
@@ -250,15 +277,23 @@ class TamuController extends Controller
     public function reportdeposit(Request $request, $id)
     {
         $decrypt_id = Crypt::decryptString($id);
-        $aktifitas_deposit = ReportDeposit::select('id', 'report_balance', 'payment_type', 'visitor_id', 'user_id', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
+        $aktifitas_deposit = ReportDeposit::select('id', 'report_balance', 'payment_type', 'visitor_id', 'user_id','activities', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
             return datatables()->of($aktifitas_deposit)->editColumn('report_balance', function ($data) {
-                return number_format($data->report_balance, 0, ',', '.');
+                return 'Rp. '.number_format($data->report_balance, 0, ',', '.');
             })->addColumn('information', function ($data) {
-                return $data->visitor->name . ' melakukan deposit sebesar ' . number_format($data->report_balance, 0, ',', '.');
+                return $data->activities;
+            })->addColumn('payment_type', function ($data) {
+                if($data->payment_type == 'Cash'){
+                    return '<p class="label label-success">'.$data->payment_type.'<div>';
+                }elseif($data->payment_type == 'Transfer'){
+                    return '<p class="label label-warning">'.$data->payment_type.'<div>';
+                }else{
+                    return '<p class="label label-danger">'.$data->payment_type.'<div>';
+                }
             })->editColumn('created_at', function ($data) {
                 return date_format($data->created_at, 'd-m-Y');
-            })->make(true);
+            })->rawColumns(['report_balance', 'information', 'payment_type','created_at'])->make(true);
         }
     }
     /* end data aktifitas tamu Deposit */

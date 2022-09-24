@@ -53,8 +53,8 @@ class Kernel extends ConsoleKernel
                     'created_at' => Carbon::now(),
                 ]);
             }
-        })->everyMinute();
-    // })->monthly();
+        // })->everyMinute();
+    })->monthly();
     }
 
     /**
