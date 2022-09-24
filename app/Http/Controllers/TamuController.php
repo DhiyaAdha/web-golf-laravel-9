@@ -607,6 +607,7 @@ class TamuController extends Controller
             'type' => 'DELETE',
             'activities' => 'Menghapus member <b>' . $visitor->name . '</b>',
         ]);
+
         // $visitor->delete($id);
         Visitor::destroy($id);
         return redirect()->route('daftar-tamu');
