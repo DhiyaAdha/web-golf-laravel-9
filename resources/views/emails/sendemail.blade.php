@@ -131,6 +131,14 @@
                         </td>
                     </tr>
                     <tr>
+                        <td bgcolor="#ffffff" align="center"
+                        style="padding: 
+                        1.1px 0px 50px 1.11px; color: #000000; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
+                            <img src="{{ $message->embed(public_path().'/tgcc144.png') }}" height="
+                            80px" width="50px"> <strong style="vertical-align:25%; font-size: 25px;">TGCC</strong>
+                        </td>
+                    </tr>
+                    <tr>
                         <td bgcolor="#ffffff" align="center" valign="top"
                             {{-- <div style="display:flex;justify-content: center;">
                                 <img class="brand-img" src="{{ asset('dist/img/tgcc_icon.svg') }}" alt="brand"
@@ -142,7 +150,7 @@
                                 <img src="{{ env('APP_URL') . 'img/success.svg' }}" width="50" height="50"
                                     style="display: block; border: 0px; margin: 15px;" />
                             </div> --}}
-                            <p style="margin: 0;text-align: center;">Member Terdaftar</p>
+                            <p style="color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px; margin: 0;text-align: center;">Member Terdaftar</p>
                         </td>
                     </tr>
                 </table>

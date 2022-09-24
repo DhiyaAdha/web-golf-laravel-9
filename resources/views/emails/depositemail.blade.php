@@ -137,6 +137,14 @@
                                 <span class="brand-text" style="color: #111111">TGGC</span>
                             </div> --}}
                         </td>
+                        <tr>
+                            <td bgcolor="#ffffff" align="center"
+                            style="padding: 
+                            1.1px 0px 50px 1.11px; color: #000000; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
+                                <img src="{{ $message->embed(public_path().'/tgcc144.png') }}" height="
+                                60px" width="30px"> <strong style="vertical-align:25%; font-size: 25px;">TGCC</strong>
+                            </td>
+                        </tr>
                     <tr>
                         <td bgcolor="#ffffff" align="center"
                             style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
@@ -166,7 +174,7 @@
                         </div>
                         <div style="display:flex;">
                             <p style="margin: 0;">Sisa Deposit: </p>
-                            <p style="margin: 0;">&nbsp; {{ $data['balance'] }}</p>
+                            <p style="margin: 0;">&nbsp; Rp. {!! formatrupiah ($data['balance']) !!}</p>
                         </div>
                     </td>
                 </tr>
