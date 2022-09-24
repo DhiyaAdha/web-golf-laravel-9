@@ -79,6 +79,10 @@ i.fa.fa-trash-o {
     height: 23.5rem;
 }
 
+.panel.panel-default.card-view.limit {
+    height: 12rem;
+}
+
 .panel-heading.g {
     padding: 8px 0px 8px 0px;
 }

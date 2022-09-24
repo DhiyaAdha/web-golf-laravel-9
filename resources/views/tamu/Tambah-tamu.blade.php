@@ -98,7 +98,7 @@
                                             <label class="control-label mb-10" for="">Tipe Member Tamu Ini Adalah</label>
                                             <label class="switch">
                                                 <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" value="VIP" name="tipe_member">
-                                                <input type="checkbox" name="tipe_member" type="checkbox" id="tipe">
+                                                <input type="checkbox" name="tipe_member" type="checkbox"  value="VVIP">
                                                 <div class="slider round switch">
                                                     <!--ADDED HTML -->
                                                     <span class="off">VIP</span>

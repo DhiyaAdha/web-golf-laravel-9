@@ -189,10 +189,12 @@ class TamuController extends Controller
         $this->validate($request, [
             'visitor_id' => 'required',
             'balance' => 'required',
+            'payment_type' => 'required',
         ]);
 
         $visitors = Visitor::where('id', $request->id)->first();
         $report_deposit = ReportDeposit::create([
+            'payment_type' => $request->payment_type,
             'visitor_id' => $request->visitor_id,
             'user_id' => Auth::user()->id,
             'report_balance' => $request->balance,
@@ -234,6 +236,7 @@ class TamuController extends Controller
             $visitor = Visitor::findOrFail($decrypt_id);
             $data['qrcode'] = QrCode::size(180)->generate($visitor->id);
             $data['quota'] = $limit->quota;
+            $data['quota_kupon'] = $limit->quota_kupon;
             $data['balance'] = $deposit->balance;
             $data['deposit'] = Deposit::where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
             $data['limit'] = LogLimit::where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
@@ -410,17 +413,21 @@ class TamuController extends Controller
     public function reporttransaksi(Request $request, $id)
     {
         $decrypt_id = Crypt::decryptString($id);
-        $reporttransaksi = LogTransaction::select('id', 'payment_type', 'payment_status', 'total', 'visitor_id', 'user_id', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
+        $reporttransaksi = LogTransaction::select('id', 'payment_type', 'payment_status', 'total', 'visitor_id', 'user_id','activities', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
             return datatables()->of($reporttransaksi)->addColumn('order_id', function ($data) {
                 return $data->id;
             })->editColumn('information', function ($data) {
-                return 'Transaksi berhasil! ' . $data->visitor->name . ' telah melakukan pembayaran Rp.' . number_format($data->total, 0, ',', '.');
+                return $data->activities;
             })->addColumn('status', function ($data) {
-                return $data->payment_status;
-            })->addColumn('created_at', function ($data) {
-                return $data->created_at;
-            })->make(true);
+                if ($data->payment_status == '1'){
+                    return '<p class="label label-success">Berhasil<div>';
+                }else {
+                    return '<p class="label label-warning">Gagal<div>';
+                }
+            })->editColumn('created_at', function ($data) {
+                return date_format($data->created_at, 'd-m-Y');
+            })->rawColumns(['order_id', 'information', 'status', 'created_at'])->make(true);
         }
     }
     /* END data aktifitas tamu transaksi*/

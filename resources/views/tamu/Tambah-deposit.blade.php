@@ -27,6 +27,19 @@
                                         <label class="control-label mb-10" for=""></label>
                                         <input type="hidden" name="visitor_id" value="{{ $id }}"
                                             class="form-control">
+                                        <label class="control-label mb-10" for="">Jenis Pembayaran</label>
+                                        <select name="payment_type" id="payment_type" class="form-control">
+                                            <option disabled selected>Pilih Pembayaran</option>
+                                            <option value="cash" name="payment_type" id="payment_type">Cash</option>
+                                            <option value="transfer" name="payment_type" id="payment_type">Transfer</option>
+                                        </select>
+                                        <br>
+                                       
+                                        
+
+                                        <label class="control-label mb-10" for=""></label>
+                                        <input type="hidden" name="visitor_id" value="{{ $id }}"
+                                            class="form-control">
                                         <label class="control-label mb-10" for="">Tambah Jumlah Deposit</label>
                                         <input type="text" min="0"
                                             onkeypress="return event.charCode >= 48 && event.charCode <=57"
