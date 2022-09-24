@@ -188,6 +188,7 @@ class PackageController extends Controller
             // 'created_at' => Carbon::now(),
         ]);
         Package::destroy($id);
+        
         return redirect()->route('package.index');
     }
 }

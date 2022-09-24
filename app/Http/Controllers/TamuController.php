@@ -53,25 +53,25 @@ class TamuController extends Controller
         if ($request->ajax()) {
             return datatables()->of($visitor)->addColumn('action', function ($visitor) {
                 if (auth()->user()->role_id == '2') {
-                    $button = '<div class="d-flex align-items-center"><a data-toggle="tooltip" data-placement="top" title="Detail Tamu" href="' .url('kartu-tamu/' . Crypt::encryptString($visitor->id)) .'"><img src="'.url('dist/img/Card-Tamu.svg').'"></a>';
+                    $button = '<div class="d-flex align-items-center"><a data-toggle="tooltip" data-placement="top" title="Detail Tamu" href="' . url('kartu-tamu/' . Crypt::encryptString($visitor->id)) . '"><img src="' . url('dist/img/Card-Tamu.svg') . '"></a>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<a data-toggle="tooltip" data-placement="top" title="Edit" href="'.url('edit-tamu/' . Crypt::encryptString($visitor->id)) .'">
+                    $button .= '<a data-toggle="tooltip" data-placement="top" title="Edit" href="' . url('edit-tamu/' . Crypt::encryptString($visitor->id)) . '">
                                     <svg width="21" height="21";viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M20 3.26645L17.5333 0.799784C17.3213 0.597635 17.0396 0.484863 16.7467 0.484863C16.4537 0.484863 16.172 0.597635 15.96 0.799784L13.7667 2.99978H1.99999C1.64637 2.99978 1.30723 3.14026 1.05718 3.39031C0.807132 3.64036 0.666656 3.9795 0.666656 4.33312V18.9998C0.666656 19.3534 0.807132 19.6925 1.05718 19.9426C1.30723 20.1926 1.64637 20.3331 1.99999 20.3331H16.6667C17.0203 20.3331 17.3594 20.1926 17.6095 19.9426C17.8595 19.6925 18 19.3534 18 18.9998V6.83978L20 4.83978C20.2084 4.63104 20.3255 4.34811 20.3255 4.05312C20.3255 3.75813 20.2084 3.47519 20 3.26645ZM10.5533 12.4198L7.75999 13.0398L8.42666 10.2731L14.7933 3.89312L16.9467 6.04645L10.5533 12.4198ZM17.6667 5.28645L15.5133 3.13312L16.7467 1.89978L18.9 4.05312L17.6667 5.28645Z" fill="#787878"/>
                                     </svg>
                                 </a>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .='<a href="javascript:void(0)" name="delete" data-toggle="tooltip" data-placement="top" title="Hapus" id="' .$visitor->id . '" class="delete-confirm"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.25 3.50004V1.24854C7.25 1.04962 7.32902 0.858857 7.46967 0.718205C7.61032 0.577553 7.80109 0.498535 8 0.498535H14C14.1989 0.498535 14.3897 0.577553 14.5303 0.718205C14.671 0.858857 14.75 1.04962 14.75 1.24854V3.50004H20.75C20.9489 3.50004 21.1397 3.57905 21.2803 3.71971C21.421 3.86036 21.5 4.05112 21.5 4.25004C21.5 4.44895 21.421 4.63971 21.2803 4.78036C21.1397 4.92102 20.9489 5.00004 20.75 5.00004H1.25C1.05109 5.00004 0.860322 4.92102 0.71967 4.78036C0.579018 4.63971 0.5 4.44895 0.5 4.25004C0.5 4.05112 0.579018 3.86036 0.71967 3.71971C0.860322 3.57905 1.05109 3.50004 1.25 3.50004H7.25ZM8.75 3.50004H13.25V2.00004H8.75V3.50004ZM3.5 21.5C3.30109 21.5 3.11032 21.421 2.96967 21.2804C2.82902 21.1397 2.75 20.9489 2.75 20.75V5.00004H19.25V20.75C19.25 20.9489 19.171 21.1397 19.0303 21.2804C18.8897 21.421 18.6989 21.5 18.5 21.5H3.5ZM8.75 17C8.94891 17 9.13968 16.921 9.28033 16.7804C9.42098 16.6397 9.5 16.4489 9.5 16.25V8.75004C9.5 8.55112 9.42098 8.36036 9.28033 8.21971C9.13968 8.07905 8.94891 8.00004 8.75 8.00004C8.55109 8.00004 8.36032 8.07905 8.21967 8.21971C8.07902 8.36036 8 8.55112 8 8.75004V16.25C8 16.4489 8.07902 16.6397 8.21967 16.7804C8.36032 16.921 8.55109 17 8.75 17ZM13.25 17C13.4489 17 13.6397 16.921 13.7803 16.7804C13.921 16.6397 14 16.4489 14 16.25V8.75004C14 8.55112 13.921 8.36036 13.7803 8.21971C13.6397 8.07905 13.4489 8.00004 13.25 8.00004C13.0511 8.00004 12.8603 8.07905 12.7197 8.21971C12.579 8.36036 12.5 8.55112 12.5 8.75004V16.25C12.5 16.4489 12.579 16.6397 12.7197 16.7804C12.8603 16.921 13.0511 17 13.25 17Z" fill="#787878"/></svg></a></div>';
+                    $button .= '<a href="javascript:void(0)" name="delete" data-toggle="tooltip" data-placement="top" title="Hapus" id="' . $visitor->id . '" class="delete-confirm"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.25 3.50004V1.24854C7.25 1.04962 7.32902 0.858857 7.46967 0.718205C7.61032 0.577553 7.80109 0.498535 8 0.498535H14C14.1989 0.498535 14.3897 0.577553 14.5303 0.718205C14.671 0.858857 14.75 1.04962 14.75 1.24854V3.50004H20.75C20.9489 3.50004 21.1397 3.57905 21.2803 3.71971C21.421 3.86036 21.5 4.05112 21.5 4.25004C21.5 4.44895 21.421 4.63971 21.2803 4.78036C21.1397 4.92102 20.9489 5.00004 20.75 5.00004H1.25C1.05109 5.00004 0.860322 4.92102 0.71967 4.78036C0.579018 4.63971 0.5 4.44895 0.5 4.25004C0.5 4.05112 0.579018 3.86036 0.71967 3.71971C0.860322 3.57905 1.05109 3.50004 1.25 3.50004H7.25ZM8.75 3.50004H13.25V2.00004H8.75V3.50004ZM3.5 21.5C3.30109 21.5 3.11032 21.421 2.96967 21.2804C2.82902 21.1397 2.75 20.9489 2.75 20.75V5.00004H19.25V20.75C19.25 20.9489 19.171 21.1397 19.0303 21.2804C18.8897 21.421 18.6989 21.5 18.5 21.5H3.5ZM8.75 17C8.94891 17 9.13968 16.921 9.28033 16.7804C9.42098 16.6397 9.5 16.4489 9.5 16.25V8.75004C9.5 8.55112 9.42098 8.36036 9.28033 8.21971C9.13968 8.07905 8.94891 8.00004 8.75 8.00004C8.55109 8.00004 8.36032 8.07905 8.21967 8.21971C8.07902 8.36036 8 8.55112 8 8.75004V16.25C8 16.4489 8.07902 16.6397 8.21967 16.7804C8.36032 16.921 8.55109 17 8.75 17ZM13.25 17C13.4489 17 13.6397 16.921 13.7803 16.7804C13.921 16.6397 14 16.4489 14 16.25V8.75004C14 8.55112 13.921 8.36036 13.7803 8.21971C13.6397 8.07905 13.4489 8.00004 13.25 8.00004C13.0511 8.00004 12.8603 8.07905 12.7197 8.21971C12.579 8.36036 12.5 8.55112 12.5 8.75004V16.25C12.5 16.4489 12.579 16.6397 12.7197 16.7804C12.8603 16.921 13.0511 17 13.25 17Z" fill="#787878"/></svg></a></div>';
                     return $button;
-                } else{
-                        $button = '<div class="d-flex align-items-center"><a data-toggle="tooltip" data-placement="top" title="Detail Tamu" href="' .url('kartu-tamu/' . Crypt::encryptString($visitor->id)) .'"><img src="'.url('dist/img/Card-Tamu.svg').'"></a>';
-                        return $button;
+                } else {
+                    $button = '<div class="d-flex align-items-center"><a data-toggle="tooltip" data-placement="top" title="Detail Tamu" href="' . url('kartu-tamu/' . Crypt::encryptString($visitor->id)) . '"><img src="' . url('dist/img/Card-Tamu.svg') . '"></a>';
+                    return $button;
                 }
-                })->editColumn('tipe_member', function ($data) {
-                    return $data->tipe_member;
-                })->editColumn('qrcode', function ($data) {
-                    return '<a href="' .url('kartu-tamu/' . $data->id) .'">' .$data->name .'</a>';
-                })->rawColumns(['qrcode', 'action'])->make(true);
+            })->editColumn('tipe_member', function ($data) {
+                return $data->tipe_member;
+            })->editColumn('qrcode', function ($data) {
+                return '<a href="' . url('kartu-tamu/' . $data->id) . '">' . $data->name . '</a>';
+            })->rawColumns(['qrcode', 'action'])->make(true);
         }
         return view('tamu.daftar-tamu', compact('visitor'));
     }
@@ -171,7 +171,7 @@ class TamuController extends Controller
             'type' => 'CREATE',
             'activities' => 'Menambah member <b>' . $visitors->name . '</b>',
         ]);
-        
+
         $encrypt = Crypt::encrypt($visitors->id);
         return redirect('/tambah-deposit/' . $encrypt)->with('success', 'Berhasil menambah tamu');
     }
@@ -190,7 +190,7 @@ class TamuController extends Controller
     {
         $this->validate($request, [
             'visitor_id' => 'required',
-        'balance' => 'required',
+            'balance' => 'required',
         ]);
 
         $visitors = Visitor::where('id', $request->id)->first();
@@ -248,12 +248,15 @@ class TamuController extends Controller
     /* data aktifitas tamu Deposit */
     public function reportdeposit(Request $request, $id)
     {
-        $aktifitas_deposit = ReportDeposit::select('id', 'report_balance', 'payment_type', 'visitor_id', 'user_id', 'created_at')->where('visitor_id', $id)->orderBy('created_at', 'desc')->get();
+        $decrypt_id = Crypt::decryptString($id);
+        $aktifitas_deposit = ReportDeposit::select('id', 'report_balance', 'payment_type', 'visitor_id', 'user_id', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
             return datatables()->of($aktifitas_deposit)->editColumn('report_balance', function ($data) {
                 return number_format($data->report_balance, 0, ',', '.');
             })->addColumn('information', function ($data) {
                 return $data->visitor->name . ' melakukan deposit sebesar ' . number_format($data->report_balance, 0, ',', '.');
+            })->editColumn('created_at', function ($data) {
+                return date_format($data->created_at, 'd-m-Y');
             })->make(true);
         }
     }
@@ -262,12 +265,16 @@ class TamuController extends Controller
     /* data aktifitas tamu limit */
     public function reportlimit(Request $request, $id)
     {
-        $aktifitas_limit = ReportLimit::select('id', 'report_quota', 'status', 'visitor_id', 'user_id', 'created_at')->where('visitor_id', $id)->orderBy('created_at', 'desc')->get();
+        $decrypt_id = Crypt::decryptString($id);
+        $aktifitas_limit = ReportLimit::select('id', 'report_quota', 'status', 'visitor_id', 'user_id', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
-            return datatables()->of($aktifitas_limit)->addColumn('information', function ($data) {
+            return datatables()->of($aktifitas_limit)
+            ->addColumn('information', function ($data) {
                 return 'Limit ' . $data->visitor->name . ' bertambah menjadi ' . $data->report_quota;
             })->addColumn('status', function ($data) {
                 return $data->status;
+            })->editColumn('created_at', function ($data) {
+                return date_format($data->created_at, 'd-m-Y');
             })->make(true);
         }
     }
@@ -404,7 +411,8 @@ class TamuController extends Controller
     /* data aktifitas tamu transaksi*/
     public function reporttransaksi(Request $request, $id)
     {
-        $reporttransaksi = LogTransaction::select('id', 'payment_type', 'payment_status', 'total', 'visitor_id', 'user_id', 'created_at')->where('visitor_id', $id)->orderBy('created_at', 'desc')->get();
+        $decrypt_id = Crypt::decryptString($id);
+        $reporttransaksi = LogTransaction::select('id', 'payment_type', 'payment_status', 'total', 'visitor_id', 'user_id', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
             return datatables()->of($reporttransaksi)->addColumn('order_id', function ($data) {
                 return $data->id;
@@ -483,7 +491,7 @@ class TamuController extends Controller
         $decrypt_id = Crypt::decryptString($id);
         $visitor = Visitor::find($decrypt_id);
         $limit = LogLimit::where('visitor_id', $decrypt_id)->first();
-        return view('tamu.edit-tamu', compact('visitor','limit'));
+        return view('tamu.edit-tamu', compact('visitor', 'limit'));
     }
 
     /**
@@ -504,7 +512,7 @@ class TamuController extends Controller
             'company' => 'required',
             'position' => 'required',
             'tipe_member' => 'required',
-            'quota' => 'required',
+            // 'quota' => 'required',
         ]);
         $visitor = Visitor::find($id);
         $visitor->fill($request->post())->save();
@@ -516,6 +524,21 @@ class TamuController extends Controller
             'type' => 'UPDATE',
             'activities' => 'Mengubah member <b>' . $visitor->name . '</b>',
         ]);
+
+        $visitor_limit = LogLimit::find($visitor->id);
+        $visitor_report_limit = ReportLimit::find($visitor->id);
+        if ($visitor->wasChanged('tipe_member')) {
+            $visitor_limit->update([
+                'quota' => $request->tipe_member == 'VIP' ? '4' : '10',
+                'created_at' => Carbon::now(),
+            ]);
+            
+            $visitor_report_limit->update([
+                'report_quota' => $request->tipe_member == 'VIP' ? '4' : '10',
+                'created_at' => Carbon::now(),
+            ]);
+        } 
+
         // $limit['limit'] = LogLimit::where('quota', $request->quota)->first();
         // $limit['quota'] = $request->quota;
 
@@ -529,7 +552,7 @@ class TamuController extends Controller
         // if($request['tipe_member'] && $visitor['tipe_member'] == 'VIP'){
         //         $visitor_report->update([
         //         'quota' => $request->tipe_member == 'VIP' ? '4' : '10',
-                
+
         //     ]);
         // }else{
         //     // $visitor_report->update([
@@ -537,32 +560,17 @@ class TamuController extends Controller
         //     // ]);
         // }
 
-        
-        $visitor_report = LogLimit::find($visitor->id);
-        if($visitor['tipe_member'] === $request['tipe_member']){
-            $visitor_report->update([
-                'quota' => $request->tipe_member == 'VIP' ? '4' : '10',
-                'created_at' => Carbon::now(),
-            ]);
-        }
-        else {
-            LogLimit::where('quota', $request->visitor_id->tipe_member)->get();
-        //     LogLimit::where('quota', $request->visitor_id->tipe_member)
-        //     ->get();
-            
-        }
+        // $quota = LogLimit::find($request->quota);
 
-            // $report_quota = ReportLimit::findOrFail($visitor->id);
-            // $report_quota = ReportLimit::create([
-            //     'visitor_id' => $visitor->id,
-            //     'user_id' =>    Auth::user()->id,
-            //     'report_quota' => $request->tipe_member == 'VIP' ? '4' : '10',
-            //     'created_at' => Carbon::now(),
-            // ]);
+        // $report_quota = ReportLimit::findOrFail($visitor->id);
+        // $report_quota = ReportLimit::create([
+        //     'visitor_id' => $visitor->id,
+        //     'user_id' =>    Auth::user()->id,
+        //     'report_quota' => $request->tipe_member == 'VIP' ? '4' : '10',
+        //     'created_at' => Carbon::now(),
+        // ]);
 
         return redirect()->route('daftar-tamu')->with('success', 'Berhasil edit tamu');
-
-        
     }
     public function tambahtamu()
     {
@@ -570,7 +578,7 @@ class TamuController extends Controller
     }
 
     /* export exel analisi*/
-    
+
     public function export_excel_tamu()
     {
         return Excel::download(new DaftarTamuExport, 'daftar_tamu.xlsx');
@@ -592,13 +600,15 @@ class TamuController extends Controller
     public function delete($id)
     {
         $visitor = Visitor::find($id);
-        $visitor->name;
-        Visitor::destroy($id);
+        $visitor->name = $visitor->name;
+
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'DELETE',
             'activities' => 'Menghapus member <b>' . $visitor->name . '</b>',
         ]);
-        return redirect()->route('daftar-tamu.index');
+        // $visitor->delete($id);
+        Visitor::destroy($id);
+        return redirect()->route('daftar-tamu');
     }
 }

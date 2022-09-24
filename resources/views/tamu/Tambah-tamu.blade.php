@@ -88,13 +88,25 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label mb-10" for="">Tamu Ini Adalah Tamu VIP
-                                        <div class="switch">
-                                            <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" value="VVIP" name="tipe_member">
-                                            <input id="cmn-toggle-4" class="cmn-toggle cmn-toggle-round-flat" name="tipe_member" type="checkbox" value="VIP">
-                                            <label for="cmn-toggle-4"></label>
-                                        </div>
-                                    </label>
+                                            {{-- <label class="control-label mb-10" for="">Tamu Ini Adalah Tamu VIP
+                                                <div class="switch">
+                                                    <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" value="VVIP" name="tipe_member">
+                                                    <input id="cmn-toggle-4" class="cmn-toggle cmn-toggle-round-flat" name="tipe_member" type="checkbox" value="VIP">
+                                                    <label for="cmn-toggle-4"></label>
+                                                </div>
+                                            </label> --}}
+                                            <label class="control-label mb-10" for="">Tipe Member Tamu Ini Adalah</label>
+                                            <label class="switch">
+                                                <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" value="VIP" name="tipe_member">
+                                                <input type="checkbox" name="tipe_member" type="checkbox" id="tipe">
+                                                <div class="slider round switch">
+                                                    <!--ADDED HTML -->
+                                                    <span class="off">VIP</span>
+                                                    <span class="on">VVIP</span> 
+                                                    <!--END-->
+                                                </div>
+                                            </label>
+
                                     {{-- <label class="switcher">
                                         <input type="checkbox" id="togBtn" value="VIP" name="tipe_member">
                                         <div class="slider round">
@@ -119,4 +131,5 @@
     @include('Layouts.Footer')
     </div>
 </div>
+
 @endsection
