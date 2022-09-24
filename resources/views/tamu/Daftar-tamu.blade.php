@@ -156,7 +156,7 @@
                 imageUrl: "../img/Warning.svg",
                 showCancelButton: true,
                 confirmButtonColor: "#FF2A00",
-                confirmButtonText: "Hapus paket",
+                confirmButtonText: "Hapus Tamu",
                 cancelButtonText: "Batal",
                 closeOnConfirm: false,
                 closeOnCancel: false
