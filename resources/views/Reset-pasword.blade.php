@@ -35,12 +35,21 @@
             box-sizing: border-box;
         }
 
-        .fa-eye {
+        .fa-eye1 {
             position: absolute;
             margin-top: -27px;
             margin-left: 90%;
             /* top: 15px;
             right: 30px; */
+            cursor: pointer;
+            color: lightgray;
+        }
+        .fa-eye2 {
+            position: absolute;
+            margin-top: -27px;
+            margin-left: 90%;
+            top: 72px;
+            /* right: 30px; */
             cursor: pointer;
             color: lightgray;
         }
@@ -118,7 +127,7 @@
                                                     class="form-control @error('password') has-error @enderror"
                                                     id="password" placeholder="Masukan Password Baru"
                                                     value="{{ old('password') }}" autocomplete="current-password">
-                                                <i class="fa-solid fa-eye fa-eye-slash" id="eye"></i>
+                                                <i class="fa-solid fa-eye1 fa-eye-slash" id="eye"></i>
 
                                                 @error('password')
                                                     <div class="text-danger"> {{ $message }}</div>
@@ -133,7 +142,8 @@
                                                     id="password_confirmation" placeholder="Masukan Password Baru"
                                                     value="{{ old('password_confirmation') }}"
                                                     autocomplete="current-password">
-                                                <i class="fa-solid fa-eye fa-eye-slash" id="eyee"></i>
+                                                    <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
+                                                <i class="fa-solid fa-eye2 fa-eye-slash" id="eyee"></i>
                                             </div>
                                             <div class="form-group text-center">
                                                 <button type="submit" class="btn btn-info btn-rounded">Update
@@ -186,6 +196,16 @@
             const typee = passwordCon.getAttribute("type") === "password" ? "text" : "password";
             passwordCon.setAttribute("type", typee);
         })
+    </script>
+    <script>
+        $("#password_confirmation").on('keyup', function() {
+            var password = $("#password").val();
+            var confirmPassword = $("#password_confirmation").val();
+            if (password != confirmPassword)
+                $("#CheckPasswordMatch").html("Password does not match !").css("color", "red");
+            else
+                $("#CheckPasswordMatch").html("Password match !").css("color", "green");
+        });
     </script>
 </body>
 
