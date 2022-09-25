@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ $order_number }}</title>
+    <title>Metode Pembayaran</title>
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.PNG') }}">
     <link rel="icon" href="{{ asset('tgcc144.PNG') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
@@ -17,15 +17,34 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <style>
         .panel-green {
-            background-color: #01c853;
             color: #fff;
-            border-radius: 4px
+            border-radius: 4px;
+            background: linear-gradient(to right, #82eee5, #01c853) !important;
+        }
+
+        .payment-1 {
+            background-color: #efefef;
+            border-radius: 5px;
+        }
+
+        .card-img-absolute {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+        }
+
+        .nilai-total1-td {
+            color: #19d895;
+            border-radius: 5px;
+            font-weight: bold;
         }
 
         .panel-black {
             background-color: #000000;
             color: #fff;
-            border-radius: 4px
+            border-radius: 4px;
+            background: linear-gradient(to right, #525151, #000000) !important;
         }
 
         .text-big {
@@ -78,12 +97,6 @@
             <div class="d-flex justify-content-center align-items-center" style="margin: 1rem 0;">
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="d-flex">
-                            <span class="font-weight-bold flex-grow-1"><i class="fa fa-money"></i> Bayar
-                                Billing :
-                                #{{ $order_number }}</span>
-                            <span class="font-weight-bold"> Tamu : {{ $visitor->name }}</span>
-                        </div>
                         <div class="d-flex flex-wrap pd-1">
                             <div class="col-md-4">
                                 <div class="card">
@@ -96,6 +109,8 @@
                                                     id="balance">{{ formatrupiah($deposit->balance) ?? '0' }}</span>
                                             </div>
                                         </div>
+                                        <img src="{{ asset('img/circle.svg') }}" class="card-img-absolute"
+                                            alt="circle-image">
                                     </div>
                                 </div>
                             </div>
@@ -131,38 +146,95 @@
                         </div>
                         <div class="d-flex flex-wrap pd-1">
                             <div class="col-md-7">
-                                <form>
-                                    <div class="form-group">
-                                        <label for="payment-type">Pilih jenis pembayaran</label>
-                                        <select class="form-control" id="payment-type">
-                                            <option value="" disabled selected>Jenis pembayaran</option>
-                                            <option value="1">Limit Bulanan</option>
-                                            <option value="2">Limit Kupon</option>
-                                            <option value="3">Cash/Transfer</option>
-                                            <option value="4">Deposit</option>
-                                        </select>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form>
+                                            <div class="d-flex">
+                                                <span class="flex-grow-1">Pilih metode Pembayaran</span>
+                                                <div class="d-flex">
+                                                    <div class="custom-control custom-radio mr-2">
+                                                        <input type="radio" name="payment" id="wk"
+                                                            class="custom-control-input" value="single" checked>
+                                                        <label class="custom-control-label"
+                                                            for="wk">Single</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio">
+                                                        <input type="radio" name="payment" id="kw"
+                                                            class="custom-control-input" value="multiple">
+                                                        <label class="custom-control-label"
+                                                            for="kw">Multiple</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="single">
+                                                <div class="form-group">
+                                                    <label for="payment-type"></label>
+                                                    <select class="form-control" id="payment-type">
+                                                        <option value="" disabled selected>Jenis pembayaran
+                                                        </option>
+                                                        <option value="1">Limit Bulanan</option>
+                                                        <option value="2">Limit Kupon</option>
+                                                        <option value="3">Cash/Transfer</option>
+                                                        <option value="4">Deposit</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group" id="cash-transfer"></div>
+                                            </div>
+                                            <div id="multiple"></div>
+                                            <div class="d-flex justify-content-end pd-1">
+                                                <a href="javascript:void(0)" id="print"
+                                                    class="d-flex align-items-center btn btn-sm btn-primary mr-2"><i
+                                                        class="fa fa-print mr-2"></i> Invoice</a>
+                                                <a href="javascript:void(0)" id="pay"
+                                                    class="btn btn-sm btn-success">Bayar</a>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="form-group" id="cash-transfer"></div>
-
-                                    <div class="d-flex justify-content-start pd-1">
-                                        <a href="javascript:void(0)" id="print"
-                                            class="d-flex align-items-center btn btn-sm btn-primary mr-2"><i
-                                                class="fa fa-print mr-2"></i> Invoice</a>
-                                        <a href="javascript:void(0)" id="pay"
-                                            class="btn btn-sm btn-success">Bayar</a>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
                             <div class="col-md-5">
-                                <div class="d-flex-flex-column">
-                                    <div class="d-flex flex-column">
-                                        <div class="d-flex">
-                                            <span class="flex-grow-1">Jumlah order</span>
-                                            <span>{{ count($orders) }}</span>
+                                <div class="card " style="border:none;">
+                                    <div class="card-body payment-1">
+                                        <div class="d-flex-flex-column">
+                                            <div class="d-flex flex-column">
+                                                <div class="d-flex">
+                                                    <span class="flex-grow-1">Tanggal order</span>
+                                                    <span>{{ date('d M, Y') }}</span>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <span class="flex-grow-1">Waktu</span>
+                                                    <span>{{ date('H:i') }}</span>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <span class="flex-grow-1">Admin</span>
+                                                    <span>{{ auth()->user()->name }}</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="d-flex">
-                                            <span class="flex-grow-1">Total bayar</span>
-                                            <span>Rp. {{ formatrupiah($totalPrice) }}</span>
+                                    </div>
+                                </div>
+                                <div class="card " style="border:none;">
+                                    <div class="card-body">
+                                        <div class="d-flex-flex-column">
+                                            <div class="d-flex flex-column">
+                                                <div class="d-flex">
+                                                    <span class="flex-grow-1">Invoice</span>
+                                                    <span style="font-size: small;">#{{ $order_number }}</span>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <span class="flex-grow-1">Tamu</span>
+                                                    <span>{{ $visitor->name }}</span>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <span class="flex-grow-1">Jumlah order</span>
+                                                    <span>{{ count($orders) }}</span>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <span class="flex-grow-1">Total bayar</span>
+                                                    <span class="nilai-total1-td">Rp.
+                                                        {{ formatrupiah($totalPrice) }}</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -195,6 +267,43 @@
                 return split[1] != undefined ? idr + ',' + split[1] : idr;
             }
 
+            $('input[type=radio][name=payment]').on('change', function() {
+                switch ($(this).val()) {
+                    case 'single':
+                        $('#single').show();
+                        $('#multiple').html(`<div id="multiple">
+                                                <div class="form-group">
+                                                    <label for="payment-type"></label>
+                                                    <select class="form-control" id="payment-type">
+                                                        <option value="" disabled selected>Jenis ok</option>
+                                                        <option value="1">Limit Bulanan</option>
+                                                        <option value="2">Limit Kupon</option>
+                                                        <option value="3">Cash/Transfer</option>
+                                                        <option value="4">Deposit</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group" id="cash-transfer"></div>
+                                            </div>`).hide();
+                        break;
+                    case 'multiple':
+                        $('#single').hide();
+                        $('#multiple').html(`<div id="multiple">
+                                                <div class="form-group">
+                                                    <label for="payment-type"></label>
+                                                    <select class="form-control" id="payment-type">
+                                                        <option value="" disabled selected>Jenis ok</option>
+                                                        <option value="1">Limit Bulanan</option>
+                                                        <option value="2">Limit Kupon</option>
+                                                        <option value="3">Cash/Transfer</option>
+                                                        <option value="4">Deposit</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group" id="cash-transfer"></div>
+                                            </div>`).show();
+                        break;
+                }
+            });
+
             $(document).on('change', '#payment-type', function(e) {
                 e.preventDefault();
                 let type = $(this).val();
@@ -206,13 +315,29 @@
 
                 if (type == 3) {
                     $('#cash-transfer').html(
-                        `<label for="cash">Pembayaran cash</label>
-                                            <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" id="cash" placeholder="masukan jumlah nominal pembayaran">`
+                        ` <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">Rp.</div>
+                                                </div>
+                                                <input type="text" min="0"
+                                                    onkeypress="return event.charCode >= 48 && event.charCode <=57"
+                                                    class="form-control number-input input-notzero bayar-input"
+                                                    name="bayar" placeholder="Masukkan nominal bayar"
+                                                    autocomplete="off">
+                                            </div>`
                     ).show();
                 } else {
                     $('#cash-transfer').html(
-                        `<label for="cash">Pembayaran cash</label>
-                                            <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" id="cash" placeholder="masukan jumlah nominal pembayaran">`
+                        ` <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">Rp.</div>
+                                                </div>
+                                                <input type="text" min="0"
+                                                    onkeypress="return event.charCode >= 48 && event.charCode <=57"
+                                                    class="form-control number-input input-notzero bayar-input"
+                                                    name="bayar" placeholder="Masukkan nominal bayar"
+                                                    autocomplete="off">
+                                            </div>`
                     ).hide();
                 }
                 $.ajaxSetup({

@@ -175,6 +175,7 @@ class OrderController extends Controller
                 'counted' => $counted,
                 'cart' => $cart_data,
                 'qty' => $cek_itemId[$id[3]]->quantity, 
+                'name' => $cek_itemId[$id[3]]->name, 
                 'price' => $cek_itemId[$id[3]]->price
             ], 200);
         }  
@@ -250,7 +251,7 @@ class OrderController extends Controller
             'id'=>$request->get('id'), 
             'total' => $get_total,
             'counted' => $counted,
-            'cart' => $items
+            'cart' => $items,
         ], 200);
     }
 

@@ -45,9 +45,10 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        {{-- <div class="d-flex flex-wrap">
+                        <div class="d-flex flex-wrap">
                             @foreach ($default as $item)
-                                <button type="button" onclick="addCart({{ $item->id }})"data-toggle="tooltip"
+                                <button type="button" id="package-{{ $item->id }}"
+                                    onclick="addCart({{ $item->id }})"data-toggle="tooltip"
                                     title="Rp. {{ number_format($today === 'Sabtu' || 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
                                     class="btn btn-default txt-success mr-15 mb-15">{{ $item->name }}</button>
                             @endforeach
@@ -60,7 +61,8 @@
                         </div>
                         <div class="d-flex flex-wrap mb-15">
                             @foreach ($additional as $item)
-                                <button type="button" onclick="addCart({{ $item->id }})"data-toggle="tooltip"
+                                <button type="button" id="package-{{ $item->id }}"
+                                    onclick="addCart({{ $item->id }})"data-toggle="tooltip"
                                     title="Rp. {{ number_format($today === 'Sabtu' || 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
                                     class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
                             @endforeach
@@ -76,7 +78,7 @@
                                     @endif
                                 </span>
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-4 sticky">
@@ -128,6 +130,7 @@
                                 <span class="not-found text-muted">Keranjang masih kosong</span>
                             </div>
                         @endif
+                        <div id="total"></div>
                         <div id="append-checkout"></div>
                         @if (count($cart_data) > 0)
                             <div class="d-flex">
@@ -288,33 +291,89 @@
                         });
                         return false;
                     }
-                    $('.counted').text(response.counted);
+                    swal({
+                        title: "",
+                        type: "success",
+                        text: "Item " + response.name + " ditambahkan",
+                        confirmButtonColor: "#01c853",
+                    }, function(isConfirm) {
+                        location.reload();
+                    });
+                }
+            });
+        }
+
+        function updateQTY(id, type) {
+            var tg = window.location.href;
+            tg = tg.split("?")
+            tg = tg[0];
+            tg = tg.split("/");
+            page = tg[tg.length - 1];
+
+            let $n = $(".qty-" + id);
+            if (type === 'plus') {
+                $n.val(Number($n.val()) + 1);
+                $.toast({
+                    text: 'Item bertambah ' + $n.val(),
+                    position: 'top-right',
+                    loaderBg: '#fec107',
+                    icon: 'success',
+                    hideAfter: 700,
+                    stack: 6
+                });
+            } else {
+                if ($n.val() == 0) {
+                    $('.disabled-cart-' + id).css('background', 'tomato');
+                    $('.disabled-cart-' + id).fadeOut(800, function() {
+                        $(this).remove();
+                    });
+                } else {
+                    $n.val(Number($n.val()) - 1);
+                    $.toast({
+                        text: 'Item berkurang ' + $n.val(),
+                        position: 'top-right',
+                        loaderBg: '#fec107',
+                        icon: 'success',
+                        hideAfter: 700,
+                        stack: 6
+                    });
+                }
+            }
+            let url = "{{ route('update.qty', ':id') }}";
+            url = url.replace(':id', id);
+            $.ajax({
+                async: true,
+                type: 'POST',
+                url: url,
+                data: {
+                    id: id,
+                    type: type,
+                    page: page
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                success: function(response) {
+                    $('.price-' + response.id).text('Rp. ' + formatIDR(response.qty * response.price));
                     $("#total-pay").text('Rp. ' + formatIDR(response.total));
-                    $('#disabled-empty').remove();
-                    $('.active-checkout').remove();
-                    // $(`<div class="d-flex">
-                //             <strong class="flex-grow-1 txt-dark">Total</strong>
-                //             <strong class="txt-dark" id="total-pay">Rp. ${response.total}</strong>
-                //         </div>`).insertBefore('#append-checkout');
-                    $('#disabled-pay').remove();
-                    $('#append-checkout').append(`<div class="d-flex justify-content-between active-checkout">
-                                <button type="button" id="reset-order"
-                                    class="mt-15 mb-15 btn-xs btn btn-danger btn-anim">
-                                    <i class="icon-rocket"></i>
-                                    <span class="btn-text">Reset</span>
-                                </button>
-                                <button type="reset" id="riwayat"
-                                    class="mt-15 mb-15 btn-xs btn btn-primary btn-anim">
-                                    <i class="icon-rocket"></i>
-                                    <span class="btn-text">Riwayat</span>
-                                </button>
-                                <button type="button" id="checkout" data-toggle="modal"
-                                    data-target=".bs-example-modal-lg"
-                                    class="mt-15 mb-15 btn-xs btn btn-success btn-anim">
-                                    <i class="icon-rocket"></i>
-                                    <span class="btn-text">Checkout</span>
-                                </button>
-                            </div>`);
+                    $('.counted').text(response.counted);
+                    if ($n.val() == 0) {
+                        $('.disabled-cart-' + response.id).remove();
+                    }
+                    if (response.cart.length != 0) {
+                        $('#qty').text(response.cart.length);
+                    } else {
+                        $('#isi-').append(`<span class="not-found text-muted">Keranjang masih kosong</span>`)
+                            .addClass('d-flex justify-content-center align-items-center');
+                        $('.active-checkout').remove();
+                        $('#disabled-checkout').html(`<button type="submit" class="mt-15 mb-15 btn-xs btn-block btn btn-success btn-anim"
+                                                            id="disabled-pay">
+                                                            <i class="icon-rocket"></i>
+                                                            <span class="btn-text">Checkout</span>
+                                                        </button>`);
+                        $('#qty').text('0');
+                    }
                 }
             });
         }
@@ -349,76 +408,20 @@
                 dataType: 'json',
                 success: function(response) {
                     $.unblockUI();
-                    $('.price-' + response.id).text('Rp. ' + formatIDR(response.qty * response.price));
                     $("#total-pay").text('Rp. ' + formatIDR(response.total));
                     $('.counted').text(response.counted);
-                    if (response.cart.length > 0) {
-                        $('#qty').text(response.cart.length);
-                    } else {
-                        $('#isi-').append(`<span class="not-found text-muted">Keranjang masih kosong</span>`)
+                    var qty = $('#qty').text();
+                    $('#qty').text(qty - 1);
+                    console.log(response.cart.length)
+                    if (response.cart.length == 0) {
+                        $('#isi-').html(`<span class="not-found text-muted">Keranjang masih kosong</span>`)
                             .addClass('d-flex justify-content-center align-items-center');
                         $('.active-checkout').remove();
-                        $('#disabled-checkout').append(`<button type="submit" class="mt-15 mb-15 btn-xs btn-block btn btn-success btn-anim"
-                                                            id="disabled-pay">
-                                                            <i class="icon-rocket"></i>
-                                                            <span class="btn-text">Checkout</span>
-                                                        </button>`);
-                        $('#qty').text('0');
-                    }
-                }
-            });
-        }
-
-        function updateQTY(id, type) {
-            var tg = window.location.href;
-            tg = tg.split("?")
-            tg = tg[0];
-            tg = tg.split("/");
-            page = tg[tg.length - 1];
-
-            let $n = $(".qty-" + id);
-            if (type === 'plus') {
-                $n.val(Number($n.val()) + 1);
-            } else {
-                $n.val(Number($n.val()) - 1);
-                if ($n.val() == 0) {
-                    $('.disabled-cart-' + id).css('background', 'tomato');
-                    $('.disabled-cart-' + id).fadeOut(800, function() {
-                        $(this).remove();
-                    });
-                }
-            }
-            let url = "{{ route('update.qty', ':id') }}";
-            url = url.replace(':id', id);
-            $.ajax({
-                async: true,
-                type: 'POST',
-                url: url,
-                data: {
-                    id: id,
-                    type: type,
-                    page: page
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                dataType: 'json',
-                success: function(response) {
-                    $('.price-' + response.id).text('Rp. ' + formatIDR(response.qty * response.price));
-                    $("#total-pay").text('Rp. ' + formatIDR(response.total));
-                    $('.counted').text(response.counted);
-                    if (response.cart.length != 0) {
-                        $('#qty').text(response.cart.length);
-                    } else {
-                        $('#isi-').append(`<span class="not-found text-muted">Keranjang masih kosong</span>`)
-                            .addClass('d-flex justify-content-center align-items-center');
-                        $('.active-checkout').remove();
-                        $('#disabled-checkout').append(`<button type="submit" class="mt-15 mb-15 btn-xs btn-block btn btn-success btn-anim"
-                                                            id="disabled-pay">
-                                                            <i class="icon-rocket"></i>
-                                                            <span class="btn-text">Checkout</span>
-                                                        </button>`);
-                        $('#qty').text('0');
+                        $('#disabled-checkout').html(`<button type="submit" class="mt-15 mb-15 btn-xs btn-block btn btn-success btn-anim"
+                                                        id="disabled-pay">
+                                                        <i class="icon-rocket"></i>
+                                                        <span class="btn-text">Checkout</span>
+                                                    </button>`);
                     }
                 }
             });
@@ -504,7 +507,6 @@
                         confirmButtonColor: "#01c853",
                     }, function(isConfirm) {
                         checkout(url, response.order_number);
-                        $('#checkout').attr('disabled', true);
                     });
                 }
             });
