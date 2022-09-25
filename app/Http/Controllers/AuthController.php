@@ -12,11 +12,12 @@ use App\Models\Visitor;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\PasswordReset;
+use App\Models\LogTransaction;
+use App\Jobs\SendEmailResetJob;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\LogTransaction;
 use Illuminate\Support\Facades\Auth;
-use App\Jobs\SendEmailResetJob;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -150,7 +151,21 @@ class AuthController extends Controller {
     //ini untuk route get di web.php memasukkan password baru
     public function showResetForm(Request $request, $token = null){
         // dd($token);
-        return view('Reset-pasword')->with(['token'=>$token,'email'=>$request->email]);
+        
+        $reset = PasswordReset::where('email', $request->input('email'))->first();
+        $expiry  = Carbon::now()->subMinutes( 3 );
+        // if ($reset->created_at == 'on null'){
+        //     return redirect()->route('login')->with('success', 'Tidak ada Token');
+        //     }
+        if ($reset == null) {
+            return redirect()->route('login')->with('error', 'Token Telah digunakan');
+        }
+    
+        return view('Reset-pasword')->with(
+            ['token' => $token, 'email' => $request->email]
+        );
+        // return view('Reset-pasword')->with(['token' => $token, 'email' => $request->email]);
+        // return view('Reset-pasword')->with(['token'=>$token,'email'=>$request->email]);
     }
     //ini untuk route get di web.php memasukkan email yang akan dirubah passwordnya
     // public function sendresetlink(Request $request){

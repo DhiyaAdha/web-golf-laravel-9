@@ -235,6 +235,31 @@
             @endif
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            // toastr.options.timeOut = 100;
+            toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "10",
+            "hideDuration": "10",
+            "timeOut": "1500",
+            "extendedTimeOut": "1500",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+            };
+            @if (Session::has('error'))
+                toastr.error('{{ Session::get('error') }}');
+            @endif
+        });
+    </script>
 </body>
 
 </html>
