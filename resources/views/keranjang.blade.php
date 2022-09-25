@@ -45,7 +45,7 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <div class="d-flex flex-wrap">
+                        {{-- <div class="d-flex flex-wrap">
                             @foreach ($default as $item)
                                 <button type="button" onclick="addCart({{ $item->id }})"data-toggle="tooltip"
                                     title="Rp. {{ number_format($today === 'Sabtu' || 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
@@ -76,7 +76,7 @@
                                     @endif
                                 </span>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="col-lg-4 sticky">
