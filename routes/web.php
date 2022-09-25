@@ -29,6 +29,14 @@ Route::get('/', function () {
     }
     return view('Login');
 });
+// Route::get('/', function () {
+//     if (Auth::user('role_id') == '2') {
+//         return redirect('/analisis-tamu');
+//     }else {
+//         return redirect('/scan-tamu');
+//     }
+//     return view('Login');
+// });
 
 Route::post('/lupa-pasword',[AuthController::class, 'email_test'])->name('email_test');
 
@@ -57,11 +65,11 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     Route::post('/edit-admin/{users}', [AdminController::class, 'update'])->name('admin.edit');
     Route::get('/daftar-admin/destroy/{id}', [AdminController::class,'delete',])->name('hapus-admin');
     Route::get('aktifitas', [AdminController::class, 'aktifitas'])->name('admin.aktifitas');
-    Route::get('/package/destroy/{id}', [PackageController::class,'destroy'])->name('package.destroy');
     Route::post('/package/store', [PackageController::class, 'store'])->name('package.store');
     Route::get('/package/edit/{package}', [PackageController::class, 'edit'])->name('package.edit');
     Route::post('/package/update/{id}', [PackageController::class,'update'])->name('package.update');
     Route::resource('package', PackageController::class)->except(['show','update']);
+    Route::get('/package/destroy/{id}', [PackageController::class,'destroy'])->name('package.destroy');
     Route::resource('riwayat-invoice', InvoiceController::class)->except(['show','update']);
     Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name('show');
     route::get('/invoice_cetakpdf/{id}', [InvoiceController::class, 'cetak_pdf'])->name('cetak_pdf');
@@ -71,14 +79,13 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
 //Level admin dan superadmin
 Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::resource('analisis-tamu', DashboardController::class);
-    Route::get('/visitor/qrcode', [ScanqrController::class, 'checkQRCode'])->name('visitor.qrcode');
     Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name('scan-tamu');
+    Route::get('/visitor/qrcode', [ScanqrController::class, 'checkQRCode'])->name('visitor.qrcode');
     Route::get('qrcode/{id}', [ScanqrController::class, 'generate'])->name('generate');
     Route::get('/kartu-tamu', [ScanqrController::class, 'kartutamu'])->name('kartu-tamu');
     Route::get('/kartu-member/{e}', [ScanqrController::class, 'show_detail'])->name('detail-scan')->middleware('signed');
     Route::post('update/deposit/{id}', [ScanqrController::class, 'update_deposit'])->name('update.deposit')->middleware('signed');
     Route::get('/daftar-tamu', [TamuController::class, 'index'])->name('daftar-tamu');
-    Route::get('/daftar-tamu/destroy/{id}', [TamuController::class,'delete'])->name('hapus-tamu');
     Route::get('/tambah-tamu', [TamuController::class, 'tambahtamu'])->name('tambah-tamu');
     Route::post('/inserttamu', [TamuController::class, 'inserttamu'])->name('inserttamu');
     Route::get('/edit-tamu', [TamuController::class, 'edit'])->name('edit-tamu');

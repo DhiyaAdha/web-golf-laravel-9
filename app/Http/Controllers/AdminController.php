@@ -121,7 +121,7 @@ class AdminController extends Controller
             'type' => 'UPDATE',
             'activities' => 'Mengubah user <b>' . $user->name . '</b>',
         ]);
-        return redirect()->route('daftar-admin')->with('success', 'Paket berhasil diupdate');
+        return redirect()->route('daftar-admin')->with('success', 'Berhasil Edit Admin');
     }
 
     /**
@@ -200,7 +200,7 @@ class AdminController extends Controller
             ],
             [
                 'name.required' => 'Nama admin masih kosong.',
-                'name.unique' => 'Nama admin sudah ada',
+                'name.unique' => 'Email admin sudah ada',
                 'email.required' => 'Nama admin masih kosong.',
                 'email.unique' => 'Nama admin sudah ada',
                 'phone.required' => 'Nomer Hp admin masih kosong.',

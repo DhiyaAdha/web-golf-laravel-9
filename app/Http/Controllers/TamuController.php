@@ -468,7 +468,8 @@ class TamuController extends Controller
     {
         $decrypt_id = Crypt::decryptString($id);
         $visitor = Visitor::find($decrypt_id);
-        return view('tamu.edit-tamu', compact('visitor'));
+        $limit = LogLimit::where('visitor_id', $decrypt_id)->first();
+        return view('tamu.edit-tamu', compact('visitor','limit'));
     }
 
     /**
