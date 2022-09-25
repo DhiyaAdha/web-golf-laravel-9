@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Checkout</title>
+    <title>{{ $order_number }}</title>
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.PNG') }}">
     <link rel="icon" href="{{ asset('tgcc144.PNG') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
@@ -13,6 +13,7 @@
     <link href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet"
         type="text/css">
     <link href="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.css') }}" rel="stylesheet"type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <style>
         .panel-green {
@@ -34,6 +35,10 @@
 
         .pd-1 {
             padding: 1rem 0;
+        }
+
+        .font-weight-bold {
+            padding: 0px 15px;
         }
 
         .table td,
@@ -73,6 +78,12 @@
             <div class="d-flex justify-content-center align-items-center" style="margin: 1rem 0;">
                 <div class="col-md-12">
                     <div class="card">
+                        <div class="d-flex">
+                            <span class="font-weight-bold flex-grow-1"><i class="fa fa-money"></i> Bayar
+                                Billing :
+                                #{{ $order_number }}</span>
+                            <span class="font-weight-bold"> Tamu : {{ $visitor->name }}</span>
+                        </div>
                         <div class="d-flex flex-wrap pd-1">
                             <div class="col-md-4">
                                 <div class="card">
@@ -82,7 +93,7 @@
                                             <div class="d-flex">
                                                 <span class="flex-grow-1 text-big">Rp</span>
                                                 <span class=" text-big"
-                                                    id="balance">{{ formatrupiah($deposit->balance) ?? 'None' }}</span>
+                                                    id="balance">{{ formatrupiah($deposit->balance) ?? '0' }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -95,7 +106,7 @@
                                             <span class="text-capitalize">Limit Kupon</span>
                                             <div class="d-flex">
                                                 <span class=" text-big"
-                                                    id="kupon">{{ $log_limit->quota_kupon ?? 'None' }}</span>
+                                                    id="kupon">{{ $log_limit->quota_kupon ?? '0' }}</span>
                                                 <span></span>
                                             </div>
                                         </div>
@@ -110,7 +121,7 @@
                                             <span class="text-capitalize">Limit Bulanan</span>
                                             <div class="d-flex">
                                                 <span class="text-big"
-                                                    id="limit">{{ $log_limit->quota ?? 'None' }}</span>
+                                                    id="limit">{{ $log_limit->quota ?? '0' }}</span>
                                                 <span></span>
                                             </div>
                                         </div>
@@ -118,57 +129,44 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <form>
-                                <div class="form-group">
-                                    <label for="payment-type">Pilih jenis pembayaran</label>
-                                    <select class="form-control" id="payment-type">
-                                        <option value="" disabled selected>Jenis pembayaran</option>
-                                        <option value="1">Limit Bulanan</option>
-                                        <option value="2">Limit Kupon</option>
-                                        <option value="3">Cash/Transfer</option>
-                                        <option value="4">Deposit</option>
-                                    </select>
+                        <div class="d-flex flex-wrap pd-1">
+                            <div class="col-md-7">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="payment-type">Pilih jenis pembayaran</label>
+                                        <select class="form-control" id="payment-type">
+                                            <option value="" disabled selected>Jenis pembayaran</option>
+                                            <option value="1">Limit Bulanan</option>
+                                            <option value="2">Limit Kupon</option>
+                                            <option value="3">Cash/Transfer</option>
+                                            <option value="4">Deposit</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" id="cash-transfer"></div>
+
+                                    <div class="d-flex justify-content-start pd-1">
+                                        <a href="javascript:void(0)" id="print"
+                                            class="d-flex align-items-center btn btn-sm btn-primary mr-2"><i
+                                                class="fa fa-print mr-2"></i> Invoice</a>
+                                        <a href="javascript:void(0)" id="pay"
+                                            class="btn btn-sm btn-success">Bayar</a>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="d-flex-flex-column">
+                                    <div class="d-flex flex-column">
+                                        <div class="d-flex">
+                                            <span class="flex-grow-1">Jumlah order</span>
+                                            <span>{{ count($orders) }}</span>
+                                        </div>
+                                        <div class="d-flex">
+                                            <span class="flex-grow-1">Total bayar</span>
+                                            <span>Rp. {{ formatrupiah($totalPrice) }}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group" id="cash-transfer"></div>
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <td><strong>Item</strong></td>
-                                                <td class="text-center"><strong>Harga</strong></td>
-                                                <td class="text-center"><strong>Jumlah</strong></td>
-                                                <td class="text-right"><strong>Total</strong></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($orders as $item)
-                                                <tr>
-                                                    <td>{{ $item['item']['name'] }}</td>
-                                                    <td class="text-center">{{ $item['price'] }}</td>
-                                                    <td class="text-center">{{ $item['quantity'] }}</td>
-                                                    <td class="text-right">{{ $item['price'] }}</td>
-                                                </tr>
-                                            @endforeach
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td class="text-center"><strong>Jumlah Item</strong></td>
-                                                <td class="text-right">{{ $totalQuantity }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td class="text-center"><strong>Total</strong></td>
-                                                <td class="text-right">Rp. {{ formatrupiah($totalPrice) }}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="d-flex justify-content-end pd-1">
-                                    <a href="javascript:void(0)" id="pay" class="btn btn-sm btn-success">Bayar</a>
-                                </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -180,6 +178,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
     <script src="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.js') }}"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.min.js') }}"></script>
     <script>
         $(document).ready(function() {
@@ -199,10 +198,12 @@
             $(document).on('change', '#payment-type', function(e) {
                 e.preventDefault();
                 let type = $(this).val();
-                const queryString = window.location.href;
-                const splitByForwardSlash = queryString.split('/');
+                var tg = window.location.href;
+                tg = tg.split("?")
+                tg = tg[0];
+                tg = tg.split("/");
+                page = tg[tg.length - 1];
 
-                splitByForwardSlash[splitByForwardSlash.length - 1]
                 if (type == 3) {
                     $('#cash-transfer').html(
                         `<label for="cash">Pembayaran cash</label>
@@ -224,7 +225,7 @@
                     type: 'GET',
                     data: {
                         type: type,
-                        param: splitByForwardSlash[4]
+                        param: page
                     },
                     url: "{{ route('select.type') }}",
                     beforeSend: function(request) {

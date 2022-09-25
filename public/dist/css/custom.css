@@ -382,6 +382,15 @@ h6.panel-title.text-center {
         min-height: 1px;
         padding-right: 15px;
     }
+    .col-md-4 {
+        width: 33.33333333% !important;
+    }
+}
+
+@media (min-width: 1200px){
+    .col-lg-4 {
+        width: 33.33333333% !important;
+    }
 }
 
 .box-footer {

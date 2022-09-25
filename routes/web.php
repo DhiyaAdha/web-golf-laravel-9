@@ -103,9 +103,11 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/proses', [OrderController::class, 'index'])->name('proses');
     Route::get('/cart/{id}', [OrderController::class, 'index'])->name('order.cart');
     Route::resource('cart', OrderController::class);
-    Route::get('/cart/add/{package}', [OrderController::class, 'add'])->name('cart.add');
-    Route::get('/cart/remove/{package}',[OrderController::class, 'remove'])->name('cart.remove');
-    Route::get('/cart/remove/all/{package}',[OrderController::class, 'remove_all'])->name('cart.remove_all');
-    Route::get('/checkout/{id}', [OrderController::class,'checkout'])->name('checkout')->middleware('signed');
+    Route::post('/cart/add/{package}', [OrderController::class, 'add'])->name('cart.add');
+    Route::post('/cart/remove/{package}',[OrderController::class, 'remove'])->name('remove.item');
+    Route::post('/cart/clear',[OrderController::class, 'clear_cart'])->name('cart.clear');
+    Route::get('/checkout/{id}', [OrderController::class,'checkout'])->name('checkout');
     Route::get('/select', [OrderController::class,'select'])->name('select.type');
+    Route::post('/qty/minus/{id}', [OrderController::class,'minus'])->name('qty.minus');
+    Route::post('/update/qty/{id}', [OrderController::class,'update_qty'])->name('update.qty');
 });

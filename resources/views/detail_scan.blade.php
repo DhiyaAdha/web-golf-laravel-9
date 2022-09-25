@@ -94,7 +94,7 @@
                     <div class="panel panel-default panel-dropdown card-view">
                         <div class="panel-heading d-flex justify-content-start k">
                             <div class="pull-left">
-                                <h6 class="panel-title txt-dark">Sisa Limit dan Deposit
+                                <h6 class="panel-title txt-dark">Sisa Limit dan Saldo
                                     <strong>{{ $visitor->name }}</strong>
                                 </h6>
                             </div>
@@ -104,7 +104,7 @@
                             <div class="panel-body">
                                 <div class="panel-green">
                                     <div class="d-flex flex-column color-white">
-                                        Deposit
+                                        Saldo
                                         <div class="mt-15">
                                             <div class="pull-left">
                                                 <strong>Rp</strong>
