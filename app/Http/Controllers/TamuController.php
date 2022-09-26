@@ -151,6 +151,7 @@ class TamuController extends Controller
             'visitor_id' => $visitors->id,
             'user_id' =>    Auth::user()->id,
             'report_quota' => $request->tipe_member == 'VIP' ? '4' : '10',
+            'status' => 'bertambah',
             'created_at' => Carbon::now(),
         ]);
         $report_quota->save();
@@ -158,7 +159,6 @@ class TamuController extends Controller
             'visitor_id' => $visitors->id,
             'report_limit_id' => $report_quota->id,
             'quota' => $request->tipe_member == 'VIP' ? '4' : '10',
-            'status' => 'bertambah',
             'created_at' => Carbon::now(),
         ]);
         $quota->save();
