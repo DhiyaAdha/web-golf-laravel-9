@@ -126,11 +126,20 @@
                             style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #111111; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; letter-spacing: 4px; line-height: 48px;">
                             {{-- <img src="{{ $message->embed(public_path() . '/img/icon-logo.svg') }}" width="90"
                                 height="90" style="display: block; border: 0px;" /> --}}
+                                {{-- <img src="{{ $message->embed(public_path(). '/tgcc144.PNG') }}" alt=""
+                                height="60px" width="30px"> <strong style="vertical-align: 25%; font-size:25px;">TGCC</strong> --}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#ffffff" align="center"
+                        style="padding: 
+                        1.1px 0px 50px 1.11px; color: #000000; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
+                            <img src="{{ $message->embed(public_path().'/tgcc144.png') }}" height="
+                            80px" width="50px"> <strong style="vertical-align:25%; font-size: 25px;">TGCC</strong>
                         </td>
                     </tr>
                     <tr>
                         <td bgcolor="#ffffff" align="center" valign="top"
-                            style="justify-content: center; padding: 0px 20px 0px 20px; border-radius: 4px 4px 0px 0px; color: #01C853; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 25px; font-weight: 600; letter-spacing: 4px; line-height: 48px;">
                             {{-- <div style="display:flex;justify-content: center;">
                                 <img class="brand-img" src="{{ asset('dist/img/tgcc_icon.svg') }}" alt="brand"
                                     width="30" height="30">
@@ -141,7 +150,7 @@
                                 <img src="{{ env('APP_URL') . 'img/success.svg' }}" width="50" height="50"
                                     style="display: block; border: 0px; margin: 15px;" />
                             </div> --}}
-                            <p style="margin: 0;text-align: center;">Member Terdaftar</p>
+                            <p style="color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px; margin: 0;text-align: center;">Member Terdaftar</p>
                         </td>
                     </tr>
                 </table>
@@ -166,28 +175,28 @@
                         <td bgcolor="#ffffff" align="left"
                             style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
                             <div style="display:flex;">
-                                <p style="margin: 0;">Alamat : </p>
-                                <p style="margin: 0;">{{ $data['address'] }}</p>
+                                <p style="margin: 0;">Alamat: </p>
+                                <p style="margin: 0;">&nbsp; {{ $data['address'] }}</p>
                             </div>
                             <div style="display:flex;">
-                                <p style="margin: 0;">Jenis Kelamin : </p>
-                                <p style="margin: 0;">{{ $data['gender'] }}</p>
+                                <p style="margin: 0;">Jenis Kelamin: </p>
+                                <p style="margin: 0;">&nbsp; {{ $data['gender'] }}</p>
                             </div>
                             <div style="display:flex;">
-                                <p style="margin: 0;">Phone : </p>
-                                <p style="margin: 0;">{{ $data['phone'] }}</p>
+                                <p style="margin: 0;">Phone: </p>
+                                <p style="margin: 0;">&nbsp; {{ $data['phone'] }}</p>
                             </div>
                             <div style="display:flex;">
-                                <p style="margin: 0;">Perusahaan : </p>
-                                <p style="margin: 0;">{{ $data['company'] }}</p>
+                                <p style="margin: 0;">Perusahaan: </p>
+                                <p style="margin: 0;">&nbsp; {{ $data['company'] }}</p>
                             </div>
                             <div style="display:flex;">
-                                <p style="margin: 0;">Jabatan:</p>
-                                <p style="margin: 0;">{{ $data['position'] }}</p>
+                                <p style="margin: 0;">Jabatan: </p>
+                                <p style="margin: 0;">&nbsp; {{ $data['position'] }}</p>
                             </div>
                             <div style="display:flex;">
-                                <p style="margin: 0;">Tipe Member:</p>
-                                <p style="margin: 0;">{{ $data['tipe_member'] }}</< /p>
+                                <p style="margin: 0;">Tipe Member: </p>
+                                <p style="margin: 0;">&nbsp; {{ $data['tipe_member'] }}</< /p>
                             </div>
                         </td>
                     </tr>

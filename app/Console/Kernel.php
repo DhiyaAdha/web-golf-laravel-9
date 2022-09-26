@@ -34,13 +34,22 @@ class Kernel extends ConsoleKernel
             LogLimit::whereHas('visitor', function($query) {
                 $query->where('tipe_member', 'VIP');
             })->update(['quota'=>4]);
-
+            
             $visitor = Visitor::all();
+            
+            // ReportLimit::create([
+            //     'visitor_id' => $visitor->id,
+            //     'user_id' => '3',
+            //     'report_quota' => 'VVIP' == 'VIP' ? '4' : '10',
+            //     'status' => 'reset',
+            //     'created_at' => Carbon::now(),
+            // ]);
             foreach($visitor as $value){
                 ReportLimit::create([
-                    'visitor_id' => $value->id,
-                    'user_id' => Auth::user()->id,
-                    'report_quota' => $value->tipe_member == 'VIP' ? '4' : '10',
+                    'visitor_id' => $value['id'],
+                    'user_id' => '1',
+                    'report_quota' => $value['tipe_member'] == 'VIP' ? '4' : '10',
+                    'status' => 'reset',
                     'created_at' => Carbon::now(),
                 ]);
             }

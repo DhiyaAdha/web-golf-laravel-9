@@ -19,7 +19,8 @@ class CreateReportLimitsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('report_quota')->default(0);
             $table->integer('report_quota_kupon')->default(0);
-            $table->enum('status',['reset', 'berkurang']);
+            $table->enum('status',['Reset', 'Bertambah','Berkurang']);
+            $table->string('activities')->nullable();
             $table->timestamps();
             
             $table->foreign('visitor_id')

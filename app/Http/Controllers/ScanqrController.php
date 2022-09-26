@@ -213,6 +213,15 @@ class ScanqrController extends Controller
                 'type' => 'CREATE',
                 'activities' => 'Berhasil menambah deposit <b>'.$request->balance.'</b> atas nama <b>'.$visitor->name.'</b>',
             ]);
+            
+            ReportDeposit::create([
+                'payment_type' => $request->payment_type,
+                'visitor_id' => $get_uri[3],
+                'user_id' => Auth::id(),
+                'activities' => 'Deposit <b>' . $request->name . ' bertambah menjadi <b>Rp.' .number_format($request->balance, 0, ',', '.') . '</b>',
+                'report_balance' => $request->balance,
+            ]);
+
             return redirect()->back()->with('success','Berhasil menambah deposit');
         } catch (\Throwable $th) {
             return response()->json($this->getResponse());

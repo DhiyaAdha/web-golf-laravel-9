@@ -88,7 +88,11 @@ class AuthController extends Controller {
                 ],
             ];
             //  return response()->json($respon, 200);
-            return redirect()->intended('/analisis-tamu');
+            if($user->role_id == 2){
+                return redirect()->intended('/analisis-tamu')->with('success', 'Selamat Datang Admin '.$user->name.'');
+            }else {
+                return redirect()->intended('/scan-tamu')->with('success', 'Selamat Datang Admin '.$user->name.''); 
+            }
             // dd(session()->all());
         }
     }
@@ -113,7 +117,7 @@ class AuthController extends Controller {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
+        return redirect('/')->with('success','Anda Berhasil Logout');
     }
     //ini untuk function reset password, email yang di input akan dicek
     public function resetPassword(Request $request){

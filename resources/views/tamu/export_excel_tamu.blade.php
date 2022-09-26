@@ -13,6 +13,9 @@
                 <th class="" style="text-align:center"><strong>Nama</strong></th>
                 <th class="" style="text-align:center"><strong>Email</strong></th>
                 <th class="" style="text-align:center"><strong>Phone</strong></th>
+                <th class="" style="text-align:center"><strong>Alamat</strong></th>
+                <th class="" style="text-align:center"><strong>Posisi</strong></th>
+                <th class="" style="text-align:center"><strong>Perusahaan</strong></th>
                 <th class="" style="text-align:center"><strong>Tipe</strong></th>
             </tr>
         </thead>
@@ -22,6 +25,9 @@
                 <td>{{ $item->name }}</td>
                 <td style="text-align: center">{{ $item->email }}</td>
                 <td>{{ $item->phone }}</td>
+                <td>{{ $item->address }}</td>
+                <td>{{ $item->position }}</td>
+                <td>{{ $item->company }}</td>
                 <td>{{ $item->tipe_member }}</td>
             </tr>
         @endforeach

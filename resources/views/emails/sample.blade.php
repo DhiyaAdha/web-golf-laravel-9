@@ -101,7 +101,7 @@
     </style>
 </head>
 
-<body style="background-color: #f4f4f4; margin: 0 !important; padding: 0 !important;">
+<body style="background-color: #f4f4f4; margin: 0 !important; padding: 0 !important; max-width:100%">
     <!-- HIDDEN PREHEADER TEXT -->
     <div
         style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Lato', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
@@ -123,7 +123,7 @@
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                     <tr>
                         <td bgcolor="#ffffff" align="center" valign="top"
-                            style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #111111; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; letter-spacing: 4px; line-height: 48px;">
+                            style="padding: 1px 20px 20px 20px; border-radius: 1px 4px 0px 0px; color: #111111; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 1px; font-weight: 10; letter-spacing: 4px; line-height: 1px;">
                             {{-- <img src="{{ $message->embed(public_path() . '/img/icon-logo.svg') }}" width="90"
                                 height="90" style="display: block; border: 0px;" /> --}}
                         </td>
@@ -139,8 +139,16 @@
                         </td>
                     <tr>
                         <td bgcolor="#ffffff" align="center"
+                            style="padding: 
+                            1.1px 0px 50px 1.11px; color: #000000; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
+                            <img src="{{ asset('img/tggc.svg') }}" height=" 60px" width="30px"> <strong
+                                style="vertical-align:25%; font-size: 25px;">TGCC</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#ffffff" align="center"
                             style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;text-align: center;">Hallo, <strong>{{ $data['name'] }}</strong></p>
+                            <p style="margin: 0;text-align: center;">Hallo, Yudistira<strong></strong></p>
                         </td>
                     </tr>
         </tr>
@@ -160,13 +168,29 @@
                 <tr>
                     <td bgcolor="#ffffff" align="left"
                         style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                        <div style="display:flex;">
-                            <p style="margin: 0;">ID Anda : </p>
-                            <p style="margin: 0;">{{ $data['visitor_id'] }}</p>
+                        {{-- <div style="display:flex;">
+                            <p style="margin: 0;">Nama: </p>
+                            <p style="margin: 0;">&nbsp; {!! $data['name'] !!}</p>
                         </div>
                         <div style="display:flex;">
-                            <p style="margin: 0;">Sisa Deposit : </p>
-                            <p style="margin: 0;">{{ $data['balance'] }}</p>
+                            <p style="margin: 0;">Saldo Deposit Sebelumnya: </p>
+                            <p style="margin: 0;">&nbsp; Rp. {!! formatrupiah($data['sebelumdeposit']) !!}</p>
+                        </div> --}}
+                        <div style="display:flex;">
+                            <p style="margin: 0;">Anda Menambah Deposit Sejumlah: </p>
+                            <p style="margin: 0;">&nbsp; Rp. 150.000</p>
+                        </div>
+                        <div style="display:flex;">
+                            <p style="margin: 0;">Total Deposit Anda: </p>
+                            <p style="margin: 0;">&nbsp; Rp. 250.000</p>
+                        </div>
+                        <div style="display:flex;">
+                            <p style="margin: 0;">Sisa Limit Bulanan: </p>
+                            <p style="margin: 0;">&nbsp; 3 Kali</p>
+                        </div>
+                        <div style="display:flex;">
+                            <p style="margin: 0;">Sisa Limit Kupon: </p>
+                            <p style="margin: 0;">&nbsp; 10 Kali</p>
                         </div>
                     </td>
                 </tr>
