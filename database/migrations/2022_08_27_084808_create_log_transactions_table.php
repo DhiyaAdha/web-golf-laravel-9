@@ -15,14 +15,15 @@ class CreateLogTransactionsTable extends Migration
     {
         Schema::create('log_transactions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('order_number')->unique();
+            $table->string('order_number')->unique();
             $table->integer('visitor_id')->unsigned();
             $table->integer('user_id')->unsigned();
+            $table->longText('cart')->nullable();
             $table->enum('payment_type',['deposit', 'cash/transfer', 'limit bulanan', 'limit kupon']);
-            $table->integer('payment_status')->default(1);
+            $table->string('payment_status')->default(1);
             $table->integer('total');
             $table->string('activities')->nullable();
-            $table->timestamp('created_at');
+            $table->timestamps();
 
             $table->foreign('visitor_id')
                 ->references('id')

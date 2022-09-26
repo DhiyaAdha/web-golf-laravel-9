@@ -2,15 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use Throwable;
 use App\Models\Deposit;
 use App\Models\Package;
 use App\Models\Visitor;
+use App\Models\LogAdmin;
 use App\Models\LogLimit;
 use Darryldecode\Cart\Cart;
 use Illuminate\Http\Request;
+use App\Models\ReportDeposit;
+use App\Models\LogTransaction;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Session;
+use function PHPUnit\Framework\returnSelf;
 
 class OrderController extends Controller
 {
@@ -292,7 +300,6 @@ class OrderController extends Controller
     public function select(Request $request)
     {
         $type = $request->get('type');
-        $items = \Cart::session($request->get('param'))->getContent();
         $totalPrice = \Cart::session($request->get('param'))->getTotal();
         $deposit = Deposit::where('visitor_id', $request->get('param'))->first();
         $log_limit = LogLimit::where('visitor_id', $request->get('param'))->first();
@@ -339,6 +346,92 @@ class OrderController extends Controller
                 return response()->json($this->getResponse());
             }
         }
+    }
+
+    public function pay(Request $req) {
+        $visitor = Visitor::find($req->get('page'));
+        $items = \Cart::session($req->get('page'))->getContent();
+        $deposit = Deposit::where('visitor_id', $req->get('page'))->first();
+        $totalPrice = \Cart::session($req->get('page'))->getTotal();
+        if($req->get('single')){
+            if($req->get('single') == 4){
+                if($deposit->balance < $totalPrice){
+                    $this->setResponse('INVALID', "Deposit tidak terpenuhi");
+                    return response()->json($this->getResponse());
+                } else {
+                    try {
+                        $deposit->balance = $deposit->balance - $totalPrice;
+                        $report_deposit = ReportDeposit::where('visitor_id', $req->get('page'))->first();
+                        $report_deposit->report_balance = $report_deposit->report_balance - $totalPrice;
+                        $deposit->save();
+                        $report_deposit->save();  
+                        
+                        if(\Cart::isEmpty()){
+                            $cart_data = [];            
+                        } else {
+                            foreach($items as $row) {
+                                $cart[] = [
+                                    'rowId' => $row->id,
+                                    'name' => $row->name,
+                                    'qty' => $row->quantity,
+                                    'pricesingle' => $row->price,
+                                    'price' => $row->getPriceSum(),
+                                    'created_at' => $row->attributes['created_at'],
+                                ];           
+                            }
+                            $cart_data = collect($cart)->sortBy('created_at');
+                        }
+                        
+                        LogTransaction::create([
+                            'order_number' => $req->get('order_number'),
+                            'visitor_id' => $req->get('page'),
+                            'user_id' => Auth()->id(),
+                            'cart' => serialize($cart_data),
+                            'payment_type' => 'deposit',
+                            'payment_status' => 'paid',
+                            'total' => $totalPrice
+                        ]);
+
+                        LogAdmin::create([
+                            'user_id' => Auth::id(),
+                            'type' => 'CREATE',
+                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                        ]);
+
+                        \Cart::session($req->get('page'))->clear();
+                        if($req->ajax()){
+                            $this->setResponse('VALID', "Pembayaran berhasil");
+                            return response()->json($this->getResponse());
+                        }
+                    } catch (Throwable $e) {
+                        return response()->json($this->getResponse());
+                    }
+                }
+            }
+        }
+    }
+
+    public function print_invoice($id){
+        $visitor = Visitor::find($id);
+        $log_transaction = LogTransaction::where('visitor_id', $id)->latest()->first();
+        $cart = unserialize($log_transaction->cart);
+        $deposit = Deposit::where('visitor_id', $id)->first();
+        $total = 0;
+        $qty = 0;
+        foreach($cart as $get) {
+            $qty += $get['qty'];
+            $total += $get['price'];
+        }
+        $counted = ucwords(counted($total). ' Rupiah');
+        return view('print-invoice', compact(
+            'visitor', 
+            'log_transaction', 
+            'cart',
+            'deposit',
+            'total',
+            'counted',
+            'qty'
+        ));
     }
 
     private function setResponse($status = "INVALID", $message = "Ada sesuatu yang salah!", $data = [])

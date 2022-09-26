@@ -60,5 +60,10 @@ class Visitor extends Model
             ->orderBy('created_at', 'desc')
             ->first();
     }
+
+    public function orders()
+    {
+        return $this->hasMany(LogTransaction::class);
+    }
     
 }
