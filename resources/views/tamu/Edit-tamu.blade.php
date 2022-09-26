@@ -76,7 +76,7 @@
                                                 id="phone" size="50px" placeholder="Masukan Nomer Hp" required
                                                 autofocus>
                                         </div>
-                                        
+
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
@@ -103,12 +103,15 @@
                                                 </div> --}}
 
                                                 <label class="switch">
-                                                    <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" value="VIP" name="tipe_member">
-                                                    <input type="checkbox" name="tipe_member" type="checkbox" id="tipe" value="VVIP" {{ $visitor->tipe_member == 'VVIP' ? ' checked' : '' }}>
+                                                    <input class="cmn-toggle cmn-toggle-round-flat" type="hidden"
+                                                        value="VIP" name="tipe_member">
+                                                    <input type="checkbox" name="tipe_member" type="checkbox"
+                                                        id="tipe" value="VVIP"
+                                                        {{ $visitor->tipe_member == 'VVIP' ? ' checked' : '' }}>
                                                     <div class="slider round switch">
                                                         <!--ADDED HTML -->
                                                         <span class="off">VIP</span>
-                                                        <span class="on">VVIP</span> 
+                                                        <span class="on">VVIP</span>
                                                         <!--END-->
                                                     </div>
                                                 </label>

@@ -45,10 +45,12 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        {{-- <div class="d-flex flex-wrap">
+                        <div class="d-flex flex-wrap">
                             @foreach ($default as $item)
-                                <a href="{{ route('cart.add', ['package' => $item->id]) }}"
-                                    class="btn btn-default txt-success mr-15 mb-15">{{ $item->name }}</a>
+                                <button type="button" id="package-{{ $item->id }}"
+                                    onclick="addCart({{ $item->id }})"data-toggle="tooltip"
+                                    title="Rp. {{ number_format($today === 'Sabtu' || 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
+                                    class="btn btn-default txt-success mr-15 mb-15">{{ $item->name }}</button>
                             @endforeach
                         </div>
                         <div class="panel-heading">
@@ -59,22 +61,24 @@
                         </div>
                         <div class="d-flex flex-wrap mb-15">
                             @foreach ($additional as $item)
-                                <a href="{{ route('cart.add', ['package' => $item->id]) }}"
-                                    class="btn btn-default txt-success mr-15 mb-15">{{ $item->name }}</a>
+                                <button type="button" id="package-{{ $item->id }}"
+                                    onclick="addCart({{ $item->id }})" data-toggle="tooltip"
+                                    title="Rp. {{ number_format($today === 'Sabtu' || 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
+                                    class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
                             @endforeach
                         </div>
                         <div class="panel-heading fk d-flex align-items-center">
                             <div class="d-flex align-items-center justify-content-between" style="width: 100%">
                                 <span class="text-size">Terbilang</span>
                                 <span class="counted">
-                                    @if (!Session::has('cart'))
+                                    @if (count($cart_data) < 1)
                                         -
                                     @else
                                         {{ $counted }}
                                     @endif
                                 </span>
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-4 sticky">
@@ -85,7 +89,7 @@
                                 <a href="javascript:void(0)" style="position: relative">
                                     <i class="fa fa-shopping-cart"></i>
                                     <span class="top-nav-icon-badge" style="position: absolute"
-                                        id="qty">{{ $totalQuantity }}</span>
+                                        id="qty">{{ count($cart_data) }}</span>
                                 </a>
                                 <div class="clearfix"></div>
                             </div>
@@ -100,51 +104,54 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        @if (!Session::has('cart'))
-                            <div style="height: 242px;" class="d-flex justify-content-center align-items-center isi-">
-                                <span class="not-found text-muted">Keranjang masih kosong</span>
-                            </div>
-                        @else
-                            <div style="overflow-x: scroll; height: 242px;" class="isi-">
-                                @foreach ($orders as $item)
-                                    <div class="panel-heading g">
-                                        <div class="pull-left d-flex align-items-center">
-                                            <p class="text-muted">{{ $item['item']['name'] }}</p>
-                                        </div>
-                                        <div class="pull-right mr-5">
-                                            <div class="d-flex">
-                                                <p class="text-muted mr-15">{{ $item['price'] }}</p>
-                                                <a href="javascript:void(0)" data-item-name="{{ $item['item']['name'] }}"
-                                                    data-item="{{ key($orders) }}" id="remove-item"><i
-                                                        class="fa fa-trash-o"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="clearfix"></div>
+                        @if (count($cart_data) > 0)
+                            <div style="overflow-y: scroll;height: 242px;" id="isi-">
+                                @foreach ($cart_data as $index => $item)
+                                    <div class="d-flex pl disabled-cart-{{ $item['rowId'] }}"
+                                        style="padding: 10px 0px 10px 0px;">
+                                        <p class="flex-grow-1 text-muted mr-5">{{ Str::words($item['name'], 3) }}
+                                        </p>
+                                        <p class="text-muted price-{{ $item['rowId'] }}">
+                                            Rp.{{ number_format($item['price'], 0, ',', '.') }}</p>
+                                        <button onclick="updateQTY({{ $item['rowId'] }}, 'minus')"><i
+                                                class="cart-qty-minus-{{ $item['rowId'] }} fa fa-minus-square"></i></button>
+                                        <input type="number" min="0" class="qty-{{ $item['rowId'] }}"
+                                            value="{{ $item['qty'] }}" style="width: 30px;" readonly />
+                                        <button onclick="updateQTY({{ $item['rowId'] }}, 'plus')"><i
+                                                class="cart-qty-plus-{{ $item['rowId'] }} fa fa-plus-square"></i></button>
+                                        <button class="mr-10 ml-10" data-toggle="tooltip" title="Hapus"
+                                            onclick="removeItem({{ $item['rowId'] }})" id="remove-item"
+                                            style="color:red;"><i class="fa fa-trash-o"></i></button>
                                     </div>
                                 @endforeach
                             </div>
+                        @else
+                            <div id="disabled-empty" style="height: 242px;"
+                                class="d-flex justify-content-center align-items-center">
+                                <span class="not-found text-muted">Keranjang masih kosong</span>
+                            </div>
                         @endif
-
-                        <div class="panel-heading gu">
-                            <div class="pull-left">
-                                <strong class="txt-dark">Total</strong>
+                        <div id="total"></div>
+                        <div id="append-checkout"></div>
+                        @if (count($cart_data) > 0)
+                            <div class="d-flex">
+                                <strong class="flex-grow-1 txt-dark">Total</strong>
+                                <strong class="txt-dark" id="total-pay">Rp.
+                                    {{ number_format($data_total['total'], 0, ',', '.') }}</strong>
                             </div>
-                            <div class="pull-right">
-                                <strong class="txt-dark" id="total-pay">Rp. {{ $totalPrice }}</strong>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        @if (Session::has('cart'))
-                            <div class="pull-left">
-                                <button type="reset" data-order="{{ key($orders) }}" id="reset-order"
-                                    class="mt-15 mb-15 btn-xs btn btn-primary btn-anim">
+                            <div id="disabled-checkout"></div>
+                            <div class="d-flex justify-content-between active-checkout">
+                                <button type="button" id="reset-order"
+                                    class="mt-15 mb-15 btn-xs btn btn-danger btn-anim">
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Reset</span>
                                 </button>
-                            </div>
-                            <div class="pull-right">
-                                <button type="button" id="checkout" data-checkout="{{ $url_checkout }}"
-                                    data-url="{{ \Request::segment(2) }}"
+                                <button type="reset" id="riwayat"
+                                    class="mt-15 mb-15 btn-xs btn btn-primary btn-anim">
+                                    <i class="icon-rocket"></i>
+                                    <span class="btn-text">Riwayat</span>
+                                </button>
+                                <button type="button" id="checkout"
                                     class="mt-15 mb-15 btn-xs btn btn-success btn-anim">
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Checkout</span>
@@ -195,7 +202,10 @@
 @endsection
 @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script>
+        $('[data-toggle="tooltip"]').tooltip();
+
         function checkout(url, title) {
             popupCenter(url, title, 1000, 500);
         }
@@ -218,83 +228,216 @@
             if (window.focus) newWindow.focus();
         }
 
-        $(document).on('click', '#remove-item', function() {
-            var key = $(this).data('item');
-            var name = $(this).data('item-name');
-            var url = "{{ route('cart.remove', [':package']) }}";
-            url = url.replace(':package', key);
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        function loading() {
+            $.blockUI({
+                css: {
+                    backgroundColor: 'transparent',
+                    border: 'none'
+                },
+                message: '<img src="../img/rolling.svg">',
+                baseZ: 1500,
+                overlayCSS: {
+                    backgroundColor: '#7C7C7C',
+                    opacity: 0.4,
+                    cursor: 'wait'
                 }
             });
-            $.ajax({
-                type: 'GET',
-                url: url,
-                success: function(response) {
-                    $.toast({
-                        text: 'Item ' + name + ' terhapus',
-                        position: 'top-right',
-                        loaderBg: '#fec107',
-                        icon: 'success',
-                        hideAfter: 1000,
-                        stack: 6
-                    });
-                    window.setTimeout(function() {
-                        location.reload();
-                    }, 1200);
-                }
-            });
-        });
+        }
 
-        $(document).on('click', '#checkout', function() {
-            const current_url = $(this).data('url');
-            const check = $(this).data('checkout');
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
+        function formatIDR(price) {
+            var number_string = price.toString(),
+                split = number_string.split(','),
+                remainder = split[0].length % 3,
+                idr = split[0].substr(0, remainder),
+                thousand = split[0].substr(remainder).match(/\d{1,3}/gi);
+            if (thousand) {
+                separator = remainder ? '.' : '';
+                idr += separator + thousand.join('.');
+            }
+            return split[1] != undefined ? idr + ',' + split[1] : idr;
+        }
+
+        function addCart(id) {
+            var url = window.location.href;
+            url = url.split("?")
+            url = url[0];
+            url = url.split("/");
+            page = url[url.length - 1];
+
+            var url = "{{ route('cart.add', ':package') }}";
+            url = url.replace(':package', id);
             $.ajax({
                 async: true,
-                type: 'GET',
-                url: check,
-                beforeSend: function(request) {
-                    $.blockUI({
-                        css: {
-                            backgroundColor: 'transparent',
-                            border: 'none'
-                        },
-                        message: '<img src="../img/rolling.svg">',
-                        baseZ: 1500,
-                        overlayCSS: {
-                            backgroundColor: '#7C7C7C',
-                            opacity: 0.4,
-                            cursor: 'wait'
-                        }
-                    });
+                type: 'POST',
+                url: url,
+                data: {
+                    url: url,
+                    page: page
                 },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                beforeSend: function(request) {
+                    loading();
+                },
+                dataType: 'json',
                 success: function(response) {
                     $.unblockUI();
+                    if (response.status == "INVALID") {
+                        swal({
+                            title: "",
+                            type: "error",
+                            text: "Sudah ditambahkan",
+                            confirmButtonColor: "#01c853",
+                        });
+                        return false;
+                    }
                     swal({
                         title: "",
                         type: "success",
-                        text: "Order berhasil dibuat",
+                        text: "Item " + response.name + " ditambahkan",
                         confirmButtonColor: "#01c853",
                     }, function(isConfirm) {
-                        checkout(check, 'testing');
-                        $('#checkout').attr('disabled', true);
+                        location.reload();
                     });
                 }
             });
-        });
+        }
+
+        function updateQTY(id, type) {
+            var tg = window.location.href;
+            tg = tg.split("?")
+            tg = tg[0];
+            tg = tg.split("/");
+            page = tg[tg.length - 1];
+
+            let $n = $(".qty-" + id);
+            if (type === 'plus') {
+                $n.val(Number($n.val()) + 1);
+                $.toast({
+                    text: 'Item bertambah ' + $n.val(),
+                    position: 'top-right',
+                    loaderBg: '#fec107',
+                    icon: 'success',
+                    hideAfter: 700,
+                    stack: 6
+                });
+            } else {
+                if ($n.val() == 0) {
+                    $('.disabled-cart-' + id).css('background', 'tomato');
+                    $('.disabled-cart-' + id).fadeOut(800, function() {
+                        $(this).remove();
+                    });
+                } else {
+                    $n.val(Number($n.val()) - 1);
+                    $.toast({
+                        text: 'Item berkurang ' + $n.val(),
+                        position: 'top-right',
+                        loaderBg: '#fec107',
+                        icon: 'success',
+                        hideAfter: 700,
+                        stack: 6
+                    });
+                }
+            }
+            let url = "{{ route('update.qty', ':id') }}";
+            url = url.replace(':id', id);
+            $.ajax({
+                async: true,
+                type: 'POST',
+                url: url,
+                data: {
+                    id: id,
+                    type: type,
+                    page: page
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                success: function(response) {
+                    $('.price-' + response.id).text('Rp. ' + formatIDR(response.qty * response.price));
+                    $("#total-pay").text('Rp. ' + formatIDR(response.total));
+                    $('.counted').text(response.counted);
+                    if ($n.val() == 0) {
+                        $('.disabled-cart-' + response.id).remove();
+                    }
+                    if (response.cart.length != 0) {
+                        $('#qty').text(response.cart.length);
+                    } else {
+                        $('#isi-').append(`<span class="not-found text-muted">Keranjang masih kosong</span>`)
+                            .addClass('d-flex justify-content-center align-items-center');
+                        $('.active-checkout').remove();
+                        $('#disabled-checkout').html(`<button type="submit" class="mt-15 mb-15 btn-xs btn-block btn btn-success btn-anim"
+                                                            id="disabled-pay">
+                                                            <i class="icon-rocket"></i>
+                                                            <span class="btn-text">Checkout</span>
+                                                        </button>`);
+                        $('#qty').text('0');
+                    }
+                }
+            });
+        }
+
+        function removeItem(id) {
+            var tg = window.location.href;
+            tg = tg.split("?")
+            tg = tg[0];
+            tg = tg.split("/");
+            page = tg[tg.length - 1];
+
+            var url = "{{ route('remove.item', ':package') }}";
+            url = url.replace(':package', id);
+            $('.disabled-cart-' + id).css('background', 'tomato');
+            $('.disabled-cart-' + id).fadeOut(800, function() {
+                $(this).remove();
+            });
+            $.ajax({
+                async: true,
+                type: 'POST',
+                url: url,
+                data: {
+                    url: url,
+                    page: page
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                beforeSend: function(request) {
+                    loading();
+                },
+                dataType: 'json',
+                success: function(response) {
+                    $.unblockUI();
+                    $("#total-pay").text('Rp. ' + formatIDR(response.total));
+                    $('.counted').text(response.counted);
+                    var qty = $('#qty').text();
+                    $('#qty').text(qty - 1);
+                    console.log(response.cart.length)
+                    if (response.cart.length == 0) {
+                        $('#isi-').html(`<span class="not-found text-muted">Keranjang masih kosong</span>`)
+                            .addClass('d-flex justify-content-center align-items-center');
+                        $('.active-checkout').remove();
+                        $('#disabled-checkout').html(`<button type="submit" class="mt-15 mb-15 btn-xs btn-block btn btn-success btn-anim"
+                                                        id="disabled-pay">
+                                                        <i class="icon-rocket"></i>
+                                                        <span class="btn-text">Checkout</span>
+                                                    </button>`);
+                    }
+                }
+            });
+        }
 
         $(document).on('click', '#reset-order', function() {
-            var key = $(this).data('order');
-            var url = "{{ route('cart.remove_all', [':package']) }}";
-            url = url.replace(':package', key);
+            var tg = window.location.href;
+            tg = tg.split("?")
+            tg = tg[0];
+            tg = tg.split("/");
+            page = tg[tg.length - 1];
+
+            var url = "{{ route('cart.clear') }}";
             swal({
-                title: "Anda yakin reset order semua?",
+                title: "Anda yakin ingin reset keranjang?",
                 imageUrl: "../img/Warning.svg",
                 showCancelButton: true,
                 confirmButtonColor: "#FF2A00",
@@ -305,9 +448,17 @@
             }, function(isConfirm) {
                 if (isConfirm) {
                     $.ajax({
+                        async: true,
+                        type: 'POST',
                         url: url,
-                        beforeSend: function() {
-                            $('#ok_button').text('Hapus Order');
+                        data: {
+                            page: page
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        beforeSend: function(request) {
+                            loading();
                         },
                         success: function(data) {
                             swal({
@@ -316,6 +467,7 @@
                                 text: "Order berhasil dihapus",
                                 confirmButtonColor: "#01c853",
                             }, function(isConfirm) {
+                                $.unblockUI();
                                 location.reload();
                             });
                         }
@@ -325,6 +477,40 @@
                 }
             });
             return false;
+        });
+
+        $(document).on('click', '#checkout', function() {
+            var tg = window.location.href;
+            tg = tg.split("?")
+            tg = tg[0];
+            tg = tg.split("/");
+            page = tg[tg.length - 1];
+            let url = "{{ route('checkout', ':id') }}";
+            url = url.replace(':id', page);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                async: true,
+                type: 'GET',
+                url: url,
+                beforeSend: function(request) {
+                    loading();
+                },
+                success: function(response) {
+                    $.unblockUI();
+                    swal({
+                        title: "",
+                        type: "success",
+                        text: "Order berhasil dibuat",
+                        confirmButtonColor: "#01c853",
+                    }, function(isConfirm) {
+                        checkout(url, response.order_number);
+                    });
+                }
+            });
         });
 
         $(document).on('click', '#disabled-pay', function() {
@@ -384,14 +570,14 @@
                     "data": function(data) {
                         if (data.status == 0) {
                             return `<div class="checkbox checkbox-success checkbox-circle">
-                                    <input id="checkbox-10" type="checkbox" disabled checked="" data-toggle="tooltip" data-placement="top" title="ON">
-                                    <label for="checkbox-10"></label>
-                                </div>`;
+                                <input id="checkbox-10" type="checkbox" disabled checked="" data-toggle="tooltip" data-placement="top" title="ON">
+                                <label for="checkbox-10"></label>
+                            </div>`;
                         } else {
                             return `<div class="checkbox checkbox-danger checkbox-circle">
-                                    <input id="checkbox-12" type="checkbox" disabled checked=""data-toggle="tooltip" data-placement="top" title="OFF">
-                                    <label for="checkbox-12"></label>
-                                </div>`;
+                                <input id="checkbox-12" type="checkbox" disabled checked=""data-toggle="tooltip" data-placement="top" title="OFF">
+                                <label for="checkbox-12"></label>
+                            </div>`;
                         }
                     }
                 }
