@@ -34,7 +34,8 @@
 <script src="{{ asset('vendors/chart.js/Chart.min.js') }}"></script>
 
 <!-- Bootstrap Switches CSS -->
-<script src="{{ asset('vendors/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') }}"></script>
+<script src="{{ asset('vendors/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') }}">
+</script>
 <!-- <link href="{{ asset('vendors/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') }}" rel="stylesheet" type="text/css" /> -->
 <script src="{{ asset('vendors/bower_components/bootstrap-switch/dist/js/bootstrap-switch.js') }}"></script>
 
@@ -54,7 +55,6 @@
 <script src="{{ asset('/dist/js/dashboard-data.js') }}"></script>
 <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-
 <script type="text/javascript" src="{{ asset('/dist/js/printThis.js') }}"></script>
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>

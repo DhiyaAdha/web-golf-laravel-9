@@ -2,8 +2,34 @@
 
 <head>
     <title>12022/00000001</title>
-    <link type="text/css" href="../assets/itsolution24/cssmin/main.css" rel="stylesheet">
+    <link rel="apple-touch-icon" href="{{ asset('tgcc144.PNG') }}">
+    <link rel="icon" href="{{ asset('tgcc144.PNG') }}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet"
+        type="text/css">
+    <link href="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.css') }}" rel="stylesheet"type="text/css">
     <style type="text/css">
+        /* width */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #fff;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb:vertical {
+            background: #888;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
         a,
         .no-print,
         .modal-open.wrapper,
@@ -40,7 +66,7 @@
     </style>
 </head>
 
-<body style="background:#ffffff;">
+<body style="background:#ffffff;" id="print">
     <div class="col-xs-12 col-md-12">
         <style id="styles" type="text/css">
             /*Common CSS*/
@@ -233,156 +259,99 @@
             @media all and (max-width: 215px) {}
         </style>
         <section class="receipt-template">
-
             <header class="receipt-header">
                 <div class="logo-area">
-                    <img class="logo"
-                        src="https://itsolution24.com/posv33/assets/itsolution24/img/logo-favicons/1_logo.jpg">
+                    <img class="logo" src="{{ asset('tgcc144.png') }}">
                 </div>
-                <h2 class="store-name">Store 01</h2>
+                <h5>Tritih Golf & Country Club</h5>
                 <div class="address-area">
-                    <span class="info address">BD</span>
                     <div class="block">
-                        <span class="info phone">Mobile: 11111111111</span>, <span class="info email">Email:
-                            info@store1.com</span>
+                        <span class="info phone">Mobile: 085765536865</span>, <span class="info email">Email:
+                            info@tgcc.com</span>
                     </div>
                 </div>
             </header>
-
             <section class="info-area">
                 <table>
                     <tbody>
                         <tr>
                             <td class="w-30"><span>Invoice ID:</span></td>
-                            <td>12022/00000001</td>
+                            <td>{{ $log_transaction->order_number }}</td>
                         </tr>
                         <tr>
-                            <td class="w-30">VAT-Reg:</td>
-                            <td>654321</td>
+                            <td class="w-30"><span>Tanggal:</span></td>
+                            <td>{{ \Carbon\Carbon::parse($log_transaction->created_at)->format('d M, Y H:i') }}</td>
                         </tr>
                         <tr>
-                            <td class="w-30"><span>Date:</span></td>
-                            <td>17 Sep 2022 4:52 PM</td>
-                        </tr>
-                        <tr>
-                            <td class="w-30"><span>GST Reg:</span></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td class="w-30">Customer Name:</td>
-                            <td>Walking Customer</td>
+                            <td class="w-30">Nama Tamu:</td>
+                            <td>{{ $visitor->name }}</td>
                         </tr>
                         <tr>
                             <td class="w-30">Phone:</td>
-                            <td>0170000000000</td>
+                            <td>{{ $visitor->phone }}</td>
                         </tr>
                         <tr>
                             <td class="w-30">Address:</td>
-                            <td>BD</td>
+                            <td>{{ $visitor->address }}</td>
                         </tr>
                         <tr>
-                            <td class="w-30">GTIN:</td>
-                            <td>147258</td>
+                            <td class="w-30">Tipe Member:</td>
+                            <td>{{ $visitor->tipe_member }}</td>
                         </tr>
                     </tbody>
                 </table>
             </section>
-
             <h4 class="main-title">INVOICE</h4>
-
             <section class="listing-area item-list">
                 <table>
                     <thead>
                         <tr>
                             <td class="w-10 text-center">Sl.</td>
-                            <td class="w-40 text-center">Name</td>
+                            <td class="w-40">Name</td>
                             <td class="w-15 text-center">Qty</td>
-                            <td class="w-15 text-right">Price</td>
-                            <td class="w-20 text-right">Amount</td>
+                            <td class="w-15 text-right">Harga</td>
+                            <td class="w-20 text-right">Total Harga</td>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td>Banana
-
-                                <small>[HSN-]</small>
-                            </td>
-                            <td class="text-center">4.00 Pieces</td>
-                            <td class="text-right">50.00</td>
-                            <td class="text-right">200.00</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">2</td>
-                            <td>Home Delivery
-
-                                <small>[HSN-]</small>
-                            </td>
-                            <td class="text-center">1.00 </td>
-                            <td class="text-right">100.00</td>
-                            <td class="text-right">100.00</td>
-                        </tr>
-
+                        <input type="hidden" value="{{ $i = 1 }}">
+                        @foreach ($cart as $item)
+                            <tr>
+                                <td class="text-center">{{ $i++ }}</td>
+                                <td>{{ $item['name'] }}</td>
+                                <td class="text-center">{{ $item['qty'] }}</td>
+                                <td class="text-right">{{ $item['pricesingle'] }}</td>
+                                <td class="text-right">{{ $item['price'] }}</td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </section>
-
             <section class="info-area calculation-area">
                 <table>
                     <tbody>
                         <tr>
-                            <td class="w-70">Total Amt:</td>
-                            <td>300.00</td>
+                            <td class="w-70">Total Item:</td>
+                            <td>{{ count($cart) }}</td>
                         </tr>
                         <tr>
-                            <td class="w-70">Order Tax:</td>
-                            <td>0.00</td>
+                            <td class="w-70">Total Order:</td>
+                            <td>{{ $qty }}</td>
                         </tr>
                         <tr>
                             <td class="w-70">Discount:</td>
                             <td>0.00</td>
                         </tr>
                         <tr>
-                            <td class="w-70">Shipping Chrg:</td>
-                            <td>0.00</td>
-                        </tr>
-                        <tr>
-                            <td class="w-70">Others Chrg:</td>
-                            <td>0.00</td>
-                        </tr>
-                        <tr>
-                            <td class="w-70">Previous Due:</td>
-                            <td>0.00</td>
-                        </tr>
-                        <tr>
-                            <td class="w-70">Total Due:</td>
-                            <td>300.00</td>
-                        </tr>
-                        <tr>
-                            <td class="w-70">Amount Paid:</td>
-                            <td>300.00</td>
-                        </tr>
-                        <tr>
-                            <td class="w-70">Prev. Due Paid:</td>
-                            <td>0.00</td>
-                        </tr>
-                        <tr>
-                            <td class="w-70">Change:</td>
-                            <td>0.00</td>
-                        </tr>
-                        <tr>
-                            <td class="w-70">Due:</td>
-                            <td>0.00</td>
+                            <td class="w-70">Jumlah Pembayaran:</td>
+                            <td>{{ formatrupiah($total) }}</td>
                         </tr>
                     </tbody>
                 </table>
             </section>
-
-            <section class="info-area italic">
-                <span class="text-small"><b>In Text:</b> Three Hundred only</span><br>
+            <section class="info-area italic mt-2">
+                <span class="text-small"><b>Dalam Teks:</b> {{ $counted }}</span><br>
             </section>
-
-
             <section class="listing-area payment-list">
                 <div class="heading">
                     <h2 class="sub-title">Payments</h2>
@@ -391,67 +360,39 @@
                     <thead>
                         <tr>
                             <td class="w-10 text-center">Sl.</td>
-                            <td class="w-50 text-center">Payment Method</td>
-                            <td class="w-20 text-right">Amount</td>
-                            <td class="w-20 text-right">Balance</td>
+                            <td class="w-50">Cara Pembayaran</td>
+                            <td class="w-20">Bayar</td>
+                            <td class="w-20">Balance</td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td class="text-center">1</td>
-                            <td>Cash on Delivery by Your Name on 17 Sep 2022 4:52 PM</td>
-                            <td class="text-right">300.00</td>
-                            <td class="text-right">0.00</td>
+                            <td>{{ $log_transaction->payment_type }}</td>
+                            <td>{{ formatrupiah($total) }}</td>
+                            <td>{{ formatrupiah($deposit->balance) }}</td>
                         </tr>
-
                     </tbody>
                 </table>
             </section>
-
-
             <section class="info-area barcode-area">
-                <img class="bcimg"
-                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAAeAQMAAAD5F1J6AAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAClJREFUKJFj6N71Yt2OdYt37QCSHYsW70KGL9Z172IYVTCqYFTB0FQAABuZk2u8asWIAAAAAElFTkSuQmCC"
-                    height="20">
+                <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($log_transaction->order_number, 'C128', 3, 33) }}"
+                    height="30" width="150" alt="barcode" />
             </section>
-
             <section class="info-area align-center footer-area">
-                <span class="block">Sold product No Claim. No Change, New product One Month Warranty.</span>
-                <span class="block bold">Thank you for choosing us!</span>
+                <span class="block">Permainan Golf Tidak Ada Klaim, Tidak Ada Perubahan</span>
+                <span class="block bold">Terima kasih telah bermain di tgcc!</span>
             </section>
-
         </section>
-        <div class="table-responsive footer-actions">
-            <table class="table">
-                <tbody>
-                    <tr class="no-print">
-                        <td colspan="2">
-                            <button
-                                onclick="window.printInvoice('invoice', {title:'12022/00000001',scrrenSize:'halfScreen'});"
-                                class="btn btn-info btn-block">
-                                <span class="fa fa-fw fa-print"></span>
-                                Print </button>
-                        </td>
-                    </tr>
-                    <tr class="no-print">
-                        <td colspan="2">
-                            <button id="email-btn" data-customername="Walking Customer" data-invoiceid="12022/00000001"
-                                class="btn btn-success btn-block">
-                                <span class="fa fa-fw fa-envelope-o"></span>
-                                Send Email </button>
-                        </td>
-                    </tr>
-                    <tr class="no-print">
-                        <td colspan="2">
-                            <a class="btn btn-default btn-block" href="pos.php">
-                                ← Back to POS </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
     </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ asset('/dist/js/printThis.js') }}"></script>
+    <script>
+        $('#print').printThis({
+            printContainer: true,
+        });
+    </script>
 </body>
 
 </html>

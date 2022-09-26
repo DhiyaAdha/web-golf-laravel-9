@@ -2,9 +2,14 @@
 @section('content')
     <div class="page-wrapper">
         <div class="container-fluid">
-            <div class="row heading-bg">
-                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                    <h5 class="txt-dark">Detail tamu</h5>
+            <div class="row heading-bg d-flex align-items-center">
+                <div class="col-lg-12">
+                    <h5 class="txt-dark flex-grow-1">Detail tamu</h5>
+                    <ol class="breadcrumb">
+                        <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
+                        <li><a href="{{ url('daftar-tamu') }}">Daftar tamu</a></li>
+                        <li class="active"><span>Detail tamu</span></li>
+                    </ol>
                 </div>
                 <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
@@ -239,7 +244,7 @@
                             <li class="active" role="presentation"><a class="tabs-log" aria-expanded="true"
                                     data-toggle="tab" role="tab" href="#transaction_tabs">Transaksi</a></li>
                             <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
-                                    href="#deposit_tabs" aria-expanded="false">Saldo</a></li>
+                                    href="#deposit_tabs" aria-expanded="false">Deposit</a></li>
                             <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
                                     href="#limit_tabs" aria-expanded="false">Limit</a></li>
                         </ul>
