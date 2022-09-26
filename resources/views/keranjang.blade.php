@@ -62,7 +62,7 @@
                         <div class="d-flex flex-wrap mb-15">
                             @foreach ($additional as $item)
                                 <button type="button" id="package-{{ $item->id }}"
-                                    onclick="addCart({{ $item->id }})"data-toggle="tooltip"
+                                    onclick="addCart({{ $item->id }})" data-toggle="tooltip"
                                     title="Rp. {{ number_format($today === 'Sabtu' || 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
                                     class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
                             @endforeach
@@ -119,8 +119,9 @@
                                             value="{{ $item['qty'] }}" style="width: 30px;" readonly />
                                         <button onclick="updateQTY({{ $item['rowId'] }}, 'plus')"><i
                                                 class="cart-qty-plus-{{ $item['rowId'] }} fa fa-plus-square"></i></button>
-                                        <button class="mr-10 ml-10" onclick="removeItem({{ $item['rowId'] }})"
-                                            id="remove-item" style="color:red;"><i class="fa fa-trash-o"></i></button>
+                                        <button class="mr-10 ml-10" data-toggle="tooltip" title="Hapus"
+                                            onclick="removeItem({{ $item['rowId'] }})" id="remove-item"
+                                            style="color:red;"><i class="fa fa-trash-o"></i></button>
                                     </div>
                                 @endforeach
                             </div>
