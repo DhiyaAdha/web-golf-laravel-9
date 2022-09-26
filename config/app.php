@@ -164,6 +164,7 @@ return [
         Ladumor\LaravelPwa\PWAServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Darryldecode\Cart\CartServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -235,6 +236,7 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Cart' => Darryldecode\Cart\Facades\CartFacade::class
     ],
 
 ];

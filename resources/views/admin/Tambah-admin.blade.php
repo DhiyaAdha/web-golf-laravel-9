@@ -68,7 +68,7 @@
                                 </div>
                                 <div class="form-group @error('phone') has-error @enderror">
                                     <label class="control-label mb-10" for="">Nomer Hp</label>
-                                    <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" name="phone" class="form-control" id="result" size="50px" placeholder="Masukan Nomer Hp" value="{{ old('phone') }}">
+                                    <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <=57" name="phone" class="form-control" id="result" size="50px" placeholder="Masukan Nomer Hp" value="{{ old('phone') }}">
                                     @error('phone')
                                     <div class="text-danger"> {{ $message }}</div>
                                     @enderror
@@ -77,12 +77,12 @@
                                     <label class="control-label mb-10 text-left">Role</label>
                                     <div class="radio-list">
                                         <div class="radio-inline pl-0">
-                                            <span class="radio radio-info"> <input type="radio" name="role_id" id="radio_11" value="1">
+                                            <span class="radio radio-info"> <input type="radio" name="role_id" id="radio_11" value="1" {{ old('role_id') == "1" ? 'checked' : '' }}>
                                                 <label for="radio_11">Admin</label>
                                             </span>
                                         </div>
                                         <div class="radio-inline pl-0">
-                                            <span class="radio radio-info"> <input type="radio" name="role_id" id="radio_12" value="2">
+                                            <span class="radio radio-info"> <input type="radio" name="role_id" id="radio_12" value="2" {{ old('role_id') == "2" ? 'checked' : '' }}>
                                                 <label for="radio_12">Super Admin</label>
                                             </span>
                                         </div>

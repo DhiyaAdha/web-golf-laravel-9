@@ -94,7 +94,7 @@ class PackageController extends Controller
 
         return redirect()
             ->route('package.index')
-            ->with('success', 'Berhasil menambahkan produk baru');
+            ->with('success', 'Berhasil Tambah Paket');
     }
 
     /**
@@ -167,7 +167,7 @@ class PackageController extends Controller
         ]);
 
         $package->save();
-        return redirect()->route('package.index')->with('success', 'Berhasil edit produk');
+        return redirect()->route('package.index')->with('success', 'Berhasil edit paket');
     }
 
     /**
