@@ -117,7 +117,7 @@ class ScanqrController extends Controller
     public function scantamuberhasil(){
             return view('/scan-tamu-berhasil');
     }
-    
+
     public function proses (){
             return view('proses');
     }
@@ -128,14 +128,14 @@ class ScanqrController extends Controller
         $qrcode = QrCode::size(180)->generate($visitor->unique_qr);
         $data['visitor'] =  Visitor::find($id);
         return view('tamu.kartu-tamu',compact('qrcode'),$data);
-        
+
     }
 
     //penghubung route dengan view
     public function detailscan(){
         return view('detail_scan');
     }
-    
+
     //penghubung method dengan view yang akan ditampilkan
     public function show_detail($id = null){
         $visitor = Visitor::find($id);
@@ -189,7 +189,7 @@ class ScanqrController extends Controller
             $visitor = Deposit::join('visitors', 'deposits.visitor_id', '=', 'visitors.id')->where('deposits.visitor_id', $get_uri[3])->first();
             $deposit = Deposit::where('visitor_id', $get_uri[3])->first();
             $deposit->balance = $request->balance + $deposit->balance;
-            
+
             $report_deposit = ReportDeposit::where('visitor_id', $get_uri[3])->first();
             $report_deposit->report_balance = $request->balance + $report_deposit->report_balance;
             $deposit->save();
@@ -213,12 +213,12 @@ class ScanqrController extends Controller
                 'type' => 'CREATE',
                 'activities' => 'Berhasil menambah deposit <b>'.$request->balance.'</b> atas nama <b>'.$visitor->name.'</b>',
             ]);
-            
+
             ReportDeposit::create([
                 'payment_type' => $request->payment_type,
                 'visitor_id' => $get_uri[3],
                 'user_id' => Auth::id(),
-                'activities' => 'Deposit <b>' . $request->name . ' bertambah menjadi <b>Rp.' .number_format($request->balance, 0, ',', '.') . '</b>',
+                'activities' => 'Saldo <b>' . $datav->name . '</b> bertambah menjadi <b>Rp.' .number_format($request->balance, 0, ',', '.') . '</b>',
                 'report_balance' => $request->balance,
             ]);
 
