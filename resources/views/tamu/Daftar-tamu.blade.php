@@ -24,18 +24,28 @@
                 <div class="col-sm-12">
                     <div class="panel panel-default card-view">
                         <div class="panel-heading">
-                            <div class="pull-left">
-                                <h6 class="panel-title txt-dark">Daftar Tamu</h6>
+                            <div class="pull-right" >
+                                
                             </div>
-                            <div class="pull-right">
+                            <div class="pull-left">
+                                {{-- <h6 class="panel-title txt-dark">Daftar Tamu</h6> --}}
                                 <a href="{{ route('tambah-tamu') }}" class="btn btn-xs btn-success">Tambah
                                     Tamu</a>
+                            </div>
+                            <div class="pull-right">
+                                
+                                    <a href="{{ url('export_excel_tamu') }}" target="_blank" name="excel" data-toggle="tooltip" data-placement="top" title="Download Excel">
+                                        <img src="dist/img/excel2.svg" width="25px" height="25px">
+                                    </a>
                             </div>
                             <div class="clearfix"></div>
                         </div>
                         <div class="clearfix"></div>
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
+                                <div style="position: absolute; padding-top: 5px">
+                                    <h6 class="panel-title txt-dark">Daftar Tamu</h6>
+                                </div>
                                 <div class="table-wrap">
                                     <div class="table-responsive">
                                         <table class="table mb-0 table-hover" id="dt-tamu">
@@ -119,6 +129,7 @@
             order: [],
             responsive: true,
             language: {
+                // 
                 search: "",
                 searchPlaceholder: "Cari",
                 emptyTable: "Tidak ada data pada tabel ini",
@@ -145,7 +156,7 @@
                 imageUrl: "../img/Warning.svg",
                 showCancelButton: true,
                 confirmButtonColor: "#FF2A00",
-                confirmButtonText: "Hapus paket",
+                confirmButtonText: "Hapus Tamu",
                 cancelButtonText: "Batal",
                 closeOnConfirm: false,
                 closeOnCancel: false

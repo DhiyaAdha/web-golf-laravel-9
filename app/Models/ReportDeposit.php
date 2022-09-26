@@ -15,6 +15,7 @@ class ReportDeposit extends Model
         'user_id',
         'report_balance',
         'payment_type',
+        'activities',
         'created_at',
         'updated_at'
     ];

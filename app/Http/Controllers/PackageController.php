@@ -94,7 +94,7 @@ class PackageController extends Controller
 
         return redirect()
             ->route('package.index')
-            ->with('success', 'Berhasil menambahkan produk baru');
+            ->with('success', 'Berhasil Tambah Paket');
     }
 
     /**
@@ -167,7 +167,7 @@ class PackageController extends Controller
         ]);
 
         $package->save();
-        return redirect()->route('package.index')->with('success', 'Berhasil edit produk');
+        return redirect()->route('package.index')->with('success', 'Berhasil edit paket');
     }
 
     /**
@@ -179,13 +179,16 @@ class PackageController extends Controller
     public function destroy($id)
     {
         $package = Package::find($id);
-        Package::destroy($id);
+        $package->name = $package->name;
+        
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'DELETE',
             'activities' => 'Menghapus package <b>' . $package->name . '</b>'
             // 'created_at' => Carbon::now(),
         ]);
+        Package::destroy($id);
+        
         return redirect()->route('package.index');
     }
 }
