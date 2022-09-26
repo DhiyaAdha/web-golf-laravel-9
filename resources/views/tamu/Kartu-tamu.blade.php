@@ -16,25 +16,17 @@
                 </div>
                 <!-- /Breadcrumb -->
             </div>
-            <!-- /Breadcrumb -->
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-default border-panel card-view jt">
-                    <img src="{{ asset('img/detail-kartutamu.jpg') }}" style="width: 100%; height: 200px;">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default border-panel card-view jt">
+                        <img src="{{ asset('img/detail-kartutamu.jpg') }}" style="width: 100%; height: 200px;">
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="panel panel-default panel-dropdown card-view">
-                    <div class="panel-heading">
-                        <div class="pull-left">
-                            <h6 class="panel-title txt-dark">Kartu Tamu</h6>
-                        </div>
-                        <div class="pull-right">
-                            <div class="dropdown  pull-left">
-                                <a class="weight-500" data-toggle="modal" href="javascript:void(0)" data-target="#kartu-tamu">
-                                    <i class="fa-solid fa-address-card"></i>
-                                </a>
+                <div class="col-lg-6">
+                    <div class="panel panel-default panel-dropdown card-view">
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <h6 class="panel-title txt-dark">Kartu Tamu</h6>
                             </div>
                             <div class="pull-right">
                                 <div class="dropdown  pull-left">
@@ -176,72 +168,81 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="col-lg-6 col-md-4 col-sm-3 col-xs-12">
-                <div class="panel panel-default card-view b">
-                    <div class="panel-heading">
-                        <h6 class="panel-title text-center">Barcode</h6>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="d-flex justify-content-center p">
-                        {{ QrCode::size(180)->generate($visitor->unique_qr) }}
+
+                <div class="col-lg-6 col-md-4 col-sm-3 col-xs-12">
+                    <div class="panel panel-default card-view b">
+                        <div class="panel-heading">
+                            <h6 class="panel-title text-center">Barcode</h6>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="d-flex justify-content-center p">
+                            {{ QrCode::size(180)->generate($visitor->unique_qr) }}
+                        </div>
                     </div>
                 </div>
+
             </div>
-            
-        </div>
-       
-        <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-                <div class="panel panel-default card-view limit">
-                    <div class="panel-heading">
+
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                    <div class="panel panel-default card-view limit">
+                        <div class="panel-heading">
                             <h6 class="panel-title text-center">Deposit</h6>
                             <div class="clearfix"></div>
-                    </div>
-                    <div>
-                        <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
-                            <img src="/dist/img/money.svg">
-                            <h6 class="text-center">IDR {{ number_format($balance, 0, '', '.') }}</h6>
+                        </div>
+                        <div>
+                            <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
+                                <img src="/dist/img/money.svg">
+                                <h6 class="text-center">IDR {{ number_format($balance, 0, '', '.') }}</h6>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-                <div class="panel panel-default card-view limit">
-                    <div class="panel-heading">
+                <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                    <div class="panel panel-default card-view limit">
+                        <div class="panel-heading">
                             <h6 class="panel-title text-center">Limit Bulanan</h6>
                             <div class="clearfix"></div>
-                    </div>
-                    <div>
-                        <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
-                            <img src="/dist/img/Golf.svg">
-                            <h6 class="text-center">{{ $quota }}</h6>
+                        </div>
+                        <div>
+                            <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
+                                <img src="/dist/img/Golf.svg">
+                                <h6 class="text-center">{{ $quota }}</h6>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-                <div class="panel panel-default card-view limit">
-                    <div class="panel-heading">
+                <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                    <div class="panel panel-default card-view limit">
+                        <div class="panel-heading">
                             <h6 class="panel-title text-center">Limit Kupon</h6>
                             <div class="clearfix"></div>
-                    </div>
-                    <div>
-                        <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
-                            <img src="/dist/img/Golf.svg">
-                            <h6 class="text-center">{{ $quota_kupon }}</h6>
+                        </div>
+                        <div>
+                            <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
+                                <img src="/dist/img/Golf.svg">
+                                <h6 class="text-center">{{ $quota_kupon }}</h6>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="panel-heading tabs">
-                <div class="d-flex">
-                    <div class="flex-grow-1 d-flex align-items-center">
-                        <h6 class="panel-title txt-dark">Riwayat tamu</h6>
+            <br>
+            <div class="row">
+                <div class="panel-heading tabs">
+                    <div class="d-flex">
+                        <div class="flex-grow-1 d-flex align-items-center">
+                            <h6 class="panel-title txt-dark">Riwayat tamu</h6>
+                        </div>
+                        {{-- tab --}}
+                        <ul role="tablist" class="nav nav-pills" id="myTabs_6">
+                            <li class="active" role="presentation"><a class="tabs-log" aria-expanded="true"
+                                    data-toggle="tab" role="tab" href="#transaction_tabs">Transaksi</a></li>
+                            <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
+                                    href="#deposit_tabs" aria-expanded="false">Saldo</a></li>
+                            <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
+                                    href="#limit_tabs" aria-expanded="false">Limit</a></li>
+                        </ul>
                     </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -278,7 +279,7 @@
                                                 <tr>
                                                     <th>Saldo</th>
                                                     <th>Informasi</th>
-                                                    <th class="text-center">Status</th>
+                                                    <th class="text-center">Tipe Pembayaran</th>
                                                     <th class="text-center">Tanggal</th>
                                                 </tr>
                                             </thead>
@@ -288,26 +289,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        {{-- deposit --}}
-                        <div id="deposit_tabs" class="tab-pane fade" role="tabpanel">
-                            <div class="table-wrap">
-                                <div class="table-responsive">
-                                    <table width="100%" class="table table-hover" style="margin: 10px;" id="dt-tamu-deposit">
-                                        <thead>
-                                            <tr>
-                                                <th>Saldo</th>
-                                                <th>Informasi</th>
-                                                <th class="text-center">Tipe Pembayaran</th>
-                                                <th class="text-center">Tanggal</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
 
                             <div id="deposit_tabs" class="tab-pane fade" role="tabpanel">
                                 <div class="panel-heading r">
@@ -369,7 +350,6 @@
                 printContainer: true,
             });
         });
-
         // Transaction Activity
         $('#dt-tamu-transaksi').DataTable({
             "processing": true,
@@ -426,7 +406,6 @@
             }]
         });
         // End Of Transaction Activity
-
         //  Deposit Activity
         $('#dt-tamu-deposit').DataTable({
             "processing": true,

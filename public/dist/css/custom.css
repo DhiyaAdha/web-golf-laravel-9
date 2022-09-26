@@ -67,10 +67,12 @@ i.fa.fa-trash-o {
 .txt-muted {
     color: #868e96 !important;
 }
+
 .panel.panel-default.card-view.l {
     position: sticky;
     top: 0;
 }
+
 .panel.panel-default.card-view.p {
     padding: 23px !important;
 }
@@ -302,7 +304,7 @@ h6.panel-title.txt-dark.label-visitor {
     position: relative;
 }
 
-.panel-body > .img-footer {
+.panel-body>.img-footer {
     position: absolute;
     bottom: -38px;
     left: -1px;
@@ -312,8 +314,8 @@ h6.panel-title.txt-dark.label-visitor {
     width: 100% !important;
 }
 
-.card-view.panel.panel-default.border-panel > .panel-heading,
-.card-view.panel.panel-default.panel-tabs > .panel-heading {
+.card-view.panel.panel-default.border-panel>.panel-heading,
+.card-view.panel.panel-default.panel-tabs>.panel-heading {
     border-bottom: 1px solid rgb(124 239 150 / 58%) !important;
 }
 
@@ -371,28 +373,6 @@ h6.panel-title.text-center {
     padding: 15px;
 } */
 
-/* pasword tambah admin */
-.password-container {
-    width: 100%;
-    position: relative;
-}
-
-.password-container input[type="password"],
-.password-container input[type="text"] {
-    width: 100%;
-    padding: 12px 36px 12px 12px;
-    box-sizing: border-box;
-}
-
-.fa-eye {
-    position: absolute;
-    top: 60%;
-    right: 1%;
-    cursor: pointer;
-    color: rgb(114, 114, 114);
-}
-
-/* pasword tambah admin */
 .qr-code-visitor {
     height: 150px;
     width: 150px;
@@ -509,33 +489,29 @@ element.style {
 }
 
 .sm-data-box.today {
-    background: -webkit-gradient(
-        linear,
-        left top,
-        right top,
-        from(#82eee5),
-        to(#01c853)
-    ) !important;
+    background: -webkit-gradient(linear,
+            left top,
+            right top,
+            from(#82eee5),
+            to(#01c853)) !important;
     background: linear-gradient(to right, #82eee5, #01c853) !important;
 }
+
 .sm-data-box.vvip {
-    background: -webkit-gradient(
-        linear,
-        left top,
-        right top,
-        from(#f3e18c),
-        to(#ffde32)
-    ) !important;
+    background: -webkit-gradient(linear,
+            left top,
+            right top,
+            from(#f3e18c),
+            to(#ffde32)) !important;
     background: linear-gradient(to right, #f3e18c, #ffde32) !important;
 }
+
 .sm-data-box.vip {
-    background: -webkit-gradient(
-        linear,
-        left top,
-        right top,
-        from(#81efce),
-        to(#32ffc1)
-    ) !important;
+    background: -webkit-gradient(linear,
+            left top,
+            right top,
+            from(#81efce),
+            to(#32ffc1)) !important;
     background: linear-gradient(to right, #81efce, #32ffc1) !important;
 }
 
@@ -596,18 +572,18 @@ strong {
     font-weight: 700 !important;
 }
 
-.table > tbody > tr > td,
-.jsgrid-table > tbody > tr > td,
-.table > tbody > tr > th,
-.jsgrid-table > tbody > tr > th,
-.table > tfoot > tr > td,
-.jsgrid-table > tfoot > tr > td,
-.table > tfoot > tr > th,
-.jsgrid-table > tfoot > tr > th,
-.table > thead > tr > td,
-.jsgrid-table > thead > tr > td,
-.table > thead > tr > th,
-.jsgrid-table > thead > tr > th {
+.table>tbody>tr>td,
+.jsgrid-table>tbody>tr>td,
+.table>tbody>tr>th,
+.jsgrid-table>tbody>tr>th,
+.table>tfoot>tr>td,
+.jsgrid-table>tfoot>tr>td,
+.table>tfoot>tr>th,
+.jsgrid-table>tfoot>tr>th,
+.table>thead>tr>td,
+.jsgrid-table>thead>tr>td,
+.table>thead>tr>th,
+.jsgrid-table>thead>tr>th {
     padding: 16px 0px !important;
 }
 
@@ -722,11 +698,13 @@ strong {
     top: 41%;
     transform: translate(-50%);
 }
+
 .show-hide1 i {
     font-size: 19px;
     color: #000000;
     cursor: pointer;
 }
+
 #hide1 {
     display: none;
 }
@@ -737,11 +715,13 @@ strong {
     top: 54%;
     transform: translate(-50%);
 }
+
 .show-hide2 i {
     font-size: 19px;
     color: #000000;
     cursor: pointer;
 }
+
 #hide3 {
     display: none;
 }
@@ -805,6 +785,7 @@ strong {
     color: black;
     cursor: pointer;
 }
+
 .btn3 {
     background-color: #01c853;
     border-color: #0fe016;
@@ -879,7 +860,7 @@ strong {
 }
 
 .text-name-card {
-    margin-top: -160px;
+    margin-top: -121px;
     height: 150px;
     width: 200px;
     /* display: flex; */
@@ -1488,11 +1469,13 @@ input.cmn-toggle-round-flat:checked+label:after {
     display: flex;
     width: 90px;
     height: 34px;
-  }
-  
-  .switch input {display:none;}
-  
-  .slider {
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -1502,9 +1485,9 @@ input.cmn-toggle-round-flat:checked+label:after {
     background-color: #01c853;
     -webkit-transition: .4s;
     transition: .4s;
-  }
-  
-  .slider:before {
+}
+
+.slider:before {
     position: absolute;
     content: "";
     height: 26px;
@@ -1514,54 +1497,56 @@ input.cmn-toggle-round-flat:checked+label:after {
     background-color: white;
     -webkit-transition: .4s;
     transition: .4s;
-  }
-  
-  input:checked + .slider {
+}
+
+input:checked+.slider {
     background-color: #ffd336;
-  }
-  
-  input:focus + .slider {
+}
+
+input:focus+.slider {
     box-shadow: 0 0 1px #2196F3;
-  }
-  
-  input:checked + .slider:before {
+}
+
+input:checked+.slider:before {
     -webkit-transform: translateX(55px);
     -ms-transform: translateX(55px);
     transform: translateX(55px);
-  }
-  
-  /*------ ADDED CSS ---------*/
-  .on
-  {
+}
+
+/*------ ADDED CSS ---------*/
+.on {
     display: none;
-  }
-  
-  .on, .off
-  {
+}
+
+.on,
+.off {
     color: white;
     position: absolute;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     top: 50%;
     left: 50%;
     font-size: 10px;
     font-family: Verdana, sans-serif;
-  }
-  
-  input:checked+ .slider .on
-  {display: block;}
-  
-  input:checked + .slider .off
-  {display: none;}
-  
-  /*--------- END --------*/
-  
-  /* Rounded sliders */
-  .slider.round {
+}
+
+input:checked+.slider .on {
+    display: block;
+}
+
+input:checked+.slider .off {
+    display: none;
+}
+
+/*--------- END --------*/
+
+/* Rounded sliders */
+.slider.round {
     border-radius: 34px;
-  }
-  
-  .slider.round:before {
-    border-radius: 50%;}
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
 
 /*--------- END --------*/
 
@@ -1788,9 +1773,11 @@ button {
 #increment {
     padding: 15px 25px 15px 5px;
 }
+
 .odd:hover {
     background-color: rgb(215, 250, 187);
 }
+
 .even:hover {
     background-color: rgb(215, 250, 187);
 }
