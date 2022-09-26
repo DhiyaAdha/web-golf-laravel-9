@@ -13,9 +13,11 @@ use App\Http\Controllers\PackageController;
 use App\Mail\SendEmailReset;
 
 /*
-|--------------------------------------------------------------------------
+|--------------------
 | Web Routes
-|--------------------------------------------------------------------------
+|
+
+--------------------
 |
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
@@ -25,9 +27,9 @@ use App\Mail\SendEmailReset;
 
 Route::get('/', function () {
     if (Auth::user()) {
-        return redirect('/analisis-tamu');
-    }
-    return view('Login');
+       return redirect('/analisis-tamu');
+   }
+   return view('Login');
 });
 // Route::get('/', function () {
 //     if (Auth::user('role_id') == '2') {
@@ -41,17 +43,17 @@ Route::get('/', function () {
 Route::post('/lupa-pasword',[AuthController::class, 'email_test'])->name('email_test');
 
 //untuk route login
-    Route::get('/login', [AuthController::class, 'index'])->Middleware('guest')->name('login');
-    Route::post('/login', [AuthController::class, 'login']);
-    //Route untuk sebelum Login
-    Route::get('/lupa-pasword', [AuthController::class, 'forgot_password'])->middleware('guest')->name('Lupa-pasword');
-    // Route::post('/lupa-pasword', [AuthController::class, 'sendresetlink'])->name('Lupa-pasword.link');
-    Route::get('/reset-pasword/{token}', [AuthController::class,'showResetForm'])->name('Reset-pasword');
-    Route::post('/reset-pasword', [AuthController::class, 'resetPassword'])     ->name('Reset-pasword.update');
-    //untuk route logout
-    Route::get('/logout', [AuthController::class, 'logout']);
+   Route::get('/login', [AuthController::class, 'index'])->Middleware('guest')->name('login');
+   Route::post('/login', [AuthController::class, 'login']);
+   //Route untuk sebelum Login
+   Route::get('/lupa-pasword', [AuthController::class, 'forgot_password'])->middleware('guest')->name('Lupa-pasword');
+   // Route::post('/lupa-pasword', [AuthController::class, 'sendresetlink'])->name('Lupa-pasword.link');
+   Route::get('/reset-pasword/{token}', [AuthController::class,'showResetForm'])->name('Reset-pasword');
+   Route::post('/reset-pasword', [AuthController::class, 'resetPassword']) ->name('Reset-pasword.update');
+   //untuk route logout
+   Route::get('/logout', [AuthController::class, 'logout']);
 
-    //Level superadmin
+   //Level superadmin
 Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     Route::get('/daftar-admin', [AdminController::class, 'index'])->name('daftar-admin');
     Route::post('/store', [AdminController::class, 'store'])->name('store');

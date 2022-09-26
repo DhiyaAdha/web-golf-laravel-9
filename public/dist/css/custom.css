@@ -301,6 +301,7 @@ h6.panel-title.txt-dark.label-visitor {
 .panel-body.card {
     position: relative;
 }
+
 .panel-body > .img-footer {
     position: absolute;
     bottom: -38px;
@@ -370,6 +371,28 @@ h6.panel-title.text-center {
     padding: 15px;
 } */
 
+/* pasword tambah admin */
+.password-container {
+    width: 100%;
+    position: relative;
+}
+
+.password-container input[type="password"],
+.password-container input[type="text"] {
+    width: 100%;
+    padding: 12px 36px 12px 12px;
+    box-sizing: border-box;
+}
+
+.fa-eye {
+    position: absolute;
+    top: 60%;
+    right: 1%;
+    cursor: pointer;
+    color: rgb(114, 114, 114);
+}
+
+/* pasword tambah admin */
 .qr-code-visitor {
     height: 150px;
     width: 150px;
@@ -765,14 +788,17 @@ strong {
     margin-left: -9px;
     margin-right: -9px;
 }
+
 .data {
     color: #696969;
     font-size: 16px;
 }
+
 .isi {
     color: #000000;
     font-size: 16px;
 }
+
 .btn1 {
     background-color: #01c853;
     color: black;
@@ -780,6 +806,7 @@ strong {
     border-color: #0fe016;
     padding: 10px 20px 10px;
 }
+
 .btn2 {
     background-color: #01c853;
     border-color: #0fe016;
@@ -794,6 +821,7 @@ strong {
     color: black;
     cursor: pointer;
 }
+
 .card-tamu {
     background: #fff;
     margin-bottom: 12px;
@@ -804,6 +832,7 @@ strong {
     margin-left: 20px;
     margin-right: -9px;
 }
+
 .card-riwayat {
     background: #fff;
     margin-bottom: 12px;
@@ -814,6 +843,7 @@ strong {
     margin-left: -9px;
     margin-right: -9px;
 }
+
 .card-qr {
     /* background: #fff; */
     /* margin-bottom: 12px; */
@@ -846,6 +876,7 @@ strong {
 .label.label-berkurang {
     background: #000000;
 }
+
 .card-aktifitas {
     /* margin-bottom: 12px; */
     /* border: 20px  rgba(255, 255, 255, 0.1); */
@@ -855,6 +886,7 @@ strong {
     margin-left: 5px;
     margin-right: -9px;
 }
+
 .text-name-card {
     margin-top: -121px;
     height: 150px;
@@ -1653,6 +1685,10 @@ input.cmn-toggle-round-flat:checked+label:after {
         left: 100px;
         width: 80px;
     }
+<<<<<<< HEAD
+
+=======
+>>>>>>> dhany
 }
 
 @media only screen and (max-width: 300px) {

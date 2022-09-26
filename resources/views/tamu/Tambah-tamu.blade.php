@@ -31,32 +31,32 @@
                                     <label class="control-label mb-10" for="">Nama Lengkap</label>
                                     <input type="text" name="name" class="form-control" id="name" size="50px" placeholder="Masukan Nama" value="{{ old('name') }}" autofocus>
                                     @error('name')
-                                    <div class="text-danger"> {{ $message }}</div>
+                                        <div class="text-danger"> {{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group @error('address') has-error @enderror">
                                     <label class="control-label mb-10" for="address">Alamat</label>
                                     <input type="text" class="form-control" name="address" id="address" size="50px" placeholder="Masukan Alamat" value="{{ old('address') }}" autofocus>
                                     @error('address')
-                                    <div class="text-danger"> {{ $message }}</div>
+                                        <div class="text-danger"> {{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group @error('gender') has-error @enderror">
                                     <label class="control-label mb-10 text-left">Jenis Kelamin</label>
                                     <div class="radio-list">
                                         <div class="radio-inline pl-0">
-                                            <span class="radio radio-info"> <input type="radio" name="gender" id="gender-m" value="laki-laki">
+                                            <span class="radio radio-info"> <input type="radio" name="gender" id="gender-m" value="Laki-laki">
                                                 <label for="gender-m">Laki-laki</label>
                                             </span>
                                         </div>
                                         <div class="radio-inline pl-0">
-                                            <span class="radio radio-info"> <input type="radio" name="gender" id="gender-w" value="perempuan">
+                                            <span class="radio radio-info"> <input type="radio" name="gender" id="gender-w" value="Perempuan">
                                                 <label for="gender-w">Perempuan</label>
                                             </span>
                                         </div>
                                     </div>
                                     @error('gender')
-                                    <div class="text-danger"> {{ $message }}</div>
+                                        <div class="text-danger"> {{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group @error('email') has-error @enderror">
@@ -70,21 +70,21 @@
                                     <label class="control-label mb-10" for="">Nomer Hp</label>
                                     <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" name="phone" class="form-control" id="phone" size="50px" value="{{ old('phone') }}" placeholder="Masukan Nomer Hp">
                                     @error('phone')
-                                    <div class="text-danger"> {{ $message }}</div>
+                                        <div class="text-danger"> {{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group @error('company') has-error @enderror">
                                     <label class="control-label mb-10" for="">Perusahaan</label>
                                     <input type="text" name="company" class="form-control" id="company" size="50px"  value="{{ old('name') }}" placeholder="Masukan Nama Perusahaan">
                                     @error('company')
-                                    <div class="text-danger"> {{ $message }}</div>
+                                        <div class="text-danger"> {{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group @error('position') has-error @enderror">
                                     <label class="control-label mb-10" for="">Jabatan</label>
                                     <input type="text" name="position" class="form-control" id="position" size="50px"  value="{{ old('position') }}" placeholder="Masukan Jabatan">
                                     @error('position')
-                                    <div class="text-danger"> {{ $message }}</div>
+                                        <div class="text-danger"> {{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -113,11 +113,13 @@
                                 </div>
                             </form>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        @include('Layouts.Footer')
+    </div>
+    @include('Layouts.Footer')
     </div>
 </div>
 
