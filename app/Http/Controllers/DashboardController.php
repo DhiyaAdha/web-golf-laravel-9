@@ -200,17 +200,11 @@ class DashboardController extends Controller
                 ->of($visitor)
                 ->editColumn('updated_at', function ($data) {
                     return empty($data->transaction($data->id))
-                        ? '-'
-                        : $data
-                        ->transaction($data->id)
-                        ->created_at->translatedFormat('d F Y');
+                        ? '-' : $data->transaction($data->id)->created_at->translatedFormat('d F Y');
                 })
                 ->addColumn('times', function ($data) {
                     return empty($data->transaction($data->id))
-                        ? '-'
-                        : $data
-                        ->transaction($data->id)
-                        ->created_at->translatedFormat('h:i a');
+                        ? '-' : $data->transaction($data->id)->created_at->translatedFormat('h:i a');
                 })
                 ->editColumn('tipe_member', function ($data) {
                     return $data->tipe_member;

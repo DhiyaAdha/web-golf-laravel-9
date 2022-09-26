@@ -353,6 +353,21 @@ class OrderController extends Controller
         $items = \Cart::session($req->get('page'))->getContent();
         $deposit = Deposit::where('visitor_id', $req->get('page'))->first();
         $totalPrice = \Cart::session($req->get('page'))->getTotal();
+        if(\Cart::isEmpty()){
+            $cart_data = [];            
+        } else {
+            foreach($items as $row) {
+                $cart[] = [
+                    'rowId' => $row->id,
+                    'name' => $row->name,
+                    'qty' => $row->quantity,
+                    'pricesingle' => $row->price,
+                    'price' => $row->getPriceSum(),
+                    'created_at' => $row->attributes['created_at'],
+                ];           
+            }
+            $cart_data = collect($cart)->sortBy('created_at');
+        }
         if($req->get('single')){
             if($req->get('single') == 4){
                 if($deposit->balance < $totalPrice){
@@ -365,22 +380,6 @@ class OrderController extends Controller
                         $report_deposit->report_balance = $report_deposit->report_balance - $totalPrice;
                         $deposit->save();
                         $report_deposit->save();  
-                        
-                        if(\Cart::isEmpty()){
-                            $cart_data = [];            
-                        } else {
-                            foreach($items as $row) {
-                                $cart[] = [
-                                    'rowId' => $row->id,
-                                    'name' => $row->name,
-                                    'qty' => $row->quantity,
-                                    'pricesingle' => $row->price,
-                                    'price' => $row->getPriceSum(),
-                                    'created_at' => $row->attributes['created_at'],
-                                ];           
-                            }
-                            $cart_data = collect($cart)->sortBy('created_at');
-                        }
                         
                         LogTransaction::create([
                             'order_number' => $req->get('order_number'),
@@ -402,6 +401,41 @@ class OrderController extends Controller
                         if($req->ajax()){
                             $this->setResponse('VALID', "Pembayaran berhasil");
                             return response()->json($this->getResponse());
+                        }
+                    } catch (Throwable $e) {
+                        return response()->json($this->getResponse());
+                    }
+                }
+            } else if($req->get('single') == 3){
+                if($req->get('bayar_input') < $totalPrice) {
+                    $this->setResponse('INVALID', "Nominal tidak terpenuhi");
+                    return response()->json($this->getResponse());
+                } else {
+                    try {
+                        $return = $req->get('bayar_input') - $totalPrice;
+                        LogTransaction::create([
+                            'order_number' => $req->get('order_number'),
+                            'visitor_id' => $req->get('page'),
+                            'user_id' => Auth()->id(),
+                            'cart' => serialize($cart_data),
+                            'payment_type' => 'cash/transfer',
+                            'payment_status' => 'paid',
+                            'total' => $totalPrice
+                        ]);
+
+                        LogAdmin::create([
+                            'user_id' => Auth::id(),
+                            'type' => 'CREATE',
+                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                        ]);
+
+                        \Cart::session($req->get('page'))->clear();
+
+                        if($req->ajax()){
+                            return response()->json([
+                                'status' => 'VALID',
+                                'return' => $req->get('bayar_input')
+                            ]);
                         }
                     } catch (Throwable $e) {
                         return response()->json($this->getResponse());

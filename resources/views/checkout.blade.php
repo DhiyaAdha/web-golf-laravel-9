@@ -150,7 +150,7 @@
                                     <div class="card-body">
                                         <form>
                                             <div class="d-flex">
-                                                <span class="flex-grow-1">Pilih metode Pembayaran</span>
+                                                <span class="flex-grow-1">Metode Pembayaran</span>
                                                 <div class="d-flex">
                                                     <div class="custom-control custom-radio mr-2">
                                                         <input type="radio" name="payment" id="wk"
@@ -170,7 +170,8 @@
                                                 <div class="form-group">
                                                     <label for="payment-type"></label>
                                                     <select class="form-control" id="payment-type">
-                                                        <option value="" disabled selected>Jenis pembayaran
+                                                        <option value="" disabled selected>-- Pilih jenis
+                                                            pembayaran --
                                                         </option>
                                                         <option value="1">Limit Bulanan</option>
                                                         <option value="2">Limit Kupon</option>
@@ -181,12 +182,15 @@
                                                 <div class="form-group" id="cash-transfer"></div>
                                             </div>
                                             <div id="multiple"></div>
-                                            <div class="d-flex justify-content-end pd-1">
-                                                {{-- <a href="javascript:void(0)" id="print"
-                                                    class="d-flex align-items-center btn btn-sm btn-primary mr-2"><i
-                                                        class="fa fa-print mr-2"></i> Invoice</a> --}}
-                                                <a href="javascript:void(0)" id="pay"
-                                                    class="btn btn-sm btn-success">Bayar</a>
+                                            <div class="d-flex">
+                                                <div class="d-flex justify-content-start pd-1 flex-grow-1">
+                                                    <span>Uang Kembali :</span>
+                                                    <span id="return"></span>
+                                                </div>
+                                                <div class="d-flex justify-content-end pd-1">
+                                                    <a href="javascript:void(0)" id="pay"
+                                                        class="btn btn-sm btn-success">Bayar</a>
+                                                </div>
                                             </div>
                                         </form>
                                     </div>
@@ -227,12 +231,13 @@
                                                     <span>{{ $visitor->name }}</span>
                                                 </div>
                                                 <div class="d-flex">
-                                                    <span class="flex-grow-1">Jumlah order</span>
+                                                    <span class="flex-grow-1">Jumlah Item</span>
                                                     <span>{{ count($orders) }}</span>
                                                 </div>
                                                 <div class="d-flex">
                                                     <span class="flex-grow-1">Total bayar</span>
-                                                    <span class="nilai-total1-td">Rp.
+                                                    <span class="nilai-total1-td"
+                                                        data-total="{{ $totalPrice }}">Rp.
                                                         {{ formatrupiah($totalPrice) }}</span>
                                                 </div>
                                             </div>
@@ -305,6 +310,18 @@
                 }
             });
 
+            $(document).on('input', '.bayar-input', function(e) {
+                e.preventDefault();
+                let total = $('.nilai-total1-td').data('total');
+                let return_pay = parseInt($(this).val()) - parseInt(total);
+                if ($(this).val() < total) {
+                    $(this).addClass('is-invalid');
+                } else {
+                    $(this).removeClass('is-invalid');
+                    $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00');
+                }
+            });
+
             $(document).on('change', '#payment-type', function(e) {
                 e.preventDefault();
                 let type = $(this).val();
@@ -316,7 +333,7 @@
 
                 if (type == 3) {
                     $('#cash-transfer').html(
-                        ` <div class="input-group">
+                        `<div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text">Rp.</div>
                                                 </div>
@@ -329,7 +346,7 @@
                     ).show();
                 } else {
                     $('#cash-transfer').html(
-                        ` <div class="input-group">
+                        `<div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text">Rp.</div>
                                                 </div>
@@ -402,6 +419,7 @@
                 let error = false;
                 let type_single = $('#payment-type').val();
                 let order_number = $('#order-number').text();
+                let bayar_input = $('.bayar-input').val();
                 let tg = window.location.href;
                 tg = tg.split("?")
                 tg = tg[0];
@@ -420,55 +438,75 @@
                             confirmButtonColor: "#01c853",
                         }, function(isConfirm) {});
                     } else {
-                        $.ajax({
-                            async: true,
-                            type: 'POST',
-                            data: {
-                                single: type_single,
-                                page: parseFloat(page),
-                                order_number: order_number
-                            },
-                            url: "{{ route('pay') }}",
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            beforeSend: function(request) {
-                                $.blockUI({
-                                    css: {
-                                        backgroundColor: 'transparent',
-                                        border: 'none'
+                        swal({
+                            title: "",
+                            text: "Lakukan pembayaran",
+                            type: "info",
+                            showCancelButton: true,
+                            confirmButtonColor: "#01c853",
+                            confirmButtonText: "Bayar",
+                            cancelButtonText: "Batal",
+                            closeOnConfirm: false,
+                            closeOnCancel: false
+                        }, function(isConfirm) {
+                            if (isConfirm) {
+                                $.ajax({
+                                    async: true,
+                                    type: 'POST',
+                                    data: {
+                                        single: type_single,
+                                        page: parseFloat(page),
+                                        order_number: order_number,
+                                        bayar_input: bayar_input
                                     },
-                                    message: '<img src="../img/rolling.svg">',
-                                    baseZ: 1500,
-                                    overlayCSS: {
-                                        backgroundColor: '#7C7C7C',
-                                        opacity: 0.4,
-                                        cursor: 'wait'
+                                    url: "{{ route('pay') }}",
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                            'content')
+                                    },
+                                    beforeSend: function(request) {
+                                        $.blockUI({
+                                            css: {
+                                                backgroundColor: 'transparent',
+                                                border: 'none'
+                                            },
+                                            message: '<img src="../img/rolling.svg">',
+                                            baseZ: 1500,
+                                            overlayCSS: {
+                                                backgroundColor: '#7C7C7C',
+                                                opacity: 0.4,
+                                                cursor: 'wait'
+                                            }
+                                        });
+                                    },
+                                    success: function(response) {
+                                        $.unblockUI();
+                                        if (response.status == "INVALID") {
+                                            swal({
+                                                title: "",
+                                                type: "error",
+                                                text: response.message,
+                                                confirmButtonColor: "#01c853",
+                                            });
+                                        } else {
+                                            swal({
+                                                title: '',
+                                                type: "success",
+                                                text: 'Pembayaran berhasil',
+                                                content: span,
+                                                confirmButtonColor: "#01c853",
+                                            }, function(isConfirm) {
+                                                invoice(url, 'Print Invoice');
+                                                window.close();
+                                            });
+                                        }
                                     }
                                 });
-                            },
-                            success: function(response) {
-                                $.unblockUI();
-                                if (response.status == "INVALID") {
-                                    swal({
-                                        title: "",
-                                        type: "error",
-                                        text: response.message,
-                                        confirmButtonColor: "#01c853",
-                                    });
-                                } else {
-                                    swal({
-                                        title: "",
-                                        type: "success",
-                                        text: response.message,
-                                        confirmButtonColor: "#01c853",
-                                    }, function(isConfirm) {
-                                        invoice(url, 'Print Invoice');
-                                        window.close();
-                                    });
-                                }
+                            } else {
+                                swal("Dibatalkan", "", "info");
                             }
                         });
+                        return false;
                     }
                 }
             });
