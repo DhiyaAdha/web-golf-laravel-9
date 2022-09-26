@@ -406,7 +406,21 @@
                             type: "error",
                             text: "Silahkan pilih jenis pembayaran",
                             confirmButtonColor: "#01c853",
-                        }, function(isConfirm) {});
+                        }, function(isConfirm) {
+                            if (isConfirm) {
+                            $.ajax({
+                                type: "GET",
+                                url: "{{ route('daftar-tamu') }}",
+                                data: data,
+                                success: function(data, dataType) {
+                                    swal("Deleted", "The user has been removed from the Database", "Success");
+                                },
+                                error: function (xhr, ajaxOptions, thrownError) {
+                                    swal("Error deleting!", "Please try again", "error");
+                                    }
+                                });
+                        } else {}
+                        });
                     }
                 }
             });
