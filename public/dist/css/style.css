@@ -17615,6 +17615,15 @@ footer .nav > li > a:hover {
     color: #212121;
     min-width: 42px;
 }
+
+.input-group-dropdown {
+    background: transparent none repeat scroll 0 0;
+    border-color: rgba(33, 33, 33, 0.1);
+    border-radius: 0;
+    color: #212121;
+    min-width: 42px;
+}
+
 .input-group-addon.btn,
 .wizard > .actions a.input-group-addon,
 .dt-buttons .input-group-addon.dt-button,

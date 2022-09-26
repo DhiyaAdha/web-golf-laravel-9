@@ -27,7 +27,6 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Cache\RateLimiting\Limit;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use Twig\NodeVisitor\NodeVisitorInterface;
 
 
 class TamuController extends Controller
@@ -103,10 +102,10 @@ class TamuController extends Controller
         $this->validate(
             $request,
             [
-                'name' => 'required|unique:visitors,name',
+                'name' => 'required',
                 'address' => 'required',
                 'gender' => 'required',
-                'email' => 'required|email|unique:visitors,email',
+                'email' => 'required|email|unique:visitors,name',
                 'phone' => 'required|min:12',
                 'company' => 'required',
                 'position' => 'required',
@@ -143,7 +142,6 @@ class TamuController extends Controller
             'tipe_member' => $request->tipe_member,
             'created_at' => Carbon::now(),
         ]);
-
         $get_visitor = Visitor::where('id', $visitors->id)->latest()->first();
         $link_qr = URL::signedRoute('detail-scan', ['qr' => $token, 'e' => $visitors->id]);
         $get_visitor->unique_qr = $link_qr;
@@ -160,6 +158,7 @@ class TamuController extends Controller
             'visitor_id' => $visitors->id,
             'report_limit_id' => $report_quota->id,
             'quota' => $request->tipe_member == 'VIP' ? '4' : '10',
+            'status' => 'bertambah',
             'created_at' => Carbon::now(),
         ]);
         $quota->save();
@@ -188,46 +187,63 @@ class TamuController extends Controller
     /* insert deposit && BERTAMBAH(create) deposit */
     public function insertdeposit(Request $request)
     {
-        // $visitors = Deposit::join('visitors', 'deposits.visitor_id', '=', 'visitors.id')->where('deposits.visitor_id', $request->visitor_id)->first();
-        $visitor = Visitor::find($request->visitor_id);
-        // dd($visitors);
-        $report_deposit = ReportDeposit::create([
+        $this->validate($request, [
+            'visitor_id' => 'required',
+            'balance' => 'required',
+            'payment_type' => 'required',
+        ]);
+
+        $visitors = Visitor::where('id', $request->id)->first();
+        // $report_deposit = ReportDeposit::create([
+        //     'payment_type' => $request->payment_type,
+        //     'visitor_id' => $request->visitor_id,
+        //     'user_id' => Auth::user()->id,
+        //     'report_balance' => $request->balance,
+            
+        // ]);
+        if ($request->payment_type == 'Cash') {
+            $report_deposit = ReportDeposit::create([
+            'payment_type' => $request->payment_type,
             'visitor_id' => $request->visitor_id,
             'user_id' => Auth::user()->id,
+            'activities' => 'Deposit <b>' . $request->name . ' bertambah menjadi <b>Rp.' .number_format($request->balance, 0, ',', '.') . '</b>',
+            'report_balance' => $request->balance,
+            ]);
+        } elseif ($request->payment_type == 'Transfer') {
+            $report_deposit = ReportDeposit::create([
+            'payment_type' => $request->payment_type,
+            'visitor_id' => $request->visitor_id,
+            'user_id' => Auth::user()->id,
+            'activities' => 'Deposit <b>' . $request->name . ' bertambah menjadi <b>Rp.' .number_format($request->balance, 0, ',', '.') . '</b>',
+            'report_balance' => $request->balance,
+            ]);
+        }else {
+            $report_deposit = ReportDeposit::create([
+            'payment_type' => $request->payment_type,
+            'visitor_id' => $request->visitor_id,
+            'user_id' => Auth::user()->id,
+            'activities' => '<b>Tidak ada deposit</b>',
             'report_balance' => $request->balance,
         ]);
-        $report_deposit->save();    
+        }
+
+        $report_deposit->save();
         $deposit = Deposit::create([
             'visitor_id' => $request->visitor_id,
             'user_id' =>    Auth::user()->id,
             'report_deposit_id' => $report_deposit->id,
             'type' => 'CREATE',
             'balance' => $request->balance,
-            'activities' => 'Deposit <b>'.$visitor->name.' bertambah menjadi <b>'.$request->balance.'</b>',
         ]);
         $deposit->save();
-        $data_deposit = array (
-            "visitor_id" => $request->visitor_id,
-            "balance" => $request->balance,
-            "name" => $visitor->name,
-            "address" => $visitor->address,
-            "gender" => $visitor->gender,
-            "email" => $visitor->email,
-            "phone" => $visitor->phone,
-            "company" => $visitor->company,
-            "position" => $visitor->position,
-            "tipe_member" => $visitor->tipe_member
-        );
-        // dd($data_deposit);
-        // $data_deposit = $request->all();
-        // dispatch(new SendMailJob($data));
-        dispatch(new SendMailJobDeposit($data_deposit));
+        $data = $request->all();
+        dispatch(new SendMailJobDeposit($data));
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'CREATE',
             'activities' => 'Berhasil menambah deposit ',
         ]);
-        return redirect('/daftar-tamu')->with('success','Berhasil menambah deposit');
+        return redirect('/daftar-tamu')->with('success', 'Berhasil menambah deposit');
     }
     /* insert deposit && BERTAMBAH(create) deposit */
 
@@ -247,6 +263,7 @@ class TamuController extends Controller
             $visitor = Visitor::findOrFail($decrypt_id);
             $data['qrcode'] = QrCode::size(180)->generate($visitor->id);
             $data['quota'] = $limit->quota;
+            $data['quota_kupon'] = $limit->quota_kupon;
             $data['balance'] = $deposit->balance;
             $data['deposit'] = Deposit::where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
             $data['limit'] = LogLimit::where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
@@ -260,15 +277,23 @@ class TamuController extends Controller
     public function reportdeposit(Request $request, $id)
     {
         $decrypt_id = Crypt::decryptString($id);
-        $aktifitas_deposit = ReportDeposit::select('id', 'report_balance', 'payment_type', 'visitor_id', 'user_id', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
+        $aktifitas_deposit = ReportDeposit::select('id', 'report_balance', 'payment_type', 'visitor_id', 'user_id','activities', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
             return datatables()->of($aktifitas_deposit)->editColumn('report_balance', function ($data) {
-                return number_format($data->report_balance, 0, ',', '.');
+                return 'Rp. '.number_format($data->report_balance, 0, ',', '.');
             })->addColumn('information', function ($data) {
-                return $data->visitor->name . ' melakukan deposit sebesar ' . number_format($data->report_balance, 0, ',', '.');
+                return $data->activities;
+            })->addColumn('payment_type', function ($data) {
+                if($data->payment_type == 'Cash'){
+                    return '<p class="label label-success">'.$data->payment_type.'<div>';
+                }elseif($data->payment_type == 'Transfer'){
+                    return '<p class="label label-warning">'.$data->payment_type.'<div>';
+                }else{
+                    return '<p class="label label-danger">'.$data->payment_type.'<div>';
+                }
             })->editColumn('created_at', function ($data) {
                 return date_format($data->created_at, 'd-m-Y');
-            })->make(true);
+            })->rawColumns(['report_balance', 'information', 'payment_type','created_at'])->make(true);
         }
     }
     /* end data aktifitas tamu Deposit */
@@ -423,17 +448,21 @@ class TamuController extends Controller
     public function reporttransaksi(Request $request, $id)
     {
         $decrypt_id = Crypt::decryptString($id);
-        $reporttransaksi = LogTransaction::select('id', 'payment_type', 'payment_status', 'total', 'visitor_id', 'user_id', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
+        $reporttransaksi = LogTransaction::select('id', 'payment_type', 'payment_status', 'total', 'visitor_id', 'user_id','activities', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
             return datatables()->of($reporttransaksi)->addColumn('order_id', function ($data) {
                 return $data->id;
             })->editColumn('information', function ($data) {
-                return 'Transaksi berhasil! ' . $data->visitor->name . ' telah melakukan pembayaran Rp.' . number_format($data->total, 0, ',', '.');
+                return $data->activities;
             })->addColumn('status', function ($data) {
-                return $data->payment_status;
-            })->addColumn('created_at', function ($data) {
-                return $data->created_at;
-            })->make(true);
+                if ($data->payment_status == '1'){
+                    return '<p class="label label-success">Berhasil<div>';
+                }else {
+                    return '<p class="label label-warning">Gagal<div>';
+                }
+            })->editColumn('created_at', function ($data) {
+                return date_format($data->created_at, 'd-m-Y');
+            })->rawColumns(['order_id', 'information', 'status', 'created_at'])->make(true);
         }
     }
     /* END data aktifitas tamu transaksi*/
@@ -618,7 +647,6 @@ class TamuController extends Controller
             'type' => 'DELETE',
             'activities' => 'Menghapus member <b>' . $visitor->name . '</b>',
         ]);
-
         // $visitor->delete($id);
         Visitor::destroy($id);
         return redirect()->route('daftar-tamu');
