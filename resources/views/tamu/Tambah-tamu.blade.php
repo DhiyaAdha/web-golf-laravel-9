@@ -106,16 +106,6 @@
                                                     <!--END-->
                                                 </div>
                                             </label>
-
-                                    {{-- <label class="switcher">
-                                        <input type="checkbox" id="togBtn" value="VIP" name="tipe_member">
-                                        <div class="slider round">
-                                            <!--ADDED HTML -->
-                                            <span class="on">VIP</span>
-                                            <span class="off">VVIP</span>
-                                            <!--END-->
-                                        </div>
-                                    </label> --}}
                                 </div>
                                 <br>
                                 <div class="form-group text-left">
