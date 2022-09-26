@@ -182,9 +182,9 @@
                                             </div>
                                             <div id="multiple"></div>
                                             <div class="d-flex justify-content-end pd-1">
-                                                <a href="javascript:void(0)" id="print"
+                                                {{-- <a href="javascript:void(0)" id="print"
                                                     class="d-flex align-items-center btn btn-sm btn-primary mr-2"><i
-                                                        class="fa fa-print mr-2"></i> Invoice</a>
+                                                        class="fa fa-print mr-2"></i> Invoice</a> --}}
                                                 <a href="javascript:void(0)" id="pay"
                                                     class="btn btn-sm btn-success">Bayar</a>
                                             </div>
@@ -219,7 +219,8 @@
                                             <div class="d-flex flex-column">
                                                 <div class="d-flex">
                                                     <span class="flex-grow-1">Invoice</span>
-                                                    <span style="font-size: small;">#{{ $order_number }}</span>
+                                                    <span style="font-size: small;"
+                                                        id="order-number">#{{ $order_number }}</span>
                                                 </div>
                                                 <div class="d-flex">
                                                     <span class="flex-grow-1">Tamu</span>
@@ -307,7 +308,7 @@
             $(document).on('change', '#payment-type', function(e) {
                 e.preventDefault();
                 let type = $(this).val();
-                var tg = window.location.href;
+                let tg = window.location.href;
                 tg = tg.split("?")
                 tg = tg[0];
                 tg = tg.split("/");
@@ -370,7 +371,7 @@
                     },
                     success: function(response) {
                         $.unblockUI();
-                        $('#balance').text(formatIDR(response.price));
+                        $('#balance').text(formatIDR(response.price) + ',00');
                         $('#kupon').text(formatIDR(parseInt(response.kupon)));
                         $('#limit').text(formatIDR(parseInt(response.limit)));
                         $.toast({
@@ -396,20 +397,105 @@
                     }
                 });
             });
+
             $(document).on('click', '#pay', function() {
                 let error = false;
-                const type = $('#payment-type').val();
+                let type_single = $('#payment-type').val();
+                let order_number = $('#order-number').text();
+                let tg = window.location.href;
+                tg = tg.split("?")
+                tg = tg[0];
+                tg = tg.split("/");
+                page = tg[tg.length - 1];
+
+                let url = "{{ route('invoice.print', ':id') }}";
+                url = url.replace(':id', page);
+
                 if (!error) {
-                    if (type == null) {
+                    if (type_single == null) {
                         swal({
                             title: "",
                             type: "error",
                             text: "Silahkan pilih jenis pembayaran",
                             confirmButtonColor: "#01c853",
                         }, function(isConfirm) {});
+                    } else {
+                        $.ajax({
+                            async: true,
+                            type: 'POST',
+                            data: {
+                                single: type_single,
+                                page: parseFloat(page),
+                                order_number: order_number
+                            },
+                            url: "{{ route('pay') }}",
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            beforeSend: function(request) {
+                                $.blockUI({
+                                    css: {
+                                        backgroundColor: 'transparent',
+                                        border: 'none'
+                                    },
+                                    message: '<img src="../img/rolling.svg">',
+                                    baseZ: 1500,
+                                    overlayCSS: {
+                                        backgroundColor: '#7C7C7C',
+                                        opacity: 0.4,
+                                        cursor: 'wait'
+                                    }
+                                });
+                            },
+                            success: function(response) {
+                                $.unblockUI();
+                                if (response.status == "INVALID") {
+                                    swal({
+                                        title: "",
+                                        type: "error",
+                                        text: response.message,
+                                        confirmButtonColor: "#01c853",
+                                    });
+                                } else {
+                                    swal({
+                                        title: "",
+                                        type: "success",
+                                        text: response.message,
+                                        confirmButtonColor: "#01c853",
+                                    }, function(isConfirm) {
+                                        invoice(url, 'Print Invoice');
+                                        window.close();
+                                    });
+                                }
+                            }
+                        });
                     }
                 }
             });
+
+            function invoice(url, title) {
+                popupCenter(url, title, 350, 550);
+            }
+
+            function popupCenter(url, title, w, h) {
+                const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+                const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+
+                const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ?
+                    document
+                    .documentElement.clientWidth : screen.width;
+                const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ?
+                    document
+                    .documentElement.clientHeight : screen.height;
+
+                const systemZoom = width / window.screen.availWidth;
+                const left = (width - w) / 2 / systemZoom + dualScreenLeft
+                const top = (height - h) / 2 / systemZoom + dualScreenTop
+                const newWindow = window.open(url, title,
+                    `scrollbars=yes,width  = ${w / systemZoom}, height = ${h / systemZoom}, top    = ${top}, left   = ${left}`
+                );
+                if (window.focus) newWindow.focus();
+            }
         });
     </script>
 </body>

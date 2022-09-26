@@ -119,4 +119,6 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/select', [OrderController::class,'select'])->name('select.type');
     Route::post('/qty/minus/{id}', [OrderController::class,'minus'])->name('qty.minus');
     Route::post('/update/qty/{id}', [OrderController::class,'update_qty'])->name('update.qty');
+    Route::post('/pay', [OrderController::class,'pay'])->name('pay');
+    Route::get('/print_invoice/{id}', [OrderController::class,'print_invoice'])->name('invoice.print');
 });
