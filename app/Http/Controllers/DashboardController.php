@@ -144,7 +144,8 @@ class DashboardController extends Controller
         ) {
             $query->where('tipe_member', 'VIP');
         })->count();
-        $data['visitor_vvip'] = LogTransaction::whereHas('visitor', function (
+
+        $data['visitor_vvip'] = LogTransaction::where('payment_status', 1)->whereHas('visitor', function (
             Builder $query
         ) {
             $query->where('tipe_member', 'VVIP');
