@@ -137,33 +137,80 @@ class AuthController extends Controller {
                 return back()->withInput()->with('fail', 'Invalid token');
             }else{
                 //ini untuk function jika token yang dicek ada
-                User::where('email', $request->email)->update([
-                    'password'=> Hash::make($request->password)
-            ]);
+                if (Carbon::now()->lte($check_token->created_at)){
+                    //ini untuk function jika token tidak expired setelah link diklik
+                    User::where('email', $request->email)->update([
+                        'password'=> Hash::make($request->password)
+                    ]);
+
+                    //ini function untuk menghapus token jika user sudah mengganti password
+                    PasswordReset::where([
+                        'email'=> $request->email,
+                    ])->delete();
+                }else{
+                    return redirect()->route('login')->with('error', 'Link reset password telah expired');
+                }
             
-            DB::table('password_resets')->where([
-                'email'=>$request->email
-            ])->delete();
             //ini untuk function jika semua proses selesai dan akan di redirect ke menu login 
             return redirect()->intended('login')->with('success', 'Your password has been changed! You can login with new password')->with('verifiedEmail', $request->email);
         }
     }
     //ini untuk route get di web.php memasukkan password baru
     public function showResetForm(Request $request, $token = null){
-        // dd($token);
         
-        $reset = PasswordReset::where('email', $request->input('email'))->first();
-        $expiry  = Carbon::now()->subMinutes( 3 );
-        // if ($reset->created_at == 'on null'){
-        //     return redirect()->route('login')->with('success', 'Tidak ada Token');
-        //     }
-        if ($reset == null) {
-            return redirect()->route('login')->with('error', 'Token Telah digunakan');
+        $check_expired = PasswordReset::where([
+            'email' => $request->input('email'),
+            'token'=>$request->token,
+            ])->first();
+        $check_token = PasswordReset::where([
+            'email'=>$request->email,
+            'token'=>$request->token,
+            ])->first();
+
+        if(!$check_token){
+            //jika token yang dicek tidak ada
+            return redirect()->route('login')->with('error', 'Link reset password telah digunakan');
+        }else{
+            //jika token yang dicek ada
+            if (Carbon::now()->lte($check_expired->created_at)) {
+                return view('Reset-pasword')->with(['token' => $token, 'email' => $request->email]);
+            }else {
+                return redirect()->route('login')->with('error', 'Link reset password telah expired');
+            }
         }
+
+
+        // $expiry  = $reset->created_at;
+        // if ($reset->created_at == $expiry){
+        //     return redirect()->route('login')->with('error', 'Token Expired');
+        //     }
+       
+        // if ($reset != null ) {
+        //     if ($expiry >= $expiry->subMinutes(5)->toDateString() ){
+        //         return view('Reset-pasword')->with(
+        //             ['token' => $token, 'email' => $request->email]
+        //         );
+        //     }else {
+        //         return redirect()->route('login')->with('error', 'Token Expired');
+
+        //     }
+            
+        // }else {
+        //     return redirect()->route('login')->with('error', 'Token Tidak Ada');
+        // }
+
+        // if (!$reset == null) {
+        //     $email = $reset->email;
+        //     return view('Reset-pasword')->with(
+        //         ['token' => $token, 'email' => $request->email]
+        //     );
+        // }else {
+        //     return redirect()->route('login')->with('error', 'Token Expired');
+        // }
     
-        return view('Reset-pasword')->with(
-            ['token' => $token, 'email' => $request->email]
-        );
+        // return view('Reset-pasword')->with(
+        //     ['token' => $token, 'email' => $request->email]
+        // );
         // return view('Reset-pasword')->with(['token' => $token, 'email' => $request->email]);
         // return view('Reset-pasword')->with(['token'=>$token,'email'=>$request->email]);
     }
@@ -197,10 +244,12 @@ class AuthController extends Controller {
         ]);
 
         $token = Str::random(64);
+        //ini function untuk membuat token dan mengatur expired dari created at
         DB::table('password_resets')->insert([
             'email'=>$request->email,
             'token'=>$token,
-            'created_at'=>Carbon::now(),
+            'created_at'=>Carbon::now()->addMinutes(5), //batas waktu expired
+            'is_verified' => 0,
         ]);
 
         $data['action_link'] = route('Reset-pasword',['token'=>$token,'email'=>$request->email]);

@@ -11,6 +11,25 @@ class PasswordReset extends Model
     protected $fillable = [
         'email',
         'token',
-        'created_at'
+        'is_verified'
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'created_at' => 'datetime',
     ];
 }

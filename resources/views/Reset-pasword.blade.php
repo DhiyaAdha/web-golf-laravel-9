@@ -127,7 +127,7 @@
                                                     class="form-control @error('password') has-error @enderror"
                                                     id="password" placeholder="Masukan Password Baru"
                                                     value="{{ old('password') }}" autocomplete="current-password">
-                                                <i class="fa-solid fa-eye1 fa-eye-slash" id="eye"></i>
+                                                <i class="fa-solid fa-eye1 fa-eye fa-eye-slash" id="eye"></i>
 
                                                 @error('password')
                                                     <div class="text-danger"> {{ $message }}</div>
@@ -143,7 +143,7 @@
                                                     value="{{ old('password_confirmation') }}"
                                                     autocomplete="current-password">
                                                     <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
-                                                <i class="fa-solid fa-eye2 fa-eye-slash" id="eyee"></i>
+                                                <i class="fa-solid fa-eye2 fa-eye fa-eye-slash" id="eyee"></i>
                                             </div>
                                             <div class="form-group text-center">
                                                 <button type="submit" class="btn btn-info btn-rounded">Update
