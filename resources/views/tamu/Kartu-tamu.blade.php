@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="panel panel-default panel-dropdown card-view">
+                    <div class="panel panel-default panel-dropdown card-view" style="height: 540px;">
                         <div class="panel-heading">
                             <div class="pull-left">
                                 <h6 class="panel-title txt-dark">Kartu Tamu</h6>
@@ -165,7 +165,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-6 col-md-4 col-sm-3 col-xs-12">
+                {{-- <div class="col-lg-6 col-md-4 col-sm-3 col-xs-12">
                     <div class="panel panel-default card-view b">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Barcode</h6>
@@ -175,66 +175,67 @@
                             {{ QrCode::size(180)->generate($visitor->unique_qr) }}
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
-            </div>
-            
-            <div class="row">
-                <div class="col-lg-3">
-                        {{-- Limit Bulanan --}}
-                            <div class="panel panel-default card-view limit" style="height: 170px;">
-                                <div class="panel-heading">
-                                        <h6 class="panel-title text-center">Limit Bulanan</h6>
-                                        <div class="clearfix"></div>
-                                </div>
-                                <div>
-                                    <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
-                                        <img src="/dist/img/Golf.svg">
-                                        <h6 class="text-center">{{ $quota }}</h6>
+                <div class="row">
+                    <div class="col-lg-3">
+                            {{-- Limit Bulanan --}}
+                                <div class="panel panel-default card-view limit" style="height: 170px;">
+                                    <div class="panel-heading">
+                                            <h6 class="panel-title text-center">Limit Bulanan</h6>
+                                            <div class="clearfix"></div>
+                                    </div>
+                                    <div>
+                                        <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
+                                            <img src="/dist/img/Golf.svg">
+                                            <h6 class="text-center">{{ $quota }}</h6>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        {{-- Limit Kupon --}}
-                            <div class="panel panel-default card-view limit" style="height: 170px;">
-                                <div class="panel-heading">
-                                        <h6 class="panel-title text-center">Limit Kupon</h6>
-                                        <div class="clearfix"></div>
-                                </div>
-                                <div>
-                                    <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
-                                        <img src="/dist/img/Golf.svg">
-                                        <h6 class="text-center">{{ $quota_kupon }}</h6>
+                            {{-- Limit Kupon --}}
+                                <div class="panel panel-default card-view limit" style="height: 170px;">
+                                    <div class="panel-heading">
+                                            <h6 class="panel-title text-center">Limit Kupon</h6>
+                                            <div class="clearfix"></div>
+                                    </div>
+                                    <div>
+                                        <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
+                                            <img src="/dist/img/Golf.svg">
+                                            <h6 class="text-center">{{ $quota_kupon }}</h6>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                         {{-- Deposit --}}
-                            <div class="panel panel-default card-view limit" style="height: 170px;">
+                             {{-- Deposit --}}
+                                <div class="panel panel-default card-view limit" style="height: 170px;">
+                                    <div class="panel-heading">
+                                        <h6 class="panel-title text-center">Deposit</h6>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div>
+                                        <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
+                                            <img src="/dist/img/money.svg">
+                                            <h6 class="text-center">IDR {{ number_format($balance, 0, '', '.') }}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                    </div>
+                    <div class="col-lg-3">
+                        {{-- Barcode --}}
+                            <div class="panel panel-default card-view b" style="height: 540px;">
                                 <div class="panel-heading">
-                                    <h6 class="panel-title text-center">Deposit</h6>
+                                    <h6 class="panel-title text-center">Barcode</h6>
                                     <div class="clearfix"></div>
                                 </div>
-                                <div>
-                                    <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
-                                        <img src="/dist/img/money.svg">
-                                        <h6 class="text-center">IDR {{ number_format($balance, 0, '', '.') }}</h6>
-                                    </div>
+                                <div class="d-flex justify-content-center p">
+                                    {{ QrCode::size(180)->generate($visitor->unique_qr) }}
                                 </div>
                             </div>
-
-                </div>
-                <div class="col-lg-3">
-                    {{-- Barcode --}}
-                        <div class="panel panel-default card-view b" style="height: 540px;">
-                            <div class="panel-heading">
-                                <h6 class="panel-title text-center">Barcode</h6>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="d-flex justify-content-center p">
-                                {{ QrCode::size(180)->generate($visitor->unique_qr) }}
-                            </div>
-                        </div>
+                    </div>
                 </div>
             </div>
+            
+            
             <br>
             <div class="row">
                 <div class="panel-heading tabs">

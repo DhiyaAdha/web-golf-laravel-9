@@ -1685,6 +1685,10 @@ input.cmn-toggle-round-flat:checked+label:after {
         left: 100px;
         width: 80px;
     }
+<<<<<<< HEAD
+
+=======
+>>>>>>> dhany
 }
 
 @media only screen and (max-width: 300px) {
