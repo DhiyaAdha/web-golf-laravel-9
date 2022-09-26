@@ -218,7 +218,7 @@ class ScanqrController extends Controller
                 'payment_type' => $request->payment_type,
                 'visitor_id' => $get_uri[3],
                 'user_id' => Auth::id(),
-                'activities' => 'Deposit <b>' . $request->name . ' bertambah menjadi <b>Rp.' .number_format($request->balance, 0, ',', '.') . '</b>',
+                'activities' => 'Saldo <b>' . $request->name . ' bertambah menjadi <b>Rp.' .number_format($request->balance, 0, ',', '.') . '</b>',
                 'report_balance' => $request->balance,
             ]);
 
