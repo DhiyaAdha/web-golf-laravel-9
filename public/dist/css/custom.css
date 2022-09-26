@@ -425,15 +425,6 @@ h6.panel-title.text-center {
         min-height: 1px;
         padding-right: 15px;
     }
-    .col-md-4 {
-        width: 33.33333333% !important;
-    }
-}
-
-@media (min-width: 1200px){
-    .col-lg-4 {
-        width: 33.33333333% !important;
-    }
 }
 
 .box-footer {
@@ -891,13 +882,11 @@ strong {
     margin-top: -121px;
     height: 150px;
     width: 200px;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
     position: absolute;
-    bottom: 33px;
-}
-
-.cart{
-    overflow-y: scroll;
-    height: 242px;
+    /* font-size: 10px; */
 }
 
 .text-email {
@@ -1685,10 +1674,7 @@ input.cmn-toggle-round-flat:checked+label:after {
         left: 100px;
         width: 80px;
     }
-<<<<<<< HEAD
 
-=======
->>>>>>> dhany
 }
 
 @media only screen and (max-width: 300px) {
