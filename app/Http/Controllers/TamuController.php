@@ -478,21 +478,33 @@ class TamuController extends Controller
     public function reporttransaksi(Request $request, $id)
     {
         $decrypt_id = Crypt::decryptString($id);
-        $reporttransaksi = LogTransaction::select('id', 'payment_type', 'payment_status', 'total', 'visitor_id', 'user_id','activities', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
+        $reporttransaksi = LogTransaction::join('visitors', 'log_transactions.visitor_id', '=', 'visitors.id')->where('log_transactions.visitor_id', $decrypt_id)->orderBy('log_transactions.created_at', 'desc')->get(['log_transactions.*', 'visitors.name as name']);
+        // dd($reporttransaksi);
         if ($request->ajax()) {
-            return datatables()->of($reporttransaksi)->addColumn('order_id', function ($data) {
-                return $data->id;
-            })->editColumn('information', function ($data) {
-                return $data->activities;
-            })->addColumn('status', function ($data) {
-                if ($data->payment_status == '1'){
+            return datatables()->of($reporttransaksi)->editColumn('order_number', function ($data) {
+                return $data->order_number;
+            })
+            ->addColumn('information', function ($data) {
+                if($data->payment_type == 'limit'){
+                    return '<p>Transaksi berhasil ! <b>'. $data->name.'</b> telah melakukan pembayaran menggunakan <b>limit</b></p>';
+                } else if ($data->payment_type == 'kupon') {
+                    return '<p>Transaksi berhasil ! <b>'. $data->name.'</b> telah melakukan pembayaran menggunakan <b>kupon</b></p>';
+                } else if ($data->payment_type == 'cash/transfer') {
+                    return '<p>Transaksi berhasil ! <b>'. $data->name.'</b> telah melakukan pembayaran <b>cash/transfer</b> sebesar <b>Rp. '.\formatrupiah($data->total).'</b></p>';
+                } else if ($data->payment_type == 'deposit'){
+                    return '<p>Transaksi berhasil ! <b>'. $data->name.'</b> telah melakukan pembayaran menggunakan <b>saldo deposit</b> sebesar <b>Rp. '.\formatrupiah($data->total).'</b></p>';
+                }
+            })
+            ->addColumn('status', function ($data) {
+                if ($data->payment_status == 'paid'){
                     return '<p class="label label-success">Berhasil<div>';
                 }else {
                     return '<p class="label label-warning">Gagal<div>';
                 }
-            })->editColumn('created_at', function ($data) {
-                return date_format($data->created_at, 'd-m-Y');
-            })->rawColumns(['order_id', 'information', 'status', 'created_at'])->make(true);
+            })
+            ->editColumn('created_at', function ($data) {
+                return date_format($data->created_at, 'd-m-Y H:i');
+            })->rawColumns(['order_number', 'information', 'status', 'created_at'])->make(true);
         }
     }
     /* END data aktifitas tamu transaksi*/
