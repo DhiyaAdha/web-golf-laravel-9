@@ -117,10 +117,6 @@ i.fa.fa-trash-o {
     font-size: 15px;
 }
 
-.d-flex.justify-content-center.p {
-    padding: 50px 0px;
-}
-
 .panel-heading.l {
     padding: 10px 7px !important;
 }
@@ -882,11 +878,8 @@ strong {
     margin-top: -121px;
     height: 150px;
     width: 200px;
-    /* display: flex; */
-    /* justify-content: center; */
-    /* align-items: center; */
     position: absolute;
-    /* font-size: 10px; */
+    bottom: 33px;
 }
 
 .text-email {
