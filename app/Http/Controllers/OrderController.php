@@ -13,6 +13,7 @@ use Darryldecode\Cart\Cart;
 use Illuminate\Http\Request;
 use App\Models\ReportDeposit;
 use App\Models\LogTransaction;
+use App\Models\ReportLimit;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
@@ -307,43 +308,33 @@ class OrderController extends Controller
             $resultPrice =  $deposit->balance - $totalPrice;
             if($resultPrice > 0) {
                 try {
-                    return response(['limit' => $log_limit->quota, 'price' => $resultPrice, 'kupon' => $log_limit->quota_kupon, 'VALID' => 'Deposit telah dipilih']);
+                    return response(['limit' => $log_limit->quota, 'price' => $resultPrice, 'kupon' => $log_limit->quota_kupon, 'status' => 'VALID', 'message' => 'Saldo telah dipilih']);
                 } catch (\Throwable $th) {
                     return response()->json($this->getResponse());
                 }
             } else {
-                $this->setResponse('INVALID', "Deposit tidak terpenuhi");
+                $this->setResponse('INVALID', "Saldo tidak terpenuhi");
                 return response()->json($this->getResponse());
             }
         } else if ($type == 3) {
             try {
-                return response(['limit' => $log_limit->quota, 'price' => $deposit->balance, 'kupon' => $log_limit->quota_kupon, 'VALID' => 'Deposit telah dipilih']);
+                return response(['limit' => $log_limit->quota, 'price' => $deposit->balance, 'kupon' => $log_limit->quota_kupon, 'status' => 'VALID', 'message' => 'Cash/Transfer telah dipilih']);
             } catch (\Throwable $th) {
                 return response()->json($this->getResponse());
             }
         } else if($type == 2) {
-            $resultLimit =  $log_limit->quota_kupon - 1;
-            if($resultLimit > 0){
-                try {
-                    return response(['kupon' => $resultLimit, 'limit' => $log_limit->quota, 'price' => $deposit->balance, 'VALID' => 'Kupon telah dipilih']);
-                } catch (\Throwable $th) {
-                    return response()->json($this->getResponse());
-                }
+            $resultKupon =  $log_limit->quota_kupon - 1;
+            if($log_limit->quota_kupon == 0) {
+                return response(['price' => $deposit->balance, 'limit' => $log_limit->quota, 'kupon' => 0, 'status' => 'INVALID', 'message' => 'Kupon tidak terpenuhi']);
             } else {
-                $this->setResponse('INVALID', "Limit tidak terpenuhi");
-                return response()->json($this->getResponse());
+                return response(['price' => $deposit->balance, 'limit' => $log_limit->quota, 'kupon' => $resultKupon, 'status' => 'VALID', 'message' => 'Limit telah dipilih']);
             }
         } else if ($type == 1) {
             $resultLimit =  $log_limit->quota - 1;
-            if($log_limit > '0') {
-                try {
-                    return response(['price' => $deposit->balance, 'limit' => $resultLimit, 'kupon' => $log_limit->quota_kupon, 'VALID' => 'Limit telah dipilih']);
-                } catch (\Throwable $th) {
-                    return response()->json($this->getResponse());
-                }
+            if($log_limit->quota == 0) {
+                return response(['price' => $deposit->balance, 'limit' => 0, 'kupon' => $log_limit->quota_kupon, 'status' => 'INVALID', 'message' => 'Limit tidak terpenuhi']);
             } else {
-                $this->setResponse('INVALID', "Limit tidak terpenuhi");
-                return response()->json($this->getResponse());
+                return response(['price' => $deposit->balance, 'limit' => $resultLimit, 'kupon' => $log_limit->quota_kupon, 'status' => 'VALID', 'message' => 'Limit telah dipilih']);
             }
         }
     }
@@ -352,6 +343,7 @@ class OrderController extends Controller
         $visitor = Visitor::find($req->get('page'));
         $items = \Cart::session($req->get('page'))->getContent();
         $deposit = Deposit::where('visitor_id', $req->get('page'))->first();
+        $log_limit = LogLimit::where('visitor_id', $req->get('page'))->first();
         $totalPrice = \Cart::session($req->get('page'))->getTotal();
         if(\Cart::isEmpty()){
             $cart_data = [];            
@@ -369,9 +361,9 @@ class OrderController extends Controller
             $cart_data = collect($cart)->sortBy('created_at');
         }
         if($req->get('single')){
-            if($req->get('single') == 4){
+            if($req->get('single') == 4) {
                 if($deposit->balance < $totalPrice){
-                    $this->setResponse('INVALID', "Deposit tidak terpenuhi");
+                    $this->setResponse('INVALID', "Saldo tidak terpenuhi");
                     return response()->json($this->getResponse());
                 } else {
                     try {
@@ -406,39 +398,151 @@ class OrderController extends Controller
                         return response()->json($this->getResponse());
                     }
                 }
-            } else if($req->get('single') == 3){
-                if($req->get('bayar_input') < $totalPrice) {
-                    $this->setResponse('INVALID', "Nominal tidak terpenuhi");
+            } else if($req->get('single') == 3) {
+                if(is_null($req->get('bayar_input'))) {
+                    $this->setResponse('INVALID', "Nominal wajib diisi");
                     return response()->json($this->getResponse());
                 } else {
-                    try {
-                        $return = $req->get('bayar_input') - $totalPrice;
-                        LogTransaction::create([
-                            'order_number' => $req->get('order_number'),
-                            'visitor_id' => $req->get('page'),
-                            'user_id' => Auth()->id(),
-                            'cart' => serialize($cart_data),
-                            'payment_type' => 'cash/transfer',
-                            'payment_status' => 'paid',
-                            'total' => $totalPrice
-                        ]);
-
-                        LogAdmin::create([
-                            'user_id' => Auth::id(),
-                            'type' => 'CREATE',
-                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                        ]);
-
-                        \Cart::session($req->get('page'))->clear();
-
-                        if($req->ajax()){
-                            return response()->json([
-                                'status' => 'VALID',
-                                'return' => $req->get('bayar_input')
-                            ]);
-                        }
-                    } catch (Throwable $e) {
+                    if($req->get('bayar_input') < $totalPrice) {
+                        $this->setResponse('INVALID', "Nominal tidak terpenuhi");
                         return response()->json($this->getResponse());
+                    } else {
+                        try {
+                            LogTransaction::create([
+                                'order_number' => $req->get('order_number'),
+                                'visitor_id' => $req->get('page'),
+                                'user_id' => Auth()->id(),
+                                'cart' => serialize($cart_data),
+                                'payment_type' => 'cash/transfer',
+                                'payment_status' => 'paid',
+                                'total' => $totalPrice
+                            ]);
+    
+                            LogAdmin::create([
+                                'user_id' => Auth::id(),
+                                'type' => 'CREATE',
+                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                            ]);
+    
+                            \Cart::session($req->get('page'))->clear();
+    
+                            if($req->ajax()){
+                                return response()->json([
+                                    'status' => 'VALID',
+                                    'return' => $req->get('bayar_input')
+                                ]);
+                            }
+                        } catch (Throwable $e) {
+                            return response()->json($this->getResponse());
+                        }
+                    }
+                }
+            } else if($req->get('single') == 2){
+                if($log_limit->quota_kupon == 0) {
+                    $this->setResponse('INVALID', "Limit tidak terpenuhi");
+                    return response()->json($this->getResponse());
+                } else {
+                    $id_package = [];
+                    foreach($items as $sd){
+                        $id_package[] = $sd['id'];
+                    }
+                    $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
+                    $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
+                    if(count($package_additional) >= 1){
+                        $this->setResponse('INVALID', "Kupon hanya berlaku jenis permainan default");
+                        return response()->json($this->getResponse());
+                    } else if($package_default) {
+                        if(count($package_default) != 1){
+                            $this->setResponse('INVALID', "Single kupon hanya berlaku satu jenis permainan default");
+                            return response()->json($this->getResponse());
+                        } else {
+                            try { 
+                                $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
+                                $report_limit = ReportLimit::where('visitor_id', $req->get('page'))->first();
+                                $report_limit->report_quota_kupon = $report_limit->report_quota_kupon - 1;
+                                $log_limit->save();
+                                $report_limit->save();
+
+                                LogTransaction::create([
+                                    'order_number' => $req->get('order_number'),
+                                    'visitor_id' => $req->get('page'),
+                                    'user_id' => Auth()->id(),
+                                    'cart' => serialize($cart_data),
+                                    'payment_type' => 'kupon',
+                                    'payment_status' => 'paid',
+                                    'total' => $totalPrice
+                                ]);
+        
+                                LogAdmin::create([
+                                    'user_id' => Auth::id(),
+                                    'type' => 'CREATE',
+                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                ]);
+        
+                                \Cart::session($req->get('page'))->clear();
+
+                                if($req->ajax()){
+                                    $this->setResponse('VALID', "Pembayaran berhasil");
+                                    return response()->json($this->getResponse());
+                                }
+                            } catch (\Throwable $th) {
+                                return response()->json($this->getResponse());
+                            }
+                        }
+                    }
+                }
+            } else {
+                if($log_limit->quota == 0) {
+                    $this->setResponse('INVALID', "Limit tidak terpenuhi");
+                    return response()->json($this->getResponse());
+                } else {
+                    $id_package = [];
+                    foreach($items as $sd){
+                        $id_package[] = $sd['id'];
+                    }
+                    $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
+                    $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
+                    if(count($package_additional) >= 1){
+                        $this->setResponse('INVALID', "Limit hanya berlaku jenis permainan default");
+                        return response()->json($this->getResponse());
+                    } else if($package_default) {
+                        if(count($package_default) != 1){
+                            $this->setResponse('INVALID', "Single limit hanya berlaku satu jenis permainan default");
+                            return response()->json($this->getResponse());
+                        } else {
+                            try { 
+                                $log_limit->quota = $log_limit->quota - 1;
+                                $report_limit = ReportLimit::where('visitor_id', $req->get('page'))->first();
+                                $report_limit->report_quota = $report_limit->report_quota - 1;
+                                $log_limit->save();
+                                $report_limit->save();
+
+                                LogTransaction::create([
+                                    'order_number' => $req->get('order_number'),
+                                    'visitor_id' => $req->get('page'),
+                                    'user_id' => Auth()->id(),
+                                    'cart' => serialize($cart_data),
+                                    'payment_type' => 'limit',
+                                    'payment_status' => 'paid',
+                                    'total' => $totalPrice
+                                ]);
+        
+                                LogAdmin::create([
+                                    'user_id' => Auth::id(),
+                                    'type' => 'CREATE',
+                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                ]);
+        
+                                \Cart::session($req->get('page'))->clear();
+
+                                if($req->ajax()){
+                                    $this->setResponse('VALID', "Pembayaran berhasil");
+                                    return response()->json($this->getResponse());
+                                }
+                            } catch (\Throwable $th) {
+                                return response()->json($this->getResponse());
+                            }
+                        }
                     }
                 }
             }

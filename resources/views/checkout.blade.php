@@ -14,12 +14,20 @@
         type="text/css">
     <link href="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.css') }}" rel="stylesheet"type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ asset('dist/css/custom.css') }}" type="text/css">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <style>
         .panel-green {
             color: #fff;
             border-radius: 4px;
             background: linear-gradient(to right, #82eee5, #01c853) !important;
+        }
+
+        .return-true {
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 0px 5px;
         }
 
         .payment-1 {
@@ -69,6 +77,14 @@
             border-top: 1px solid #dee2e6 !important;
         }
 
+        body {
+            background: #efefef;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
         /* width */
         ::-webkit-scrollbar {
             width: 8px;
@@ -96,13 +112,13 @@
         <div class="container">
             <div class="d-flex justify-content-center align-items-center" style="margin: 1rem 0;">
                 <div class="col-md-12">
-                    <div class="card">
+                    <div class="card" style="border: none !important;">
                         <div class="d-flex flex-wrap pd-1">
                             <div class="col-md-4">
                                 <div class="card">
                                     <div class="card-body panel-green">
                                         <div class="d-flex-flex-column">
-                                            <span class="text-capitalize">deposit</span>
+                                            <span class="text-capitalize">Saldo</span>
                                             <div class="d-flex">
                                                 <span class="flex-grow-1 text-big">Rp</span>
                                                 <span class=" text-big"
@@ -118,7 +134,7 @@
                                 <div class="card">
                                     <div class="card-body panel-black">
                                         <div class="d-flex-flex-column">
-                                            <span class="text-capitalize">Limit Kupon</span>
+                                            <span class="text-capitalize">Kupon</span>
                                             <div class="d-flex">
                                                 <span class=" text-big"
                                                     id="kupon">{{ $log_limit->quota_kupon ?? '0' }}</span>
@@ -133,7 +149,7 @@
                                 <div class="card">
                                     <div class="card-body panel-black">
                                         <div class="d-flex-flex-column">
-                                            <span class="text-capitalize">Limit Bulanan</span>
+                                            <span class="text-capitalize">Limit</span>
                                             <div class="d-flex">
                                                 <span class="text-big"
                                                     id="limit">{{ $log_limit->quota ?? '0' }}</span>
@@ -183,9 +199,10 @@
                                             </div>
                                             <div id="multiple"></div>
                                             <div class="d-flex">
-                                                <div class="d-flex justify-content-start pd-1 flex-grow-1">
-                                                    <span>Uang Kembali :</span>
-                                                    <span id="return"></span>
+                                                <div
+                                                    class="d-flex align-items-center justify-content-start pd-1 flex-grow-1 return-hide">
+                                                    <span class="mr-1">Uang Kembali :</span>
+                                                    <span id="return" class="return-true">-</span>
                                                 </div>
                                                 <div class="d-flex justify-content-end pd-1">
                                                     <a href="javascript:void(0)" id="pay"
@@ -298,10 +315,10 @@
                                                     <label for="payment-type"></label>
                                                     <select class="form-control" id="payment-type">
                                                         <option value="" disabled selected>Jenis ok</option>
-                                                        <option value="1">Limit Bulanan</option>
-                                                        <option value="2">Limit Kupon</option>
+                                                        <option value="1">Limit</option>
+                                                        <option value="2">Kupon</option>
                                                         <option value="3">Cash/Transfer</option>
-                                                        <option value="4">Deposit</option>
+                                                        <option value="4">Saldo</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group" id="cash-transfer"></div>
@@ -316,9 +333,16 @@
                 let return_pay = parseInt($(this).val()) - parseInt(total);
                 if ($(this).val() < total) {
                     $(this).addClass('is-invalid');
+                    $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                        "background-color": "rgba(216, 25, 25, 0.2)",
+                        "color": "#d81c19d1"
+                    });
                 } else {
                     $(this).removeClass('is-invalid');
-                    $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00');
+                    $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                        "background-color": "rgba(25, 216, 149, 0.2)",
+                        "color": "#19d895"
+                    });
                 }
             });
 
@@ -391,13 +415,23 @@
                         $('#balance').text(formatIDR(response.price) + ',00');
                         $('#kupon').text(formatIDR(parseInt(response.kupon)));
                         $('#limit').text(formatIDR(parseInt(response.limit)));
-                        $.toast({
-                            text: response.VALID,
-                            position: 'top-right',
-                            loaderBg: '#fec107',
-                            icon: 'success',
-                            hideAfter: 1000,
-                        });
+                        if (response.status == "VALID") {
+                            $.toast({
+                                text: response.message,
+                                position: 'top-right',
+                                loaderBg: '#fec107',
+                                icon: 'success',
+                                hideAfter: 700,
+                            });
+                        } else {
+                            $.toast({
+                                text: response.message,
+                                position: 'top-right',
+                                loaderBg: '#fec107',
+                                icon: 'error',
+                                hideAfter: 700,
+                            });
+                        }
                     },
                     error: function(request, error) {
                         if (response.status == "INVALID") {
@@ -440,7 +474,7 @@
                     } else {
                         swal({
                             title: "",
-                            text: "Lakukan pembayaran",
+                            text: "Lakukan pembayaran ?",
                             type: "info",
                             showCancelButton: true,
                             confirmButtonColor: "#01c853",
@@ -493,7 +527,6 @@
                                                 title: '',
                                                 type: "success",
                                                 text: 'Pembayaran berhasil',
-                                                content: span,
                                                 confirmButtonColor: "#01c853",
                                             }, function(isConfirm) {
                                                 invoice(url, 'Print Invoice');
@@ -518,14 +551,12 @@
             function popupCenter(url, title, w, h) {
                 const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
                 const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
-
                 const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ?
                     document
                     .documentElement.clientWidth : screen.width;
                 const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ?
                     document
                     .documentElement.clientHeight : screen.height;
-
                 const systemZoom = width / window.screen.availWidth;
                 const left = (width - w) / 2 / systemZoom + dualScreenLeft
                 const top = (height - h) / 2 / systemZoom + dualScreenTop
