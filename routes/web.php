@@ -74,6 +74,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name('show');
     route::get('/invoice_cetakpdf/{id}', [InvoiceController::class, 'cetak_pdf'])->name('cetak_pdf');
     route::get('/export_excel', [InvoiceController::class, 'export_excel'])->name('export_excel');
+    Route::get('/package/destroy/{id}', [PackageController::class,'destroy'])->name('package.destroy');
 });
 
 //Level admin dan superadmin
@@ -107,12 +108,17 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('reportlimit/{id}', [TamuController::class, 'reportlimit'])->name('limit.report.data');
     Route::get('reporttransaksi/{id}', [TamuController::class, 'reporttransaksi'])->name('transaksi.report.data');
     Route::post('/tambah-deposit', [TamuController::class, 'insertdeposit'])->name('insertdeposit');
+    route::get('/export_excel_tamu', [TamuController::class, 'export_excel_tamu'])->name('export_excel_tamu');
     Route::get('/proses', [OrderController::class, 'index'])->name('proses');
     Route::get('/cart/{id}', [OrderController::class, 'index'])->name('order.cart');
     Route::resource('cart', OrderController::class);
-    Route::get('/cart/add/{package}', [OrderController::class, 'add'])->name('cart.add');
-    Route::get('/cart/remove/{package}',[OrderController::class, 'remove'])->name('cart.remove');
-    Route::get('/cart/remove/all/{package}',[OrderController::class, 'remove_all'])->name('cart.remove_all');
-    Route::get('/checkout/{id}', [OrderController::class,'checkout'])->name('checkout')->middleware('signed');
+    Route::post('/cart/add/{package}', [OrderController::class, 'add'])->name('cart.add');
+    Route::post('/cart/remove/{package}',[OrderController::class, 'remove'])->name('remove.item');
+    Route::post('/cart/clear',[OrderController::class, 'clear_cart'])->name('cart.clear');
+    Route::get('/checkout/{id}', [OrderController::class,'checkout'])->name('checkout');
     Route::get('/select', [OrderController::class,'select'])->name('select.type');
+    Route::post('/qty/minus/{id}', [OrderController::class,'minus'])->name('qty.minus');
+    Route::post('/update/qty/{id}', [OrderController::class,'update_qty'])->name('update.qty');
+    Route::post('/pay', [OrderController::class,'pay'])->name('pay');
+    Route::get('/print_invoice/{id}', [OrderController::class,'print_invoice'])->name('invoice.print');
 });

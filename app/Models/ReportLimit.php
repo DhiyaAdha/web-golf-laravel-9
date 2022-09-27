@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ReportLimit extends Model
 {
     use HasFactory;
+    protected $table = 'report_limits';
 
     protected $fillable = [
         'visitor_id',
@@ -15,6 +16,7 @@ class ReportLimit extends Model
         'report_quota',
         'report_quota_kupon',
         'status',
+        'activities',
         'created_at',
         'updated_at', 
     ];

@@ -12,8 +12,9 @@ use PhpParser\Node\Stmt\Foreach_;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use CreatePersonalAccessTokensTable;
-use Illuminate\Mail\Transport\LogTransport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Mail\Transport\LogTransport;
 
 class DashboardController extends Controller
 {
@@ -131,6 +132,7 @@ class DashboardController extends Controller
             'created_at',
             now()->month
         )->count(); 
+        
         $data['visitor_year'] = LogTransaction::whereYear(
             'created_at',
             $request->year ? $request->year : date('Y')
@@ -198,17 +200,11 @@ class DashboardController extends Controller
                 ->of($visitor)
                 ->editColumn('updated_at', function ($data) {
                     return empty($data->transaction($data->id))
-                        ? '-'
-                        : $data
-                        ->transaction($data->id)
-                        ->created_at->translatedFormat('d F Y');
+                        ? '-' : $data->transaction($data->id)->created_at->translatedFormat('d F Y');
                 })
                 ->addColumn('times', function ($data) {
                     return empty($data->transaction($data->id))
-                        ? '-'
-                        : $data
-                        ->transaction($data->id)
-                        ->created_at->translatedFormat('h:i a');
+                        ? '-' : $data->transaction($data->id)->created_at->translatedFormat('h:i a');
                 })
                 ->editColumn('tipe_member', function ($data) {
                     return $data->tipe_member;
@@ -218,7 +214,7 @@ class DashboardController extends Controller
         }
         // dd($visitor);
         return view('/Analisis-tamu', $data);
-    }
+    }  
 
     /**
      * Show the form for creating a new resource.

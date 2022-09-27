@@ -94,7 +94,7 @@
                     <div class="panel panel-default panel-dropdown card-view">
                         <div class="panel-heading d-flex justify-content-start k">
                             <div class="pull-left">
-                                <h6 class="panel-title txt-dark">Sisa Limit dan Deposit
+                                <h6 class="panel-title txt-dark">Sisa Limit dan Saldo
                                     <strong>{{ $visitor->name }}</strong>
                                 </h6>
                             </div>
@@ -104,7 +104,7 @@
                             <div class="panel-body">
                                 <div class="panel-green">
                                     <div class="d-flex flex-column color-white">
-                                        Deposit
+                                        Saldo
                                         <div class="mt-15">
                                             <div class="pull-left">
                                                 <strong>Rp</strong>
@@ -145,7 +145,8 @@
                                 </div>
                                 <a href="javascript:void(0)" class="btn btn-block btn-outline-success btn-sm"
                                     data-toggle="modal" data-target="#myModal">Deposit</a>
-                                <a href="{{ URL::temporarySignedRoute('order.cart', now()->addMinutes(10), ['id' => $visitor->id]) }}"
+                                {{-- {{ URL::signedRoute('order.cart', now()->addMinutes(10), ['id' => $visitor->id]) }} --}}
+                                <a href="{{ URL::signedRoute('order.cart', ['id' => $visitor->id]) }}"
                                     class="btn btn-block btn-success btn-sm" target="_blank">Pilih paket bermain</a>
                             </div>
                             <div id="myModal" class="modal fade" tabindex="-1" role="dialog"

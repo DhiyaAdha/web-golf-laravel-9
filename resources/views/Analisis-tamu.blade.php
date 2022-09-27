@@ -166,7 +166,7 @@
                                     {{-- statistik pertahun --}}
                                     <li>
                                         <span class="block">Statistika Pertahun</span>
-                                        <span class="block txt-dark weight-500 font-18"><span {{-- class="counter-anim">{{ $visitor_year }}</span></span> --}}
+                                        <span class="block txt-dark weight-500 font-18"><span
                                                 class="counter-anim">{{ $visitor_year }}</span></span>
                                     </li>
                                 </ul>

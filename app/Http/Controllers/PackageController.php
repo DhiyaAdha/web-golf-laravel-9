@@ -179,13 +179,16 @@ class PackageController extends Controller
     public function destroy($id)
     {
         $package = Package::find($id);
-        Package::destroy($id);
+        $package->name = $package->name;
+        
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'DELETE',
             'activities' => 'Menghapus package <b>' . $package->name . '</b>'
             // 'created_at' => Carbon::now(),
         ]);
+        Package::destroy($id);
+        
         return redirect()->route('package.index');
     }
 }
