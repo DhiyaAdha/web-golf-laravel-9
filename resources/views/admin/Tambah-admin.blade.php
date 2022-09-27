@@ -1,19 +1,21 @@
 @extends('Layouts.Main')
 @section('content')
-<div class="page-wrapper">
-    <div class="container-fluid">
-        <!-- Title -->
-        <div class="row heading-bg">
-            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h5 class="txt-dark">Tambah Admin</h5>
-            </div>
-            <!-- Breadcrumb -->
-            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                <ol class="breadcrumb">
-                    <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
-                    <li><a href="{{ url('daftar-admin') }}"><span>Daftar Admin</span></a></li>
-                    <li class="active"><span>Tambah admin</span></li>
-                </ol>
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <!-- Title -->
+            <div class="row heading-bg">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h5 class="txt-dark">Tambah Admin</h5>
+                </div>
+                <!-- Breadcrumb -->
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <ol class="breadcrumb">
+                        <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
+                        <li><a href="{{ url('daftar-admin') }}"><span>Daftar Admin</span></a></li>
+                        <li class="active"><span>Tambah admin</span></li>
+                    </ol>
+                </div>
+                <!-- /Breadcrumb -->
             </div>
             <!-- /Breadcrumb -->
         </div>
@@ -40,25 +42,25 @@
                                     <div class="text-danger"> {{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="form-group @error('name') has-error @enderror">
-                                    <label class="control-label mb-10" for="password">Password</label>
+                                <div class="form-group @error('password') has-error @enderror">
+                                    <label class="pull-left control-label mb-10" for="password">Password</label>
                                     <input type="password" name="password" class="form-control" id="password" placeholder="Masukan Password">
                                     <span class="show-hide1" onclick="myfunction()">
-                                        <i id="hide1" class="fa fa-eye"></i>
-                                        <i id="hide2" class="fa fa-eye-slash"></i>
+                                        <i id="hide1" class="fa-solid fa-eye"></i>
+                                        <i id="hide2" class="fa-solid fa-eye-slash"></i>
                                     </span>
                                     @error('password')
                                     <div class="text-danger"> {{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="form-group @error('name') has-error @enderror">
-                                    <label class="control-label mb-10" for="confirm-password">Konfirmasi
+                                <div class="form-group @error('password') has-error @enderror">
+                                    <label class="pull-left control-label mb-10" for="confirm-password">Konfirmasi
                                         Password</label>
                                     <input type="password" name="password" class="form-control" id="confirm_password" placeholder="Masukan Ulang Password">
                                     <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
                                     <span class="show-hide2" onclick="myfunction2()">
-                                        <i id="hide3" class="fa fa-eye"></i>
-                                        <i id="hide4" class="fa fa-eye-slash"></i>
+                                        <i id="hide3" class="fa-solid fa-eye"></i>
+                                        <i id="hide4" class="fa-solid fa-eye-slash"></i>
                                     </span>
                                     @error('password')
                                     <div class="text-danger"> {{ $message }}</div>
@@ -84,63 +86,62 @@
                                                 <label for="radio_12">Super Admin</label>
                                             </span>
                                         </div>
+                                        @error('role_id')
+                                            <div class="text-danger"> {{ $message }}</div>
+                                        @enderror
                                     </div>
-                                    @error('role_id')
-                                    <div class="text-danger"> {{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="form-group text-left">
-                                    <button type="" class="btn btn-info" id="gd">Tambah Admin</button>
-                                </div>
-                            </form>
+                                    <div class="form-group text-left">
+                                        <button type="" class="btn btn-info" id="gd">Tambah Admin</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            @include('Layouts.Footer')
         </div>
-        @include('Layouts.Footer')
     </div>
-</div>
 @endsection
 @push('scripts')
-<script>
-    function myfunction() {
-        var x = document.getElementById("password");
-        var y = document.getElementById("hide1");
-        var z = document.getElementById("hide2");
-        if (x.type === 'password') {
-            x.type = "text";
-            y.style.display = "block";
-            z.style.display = "none";
-        } else {
-            x.type = "password";
-            y.style.display = "none";
-            z.style.display = "block";
+    <script>
+        function myfunction() {
+            var x = document.getElementById("password");
+            var y = document.getElementById("hide1");
+            var z = document.getElementById("hide2");
+            if (x.type === 'password') {
+                x.type = "text";
+                y.style.display = "block";
+                z.style.display = "none";
+            } else {
+                x.type = "password";
+                y.style.display = "none";
+                z.style.display = "block";
+            }
         }
-    }
 
-    function myfunction2() {
-        var x = document.getElementById("confirm_password");
-        var y = document.getElementById("hide3");
-        var z = document.getElementById("hide4");
-        if (x.type === 'password') {
-            x.type = "text";
-            y.style.display = "block";
-            z.style.display = "none";
-        } else {
-            x.type = "password";
-            y.style.display = "none";
-            z.style.display = "block";
+        function myfunction2() {
+            var x = document.getElementById("confirm_password");
+            var y = document.getElementById("hide3");
+            var z = document.getElementById("hide4");
+            if (x.type === 'password') {
+                x.type = "text";
+                y.style.display = "block";
+                z.style.display = "none";
+            } else {
+                x.type = "password";
+                y.style.display = "none";
+                z.style.display = "block";
+            }
         }
-    }
 
-    $("#confirm_password").on('keyup', function() {
-        var password = $("#password").val();
-        var confirmPassword = $("#confirm_password").val();
-        if (password != confirmPassword)
-            $("#CheckPasswordMatch").html("Password does not match !").css("color", "red");
-        else
-            $("#CheckPasswordMatch").html("Password match !").css("color", "green");
-    });
-</script>
+        $("#confirm_password").on('keyup', function() {
+            var password = $("#password").val();
+            var confirmPassword = $("#confirm_password").val();
+            if (password != confirmPassword)
+                $("#CheckPasswordMatch").html("Password does not match !").css("color", "red");
+            else
+                $("#CheckPasswordMatch").html("Password match !").css("color", "green");
+        });
+    </script>
 @endpush
