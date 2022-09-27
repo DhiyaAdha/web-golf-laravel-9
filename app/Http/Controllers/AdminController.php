@@ -99,10 +99,10 @@ class AdminController extends Controller
             ],
             [
                 'name.required' => 'Nama admin masih kosong.',
-                'email.required' => 'Nama admin masih kosong.',
+                'email.required' => 'Email admin masih kosong.',
                 'phone.required' => 'Nomer Hp admin masih kosong.',
-                'password.required' => 'password admin masih kosong.',
-                'role_id.required' => 'role_id admin masih kosong.',
+                'password.required' => 'Password admin masih kosong.',
+                'role_id.required' => ' Role admin masih kosong.',
             ]
         );
         $user = User::findOrFail($id);
@@ -198,12 +198,12 @@ class AdminController extends Controller
             [
                 'name.required' => 'Nama admin masih kosong.',
                 'name.unique' => 'Email admin sudah ada',
-                'email.required' => 'Nama admin masih kosong.',
-                'email.unique' => 'Nama admin sudah ada',
+                'email.required' => 'Email masih kosong.',
+                'email.unique' => 'Email sudah ada',
                 'phone.required' => 'Nomer Hp admin masih kosong.',
                 'phone.unique' => 'Nomer Hp admin sudah ada',
-                'password.required' => 'password admin masih kosong.',
-                'role_id.required' => 'role_id admin masih kosong.',
+                'password.required' => 'Password admin masih kosong.',
+                'role_id.required' => 'Role admin masih kosong.',
             ]
         );
         $user = User::create([

@@ -179,7 +179,6 @@ class TamuController extends Controller
         $quota->save();
         $data = $request->all();
         dispatch(new SendMailJob($data));
-        // dispatch(new SendMailJobDeposit($data));
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'CREATE',
@@ -202,61 +201,45 @@ class TamuController extends Controller
     /* insert deposit && BERTAMBAH(create) deposit */
     public function insertdeposit(Request $request)
     {
-        $this->validate($request, [
-            'visitor_id' => 'required',
-            'balance' => 'required',
-            'payment_type' => 'required',
-        ]);
-
-        $visitors = Visitor::where('id', $request->id)->first();
-        // $report_deposit = ReportDeposit::create([
-        //     'payment_type' => $request->payment_type,
-        //     'visitor_id' => $request->visitor_id,
-        //     'user_id' => Auth::user()->id,
-        //     'report_balance' => $request->balance,
-
-        // ]);
-        if ($request->payment_type == 'Cash') {
-            $report_deposit = ReportDeposit::create([
-            'payment_type' => $request->payment_type,
+        $visitor = Visitor::find($request->visitor_id);
+        // dd($visitors);
+        $report_deposit = ReportDeposit::create([
             'visitor_id' => $request->visitor_id,
             'user_id' => Auth::user()->id,
-            'activities' => 'Deposit <b>' . $request->name . '</b> bertambah menjadi <b>Rp.' .number_format($request->balance, 0, ',', '.') . '</b>',
             'report_balance' => $request->balance,
-            ]);
-        } elseif ($request->payment_type == 'Transfer') {
-            $report_deposit = ReportDeposit::create([
-            'payment_type' => $request->payment_type,
-            'visitor_id' => $request->visitor_id,
-            'user_id' => Auth::user()->id,
-            'activities' => 'Deposit <b>' . $request->name . '</b> bertambah menjadi <b>Rp.' .number_format($request->balance, 0, ',', '.') . '</b>',
-            'report_balance' => $request->balance,
-            ]);
-        } else {
-            $report_deposit = ReportDeposit::create([
-            'payment_type' => $request->payment_type,
-            'visitor_id' => $request->visitor_id,
-            'user_id' => Auth::user()->id,
         ]);
-        }
-
-        $report_deposit->save();
+        $report_deposit->save();    
         $deposit = Deposit::create([
             'visitor_id' => $request->visitor_id,
             'user_id' =>    Auth::user()->id,
             'report_deposit_id' => $report_deposit->id,
             'type' => 'CREATE',
             'balance' => $request->balance,
+            'activities' => 'Deposit <b>'.$visitor->name.' bertambah menjadi <b>'.$request->balance.'</b>',
         ]);
         $deposit->save();
-        $data = $request->all();
-        dispatch(new SendMailJobDeposit($data));
+        $data_deposit = array (
+            "visitor_id" => $request->visitor_id,
+            "balance" => $request->balance,
+            "name" => $visitor->name,
+            "address" => $visitor->address,
+            "gender" => $visitor->gender,
+            "email" => $visitor->email,
+            "phone" => $visitor->phone,
+            "company" => $visitor->company,
+            "position" => $visitor->position,
+            "tipe_member" => $visitor->tipe_member
+        );
+        // dd($data_deposit);
+        // $data_deposit = $request->all();
+        // dispatch(new SendMailJob($data));
+        dispatch(new SendMailJobDeposit($data_deposit));
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'CREATE',
             'activities' => 'Berhasil menambah deposit ',
         ]);
-        return redirect('/daftar-tamu')->with('success', 'Berhasil menambah deposit');
+        return redirect('/daftar-tamu')->with('success','Berhasil menambah deposit');
     }
     /* insert deposit && BERTAMBAH(create) deposit */
 
