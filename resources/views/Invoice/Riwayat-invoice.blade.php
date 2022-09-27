@@ -43,6 +43,7 @@
                                                 <tr>
                                                     <th class="" style="">Nama</th>
                                                     <th class="" style="">Kategori Tamu</th>
+                                                    <th class="" style="">Metode Pembayaran</th>
                                                     <th class="" style="">Total Bayar</th>
                                                     <th class="" style="">Tanggal Bayar</th>
                                                     <th class="" style="">Action</th>
@@ -95,6 +96,9 @@
                     "data": function(data) {
                         return `<span class="label ${data.tipe_member == 'VIP' ? 'label-success' : 'label-warning'}">${data.tipe_member}</span>`;
                     }
+                },
+                {
+                    data: 'payment_type'
                 },
                 {
                     data: 'total'
