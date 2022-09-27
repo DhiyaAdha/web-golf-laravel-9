@@ -35,7 +35,7 @@
                             <div class="pull-right">
                                 
                                     <a href="{{ url('export_excel_tamu') }}" target="_blank" name="excel" data-toggle="tooltip" data-placement="top" title="Download Excel">
-                                        <img src="dist/img/excel2.svg" width="25px" height="25px">
+                                        <img src="dist/img/excel.svg" width="25px" height="25px">
                                     </a>
                             </div>
                             <div class="clearfix"></div>

@@ -193,7 +193,8 @@ class TamuController extends Controller
             'payment_type' => 'required',
         ]);
 
-        $visitors = Visitor::where('id', $request->id)->first();
+        // $visitors = Visitor::where('id', $request->id)->first();
+        $visitor = Visitor::find($request->visitor_id);
         // $report_deposit = ReportDeposit::create([
         //     'payment_type' => $request->payment_type,
         //     'visitor_id' => $request->visitor_id,
