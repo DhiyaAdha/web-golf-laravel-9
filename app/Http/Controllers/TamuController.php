@@ -102,7 +102,7 @@ class TamuController extends Controller
         $this->validate(
             $request,
             [
-                'name' => 'required|unique:visitors,name',
+                'name' => 'required',
                 'address' => 'required',
                 'gender' => 'required',
                 'email' => 'required|email|unique:visitors,email',
@@ -179,6 +179,7 @@ class TamuController extends Controller
         $quota->save();
         $data = $request->all();
         dispatch(new SendMailJob($data));
+        // dispatch(new SendMailJobDeposit($data));
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'CREATE',
@@ -201,21 +202,44 @@ class TamuController extends Controller
     /* insert deposit && BERTAMBAH(create) deposit */
     public function insertdeposit(Request $request)
     {
+        $this->validate($request, [
+            'visitor_id' => 'required',
+            'balance' => 'required',
+            'payment_type' => 'required',
+        ]);
+
         $visitor = Visitor::find($request->visitor_id);
-        // dd($visitors);
-        $report_deposit = ReportDeposit::create([
+        if ($request->payment_type == 'Cash') {
+            $report_deposit = ReportDeposit::create([
+            'payment_type' => $request->payment_type,
             'visitor_id' => $request->visitor_id,
             'user_id' => Auth::user()->id,
+            'activities' => 'Deposit <b>' . $request->name . '</b> bertambah menjadi <b>Rp.' .number_format($request->balance, 0, ',', '.') . '</b>',
             'report_balance' => $request->balance,
+            ]);
+        } elseif ($request->payment_type == 'Transfer') {
+            $report_deposit = ReportDeposit::create([
+            'payment_type' => $request->payment_type,
+            'visitor_id' => $request->visitor_id,
+            'user_id' => Auth::user()->id,
+            'activities' => 'Deposit <b>' . $request->name . '</b> bertambah menjadi <b>Rp.' .number_format($request->balance, 0, ',', '.') . '</b>',
+            'report_balance' => $request->balance,
+            ]);
+        }else {
+            $report_deposit = ReportDeposit::create([
+            'payment_type' => $request->payment_type,
+            'visitor_id' => $request->visitor_id,
+            'user_id' => Auth::user()->id,
         ]);
-        $report_deposit->save();    
+        }
+
+        $report_deposit->save();
         $deposit = Deposit::create([
             'visitor_id' => $request->visitor_id,
             'user_id' =>    Auth::user()->id,
             'report_deposit_id' => $report_deposit->id,
             'type' => 'CREATE',
             'balance' => $request->balance,
-            'activities' => 'Deposit <b>'.$visitor->name.' bertambah menjadi <b>'.$request->balance.'</b>',
         ]);
         $deposit->save();
         $data_deposit = array (
@@ -230,16 +254,13 @@ class TamuController extends Controller
             "position" => $visitor->position,
             "tipe_member" => $visitor->tipe_member
         );
-        // dd($data_deposit);
-        // $data_deposit = $request->all();
-        // dispatch(new SendMailJob($data));
         dispatch(new SendMailJobDeposit($data_deposit));
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'CREATE',
             'activities' => 'Berhasil menambah deposit ',
         ]);
-        return redirect('/daftar-tamu')->with('success','Berhasil menambah deposit');
+        return redirect('/daftar-tamu')->with('success', 'Berhasil menambah deposit');
     }
     /* insert deposit && BERTAMBAH(create) deposit */
 
@@ -273,7 +294,7 @@ class TamuController extends Controller
     public function reportdeposit(Request $request, $id)
     {
         $decrypt_id = Crypt::decryptString($id);
-        $aktifitas_deposit = ReportDeposit::select('id', 'report_balance', 'payment_type', 'visitor_id', 'user_id', 'activities', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
+        $aktifitas_deposit = ReportDeposit::select('id', 'report_balance', 'payment_type', 'visitor_id', 'user_id','activities', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
             return datatables()->of($aktifitas_deposit)->editColumn('report_balance', function ($data) {
                 if($data->payment_type == 'Tidak ada'){
@@ -461,16 +482,16 @@ class TamuController extends Controller
     public function reporttransaksi(Request $request, $id)
     {
         $decrypt_id = Crypt::decryptString($id);
-        $reporttransaksi = LogTransaction::select('id', 'payment_type', 'payment_status', 'total', 'visitor_id', 'user_id', 'activities', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
+        $reporttransaksi = LogTransaction::select('id', 'payment_type', 'payment_status', 'total', 'visitor_id', 'user_id','activities', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
             return datatables()->of($reporttransaksi)->addColumn('order_id', function ($data) {
                 return $data->id;
             })->editColumn('information', function ($data) {
                 return $data->activities;
             })->addColumn('status', function ($data) {
-                if ($data->payment_status == '1') {
+                if ($data->payment_status == '1'){
                     return '<p class="label label-success">Berhasil<div>';
-                } else {
+                }else {
                     return '<p class="label label-warning">Gagal<div>';
                 }
             })->editColumn('created_at', function ($data) {

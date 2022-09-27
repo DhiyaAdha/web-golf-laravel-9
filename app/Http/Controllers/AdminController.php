@@ -197,7 +197,7 @@ class AdminController extends Controller
             ],
             [
                 'name.required' => 'Nama admin masih kosong.',
-                'name.unique' => 'Email admin sudah ada',
+                'name.unique' => 'Nama admin sudah ada',
                 'email.required' => 'Email masih kosong.',
                 'email.unique' => 'Email sudah ada',
                 'phone.required' => 'Nomer Hp admin masih kosong.',

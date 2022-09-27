@@ -30,8 +30,5 @@ class SendEmail extends Mailable
     public function build()
     {
         return $this->view('emails.sendemail')->subject('Horee, Pendaftaran Berhasil');
-        // return $this->subject('Horee, Pendaftaran Berhasil')
-        //             // ->with(['message' => $this])
-        //             ->markdown('emails.sendemail', ['data' => $this->data]);
     }
 }
