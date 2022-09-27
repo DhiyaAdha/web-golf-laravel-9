@@ -9,16 +9,18 @@ use App\Models\Package;
 use App\Models\Visitor;
 use App\Models\LogAdmin;
 use App\Models\LogLimit;
+use App\Models\ReportLimit;
 use Darryldecode\Cart\Cart;
 use Illuminate\Http\Request;
 use App\Models\ReportDeposit;
 use App\Models\LogTransaction;
-use App\Models\ReportLimit;
 use Illuminate\Support\Carbon;
+use App\Jobs\SendEmailResetJob;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Jobs\SendMailPaymentsuccess4Job;
 use function PHPUnit\Framework\returnSelf;
 
 class OrderController extends Controller
@@ -382,7 +384,7 @@ class OrderController extends Controller
                             'payment_status' => 'paid',
                             'total' => $totalPrice
                         ]);
-
+                        
                         LogAdmin::create([
                             'user_id' => Auth::id(),
                             'type' => 'CREATE',
@@ -390,6 +392,8 @@ class OrderController extends Controller
                         ]);
 
                         \Cart::session($req->get('page'))->clear();
+
+                        
 
                         if($req->ajax()){
                             $this->setResponse('VALID', "Pembayaran berhasil");
