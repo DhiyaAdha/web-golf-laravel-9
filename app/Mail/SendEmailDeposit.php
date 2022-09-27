@@ -29,8 +29,9 @@ class SendEmailDeposit extends Mailable
      */
     public function build()
     {
-        return $this->subject('Horee, Deposit anda telah Berhasil')
-                    // ->with(['message' => $this])
-                    ->markdown('emails.depositemail', ['data' => $this->data]);
+        return $this->view('emails.depositemail')->subject('Horee, Deposit anda telah Berhasil');
+        // return $this->subject('Horee, Deposit anda telah Berhasil')
+        //             // ->with(['message' => $this])
+        //             ->markdown('emails.depositemail', ['data' => $this->data]);
     }
 }

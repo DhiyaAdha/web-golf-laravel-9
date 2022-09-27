@@ -179,7 +179,8 @@ class TamuController extends Controller
     /* insert deposit && BERTAMBAH(create) deposit */
     public function insertdeposit(Request $request)
     {
-        $visitors = Visitor::where('id', $request->id)->first();
+        // $visitors = Visitor::where('id', $request->id)->first();
+        $visitor = Visitor::find($request->visitor_id);
         $report_deposit = ReportDeposit::create([
             'visitor_id' => $request->visitor_id,
             'user_id' => Auth::user()->id,
@@ -195,8 +196,19 @@ class TamuController extends Controller
             'activities' => 'Deposit <b>' . $request->name . ' bertambah menjadi <b>' . $request->balance . '</b>',
         ]);
         $deposit->save();
-        $data = $request->all();
-        dispatch(new SendMailJobDeposit($data));
+        $data_deposit = array (
+            "visitor_id" => $request->visitor_id,
+            "balance" => $request->balance,
+            "name" => $visitor->name,
+            "address" => $visitor->address,
+            "gender" => $visitor->gender,
+            "email" => $visitor->email,
+            "phone" => $visitor->phone,
+            "company" => $visitor->company,
+            "position" => $visitor->position,
+            "tipe_member" => $visitor->tipe_member
+        );
+        dispatch(new SendMailJobDeposit($data_deposit));
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'CREATE',
