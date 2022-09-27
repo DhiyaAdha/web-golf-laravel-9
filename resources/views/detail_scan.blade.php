@@ -145,7 +145,8 @@
                                 </div>
                                 <a href="javascript:void(0)" class="btn btn-block btn-outline-success btn-sm"
                                     data-toggle="modal" data-target="#myModal">Deposit</a>
-                                <a href="{{ URL::temporarySignedRoute('order.cart', now()->addMinutes(10), ['id' => $visitor->id]) }}"
+                                {{-- {{ URL::signedRoute('order.cart', now()->addMinutes(10), ['id' => $visitor->id]) }} --}}
+                                <a href="{{ URL::signedRoute('order.cart', ['id' => $visitor->id]) }}"
                                     class="btn btn-block btn-success btn-sm" target="_blank">Pilih paket bermain</a>
                             </div>
                             <div id="myModal" class="modal fade" tabindex="-1" role="dialog"

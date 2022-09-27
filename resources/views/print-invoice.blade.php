@@ -389,8 +389,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="{{ asset('/dist/js/printThis.js') }}"></script>
     <script>
-        $('#print').printThis({
-            printContainer: true,
+        31
+        $(document).ready(function() {
+            $('#print').printThis({
+                printContainer: true,
+            });
+            var back = $("input[name=back]").val();
+            console.log(history.go(-1))
         });
     </script>
 </body>
