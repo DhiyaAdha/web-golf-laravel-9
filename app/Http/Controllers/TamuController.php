@@ -102,7 +102,7 @@ class TamuController extends Controller
         $this->validate(
             $request,
             [
-                'name' => 'required',
+                'name' => 'required|unique:visitors,name',
                 'address' => 'required',
                 'gender' => 'required',
                 'email' => 'required|email|unique:visitors,email',
@@ -232,7 +232,7 @@ class TamuController extends Controller
             'activities' => 'Deposit <b>' . $request->name . '</b> bertambah menjadi <b>Rp.' .number_format($request->balance, 0, ',', '.') . '</b>',
             'report_balance' => $request->balance,
             ]);
-        }else {
+        } else {
             $report_deposit = ReportDeposit::create([
             'payment_type' => $request->payment_type,
             'visitor_id' => $request->visitor_id,
@@ -290,7 +290,7 @@ class TamuController extends Controller
     public function reportdeposit(Request $request, $id)
     {
         $decrypt_id = Crypt::decryptString($id);
-        $aktifitas_deposit = ReportDeposit::select('id', 'report_balance', 'payment_type', 'visitor_id', 'user_id','activities', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
+        $aktifitas_deposit = ReportDeposit::select('id', 'report_balance', 'payment_type', 'visitor_id', 'user_id', 'activities', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
             return datatables()->of($aktifitas_deposit)->editColumn('report_balance', function ($data) {
                 if($data->payment_type == 'Tidak ada'){
@@ -478,16 +478,16 @@ class TamuController extends Controller
     public function reporttransaksi(Request $request, $id)
     {
         $decrypt_id = Crypt::decryptString($id);
-        $reporttransaksi = LogTransaction::select('id', 'payment_type', 'payment_status', 'total', 'visitor_id', 'user_id','activities', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
+        $reporttransaksi = LogTransaction::select('id', 'payment_type', 'payment_status', 'total', 'visitor_id', 'user_id', 'activities', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
             return datatables()->of($reporttransaksi)->addColumn('order_id', function ($data) {
                 return $data->id;
             })->editColumn('information', function ($data) {
                 return $data->activities;
             })->addColumn('status', function ($data) {
-                if ($data->payment_status == '1'){
+                if ($data->payment_status == '1') {
                     return '<p class="label label-success">Berhasil<div>';
-                }else {
+                } else {
                     return '<p class="label label-warning">Gagal<div>';
                 }
             })->editColumn('created_at', function ($data) {

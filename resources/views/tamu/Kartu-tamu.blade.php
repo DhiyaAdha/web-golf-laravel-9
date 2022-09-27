@@ -18,19 +18,18 @@
                         <img src="{{ asset('img/detail-kartutamu.jpg') }}" style="width: 100%; height: 200px;">
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="panel panel-default panel-dropdown card-view" style="height: 540px;">
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                <h6 class="panel-title txt-dark">Kartu Tamu</h6>
-                            </div>
-                            <div class="pull-right">
-                                <div class="dropdown  pull-left">
-                                    <a class="weight-500" data-toggle="modal" href="javascript:void(0)"
-                                        data-target="#kartu-tamu">
-                                        <i class="fa-solid fa-address-card"></i>
-                                    </a>
-                                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="panel panel-default panel-dropdown card-view" style="height: 540px;" >
+                    <div class="panel-heading">
+                        <div class="pull-left">
+                            <h6 class="panel-title txt-dark">Kartu Tamu</h6>
+                        </div>
+                        <div class="pull-right">
+                            <div class="dropdown  pull-left">
+                                <a class="weight-500" data-toggle="modal" href="javascript:void(0)" data-target="#kartu-tamu">
+                                    <i class="fa-solid fa-address-card"></i>
+                                </a>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -162,83 +161,79 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-3">
-                            {{-- Limit Bulanan --}}
-                                <div class="panel panel-default card-view limit" style="height: 170px;">
-                                    <div class="panel-heading">
-                                            <h6 class="panel-title text-center">Limit Bulanan</h6>
-                                            <div class="clearfix"></div>
-                                    </div>
-                                    <div>
-                                        <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
-                                            <img src="/dist/img/Golf.svg">
-                                            <h6 class="text-center">{{ $quota }}</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            {{-- Limit Kupon --}}
-                                <div class="panel panel-default card-view limit" style="height: 170px;">
-                                    <div class="panel-heading">
-                                            <h6 class="panel-title text-center">Limit Kupon</h6>
-                                            <div class="clearfix"></div>
-                                    </div>
-                                    <div>
-                                        <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
-                                            <img src="/dist/img/Golf.svg">
-                                            <h6 class="text-center">{{ $quota_kupon }}</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                             {{-- Deposit --}}
-                                <div class="panel panel-default card-view limit" style="height: 170px;">
-                                    <div class="panel-heading">
-                                        <h6 class="panel-title text-center">Deposit</h6>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    <div>
-                                        <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
-                                            <img src="/dist/img/money.svg">
-                                            <h6 class="text-center">IDR {{ number_format($balance, 0, '', '.') }}</h6>
-                                        </div>
-                                    </div>
-                                </div>
-    
-                    </div>
-                    <div class="col-lg-3">
-                        {{-- Barcode --}}
-                            <div class="panel panel-default card-view b" style="height: 540px;">
-                                <div class="panel-heading">
-                                    <h6 class="panel-title text-center">Barcode</h6>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="d-flex justify-content-center p">
-                                    {{ QrCode::size(180)->generate($visitor->unique_qr) }}
-                                </div>
-                            </div>
-                    </div>
+                    </div>  
                 </div>
             </div>
             
-           
-            <br>
             <div class="row">
-                <div class="panel-heading tabs">
-                    <div class="d-flex">
-                        <div class="flex-grow-1 d-flex align-items-center">
-                            <h6 class="panel-title txt-dark">Riwayat tamu</h6>
+                <div class="col-lg-3">
+                        {{-- Limit Bulanan --}}
+                            <div class="panel panel-default card-view limit" style="height: 170px;">
+                                <div class="panel-heading">
+                                        <h6 class="panel-title text-center">Limit Bulanan</h6>
+                                        <div class="clearfix"></div>
+                                </div>
+                                <div>
+                                    <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
+                                        <img src="/dist/img/Golf.svg">
+                                        <h6 class="text-center">{{ $quota }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        {{-- Limit Kupon --}}
+                            <div class="panel panel-default card-view limit" style="height: 170px;">
+                                <div class="panel-heading">
+                                        <h6 class="panel-title text-center">Limit Kupon</h6>
+                                        <div class="clearfix"></div>
+                                </div>
+                                <div>
+                                    <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
+                                        <img src="/dist/img/Golf.svg">
+                                        <h6 class="text-center">{{ $quota_kupon }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                         {{-- Deposit --}}
+                            <div class="panel panel-default card-view limit" style="height: 170px;">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title text-center">Deposit</h6>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div>
+                                    <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
+                                        <img src="/dist/img/money.svg">
+                                        <h6 class="text-center">IDR {{ number_format($balance, 0, '', '.') }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                </div>
+                <div class="col-lg-3">
+                    {{-- Barcode --}}
+                        <div class="panel panel-default card-view b" style="height: 540px;">
+                            <div class="panel-heading">
+                                <h6 class="panel-title text-center">Barcode</h6>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="d-flex justify-content-center p">
+                                {{ QrCode::size(180)->generate($visitor->unique_qr) }}
+                            </div>
                         </div>
-                        {{-- tab --}}
-                        <ul role="tablist" class="nav nav-pills" id="myTabs_6">
-                            <li class="active" role="presentation"><a class="tabs-log" aria-expanded="true"
-                                    data-toggle="tab" role="tab" href="#transaction_tabs">Transaksi</a></li>
-                            <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
-                                    href="#deposit_tabs" aria-expanded="false">Deposit</a></li>
-                            <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
-                                    href="#limit_tabs" aria-expanded="false">Limit</a></li>
-                        </ul>
+                </div>
+            </div>
+            
+            
+
+            
+            
+        </div>
+       
+        <br>
+        <div class="row">
+            <div class="panel-heading tabs">
+                <div class="d-flex">
+                    <div class="flex-grow-1 d-flex align-items-center">
+                        <h6 class="panel-title txt-dark">Riwayat tamu</h6>
                     </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -347,18 +342,29 @@
             });
         });
 
-        // Transaction Activity
-        $('#dt-tamu-transaksi').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "lengthChange": false,
-            "bDestroy": true,
-            "searching": false,
-            "paginate": {
-                "first": "First",
-                "last": "Last",
-                "next": "Next",
-                "previous": "Previous"
+    // Transaction Activity
+    $('#dt-tamu-transaksi').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "lengthChange": false,
+        "bDestroy": true,
+        "searching": false,
+        "paginate": {
+            "first": "First",
+            "last": "Last",
+            "next": "Next",
+            "previous": "Previous"
+        },
+        "ajax": {
+            "url": "{{ route('transaksi.report.data', Request::segment(2)) }}",
+            "type": "GET",
+            "datatype": "json"
+        },
+        "render": $.fn.dataTable.render.text(),
+        "columns": [{
+                data: 'order_id',
+                searchable: true,
+                orderable: false
             },
             "ajax": {
                 "url": "{{ route('transaksi.report.data', Request::segment(2)) }}",
@@ -397,30 +403,52 @@
                 lengthMenu: "Menampilkan _MENU_ data",
                 zeroRecords: "Tidak ada data pada tabel ini"
             },
-            columnDefs: [{
-                className: 'text-left',
-                targets: [0, 1, 2, 3]
-            }]
-        });
-        // End Of Transaction Activity
+            {
+                data: 'created_at',
+                searchable: true,
+                orderable: false
+            }
+        ],
+        order: [],
+        responsive: true,
+        language: {
+            emptyTable: "Tidak ada data pada tabel ini",
+            info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+            infoFiltered: "(difilter dari _MAX_ total data)",
+            infoEmpty: "Tidak ada data pada tabel ini",
+            lengthMenu: "Menampilkan _MENU_ data",
+            zeroRecords: "Tidak ada data pada tabel ini"
+        },
+        columnDefs: [{
+            className: 'text-left',
+            targets: [0, 1, 2, 3]
+        }]
+    });
+    // End Of Transaction Activity
 
-        //  Deposit Activity
-        $('#dt-tamu-deposit').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "lengthChange": false,
-            "bDestroy": true,
-            "searching": false,
-            "paginate": {
-                "first": "First",
-                "last": "Last",
-                "next": "Next",
-                "previous": "Previous"
-            },
-            "ajax": {
-                "url": "{{ route('deposit.report.data', Request::segment(2)) }}",
-                "type": "GET",
-                "datatype": "json"
+    //  Deposit Activity
+    $('#dt-tamu-deposit').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "lengthChange": false,
+        "bDestroy": true,
+        "searching": false,
+        "paginate": {
+            "first": "First",
+            "last": "Last",
+            "next": "Next",
+            "previous": "Previous"
+        },
+        "ajax": {
+            "url": "{{ route('deposit.report.data', Request::segment(2)) }}",
+            "type": "GET",
+            "datatype": "json"
+        },
+        "render": $.fn.dataTable.render.text(),
+        "columns": [{
+                data: 'report_balance',
+                searchable: true,
+                orderable: false
             },
             "render": $.fn.dataTable.render.text(),
             "columns": [{
