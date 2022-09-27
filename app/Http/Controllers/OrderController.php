@@ -390,6 +390,7 @@ class OrderController extends Controller
                         ]);
 
                         \Cart::session($req->get('page'))->clear();
+
                         if($req->ajax()){
                             $this->setResponse('VALID', "Pembayaran berhasil");
                             return response()->json($this->getResponse());
@@ -439,7 +440,7 @@ class OrderController extends Controller
                 }
             } else if($req->get('single') == 2){
                 if($log_limit->quota_kupon == 0) {
-                    $this->setResponse('INVALID', "Limit tidak terpenuhi");
+                    $this->setResponse('INVALID', "Kupon tidak terpenuhi");
                     return response()->json($this->getResponse());
                 } else {
                     $id_package = [];

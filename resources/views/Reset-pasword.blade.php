@@ -39,8 +39,8 @@
             position: absolute;
             margin-top: -27px;
             margin-left: 90%;
-            /* top: 15px;
-            right: 30px; */
+            top: 72px;
+            right: 10px;
             cursor: pointer;
             color: lightgray;
         }
@@ -49,7 +49,7 @@
             margin-top: -27px;
             margin-left: 90%;
             top: 72px;
-            /* right: 30px; */
+            right: 10px;
             cursor: pointer;
             color: lightgray;
         }
