@@ -38,39 +38,52 @@ class Kernel extends ConsoleKernel
             $visitor = Visitor::all();
 
             foreach($visitor as $value){
-                ReportLimit::create([
-                    'visitor_id' => $value['id'],
-                    'user_id' => '1',
-                    'report_quota' => $value['tipe_member'] == 'VIP' ? '4' : '10',
-                    'status' => 'reset',
-                    'activities' => 'Limit melakukan reset' ,
-                    'created_at' => Carbon::now(),
-                ]);
+                if($value->tipe_member == 'VVIP'){
+                    ReportLimit::create([
+                        'visitor_id' => $value['id'],
+                        'user_id' => '1',
+                        'report_quota' => $value['tipe_member'] == 'VIP' ? '4' : '10',
+                        'status' => 'Reset',
+                        'activities' => 'Limit <b>'.$value['name'].'</b> berhasil di reset menjadi <b>10x</b> main gratis pada bulan <b>'. Carbon::now()->format('M') .'</b> tahun <b>'. Carbon::now()->year .'</b>',
+                        'created_at' => Carbon::now(),
+                    ]);
+                }else{
+                    ReportLimit::create([
+                        'visitor_id' => $value['id'],
+                        'user_id' => '1',
+                        'report_quota' => $value['tipe_member'] == 'VIP' ? '4' : '10',
+                        'status' => 'Reset',
+                        'activities' => 'Limit <b>'.$value['name'].'</b> berhasil di reset menjadi <b>4x</b> main gratis pada bulan <b>'. Carbon::now()->format('M').'</b> tahun <b>'. Carbon::now()->year .'</b>',
+                        'created_at' => Carbon::now(),
+                    ]);
+                }
             }
 
             // if($visitor->tipe_member == 'VIP'){
-            //     $report_quota =ReportLimit::create([
-            //         'visitor_id' => $visitor->id,
-            //         'user_id' =>    Auth::user()->id,
-            //         'report_quota' => $visitor->tipe_member == 'VIP' ? '4' : '10',
-            //         'status' => 'Bertambah',
-            //         // 'activities'=> 'Limit ' . $request->name . ' bertambah menjadi ' . $request->tipe_member == 'VIP' ? '4' : '10',
-            //         'activities' => 'Limit <b>' . $visitor->name . '</b> bertambah menjadi <b> 4</b>',
-            //         'created_at' => Carbon::now(),
-            //     ]);
+            //     foreach($visitor as $value){
+            //     ReportLimit::create([
+            //                 'visitor_id' => $value['id'],
+            //                 'user_id' => '1',
+            //                 'report_quota' => $value['tipe_member'] == 'VIP' ? '4' : '10',
+            //                 'status' => 'reset',
+            //                 'activities' => 'Limit <b>' . $visitor->name . '</b> bertambah menjadi <b> 4/b>',
+            //                 'created_at' => Carbon::now(),
+            //             ]);
+            //         }
             // }else {
-            //     $report_quota =ReportLimit::create([
-            //         'visitor_id' => $visitor->id,
-            //         'user_id' =>    Auth::user()->id,
-            //         'report_quota' => $visitor->tipe_member == 'VIP' ? '4' : '10',
-            //         'status' => 'Bertambah',
-            //         // 'activities'=> 'Limit ' . $request->name . ' bertambah menjadi ' . $request->tipe_member == 'VIP' ? '4' : '10',
-            //         'activities' => 'Limit <b>' . $visitor->name . '</b> bertambah menjadi <b> 10</b>',
-            //         'created_at' => Carbon::now(),
-            //     ]);
+            //     foreach($visitor as $value){
+            //         ReportLimit::create([
+            //                 'visitor_id' => $value['id'],
+            //                 'user_id' => '1',
+            //                 'report_quota' => $value['tipe_member'] == 'VIP' ? '4' : '10',
+            //                 'status' => 'reset',
+            //                 'activities' => 'Limit <b>' . $visitor->name . '</b> bertambah menjadi <b> 10/b>',
+            //                 'created_at' => Carbon::now(),
+            //             ]);
+            //         }
             // }
 
-
+        
         })->everyMinute();
     
         // })->monthly();
