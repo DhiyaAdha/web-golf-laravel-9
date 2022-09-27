@@ -155,7 +155,7 @@
                         </div>
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
-                                <div id="statistic_visitor_line" class="morris-chart" style="height:293px;"></div>
+                                <div id="statistic_visitor_line" class="morris-chart" style="d:293px;"></div>
                                 <ul class="flex-stat mt-45" style="display: flex">
                                     <li>
                                         <span class="block"></span>

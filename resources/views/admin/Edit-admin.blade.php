@@ -45,15 +45,15 @@
                                     <label class="pull-left control-label mb-10" for="password">Password</label>
                                     <input type="password" name="password" class="form-control" id="password" placeholder="Masukan Password">
                                     <i class="fa-solid fa-eye fa-eye-slash" id="eye"></i>
-                                    @error('password')
+                                    @error('password1')
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group password-container @error('password') has-error @enderror">
-                                    <label class="pull-left control-label mb-10" for="password">Konfirmasi Password</label>
+                                    <label class="pull-left control-label mb-10" for="confirm_password">Konfirmasi Password</label>
                                     <input type="password" name="password" class="form-control" id="confirm_password" placeholder="Masukan Ulang Password" required>
                                     <i class="fa-solid fa-eye fa-eye-slash" id="eye2"></i>
-                                    @error('password')
+                                    @error('password1')
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>

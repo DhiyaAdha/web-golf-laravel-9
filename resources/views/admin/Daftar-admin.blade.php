@@ -1,4 +1,5 @@
-    @extends('Layouts.Main')
+@extends('Layouts.Main')
+
 @section('content')
     <div class="page-wrapper">
         <div class="container-fluid">

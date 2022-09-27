@@ -36,6 +36,7 @@ class Kernel extends ConsoleKernel
             })->update(['quota'=>4]);
             
             $visitor = Visitor::all();
+            // $quota = ReportLimit::all();
             
             // ReportLimit::create([
             //     'visitor_id' => $visitor->id,
@@ -44,17 +45,23 @@ class Kernel extends ConsoleKernel
             //     'status' => 'reset',
             //     'created_at' => Carbon::now(),
             // ]);
+
             foreach($visitor as $value){
                 ReportLimit::create([
                     'visitor_id' => $value['id'],
                     'user_id' => '1',
                     'report_quota' => $value['tipe_member'] == 'VIP' ? '4' : '10',
                     'status' => 'reset',
+                    'activities' => 'Limit melakukan reset' ,
                     'created_at' => Carbon::now(),
                 ]);
             }
-        // })->everyMinute();
-    })->monthly();
+
+
+            
+
+        })->everyMinute();
+    // })->monthly();
     }
 
     /**
