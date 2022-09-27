@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "ext-gd": "*",
         "barryvdh/laravel-dompdf": "^2.0",
         "darryldecode/cart": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
@@ -23,6 +24,7 @@
         "tightenco/ziggy": "^1.4",
         "yajra/laravel-datatables-oracle": "~9.0"
     },
+    
     "require-dev": {
         "bangnokia/laravel-serve-livereload": "^1.1",
         "facade/ignition": "^2.5",
@@ -70,5 +72,6 @@
         "sort-packages": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "ext-gd": "*"
 }
