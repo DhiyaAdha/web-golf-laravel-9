@@ -478,14 +478,14 @@ class TamuController extends Controller
     public function reporttransaksi(Request $request, $id)
     {
         $decrypt_id = Crypt::decryptString($id);
-        $reporttransaksi = LogTransaction::select('id', 'payment_type', 'payment_status', 'total', 'visitor_id', 'user_id','activities', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
+        $reporttransaksi = LogTransaction::select('id', 'order_number','payment_type', 'payment_status', 'total', 'visitor_id', 'user_id','activities', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
             return datatables()->of($reporttransaksi)->addColumn('order_id', function ($data) {
-                return $data->id;
+                return $data->order_number;
             })->editColumn('information', function ($data) {
                 return $data->activities;
             })->addColumn('status', function ($data) {
-                if ($data->payment_status == '1'){
+                if ($data->payment_status == 'paid'){
                     return '<p class="label label-success">Berhasil<div>';
                 }else {
                     return '<p class="label label-warning">Gagal<div>';
