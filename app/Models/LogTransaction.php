@@ -21,7 +21,6 @@ class LogTransaction extends Model
         'payment_status',
         'total',
         'cart',
-        'activities',
         'created_at',
     ];
 
