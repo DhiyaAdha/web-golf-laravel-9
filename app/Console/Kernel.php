@@ -58,31 +58,6 @@ class Kernel extends ConsoleKernel
                     ]);
                 }
             }
-
-            // if($visitor->tipe_member == 'VIP'){
-            //     foreach($visitor as $value){
-            //     ReportLimit::create([
-            //                 'visitor_id' => $value['id'],
-            //                 'user_id' => '1',
-            //                 'report_quota' => $value['tipe_member'] == 'VIP' ? '4' : '10',
-            //                 'status' => 'reset',
-            //                 'activities' => 'Limit <b>' . $visitor->name . '</b> bertambah menjadi <b> 4/b>',
-            //                 'created_at' => Carbon::now(),
-            //             ]);
-            //         }
-            // }else {
-            //     foreach($visitor as $value){
-            //         ReportLimit::create([
-            //                 'visitor_id' => $value['id'],
-            //                 'user_id' => '1',
-            //                 'report_quota' => $value['tipe_member'] == 'VIP' ? '4' : '10',
-            //                 'status' => 'reset',
-            //                 'activities' => 'Limit <b>' . $visitor->name . '</b> bertambah menjadi <b> 10/b>',
-            //                 'created_at' => Carbon::now(),
-            //             ]);
-            //         }
-            // }
-
         
         })->everyMinute();
     

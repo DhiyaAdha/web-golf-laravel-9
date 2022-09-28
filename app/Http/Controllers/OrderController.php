@@ -495,7 +495,7 @@ class OrderController extends Controller
                                     'report_quota_kupon' => $log_limit->quota_kupon,
                                     'visitor_id' => $req->get('page'),
                                     'user_id' => Auth()->id(),
-                                    'activities' => '<b>Limit Bulanan Berkurang menjadi '. $log_limit->quota_kupon .' ! </b>  Anda telah melakukan pembayaran menggunakan<b> quota kupon</b>',
+                                    'activities' => '<b>Limit Kupon Berkurang menjadi '. $log_limit->quota_kupon .' ! </b>  Anda telah melakukan pembayaran menggunakan<b> quota kupon</b>',
                                     'created_at' => Carbon::now(),
                                 ]);
         
