@@ -378,26 +378,26 @@ class OrderController extends Controller
                         $report_deposit->report_balance = $report_deposit->report_balance - $totalPrice;
                         $deposit->save();
                         $report_deposit->save();
-
+                        // $newArray =[
+                        //     ['saldo' => 120, 'sald' => 2545, 'qty' => '2'],
+                        //     ['limit' => 120, 'sald' => 2545, 'qty' => '2'],
+                        // ];
                         LogTransaction::create([
                             'order_number' => $req->get('order_number'),
                             'visitor_id' => $req->get('page'),
                             'user_id' => Auth()->id(),
                             'cart' => serialize($cart_data),
-                            'payment_type' => 'deposit',
+                            'payment_type' => serialize([['payment_type' => 'deposit', 'total' => $totalPrice, 'balance' => $deposit->balance]]),
                             'payment_status' => 'paid',
                             'total' => $totalPrice
                         ]);
                         
-                        
-
                         LogAdmin::create([
                             'user_id' => Auth::id(),
                             'type' => 'CREATE',
                             'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
                         ]);
                         
-
                         \Cart::session($req->get('page'))->clear();
 
                         $data['qty'] = $row->quantity;
@@ -428,7 +428,6 @@ class OrderController extends Controller
                             $this->setResponse('VALID', "Pembayaran berhasil");
                             return response()->json($this->getResponse());
                         }
-                        
                     } catch (Throwable $e) {
                         return response()->json($this->getResponse());
                     }
@@ -588,6 +587,7 @@ class OrderController extends Controller
         $visitor = Visitor::find($id);
         $log_transaction = LogTransaction::where('visitor_id', $id)->latest()->first();
         $cart = unserialize($log_transaction->cart);
+        $payment_type = unserialize($log_transaction->payment_type);
         $deposit = Deposit::where('visitor_id', $id)->first();
         $total = 0;
         $qty = 0;
@@ -598,7 +598,8 @@ class OrderController extends Controller
         $counted = ucwords(counted($total). ' Rupiah');
         return view('print-invoice', compact(
             'visitor', 
-            'log_transaction', 
+            'log_transaction',
+            'payment_type',
             'cart',
             'deposit',
             'total',

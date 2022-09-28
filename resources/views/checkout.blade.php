@@ -545,7 +545,7 @@
             });
 
             function invoice(url, title) {
-                popupCenter(url, title, 350, 550);
+                popupCenter(url, title, 300, 550);
             }
 
             function popupCenter(url, title, w, h) {
