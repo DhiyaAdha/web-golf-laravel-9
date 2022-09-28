@@ -63,6 +63,7 @@ class OrderController extends Controller
         $today = Carbon::now()->isoFormat('dddd');
         $date_now = Carbon::now()->translatedFormat('d F Y');
         $visitor = request()->segment(2);
+        $get_visitor = Visitor::find(request()->segment(2));
         $url_checkout = URL::temporarySignedRoute('checkout', now()->addMinutes(7), ['id' => $visitor]);
         $default = Package::where('category', 'default')->where('status', 0)->get();
         $additional = Package::where('category', 'additional')->where('status', 0)->get();
@@ -120,6 +121,7 @@ class OrderController extends Controller
             'products',
             'cart_data',
             'data_total',
+            'get_visitor'
         ));
     }
 

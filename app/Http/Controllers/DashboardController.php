@@ -184,7 +184,6 @@ class DashboardController extends Controller
                     ->where('gender', 'laki-laki');
             }
         )->count();
-        // dd($data['visitor_vip_male']);
         
         // data-table analisis tamu
         $visitor = Visitor::select([

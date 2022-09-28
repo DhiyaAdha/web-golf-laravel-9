@@ -30,14 +30,14 @@
 
     {{-- toastr --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
-    
+
     {{-- font roboto --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,400;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,400;1,500&display=swap"
+        rel="stylesheet">
     <style>
     </style>
-
     <style>
         .password-container {
             width: 400px;
@@ -59,33 +59,26 @@
             color: rgb(114, 114, 114);
         }
 
-        #toast-container > .toast-success {
-        background-color: #01C853;
-        font-family: Arial;
+        #toast-container>.toast-success {
+            background-color: #01C853;
+            font-family: Arial;
         }
     </style>
 </head>
 
 <body>
-    <!--Preloader-->
     <div class="preloader-it">
         <div class="la-anim-1"></div>
     </div>
-    <!--/Preloader-->
-
     <div class="wrapper pa-0">
         <header class="sp-header">
             <div class="sp-logo-wrap pull-left">
-
                 <a href="#">
                     <img class="brand-img mr-10" src="dist/img/tgcc.svg" alt="brand" />
                 </a>
             </div>
             <div class="clearfix"></div>
         </header>
-
-
-
         <!-- Main Content -->
         <div class="page-wrapper pa-0 ma-0 auth-page">
             <div class="container-fluid">
@@ -134,20 +127,7 @@
                                                     </div>
                                                 @enderror
                                             </div>
-                                            {{-- <div class="form-group">
-                                                <label class="pull-left control-label mb-10"
-                                                    for="password">Password</label>
-                                                <a class="capitalize-font txt-primary block mb-10 pull-right font-12"
-                                                    href="{{ route('Lupa-pasword') }}">Lupa Password?</a>
-                                                <div class="clearfix"></div>
-                                                <input type="password" name="password" class="form-control"
-                                                    id="password" placeholder="Masukan Password" required data-toggle="password">
-                                            </div> --}}
-
-
-
                                             <div class="clearfix"></div>
-
                                             <div class="form-group password-container">
                                                 <a class="capitalize-font txt-primary block mb-10 pull-right font-12"
                                                     href="{{ route('Lupa-pasword') }}">Lupa Password?</a>
@@ -157,14 +137,9 @@
                                                     id="password" placeholder="Masukan Password" required>
                                                 <i class="fa-solid fa-eye fa-eye-slash" id="eye"></i>
                                             </div>
-
-
-                                            {{-- <div class="password-container">
-                                                <input type="password" placeholder="Password..." id="password">
-                                                <i class="fa-solid fa-eye" id="eye"></i>
-                                           </div> --}}
                                             <div class="form-group text-center">
-                                                <button type="submit" class="btn btn-info btn-rounded">sign in</button>
+                                                <button type="submit" class="btn btn-info btn-rounded">sign
+                                                    in</button>
                                             </div>
                                         </form>
                                     </div>
@@ -173,31 +148,23 @@
                         </div>
                     </div>
                 </div>
-                <!-- /Row -->
             </div>
-
         </div>
-        <!-- /Main Content -->
-
     </div>
-    <!-- /#wrapper -->
-
-    <!-- JavaScript -->
-
-    <!-- jQuery -->
     <script src="../../vendors/bower_components/jquery/dist/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
     <script src="../../vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="../../vendors/bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js"></script>
-
-    <!-- Slimscroll JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
     <script src="dist/js/jquery.slimscroll.js"></script>
-
-    <!-- Init JavaScript -->
     <script src="dist/js/init.js"></script>
-
+    <script src="{{ asset('/sw.js') }}"></script>
     <script>
+        if (!navigator.serviceWorker.controller) {
+            navigator.serviceWorker.register("/sw.js").then(function(reg) {
+                console.log("Service worker has been registered for scope: " + reg.scope);
+            });
+        }
+
         const passwordField = document.querySelector("#password");
         const eyeIcon = document.querySelector("#eye");
 
@@ -205,14 +172,9 @@
             this.classList.toggle("fa-eye-slash");
             const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
             passwordField.setAttribute("type", type);
-        })
-    </script>
-    {{-- toastr js --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+        });
 
-    <script>
         $(document).ready(function() {
-            // toastr.options.timeOut = 100;
             toastr.options = {
             "closeButton": true,
             "debug": false,

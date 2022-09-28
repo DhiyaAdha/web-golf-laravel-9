@@ -22,7 +22,6 @@ class CreateLogTransactionsTable extends Migration
             $table->enum('payment_type',['deposit', 'cash/transfer', 'limit', 'kupon']);
             $table->string('payment_status')->default(1);
             $table->integer('total');
-            $table->string('activities')->nullable();
             $table->timestamps();
 
             $table->foreign('visitor_id')

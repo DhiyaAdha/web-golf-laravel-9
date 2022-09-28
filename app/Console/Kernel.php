@@ -36,15 +36,6 @@ class Kernel extends ConsoleKernel
             })->update(['quota'=>4]);
             
             $visitor = Visitor::all();
-            // $quota = ReportLimit::all();
-            
-            // ReportLimit::create([
-            //     'visitor_id' => $visitor->id,
-            //     'user_id' => '3',
-            //     'report_quota' => 'VVIP' == 'VIP' ? '4' : '10',
-            //     'status' => 'reset',
-            //     'created_at' => Carbon::now(),
-            // ]);
 
             foreach($visitor as $value){
                 ReportLimit::create([
@@ -56,8 +47,33 @@ class Kernel extends ConsoleKernel
                     'created_at' => Carbon::now(),
                 ]);
             }
+
+            // if($visitor->tipe_member == 'VIP'){
+            //     $report_quota =ReportLimit::create([
+            //         'visitor_id' => $visitor->id,
+            //         'user_id' =>    Auth::user()->id,
+            //         'report_quota' => $visitor->tipe_member == 'VIP' ? '4' : '10',
+            //         'status' => 'Bertambah',
+            //         // 'activities'=> 'Limit ' . $request->name . ' bertambah menjadi ' . $request->tipe_member == 'VIP' ? '4' : '10',
+            //         'activities' => 'Limit <b>' . $visitor->name . '</b> bertambah menjadi <b> 4</b>',
+            //         'created_at' => Carbon::now(),
+            //     ]);
+            // }else {
+            //     $report_quota =ReportLimit::create([
+            //         'visitor_id' => $visitor->id,
+            //         'user_id' =>    Auth::user()->id,
+            //         'report_quota' => $visitor->tipe_member == 'VIP' ? '4' : '10',
+            //         'status' => 'Bertambah',
+            //         // 'activities'=> 'Limit ' . $request->name . ' bertambah menjadi ' . $request->tipe_member == 'VIP' ? '4' : '10',
+            //         'activities' => 'Limit <b>' . $visitor->name . '</b> bertambah menjadi <b> 10</b>',
+            //         'created_at' => Carbon::now(),
+            //     ]);
+            // }
+
+
         })->everyMinute();
-    // })->monthly();
+    
+        // })->monthly();
     }
 
     /**
