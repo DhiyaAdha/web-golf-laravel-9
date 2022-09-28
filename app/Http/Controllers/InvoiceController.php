@@ -96,14 +96,16 @@ class InvoiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    
+     public function show($id)
     {
+        // $decrypt_id = Crypt::decryptString($id);
         $transaction = LogTransaction::find($id);
         $package = Package::find($id);
         $detail = Detail::find($id);
         $data['transaction'] = $transaction;
-        $data['visitor'] = Visitor::find($transaction->visitor_id);
-        $data['package'] = Package::find($package->id);
+        $data['visitor'] = Visitor::find($package->id);
+        $data['package'] = Package::find($package->id);  
         $data['detail'] = Detail::find($detail->id);
         // $data['detail'] = Detail::where('transaction_id', $id)->get();
         return view('invoice.invoice', $data);

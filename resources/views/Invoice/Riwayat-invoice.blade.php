@@ -41,16 +41,16 @@
 
                                             <thead>
                                                 <tr>
-                                                    <th class="" style="">Nama</th>
-                                                    <th class="" style="">Kategori Tamu</th>
-                                                    <th class="" style="">Metode Pembayaran</th>
-                                                    <th class="" style="">Total Bayar</th>
-                                                    <th class="" style="">Tanggal Bayar</th>
-                                                    <th class="" style="">Action</th>
+                                                    <th class="">Nama</th>
+                                                    <th class="">Kategori Tamu</th>
+                                                    <th class="">Metode Pembayaran</th>
+                                                    <th class="">Total Bayar</th>
+                                                    <th class="">Tanggal Bayar</th>
+                                                    <th class="">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            </tbody>
+                                            </tbody>    
                                         </table>
                                     </div>
                                 </div>
@@ -71,7 +71,7 @@
 @push('scripts')
     <script>
         /* daftar invoice */
-        $('#dt-riwayat').DataTable({
+        $('#dt-riwayat').dataTable({
             "processing": true,
             "serverSide": true,
             "lengthChange": false,
@@ -110,7 +110,9 @@
                     data: 'action'
                 },
             ],
-            order: [],
+            order: [
+                [5, 'desc']
+            ],
             responsive: true,
             language: {
                 search: "",
@@ -125,6 +127,7 @@
             columnDefs: [{
                 className: 'text-center',
                 targets: [1, 2, 3, 4]
+                // {"width" : "5%", "targets" : [2]}
             }, {
                 orderable: false,
                 targets: [0, 1, 2, 3, 4]
