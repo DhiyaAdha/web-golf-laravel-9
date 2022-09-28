@@ -126,7 +126,7 @@ class DashboardController extends Controller
 
         // statistika harian
         $data['visitor_today'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))
-            ->where('payment_status', '=', 'paid')
+            ->where('payment_status', 'paid')
             ->count();
         $data['visitor_month'] = Visitor::whereMonth(
             'created_at',

@@ -232,7 +232,7 @@
                             <li class="active" role="presentation"><a class="tabs-log" aria-expanded="true"
                                     data-toggle="tab" role="tab" href="#transaction_tabs">Transaksi</a></li>
                             <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
-                                    href="#deposit_tabs" aria-expanded="false">Deposit</a></li>
+                                    href="#deposit_tabs" aria-expanded="false">Saldo</a></li>
                             <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
                                     href="#limit_tabs" aria-expanded="false">Limit</a></li>
                         </ul>
