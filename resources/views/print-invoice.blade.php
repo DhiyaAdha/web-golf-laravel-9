@@ -261,7 +261,7 @@
         <section class="receipt-template">
             <header class="receipt-header">
                 <div class="logo-area">
-                    <img class="logo" src="{{ asset('tgcc144.png') }}">
+                    <img class="logo" src="{{ asset('tgcc.png') }}">
                 </div>
                 <h5>Tritih Golf & Country Club</h5>
                 <div class="address-area">

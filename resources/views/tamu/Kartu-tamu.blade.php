@@ -2,15 +2,19 @@
 @section('content')
     <div class="page-wrapper">
         <div class="container-fluid">
-            <div class="row heading-bg d-flex align-items-center">
-                <div class="col-lg-12">
-                    <h5 class="txt-dark flex-grow-1">Detail tamu</h5>
+            <div class="row heading-bg">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h5 class="txt-dark">Detail tamu</h5>
+                </div>
+                <!-- Breadcrumb -->
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
                         <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
                         <li><a href="{{ url('daftar-tamu') }}">Daftar tamu</a></li>
                         <li class="active"><span>Detail tamu</span></li>
                     </ol>
                 </div>
+                <!-- /Breadcrumb -->
             </div>
             <div class="row">
                 <div class="col-lg-12">
@@ -164,40 +168,11 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="col-lg-6 col-md-4 col-sm-3 col-xs-12">
-                    <div class="panel panel-default card-view b">
+                <div class="col-lg-3">
+                    {{-- Limit Bulanan --}}
+                    <div class="panel panel-default card-view limit" style="height: 181px;">
                         <div class="panel-heading">
-                            <h6 class="panel-title text-center">Barcode</h6>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="d-flex justify-content-center p">
-                            {{ QrCode::size(180)->generate($visitor->unique_qr) }}
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-                    <div class="panel panel-default card-view limit">
-                        <div class="panel-heading">
-                            <h6 class="panel-title text-center">Deposit</h6>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div>
-                            <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
-                                <img src="/dist/img/money.svg">
-                                <h6 class="text-center">IDR {{ number_format($balance, 0, '', '.') }}</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-                    <div class="panel panel-default card-view limit">
-                        <div class="panel-heading">
-                            <h6 class="panel-title text-center">Limit Bulanan</h6>
+                            <h6 class="panel-title text-center">Limit</h6>
                             <div class="clearfix"></div>
                         </div>
                         <div>
@@ -207,11 +182,10 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-                    <div class="panel panel-default card-view limit">
+                    {{-- Limit Kupon --}}
+                    <div class="panel panel-default card-view limit" style="height: 181px;">
                         <div class="panel-heading">
-                            <h6 class="panel-title text-center">Limit Kupon</h6>
+                            <h6 class="panel-title text-center">Kupon</h6>
                             <div class="clearfix"></div>
                         </div>
                         <div>
@@ -219,6 +193,29 @@
                                 <img src="/dist/img/Golf.svg">
                                 <h6 class="text-center">{{ $quota_kupon }}</h6>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="panel panel-default card-view limit" style="height: 181px;">
+                        <div class="panel-heading">
+                            <h6 class="panel-title text-center">Saldo</h6>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div>
+                            <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
+                                <img src="/dist/img/money.svg">
+                                <h6 class="text-center">IDR {{ number_format($balance, 0, '', '.') }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default card-view b" style="height: 181px;">
+                        <div class="panel-heading">
+                            <h6 class="panel-title text-center">Barcode</h6>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="d-flex justify-content-center p">
+                            {{ QrCode::size(100)->generate($visitor->unique_qr) }}
                         </div>
                     </div>
                 </div>
@@ -242,91 +239,92 @@
                     </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="card-view p">
-                        <div class="tab-content">
-                            {{-- transactions --}}
-                            <div id="transaction_tabs" class="tab-pane fade active in" role="tabpanel">
-                                <div class="table-wrap">
-                                    <div class="table-responsive">
-                                        <table class="table table-hover">
-                                            <table class="table table-hover" id="dt-tamu-transaksi">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Order ID</th>
-                                                        <th>Informasi</th>
-                                                        <th style="text-align: center;">Status</th>
-                                                        <th style="text-align: center;">Tanggal</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-
-                                                </tbody>
-                                            </table>
+                    <div class="tab-content">
+                        {{-- transactions --}}
+                        <div id="transaction_tabs" class="tab-pane fade active in" role="tabpanel">
+                            <div class="panel panel-default card-view">
+                                <div class="panel-heading">
+                                    <div class="pull-left">
+                                        <h6 class="panel-title txt-dark">Riwayat Transaksi</h6>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="panel-wrapper collapse in">
+                                    <div class="panel-body">
+                                        <div class="table-wrap">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover mb-0" id="dt-tamu-transaksi">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Order ID</th>
+                                                            <th>Informasi</th>
+                                                            <th style="text-align: center;">Status</th>
+                                                            <th style="text-align: center;">Tanggal</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            {{-- deposit --}}
-                            <div id="deposit_tabs" class="tab-pane fade" role="tabpanel">
-                                <div class="table-wrap">
-                                    <div class="table-responsive">
-                                        <table width="100%" class="table table-hover" style="margin: 10px;"
-                                            id="dt-tamu-deposit">
-                                            <thead>
-                                                <tr>
-                                                    <th>Saldo</th>
-                                                    <th>Informasi</th>
-                                                    <th class="text-center">Tipe Pembayaran</th>
-                                                    <th class="text-center">Tanggal</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="deposit_tabs" class="tab-pane fade" role="tabpanel">
-                                <div class="panel-heading r">
+                        </div>
+                        {{-- deposit --}}
+                        <div id="deposit_tabs" class="tab-pane fade" role="tabpanel">
+                            <div class="panel panel-default card-view">
+                                <div class="panel-heading">
                                     <div class="pull-left">
                                         <h6 class="panel-title txt-dark">Riwayat Deposit</h6>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
-                                <div class="table-wrap">
-                                    <div class="table-responsive">
-                                        <table width="100%" class="table table-hover" style="margin: 10px;"
-                                            id="dt-tamu-deposit">
-                                            <thead>
-                                                <tr>
-                                                    <th>Saldo</th>
-                                                    <th>Informasi</th>
-                                                    <th style="text-align: center;">Jenis Pembayaran</th>
-                                                    <th style="text-align: center;">Tanggal</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
+                                <div class="panel-wrapper collapse in">
+                                    <div class="panel-body">
+                                        <div class="table-wrap">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover mb-0" id="dt-tamu-deposit">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Saldo</th>
+                                                            <th>Informasi</th>
+                                                            <th class="text-center">Tipe Pembayaran</th>
+                                                            <th class="text-center">Tanggal</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            {{-- limit --}}
-                            <div id="limit_tabs" class="tab-pane fade" role="tabpanel">
-                                <div class="table-wrap">
-                                    <div class="table-responsive">
-                                        <table width="100%" class="table table-hover" style="margin: 10px;"
-                                            id="dt-tamu-limit">
-                                            <thead>
-                                                <tr>
-                                                    <th>Informasi</th>
-                                                    <th>Tipe</th>
-                                                    <th style="text-align: center;">Tanggal</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
+                        </div>
+                        {{-- limit --}}
+                        <div id="limit_tabs" class="tab-pane fade" role="tabpanel">
+                            <div class="panel panel-default card-view">
+                                <div class="panel-heading">
+                                    <div class="pull-left">
+                                        <h6 class="panel-title txt-dark">Riwayat Limit</h6>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="panel-wrapper collapse in">
+                                    <div class="panel-body">
+                                        <div class="table-wrap">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover mb-0" id="dt-tamu-transaksi">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Informasi</th>
+                                                            <th>Tipe</th>
+                                                            <th style="text-align: center;">Tanggal</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -367,7 +365,7 @@
             },
             "render": $.fn.dataTable.render.text(),
             "columns": [{
-                    data: 'order_id',
+                    data: 'order_number',
                     searchable: true,
                     orderable: false
                 },
@@ -400,67 +398,76 @@
             columnDefs: [{
                 className: 'text-left',
                 targets: [0, 1, 2, 3]
+            }, {
+                width: '20%',
+                targets: [0]
+            }, {
+                width: '50%',
+                targets: [1]
+            }, {
+                width: '10%',
+                targets: [2, 3]
             }]
         });
         // End Of Transaction Activity
 
         //  Deposit Activity
-        $('#dt-tamu-deposit').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "lengthChange": false,
-            "bDestroy": true,
-            "searching": false,
-            "paginate": {
-                "first": "First",
-                "last": "Last",
-                "next": "Next",
-                "previous": "Previous"
-            },
-            "ajax": {
-                "url": "{{ route('deposit.report.data', Request::segment(2)) }}",
-                "type": "GET",
-                "datatype": "json"
-            },
-            "render": $.fn.dataTable.render.text(),
-            "columns": [{
-                    data: 'report_balance',
-                    searchable: true,
-                    orderable: false
-                },
-                {
-                    data: 'information',
-                    searchable: true,
-                    orderable: false
-                },
-                {
-                    data: 'payment_type',
-                    searchable: true,
-                    orderable: false
-                },
-                {
-                    data: 'created_at',
-                    searchable: true,
-                    orderable: false
-                }
-            ],
-            order: [],
-            responsive: true,
-            language: {
-                // search: "",
-                // searchPlaceholder: "Cari",
-                emptyTable: "Tidak ada data pada tabel ini",
-                info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
-                infoFiltered: "(difilter dari _MAX_ total data)",
-                infoEmpty: "Tidak ada data pada tabel ini",
-                lengthMenu: "Menampilkan _MENU_ data",
-                zeroRecords: "Tidak ada data pada tabel ini"
-            },
-            columnDefs: [{
-                className: 'text-left',
-                targets: [0, 1, 2, 3]
-            }]
-        });
+        // $('#dt-tamu-deposit').DataTable({
+        //     "processing": true,
+        //     "serverSide": true,
+        //     "lengthChange": false,
+        //     "bDestroy": true,
+        //     "searching": false,
+        //     "paginate": {
+        //         "first": "First",
+        //         "last": "Last",
+        //         "next": "Next",
+        //         "previous": "Previous"
+        //     },
+        //     "ajax": {
+        //         "url": "{{ route('deposit.report.data', Request::segment(2)) }}",
+        //         "type": "GET",
+        //         "datatype": "json"
+        //     },
+        //     "render": $.fn.dataTable.render.text(),
+        //     "columns": [{
+        //             data: 'report_balance',
+        //             searchable: true,
+        //             orderable: false
+        //         },
+        //         {
+        //             data: 'information',
+        //             searchable: true,
+        //             orderable: false
+        //         },
+        //         {
+        //             data: 'payment_type',
+        //             searchable: true,
+        //             orderable: false
+        //         },
+        //         {
+        //             data: 'created_at',
+        //             searchable: true,
+        //             orderable: false
+        //         }
+        //     ],
+        //     order: [],
+        //     responsive: true,
+        //     language: {
+        //         // search: "",
+        //         // searchPlaceholder: "Cari",
+        //         emptyTable: "Tidak ada data pada tabel ini",
+        //         info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+        //         infoFiltered: "(difilter dari _MAX_ total data)",
+        //         infoEmpty: "Tidak ada data pada tabel ini",
+        //         lengthMenu: "Menampilkan _MENU_ data",
+        //         zeroRecords: "Tidak ada data pada tabel ini"
+        //     },
+        //     columnDefs: [{
+        //         className: 'text-left',
+        //         targets: [0, 1, 2, 3]
+        //     }]
+        // });
         // Limit Activity
         $('#dt-tamu-limit').DataTable({
             "processing": true,

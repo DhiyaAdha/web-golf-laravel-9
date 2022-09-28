@@ -164,6 +164,15 @@
                                                 method="POST">
                                                 @csrf
                                                 <div class="form-group">
+                                                    <div class="input-group-dropdown">
+                                                        <select name="payment_type" id="payment_type" class="form-control" required>
+                                                            <option disabled selected value="">Pilih Pembayaran</option>
+                                                            <option value="Cash" name="payment_type" id="payment_type">Cash</option>
+                                                            <option value="Transfer" name="payment_type" id="payment_type">Transfer</option>
+                                                        </select>
+                                                    </div>
+                                                </div> 
+                                                <div class="form-group">
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
                                                         <input type="text" min="0"

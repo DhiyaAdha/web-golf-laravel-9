@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="page-wrapper">
+
         <div class="container-fluid">
             <div class="row heading-bg">
                 <!-- Breadcrumb -->
@@ -42,7 +43,7 @@
                                         <input type="text" min="0"
                                             onkeypress="return event.charCode >= 48 && event.charCode <=57"
                                             class="form-control" value="0" name="balance" size="50px"
-                                            placeholder="Masukan Jumlah Deposit">
+                                            placeholder="Masukan Jumlah Deposit" id="balance">
                                         <p>Pastikan tamu memberitahu atau memberi bukti transfer, baik berupa screenshoot
                                         </p>
                                     </label>
@@ -71,8 +72,9 @@
         document.getElementById('hidden_div').style.display = "block";
     }else{
         document.getElementById('hidden_div').style.display = "none";
+        document.getElementById("balance").value = "0";
     }
-    } 
+    }
 </script>
-@endsection
+@endsection 
 

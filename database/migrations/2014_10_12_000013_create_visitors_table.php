@@ -27,7 +27,6 @@ class CreateVisitorsTable extends Migration
             $table->enum('tipe_member',['VVIP', 'VIP']);
             // $table->rememberToken();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
