@@ -2,78 +2,114 @@
 <html>
 
 <head>
-    <title></title>
-    {{-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> --}}
+    <meta charset="utf-8" />
+    <title>Pembayaran Deposit</title>
 
-
-    <link rel="apple-touch-icon" href="{{ asset('tgcc144.PNG') }}">
-    <link rel="icon" href="{{ asset('tgcc144.PNG') }}" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-    <link href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet"
-        type="text/css">
-    <link href="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.css') }}" rel="stylesheet"type="text/css">
-
-
-    <style type="text/css">
-
-         /* width */
-         ::-webkit-scrollbar {
-            width: 8px;
+    <style>
+        .invoice {
+            font-size: 2.5rem;
+            font-weight: 500;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: #00000021;
+            margin: 0;
         }
 
-        /* Track */
-        ::-webkit-scrollbar-track {
-            background: #fff;
+        .invoice-box {
+            max-width: 800px;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #eee;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            font-size: 16px;
+            line-height: 24px;
+            font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+            color: #555;
         }
 
-        /* Handle */
-        ::-webkit-scrollbar-thumb:vertical {
-            background: #888;
+        .invoice-box table {
+            width: 100%;
+            line-height: inherit;
+            text-align: left;
         }
 
-        /* Handle on hover */
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555;
+        .invoice-box table td {
+            padding: 5px;
+            vertical-align: top;
         }
 
-        a,
-        .no-print,
-        .modal-open.wrapper,
-        .main-footer,
-        .view-link,
-        .dataTables_length,
-        .dataTables_filter {
-            display: none !important;
+        .invoice-box table tr td:nth-child(2) {
+            /* text-align: right; */
         }
 
-        .box {
-            border-top: none !important;
+        .invoice-box table tr.top table td {
+            padding-bottom: 20px;
         }
 
-        .box-header.with-border {
+        .invoice-box table tr.top table td.title {
+            font-size: 45px;
+            line-height: 45px;
+            color: #333;
+        }
+
+        .invoice-box table tr.information table td {
+            padding-bottom: 40px;
+            padding-left: 20px;
+        }
+
+        .invoice-box table tr.heading td {
+            background: #eee;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+
+        }
+
+        .invoice-box table tr.details td {
+            padding-bottom: 20px;
+        }
+
+        .invoice-box table tr.item td {
+            border-bottom: 1px solid #eee;
+        }
+
+        .invoice-box table tr.item.last td {
             border-bottom: none;
         }
 
-        .close,
-        .btn {
-            display: none !important
+        .invoice-box table tr.total td:nth-child(2) {
+            border-top: 2px solid #eee;
+            font-weight: bold;
         }
 
-        .print-btn {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            height: 30px;
-            z-index: 1251;
-            background: #81ECFF;
-            line-height: 30px;
-            text-align: center;
-            cursor: pointer;
+        @media only screen and (max-width: 600px) {
+            .invoice-box table tr.top table td {
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+
+            .invoice-box table tr.information table td {
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
         }
 
+        /** RTL **/
+        .invoice-box.rtl {
+            direction: rtl;
+            font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        }
+
+        .invoice-box.rtl table {
+            text-align: right;
+        }
+
+        .invoice-box.rtl table tr td:nth-child(2) {
+            text-align: left;
+        }
+
+
+        <style type="text/css">
         @media screen {
             @font-face {
                 font-family: 'Lato';
@@ -165,392 +201,139 @@
         div[style*="margin: 16px 0;"] {
             margin: 0 !important;
         }
-
-        /* email invoice */
-        .receipt-template .main-title {
-                font-size: 14px;
-                font-weight: 700;
-                text-align: center;
-                margin: 10px 0 5px 0;
-                padding: 0;
-            }
-
     </style>
 </head>
 
-<body style="background-color: #f4f4f4; margin: 0 !important; padding: 0 !important;" id="print">
-        <style id="styles" type="text/css">
-            /*Common CSS*/
-            .receipt-template {
-                width: 302px;
-                margin: 0 auto;
-            }
-
-            .receipt-template .text-small {
-                font-size: 10px;
-            }
-
-            .receipt-template .block {
-                display: block;
-            }
-
-            .receipt-template .inline-block {
-                display: inline-block;
-            }
-
-            .receipt-template .bold {
-                font-weight: 700;
-            }
-
-            .receipt-template .italic {
-                font-style: italic;
-            }
-
-            .receipt-template .align-right {
-                text-align: right;
-            }
-
-            .receipt-template .align-center {
-                text-align: center;
-            }
-
-            .receipt-template .main-title {
-                font-size: 14px;
-                font-weight: 700;
-                text-align: center;
-                margin: 10px 0 5px 0;
-                padding: 0;
-            }
-
-            .receipt-template .heading {
-                position: relation;
-            }
-
-            .receipt-template .title {
-                font-size: 16px;
-                font-weight: 700;
-                margin: 10px 0 5px 0;
-            }
-
-            .receipt-template .sub-title {
-                font-size: 12px;
-                font-weight: 700;
-                margin: 10px 0 5px 0;
-            }
-
-            .receipt-template table {
-                width: 100%;
-            }
-
-            .receipt-template td,
-            .receipt-template th {
-                font-size: 12px;
-            }
-
-            .receipt-template .info-area {
-                font-size: 12px;
-                line-height: 1.222;
-            }
-
-            .receipt-template .listing-area {
-                line-height: 1.222;
-            }
-
-            .receipt-template .listing-area table {}
-
-            .receipt-template .listing-area table thead tr {
-                border-top: 1px solid #000;
-                border-bottom: 1px solid #000;
-                font-weight: 700;
-            }
-
-            .receipt-template .listing-area table tbody tr {
-                border-top: 1px dashed #000;
-                border-bottom: 1px dashed #000;
-            }
-
-            .receipt-template .listing-area table tbody tr:last-child {
-                border-bottom: none;
-            }
-
-            .receipt-template .listing-area table td {
-                vertical-align: top;
-            }
-
-            .receipt-template .info-area table {}
-
-            .receipt-template .info-area table thead tr {
-                border-top: 1px solid #000;
-                border-bottom: 1px solid #000;
-            }
-
-            /*Receipt Heading*/
-            .receipt-template .receipt-header {
-                text-align: center;
-            }
-
-            .receipt-template .receipt-header .logo-area {
-                width: 80px;
-                height: 80px;
-                margin: 0 auto;
-            }
-
-            .receipt-template .receipt-header .logo-area img.logo {
-                display: inline-block;
-                max-width: 100%;
-                max-height: 100%;
-            }
-
-            .receipt-template .receipt-header .address-area {
-                margin-bottom: 5px;
-                line-height: 1;
-            }
-
-            .receipt-template .receipt-header .info {
-                font-size: 12px;
-            }
-
-            .receipt-template .receipt-header .store-name {
-                font-size: 24px;
-                font-weight: 700;
-                margin: 0;
-                padding: 0;
-            }
-
-
-            /*Invoice Info Area*/
-            .receipt-template .invoice-info-area {}
-
-            /*Customer Customer Area*/
-            .receipt-template .customer-area {
-                margin-top: 10px;
-            }
-
-            /*Calculation Area*/
-            .receipt-template .calculation-area {
-                border-top: 2px solid #000;
-                font-weight: bold;
-            }
-
-            .receipt-template .calculation-area table td {
-                text-align: right;
-            }
-
-            .receipt-template .calculation-area table td:nth-child(2) {
-                border-bottom: 1px dashed #000;
-            }
-
-            /*Item Listing*/
-            .receipt-template .item-list table tr {}
-
-            /*Barcode Area*/
-            .receipt-template .barcode-area {
-                margin-top: 10px;
-                text-align: center;
-            }
-
-            .receipt-template .barcode-area img {
-                max-width: 100%;
-                display: inline-block;
-            }
-
-            /*Footer Area*/
-            .receipt-template .footer-area {
-                line-height: 1.222;
-                font-size: 10px;
-            }
-
-            /*Media Query*/
-            @media print {
-                .receipt-template {
-                    width: 100%;
-                }
-            }
-
-            @media all and (max-width: 215px) {}
-        </style>
-    <!-- HIDDEN PREHEADER TEXT -->
-    <div
-        style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Lato', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
-        We're thrilled to have you here! Get ready to dive into your new account.
-    </div>
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-        <!-- LOGO -->
-        <tr>
-            <td bgcolor="#01C853" align="center">
-                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-                    <tr>
-                        <td align="center" valign="top" style="padding: 40px 10px 40px 10px;"> </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td bgcolor="#01C853" align="center" style="padding: 0px 10px 0px 10px;">
-                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-                    <tr>
-                        <td bgcolor="#ffffff" align="center" valign="top"
-                            style="padding: 1px 20px 20px 20px; border-radius: 1px 4px 0px 0px; color: #111111; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 1px; font-weight: 10; letter-spacing: 4px; line-height: 1px;">
-                            {{-- <img src="{{ $message->embed(public_path() . '/img/icon-logo.svg') }}" width="90"
-                                height="90" style="display: block; border: 0px;" /> --}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td bgcolor="#ffffff" align="center" valign="top"
-                            style="justify-content: center; padding: 0px 20px 0px 20px; border-radius: 4px 4px 0px 0px; color: #01C853; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 25px; font-weight: 600; letter-spacing: 4px; line-height: 48px;">
-                            {{-- <div style="display:flex;justify-content: center;">
-                                <img class="brand-img" src="{{ asset('dist/img/tgcc_icon.svg') }}" alt="brand"
-                                    width="30" height="30">
-                                <span class="brand-text" style="color: #111111">TGGC</span>
-                            </div> --}}
-                        </td>
+<body>
+    <div class="invoice-box">
+        <table cellpadding="0" cellspacing="0" border="1">
+            <tr class="top">
+                <td colspan="5">
+                    <table>
                         <tr>
-                            <td bgcolor="#ffffff" align="center"
-                            style="padding: 
-                            1.1px 0px 50px 1.11px; color: #000000; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                                <img src="{{ $message->embed(public_path().'/tgcc144.PNG') }}" height="
-                                60px" width="30px"> <strong style="vertical-align:25%; font-size: 25px;">TGCC</strong>
+                            <td class="title">
+                                <h2 class="invoice">INVOICE</h2>
+                            </td>
+                            <td style="text-align: right">
+                                <strong>Order</strong>
+                                    687676576<br /><br>
+                                <strong>Jenis Pembayaran:</strong>
+                                <p style="color: #616161;">Deposit</p><br />
+
                             </td>
                         </tr>
-                    <tr>
-                        <td bgcolor="#ffffff" align="center"
-                            style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;text-align: center;">Hallo, <strong>{!! $data['name'] !!}</strong></p>
-                        </td>
-                    </tr>
-        </tr>
-    </table>
-    </td>
-    </tr>
-    <tr>
-        <td bgcolor="#f4f4f4" align="center" style="padding: 0px 10px 0px 10px;">
-            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-                <tr>
-                    <td bgcolor="#ffffff" align="center"
-                        style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                        <p style="margin: 0;text-align: left;">Terimakasih telah bermain Golf di <strong>Tritih
-                                Golf Country & Club. </strong>Berikut detail kartu anda :</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td bgcolor="#ffffff" align="left"
-                        style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                        {{-- <div style="display:flex;">
-                            <p style="margin: 0;">Nama: </p>
-                            <p style="margin: 0;">&nbsp; {!! $data['name'] !!}</p>
-                        </div>
-                        <div style="display:flex;">
-                            <p style="margin: 0;">Saldo Deposit Sebelumnya: </p>
-                            <p style="margin: 0;">&nbsp; Rp. {!! formatrupiah($data['sebelumdeposit']) !!}</p>
-                        </div> --}}
-                        <div style="display:flex;">
-                            <p style="margin: 0;">Sisa Saldo: </p>
-                            <p style="margin: 0;">&nbsp; Rp. {!! formatrupiah($data['sisasaldo']) !!}</p>
-                        </div>
-                        <div style="display:flex;">
-                            <p style="margin: 0;">Jumlah Pembayaran: </p>
-                            <p style="margin: 0;">&nbsp; Rp. {!! formatrupiah($data['total']) !!}</p>
-                        </div>
-                        <div style="display:flex;">
-                            <p style="margin: 0;">Order Invoice: </p>
-                            <p style="margin: 0;">&nbsp; </p>
-                        </div>
-                        <div style="display:flex;">
-                            <p style="margin: 0;">Jumlah item order: </p>
-                            <p style="margin: 0;">&nbsp; </p>
-                        </div>
-                        <div style="display:flex;">
-                            <p style="margin: 0;">Waktu Transaksi: </p>
-                            <p style="margin: 0;">&nbsp; </p>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <h4 class="main-title">INVOICE</h4>
-            <section class="listing-area item-list">
-                <table>
-                    <thead>
+                    </table>
+                </td>
+            </tr>
+
+            <tr class="information">
+                <td colspan="5">
+                    <table>
                         <tr>
-                            <td class="w-10 text-center">Sl.</td>
-                            <td class="w-40">Name</td>
-                            <td class="w-15 text-center">Qty</td>
-                            <td class="w-15 text-right">Harga</td>
-                            <td class="w-20 text-right">Total Harga</td>
+                            <td style="text-align: left">
+                                <strong>Nama Tamu:</strong><br />
+                                <span class="weight-600">Imas</span>
+                                <br />jl. jhghugy<br>
+                                087766665655<br>
+                            </td>
+                            <td rowspan="4" style="text-align: right">
+                                <strong>Tanggal Order:</strong><br>
+                                <p style="color: #616161">27/10/2022
+                                </p>
+                                <br><br>
+                            </td>
+
                         </tr>
-                    </thead>
-                    <tbody>
-                        <input type="hidden" value="{!! $i = 1 !!}">
-                        @foreach ($data['cart'] as $item)
-                            <tr>
-                                <td class="text-center">{!! $i++ !!}</td>
-                                <td>{!! $item['name'] !!}</td>
-                                <td class="text-center">{!! $item['qty'] !!}</td>
-                                <td class="text-right">{!! $item['pricesingle'] !!}</td>
-                                <td class="text-right">{!! $item['price'] !!}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </section>
-            {{-- <section class="info-area calculation-area">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td class="w-70">Total Item:</td>
-                            <td>{!! count($cart) !!}</td>
-                        </tr>
-                        <tr>
-                            <td class="w-70">Total Order:</td>
-                            <td>{!! $qty !!}</td>
-                        </tr>
-                        <tr>
-                            <td class="w-70">Discount:</td>
-                            <td>0.00</td>
-                        </tr>
-                        <tr>
-                            <td class="w-70">Jumlah Pembayaran:</td>
-                            <td>{!! formatrupiah($total) !!}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section> --}}
-                    </td>
-                </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr class="information">
+                <td colspan="5">
+                    <table>
+                            <td style="text-align: left">
+                                <strong>Katagori Tamu:</strong><br>
+                                <span class="label label-warning">VIP</span>
+                            </td>
+                            <td rowspan="" style="text-align: right">
+                                <strong>Sisa Saldo:</strong><br>
+                                <p style="color: #616161">Rp. 100.000.000
+                                </p>
+                                <br><br>
+                            </td>
+                    </table>
+                </td>
+            </tr>
+
+            <tr class="heading">
+                <td>No</td>
+
+                <td>Nama Paket</td>
+
+                <td>Harga</td>
+
+                <td>Jumlah</td>
+
+                <td>Total Harga</td>
+            </tr>
+
+            
+            
                 <tr>
-                    <td bgcolor="#ffffff" align="justify"
-                        style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                        <p style="margin: 0;">Demikian kami sampaikan, Stay Healty dan jangan lupa luangkan waktu
-                            untuk bermain Golf.</p>
-                    </td>
+                    <td class="text-center">1</td>
+                    <td>Car 1 Sheet</td>
+                    <td class="text-right">Rp. 10.000.000</td>
+                    <td class="text-center">7</td>
+                    <td class="text-right">Rp. 100.000.000</td>
                 </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td bgcolor="#f4f4f4" align="center">
-            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-                <tr>
-                    <td bgcolor="#FFE600" align="justify"
-                        style="padding: 20px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                        <p style="margin: 0;">Disclaimer : Berhati-hatilah dengan lampiran ini. Pesan ini berisi 1
-                            lampiran terenkripsi yang tidak dapat dipindai untuk mengetahui adanya konten berbahaya.
-                            Jangan download lampiran tersebut kecuali Anda mengenal pengirimnya dan yakin email
-                            tersebut sah.</p>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td class="content-cell" align="center"
-            style="word-break: break-word; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif; font-size: 16px; padding: 45px;">
-            <p class="f-fallback sub align-center"
-                style="font-size: 13px; line-height: 1.625; text-align: center; color: #A8AAAF; margin: .4em 0 1.1875em;"
-                align="center">© 2022 Tritih Golf & Country Club. Cilacap.</p>
-        </td>
-    </tr>
-    </table>
+			{{-- <tr>
+				<td class="thick-line"></td>
+				<td class="thick-line"></td>
+                <td class="thick-line"></td>
+				<td class="thick-line text-right">Total Item</td>
+				<td class="thick-line text-right">
+					<span>{!! $data['cart'] !!}</span>
+				</td>
+			</tr> --}}
+			<tr>
+				<td class="no-line"></td>
+				<td class="no-line"></td>
+                <td class="no-line"></td>
+				<td class="no-line text-right">Total Order</td>
+				<td class="no-line text-right">10</td>
+			</tr>
+			<tr>
+				<td class="no-line"></td>
+				<td class="no-line"></td>
+                <td class="no-line"></td>
+				<td class="no-line text-right">Discount</td>
+				<td class="no-line text-right">Rp. -</td>
+			</tr>
+			<tr>
+				<td class="no-line"></td>
+				<td class="no-line"></td>
+                <td class="no-line"></td>
+				<td class="no-line text-right"><strong>Jumlah Pembayaran</strong></td>
+				<td class="no-line text-right">
+					<span>Rp. 100.000.000</span>
+				</td>
+			</tr>
+            {{-- <tr>
+				<td class="no-line text-left"><strong>Sisa Saldo :</strong></td>
+				<td class="no-line">&nbsp; Rp. 999.000.000</td>
+			</tr> --}}
+
+        </table>
+        
+    </div>
+    <footer class="footer container-fluid pl-30 pr-30">
+        <div class="row">
+            <div class="col-sm-12">
+                <p>2022 &copy; Tritih Golf & Country Club. Cilacap</p>
+            </div>
+        </div>
+    </footer>
+
 </body>
 
 </html>

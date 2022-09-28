@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Cetak Invoice</title>
+    <title>Pembayaran Deposit</title>
 
     <style>
         .invoice {
@@ -122,8 +122,8 @@
                             </td>
                             <td style="text-align: right">
                                 <strong>Order</strong>
-                                    {!!$data['order_number'] !!}<br />
-                                <strong>Jenis Pembayaran:</strong><br>
+                                    {!! $data['order_number'] !!}<br /><br>
+                                <strong>Jenis Pembayaran:</strong>
                                 <p style="color: #616161;">Deposit</p><br />
 
                             </td>
@@ -144,7 +144,7 @@
                             </td>
                             <td rowspan="4" style="text-align: right">
                                 <strong>Tanggal Order:</strong><br>
-                                <p style="color: #616161">{!! $data['tanggal'] !!}
+                                <p style="color: #616161">{!! $data['date'] !!}
                                 </p>
                                 <br><br>
                             </td>
@@ -154,11 +154,10 @@
                 </td>
             </tr>
 
-
             <tr class="details">
                 <td>
                     <strong>Katagori Tamu:</strong><br>
-                    <span class="label label-warning">{!! $data['tipe_member'] !!}</span>
+                    <span class="label label-warning">{!! $data['type_member'] !!}</span>
                 </td>
             </tr>
 
@@ -167,9 +166,9 @@
 
                 <td>Nama Paket</td>
 
-                <td style="text-align: center">Harga</td>
+                <td>Harga</td>
 
-                <td style="text-align: center">Jumlah</td>
+                <td>Jumlah</td>
 
                 <td>Total Harga</td>
             </tr>
@@ -180,9 +179,9 @@
                 <tr>
                     <td class="text-center">{!! $i++ !!}</td>
                     <td>{!! $item['name'] !!}</td>
+                    <td class="text-right">Rp. {!! formatrupiah($item['pricesingle']) !!}</td>
                     <td class="text-center">{!! $item['qty'] !!}</td>
-                    <td class="text-right">{!! $item['pricesingle'] !!}</td>
-                    <td class="text-right">{!! $item['price'] !!}</td>
+                    <td class="text-right">Rp. {!! formatrupiah($item['price']) !!}</td>
                 </tr>
             @endforeach
 			{{-- <tr>
@@ -199,7 +198,7 @@
 				<td class="no-line"></td>
                 <td class="no-line"></td>
 				<td class="no-line text-right">Total Order</td>
-				<td class="no-line text-right">{!! $data['qty'] !!}</td>
+				<td class="no-line text-right">{!! $data['total_qty'] !!}</td>
 			</tr>
 			<tr>
 				<td class="no-line"></td>
@@ -220,10 +219,6 @@
             <tr>
 				<td class="no-line text-left"><strong>Sisa Saldo :</strong></td>
 				<td class="no-line">&nbsp; Rp. {!! formatrupiah($data['sisasaldo']) !!}</td>
-                <td class="no-line"></td>
-				<td class="no-line"></td>
-				<td class="no-line text-right">
-				</td>
 			</tr>
 
         </table>

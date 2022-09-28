@@ -400,23 +400,28 @@ class OrderController extends Controller
 
                         \Cart::session($req->get('page'))->clear();
 
-                        // Notif Email
-
-                        $data['email'] = $visitor->email;
-                        $data['name'] = $visitor->name;
-                        $data['address'] = $visitor->address;
-                        $data['phone'] = $visitor->phone;
-                        $data['tipe_member'] = $visitor->tipe_member;
-                        $data['sisasaldo'] = $report_deposit->report_balance;
-                        $data['order_number'] = $req->get('order_number');
-                        $data['tanggal'] = $row->attributes['created_at'];
-
-                        $data['pricesingle'] = $row->price;
                         $data['qty'] = $row->quantity;
-                        // $data['qty_total'] = $get_total;
-                        $data['price'] = $row->getPriceSum();
-                        $data['total'] = $totalPrice;
-                        $data['cart'] = $cart_data;
+                        $total_qty = 0;
+                        foreach($cart_data as $get) {
+                            $total_qty += $get['qty'];
+                        }
+
+                        $data = [
+                            'name' => $visitor->name,
+                            'email' => $visitor->email,
+                            'address' => $visitor->address,
+                            'phone' => $visitor->phone,
+                            'type_member' => $visitor->tipe_member,
+                            'sisasaldo' => $report_deposit->report_balance,
+                            'order_number' => $req->get('order_number'),
+                            'date' => $row->attributes['created_at'],
+                            'pricesingle' => $row->price,
+                            'price' => $row->getPriceSum(),
+                            'total' => $totalPrice,
+                            'qty' => $row->quantity,
+                            'total_qty' => $total_qty,
+                            'cart' => $cart_data,
+                        ];
                         dispatch(new SendMailPaymentsuccess4Job($data));
 
                         if($req->ajax()){

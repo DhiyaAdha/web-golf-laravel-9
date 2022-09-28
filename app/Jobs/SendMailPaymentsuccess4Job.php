@@ -32,6 +32,7 @@ class SendMailPaymentsuccess4Job implements ShouldQueue
      */
     public function handle()
     {
+        // dd($this->data);
         $email = new SendEmailPaymentsuccess4($this->data);
         Mail::to($this->data['email'])->send($email);
     }
