@@ -9,16 +9,20 @@ use App\Models\Package;
 use App\Models\Visitor;
 use App\Models\LogAdmin;
 use App\Models\LogLimit;
+use App\Models\ReportLimit;
 use Darryldecode\Cart\Cart;
 use Illuminate\Http\Request;
 use App\Models\ReportDeposit;
 use App\Models\LogTransaction;
-use App\Models\ReportLimit;
 use Illuminate\Support\Carbon;
+use App\Jobs\SendEmailResetJob;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendEmailPaymentsuccess4;
 use Illuminate\Support\Facades\Session;
+use App\Jobs\SendMailPaymentsuccess4Job;
 use function PHPUnit\Framework\returnSelf;
 
 class OrderController extends Controller
@@ -373,8 +377,8 @@ class OrderController extends Controller
                         $report_deposit = ReportDeposit::where('visitor_id', $req->get('page'))->first();
                         $report_deposit->report_balance = $report_deposit->report_balance - $totalPrice;
                         $deposit->save();
-                        $report_deposit->save();  
-                        
+                        $report_deposit->save();
+
                         LogTransaction::create([
                             'order_number' => $req->get('order_number'),
                             'visitor_id' => $req->get('page'),
@@ -384,18 +388,47 @@ class OrderController extends Controller
                             'payment_status' => 'paid',
                             'total' => $totalPrice
                         ]);
+                        
+                        
 
                         LogAdmin::create([
                             'user_id' => Auth::id(),
                             'type' => 'CREATE',
                             'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
                         ]);
+                        
 
                         \Cart::session($req->get('page'))->clear();
+
+                        $data['qty'] = $row->quantity;
+                        $total_qty = 0;
+                        foreach($cart_data as $get) {
+                            $total_qty += $get['qty'];
+                        }
+
+                        $data = [
+                            'name' => $visitor->name,
+                            'email' => $visitor->email,
+                            'address' => $visitor->address,
+                            'phone' => $visitor->phone,
+                            'type_member' => $visitor->tipe_member,
+                            'sisasaldo' => $report_deposit->report_balance,
+                            'order_number' => $req->get('order_number'),
+                            'date' => $row->attributes['created_at'],
+                            'pricesingle' => $row->price,
+                            'price' => $row->getPriceSum(),
+                            'total' => $totalPrice,
+                            'qty' => $row->quantity,
+                            'total_qty' => $total_qty,
+                            'cart' => $cart_data,
+                        ];
+                        dispatch(new SendMailPaymentsuccess4Job($data));
+
                         if($req->ajax()){
                             $this->setResponse('VALID', "Pembayaran berhasil");
                             return response()->json($this->getResponse());
                         }
+                        
                     } catch (Throwable $e) {
                         return response()->json($this->getResponse());
                     }
@@ -441,7 +474,7 @@ class OrderController extends Controller
                 }
             } else if($req->get('single') == 2){
                 if($log_limit->quota_kupon == 0) {
-                    $this->setResponse('INVALID', "Limit tidak terpenuhi");
+                    $this->setResponse('INVALID', "Kupon tidak terpenuhi");
                     return response()->json($this->getResponse());
                 } else {
                     $id_package = [];

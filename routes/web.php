@@ -123,4 +123,9 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::post('/update/qty/{id}', [OrderController::class,'update_qty'])->name('update.qty');
     Route::post('/pay', [OrderController::class,'pay'])->name('pay');
     Route::get('/print_invoice/{id}', [OrderController::class,'print_invoice'])->name('invoice.print');
+    //route 4 notifikasi email pembayaran sukses
+    Route::get('/test_payment', function(){
+        return view('emails.paymentsuccess4_');
+    });
+
 });
