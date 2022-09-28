@@ -87,18 +87,18 @@
             .invoice-box table tr.top table td {
                 width: 100%;
                 display: block;
-                text-align: center;
+                /* text-align: center; */
             }
 
             .invoice-box table tr.information table td {
                 width: 100%;
                 display: block;
-                text-align: center;
+                /* text-align: center; */
             }
             .invoice-box table tr.information2 table td {
                 width: 100%;
                 display: block;
-                text-align: center;
+                /* text-align: center; */
             }
         }
 
@@ -109,7 +109,7 @@
         }
 
         .invoice-box.rtl table {
-            text-align: right;
+            /* text-align: right; */
         }
 
         .invoice-box.rtl table tr td:nth-child(2) {
@@ -270,7 +270,7 @@
                     <tr>
                         <td bgcolor="#ffffff" align="center"
                             style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;text-align: left;">Terimakasih telah bermain Golf di <strong>Tritih Golf Country & Club. </strong></p>
+                            <p style="margin: 0;text-align: center;">Terimakasih telah bermain Golf di <strong>Tritih Golf Country & Club. </strong></p>
                         </td>
                     </tr>
                     <tr>
@@ -305,13 +305,13 @@
                                                 <tr>
                                                     <td style="text-align: left">
                                                         <strong>Nama Tamu:</strong><br />
-                                                        <span class="weight-600">Imas</span>
-                                                        <br />jl. jhghugy<br>
-                                                        087766665655<br>
+                                                        <span class="weight-600">{!! $data['name'] !!}</span>
+                                                        <br />{!! $data['address'] !!}<br>
+                                                        {!! $data['phone'] !!}<br>
                                                     </td>
                                                     <td rowspan="4" style="text-align: right">
                                                         <strong>Tanggal Order:</strong><br>
-                                                        <p style="color: #616161">27/10/2022
+                                                        <p style="color: #616161">{!! $data['date'] !!}
                                                         </p>
                                                     </td>
                         
@@ -325,11 +325,11 @@
                                             <table>
                                                     <td style="text-align: left">
                                                         <strong>Katagori Tamu:</strong><br>
-                                                        <span class="label label-warning">VIP</span>
+                                                        <span class="label label-warning">{!! $data['type_member'] !!}</span>
                                                     </td>
                                                     <td style="text-align: right">
                                                         <strong>Sisa Saldo:</strong><br>
-                                                        <span style="color: #616161">Rp. 100.000.000
+                                                        <span style="color: #616161">Rp. {!! formatrupiah($data['sisasaldo']) !!}
                                                         </span>
                                                     </td>
                                             </table>
@@ -343,35 +343,28 @@
                         
                                         <td>Harga</td>
                         
-                                        <td>Jumlah</td>
+                                        <td style="text-align: center">Jumlah</td>
                         
                                         <td>Total Harga</td>
                                     </tr>
                         
                                     
-                                    
+                                    <input type="hidden" value="{!! $i = 1 !!}">
+                                    @foreach ($data['cart'] as $item)
                                         <tr>
-                                            <td style="vertical-align: 50px">1</td>
-                                            <td>Car 1 Sheet</td>
-                                            <td class="text-right">Rp. 10.000.000</td>
-                                            <td class="text-center">7</td>
-                                            <td class="text-right">Rp. 100.000.000</td>
+                                            <td style="vertical-align: 50px">{!! $i++ !!}</td>
+                                            <td>{!! $item['name'] !!}</td>
+                                            <td class="text-right">Rp. {!! formatrupiah($item['pricesingle']) !!}</td>
+                                            <td style="text-align: center">{!! $item['qty'] !!}</td>
+                                            <td class="text-right">Rp. {!! formatrupiah($item['price']) !!}</td>
                                         </tr>
-                                    {{-- <tr>
-                                        <td class="thick-line"></td>
-                                        <td class="thick-line"></td>
-                                        <td class="thick-line"></td>
-                                        <td class="thick-line text-right">Total Item</td>
-                                        <td class="thick-line text-right">
-                                            <span>{!! $data['cart'] !!}</span>
-                                        </td>
-                                    </tr> --}}
+                                    @endforeach
                                     <tr>
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
                                         <td class="no-line text-right">Total Order</td>
-                                        <td class="no-line text-right">10</td>
+                                        <td class="no-line text-right">{!! $data['total_qty'] !!}</td>
                                     </tr>
                                     <tr>
                                         <td class="no-line"></td>
@@ -386,7 +379,7 @@
                                         <td class="no-line"></td>
                                         <td class="no-line text-right"><strong>Jumlah Pembayaran</strong></td>
                                         <td class="no-line text-right">
-                                            <span>Rp. 100.000.000</span>
+                                            <span>Rp. {!! formatrupiah($data['total']) !!}</span>
                                         </td>
                                     </tr>
                                     {{-- <tr>

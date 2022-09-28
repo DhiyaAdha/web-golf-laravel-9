@@ -87,18 +87,18 @@
             .invoice-box table tr.top table td {
                 width: 100%;
                 display: block;
-                text-align: center;
+                /* text-align: center; */
             }
 
             .invoice-box table tr.information table td {
                 width: 100%;
                 display: block;
-                text-align: center;
+                /* text-align: center; */
             }
             .invoice-box table tr.information2 table td {
                 width: 100%;
                 display: block;
-                text-align: center;
+                /* text-align: center; */
             }
         }
 
@@ -109,7 +109,7 @@
         }
 
         .invoice-box.rtl table {
-            text-align: right;
+            /* text-align: right; */
         }
 
         .invoice-box.rtl table tr td:nth-child(2) {
@@ -273,7 +273,7 @@
                     <tr>
                         <td bgcolor="#ffffff" align="center"
                             style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;text-align: left;">Terimakasih telah bermain Golf di <strong>Tritih Golf Country & Club. </strong></p>
+                            <p style="margin: 0;text-align: center;">Terimakasih telah bermain Golf di <strong>Tritih Golf Country & Club. </strong></p>
                         </td>
                     </tr>
                     <tr>
@@ -357,7 +357,7 @@
                                             <td style="vertical-align: 50px">1</td>
                                             <td>Car 1 Sheet</td>
                                             <td class="text-right">Rp. 10.000.000</td>
-                                            <td class="text-center">7</td>
+                                            <td style="text-align: center">7</td>
                                             <td class="text-right">Rp. 100.000.000</td>
                                         </tr>
                                     {{-- <tr>
