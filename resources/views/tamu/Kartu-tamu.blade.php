@@ -121,7 +121,7 @@
                                                                     <img class="back-qr"
                                                                         src="{{ asset('/dist/img/icon-golf2.svg') }}">
                                                                     <div class="qr-code-visitor">
-                                                                        {{ QrCode::size(120)->generate($visitor->unique_qr) }}
+                                                                        {{ QrCode::size(120)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
                                                                     </div>
                                                                 </div>
                                                                 <img class="align-self-end img-footer"
@@ -215,7 +215,7 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="d-flex justify-content-center p">
-                            {{ QrCode::size(100)->generate($visitor->unique_qr) }}
+                            {{ QrCode::size(100)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
                         </div>
                     </div>
                 </div>

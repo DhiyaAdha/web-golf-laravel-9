@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-		<title>500 NotFound</title>
+		<title>500</title>
 		<meta name="description" content="Hound is a Dashboard & Admin Site Responsive Template by hencework." />
 		<meta name="keywords" content="admin, admin dashboard, admin template, cms, crm, Hound Admin, Houndadmin, premium admin templates, responsive admin, sass, panel, software, ui, visualization, web app, application" />
 		<meta name="author" content="hencework"/>
@@ -44,7 +44,7 @@
                                             <h2 class="block error-head text-center mb-10"
                                             style="font-family: arial black; font-size: 100px; background: -webkit-gradient(linear, left bottom, right top, from(#171d18),to(#15e26a)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                                             500</h2>
-											<span class="text-center nonecase-font mb-20 block error-comment">Halaman Tidak Ditemukan</span>
+											<span class="text-center nonecase-font mb-20 block error-comment">Internal Server Error</span>
 											<div class="col text-center">
 											<a class="text-center btn btn-outlen btn-info" style="{text-align: center;}" 
 											 
