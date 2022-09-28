@@ -58,8 +58,14 @@
 <script type="text/javascript" src="{{ asset('/dist/js/printThis.js') }}"></script>
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
+<script src="{{ asset('/sw.js') }}"></script>
 @stack('scripts')
 <script>
+    if (!navigator.serviceWorker.controller) {
+        navigator.serviceWorker.register("/sw.js").then(function(reg) {
+            console.log("Service worker has been registered for scope: " + reg.scope);
+        });
+    }
     $('.download-kartu-tamu').on("click", function() {
         $('#cetak-kartu').printThis({
             base: "https://jasonday.github.io/printThis/"

@@ -36,10 +36,6 @@ class TamuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function fgf()
-    {
-        return view('emails.sample');
-    }
     public function index(Request $request)
     {
         $visitor = Visitor::select([
@@ -483,7 +479,6 @@ class TamuController extends Controller
     {
         $decrypt_id = Crypt::decryptString($id);
         $reporttransaksi = LogTransaction::join('visitors', 'log_transactions.visitor_id', '=', 'visitors.id')->where('log_transactions.visitor_id', $decrypt_id)->orderBy('log_transactions.created_at', 'desc')->get(['log_transactions.*', 'visitors.name as name']);
-        // dd($reporttransaksi);
         if ($request->ajax()) {
             return datatables()->of($reporttransaksi)->editColumn('order_number', function ($data) {
                 return $data->order_number;

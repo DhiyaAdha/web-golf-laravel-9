@@ -141,21 +141,21 @@
                             </div>
                             <div id="disabled-checkout"></div>
                             <div class="d-flex justify-content-between active-checkout">
-                                <button type="button" id="reset-order"
+                                <a href="javascript:void(0)" id="reset-order"
                                     class="mt-15 mb-15 btn-xs btn btn-danger btn-anim">
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Reset</span>
-                                </button>
-                                <button type="reset" id="riwayat"
-                                    class="mt-15 mb-15 btn-xs btn btn-primary btn-anim">
+                                </a>
+                                <a href="{{ url('kartu-tamu/' . Crypt::encryptString($get_visitor->id)) }}"
+                                    id="riwayat" class="mt-15 mb-15 btn-xs btn btn-primary btn-anim">
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Riwayat</span>
-                                </button>
-                                <button type="button" id="checkout"
+                                </a>
+                                <a href="javascript:void(0)" type="button" id="checkout"
                                     class="mt-15 mb-15 btn-xs btn btn-success btn-anim">
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Checkout</span>
-                                </button>
+                                </a>
                             </div>
                         @else
                             <button type="submit" class="mt-15 mb-15 btn-xs btn-block btn btn-success btn-anim"
