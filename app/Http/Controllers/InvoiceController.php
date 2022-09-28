@@ -99,7 +99,6 @@ class InvoiceController extends Controller
     
      public function show($id)
     {
-        // $decrypt_id = Crypt::decryptString($id);
         $transaction = LogTransaction::find($id);
         $package = Package::find($id);
         $detail = Detail::where('log_transaction_id',$id)->first();
