@@ -102,11 +102,16 @@ class InvoiceController extends Controller
         // $decrypt_id = Crypt::decryptString($id);
         $transaction = LogTransaction::find($id);
         $package = Package::find($id);
-        $detail = Detail::find($id);
+        $detail = Detail::where('log_transaction_id',$id)->first();
         $data['transaction'] = $transaction;
-        $data['visitor'] = Visitor::find($package->id);
-        $data['package'] = Package::find($package->id);  
-        $data['detail'] = Detail::find($detail->id);
+        $data['visitor'] = Visitor::find($transaction->visitor_id);
+        if ($detail) {
+            $data['package'] = Package::find($detail->package_id);  
+            $data['detail'] = Detail::find($detail->id);
+        } else {
+            $data['package'] = null;  
+            $data['detail'] = null;
+        }
         // $data['detail'] = Detail::where('transaction_id', $id)->get();
         return view('invoice.invoice', $data);
     }
