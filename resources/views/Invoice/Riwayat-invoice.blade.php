@@ -26,7 +26,7 @@
                         {{-- <a href="{{ url('export_excel') }}"><i data-toggle="tooltip" title="Download Excell" class="fa fa-file-excel-o pull-right"></i></a> --}}
                         <div class="pull-right">
                             <a href="{{ url('export_excel') }}" target="_blank" name="excel" data-toggle="tooltip"
-                                data-placement="top" title="Download Excel"><img src="dist/img/excel2.svg" width="25px"
+                                data-placement="top" title="Download Excel"><img src="dist/img/excel.svg" width="25px"
                                     height="25px"></a>
                         </div>
                         <div class="pull-left">

@@ -263,7 +263,7 @@
                 <div class="logo-area">
                     <img class="logo" src="{{ asset('tgcc.png') }}">
                 </div>
-                <h5>Tritih Golf & Country Club</h5>
+                <h5 class="mt-2">Tritih Golf & Country Club</h5>
                 <div class="address-area">
                     <div class="block">
                         <span class="info phone">Mobile: 085765536865</span>, <span class="info email">Email:
@@ -306,7 +306,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <td class="w-10 text-center">Sl.</td>
+                            <td class="w-10 text-center">No.</td>
                             <td class="w-40">Name</td>
                             <td class="w-15 text-center">Qty</td>
                             <td class="w-15 text-right">Harga</td>
@@ -359,19 +359,22 @@
                 <table>
                     <thead>
                         <tr>
-                            <td class="w-10 text-center">Sl.</td>
+                            <td class="w-10 text-center">No.</td>
                             <td class="w-50">Cara Pembayaran</td>
-                            <td class="w-20">Bayar</td>
+                            <td class="w-20">Jumlah</td>
                             <td class="w-20">Balance</td>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td>{{ $log_transaction->payment_type }}</td>
-                            <td>{{ formatrupiah($total) }}</td>
-                            <td>{{ formatrupiah($deposit->balance) }}</td>
-                        </tr>
+                        <input type="hidden" value="{{ $i = 1 }}">
+                        @foreach ($payment_type as $type)
+                            <tr>
+                                <td class="text-center">{{ $i++ }}</td>
+                                <td>{{ $type['payment_type'] }}</td>
+                                <td>{{ formatrupiah($type['total']) }}</td>
+                                <td>{{ formatrupiah($type['balance']) }}</td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </section>

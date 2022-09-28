@@ -534,7 +534,8 @@
                                                     </td>
                                                 </tr>
                                             </table>
-
+                                            <br>
+                                            <a style="color: red; font-size: 12px;">Perhatian: *Link hanya berlaku 5 Menit dari email ini terkirim</a>
                                             <!-- Sub copy -->
                                             <table class="body-sub" role="presentation"
                                                 style="margin-top: 25px; padding-top: 25px; border-top-width: 1px; border-top-color: #EAEAEC; border-top-style: solid;">
