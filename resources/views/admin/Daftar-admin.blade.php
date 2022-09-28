@@ -60,13 +60,6 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="panel panel-default card-view">
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                <h6 class="panel-title txt-dark">Riwayat Aktifitas</h6>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="clearfix"></div>
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
                                 <div class="table-wrap">
@@ -275,6 +268,12 @@
                 className: 'text-left',
                 targets: [1, 2, 3, 4]
             }],
+            dom: "<'row mb-3'<'col-sm-12 col-md-8 pull-right'f><'toolbar col-sm-12 col-md-4 float-left'B>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+            initComplete: function() {
+                $('div.toolbar').html('<b>Riwayat Aktifitas</b>').appendTo('.float-left');
+            }
         });
         /* data aktifitas */
     </script>
