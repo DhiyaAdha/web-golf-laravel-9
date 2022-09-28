@@ -190,7 +190,7 @@
                 "showEasing": "swing",
                 "hideEasing": "linear",
                 "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
+                "hideMethod": "fadeOut",
             };
             @if (Session::has('success'))
                 toastr.success('{{ Session::get('success') }}');

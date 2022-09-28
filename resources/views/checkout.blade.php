@@ -189,8 +189,8 @@
                                                         <option value="" disabled selected>-- Pilih jenis
                                                             pembayaran --
                                                         </option>
-                                                        <option value="1">Limit Bulanan</option>
-                                                        <option value="2">Limit Kupon</option>
+                                                        <option value="1">Limit</option>
+                                                        <option value="2">Kupon</option>
                                                         <option value="3">Cash/Transfer</option>
                                                         <option value="4">Deposit</option>
                                                     </select>
