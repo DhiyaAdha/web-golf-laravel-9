@@ -10,7 +10,7 @@
             font-size: 2.5rem;
             font-weight: 500;
             -webkit-background-clip: text;
-            -webkit-text-fill-color: #00000021;
+            -webkit-text-fill-color: #01C853;
             margin: 0;
         }
 
@@ -42,18 +42,21 @@
         }
 
         .invoice-box table tr.top table td {
-            padding-bottom: 20px;
+            /* padding-bottom: 20px; */
         }
 
         .invoice-box table tr.top table td.title {
             font-size: 45px;
             line-height: 45px;
-            color: #333;
         }
 
         .invoice-box table tr.information table td {
-            padding-bottom: 40px;
-            padding-left: 20px;
+            /* padding-bottom: 10px; */
+            /* padding-left: 20px; */
+        }
+        .invoice-box table tr.information2 table td {
+            /* padding-bottom: 20px; */
+            /* padding-left: 20px; */
         }
 
         .invoice-box table tr.heading td {
@@ -64,7 +67,7 @@
         }
 
         .invoice-box table tr.details td {
-            padding-bottom: 20px;
+            padding-bottom: 5px;
         }
 
         .invoice-box table tr.item td {
@@ -88,6 +91,11 @@
             }
 
             .invoice-box table tr.information table td {
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+            .invoice-box table tr.information2 table td {
                 width: 100%;
                 display: block;
                 text-align: center;
@@ -162,7 +170,8 @@
         /* RESET STYLES */
         img {
             border: 0;
-            height: auto;
+            height: 60px;
+            width: 50px;
             line-height: 100%;
             outline: none;
             text-decoration: none;
@@ -204,135 +213,232 @@
     </style>
 </head>
 
-<body>
-    <div class="invoice-box">
-        <table cellpadding="0" cellspacing="0" border="1">
-            <tr class="top">
-                <td colspan="5">
-                    <table>
-                        <tr>
-                            <td class="title">
-                                <h2 class="invoice">INVOICE</h2>
-                            </td>
-                            <td style="text-align: right">
-                                <strong>Order</strong>
-                                    687676576<br /><br>
-                                <strong>Jenis Pembayaran:</strong>
-                                <p style="color: #616161;">Deposit</p><br />
-
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-
-            <tr class="information">
-                <td colspan="5">
-                    <table>
-                        <tr>
-                            <td style="text-align: left">
-                                <strong>Nama Tamu:</strong><br />
-                                <span class="weight-600">Imas</span>
-                                <br />jl. jhghugy<br>
-                                087766665655<br>
-                            </td>
-                            <td rowspan="4" style="text-align: right">
-                                <strong>Tanggal Order:</strong><br>
-                                <p style="color: #616161">27/10/2022
-                                </p>
-                                <br><br>
-                            </td>
-
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-
-            <tr class="information">
-                <td colspan="5">
-                    <table>
-                            <td style="text-align: left">
-                                <strong>Katagori Tamu:</strong><br>
-                                <span class="label label-warning">VIP</span>
-                            </td>
-                            <td rowspan="" style="text-align: right">
-                                <strong>Sisa Saldo:</strong><br>
-                                <p style="color: #616161">Rp. 100.000.000
-                                </p>
-                                <br><br>
-                            </td>
-                    </table>
-                </td>
-            </tr>
-
-            <tr class="heading">
-                <td>No</td>
-
-                <td>Nama Paket</td>
-
-                <td>Harga</td>
-
-                <td>Jumlah</td>
-
-                <td>Total Harga</td>
-            </tr>
-
-            
-            
-                <tr>
-                    <td class="text-center">1</td>
-                    <td>Car 1 Sheet</td>
-                    <td class="text-right">Rp. 10.000.000</td>
-                    <td class="text-center">7</td>
-                    <td class="text-right">Rp. 100.000.000</td>
-                </tr>
-			{{-- <tr>
-				<td class="thick-line"></td>
-				<td class="thick-line"></td>
-                <td class="thick-line"></td>
-				<td class="thick-line text-right">Total Item</td>
-				<td class="thick-line text-right">
-					<span>{!! $data['cart'] !!}</span>
-				</td>
-			</tr> --}}
-			<tr>
-				<td class="no-line"></td>
-				<td class="no-line"></td>
-                <td class="no-line"></td>
-				<td class="no-line text-right">Total Order</td>
-				<td class="no-line text-right">10</td>
-			</tr>
-			<tr>
-				<td class="no-line"></td>
-				<td class="no-line"></td>
-                <td class="no-line"></td>
-				<td class="no-line text-right">Discount</td>
-				<td class="no-line text-right">Rp. -</td>
-			</tr>
-			<tr>
-				<td class="no-line"></td>
-				<td class="no-line"></td>
-                <td class="no-line"></td>
-				<td class="no-line text-right"><strong>Jumlah Pembayaran</strong></td>
-				<td class="no-line text-right">
-					<span>Rp. 100.000.000</span>
-				</td>
-			</tr>
-            {{-- <tr>
-				<td class="no-line text-left"><strong>Sisa Saldo :</strong></td>
-				<td class="no-line">&nbsp; Rp. 999.000.000</td>
-			</tr> --}}
-
-        </table>
-        
-    </div>
-    <footer class="footer container-fluid pl-30 pr-30">
-        <div class="row">
-            <div class="col-sm-12">
-                <p>2022 &copy; Tritih Golf & Country Club. Cilacap</p>
-            </div>
+    <body style="background-color: #f4f4f4; margin: 0 !important; padding: 0 !important;">
+        <!-- HIDDEN PREHEADER TEXT -->
+        <div
+            style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Lato', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
+            We're thrilled to have you here! Get ready to dive into your new account.
         </div>
-    </footer>
+        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <!-- LOGO -->
+            <tr>
+                <td bgcolor="#01C853" align="center">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                        <tr>
+                            <td align="center" valign="top" style="padding: 40px 10px 40px 10px;"> </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td bgcolor="#01C853" align="center" style="padding: 0px 10px 0px 10px;">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                        <tr>
+                            <td bgcolor="#ffffff" align="center" valign="top"
+                                style="padding: 1px 20px 20px 20px; border-radius: 1px 4px 0px 0px; color: #111111; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 1px; font-weight: 10; letter-spacing: 4px; line-height: 1px;">
+                                {{-- <img src="{{ $message->embed(public_path() . '/img/icon-logo.svg') }}" width="90"
+                                    height="90" style="display: block; border: 0px;" /> --}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#ffffff" align="center" valign="top"
+                                style="justify-content: center; padding: 0px 20px 0px 20px; border-radius: 4px 4px 0px 0px; color: #01C853; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 25px; font-weight: 600; letter-spacing: 4px; line-height: 48px;">
+                                {{-- <div style="display:flex;justify-content: center;">
+                                    <img class="brand-img" src="{{ asset('dist/img/tgcc_icon.svg') }}" alt="brand"
+                                        width="30" height="30">
+                                    <span class="brand-text" style="color: #111111">TGGC</span>
+                                </div> --}}
+                            </td>
+                            <tr>
+                                <td bgcolor="#ffffff" align="center"
+                                style="padding: 
+                                1.1px 0px 50px 1.11px; color: #000000; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
+                                    <img src={{ asset('/tgcc144.PNG') }} height="
+                                    60px" width="30px"> <strong style="vertical-align:75%; font-size: 25px;">TGCC</strong>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td bgcolor="#ffffff" align="center"
+                                style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
+                                <p style="margin: 0;text-align: center;">Hallo, <strong>imas</strong></p>
+                            </td>
+                        </tr>
+            </tr>
+        </table>
+        </td>
+        </tr>
+        <tr>
+            <td bgcolor="#f4f4f4" align="center" style="padding: 0px 10px 0px 10px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                    <tr>
+                        <td bgcolor="#ffffff" align="center"
+                            style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
+                            <p style="margin: 0;text-align: left;">Terimakasih telah bermain Golf di <strong>Tritih Golf Country & Club. </strong></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#ffffff" align="left"
+                            style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
+                            
+
+                            <div class="invoice-box">
+                                <table cellpadding="0" cellspacing="0" border="0">
+                                    <tr class="top">
+                                        <td colspan="5">
+                                            <table>
+                                                <tr>
+                                                    <td class="title">
+                                                        <h2 class="invoice">INVOICE</h2>
+                                                    </td>
+                                                    <td style="text-align: right">
+                                                        <strong>Order</strong>
+                                                            687676576<br /><br>
+                                                        <strong>Jenis Pembayaran:</strong>
+                                                        <p style="color: #616161;">Deposit</p><br />
+                        
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                        
+                                    <tr class="information">
+                                        <td colspan="5">
+                                            <table>
+                                                <tr>
+                                                    <td style="text-align: left">
+                                                        <strong>Nama Tamu:</strong><br />
+                                                        <span class="weight-600">Imas</span>
+                                                        <br />jl. jhghugy<br>
+                                                        087766665655<br>
+                                                    </td>
+                                                    <td rowspan="4" style="text-align: right">
+                                                        <strong>Tanggal Order:</strong><br>
+                                                        <p style="color: #616161">27/10/2022
+                                                        </p>
+                                                    </td>
+                        
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                        
+                                    <tr class="information2">
+                                        <td colspan="5">
+                                            <table>
+                                                    <td style="text-align: left">
+                                                        <strong>Katagori Tamu:</strong><br>
+                                                        <span class="label label-warning">VIP</span>
+                                                    </td>
+                                                    <td style="text-align: right">
+                                                        <strong>Sisa Saldo:</strong><br>
+                                                        <span style="color: #616161">Rp. 100.000.000
+                                                        </span>
+                                                    </td>
+                                            </table>
+                                        </td>
+                                    </tr>
+                        
+                                    <tr class="heading">
+                                        <td>No</td>
+                        
+                                        <td>Nama Paket</td>
+                        
+                                        <td>Harga</td>
+                        
+                                        <td>Jumlah</td>
+                        
+                                        <td>Total Harga</td>
+                                    </tr>
+                        
+                                    
+                                    
+                                        <tr>
+                                            <td style="vertical-align: 50px">1</td>
+                                            <td>Car 1 Sheet</td>
+                                            <td class="text-right">Rp. 10.000.000</td>
+                                            <td class="text-center">7</td>
+                                            <td class="text-right">Rp. 100.000.000</td>
+                                        </tr>
+                                    {{-- <tr>
+                                        <td class="thick-line"></td>
+                                        <td class="thick-line"></td>
+                                        <td class="thick-line"></td>
+                                        <td class="thick-line text-right">Total Item</td>
+                                        <td class="thick-line text-right">
+                                            <span>{!! $data['cart'] !!}</span>
+                                        </td>
+                                    </tr> --}}
+                                    <tr>
+                                        <td class="no-line"></td>
+                                        <td class="no-line"></td>
+                                        <td class="no-line"></td>
+                                        <td class="no-line text-right">Total Order</td>
+                                        <td class="no-line text-right">10</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="no-line"></td>
+                                        <td class="no-line"></td>
+                                        <td class="no-line"></td>
+                                        <td class="no-line text-right">Discount</td>
+                                        <td class="no-line text-right">Rp. -</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="no-line"></td>
+                                        <td class="no-line"></td>
+                                        <td class="no-line"></td>
+                                        <td class="no-line text-right"><strong>Jumlah Pembayaran</strong></td>
+                                        <td class="no-line text-right">
+                                            <span>Rp. 100.000.000</span>
+                                        </td>
+                                    </tr>
+                                    {{-- <tr>
+                                        <td class="no-line text-left"><strong>Sisa Saldo :</strong></td>
+                                        <td class="no-line">&nbsp; Rp. 999.000.000</td>
+                                    </tr> --}}
+                        
+                                </table>
+                                
+                            </div>
+
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#ffffff" align="justify"
+                            style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
+                            <p style="margin: 0;">Demikian kami sampaikan, Stay Healty dan jangan lupa luangkan waktu
+                                untuk bermain Golf.</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="#f4f4f4" align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                    <tr>
+                        <td bgcolor="#FFE600" align="justify"
+                            style="padding: 20px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
+                            <p style="margin: 0;">Disclaimer : Berhati-hatilah dengan lampiran ini. Pesan ini berisi 1
+                                lampiran terenkripsi yang tidak dapat dipindai untuk mengetahui adanya konten berbahaya.
+                                Jangan download lampiran tersebut kecuali Anda mengenal pengirimnya dan yakin email
+                                tersebut sah.</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="content-cell" align="center"
+                style="word-break: break-word; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif; font-size: 16px; padding: 45px;">
+                <p class="f-fallback sub align-center"
+                    style="font-size: 13px; line-height: 1.625; text-align: center; color: #A8AAAF; margin: .4em 0 1.1875em;"
+                    align="center">© 2022 Tritih Golf & Country Club. Cilacap.</p>
+            </td>
+        </tr>
+        </table>
+    
 
 </body>
 

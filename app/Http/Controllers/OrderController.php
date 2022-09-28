@@ -399,7 +399,7 @@ class OrderController extends Controller
                         
 
                         \Cart::session($req->get('page'))->clear();
-
+                        $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->first();
                         $data['qty'] = $row->quantity;
                         $total_qty = 0;
                         foreach($cart_data as $get) {
@@ -414,6 +414,7 @@ class OrderController extends Controller
                             'type_member' => $visitor->tipe_member,
                             'sisasaldo' => $report_deposit->report_balance,
                             'order_number' => $req->get('order_number'),
+                            'payment_type' => $log_transaction->payment_type,
                             'date' => $row->attributes['created_at'],
                             'pricesingle' => $row->price,
                             'price' => $row->getPriceSum(),
