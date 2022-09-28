@@ -133,26 +133,26 @@ class DashboardController extends Controller
             now()->month
         )->count(); 
         
-        $data['visitor_year'] = LogTransaction::whereYear(
+        $data['visitor_year'] = LogTransaction::where('payment_status', 'paid')->whereYear(
             'created_at',
             $request->year ? $request->year : date('Y')
         )->count();
 
         // total VIP VVIP
-        $data['visitor_vip'] = LogTransaction::whereHas('visitor', function (
+        $data['visitor_vip'] = LogTransaction::where('payment_status', 'paid')->whereHas('visitor', function (
             Builder $query
         ) {
             $query->where('tipe_member', 'VIP');
         })->count();
 
-        $data['visitor_vvip'] = LogTransaction::where('payment_status', 'paid')->whereHas('visitor', function (
+        $data['visitor_vvip'] = LogTransaction::where('payment_status', 'paid')->where('payment_status', 'paid')->whereHas('visitor', function (
             Builder $query
         ) {
             $query->where('tipe_member', 'VVIP');
         })->count();
 
         // total female male VVIP & VIP
-        $data['visitor_vvip_female'] = LogTransaction::whereHas(
+        $data['visitor_vvip_female'] = LogTransaction::where('payment_status', 'paid')->whereHas(
             'visitor',
             function (Builder $query) {
                 $query
@@ -160,7 +160,7 @@ class DashboardController extends Controller
                     ->where('gender', 'perempuan');
             }
         )->count();
-        $data['visitor_vvip_male'] = LogTransaction::whereHas(
+        $data['visitor_vvip_male'] = LogTransaction::where('payment_status', 'paid')->whereHas(
             'visitor',
             function (Builder $query) {
                 $query
@@ -168,7 +168,7 @@ class DashboardController extends Controller
                     ->where('gender', 'laki-laki');
             }
         )->count();
-        $data['visitor_vip_female'] = LogTransaction::whereHas(
+        $data['visitor_vip_female'] = LogTransaction::where('payment_status', 'paid')->whereHas(
             'visitor',
             function (Builder $query) {
                 $query
@@ -176,7 +176,7 @@ class DashboardController extends Controller
                     ->where('gender', 'perempuan');
             }
         )->count();
-        $data['visitor_vip_male'] = LogTransaction::whereHas(
+        $data['visitor_vip_male'] = LogTransaction::where('payment_status', 'paid')->whereHas(
             'visitor',
             function (Builder $query) {
                 $query
