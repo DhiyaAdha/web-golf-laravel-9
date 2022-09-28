@@ -166,7 +166,7 @@
 
                             <tr class="details">
                                 <td>
-                                    <strong>Katagori Tamu:</strong><br>
+                                    <strong>Katagori Tamu:&nbsp;</strong>
                                     @if ($visitor->tipe_member == 'VIP')
                                         <span class="label label-success">{{ $visitor->tipe_member }}</span>
                                     @else
@@ -186,7 +186,7 @@
                             </tr>
 
                             <tr class="item">
-                                <td>{{ ($package) ? $package->name : '-' }}</td>
+                                <td>{{ ($package) ? $package->name : 'yntkts' }}</td>
 
                                 <td>Rp.{{ ($package) ? $package->price_weekdays : '-' }}</td>
 
