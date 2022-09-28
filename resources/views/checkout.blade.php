@@ -189,8 +189,8 @@
                                                         <option value="" disabled selected>-- Pilih jenis
                                                             pembayaran --
                                                         </option>
-                                                        <option value="1">Limit Bulanan</option>
-                                                        <option value="2">Limit Kupon</option>
+                                                        <option value="1">Limit</option>
+                                                        <option value="2">Kupon</option>
                                                         <option value="3">Cash/Transfer</option>
                                                         <option value="4">Deposit</option>
                                                     </select>
@@ -545,7 +545,7 @@
             });
 
             function invoice(url, title) {
-                popupCenter(url, title, 350, 550);
+                popupCenter(url, title, 300, 550);
             }
 
             function popupCenter(url, title, w, h) {
