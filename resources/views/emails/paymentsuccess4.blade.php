@@ -328,11 +328,39 @@
                                                         <strong>Katagori Tamu:</strong><br>
                                                         <span class="label label-warning">{!! $data['type_member'] !!}</span>
                                                     </td>
+                                                    @foreach ($data['payment_type'] as $items)
+                                                    @if ($items['payment_type'] == 'deposit')
                                                     <td style="text-align: right">
                                                         <strong>Sisa Saldo:</strong><br>
                                                         <span style="color: #616161">Rp. {!! formatrupiah($data['sisasaldo']) !!}
                                                         </span>
                                                     </td>
+                                                    @endif
+                                                    @if ($items['payment_type'] == 'kupon')
+                                                    <td style="text-align: right">
+                                                        <strong>Sisa Kupon:</strong><br>
+                                                        <span style="color: #616161">{!! $data['sisakupon'] !!}
+                                                        </span>
+                                                    </td>
+                                                    @endif
+                                                    @if ($items['payment_type'] == 'limit')
+                                                    <td style="text-align: right">
+                                                        <strong>Sisa Limit Bulanan:</strong><br>
+                                                        <span style="color: #616161">{!! $data['sisabulanan'] !!}
+                                                        </span>
+                                                    </td>
+                                                    @endif
+                                                    @if ($items['payment_type'] == 'cash/transfer')
+                                                    <td style="text-align: right">
+                                                        
+                                                    </td>
+                                                    @endif
+                                                    @endforeach
+
+
+
+
+
                                             </table>
                                         </td>
                                     </tr>

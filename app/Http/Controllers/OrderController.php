@@ -22,9 +22,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendEmailPaymentsuccess4;
 use Illuminate\Support\Facades\Session;
-use App\Jobs\SendMailPaymentsuccess1Job;
-use App\Jobs\SendMailPaymentsuccess2Job;
-use App\Jobs\SendMailPaymentsuccess3Job;
 use App\Jobs\SendMailPaymentsuccess4Job;
 use function PHPUnit\Framework\returnSelf;
 
@@ -491,7 +488,7 @@ class OrderController extends Controller
                                 'total_qty' => $total_qty,
                                 'cart' => $cart_data,
                             ];
-                            dispatch(new SendMailPaymentsuccess3Job($data));
+                            dispatch(new SendMailPaymentsuccess4Job($data));
     
                             if($req->ajax()){
                                 return response()->json([
@@ -575,7 +572,7 @@ class OrderController extends Controller
                                     'cart' => $cart_data,
                                     'sisakupon' => $log_limit->quota_kupon,
                                 ];
-                                dispatch(new SendMailPaymentsuccess2Job($data));
+                                dispatch(new SendMailPaymentsuccess4Job($data));
 
                                 if($req->ajax()){
                                     $this->setResponse('VALID', "Pembayaran berhasil");
@@ -657,7 +654,7 @@ class OrderController extends Controller
                                     'cart' => $cart_data,
                                     'sisabulanan' => $log_limit->quota,
                                 ];
-                                dispatch(new SendMailPaymentsuccess1Job($data));
+                                dispatch(new SendMailPaymentsuccess4Job($data));
 
                                 if($req->ajax()){
                                     $this->setResponse('VALID', "Pembayaran berhasil");
