@@ -207,7 +207,7 @@
         $('[data-toggle="tooltip"]').tooltip();
 
         function checkout(url, title) {
-            popupCenter(url, title, 1000, 500);
+            popupCenter(url, title, 1000, 700);
         }
 
         function popupCenter(url, title, w, h) {
