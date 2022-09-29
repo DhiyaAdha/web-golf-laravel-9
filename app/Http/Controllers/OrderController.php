@@ -22,6 +22,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendEmailPaymentsuccess4;
 use Illuminate\Support\Facades\Session;
+use App\Jobs\SendMailPaymentsuccess1Job;
+use App\Jobs\SendMailPaymentsuccess2Job;
+use App\Jobs\SendMailPaymentsuccess3Job;
 use App\Jobs\SendMailPaymentsuccess4Job;
 use function PHPUnit\Framework\returnSelf;
 
@@ -382,7 +385,7 @@ class OrderController extends Controller
                         //     ['saldo' => 120, 'sald' => 2545, 'qty' => '2'],
                         //     ['limit' => 120, 'sald' => 2545, 'qty' => '2'],
                         // ];
-                        LogTransaction::create([
+                        $logs = LogTransaction::create([
                             'order_number' => $req->get('order_number'),
                             'visitor_id' => $req->get('page'),
                             'user_id' => Auth()->id(),
@@ -399,7 +402,7 @@ class OrderController extends Controller
                         ]);
                         
                         \Cart::session($req->get('page'))->clear();
-
+                        
                         $data['qty'] = $row->quantity;
                         $total_qty = 0;
                         foreach($cart_data as $get) {
@@ -414,6 +417,7 @@ class OrderController extends Controller
                             'type_member' => $visitor->tipe_member,
                             'sisasaldo' => $report_deposit->report_balance,
                             'order_number' => $req->get('order_number'),
+                            'payment_type' => 'deposit',
                             'date' => $row->attributes['created_at'],
                             'pricesingle' => $row->price,
                             'price' => $row->getPriceSum(),
@@ -442,7 +446,7 @@ class OrderController extends Controller
                         return response()->json($this->getResponse());
                     } else {
                         try {
-                            LogTransaction::create([
+                            $logs = LogTransaction::create([
                                 'order_number' => $req->get('order_number'),
                                 'visitor_id' => $req->get('page'),
                                 'user_id' => Auth()->id(),
@@ -459,6 +463,30 @@ class OrderController extends Controller
                             ]);
     
                             \Cart::session($req->get('page'))->clear();
+
+                            $data['qty'] = $row->quantity;
+                            $total_qty = 0;
+                            foreach($cart_data as $get) {
+                                $total_qty += $get['qty'];
+                            }
+
+                            $data = [
+                                'name' => $visitor->name,
+                                'email' => $visitor->email,
+                                'address' => $visitor->address,
+                                'phone' => $visitor->phone,
+                                'type_member' => $visitor->tipe_member,
+                                'order_number' => $req->get('order_number'),
+                                'payment_type' => $logs->payment_type,
+                                'date' => $row->attributes['created_at'],
+                                'pricesingle' => $row->price,
+                                'price' => $row->getPriceSum(),
+                                'total' => $totalPrice,
+                                'qty' => $row->quantity,
+                                'total_qty' => $total_qty,
+                                'cart' => $cart_data,
+                            ];
+                            dispatch(new SendMailPaymentsuccess3Job($data));
     
                             if($req->ajax()){
                                 return response()->json([
@@ -497,7 +525,7 @@ class OrderController extends Controller
                                 $log_limit->save();
                                 $report_limit->save();
 
-                                LogTransaction::create([
+                                $logs = LogTransaction::create([
                                     'order_number' => $req->get('order_number'),
                                     'visitor_id' => $req->get('page'),
                                     'user_id' => Auth()->id(),
@@ -514,6 +542,33 @@ class OrderController extends Controller
                                 ]);
         
                                 \Cart::session($req->get('page'))->clear();
+
+                               
+                                $log_limit = LogLimit::where('visitor_id', $req->get('page'))->first();
+                                $data['qty'] = $row->quantity;
+                                $total_qty = 0;
+                                foreach($cart_data as $get) {
+                                    $total_qty += $get['qty'];
+                                }
+
+                                $data = [
+                                    'name' => $visitor->name,
+                                    'email' => $visitor->email,
+                                    'address' => $visitor->address,
+                                    'phone' => $visitor->phone,
+                                    'type_member' => $visitor->tipe_member,
+                                    'order_number' => $req->get('order_number'),
+                                    'payment_type' => $logs->payment_type,
+                                    'date' => $row->attributes['created_at'],
+                                    'pricesingle' => $row->price,
+                                    'price' => $row->getPriceSum(),
+                                    'total' => $totalPrice,
+                                    'qty' => $row->quantity,
+                                    'total_qty' => $total_qty,
+                                    'cart' => $cart_data,
+                                    'sisakupon' => $log_limit->quota_kupon,
+                                ];
+                                dispatch(new SendMailPaymentsuccess2Job($data));
 
                                 if($req->ajax()){
                                     $this->setResponse('VALID', "Pembayaran berhasil");
@@ -551,7 +606,7 @@ class OrderController extends Controller
                                 $log_limit->save();
                                 $report_limit->save();
 
-                                LogTransaction::create([
+                                $logs = LogTransaction::create([
                                     'order_number' => $req->get('order_number'),
                                     'visitor_id' => $req->get('page'),
                                     'user_id' => Auth()->id(),
@@ -568,6 +623,32 @@ class OrderController extends Controller
                                 ]);
         
                                 \Cart::session($req->get('page'))->clear();
+
+                                $log_limit = LogLimit::where('visitor_id', $req->get('page'))->first();
+                                $data['qty'] = $row->quantity;
+                                $total_qty = 0;
+                                foreach($cart_data as $get) {
+                                    $total_qty += $get['qty'];
+                                }
+
+                                $data = [
+                                    'name' => $visitor->name,
+                                    'email' => $visitor->email,
+                                    'address' => $visitor->address,
+                                    'phone' => $visitor->phone,
+                                    'type_member' => $visitor->tipe_member,
+                                    'order_number' => $req->get('order_number'),
+                                    'payment_type' => $logs->payment_type,
+                                    'date' => $row->attributes['created_at'],
+                                    'pricesingle' => $row->price,
+                                    'price' => $row->getPriceSum(),
+                                    'total' => $totalPrice,
+                                    'qty' => $row->quantity,
+                                    'total_qty' => $total_qty,
+                                    'cart' => $cart_data,
+                                    'sisabulanan' => $log_limit->quota,
+                                ];
+                                dispatch(new SendMailPaymentsuccess1Job($data));
 
                                 if($req->ajax()){
                                     $this->setResponse('VALID', "Pembayaran berhasil");

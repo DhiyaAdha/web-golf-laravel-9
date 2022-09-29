@@ -116,8 +116,6 @@
             text-align: left;
         }
 
-
-        <style type="text/css">
         @media screen {
             @font-face {
                 font-family: 'Lato';
@@ -253,14 +251,13 @@
                                 <td bgcolor="#ffffff" align="center"
                                 style="padding: 
                                 1.1px 0px 50px 1.11px; color: #000000; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                                    <img src={{ asset('/tgcc144.PNG') }} height="
-                                    60px" width="30px"> <strong style="vertical-align:75%; font-size: 25px;">TGCC</strong>
+                                    <img src={{ $message->embed(public_path() . '/tgcc144.png') }} height="60px" width="50px"> <strong style="vertical-align:75%; font-size: 25px;">TGCC</strong>
                                 </td>
                             </tr>
                         <tr>
                             <td bgcolor="#ffffff" align="center"
                                 style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                                <p style="margin: 0;text-align: center;">Hallo, <strong>imas</strong></p>
+                                <p style="margin: 0;text-align: center;">Hallo, <strong>{!! $data['name'] !!}</strong></p>
                             </td>
                         </tr>
             </tr>
@@ -290,11 +287,11 @@
                                                     <td class="title">
                                                         <h2 class="invoice">INVOICE</h2>
                                                     </td>
-                                                    <td style="text-align: right">
+                                                    <td align="right" style="text-align: right">
                                                         <strong>Order</strong>
-                                                            687676576<br /><br>
+                                                        {!! $data['order_number'] !!}<br /><br>
                                                         <strong>Jenis Pembayaran:</strong>
-                                                        <p style="color: #616161;">Deposit</p><br />
+                                                        <p style="color: #616161;">{!! $data['payment_type'] !!}</p><br />
                         
                                                     </td>
                                                 </tr>
@@ -308,13 +305,13 @@
                                                 <tr>
                                                     <td style="text-align: left">
                                                         <strong>Nama Tamu:</strong><br />
-                                                        <span class="weight-600">Imas</span>
-                                                        <br />jl. jhghugy<br>
-                                                        087766665655<br>
+                                                        <span class="weight-600">{!! $data['name'] !!}</span>
+                                                        <br />{!! $data['address'] !!}<br>
+                                                        {!! $data['phone'] !!}<br>
                                                     </td>
                                                     <td rowspan="4" style="text-align: right">
                                                         <strong>Tanggal Order:</strong><br>
-                                                        <p style="color: #616161">27/10/2022
+                                                        <p style="color: #616161">{!! $data['date'] !!}
                                                         </p>
                                                     </td>
                         
@@ -328,12 +325,7 @@
                                             <table>
                                                     <td style="text-align: left">
                                                         <strong>Katagori Tamu:</strong><br>
-                                                        <span class="label label-warning">VIP</span>
-                                                    </td>
-                                                    <td style="text-align: right">
-                                                        <strong>Sisa Saldo:</strong><br>
-                                                        <span style="color: #616161">Rp. 100.000.000
-                                                        </span>
+                                                        <span class="label label-warning">{!! $data['type_member'] !!}</span>
                                                     </td>
                                             </table>
                                         </td>
@@ -346,35 +338,28 @@
                         
                                         <td>Harga</td>
                         
-                                        <td>Jumlah</td>
+                                        <td style="text-align: center">Jumlah</td>
                         
                                         <td>Total Harga</td>
                                     </tr>
                         
                                     
-                                    
+                                    <input type="hidden" value="{!! $i = 1 !!}">
+                                    @foreach ($data['cart'] as $item)
                                         <tr>
-                                            <td style="vertical-align: 50px">1</td>
-                                            <td>Car 1 Sheet</td>
-                                            <td class="text-right">Rp. 10.000.000</td>
-                                            <td style="text-align: center">7</td>
-                                            <td class="text-right">Rp. 100.000.000</td>
+                                            <td style="vertical-align: 50px">{!! $i++ !!}</td>
+                                            <td>{!! $item['name'] !!}</td>
+                                            <td class="text-right">Rp. {!! formatrupiah($item['pricesingle']) !!}</td>
+                                            <td style="text-align: center">{!! $item['qty'] !!}</td>
+                                            <td class="text-right">Rp. {!! formatrupiah($item['price']) !!}</td>
                                         </tr>
-                                    {{-- <tr>
-                                        <td class="thick-line"></td>
-                                        <td class="thick-line"></td>
-                                        <td class="thick-line"></td>
-                                        <td class="thick-line text-right">Total Item</td>
-                                        <td class="thick-line text-right">
-                                            <span>{!! $data['cart'] !!}</span>
-                                        </td>
-                                    </tr> --}}
+                                    @endforeach
                                     <tr>
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
                                         <td class="no-line text-right">Total Order</td>
-                                        <td class="no-line text-right">10</td>
+                                        <td class="no-line text-right">{!! $data['total_qty'] !!}</td>
                                     </tr>
                                     <tr>
                                         <td class="no-line"></td>
@@ -389,7 +374,7 @@
                                         <td class="no-line"></td>
                                         <td class="no-line text-right"><strong>Jumlah Pembayaran</strong></td>
                                         <td class="no-line text-right">
-                                            <span>Rp. 100.000.000</span>
+                                            <span>Rp. {!! formatrupiah($data['total']) !!}</span>
                                         </td>
                                     </tr>
                                     {{-- <tr>
