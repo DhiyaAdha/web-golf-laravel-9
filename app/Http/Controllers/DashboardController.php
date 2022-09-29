@@ -46,7 +46,7 @@ class DashboardController extends Controller
 
         $month_period = CarbonPeriod::create(Carbon::now()->subMonths(11), Carbon::now());
         // dd($monthPeriod);
-        foreach($month_period as $key => $value) {
+        foreach ($month_period as $key => $value) {
             $month_new[$value->format('m')] = [$value->format('n'), $value->format('Y')];
         }
         // dd(array_values($month_new));
@@ -61,10 +61,10 @@ class DashboardController extends Controller
                 'created_at',
                 strlen($value[0]) == 1 ? '0' . $value[0] : $value[0]
             )->whereYear(
-                'created_at', 
+                'created_at',
                 $value[1]
             )
-            ->count();
+                ->count();
 
             $data['visitor'][$key]['vip'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereHas(
                 'visitor',
@@ -75,10 +75,10 @@ class DashboardController extends Controller
                 'created_at',
                 strlen($value[0]) == 1 ? '0' . $value[0] : $value[0]
             )->whereYear(
-                'created_at', 
+                'created_at',
                 $value[1]
             )
-            ->count();
+                ->count();
         }
 
         //statistika mingguan bar-chart 
@@ -105,24 +105,26 @@ class DashboardController extends Controller
                     $query->where('tipe_member', 'VVIP');
                 }
             )->whereDate('created_at', $day_period[$key])
-            ->count();
+                ->count();
             $data['visitor_daily'][$key]['b'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereHas(
                 'visitor',
                 function (Builder $query) {
                     $query->where('tipe_member', 'VIP');
                 }
             )->whereDate('created_at', $day_period[$key])
-            ->count();
-            }
+                ->count();
+        }
 
 
         // statistika mingguan & tanggal
         $data['now'] = Carbon::now()->translatedFormat('Y-m-d');
-        $data['visitor_week'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereBetween('created_at', 
-        [
-            Carbon::now()->subDays(6)->startOfDay(), Carbon::now()->endOfDay()
-            // $day_period
-        ])->count();
+        $data['visitor_week'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereBetween(
+            'created_at',
+            [
+                Carbon::now()->subDays(6)->startOfDay(), Carbon::now()->endOfDay()
+                // $day_period
+            ]
+        )->count();
 
         $data['visitor_today'] = LogTransaction::distinct('visitor_id')->whereDate('created_at', now()->format('Y-m-d'))
             ->where('payment_status', 'paid')
@@ -132,8 +134,8 @@ class DashboardController extends Controller
         $data['visitor_month'] = Visitor::whereMonth(
             'created_at',
             now()->month
-        )->count(); 
-        
+        )->count();
+
         $data['visitor_year'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereYear(
             'created_at',
             $request->year ? $request->year : date('Y')
@@ -184,7 +186,7 @@ class DashboardController extends Controller
                     ->where('gender', 'laki-laki');
             }
         )->count();
-        
+
         // data-table analisis tamu
         $visitor = Visitor::select([
             'id',
@@ -212,9 +214,9 @@ class DashboardController extends Controller
                 ->rawColumns(['name', 'action'])
                 ->make(true);
         }
-        // dd($visitor);
+        
         return view('/Analisis-tamu', $data);
-    }  
+    }
 
     /**
      * Show the form for creating a new resource.
