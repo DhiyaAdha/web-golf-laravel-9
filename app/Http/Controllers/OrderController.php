@@ -451,7 +451,7 @@ class OrderController extends Controller
                                 'visitor_id' => $req->get('page'),
                                 'user_id' => Auth()->id(),
                                 'cart' => serialize($cart_data),
-                                'payment_type' => 'cash/transfer',
+                                'payment_type' => serialize([['payment_type' => 'cash/transfer', 'total' => $totalPrice, 'balance' => $totalPrice]]),
                                 'payment_status' => 'paid',
                                 'total' => $totalPrice
                             ]);
@@ -511,11 +511,11 @@ class OrderController extends Controller
                     $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
                     $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
                     if(count($package_additional) >= 1){
-                        $this->setResponse('INVALID', "Kupon hanya berlaku jenis permainan default");
+                        $this->setResponse('INVALID', "Kupon hanya berlaku satu jenis permainan");
                         return response()->json($this->getResponse());
                     } else if($package_default) {
                         if(count($package_default) != 1){
-                            $this->setResponse('INVALID', "Single kupon hanya berlaku satu jenis permainan default");
+                            $this->setResponse('INVALID', "Single kupon hanya berlaku satu jenis permainan");
                             return response()->json($this->getResponse());
                         } else {
                             try { 
@@ -530,7 +530,7 @@ class OrderController extends Controller
                                     'visitor_id' => $req->get('page'),
                                     'user_id' => Auth()->id(),
                                     'cart' => serialize($cart_data),
-                                    'payment_type' => 'kupon',
+                                    'payment_type' => serialize([['payment_type' => 'kupon', 'total' => 1, 'balance' => $log_limit->quota_kupon]]),
                                     'payment_status' => 'paid',
                                     'total' => $totalPrice
                                 ]);
@@ -592,11 +592,11 @@ class OrderController extends Controller
                     $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
                     $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
                     if(count($package_additional) >= 1){
-                        $this->setResponse('INVALID', "Limit hanya berlaku jenis permainan default");
+                        $this->setResponse('INVALID', "Limit hanya berlaku satu jenis permainan");
                         return response()->json($this->getResponse());
                     } else if($package_default) {
                         if(count($package_default) != 1){
-                            $this->setResponse('INVALID', "Single limit hanya berlaku satu jenis permainan default");
+                            $this->setResponse('INVALID', "Single limit hanya berlaku satu jenis permainan");
                             return response()->json($this->getResponse());
                         } else {
                             try { 
@@ -611,7 +611,7 @@ class OrderController extends Controller
                                     'visitor_id' => $req->get('page'),
                                     'user_id' => Auth()->id(),
                                     'cart' => serialize($cart_data),
-                                    'payment_type' => 'limit',
+                                    'payment_type' => serialize([['payment_type' => 'limit', 'total' => 1, 'balance' => $log_limit->quota]]),
                                     'payment_status' => 'paid',
                                     'total' => $totalPrice
                                 ]);
