@@ -291,7 +291,7 @@
                                                         <strong>Order</strong>
                                                         {!! $data['order_number'] !!}<br /><br>
                                                         <strong>Jenis Pembayaran:</strong>
-                                                        <p style="color: #616161;">{!! $data['payment_type'] !!}</p><br />
+                                                        <p style="color: #616161;">{!! $data['payment_type'] !!}</p><br/>
                         
                                                     </td>
                                                 </tr>

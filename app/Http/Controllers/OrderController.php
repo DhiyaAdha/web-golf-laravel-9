@@ -385,7 +385,7 @@ class OrderController extends Controller
                         //     ['saldo' => 120, 'sald' => 2545, 'qty' => '2'],
                         //     ['limit' => 120, 'sald' => 2545, 'qty' => '2'],
                         // ];
-                        LogTransaction::create([
+                        $logs = LogTransaction::create([
                             'order_number' => $req->get('order_number'),
                             'visitor_id' => $req->get('page'),
                             'user_id' => Auth()->id(),
@@ -417,7 +417,7 @@ class OrderController extends Controller
                             'type_member' => $visitor->tipe_member,
                             'sisasaldo' => $report_deposit->report_balance,
                             'order_number' => $req->get('order_number'),
-                            'payment_type' => [['payment_type' => 'deposit', 'total' => $totalPrice, 'balance' => $deposit->balance]],
+                            'payment_type' => 'deposit',
                             'date' => $row->attributes['created_at'],
                             'pricesingle' => $row->price,
                             'price' => $row->getPriceSum(),
