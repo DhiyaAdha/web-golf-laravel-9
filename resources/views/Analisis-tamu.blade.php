@@ -295,7 +295,7 @@
                     }
                 ],
                 order: [
-                    [3, 'desc']
+                    [2, 'desc']
                 ],
                 responsive: true,
                 language: {

@@ -189,12 +189,13 @@ class DashboardController extends Controller
 
         // data-table analisis tamu
         $visitor = Visitor::select([
-            'id',
-            'name',
-            'created_at',
-            'tipe_member',
-            'updated_at',
-        ])
+            'visitors.id',
+            'visitors.name',
+            'visitors.created_at',
+            'visitors.tipe_member',
+            'visitors.updated_at',
+        ])->rightJoin('log_transactions', 'log_transactions.visitor_id', '=', 'visitors.id')
+        ->where('log_transactions.payment_status', 'paid')
             ->orderBy('updated_at', 'desc')
             ->get();
         if ($request->ajax()) {
