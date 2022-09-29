@@ -160,7 +160,7 @@ class InvoiceController extends Controller
     {
         $transaction = LogTransaction::find($id);
         $package = Package::find($id);
-        $detail = Detail::find($id);
+        $detail = Detail::where('log_transaction_id', $id)->first();
         $data['transaction'] = $transaction;
         $data['visitor'] = Visitor::find($transaction->visitor_id);
         $data['package'] = Package::find($package->id);
