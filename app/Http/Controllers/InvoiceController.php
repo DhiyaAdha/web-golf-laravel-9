@@ -27,6 +27,10 @@ class InvoiceController extends Controller
         $riwayat_invoice = LogTransaction::select(['log_transactions.id', 'log_transactions.total', 'visitors.name', 'visitors.tipe_member', 
         'log_transactions.created_at', 'log_transactions.payment_type'])
         ->leftJoin('visitors', 'visitors.id', '=', 'log_transactions.visitor_id')->get();
+        $collection = collect([[1, 2, 3], [4, 5, 6], [7, 8, 9]]);
+        $collapsed = $collection->collapse();
+        
+        $collapsed->all();
         if($request->ajax()){
             return datatables()->of($riwayat_invoice)->addColumn('action', function ($data) {
                 $button = 
@@ -45,7 +49,8 @@ class InvoiceController extends Controller
                 return $data->created_at->format('d F Y');
             })
             ->editColumn('payment_type', function ($data) {
-                return ($data->payment_type);
+                $type =  unserialize($data->payment_type);
+                return ($type);
             })
             ->editColumn('total', function ($data) {
                 return  ('Rp. ' .formatrupiah($data->total));

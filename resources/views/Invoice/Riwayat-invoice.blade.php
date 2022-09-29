@@ -98,7 +98,10 @@
                     }
                 },
                 {
-                    data: 'payment_type'
+                    "data": function(data) {
+                        console.table(data.payment_type)
+                        
+                    }
                 },
                 {
                     data: 'total'
