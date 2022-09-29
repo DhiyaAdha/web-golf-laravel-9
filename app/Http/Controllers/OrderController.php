@@ -408,6 +408,8 @@ class OrderController extends Controller
                         foreach($cart_data as $get) {
                             $total_qty += $get['qty'];
                         }
+                        $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
+                        $payment_type = unserialize($log_transaction->payment_type);
 
                         $data = [
                             'name' => $visitor->name,
@@ -417,7 +419,7 @@ class OrderController extends Controller
                             'type_member' => $visitor->tipe_member,
                             'sisasaldo' => $report_deposit->report_balance,
                             'order_number' => $req->get('order_number'),
-                            'payment_type' => 'deposit',
+                            'payment_type' => $payment_type,
                             'date' => $row->attributes['created_at'],
                             'pricesingle' => $row->price,
                             'price' => $row->getPriceSum(),
@@ -426,6 +428,7 @@ class OrderController extends Controller
                             'total_qty' => $total_qty,
                             'cart' => $cart_data,
                         ];
+                        // dd($data);
                         dispatch(new SendMailPaymentsuccess4Job($data));
 
                         if($req->ajax()){
@@ -469,6 +472,8 @@ class OrderController extends Controller
                             foreach($cart_data as $get) {
                                 $total_qty += $get['qty'];
                             }
+                            $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
+                            $payment_type = unserialize($log_transaction->payment_type);
 
                             $data = [
                                 'name' => $visitor->name,
@@ -477,7 +482,7 @@ class OrderController extends Controller
                                 'phone' => $visitor->phone,
                                 'type_member' => $visitor->tipe_member,
                                 'order_number' => $req->get('order_number'),
-                                'payment_type' => $logs->payment_type,
+                                'payment_type' => $payment_type,
                                 'date' => $row->attributes['created_at'],
                                 'pricesingle' => $row->price,
                                 'price' => $row->getPriceSum(),
@@ -550,6 +555,8 @@ class OrderController extends Controller
                                 foreach($cart_data as $get) {
                                     $total_qty += $get['qty'];
                                 }
+                                $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
+                                $payment_type = unserialize($log_transaction->payment_type);
 
                                 $data = [
                                     'name' => $visitor->name,
@@ -558,7 +565,7 @@ class OrderController extends Controller
                                     'phone' => $visitor->phone,
                                     'type_member' => $visitor->tipe_member,
                                     'order_number' => $req->get('order_number'),
-                                    'payment_type' => $logs->payment_type,
+                                    'payment_type' => $payment_type,
                                     'date' => $row->attributes['created_at'],
                                     'pricesingle' => $row->price,
                                     'price' => $row->getPriceSum(),
@@ -630,6 +637,8 @@ class OrderController extends Controller
                                 foreach($cart_data as $get) {
                                     $total_qty += $get['qty'];
                                 }
+                                $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
+                                $payment_type = unserialize($log_transaction->payment_type);
 
                                 $data = [
                                     'name' => $visitor->name,
@@ -638,7 +647,7 @@ class OrderController extends Controller
                                     'phone' => $visitor->phone,
                                     'type_member' => $visitor->tipe_member,
                                     'order_number' => $req->get('order_number'),
-                                    'payment_type' => $logs->payment_type,
+                                    'payment_type' => $payment_type,
                                     'date' => $row->attributes['created_at'],
                                     'pricesingle' => $row->price,
                                     'price' => $row->getPriceSum(),

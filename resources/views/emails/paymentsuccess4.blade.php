@@ -291,8 +291,9 @@
                                                         <strong>Order</strong>
                                                         {!! $data['order_number'] !!}<br /><br>
                                                         <strong>Jenis Pembayaran:</strong>
-                                                        <p style="color: #616161;">{!! $data['payment_type'] !!}</p><br/>
-                        
+                                                        @foreach ($data['payment_type'] as $items)
+                                                        <p style="color: #616161;">{!! $items['payment_type'] !!}</p><br/>
+                                                        @endforeach
                                                     </td>
                                                 </tr>
                                             </table>
