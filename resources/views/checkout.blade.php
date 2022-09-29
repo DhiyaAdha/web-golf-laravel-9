@@ -30,6 +30,18 @@
             padding: 0px 5px;
         }
 
+        .custom-control-inline {
+            margin-right: 0px !important;
+        }
+
+        .green {
+            background-color: rgba(25, 216, 149, 0.2);
+            color: #19d895;
+            border-radius: 5px;
+            font-weight: bold;
+            padding: 5px;
+        }
+
         .payment-1 {
             background-color: #efefef;
             border-radius: 5px;
@@ -71,6 +83,15 @@
         .table td,
         .table th {
             border-top: none !important;
+        }
+
+        .custom-control-input:checked~.custom-control-label::before {
+            border-color: #01C813 !important;
+            background-color: #01C813 !important;
+        }
+
+        .custom-radio .custom-control-input:checked~.custom-control-label::after {
+            background-image: none !important;
         }
 
         .table th {
@@ -142,7 +163,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -168,52 +188,214 @@
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Metode Pembayaran</span>
                                                 <div class="d-flex">
-                                                    <div class="custom-control custom-radio mr-2">
-                                                        <input type="radio" name="payment" id="wk"
-                                                            class="custom-control-input" value="single" checked>
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="customSwitch1" checked>
                                                         <label class="custom-control-label"
-                                                            for="wk">Single</label>
-                                                    </div>
-                                                    <div class="custom-control custom-radio">
-                                                        <input type="radio" name="payment" id="kw"
-                                                            class="custom-control-input" value="multiple">
-                                                        <label class="custom-control-label"
-                                                            for="kw">Multiple</label>
+                                                            for="customSwitch1">Single</label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div id="single">
-                                                <div class="form-group">
-                                                    <label for="payment-type"></label>
-                                                    <select class="form-control" id="payment-type">
-                                                        <option value="" disabled selected>-- Pilih jenis
-                                                            pembayaran --
-                                                        </option>
-                                                        <option value="1">Limit</option>
-                                                        <option value="2">Kupon</option>
-                                                        <option value="3">Cash/Transfer</option>
-                                                        <option value="4">Deposit</option>
-                                                    </select>
+                                                <div class="card mt-2">
+                                                    <div class="card-body">
+                                                        <div class="d-flex"
+                                                            style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                                                            <div
+                                                                class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                <strong>Deposit</strong>
+                                                                <small class="text-muted mb-2">Deposit akan berkurang
+                                                                    sesuai
+                                                                    dengan tagihan</small>
+                                                            </div>
+                                                            <div
+                                                                class="custom-control custom-radio custom-control-inline">
+                                                                <input type="radio" id="customRadioInline4"
+                                                                    name="payment-type" value="4"
+                                                                    class="custom-control-input">
+                                                                <label class="custom-control-label"
+                                                                    for="customRadioInline4"></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex mt-2"
+                                                            style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                                                            <div
+                                                                class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                <strong>Cash/Transfer</strong>
+                                                                <small class="text-muted">Tunjukan bukti
+                                                                    transfer</small>
+                                                                <div class="form-group mt-2 mb-2" id="cash-transfer">
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                class="custom-control custom-radio custom-control-inline">
+                                                                <input type="radio" id="customRadioInline3"
+                                                                    name="payment-type" value="3"
+                                                                    class="custom-control-input">
+                                                                <label class="custom-control-label"
+                                                                    for="customRadioInline3"></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex mt-2"
+                                                            style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                                                            <div
+                                                                class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                <strong>Kupon</strong>
+                                                                <small class="text-muted">Kupon otomatis akan
+                                                                    berkurang</small>
+                                                                <small class="text-muted">Kupon berlaku hanya untuk 1
+                                                                    game</small>
+                                                            </div>
+                                                            <div
+                                                                class="custom-control custom-radio custom-control-inline">
+                                                                <input type="radio" id="customRadioInline2"
+                                                                    name="payment-type" value="2"
+                                                                    class="custom-control-input">
+                                                                <label class="custom-control-label"
+                                                                    for="customRadioInline2"></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex mt-2"
+                                                            style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                                                            <div
+                                                                class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                <strong>Limit</strong>
+                                                                <small class="text-muted">Limit otomatis akan
+                                                                    berkurang</small>
+                                                                <small class="text-muted">Limit berlaku hanya untuk 1
+                                                                    game</small>
+                                                            </div>
+                                                            <div
+                                                                class="custom-control custom-radio custom-control-inline">
+                                                                <input type="radio" id="customRadioInline1"
+                                                                    name="payment-type" value="1"
+                                                                    class="custom-control-input">
+                                                                <label class="custom-control-label"
+                                                                    for="customRadioInline1"></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="form-group" id="cash-transfer"></div>
+                                                <div class="card mt-2">
+                                                    <div class="card-body">
+                                                        <div class="d-flex">
+                                                            <span class="flex-grow-1">Total tagihan</span>
+                                                            <span class="nilai-total1-td green"
+                                                                data-total="{{ $totalPrice }}">Rp.
+                                                                {{ formatrupiah($totalPrice) }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div id="multiple"></div>
-                                            <div class="d-flex">
-                                                <div
-                                                    class="d-flex align-items-center justify-content-start pd-1 flex-grow-1 return-hide">
-                                                    <span class="mr-1">Uang Kembali :</span>
-                                                    <span id="return" class="return-true">-</span>
+                                            <div id="multiple" class="d-none">
+                                                <div class="card mt-2">
+                                                    <div class="card-body">
+                                                        <div class="d-flex"
+                                                            style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                                                            <div
+                                                                class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                <strong>Deposit</strong>
+                                                                <small class="text-muted mb-2">Deposit akan berkurang
+                                                                    sesuai
+                                                                    dengan tagihan</small>
+                                                            </div>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" name="payment-type[]"
+                                                                    value="8" class="custom-control-input"
+                                                                    id="customCheck8">
+                                                                <label class="custom-control-label"
+                                                                    for="customCheck8"></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex mt-2"
+                                                            style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                                                            <div
+                                                                class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                <strong>Cash/Transfer</strong>
+                                                                <small class="text-muted">Tunjukan bukti
+                                                                    transfer</small>
+                                                                <div class="form-group mt-2 mb-2" id="cash-transfer">
+                                                                </div>
+                                                            </div>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" name="payment-type[]"
+                                                                    value="7" class="custom-control-input"
+                                                                    id="customCheck7">
+                                                                <label class="custom-control-label"
+                                                                    for="customCheck7"></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="d-flex justify-content-end pd-1">
-                                                    <a href="javascript:void(0)" id="pay"
-                                                        class="btn btn-sm btn-success">Bayar</a>
+                                                <div class="card mt-2">
+                                                    <div class="card-body">
+                                                        <div class="d-flex">
+                                                            <strong class="flex-grow-1">Gunakan Limit/Kupon</strong>
+                                                            <div class="custom-control custom-switch">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    id="customSwitch2">
+                                                                <label class="custom-control-label"
+                                                                    for="customSwitch2"></label>
+                                                            </div>
+                                                        </div>
+                                                        <div id="hide-limit" class="d-none">
+                                                            <div class="d-flex"
+                                                                style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                                                                <div
+                                                                    class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                    <strong>Kupon</strong>
+                                                                    <small class="text-muted">Kupon otomatis akan
+                                                                        berkurang</small>
+                                                                    <small class="text-muted">Kupon berlaku hanya untuk
+                                                                        1 game</small>
+                                                                </div>
+                                                                <div
+                                                                    class="custom-control custom-radio custom-control-inline">
+                                                                    <input type="radio" id="customRadioInline6"
+                                                                        name="payment-type[]" value="6"
+                                                                        class="custom-control-input">
+                                                                    <label class="custom-control-label"
+                                                                        for="customRadioInline6"></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex mt-2"
+                                                                style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                                                                <div
+                                                                    class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                    <strong>Limit</strong>
+                                                                    <small class="text-muted">Limit otomatis akan
+                                                                        berkurang</small>
+                                                                    <small class="text-muted">Limit berlaku hanya untuk
+                                                                        1 game</small>
+                                                                </div>
+                                                                <div
+                                                                    class="custom-control custom-radio custom-control-inline">
+                                                                    <input type="radio" id="customRadioInline5"
+                                                                        name="payment-type[]" value="5"
+                                                                        class="custom-control-input">
+                                                                    <label class="custom-control-label"
+                                                                        for="customRadioInline5"></label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card mt-2">
+                                                    <div class="card-body">
+                                                        <div class="d-flex">
+                                                            <span class="flex-grow-1">Total tagihan</span>
+                                                            <span class="nilai-total1-td green"
+                                                                data-total="{{ $totalPrice }}">Rp.
+                                                                {{ formatrupiah($totalPrice) }}</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-5 mt-2">
                                 <div class="card " style="border:none;">
                                     <div class="card-body payment-1">
                                         <div class="d-flex-flex-column">
@@ -234,33 +416,51 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card " style="border:none;">
+                                <div class="card mt-2">
                                     <div class="card-body">
-                                        <div class="d-flex-flex-column">
-                                            <div class="d-flex flex-column">
-                                                <div class="d-flex">
-                                                    <span class="flex-grow-1">Invoice</span>
-                                                    <span style="font-size: small;"
-                                                        id="order-number">#{{ $order_number }}</span>
-                                                </div>
-                                                <div class="d-flex">
-                                                    <span class="flex-grow-1">Tamu</span>
-                                                    <span>{{ $visitor->name }}</span>
-                                                </div>
-                                                <div class="d-flex">
-                                                    <span class="flex-grow-1">Jumlah Item</span>
-                                                    <span>{{ count($orders) }}</span>
-                                                </div>
-                                                <div class="d-flex">
-                                                    <span class="flex-grow-1">Total bayar</span>
-                                                    <span class="nilai-total1-td"
-                                                        data-total="{{ $totalPrice }}">Rp.
-                                                        {{ formatrupiah($totalPrice) }}</span>
-                                                </div>
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex">
+                                                <span class="flex-grow-1">Invoice</span>
+                                                <span style="font-size: small;"
+                                                    id="order-number">#{{ $order_number }}</span>
+                                            </div>
+                                            <div class="d-flex">
+                                                <span class="flex-grow-1">Tamu</span>
+                                                <span>{{ $visitor->name }}</span>
+                                            </div>
+                                            <div class="d-flex">
+                                                <span class="flex-grow-1">Jumlah Item</span>
+                                                <span>{{ count($orders) }}</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="card mt-2">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex">
+                                                <strong class="flex-grow-1">Item</strong>
+                                                <strong style="font-size: small;">Harga</strong>
+                                            </div>
+                                            @foreach ($orders as $cart)
+                                                <div class="d-flex">
+                                                    <span class="flex-grow-1">{{ $cart['name'] }}</span>
+                                                    <small>Rp. {{ formatrupiah($cart['price']) }}</small>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card mt-2">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-column">
+                                            <span>Uang kembali</span>
+                                            <span class="green" id="return">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" id="pay"
+                                    class="btn btn-sm btn-success btn-block mt-2">Bayar</button>
                             </div>
                         </div>
                     </div>
@@ -290,40 +490,23 @@
                 return split[1] != undefined ? idr + ',' + split[1] : idr;
             }
 
-            $('input[type=radio][name=payment]').on('change', function() {
-                switch ($(this).val()) {
-                    case 'single':
-                        $('#single').show();
-                        $('#multiple').html(`<div id="multiple">
-                                                <div class="form-group">
-                                                    <label for="payment-type"></label>
-                                                    <select class="form-control" id="payment-type">
-                                                        <option value="" disabled selected>Jenis ok</option>
-                                                        <option value="1">Limit Bulanan</option>
-                                                        <option value="2">Limit Kupon</option>
-                                                        <option value="3">Cash/Transfer</option>
-                                                        <option value="4">Deposit</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group" id="cash-transfer"></div>
-                                            </div>`).hide();
-                        break;
-                    case 'multiple':
-                        $('#single').hide();
-                        $('#multiple').html(`<div id="multiple">
-                                                <div class="form-group">
-                                                    <label for="payment-type"></label>
-                                                    <select class="form-control" id="payment-type">
-                                                        <option value="" disabled selected>Jenis ok</option>
-                                                        <option value="1">Limit</option>
-                                                        <option value="2">Kupon</option>
-                                                        <option value="3">Cash/Transfer</option>
-                                                        <option value="4">Saldo</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group" id="cash-transfer"></div>
-                                            </div>`).show();
-                        break;
+            $(document).on('change', '#customSwitch1', function(e) {
+                if ($(this).prop('checked')) {
+                    $(this).next().text('Single');
+                    $('#single').show();
+                    $('#multiple').hide().addClass('d-none');
+                } else {
+                    $('#single').hide();
+                    $('#multiple').show().removeClass('d-none');
+                    $(this).next().text('Multiple');
+                }
+            });
+
+            $(document).on('change', '#customSwitch2', function(e) {
+                if ($(this).prop('checked')) {
+                    $('#hide-limit').show().removeClass('d-none');
+                } else {
+                    $('#hide-limit').hide().addClass('d-none');
                 }
             });
 
@@ -346,7 +529,7 @@
                 }
             });
 
-            $(document).on('change', '#payment-type', function(e) {
+            $(document).on('change', 'input[name="payment-type"]', function(e) {
                 e.preventDefault();
                 let type = $(this).val();
                 let tg = window.location.href;
@@ -449,9 +632,11 @@
                 });
             });
 
-            $(document).on('click', '#pay', function() {
+            $(document).on('click', '#pay', function(e) {
+                e.preventDefault();
                 let error = false;
-                let type_single = $('#payment-type').val();
+                let type_single = $("input[name='payment-type']:checked").val();
+                alert(type_single);
                 let order_number = $('#order-number').text();
                 let bayar_input = $('.bayar-input').val();
                 let tg = window.location.href;
