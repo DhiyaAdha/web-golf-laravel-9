@@ -163,9 +163,13 @@ class InvoiceController extends Controller
         $detail = Detail::where('log_transaction_id', $id)->first();
         $data['transaction'] = $transaction;
         $data['visitor'] = Visitor::find($transaction->visitor_id);
-        $data['package'] = Package::find($package->id);
-        $data['detail'] = Detail::find($detail->id);
-
+        if ($detail) {
+            $data['package'] = Package::find($detail->visitor_id);
+            $data['visitor'] = Detail::find($detail->id);
+        } else {
+            $data['package'] = null;
+            $data['detail'] = null;
+        }
         
         $pdf = PDF::loadView('invoice.cetak_invoice' , $data);
 
