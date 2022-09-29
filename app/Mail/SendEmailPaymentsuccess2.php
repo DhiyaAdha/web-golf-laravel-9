@@ -28,6 +28,6 @@ class SendEmailPaymentsuccess2 extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.paymentsuccess2')->subject('Pembayaran Limit Kupon');
+        return $this->view('emails.paymentsuccess2')->subject('Selamat! Pembayaran Kamu Berhasil dengan Invoice '.$this->data['order_number']);
     }
 }
