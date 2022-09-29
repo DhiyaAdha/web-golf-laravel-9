@@ -52,7 +52,7 @@ class DashboardController extends Controller
         // dd(array_values($month_new));
         foreach (array_values($month_new) as $key => $value) {
             $data['visitor'][$key]['period'] = $months[$value[0]];
-            $data['visitor'][$key]['vvip'] = LogTransaction::where('payment_status', 'paid')->whereHas(
+            $data['visitor'][$key]['vvip'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereHas(
                 'visitor',
                 function (Builder $query) {
                     $query->where('tipe_member', 'VVIP');
@@ -66,7 +66,7 @@ class DashboardController extends Controller
             )
             ->count();
 
-            $data['visitor'][$key]['vip'] = LogTransaction::where('payment_status', 'paid')->whereHas(
+            $data['visitor'][$key]['vip'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereHas(
                 'visitor',
                 function (Builder $query) {
                     $query->where('tipe_member', 'VIP');
@@ -99,14 +99,14 @@ class DashboardController extends Controller
                 $day_period[$key]
             )->translatedFormat('d/m/y');
 
-            $data['visitor_daily'][$key]['a'] = LogTransaction::where('payment_status', 'paid')->whereHas(
+            $data['visitor_daily'][$key]['a'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereHas(
                 'visitor',
                 function (Builder $query) {
                     $query->where('tipe_member', 'VVIP');
                 }
             )->whereDate('created_at', $day_period[$key])
             ->count();
-            $data['visitor_daily'][$key]['b'] = LogTransaction::where('payment_status', 'paid')->whereHas(
+            $data['visitor_daily'][$key]['b'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereHas(
                 'visitor',
                 function (Builder $query) {
                     $query->where('tipe_member', 'VIP');
@@ -118,41 +118,41 @@ class DashboardController extends Controller
 
         // statistika mingguan & tanggal
         $data['now'] = Carbon::now()->translatedFormat('Y-m-d');
-        $data['visitor_week'] = LogTransaction::where('payment_status', 'paid')->whereBetween('created_at', 
+        $data['visitor_week'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereBetween('created_at', 
         [
             Carbon::now()->subDays(6)->startOfDay(), Carbon::now()->endOfDay()
             // $day_period
         ])->count();
 
-        // statistika harian
-        $data['visitor_today'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))
+        $data['visitor_today'] = LogTransaction::distinct('visitor_id')->whereDate('created_at', now()->format('Y-m-d'))
             ->where('payment_status', 'paid')
             ->count();
+        // 
+
         $data['visitor_month'] = Visitor::whereMonth(
             'created_at',
             now()->month
         )->count(); 
         
-        $data['visitor_year'] = LogTransaction::where('payment_status', 'paid')->whereYear(
+        $data['visitor_year'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereYear(
             'created_at',
             $request->year ? $request->year : date('Y')
         )->count();
 
-        // total VIP VVIP
-        $data['visitor_vip'] = LogTransaction::where('payment_status', 'paid')->whereHas('visitor', function (
+        $data['visitor_vip'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereHas('visitor', function (
             Builder $query
         ) {
             $query->where('tipe_member', 'VIP');
         })->count();
 
-        $data['visitor_vvip'] = LogTransaction::where('payment_status', 'paid')->where('payment_status', 'paid')->whereHas('visitor', function (
+        $data['visitor_vvip'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereHas('visitor', function (
             Builder $query
         ) {
             $query->where('tipe_member', 'VVIP');
         })->count();
 
         // total female male VVIP & VIP
-        $data['visitor_vvip_female'] = LogTransaction::where('payment_status', 'paid')->whereHas(
+        $data['visitor_vvip_female'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereHas(
             'visitor',
             function (Builder $query) {
                 $query
@@ -160,7 +160,7 @@ class DashboardController extends Controller
                     ->where('gender', 'perempuan');
             }
         )->count();
-        $data['visitor_vvip_male'] = LogTransaction::where('payment_status', 'paid')->whereHas(
+        $data['visitor_vvip_male'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereHas(
             'visitor',
             function (Builder $query) {
                 $query
@@ -168,7 +168,7 @@ class DashboardController extends Controller
                     ->where('gender', 'laki-laki');
             }
         )->count();
-        $data['visitor_vip_female'] = LogTransaction::where('payment_status', 'paid')->whereHas(
+        $data['visitor_vip_female'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereHas(
             'visitor',
             function (Builder $query) {
                 $query
@@ -176,7 +176,7 @@ class DashboardController extends Controller
                     ->where('gender', 'perempuan');
             }
         )->count();
-        $data['visitor_vip_male'] = LogTransaction::where('payment_status', 'paid')->whereHas(
+        $data['visitor_vip_male'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereHas(
             'visitor',
             function (Builder $query) {
                 $query
