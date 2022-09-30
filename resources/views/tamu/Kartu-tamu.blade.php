@@ -359,11 +359,11 @@
 
 @push('scripts')
     <script>
-        $('.download-kartu-tamu').on("click", function() {
-            $('#cetak-kartu').printThis({
-                printContainer: true,
-            });
-        });
+        // $('.download-kartu-tamu').on("click", function() {
+        //     $('#cetak-kartu').printThis({
+        //         printContainer: true,
+        //     });
+        // });
 
         // Transaction Activity
         $('#dt-tamu-transaksi').DataTable({
