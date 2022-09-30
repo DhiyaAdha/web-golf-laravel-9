@@ -344,7 +344,7 @@
                                                                         <small class="text-muted">Tunjukan bukti
                                                                             transfer</small>
                                                                         <div class="form-group mt-2 mb-2"
-                                                                            id="cash-transfer">
+                                                                            id="cashtransfer">
                                                                         </div>
                                                                     </div>
                                                                 </label>
@@ -573,6 +573,38 @@
                 }
             });
 
+            $(document).on('click', 'input[name="payment-type[]"]', function(e) {
+                if ($(this).val() == 'cash/transfer') {
+                    if ($(this).is(':checked')) {
+                        $('#cashtransfer').html(
+                            `<div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">Rp.</div>
+                                                        </div>
+                                                        <input type="text" min="0"
+                                                            onkeypress="return event.charCode >= 48 && event.charCode <=57"
+                                                            class="form-control number-input input-notzero bayar-input"
+                                                            name="bayar" placeholder="Masukkan nominal bayar"
+                                                            autocomplete="off">
+                                                    </div>`
+                        ).show().prev().removeClass('mb-2');
+                    } else {
+                        $('#cashtransfer').html(
+                            `<div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">Rp.</div>
+                                                        </div>
+                                                        <input type="text" min="0"
+                                                            onkeypress="return event.charCode >= 48 && event.charCode <=57"
+                                                            class="form-control number-input input-notzero bayar-input"
+                                                            name="bayar" placeholder="Masukkan nominal bayar"
+                                                            autocomplete="off">
+                                                    </div>`
+                        ).hide().prev().addClass('mb-2');
+                    }
+                }
+            });
+
             $(document).on('change', 'input[name="payment-type"]', function(e) {
                 e.preventDefault();
                 let type = $(this).val();
@@ -689,7 +721,6 @@
                     .map(function() {
                         return $(this).val();
                     }).get();
-                console.log(type_single);
                 console.log(type_multiple);
                 let order_number = $('#order-number').text();
                 let bayar_input = $('.bayar-input').val();
@@ -760,7 +791,7 @@
                                         swal({
                                             title: '',
                                             type: "success",
-                                            text: 'Pembayaran berhasil',
+                                            text: response.message,
                                             confirmButtonColor: "#01c853",
                                         }, function(isConfirm) {
                                             invoice(url,
@@ -783,12 +814,16 @@
             }
 
             function popupCenter(url, title, w, h) {
-                const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
-                const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
-                const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ?
+                const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window
+                    .screenX;
+                const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window
+                    .screenY;
+                const width = window.innerWidth ? window.innerWidth : document.documentElement
+                    .clientWidth ?
                     document
                     .documentElement.clientWidth : screen.width;
-                const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ?
+                const height = window.innerHeight ? window.innerHeight : document.documentElement
+                    .clientHeight ?
                     document
                     .documentElement.clientHeight : screen.height;
                 const systemZoom = width / window.screen.availWidth;
