@@ -15,8 +15,8 @@
                                                     <span class="txt-light block counter"><span
                                                             class="counter-anim">{{ $visitor_today }}</span></span>
                                                     <span class="weight-500 uppercase-font txt-light block font-13">Jumlah
-                                                        tamu
-                                                        hari ini</span>
+                                                        Transaksi <br>hari ini
+                                                    </span>
                                                 </div>
                                                 <div class="col-xs-5 text-right data-wrap-right">
                                                     <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i>
@@ -40,9 +40,9 @@
                                                 <div class="col-xs-6 text-left data-wrap-left">
                                                     <span class="txt-light block counter"><span
                                                             class="counter-anim">{{ $visitor_vvip }}</span></span>
-                                                    <span class="weight-500 uppercase-font txt-light block font-13">Total
-                                                        berkunjung tamu
-                                                        VVIP</span>
+                                                    <span class="weight-500 uppercase-font txt-light block font-13">Total tamu
+                                                        VVIP PERTAHUN
+                                                        </span>
                                                 </div>
                                                 <div class="col-xs-6 text-right data-wrap-right">
                                                     <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i>
@@ -66,9 +66,9 @@
                                                 <div class="col-xs-6 text-left data-wrap-left">
                                                     <span class="txt-light block counter"><span
                                                             class="counter-anim">{{ $visitor_vip }}</span></span>
-                                                    <span class="weight-500 uppercase-font txt-light block font-13">Total
-                                                        berkunjung tamu
-                                                        VIP</span>
+                                                    <span class="weight-500 uppercase-font txt-light block font-13">Total tamu
+                                                        VIP PERTAHUN
+                                                    </span>
                                                 </div>
                                                 <div class="col-xs-6 text-right data-wrap-right">
                                                     <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i>
@@ -88,7 +88,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 ol-lg-6 col-md-12 col-sm-12 col-xs-12">
                         <div class="panel panel-default card-view panel-refresh">
-                            <h6>Total Tamu VVIP</h6>
+                            <h6>Detail Tamu VVIP Pertahun</h6>
                             <hr class="light-grey-hr row mt-10 mb-15" />
                             <div class="label-chatrs col-lg-6 mb-15">
                                 <span class="clabels-text inline-block txt-dark capitalize-font">
@@ -118,7 +118,7 @@
                         class="col-lg-6 col-md-12 col-sm-12 col-xs-12
                                 ol-lg-6 col-md-12 col-sm-12 col-xs-12">
                         <div class="panel panel-default card-view panel-refresh">
-                            <h6>Total Tamu VIP</h6>
+                            <h6>Detail Tamu VIP Pertahun</h6>
                             <hr class="light-grey-hr row mt-10 mb-15" />
                             <div class="label-chatrs col-lg-6 mb-15">
                                 <span class="clabels-text inline-block txt-dark capitalize-font">
@@ -279,7 +279,7 @@
                         data: 'name'
                     },
                     {
-                        data: 'updated_at'
+                        data: 'created_at'
                     },
                     {
                         "data": function(data) {
@@ -295,7 +295,7 @@
                     }
                 ],
                 order: [
-                    [2, 'desc']
+                    [1, 'asc']
                 ],
                 responsive: true,
                 language: {
