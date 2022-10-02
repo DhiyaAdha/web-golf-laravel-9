@@ -57,7 +57,7 @@ class OrderController extends Controller
                 ->addIndexColumn()
                 ->make(true);
         }
-        if (! $request->hasValidSignature()) {
+        if (!$request->hasValidSignature()) {
             return \redirect('/analisis-tamu');
         }
         $today = Carbon::now()->isoFormat('dddd');
@@ -67,9 +67,9 @@ class OrderController extends Controller
         $url_checkout = URL::temporarySignedRoute('checkout', now()->addMinutes(7), ['id' => $visitor]);
         $default = Package::where('category', 'default')->where('status', 0)->get();
         $additional = Package::where('category', 'additional')->where('status', 0)->get();
-        if(request()->tax){
+        if (request()->tax) {
             $tax = "+10%";
-        }else{
+        } else {
             $tax = "0%";
         }
 
@@ -79,13 +79,13 @@ class OrderController extends Controller
             'target' => 'total',
             'value' => $tax,
             'order' => 1
-        ));                
-        \Cart::session(request()->segment(2))->condition($condition);   
+        ));
+        \Cart::session(request()->segment(2))->condition($condition);
         $items = \Cart::session(request()->segment(2))->getContent();
-        if(\Cart::isEmpty()){
-            $cart_data = [];            
+        if (\Cart::isEmpty()) {
+            $cart_data = [];
         } else {
-            foreach($items as $row) {
+            foreach ($items as $row) {
                 $cart[] = [
                     'rowId' => $row->id,
                     'name' => $row->name,
@@ -93,27 +93,27 @@ class OrderController extends Controller
                     'pricesingle' => $row->price,
                     'price' => $row->getPriceSum(),
                     'created_at' => $row->attributes['created_at'],
-                ];           
+                ];
             }
             $cart_data = collect($cart)->sortBy('created_at');
         }
-        
+
         $sub_total = \Cart::session(request()->segment(2))->getSubTotal();
         $total = \Cart::session(request()->segment(2))->getTotal();
-        $counted = ucwords(counted($total). ' Rupiah');
+        $counted = ucwords(counted($total) . ' Rupiah');
         $new_condition = \Cart::session(request()->segment(2))->getCondition('pajak');
-        $pajak = $new_condition->getCalculatedValue($sub_total); 
+        $pajak = $new_condition->getCalculatedValue($sub_total);
 
         $data_total = [
-        'sub_total' => $sub_total,
-        'total' => $total,
-        'tax' => $pajak
+            'sub_total' => $sub_total,
+            'total' => $total,
+            'tax' => $pajak
         ];
 
         return view('keranjang', compact(
-            'url_checkout', 
-            'counted', 
-            'date_now', 
+            'url_checkout',
+            'counted',
+            'date_now',
             'today',
             'default',
             'additional',
@@ -125,51 +125,51 @@ class OrderController extends Controller
     }
 
     public function add(Request $request)
-    { 
+    {
         $id = explode("/", parse_url($request->get('url'), PHP_URL_PATH));
-        $package = Package::find($id[3]);          
+        $package = Package::find($id[3]);
         $cart = \Cart::session($request->get('page'))->getContent();
         $cek_itemId = $cart->whereIn('id', $id[3]);
         $today = Carbon::now()->isoFormat('dddd');
         $price = $today === 'Sabtu' || 'Minggu' ? $package->price_weekend : $package->price_weekdays;
         $get_total = \Cart::session($request->get('page'))->getTotal();
-        $counted = ucwords(counted($get_total). ' Rupiah');
-        if($cek_itemId->isNotEmpty()){
-            if($package->quantity == $cek_itemId[$id[3]]->quantity){
-                return redirect()->back()->with('error','jumlah item kurang');
-            }else{
+        $counted = ucwords(counted($get_total) . ' Rupiah');
+        if ($cek_itemId->isNotEmpty()) {
+            if ($package->quantity == $cek_itemId[$id[3]]->quantity) {
+                return redirect()->back()->with('error', 'jumlah item kurang');
+            } else {
                 // \Cart::session($request->get('page'))->update($id[3], array(
                 //     'quantity' => 1
                 // ));
-                if( $cek_itemId[$id[3]]->quantity >= 1){
+                if ($cek_itemId[$id[3]]->quantity >= 1) {
                     $this->setResponse('INVALID', "Limit tidak terpenuhi");
                     return response()->json($this->getResponse());
                 }
                 return response()->json([
-                    'id'=>$id[3], 
+                    'id' => $id[3],
                     'total' => $get_total,
                     'counted' => $counted,
                     'cart' => $cart,
-                    'qty' => $cek_itemId[$id[3]]->quantity, 
+                    'qty' => $cek_itemId[$id[3]]->quantity,
                     'price' => $cek_itemId[$id[3]]->price
                 ], 200);
-            }            
+            }
         } else {
             \Cart::session($request->get('page'))->add(array(
                 'id' => $id[3],
                 'name' => $package->name,
                 'price' => $price,
-                'quantity' => 1, 
+                'quantity' => 1,
                 'attributes' => array(
                     'created_at' => date('Y-m-d H:i:s')
-                    )          
-                ));
+                )
+            ));
             $cart = \Cart::session($request->get('page'))->getContent();
             $cek_itemId = $cart->whereIn('id', $id[3]);
-            if(\Cart::isEmpty()){
-                $cart_data = [];            
+            if (\Cart::isEmpty()) {
+                $cart_data = [];
             } else {
-                foreach($cart as $row) {
+                foreach ($cart as $row) {
                     $cart[] = [
                         'rowId' => $row->id,
                         'name' => $row->name,
@@ -177,73 +177,76 @@ class OrderController extends Controller
                         'pricesingle' => $row->price,
                         'price' => $row->getPriceSum(),
                         'created_at' => $row->attributes['created_at'],
-                    ];           
+                    ];
                 }
                 $cart_data = collect($cart)->sortBy('created_at');
             }
             $get_total = \Cart::session($request->get('page'))->getTotal();
-            $counted = ucwords(counted($get_total). ' Rupiah');
+            $counted = ucwords(counted($get_total) . ' Rupiah');
             return response()->json([
-                'id'=>$id[3], 
+                'id' => $id[3],
                 'total' => $get_total,
                 'counted' => $counted,
                 'cart' => $cart_data,
-                'qty' => $cek_itemId[$id[3]]->quantity, 
-                'name' => $cek_itemId[$id[3]]->name, 
+                'qty' => $cek_itemId[$id[3]]->quantity,
+                'name' => $cek_itemId[$id[3]]->name,
                 'price' => $cek_itemId[$id[3]]->price
             ], 200);
-        }  
+        }
     }
 
-    public function update_qty(Request $request){
-        $package = Package::find($request->get('id'));     
-        $cart = \Cart::session($request->get('page'))->getContent();        
-        $cek_itemId = $cart->whereIn('id', $request->get('id')); 
-        if($request->get('type') == 'plus'){
-            if($package->quantity == $cek_itemId[$request->get('id')]->quantity) {
-                return redirect()->back()->with('error','jumlah item kurang');
+    public function update_qty(Request $request)
+    {
+        $package = Package::find($request->get('id'));
+        $cart = \Cart::session($request->get('page'))->getContent();
+        $cek_itemId = $cart->whereIn('id', $request->get('id'));
+        if ($request->get('type') == 'plus') {
+            if ($package->quantity == $cek_itemId[$request->get('id')]->quantity) {
+                return redirect()->back()->with('error', 'jumlah item kurang');
             } else {
                 \Cart::session($request->get('page'))->update($request->get('id'), array(
                     'quantity' => array(
                         'relative' => true,
                         'value' => 1
-                )));
+                    )
+                ));
                 $items = \Cart::session($request->get('page'))->getContent();
                 $get_total = \Cart::session($request->get('page'))->getTotal();
-                $counted = ucwords(counted($get_total). ' Rupiah');
+                $counted = ucwords(counted($get_total) . ' Rupiah');
                 return response()->json([
-                    'id'=>$request->get('id'), 
+                    'id' => $request->get('id'),
                     'total' => $get_total,
                     'counted' => $counted,
                     'cart' => $items,
-                    'qty' => $cek_itemId[$request->get('id')]->quantity, 
+                    'qty' => $cek_itemId[$request->get('id')]->quantity,
                     'price' => $cek_itemId[$request->get('id')]->price
                 ], 200);
-            }   
+            }
         } else {
-            if($cek_itemId[$request->get('id')]->quantity == 1){
-                \Cart::session($request->get('page'))->remove($request->get('id'));  
-            }else{
+            if ($cek_itemId[$request->get('id')]->quantity == 1) {
+                \Cart::session($request->get('page'))->remove($request->get('id'));
+            } else {
                 \Cart::session($request->get('page'))->update($request->get('id'), array(
-                'quantity' => array(
-                    'relative' => true,
-                    'value' => -1
-                )));            
+                    'quantity' => array(
+                        'relative' => true,
+                        'value' => -1
+                    )
+                ));
             }
             $items = \Cart::session($request->get('page'))->getContent();
             $get_total = \Cart::session($request->get('page'))->getTotal();
             $counted = '';
-            if(\Cart::isEmpty()){
+            if (\Cart::isEmpty()) {
                 $counted = '-';
             } else {
-                $counted = ucwords(counted($get_total). ' Rupiah');
+                $counted = ucwords(counted($get_total) . ' Rupiah');
             }
             return response()->json([
-                'id'=>$request->get('id'), 
+                'id' => $request->get('id'),
                 'total' => $get_total,
                 'counted' => $counted,
                 'cart' => $items,
-                'qty' => $cek_itemId[$request->get('id')]->quantity, 
+                'qty' => $cek_itemId[$request->get('id')]->quantity,
                 'price' => $cek_itemId[$request->get('id')]->price
             ], 200);
         }
@@ -252,24 +255,25 @@ class OrderController extends Controller
     public function remove(Request $request)
     {
         $id = explode("/", parse_url($request->get('url'), PHP_URL_PATH));
-        \Cart::session($request->get('page'))->remove($id[3]);     
+        \Cart::session($request->get('page'))->remove($id[3]);
         $items = \Cart::session($request->get('page'))->getContent();
         $get_total = \Cart::session($request->get('page'))->getTotal();
         $counted = '';
-        if(\Cart::isEmpty()){
+        if (\Cart::isEmpty()) {
             $counted = '-';
         } else {
-            $counted = ucwords(counted($get_total). ' Rupiah');
+            $counted = ucwords(counted($get_total) . ' Rupiah');
         }
         return response()->json([
-            'id'=>$request->get('id'), 
+            'id' => $request->get('id'),
             'total' => $get_total,
             'counted' => $counted,
             'cart' => $items,
         ], 200);
     }
 
-    public function clear_cart(Request $request){
+    public function clear_cart(Request $request)
+    {
         \Cart::session($request->get('page'))->clear();
         return redirect()->back();
     }
@@ -279,10 +283,10 @@ class OrderController extends Controller
         $visitor = Visitor::find(request()->segment(2));
         $items = \Cart::session(request()->segment(2))->getContent();
         $totalPrice = \Cart::session(request()->segment(2))->getTotal();
-        if(\Cart::isEmpty()){
-            $cart_data = [];            
+        if (\Cart::isEmpty()) {
+            $cart_data = [];
         } else {
-            foreach($items as $row) {
+            foreach ($items as $row) {
                 $cart[] = [
                     'rowId' => $row->id,
                     'name' => $row->name,
@@ -290,17 +294,17 @@ class OrderController extends Controller
                     'pricesingle' => $row->price,
                     'price' => $row->getPriceSum(),
                     'created_at' => $row->attributes['created_at'],
-                ];           
+                ];
             }
             $orders = collect($cart)->sortBy('created_at');
         }
-        $order_number = 'INV/'.Carbon::now()->format('Ymd').'/'.$visitor->tipe_member.'/'.Carbon::now()->format('his');
+        $order_number = 'INV/' . Carbon::now()->format('Ymd') . '/' . $visitor->tipe_member . '/' . Carbon::now()->format('his');
         $deposit = Deposit::where('visitor_id', request()->segment(2))->first();
         $log_limit = LogLimit::where('visitor_id', request()->segment(2))->first();
-        if($request->ajax()){
+        if ($request->ajax()) {
             return response()->json(['order_number' => $order_number]);
         }
-        return view("checkout", compact('log_limit', 'visitor', 'deposit','totalPrice', 'order_number', 'orders'))->render();
+        return view("checkout", compact('log_limit', 'visitor', 'deposit', 'totalPrice', 'order_number', 'orders'))->render();
     }
 
     public function select(Request $request)
@@ -309,9 +313,9 @@ class OrderController extends Controller
         $totalPrice = \Cart::session($request->get('param'))->getTotal();
         $deposit = Deposit::where('visitor_id', $request->get('param'))->first();
         $log_limit = LogLimit::where('visitor_id', $request->get('param'))->first();
-        if($type == 4) {
+        if ($type == 4) {
             $resultPrice =  $deposit->balance - $totalPrice;
-            if($resultPrice > 0) {
+            if ($resultPrice > 0) {
                 try {
                     return response(['limit' => $log_limit->quota, 'price' => $resultPrice, 'kupon' => $log_limit->quota_kupon, 'status' => 'VALID', 'message' => 'Saldo telah dipilih']);
                 } catch (\Throwable $th) {
@@ -327,16 +331,16 @@ class OrderController extends Controller
             } catch (\Throwable $th) {
                 return response()->json($this->getResponse());
             }
-        } else if($type == 2) {
+        } else if ($type == 2) {
             $resultKupon =  $log_limit->quota_kupon - 1;
-            if($log_limit->quota_kupon == 0) {
+            if ($log_limit->quota_kupon == 0) {
                 return response(['price' => $deposit->balance, 'limit' => $log_limit->quota, 'kupon' => 0, 'status' => 'INVALID', 'message' => 'Kupon tidak terpenuhi']);
             } else {
                 return response(['price' => $deposit->balance, 'limit' => $log_limit->quota, 'kupon' => $resultKupon, 'status' => 'VALID', 'message' => 'Limit telah dipilih']);
             }
         } else if ($type == 1) {
             $resultLimit =  $log_limit->quota - 1;
-            if($log_limit->quota == 0) {
+            if ($log_limit->quota == 0) {
                 return response(['price' => $deposit->balance, 'limit' => 0, 'kupon' => $log_limit->quota_kupon, 'status' => 'INVALID', 'message' => 'Limit tidak terpenuhi']);
             } else {
                 return response(['price' => $deposit->balance, 'limit' => $resultLimit, 'kupon' => $log_limit->quota_kupon, 'status' => 'VALID', 'message' => 'Limit telah dipilih']);
@@ -344,16 +348,17 @@ class OrderController extends Controller
         }
     }
 
-    public function pay(Request $req) {
+    public function pay(Request $req)
+    {
         $visitor = Visitor::find($req->get('page'));
         $items = \Cart::session($req->get('page'))->getContent();
         $deposit = Deposit::where('visitor_id', $req->get('page'))->first();
         $log_limit = LogLimit::where('visitor_id', $req->get('page'))->first();
         $totalPrice = \Cart::session($req->get('page'))->getTotal();
-        if(\Cart::isEmpty()){
-            $cart_data = [];            
+        if (\Cart::isEmpty()) {
+            $cart_data = [];
         } else {
-            foreach($items as $row) {
+            foreach ($items as $row) {
                 $cart[] = [
                     'rowId' => $row->id,
                     'name' => $row->name,
@@ -361,26 +366,26 @@ class OrderController extends Controller
                     'pricesingle' => $row->price,
                     'price' => $row->getPriceSum(),
                     'created_at' => $row->attributes['created_at'],
-                ];           
+                ];
             }
             $cart_data = collect($cart)->sortBy('created_at');
         }
-        if($req->get('type') == 'single'){
-            if($req->get('type_single') == null) {
+        if ($req->get('type') == 'single') {
+            if ($req->get('type_single') == null) {
                 $this->setResponse('INVALID', "Silahkan pilih jenis single pembayaran");
                 return response()->json($this->getResponse());
             } else {
-                if($req->get('type_single') == 4) {
-                    if($deposit->balance < $totalPrice){
+                if ($req->get('type_single') == 4) {
+                    if ($deposit->balance < $totalPrice) {
                         $this->setResponse('INVALID', "Saldo tidak terpenuhi");
                         return response()->json($this->getResponse());
                     } else {
                         $id_package = [];
-                        foreach($items as $sd){
+                        foreach ($items as $sd) {
                             $id_package[] = $sd['id'];
                         }
                         $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
-                        if(count($package_default) == 0){
+                        if (count($package_default) == 0) {
                             $this->setResponse('INVALID', "Setidaknya pilih satu jenis permainan default");
                             return response()->json($this->getResponse());
                         } else {
@@ -399,7 +404,7 @@ class OrderController extends Controller
                                     'payment_status' => 'paid',
                                     'total' => $totalPrice
                                 ]);
-                                
+
                                 LogAdmin::create([
                                     'user_id' => Auth::id(),
                                     'type' => 'CREATE',
@@ -414,17 +419,17 @@ class OrderController extends Controller
                                     'activities' => '<b>Saldo Berkurang !</b> Anda telah melakukan pembayaran menggunakan<b> deposit</b>',
                                     'created_at' => Carbon::now(),
                                 ]);
-                                
+
                                 \Cart::session($req->get('page'))->clear();
-        
+
                                 $data['qty'] = $row->quantity;
                                 $total_qty = 0;
-                                foreach($cart_data as $get) {
+                                foreach ($cart_data as $get) {
                                     $total_qty += $get['qty'];
                                 }
                                 $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
                                 $payment_type = unserialize($log_transaction->payment_type);
-        
+
                                 $data = [
                                     'name' => $visitor->name,
                                     'email' => $visitor->email,
@@ -444,8 +449,8 @@ class OrderController extends Controller
                                 ];
                                 // dd($data);
                                 dispatch(new SendMailPaymentsuccess4Job($data));
-        
-                                if($req->ajax()){
+
+                                if ($req->ajax()) {
                                     $this->setResponse('VALID', "Pembayaran berhasil");
                                     return response()->json($this->getResponse());
                                 }
@@ -454,21 +459,21 @@ class OrderController extends Controller
                             }
                         }
                     }
-                } else if($req->get('type_single') == 3) {
-                    if(is_null($req->get('bayar_input'))) {
+                } else if ($req->get('type_single') == 3) {
+                    if (is_null($req->get('bayar_input'))) {
                         $this->setResponse('INVALID', "Nominal wajib diisi");
                         return response()->json($this->getResponse());
                     } else {
-                        if($req->get('bayar_input') < $totalPrice) {
+                        if ($req->get('bayar_input') < $totalPrice) {
                             $this->setResponse('INVALID', "Nominal tidak terpenuhi");
                             return response()->json($this->getResponse());
                         } else {
                             $id_package = [];
-                            foreach($items as $sd){
+                            foreach ($items as $sd) {
                                 $id_package[] = $sd['id'];
                             }
                             $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
-                            if(count($package_default) == 0){
+                            if (count($package_default) == 0) {
                                 $this->setResponse('INVALID', "Setidaknya pilih satu jenis permainan default");
                                 return response()->json($this->getResponse());
                             } else {
@@ -482,42 +487,42 @@ class OrderController extends Controller
                                         'payment_status' => 'paid',
                                         'total' => $totalPrice
                                     ]);
-            
+
                                     LogAdmin::create([
                                         'user_id' => Auth::id(),
                                         'type' => 'CREATE',
                                         'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
                                     ]);
-            
+
                                     \Cart::session($req->get('page'))->clear();
-            
+
                                     $data['qty'] = $row->quantity;
-                            $total_qty = 0;
-                            foreach($cart_data as $get) {
-                                $total_qty += $get['qty'];
-                            }
-                            $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
-                            $payment_type = unserialize($log_transaction->payment_type);
+                                    $total_qty = 0;
+                                    foreach ($cart_data as $get) {
+                                        $total_qty += $get['qty'];
+                                    }
+                                    $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
+                                    $payment_type = unserialize($log_transaction->payment_type);
 
-                            $data = [
-                                'name' => $visitor->name,
-                                'email' => $visitor->email,
-                                'address' => $visitor->address,
-                                'phone' => $visitor->phone,
-                                'type_member' => $visitor->tipe_member,
-                                'order_number' => $req->get('order_number'),
-                                'payment_type' => $payment_type,
-                                'date' => $row->attributes['created_at'],
-                                'pricesingle' => $row->price,
-                                'price' => $row->getPriceSum(),
-                                'total' => $totalPrice,
-                                'qty' => $row->quantity,
-                                'total_qty' => $total_qty,
-                                'cart' => $cart_data,
-                            ];
-                            dispatch(new SendMailPaymentsuccess4Job($data));
+                                    $data = [
+                                        'name' => $visitor->name,
+                                        'email' => $visitor->email,
+                                        'address' => $visitor->address,
+                                        'phone' => $visitor->phone,
+                                        'type_member' => $visitor->tipe_member,
+                                        'order_number' => $req->get('order_number'),
+                                        'payment_type' => $payment_type,
+                                        'date' => $row->attributes['created_at'],
+                                        'pricesingle' => $row->price,
+                                        'price' => $row->getPriceSum(),
+                                        'total' => $totalPrice,
+                                        'qty' => $row->quantity,
+                                        'total_qty' => $total_qty,
+                                        'cart' => $cart_data,
+                                    ];
+                                    dispatch(new SendMailPaymentsuccess4Job($data));
 
-                                    if($req->ajax()){
+                                    if ($req->ajax()) {
                                         return response()->json([
                                             'status' => 'VALID',
                                             'return' => $req->get('bayar_input')
@@ -529,32 +534,32 @@ class OrderController extends Controller
                             }
                         }
                     }
-                } else if($req->get('type_single') == 2){
-                    if($log_limit->quota_kupon == 0) {
+                } else if ($req->get('type_single') == 2) {
+                    if ($log_limit->quota_kupon == 0) {
                         $this->setResponse('INVALID', "Kupon tidak terpenuhi");
                         return response()->json($this->getResponse());
                     } else {
                         $id_package = [];
-                        foreach($items as $sd){
+                        foreach ($items as $sd) {
                             $id_package[] = $sd['id'];
                         }
                         $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
                         $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
-                        if(count($package_additional) >= 1){
+                        if (count($package_additional) >= 1) {
                             $this->setResponse('INVALID', "Kupon hanya berlaku satu jenis permainan");
                             return response()->json($this->getResponse());
-                        } else if($package_default) {
-                            if(count($package_default) != 1){
+                        } else if ($package_default) {
+                            if (count($package_default) != 1) {
                                 $this->setResponse('INVALID', "Single kupon hanya berlaku satu jenis permainan");
                                 return response()->json($this->getResponse());
                             } else {
-                                try { 
+                                try {
                                     $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
                                     $report_limit = ReportLimit::where('visitor_id', $req->get('page'))->first();
                                     $report_limit->report_quota_kupon = $report_limit->report_quota_kupon - 1;
                                     $log_limit->save();
                                     $report_limit->save();
-    
+
                                     LogTransaction::create([
                                         'order_number' => $req->get('order_number'),
                                         'visitor_id' => $req->get('page'),
@@ -564,24 +569,34 @@ class OrderController extends Controller
                                         'payment_status' => 'paid',
                                         'total' => $totalPrice
                                     ]);
-            
+
                                     LogAdmin::create([
                                         'user_id' => Auth::id(),
                                         'type' => 'CREATE',
                                         'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
                                     ]);
-            
+
+                                    // informasi limit kupon
+                                    ReportLimit::create([
+                                        'status' => 'Berkurang',
+                                        'report_quota_kupon' => $log_limit->quota_kupon,
+                                        'visitor_id' => $req->get('page'),
+                                        'user_id' => Auth()->id(),
+                                        'activities' => '<b>Limit Kupon Berkurang menjadi ' . $log_limit->quota_kupon . ' ! </b>  Anda telah melakukan pembayaran menggunakan<b> quota kupon</b>',
+                                        'created_at' => Carbon::now(),
+                                    ]);
+
                                     \Cart::session($req->get('page'))->clear();
 
                                     $log_limit = LogLimit::where('visitor_id', $req->get('page'))->first();
                                     $data['qty'] = $row->quantity;
                                     $total_qty = 0;
-                                    foreach($cart_data as $get) {
+                                    foreach ($cart_data as $get) {
                                         $total_qty += $get['qty'];
                                     }
                                     $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
                                     $payment_type = unserialize($log_transaction->payment_type);
-    
+
                                     $data = [
                                         'name' => $visitor->name,
                                         'email' => $visitor->email,
@@ -600,8 +615,8 @@ class OrderController extends Controller
                                         'sisakupon' => $log_limit->quota_kupon,
                                     ];
                                     dispatch(new SendMailPaymentsuccess4Job($data));
-    
-                                    if($req->ajax()){
+
+                                    if ($req->ajax()) {
                                         $this->setResponse('VALID', "Pembayaran berhasil");
                                         return response()->json($this->getResponse());
                                     }
@@ -612,31 +627,31 @@ class OrderController extends Controller
                         }
                     }
                 } else {
-                    if($log_limit->quota == 0) {
+                    if ($log_limit->quota == 0) {
                         $this->setResponse('INVALID', "Limit tidak terpenuhi");
                         return response()->json($this->getResponse());
                     } else {
                         $id_package = [];
-                        foreach($items as $sd){
+                        foreach ($items as $sd) {
                             $id_package[] = $sd['id'];
                         }
                         $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
                         $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
-                        if(count($package_additional) >= 1){
+                        if (count($package_additional) >= 1) {
                             $this->setResponse('INVALID', "Limit hanya berlaku satu jenis permainan");
                             return response()->json($this->getResponse());
-                        } else if($package_default) {
-                            if(count($package_default) != 1){
+                        } else if ($package_default) {
+                            if (count($package_default) != 1) {
                                 $this->setResponse('INVALID', "Single limit hanya berlaku satu jenis permainan");
                                 return response()->json($this->getResponse());
                             } else {
-                                try { 
+                                try {
                                     $log_limit->quota = $log_limit->quota - 1;
                                     $report_limit = ReportLimit::where('visitor_id', $req->get('page'))->first();
                                     $report_limit->report_quota = $report_limit->report_quota - 1;
                                     $log_limit->save();
                                     $report_limit->save();
-    
+
                                     LogTransaction::create([
                                         'order_number' => $req->get('order_number'),
                                         'visitor_id' => $req->get('page'),
@@ -646,24 +661,34 @@ class OrderController extends Controller
                                         'payment_status' => 'paid',
                                         'total' => $totalPrice
                                     ]);
-            
+
                                     LogAdmin::create([
                                         'user_id' => Auth::id(),
                                         'type' => 'CREATE',
                                         'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
                                     ]);
-            
+
+                                    // informasi limit bulanan
+                                    ReportLimit::create([
+                                        'status' => 'Berkurang',
+                                        'report_quota' => $report_limit->report_quota,
+                                        'visitor_id' => $req->get('page'),
+                                        'user_id' => Auth()->id(),
+                                        'activities' => '<b>Limit Bulanan Berkurang menjadi '.$report_limit->report_quota.' ! </b>  Anda telah melakukan pembayaran menggunakan<b> quota bulanan</b>',
+                                        'created_at' => Carbon::now(),
+                                    ]);
+
                                     \Cart::session($req->get('page'))->clear();
 
                                     $log_limit = LogLimit::where('visitor_id', $req->get('page'))->first();
                                     $data['qty'] = $row->quantity;
                                     $total_qty = 0;
-                                    foreach($cart_data as $get) {
+                                    foreach ($cart_data as $get) {
                                         $total_qty += $get['qty'];
                                     }
                                     $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
                                     $payment_type = unserialize($log_transaction->payment_type);
-    
+
                                     $data = [
                                         'name' => $visitor->name,
                                         'email' => $visitor->email,
@@ -682,8 +707,8 @@ class OrderController extends Controller
                                         'sisabulanan' => $log_limit->quota,
                                     ];
                                     dispatch(new SendMailPaymentsuccess4Job($data));
-    
-                                    if($req->ajax()){
+
+                                    if ($req->ajax()) {
                                         $this->setResponse('VALID', "Pembayaran berhasil");
                                         return response()->json($this->getResponse());
                                     }
@@ -696,7 +721,7 @@ class OrderController extends Controller
                 }
             }
         } else {
-            if(empty($req->get('type_multiple'))) {
+            if (empty($req->get('type_multiple'))) {
                 $this->setResponse('INVALID', "Silahkan pilih jenis multiple pembayaran");
                 return response()->json($this->getResponse());
             } else {
@@ -706,7 +731,8 @@ class OrderController extends Controller
         }
     }
 
-    public function print_invoice($id){
+    public function print_invoice($id)
+    {
         $visitor = Visitor::find($id);
         $log_transaction = LogTransaction::where('visitor_id', $id)->latest()->first();
         $cart = unserialize($log_transaction->cart);
@@ -714,13 +740,13 @@ class OrderController extends Controller
         $deposit = Deposit::where('visitor_id', $id)->first();
         $total = 0;
         $qty = 0;
-        foreach($cart as $get) {
+        foreach ($cart as $get) {
             $qty += $get['qty'];
             $total += $get['price'];
         }
-        $counted = ucwords(counted($total). ' Rupiah');
+        $counted = ucwords(counted($total) . ' Rupiah');
         return view('print-invoice', compact(
-            'visitor', 
+            'visitor',
             'log_transaction',
             'payment_type',
             'cart',
