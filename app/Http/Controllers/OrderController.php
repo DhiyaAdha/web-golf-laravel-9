@@ -405,6 +405,15 @@ class OrderController extends Controller
                                     'type' => 'CREATE',
                                     'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
                                 ]);
+
+                                ReportDeposit::create([
+                                    'payment_type' => 'Deposit',
+                                    'report_balance' => $deposit->balance,
+                                    'visitor_id' => $req->get('page'),
+                                    'user_id' => Auth()->id(),
+                                    'activities' => '<b>Saldo Berkurang !</b> Anda telah melakukan pembayaran menggunakan<b> deposit</b>',
+                                    'created_at' => Carbon::now(),
+                                ]);
                                 
                                 \Cart::session($req->get('page'))->clear();
         
