@@ -27,9 +27,6 @@ class InvoiceController extends Controller
         $riwayat_invoice = LogTransaction::select(['log_transactions.id', 'log_transactions.total', 'visitors.name', 'visitors.tipe_member', 
         'log_transactions.created_at', 'log_transactions.payment_type'])
         ->leftJoin('visitors', 'visitors.id', '=', 'log_transactions.visitor_id')->get();
-        $collection = collect([[1, 2, 3], [4, 5, 6], [7, 8, 9]]);
-        $collapsed = $collection->collapse();
-        $collapsed->all();
         if($request->ajax()){
             return datatables()->of($riwayat_invoice)->addColumn('action', function ($data) {
                 $button = 
@@ -48,8 +45,7 @@ class InvoiceController extends Controller
                 return $data->created_at->format('d F Y');
             })
             ->editColumn('payment_type', function ($data) {
-                $type =  unserialize($data->payment_type);
-                return ($type);
+                return ($data->payment_type);
             })
             ->editColumn('total', function ($data) {
                 return  ('Rp. ' .formatrupiah($data->total));
@@ -57,7 +53,6 @@ class InvoiceController extends Controller
             ->rawColumns(['name','action'])
             ->make(true);
         }
-        
         return view('invoice.riwayat-invoice');
     }
 
@@ -104,6 +99,7 @@ class InvoiceController extends Controller
     
      public function show($id)
     {
+        // $decrypt_id = Crypt::decryptString($id);
         $transaction = LogTransaction::find($id);
         $package = Package::find($id);
         $detail = Detail::where('log_transaction_id',$id)->first();
@@ -165,16 +161,12 @@ class InvoiceController extends Controller
     {
         $transaction = LogTransaction::find($id);
         $package = Package::find($id);
-        $detail = Detail::where('log_transaction_id', $id)->first();
+        $detail = Detail::find($id);
         $data['transaction'] = $transaction;
         $data['visitor'] = Visitor::find($transaction->visitor_id);
-        if ($detail) {
-            $data['package'] = Package::find($detail->visitor_id);
-            $data['visitor'] = Detail::find($detail->id);
-        } else {
-            $data['package'] = null;
-            $data['detail'] = null;
-        }
+        $data['package'] = Package::find($package->id);
+        $data['detail'] = Detail::find($detail->id);
+
         
         $pdf = PDF::loadView('invoice.cetak_invoice' , $data);
 

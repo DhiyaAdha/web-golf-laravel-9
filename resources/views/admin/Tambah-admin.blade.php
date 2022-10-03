@@ -1,5 +1,8 @@
 @extends('Layouts.Main')
 @section('content')
+<div class=""></div>
+
+
     <div class="page-wrapper">
         <div class="container-fluid">
             <!-- Title -->
@@ -46,8 +49,8 @@
                                     <label class="pull-left control-label mb-10" for="password">Password</label>
                                     <input type="password" name="password" class="form-control" id="password" placeholder="Masukan Password">
                                     <span class="show-hide1" onclick="myfunction()">
-                                        <i id="hide1" class="fa-solid fa-eye"></i>
-                                        <i id="hide2" class="fa-solid fa-eye-slash"></i>
+                                        <i style="color: gray;" id="hide1" class="fa-solid fa-eye"></i>
+                                        <i style="color: gray;" id="hide2" class="fa-solid fa-eye-slash"></i>
                                     </span>
                                     @error('password')
                                     <div class="text-danger"> {{ $message }}</div>

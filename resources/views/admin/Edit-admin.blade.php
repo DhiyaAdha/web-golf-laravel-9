@@ -1,5 +1,4 @@
 @extends('Layouts.Main')
-
 @section('content')
 <div class="page-wrapper">
     <div class="container-fluid">
@@ -46,7 +45,7 @@
                                     <input type="password" name="password"
                                         class="form-control @error('password') has-error @enderror"
                                         id="password" placeholder="Masukan Password">
-                                    <i class="fa-solid fa-eye1 fa-eye fa-eye-slash" id="eye"></i>
+                                        <i class="fa-solid fa-eye1 fa-eye fa-eye-slash" id="eye"></i>
 
                                     @error('password')
                                         <div class="text-danger"> {{ $message }}</div>
@@ -60,7 +59,7 @@
                                         class="form-control @error('password') is-invalid @enderror"
                                         id="password_confirmation" placeholder="Masukan Ulang Password">
                                         <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
-                                    <i class="fa-solid fa-eye2 fa-eye fa-eye-slash" style="position:absolute; margin-top: -27px; margin-left: 90%; top: 72px; right: 10px;" id="eyee"></i>
+                                    <i class="fa-solid fa-eye2 fa-eye fa-eye-slash" id="eyee"></i>
                                 </div>
                                 <div class="form-group @error('phone') has-error @enderror">
                                     <label class="control-label mb-10" for="">Nomer Hp</label>
@@ -101,6 +100,17 @@
 </div>
 @endsection
 @push('scripts')
+<script src="../../vendors/bower_components/jquery/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="../../vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../../vendors/bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js"></script>
+
+<!-- Slimscroll JavaScript -->
+<script src="/dist/js/jquery.slimscroll.js"></script>
+
+<!-- Init JavaScript -->
+<script src="/dist/js/init.js"></script>
 <script>
     const passwordField = document.querySelector("#password");
     const passwordCon = document.querySelector("#password_confirmation");
