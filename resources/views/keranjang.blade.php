@@ -20,16 +20,6 @@
             </div>
             <!-- /Title -->
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default border-panel card-view jt">
-                        <div class="icon-tgcc">
-                            <img src="{{ asset('dist/img/tgcc_icon.svg') }}" alt="">
-                        </div>
-                        <img src="{{ asset('img/lapangan-golf.jpg') }}" style="width: 100%;">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-lg-8">
                     <div style="height: 387px;" class="panel panel-default card-view">
                         <div class="panel-heading">
@@ -48,8 +38,8 @@
                         <div class="d-flex flex-wrap">
                             @foreach ($default as $item)
                                 <button type="button" id="package-{{ $item->id }}"
-                                    onclick="addCart({{ $item->id }})"data-toggle="tooltip"
-                                    title="Rp. {{ number_format($today === 'Sabtu' || 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
+                                    onclick="addCart({{ $item->id }})" data-toggle="tooltip"
+                                    title="Rp. {{ number_format($today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
                                     class="btn btn-default txt-success mr-15 mb-15">{{ $item->name }}</button>
                             @endforeach
                         </div>
@@ -59,15 +49,29 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <div class="d-flex flex-wrap mb-15">
+                        <div class="d-flex flex-wrap">
                             @foreach ($additional as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                    title="Rp. {{ number_format($today === 'Sabtu' || 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
+                                    title="Rp. {{ number_format($today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
                                     class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
                             @endforeach
                         </div>
-                        <div class="panel-heading fk d-flex align-items-center">
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <strong class="panel-title txt-dark">Lainnya</strong>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="d-flex flex-wrap mb-15">
+                            @foreach ($others as $item)
+                                <button type="button" id="package-{{ $item->id }}"
+                                    onclick="addCart({{ $item->id }})" data-toggle="tooltip"
+                                    title="Rp. {{ number_format($today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
+                                    class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
+                            @endforeach
+                        </div>
+                        {{-- <div class="panel-heading fk d-flex align-items-center">
                             <div class="d-flex align-items-center justify-content-between" style="width: 100%">
                                 <span class="text-size">Terbilang</span>
                                 <span class="counted">
@@ -78,7 +82,7 @@
                                     @endif
                                 </span>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="col-lg-4 sticky">
@@ -105,7 +109,7 @@
                             <div class="clearfix"></div>
                         </div>
                         @if (count($cart_data) > 0)
-                            <div style="overflow-y: scroll;height: 242px;" id="isi-">
+                            <div style="overflow-y: scroll;height: 270px;" id="isi-">
                                 @foreach ($cart_data as $index => $item)
                                     <div class="d-flex pl disabled-cart-{{ $item['rowId'] }}"
                                         style="padding: 10px 0px 10px 0px;">
@@ -126,7 +130,7 @@
                                 @endforeach
                             </div>
                         @else
-                            <div id="disabled-empty" style="height: 242px;"
+                            <div id="disabled-empty" style="height: 270px;"
                                 class="d-flex justify-content-center align-items-center">
                                 <span class="not-found text-muted">Keranjang masih kosong</span>
                             </div>
@@ -147,7 +151,7 @@
                                     <span class="btn-text">Reset</span>
                                 </a>
                                 <a href="{{ url('kartu-tamu/' . Crypt::encryptString($get_visitor->id)) }}"
-                                    id="riwayat" class="mt-15 mb-15 btn-xs btn btn-primary btn-anim">
+                                    id="riwayat" class="mt-15 mb-15 btn-xs btn btn-primary btn-anim" target="_blank">
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Riwayat</span>
                                 </a>
@@ -287,19 +291,12 @@
                         swal({
                             title: "",
                             type: "error",
-                            text: "Sudah ditambahkan",
+                            text: response.message,
                             confirmButtonColor: "#01c853",
                         });
                         return false;
                     }
-                    swal({
-                        title: "",
-                        type: "success",
-                        text: "Item " + response.name + " ditambahkan",
-                        confirmButtonColor: "#01c853",
-                    }, function(isConfirm) {
-                        location.reload();
-                    });
+                    location.reload();
                 }
             });
         }
@@ -517,7 +514,7 @@
             swal({
                 title: "",
                 type: "error",
-                text: "silakan pilih setidaknya satu item produk",
+                text: "Pilih item terlebih dahulu",
                 confirmButtonColor: "#01c853",
             });
             return false;

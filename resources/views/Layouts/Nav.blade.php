@@ -8,8 +8,8 @@
                 </a>
             </div>
         </div>
-        <a id="toggle_nav_btn" class="toggle-left-nav-btn inline-block ml-20 pull-left" href="javascript:void(0);"><i
-                class="zmdi zmdi-menu"></i></a>
+        <a id="toggle_nav_btn" class="toggle-left-nav-btn inline-block ml-20 pull-left" href="javascript:void(0);"
+            style="top:20;"><i class="zmdi zmdi-menu"></i></a>
         <a id="toggle_mobile_search" data-toggle="collapse" data-target="#search_form" class="mobile-only-view"
             href="javascript:void(0);"><i class="zmdi zmdi-search"></i></a>
         <a id="toggle_mobile_nav" class="mobile-only-view" href="javascript:void(0);"><i class="zmdi zmdi-more"></i></a>

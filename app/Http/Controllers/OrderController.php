@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use Throwable;
+use App\Models\User;
 use App\Models\Deposit;
 use App\Models\Package;
 use App\Models\Visitor;
@@ -16,8 +17,8 @@ use App\Models\ReportDeposit;
 use App\Models\LogTransaction;
 use Illuminate\Support\Carbon;
 use App\Jobs\SendEmailResetJob;
-use Illuminate\Support\Facades\URL;
 
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendEmailPaymentsuccess4;
@@ -46,7 +47,7 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
-        $products = Package::orderBy('id', 'desc')->get();
+        $products = Package::orderBy('id', 'desc')->where('status', '0')->get();
         if ($request->ajax()) {
             return datatables()
                 ->of($products)->editColumn('price_weekdays', function ($data) {
@@ -67,7 +68,8 @@ class OrderController extends Controller
         $url_checkout = URL::temporarySignedRoute('checkout', now()->addMinutes(7), ['id' => $visitor]);
         $default = Package::where('category', 'default')->where('status', 0)->get();
         $additional = Package::where('category', 'additional')->where('status', 0)->get();
-        if (request()->tax) {
+        $others = Package::where('category', 'others')->where('status', 0)->get();
+        if(request()->tax){
             $tax = "+10%";
         } else {
             $tax = "0%";
@@ -120,7 +122,8 @@ class OrderController extends Controller
             'products',
             'cart_data',
             'data_total',
-            'get_visitor'
+            'get_visitor',
+            'others'
         ));
     }
 
@@ -131,7 +134,7 @@ class OrderController extends Controller
         $cart = \Cart::session($request->get('page'))->getContent();
         $cek_itemId = $cart->whereIn('id', $id[3]);
         $today = Carbon::now()->isoFormat('dddd');
-        $price = $today === 'Sabtu' || 'Minggu' ? $package->price_weekend : $package->price_weekdays;
+        $price = $today === 'Minggu' ? $package->price_weekend : $package->price_weekdays;
         $get_total = \Cart::session($request->get('page'))->getTotal();
         $counted = ucwords(counted($get_total) . ' Rupiah');
         if ($cek_itemId->isNotEmpty()) {
@@ -141,8 +144,8 @@ class OrderController extends Controller
                 // \Cart::session($request->get('page'))->update($id[3], array(
                 //     'quantity' => 1
                 // ));
-                if ($cek_itemId[$id[3]]->quantity >= 1) {
-                    $this->setResponse('INVALID', "Limit tidak terpenuhi");
+                if( $cek_itemId[$id[3]]->quantity >= 1){
+                    $this->setResponse('INVALID', "Sudah ditambahkan");
                     return response()->json($this->getResponse());
                 }
                 return response()->json([
@@ -162,37 +165,48 @@ class OrderController extends Controller
                 'quantity' => 1,
                 'attributes' => array(
                     'created_at' => date('Y-m-d H:i:s')
-                )
+                    )          
             ));
-            $cart = \Cart::session($request->get('page'))->getContent();
-            $cek_itemId = $cart->whereIn('id', $id[3]);
-            if (\Cart::isEmpty()) {
-                $cart_data = [];
-            } else {
-                foreach ($cart as $row) {
-                    $cart[] = [
-                        'rowId' => $row->id,
-                        'name' => $row->name,
-                        'qty' => $row->quantity,
-                        'pricesingle' => $row->price,
-                        'price' => $row->getPriceSum(),
-                        'created_at' => $row->attributes['created_at'],
-                    ];
-                }
-                $cart_data = collect($cart)->sortBy('created_at');
+            $id_package = [];
+            foreach(\Cart::session($request->get('page'))->getContent() as $sd){
+                $id_package[] = $sd['id'];
             }
-            $get_total = \Cart::session($request->get('page'))->getTotal();
-            $counted = ucwords(counted($get_total) . ' Rupiah');
-            return response()->json([
-                'id' => $id[3],
-                'total' => $get_total,
-                'counted' => $counted,
-                'cart' => $cart_data,
-                'qty' => $cek_itemId[$id[3]]->quantity,
-                'name' => $cek_itemId[$id[3]]->name,
-                'price' => $cek_itemId[$id[3]]->price
-            ], 200);
-        }
+            $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
+            if(count($package_default) == 0){
+                \Cart::session($request->get('page'))->clear();
+                $this->setResponse('INVALID', "Setidaknya pilih satu jenis permainan default");
+                return response()->json($this->getResponse());
+            } else {
+                $cart = \Cart::session($request->get('page'))->getContent();
+                $cek_itemId = $cart->whereIn('id', $id[3]);
+                if(\Cart::isEmpty()){
+                    $cart_data = [];            
+                } else {
+                    foreach($cart as $row) {
+                        $cart[] = [
+                            'rowId' => $row->id,
+                            'name' => $row->name,
+                            'qty' => $row->quantity,
+                            'pricesingle' => $row->price,
+                            'price' => $row->getPriceSum(),
+                            'created_at' => $row->attributes['created_at'],
+                        ];           
+                    }
+                    $cart_data = collect($cart)->sortBy('created_at');
+                }
+                $get_total = \Cart::session($request->get('page'))->getTotal();
+                $counted = ucwords(counted($get_total). ' Rupiah');
+                return response()->json([
+                    'id'=>$id[3], 
+                    'total' => $get_total,
+                    'counted' => $counted,
+                    'cart' => $cart_data,
+                    'qty' => $cek_itemId[$id[3]]->quantity, 
+                    'name' => $cek_itemId[$id[3]]->name, 
+                    'price' => $cek_itemId[$id[3]]->price
+                ], 200);
+            }
+        }  
     }
 
     public function update_qty(Request $request)
@@ -395,12 +409,13 @@ class OrderController extends Controller
                                 $report_deposit->report_balance = $report_deposit->report_balance - $totalPrice;
                                 $deposit->save();
                                 $report_deposit->save();
+
                                 LogTransaction::create([
                                     'order_number' => $req->get('order_number'),
                                     'visitor_id' => $req->get('page'),
                                     'user_id' => Auth()->id(),
                                     'cart' => serialize($cart_data),
-                                    'payment_type' => serialize([['payment_type' => 'deposit', 'total' => $totalPrice, 'balance' => $deposit->balance]]),
+                                    'payment_type' => serialize([['payment_type' => 'deposit', 'balance' => $deposit->balance]]),
                                     'payment_status' => 'paid',
                                     'total' => $totalPrice
                                 ]);
@@ -447,7 +462,6 @@ class OrderController extends Controller
                                     'total_qty' => $total_qty,
                                     'cart' => $cart_data,
                                 ];
-                                // dd($data);
                                 dispatch(new SendMailPaymentsuccess4Job($data));
 
                                 if ($req->ajax()) {
@@ -473,7 +487,8 @@ class OrderController extends Controller
                                 $id_package[] = $sd['id'];
                             }
                             $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
-                            if (count($package_default) == 0) {
+
+                            if(count($package_default) == 0){
                                 $this->setResponse('INVALID', "Setidaknya pilih satu jenis permainan default");
                                 return response()->json($this->getResponse());
                             } else {
@@ -483,7 +498,7 @@ class OrderController extends Controller
                                         'visitor_id' => $req->get('page'),
                                         'user_id' => Auth()->id(),
                                         'cart' => serialize($cart_data),
-                                        'payment_type' => serialize([['payment_type' => 'cash/transfer', 'total' => $totalPrice, 'balance' => $totalPrice]]),
+                                        'payment_type' => serialize([['payment_type' => 'cash/transfer', 'balance' => 0]]),
                                         'payment_status' => 'paid',
                                         'total' => $totalPrice
                                     ]);
@@ -498,7 +513,7 @@ class OrderController extends Controller
 
                                     $data['qty'] = $row->quantity;
                                     $total_qty = 0;
-                                    foreach ($cart_data as $get) {
+                                    foreach($cart_data as $get) {
                                         $total_qty += $get['qty'];
                                     }
                                     $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
@@ -525,6 +540,7 @@ class OrderController extends Controller
                                     if ($req->ajax()) {
                                         return response()->json([
                                             'status' => 'VALID',
+                                            'message' => 'Pembayaran berhasil',
                                             'return' => $req->get('bayar_input')
                                         ]);
                                     }
@@ -565,7 +581,7 @@ class OrderController extends Controller
                                         'visitor_id' => $req->get('page'),
                                         'user_id' => Auth()->id(),
                                         'cart' => serialize($cart_data),
-                                        'payment_type' => serialize([['payment_type' => 'kupon', 'total' => 1, 'balance' => $log_limit->quota_kupon]]),
+                                        'payment_type' => serialize([['payment_type' => 'kupon', 'balance' => $log_limit->quota_kupon]]),
                                         'payment_status' => 'paid',
                                         'total' => $totalPrice
                                     ]);
@@ -657,7 +673,7 @@ class OrderController extends Controller
                                         'visitor_id' => $req->get('page'),
                                         'user_id' => Auth()->id(),
                                         'cart' => serialize($cart_data),
-                                        'payment_type' => serialize([['payment_type' => 'limit', 'total' => 1, 'balance' => $log_limit->quota]]),
+                                        'payment_type' => serialize([['payment_type' => 'limit', 'balance' => $log_limit->quota]]),
                                         'payment_status' => 'paid',
                                         'total' => $totalPrice
                                     ]);
@@ -725,8 +741,68 @@ class OrderController extends Controller
                 $this->setResponse('INVALID', "Silahkan pilih jenis multiple pembayaran");
                 return response()->json($this->getResponse());
             } else {
-                $this->setResponse('VALID', "iohoiuerg");
-                return response()->json($this->getResponse());
+                // $payment = $req->get('type_multiple');
+
+                $deposit->balance = $deposit->balance - $deposit->balance;
+                $report_deposit = ReportDeposit::where('visitor_id', $req->get('page'))->first();
+                $report_deposit->report_balance = $report_deposit->report_balance - $report_deposit->report_balance;
+                $deposit->save();
+                $report_deposit->save();
+                
+                LogTransaction::create([
+                    'order_number' => $req->get('order_number'),
+                    'visitor_id' => $req->get('page'),
+                    'user_id' => Auth()->id(),
+                    'cart' => serialize($cart_data),
+                    'payment_type' => serialize([[
+                        ['payment_type' => 'deposit', 'balance' => $deposit->balance],
+                        ['payment_type' => 'cash/transfer', 'balance' => 0],
+                        ['payment_type' => 'kupon', 'balance' => $log_limit->quota_kupon],
+                        ['payment_type' => 'limit', 'balance' => $log_limit->quota]
+                    ]]),
+                    'payment_status' => 'paid',
+                    'total' => $totalPrice
+                ]);
+                
+                // LogAdmin::create([
+                //     'user_id' => Auth::id(),
+                //     'type' => 'CREATE',
+                //     'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                // ]);
+                
+                // \Cart::session($req->get('page'))->clear();
+
+                // $data['qty'] = $row->quantity;
+                // $total_qty = 0;
+                // foreach($cart_data as $get) {
+                //     $total_qty += $get['qty'];
+                // }
+                // $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
+                // $payment_type = unserialize($log_transaction->payment_type);
+
+                // $data = [
+                //     'name' => $visitor->name,
+                //     'email' => $visitor->email,
+                //     'address' => $visitor->address,
+                //     'phone' => $visitor->phone,
+                //     'type_member' => $visitor->tipe_member,
+                //     'sisasaldo' => $report_deposit->report_balance,
+                //     'order_number' => $req->get('order_number'),
+                //     'payment_type' => $payment_type,
+                //     'date' => $row->attributes['created_at'],
+                //     'pricesingle' => $row->price,
+                //     'price' => $row->getPriceSum(),
+                //     'total' => $totalPrice,
+                //     'qty' => $row->quantity,
+                //     'total_qty' => $total_qty,
+                //     'cart' => $cart_data,
+                // ];
+                // dispatch(new SendMailPaymentsuccess4Job($data));
+
+                // if($req->ajax()){
+                //     $this->setResponse('VALID', "Pembayaran berhasil");
+                //     return response()->json($this->getResponse());
+                // }
             }
         }
     }
@@ -735,6 +811,7 @@ class OrderController extends Controller
     {
         $visitor = Visitor::find($id);
         $log_transaction = LogTransaction::where('visitor_id', $id)->latest()->first();
+        $user = User::find($log_transaction->user_id);
         $cart = unserialize($log_transaction->cart);
         $payment_type = unserialize($log_transaction->payment_type);
         $deposit = Deposit::where('visitor_id', $id)->first();
@@ -753,7 +830,8 @@ class OrderController extends Controller
             'deposit',
             'total',
             'counted',
-            'qty'
+            'qty',
+            'user'
         ));
     }
 

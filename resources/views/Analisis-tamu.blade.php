@@ -153,6 +153,10 @@
                                 <div class="pull-left">
                                     <h6 class="panel-title txt-dark">Statistika Transaksi Pertahun</h6>
                                 </div>
+                                <a href="javascript:void(0)" class="pull-right inline-block full-screen mr-15"
+                                    data-toggle="tooltip" title="Fullscreen">
+                                    <i class="zmdi zmdi-fullscreen"></i>
+                                </a>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="panel-wrapper collapse in">
