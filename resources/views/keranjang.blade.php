@@ -49,7 +49,7 @@
                             @foreach ($default as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})"data-toggle="tooltip"
-                                    title="Rp. {{ number_format($today === 'Sabtu' || 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
+                                    title="Rp. {{ number_format($today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
                                     class="btn btn-default txt-success mr-15 mb-15">{{ $item->name }}</button>
                             @endforeach
                         </div>
@@ -63,7 +63,7 @@
                             @foreach ($additional as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                    title="Rp. {{ number_format($today === 'Sabtu' || 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
+                                    title="Rp. {{ number_format($today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
                                     class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
                             @endforeach
                         </div>
@@ -147,7 +147,7 @@
                                     <span class="btn-text">Reset</span>
                                 </a>
                                 <a href="{{ url('kartu-tamu/' . Crypt::encryptString($get_visitor->id)) }}"
-                                    id="riwayat" class="mt-15 mb-15 btn-xs btn btn-primary btn-anim">
+                                    id="riwayat" class="mt-15 mb-15 btn-xs btn btn-primary btn-anim" target="_blank">
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Riwayat</span>
                                 </a>
@@ -292,14 +292,14 @@
                         });
                         return false;
                     }
-                    swal({
-                        title: "",
-                        type: "success",
-                        text: "Item " + response.name + " ditambahkan",
-                        confirmButtonColor: "#01c853",
-                    }, function(isConfirm) {
-                        location.reload();
-                    });
+                    // swal({
+                    //     title: "",
+                    //     type: "success",
+                    //     text: "Item " + response.name + " ditambahkan",
+                    //     confirmButtonColor: "#01c853",
+                    // }, function(isConfirm) {
+                    // });
+                    location.reload();
                 }
             });
         }

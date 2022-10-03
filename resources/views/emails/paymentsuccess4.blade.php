@@ -215,7 +215,7 @@
         <!-- HIDDEN PREHEADER TEXT -->
         <div
             style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Lato', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
-            We're thrilled to have you here! Get ready to dive into your new account.
+            Pembayaran Berhasil, Berikut adalah detail transaksi anda....
         </div>
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
             <!-- LOGO -->
@@ -291,8 +291,9 @@
                                                         <strong>Order</strong>
                                                         {!! $data['order_number'] !!}<br /><br>
                                                         <strong>Jenis Pembayaran:</strong>
-                                                        <p style="color: #616161;">{!! $data['payment_type'] !!}</p><br/>
-                        
+                                                        @foreach ($data['payment_type'] as $items)
+                                                        <p style="color: #616161;">{!! $items['payment_type'] !!}</p><br/>
+                                                        @endforeach
                                                     </td>
                                                 </tr>
                                             </table>
@@ -327,11 +328,39 @@
                                                         <strong>Katagori Tamu:</strong><br>
                                                         <span class="label label-warning">{!! $data['type_member'] !!}</span>
                                                     </td>
+                                                    @foreach ($data['payment_type'] as $items)
+                                                    @if ($items['payment_type'] == 'deposit')
                                                     <td style="text-align: right">
                                                         <strong>Sisa Saldo:</strong><br>
                                                         <span style="color: #616161">Rp. {!! formatrupiah($data['sisasaldo']) !!}
                                                         </span>
                                                     </td>
+                                                    @endif
+                                                    @if ($items['payment_type'] == 'kupon')
+                                                    <td style="text-align: right">
+                                                        <strong>Sisa Kupon:</strong><br>
+                                                        <span style="color: #616161">{!! $data['sisakupon'] !!}
+                                                        </span>
+                                                    </td>
+                                                    @endif
+                                                    @if ($items['payment_type'] == 'limit')
+                                                    <td style="text-align: right">
+                                                        <strong>Sisa Limit Bulanan:</strong><br>
+                                                        <span style="color: #616161">{!! $data['sisabulanan'] !!}
+                                                        </span>
+                                                    </td>
+                                                    @endif
+                                                    @if ($items['payment_type'] == 'cash/transfer')
+                                                    <td style="text-align: right">
+                                                        
+                                                    </td>
+                                                    @endif
+                                                    @endforeach
+
+
+
+
+
                                             </table>
                                         </td>
                                     </tr>
