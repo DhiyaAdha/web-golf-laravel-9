@@ -178,66 +178,7 @@ class AuthController extends Controller {
                 return redirect()->route('login')->with('error', 'Link reset password telah expired');
             }
         }
-
-
-        // $expiry  = $reset->created_at;
-        // if ($reset->created_at == $expiry){
-        //     return redirect()->route('login')->with('error', 'Token Expired');
-        //     }
-       
-        // if ($reset != null ) {
-        //     if ($expiry >= $expiry->subMinutes(5)->toDateString() ){
-        //         return view('Reset-pasword')->with(
-        //             ['token' => $token, 'email' => $request->email]
-        //         );
-        //     }else {
-        //         return redirect()->route('login')->with('error', 'Token Expired');
-
-        //     }
-            
-        // }else {
-        //     return redirect()->route('login')->with('error', 'Token Tidak Ada');
-        // }
-
-        // if (!$reset == null) {
-        //     $email = $reset->email;
-        //     return view('Reset-pasword')->with(
-        //         ['token' => $token, 'email' => $request->email]
-        //     );
-        // }else {
-        //     return redirect()->route('login')->with('error', 'Token Expired');
-        // }
-    
-        // return view('Reset-pasword')->with(
-        //     ['token' => $token, 'email' => $request->email]
-        // );
-        // return view('Reset-pasword')->with(['token' => $token, 'email' => $request->email]);
-        // return view('Reset-pasword')->with(['token'=>$token,'email'=>$request->email]);
     }
-    //ini untuk route get di web.php memasukkan email yang akan dirubah passwordnya
-    // public function sendresetlink(Request $request){
-    //     $request->validate([
-    //         'email'=>'required|email|exists:users,email'
-    //     ]);
-        
-    //     $token = Str::random(64);
-    //     DB::table('password_resets')->insert([
-    //         'email'=>$request->email,
-    //         'token'=>$token,
-    //         'created_at'=>Carbon::now(),
-    //     ]);
-    //     //ini untuk isi pesan yang dikirim ke email reset password
-    //     $data['action_link'] = route('Reset-pasword',['token'=>$token,'email'=>$request->email]);
-    //     $data['body'] = "Kami telah menerima permintaan untuk mengatur ulang kata sandi akun yang terkait dengan ".$request->email." pada <b>Tritih Golf & Country Club</b>. Anda dapat mengatur ulang kata sandi dengan mengklik tautan di bawah ini";
-        
-    //     Mail::send('email-forgot',['action_link'=>$data['action_link'],'body'=>$data['body']], function($message) use ($request){
-    //         $message->from('imasnurdianto.stu@pnc.ac.id','Imas Nurdianto');
-    //         $message->to($request->email, '')->subject('Reset Password');
-    //     });
-        
-    //     return back()->with('resetSuccess', 'Reset Password sudah dikirim ke email anda! silahkan cek email');
-    // }
-
     public function email_test(Request $request){
         $request->validate([
             'email'=>'required|email|exists:users,email'
