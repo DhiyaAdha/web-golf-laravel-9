@@ -29,7 +29,6 @@ class InvoiceController extends Controller
         ->leftJoin('visitors', 'visitors.id', '=', 'log_transactions.visitor_id')->get();
         $collection = collect([[1, 2, 3], [4, 5, 6], [7, 8, 9]]);
         $collapsed = $collection->collapse();
-        
         $collapsed->all();
         if($request->ajax()){
             return datatables()->of($riwayat_invoice)->addColumn('action', function ($data) {
@@ -58,6 +57,7 @@ class InvoiceController extends Controller
             ->rawColumns(['name','action'])
             ->make(true);
         }
+        
         return view('invoice.riwayat-invoice');
     }
 
