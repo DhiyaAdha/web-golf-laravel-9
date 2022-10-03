@@ -40,9 +40,9 @@
                                             <input type="text" id="example-email" name="name"
                                                 value="{{ $package->name }}" class="form-control"
                                                 placeholder="Masukan nama paket">
-                                                @error('name')
+                                            @error('name')
                                                 <div class="text-danger"> {{ $message }}</div>
-                                                @enderror
+                                            @enderror
                                         </div>
                                         <div class="form-group mb-30 @error('category') has-error @enderror">
                                             <label class="control-label mb-10 text-left">Kategori Paket</label>
@@ -57,37 +57,43 @@
                                                 <div class="radio-inline pl-0">
                                                     <span class="radio radio-info"> <input type="radio" name="category"
                                                             id="radio_10" value="additional"
-                                                            {{ $package->category == 'additional' ? 'checked' : '' }}
-                                                        >
-                                                        <label for="radio_10">Additional</label>
+                                                            {{ $package->category == 'additional' ? 'checked' : '' }}>
+                                                        <label for="radio_10">Tambahan</label>
+                                                    </span>
+                                                </div>
+                                                <div class="radio-inline pl-0">
+                                                    <span class="radio radio-info"> <input type="radio" name="category"
+                                                            id="radio_11" value="others"
+                                                            {{ $package->category == 'others' ? 'checked' : '' }}>
+                                                        <label for="radio_11">Lainnya</label>
                                                     </span>
                                                 </div>
                                             </div>
                                             @error('category')
                                                 <div class="text-danger"> {{ $message }}</div>
-                                                @enderror
+                                            @enderror
                                         </div>
                                         <div class="form-group mb-30 @error('status') has-error @enderror">
                                             <label class="control-label mb-10 text-left">Status Paket</label>
                                             <div class="radio-list">
                                                 <div class="radio-inline pl-0">
                                                     <span class="radio radio-info"> <input type="radio" name="status"
-                                                            id="radio_11" value="0"
+                                                            id="radio_12" value="0"
                                                             {{ $package->status == 0 ? 'checked' : '' }}>
-                                                        <label for="radio_11">ON</label>
+                                                        <label for="radio_12">ON</label>
                                                     </span>
                                                 </div>
                                                 <div class="radio-inline pl-0">
                                                     <span class="radio radio-info"> <input type="radio" name="status"
-                                                            id="radio_12" value="1"
+                                                            id="radio_13" value="1"
                                                             {{ $package->status == 1 ? 'checked' : '' }}>
-                                                        <label for="radio_12">OFF</label>
+                                                        <label for="radio_13">OFF</label>
                                                     </span>
                                                 </div>
                                             </div>
                                             @error('status')
                                                 <div class="text-danger"> {{ $message }}</div>
-                                                @enderror
+                                            @enderror
                                         </div>
                                         <div class="form-group @error('price_weekdays') has-error @enderror">
                                             <label class="control-label mb-10 text-left" for="example-email">Harga
@@ -102,7 +108,7 @@
                                             </div>
                                             @error('price_weekdays')
                                                 <div class="text-danger"> {{ $message }}</div>
-                                                @enderror
+                                            @enderror
                                         </div>
                                         <div class="form-group @error('price_weekend') has-error @enderror">
                                             <label class="control-label mb-10 text-left" for="example-email">Harga
@@ -117,7 +123,7 @@
                                             </div>
                                             @error('price_weekend')
                                                 <div class="text-danger"> {{ $message }}</div>
-                                                @enderror
+                                            @enderror
                                         </div>
                                         <button type="submit" class="btn btn-success">Submit</button>
                                     </form>
