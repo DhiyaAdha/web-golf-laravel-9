@@ -496,23 +496,16 @@ class TamuController extends Controller
                 return $data->order_number;
             })
             ->addColumn('information', function ($data) {
-                // $pay = unserialize($data->payment_type);
-                // foreach ($pay as $item){
-
-                // if($item == 'limit'){
+                // if($data->payment_type == 'limit'){
                 //     return '<p>Transaksi berhasil ! <b>'. $data->name.'</b> telah melakukan pembayaran menggunakan <b>limit</b></p>';
-                //     break;
-                // } else if ($item == 'kupon') {
+                // } else if ($data->payment_type == 'kupon') {
                 //     return '<p>Transaksi berhasil ! <b>'. $data->name.'</b> telah melakukan pembayaran menggunakan <b>kupon</b></p>';
-                //     break;
-                // } else if ($item == 'cash/transfer') {
+                // } else if ($data->payment_type == 'cash/transfer') {
                 //     return '<p>Transaksi berhasil ! <b>'. $data->name.'</b> telah melakukan pembayaran <b>cash/transfer</b> sebesar <b>Rp. '.\formatrupiah($data->total).'</b></p>';
-                //     break;
                 // } else{
-                    return '<p>Transaksi berhasil ! <b>'. $data->name.'</b> telah melakukan pembayaran sebesar <b>Rp. '.\formatrupiah($data->total).'</b></p>';
-                    // break;
-            //     }
-            // }
+                    // return '<p>Transaksi berhasil ! <b>'. $data->name.'</b> telah melakukan pembayaran menggunakan <b>saldo deposit</b> sebesar <b>Rp. '.\formatrupiah($data->total).'</b></p>';
+                    return '<p>Transaksi berhasil ! <b>'. $data->name.'</b> telah melakukan pembayaran </p>';
+                    // }
             })
             ->addColumn('status', function ($data) {
                 if ($data->payment_status == 'paid'){
