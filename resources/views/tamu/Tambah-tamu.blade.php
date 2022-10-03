@@ -76,13 +76,6 @@
                                         <div class="text-danger"> {{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="form-group @error('email') has-error @enderror">
-                                    <label class="control-label mb-10" for="">Email</label>
-                                    <input type="email" name="email" class="form-control" id="email" placeholder="Masukan Email" value="{{ old('email') }}">
-                                    @error('email')
-                                    <div class="text-danger"> {{ $message }}</div>
-                                    @enderror
-                                </div>
                                 <div class="form-group @error('phone') has-error @enderror">
                                     <label class="control-label mb-10" for="">Nomer Hp</label>
                                     <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" name="phone" class="form-control" id="phone" size="50px" value="{{ old('phone') }}" placeholder="Masukan Nomer Hp">
@@ -137,8 +130,5 @@
                     </div>
                 </div>
             </div>
-        </div>
-        @include('Layouts.Footer')
     </div>
-    </div>
-@endsection
+    @endsection

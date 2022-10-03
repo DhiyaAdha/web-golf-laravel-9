@@ -55,7 +55,6 @@ class InvoiceController extends Controller
         }
         return view('invoice.riwayat-invoice');
     }
-
     /**
      * Show the form for creating a new resource.
      *
