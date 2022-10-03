@@ -24,7 +24,8 @@ class InvoiceController extends Controller
      */
     public function index(Request $request)
     {
-        $riwayat_invoice = LogTransaction::select(['log_transactions.id', 'log_transactions.total', 'visitors.name', 'visitors.tipe_member', 'log_transactions.created_at'])
+        $riwayat_invoice = LogTransaction::select(['log_transactions.id', 'log_transactions.total', 'visitors.name', 'visitors.tipe_member', 
+        'log_transactions.created_at', 'log_transactions.payment_type'])
         ->leftJoin('visitors', 'visitors.id', '=', 'log_transactions.visitor_id')->get();
         if($request->ajax()){
             return datatables()->of($riwayat_invoice)->addColumn('action', function ($data) {
@@ -34,21 +35,24 @@ class InvoiceController extends Controller
                 return $button;
             })
             ->editColumn('name', function ($data) {
-                    return '<a data-toggle="tooltip" title="klik untuk melihat detail invoice" href="
-                    '.url('invoice/'.$data->id).'
-                    ">'
-                    .$data->name.
-                    "</a>";
+                return '<a data-toggle="tooltip" title="klik untuk melihat detail invoice" href="
+                '.url('invoice/'.$data->id).'
+                ">'
+                .$data->name.
+                "</a>";
             })
             ->editColumn('created_at', function ($data) {
                 return $data->created_at->format('d F Y');
+            })
+            ->editColumn('payment_type', function ($data) {
+                return ($data->payment_type);
             })
             ->editColumn('total', function ($data) {
                 return  ('Rp. ' .formatrupiah($data->total));
             })
             ->rawColumns(['name','action'])
             ->make(true);
-        }
+            }
         return view('invoice.riwayat-invoice');
     }
 
@@ -92,15 +96,22 @@ class InvoiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    
+     public function show($id)
     {
+        // $decrypt_id = Crypt::decryptString($id);
         $transaction = LogTransaction::find($id);
         $package = Package::find($id);
-        $detail = Detail::find($id);
+        $detail = Detail::where('log_transaction_id',$id)->first();
         $data['transaction'] = $transaction;
         $data['visitor'] = Visitor::find($transaction->visitor_id);
-        $data['package'] = Package::find($package->id);
-        $data['detail'] = Detail::find($detail->id);
+        if ($detail) {
+            $data['package'] = Package::find($detail->package_id);  
+            $data['detail'] = Detail::find($detail->id);
+        } else {
+            $data['package'] = null;  
+            $data['detail'] = null;
+        }
         // $data['detail'] = Detail::where('transaction_id', $id)->get();
         return view('invoice.invoice', $data);
     }
