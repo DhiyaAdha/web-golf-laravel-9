@@ -17,3 +17,4 @@ class Package extends Model
         'status',
     ];
 }
+

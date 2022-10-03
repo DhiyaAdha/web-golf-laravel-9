@@ -52,7 +52,7 @@ class DashboardController extends Controller
         // dd(array_values($month_new));
         foreach (array_values($month_new) as $key => $value) {
             $data['visitor'][$key]['period'] = $months[$value[0]];
-            $data['visitor'][$key]['vvip'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereHas(
+            $data['visitor'][$key]['vvip'] = LogTransaction::where('payment_status', 'paid')->whereHas(
                 'visitor',
                 function (Builder $query) {
                     $query->where('tipe_member', 'VVIP');
@@ -66,7 +66,7 @@ class DashboardController extends Controller
             )
                 ->count();
 
-            $data['visitor'][$key]['vip'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereHas(
+            $data['visitor'][$key]['vip'] = LogTransaction::where('payment_status', 'paid')->whereHas(
                 'visitor',
                 function (Builder $query) {
                     $query->where('tipe_member', 'VIP');
@@ -99,14 +99,14 @@ class DashboardController extends Controller
                 $day_period[$key]
             )->translatedFormat('d/m/y');
 
-            $data['visitor_daily'][$key]['a'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereHas(
+            $data['visitor_daily'][$key]['a'] = LogTransaction::where('payment_status', 'paid')->whereHas(
                 'visitor',
                 function (Builder $query) {
                     $query->where('tipe_member', 'VVIP');
                 }
             )->whereDate('created_at', $day_period[$key])
                 ->count();
-            $data['visitor_daily'][$key]['b'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereHas(
+            $data['visitor_daily'][$key]['b'] = LogTransaction::where('payment_status', 'paid')->whereHas(
                 'visitor',
                 function (Builder $query) {
                     $query->where('tipe_member', 'VIP');
@@ -118,7 +118,7 @@ class DashboardController extends Controller
 
         // statistika mingguan & tanggal
         $data['now'] = Carbon::now()->translatedFormat('Y-m-d');
-        $data['visitor_week'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereBetween(
+        $data['visitor_week'] = LogTransaction::where('payment_status', 'paid')->whereBetween(
             'created_at',
             [
                 Carbon::now()->subDays(6)->startOfDay(), Carbon::now()->endOfDay()
@@ -126,9 +126,12 @@ class DashboardController extends Controller
             ]
         )->count();
 
-        $data['visitor_today'] = LogTransaction::distinct('visitor_id')->whereDate('created_at', now()->format('Y-m-d'))
-            ->where('payment_status', 'paid')
-            ->count();
+        // $data['visitor_today'] = LogTransaction::distinct('visitor_id')->whereDate('created_at', now()->format('Y-m-d'))
+        //     ->where('payment_status', 'paid')
+        //     ->count();
+        $data['visitor_today'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))
+        ->where('payment_status', 'paid')
+        ->count();
         // 
 
         $data['visitor_month'] = Visitor::whereMonth(
@@ -136,9 +139,12 @@ class DashboardController extends Controller
             now()->month
         )->count();
 
-        $data['visitor_year'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereYear(
-            'created_at',
-            $request->year ? $request->year : date('Y')
+        // $data['visitor_year'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereYear(
+        //     'created_at',
+        //     $request->year ? $request->year : date('Y')
+        // )->count();
+        $data['visitor_year'] = LogTransaction::where('payment_status', 'paid')->whereYear(
+            'created_at', now()->format('Y')
         )->count();
 
         $data['visitor_vip'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereHas('visitor', function (
@@ -147,14 +153,14 @@ class DashboardController extends Controller
             $query->where('tipe_member', 'VIP');
         })->count();
 
-        $data['visitor_vvip'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereHas('visitor', function (
+        $data['visitor_vvip'] = LogTransaction::where('payment_status', 'paid')->whereHas('visitor', function (
             Builder $query
         ) {
             $query->where('tipe_member', 'VVIP');
         })->count();
 
         // total female male VVIP & VIP
-        $data['visitor_vvip_female'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereHas(
+        $data['visitor_vvip_female'] = LogTransaction::where('payment_status', 'paid')->whereHas(
             'visitor',
             function (Builder $query) {
                 $query
@@ -162,7 +168,7 @@ class DashboardController extends Controller
                     ->where('gender', 'perempuan');
             }
         )->count();
-        $data['visitor_vvip_male'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereHas(
+        $data['visitor_vvip_male'] = LogTransaction::where('payment_status', 'paid')->whereHas(
             'visitor',
             function (Builder $query) {
                 $query
@@ -170,7 +176,7 @@ class DashboardController extends Controller
                     ->where('gender', 'laki-laki');
             }
         )->count();
-        $data['visitor_vip_female'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereHas(
+        $data['visitor_vip_female'] = LogTransaction::where('payment_status', 'paid')->whereHas(
             'visitor',
             function (Builder $query) {
                 $query
@@ -178,7 +184,7 @@ class DashboardController extends Controller
                     ->where('gender', 'perempuan');
             }
         )->count();
-        $data['visitor_vip_male'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereHas(
+        $data['visitor_vip_male'] = LogTransaction::where('payment_status', 'paid')->whereHas(
             'visitor',
             function (Builder $query) {
                 $query
@@ -188,28 +194,57 @@ class DashboardController extends Controller
         )->count();
 
         // data-table analisis tamu
-        $visitor = Visitor::select([
-            'visitors.id',
+        // $visitor = Visitor::distinct([
+        //     'visitors.id',
+        //     'visitors.name',
+        //     'visitors.created_at',
+        //     'visitors.tipe_member',
+        // ])->rightJoin('log_transactions', 'log_transactions.visitor_id', '=', 'visitors.id')
+        // ->where('log_transactions.payment_status', '=', 'paid')
+        //     ->orderBy('log_transactions.created_at', 'DESC')
+        //     ->get();
+        // if ($request->ajax()) {
+        //     return datatables()
+        //         ->of($visitor)
+        //         ->editColumn('created_at', function ($data) {
+        //             return empty($data->transaction($data->id))
+        //                 ? '-' : $data->transaction($data->id)->created_at->translatedFormat('d F Y');
+        //         })
+        //         ->addColumn('times', function ($data) {
+        //             return empty($data->transaction($data->id))
+        //                 ? '-' : $data->transaction($data->id)->created_at->translatedFormat('h:i a');
+        //         })
+        //         ->editColumn('tipe_member', function ($data) {
+        //             return $data->tipe_member;
+        //         })
+        //         ->rawColumns(['name', 'action'])
+        //         ->make(true);
+        // }
+        $Log = LogTransaction::select([
+            'log_transactions.id',
+            'log_transactions.visitor_id',
+            'log_transactions.created_at',
+            'log_transactions.payment_status',
             'visitors.name',
-            'visitors.created_at',
             'visitors.tipe_member',
-            'visitors.updated_at',
-        ])->rightJoin('log_transactions', 'log_transactions.visitor_id', '=', 'visitors.id')
-        ->where('log_transactions.payment_status', 'paid')
-            ->orderBy('updated_at', 'desc')
+        ])
+        ->crossJoin('visitors', 'visitors.id', '=', 'log_transactions.visitor_id')
+        ->where('log_transactions.payment_status', '=', 'paid')
+            ->orderBy('log_transactions.created_at', 'desc')
             ->get();
         if ($request->ajax()) {
             return datatables()
-                ->of($visitor)
-                ->editColumn('updated_at', function ($data) {
-                    return empty($data->transaction($data->id))
-                        ? '-' : $data->transaction($data->id)->created_at->translatedFormat('d F Y');
+                ->of($Log)
+                ->editColumn('created_at', function ($data) {
+                    return $data->created_at->translatedFormat('d F Y');
+                })
+                ->addColumn('name', function ($data) {
+                    return $data->name;
                 })
                 ->addColumn('times', function ($data) {
-                    return empty($data->transaction($data->id))
-                        ? '-' : $data->transaction($data->id)->created_at->translatedFormat('h:i a');
+                    return $data->created_at->translatedFormat('h:i a');
                 })
-                ->editColumn('tipe_member', function ($data) {
+                ->addColumn('tipe_member', function ($data) {
                     return $data->tipe_member;
                 })
                 ->rawColumns(['name', 'action'])

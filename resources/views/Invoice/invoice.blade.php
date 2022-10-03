@@ -166,7 +166,7 @@
 
                             <tr class="details">
                                 <td>
-                                    <strong>Katagori Tamu:</strong><br>
+                                    <strong>Katagori Tamu:&nbsp;</strong>
                                     @if ($visitor->tipe_member == 'VIP')
                                         <span class="label label-success">{{ $visitor->tipe_member }}</span>
                                     @else
@@ -186,11 +186,11 @@
                             </tr>
 
                             <tr class="item">
-                                <td>{{ $package->name }}</td>
+                                <td>{{ ($package) ? $package->name : 'yntkts' }}</td>
 
-                                <td>Rp.{{ formatrupiah($package->price_weekdays) }}</td>
+                                <td>Rp.{{ ($package) ? $package->price_weekdays : '-' }}</td>
 
-                                <td style="text-align: center">{{ $detail->quantity }}</td>
+                                <td style="text-align: center">{{ ($detail) ? $detail->quantity  : '-'}}</td>
 
                                 <td style="text-align: right">Rp.{{ formatrupiah($transaction->total) }}</td>
                             </tr>
@@ -200,7 +200,7 @@
                                 <td class="thick-line"></td>
                                 <td class="thick-line text-right">Subtotal</td>
                                 <td class="thick-line text-right">
-                                    <span>Rp. {{ formatrupiah($detail->harga * $detail->quantity * 2) }}</span>
+                                    <span>Rp. {{ ($detail) ? ($detail->harga * $detail->quantity * 2) : '-' }}</span>
                                 </td>
                             </tr>
                             <tr>

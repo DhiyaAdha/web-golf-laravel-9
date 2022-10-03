@@ -115,7 +115,7 @@
         <table cellpadding="0" cellspacing="0">
             <tr class="top">
                 <td colspan="4">
-                    <table>
+                    <table border="0">
                         <tr>
                             <td class="title">
                                 <h2 class="invoice">INVOICE</h2>
@@ -139,14 +139,14 @@
                         <tr>
                             <td>
                                 <strong>Nama Tamu:</strong><br />
-                                <span class="weight-500">{{ $visitor->name }}</span>
+                                <span class="weight-500">{{ ($visitor) ? $visitor->name : '-' }}</span>
                                 <br />{{ $visitor->email }}<br>
                                 {{ $visitor->phone }}<br>
                             </td>
 
                             <td>
                                 <strong>Order Date:</strong><br>
-                                <p style="color: #616161">{{ $transaction->created_at->format('d F Y | H:i:s') }}
+                                <p style="color: #616161">{{ ($transaction) ? $transaction->created_at : '-'}}
                                 </p>
                                 <br><br>
                             </td>
@@ -179,13 +179,13 @@
             </tr>
 
             <tr class="item">
-                <td>{{ $package->name }}</td>
+                <td>{{ ($package) ? $package->name : '-' }}</td>
 
-                <td>Rp.{{ formatrupiah($package->price_weekdays) }}</td>
+                <td>Rp.{{ ($package) ? formatrupiah($package->price_weekdays) : '-' }}</td>
 
-                <td style="text-align: center">{{ $detail->quantity }}</td>
+                <td style="text-align: center">{{ ($detail) ? $detail->quantity : '-' }}</td>
 
-                <td>Rp.{{ formatrupiah($transaction->total) }}</td>
+                <td>Rp.{{ ($transaction) ? formatrupiah($transaction->total) : '-' }}</td>
             </tr>
 
 			<tr>
@@ -193,7 +193,7 @@
 				<td class="thick-line"></td>
 				<td class="thick-line text-right">Subtotal</td>
 				<td class="thick-line text-right">
-					<span>Rp. {{ formatrupiah($detail->harga * $detail->quantity * 2) }}</span>
+					<span>Rp. {{ ($detail) ? formatrupiah($detail->harga * $detail->quantity * 2) : '-' }}</span>
 				</td>
 			</tr>
 			<tr>
