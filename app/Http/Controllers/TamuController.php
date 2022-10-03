@@ -312,6 +312,8 @@ class TamuController extends Controller
                     return '<p class="label label-success">'.$data->payment_type.'<div>';
                 }elseif($data->payment_type == 'Transfer'){
                     return '<p class="label label-warning">'.$data->payment_type.'<div>';
+                }elseif($data->payment_type == 'Deposit'){
+                    return '<p class="label label-danger">'.$data->payment_type.'<div>';
                 }else{
 
                 }
@@ -319,6 +321,8 @@ class TamuController extends Controller
                 if($data->payment_type == 'Cash'){
                     return date_format($data->created_at, 'd-m-Y');
                 }elseif($data->payment_type == 'Transfer'){
+                    return date_format($data->created_at, 'd-m-Y');
+                }elseif($data->payment_type == 'Deposit'){
                     return date_format($data->created_at, 'd-m-Y');
                 }else{
 
@@ -342,9 +346,9 @@ class TamuController extends Controller
                 if($data->status == 'Bertambah'){
                     return '<p class="label label-success">'.$data->status.'<div>';
                 }elseif($data->status == 'Berkurang'){
-                    return '<p class="label label-warning">'.$data->status.'<div>';
-                }else{
                     return '<p class="label label-danger">'.$data->status.'<div>';
+                }else{
+                    return '<p class="label label-warning">'.$data->status.'<div>';
                 }
 
             })->editColumn('created_at', function ($data) {
@@ -622,10 +626,21 @@ class TamuController extends Controller
                 'created_at' => Carbon::now(),
             ]);
 
-            $visitor_report_limit->update([
-                'report_quota' => $request->tipe_member == 'VIP' ? '4' : '10',
-                'created_at' => Carbon::now(),
-            ]);
+            if($visitor->tipe_member == 'VVIP'){
+                $visitor_report_limit->update([
+                    'report_quota' => $request->tipe_member == 'VIP' ? '4' : '10',
+                    'created_at' => Carbon::now(),
+                    'status' => 'Reset',
+                    'activities' => 'Limit <b>' . $visitor->name . '</b> telah diubah menjadi <b>' . $request->tipe_member . '</b> dengan limit <b>10x Perbulan </b>',
+                ]);
+            }else{
+                $visitor_report_limit->update([
+                    'report_quota' => $request->tipe_member == 'VIP' ? '4' : '10',
+                    'created_at' => Carbon::now(),
+                    'status' => 'Reset',
+                    'activities' => 'Limit <b>' . $visitor->name . '</b> telah diubah menjadi <b>' . $request->tipe_member . '</b> dengan limit <b>4x</b> Perbulan ',
+                ]);
+            }
         }
 
         // $limit['limit'] = LogLimit::where('quota', $request->quota)->first();

@@ -153,10 +153,10 @@
                 font-weight: 700;
             }
 
-            .receipt-template .listing-area table tbody tr {
+            /* .receipt-template .listing-area table tbody tr {
                 border-top: 1px dashed #000;
                 border-bottom: 1px dashed #000;
-            }
+            } */
 
             .receipt-template .listing-area table tbody tr:last-child {
                 border-bottom: none;
@@ -266,14 +266,18 @@
                 <h5 class="mt-2">Tritih Golf & Country Club</h5>
                 <div class="address-area">
                     <div class="block">
-                        <span class="info phone">Mobile: 085765536865</span>, <span class="info email">Email:
-                            info@tgcc.com</span>
+                        <span class="info phone">Jl. Kemuning, Sawah, Tritih Kulon, Kec. Cilacap Utara, Kabupaten
+                            Cilacap, Jawa Tengah 53253</span>
                     </div>
                 </div>
             </header>
             <section class="info-area">
                 <table>
                     <tbody>
+                        <tr>
+                            <td class="w-30"><span>Admin:</span></td>
+                            <td>{{ $user->name }}</td>
+                        </tr>
                         <tr>
                             <td class="w-30"><span>Invoice ID:</span></td>
                             <td>{{ $log_transaction->order_number }}</td>
@@ -307,7 +311,7 @@
                     <thead>
                         <tr>
                             <td class="w-10 text-center">No.</td>
-                            <td class="w-40">Name</td>
+                            <td class="w-40">Item</td>
                             <td class="w-15 text-center">Qty</td>
                             <td class="w-15 text-right">Harga</td>
                             <td class="w-20 text-right">Total Harga</td>
@@ -361,7 +365,6 @@
                         <tr>
                             <td class="w-10 text-center">No.</td>
                             <td class="w-50">Cara Pembayaran</td>
-                            <td class="w-20">Jumlah</td>
                             <td class="w-20">Balance</td>
                         </tr>
                     </thead>
@@ -371,8 +374,7 @@
                             <tr>
                                 <td class="text-center">{{ $i++ }}</td>
                                 <td>{{ $type['payment_type'] }}</td>
-                                <td>{{ formatrupiah($type['total']) }}</td>
-                                <td>{{ formatrupiah($type['balance']) }}</td>
+                                <td>{{ $type['balance'] }}</td>
                             </tr>
                         @endforeach
                     </tbody>

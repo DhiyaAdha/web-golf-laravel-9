@@ -75,7 +75,7 @@
                                 </div>
                                 <div class="form-group @error('company') has-error @enderror">
                                     <label class="control-label mb-10" for="">Perusahaan</label>
-                                    <input type="text" name="company" class="form-control" id="company" size="50px"  value="{{ old('name') }}" placeholder="Masukan Nama Perusahaan">
+                                    <input type="text" name="company" class="form-control" id="company" size="50px"  value="{{ old('company') }}" placeholder="Masukan Nama Perusahaan">
                                     @error('company')
                                         <div class="text-danger"> {{ $message }}</div>
                                     @enderror
