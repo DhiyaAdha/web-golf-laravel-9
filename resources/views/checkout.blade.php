@@ -149,8 +149,8 @@
                                             <span class="text-capitalize">Saldo</span>
                                             <div class="d-flex">
                                                 <span class="flex-grow-1 text-big">Rp</span>
-                                                <span class=" text-big"
-                                                    id="balance">{{ formatrupiah($deposit->balance) ?? '0' }}</span>
+                                                <span class=" text-big" id="balance"
+                                                    data-balance="{{ $deposit->balance }}">{{ formatrupiah($deposit->balance) ?? '0' }}</span>
                                             </div>
                                         </div>
                                         <img src="{{ asset('img/circle.svg') }}" class="card-img-absolute"
@@ -188,7 +188,7 @@
                             </div>
                         </div>
                         <div class="d-flex flex-wrap pd-1">
-                            <div class="col-md-7">
+                            <div class="col-md-7 mb-2">
                                 <div class="card">
                                     <div class="card-body">
                                         <form>
@@ -309,26 +309,52 @@
                                             <div id="multiple" class="d-none">
                                                 <div class="card mt-2">
                                                     <div class="card-body">
-                                                        <div class="d-flex align-items-center choose"
-                                                            style="border-bottom: 1px solid rgba(0,0,0,.125);">
-                                                            <div class="flex-grow-1 custom-control custom-checkbox"
-                                                                style="width:100%;">
-                                                                <input type="checkbox" name="payment-type[]"
-                                                                    value="deposit" class="custom-control-input"
-                                                                    id="customCheck8">
-                                                                <label class="custom-control-label" for="customCheck8"
-                                                                    style="width: 100%; cursor:pointer;">
-                                                                    <div
-                                                                        class="d-flex flex-column flex-grow-1 justify-content-center">
-                                                                        <strong>Deposit</strong>
-                                                                        <small class="text-muted mb-2">Deposit akan
-                                                                            berkurang sesuai dengan tagihan</small>
-                                                                    </div>
-                                                                </label>
+                                                        @if ($deposit->balance > $totalPrice)
+                                                            <div class="d-flex align-items-center choose"
+                                                                style="border-bottom: 1px solid rgba(0,0,0,.125);"
+                                                                data-toggle="tooltip" title="Saldo mencukupi">
+                                                                <div class="flex-grow-1 custom-control custom-checkbox"
+                                                                    style="width:100%;">
+                                                                    <input type="checkbox"
+                                                                        class="custom-control-input" id="customCheck8"
+                                                                        disabled>
+                                                                    <label class="custom-control-label"
+                                                                        for="customCheck8"
+                                                                        style="width: 100%; cursor:pointer;">
+                                                                        <div
+                                                                            class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                            <strong>Deposit</strong>
+                                                                            <small class="text-muted mb-2">Deposit akan
+                                                                                berkurang sesuai dengan tagihan</small>
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                                <img src="{{ asset('deposit.png') }}" alt="deposit"
+                                                                    width="26" height="26">
                                                             </div>
-                                                            <img src="{{ asset('deposit.png') }}" alt="deposit"
-                                                                width="26" height="26">
-                                                        </div>
+                                                        @else
+                                                            <div class="d-flex align-items-center choose"
+                                                                style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                                                                <div class="flex-grow-1 custom-control custom-checkbox"
+                                                                    style="width:100%;">
+                                                                    <input type="checkbox" name="payment-type[]"
+                                                                        value="deposit" class="custom-control-input"
+                                                                        id="customCheck8">
+                                                                    <label class="custom-control-label"
+                                                                        for="customCheck8"
+                                                                        style="width: 100%; cursor:pointer;">
+                                                                        <div
+                                                                            class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                            <strong>Deposit</strong>
+                                                                            <small class="text-muted mb-2">Deposit akan
+                                                                                berkurang sesuai dengan tagihan</small>
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                                <img src="{{ asset('deposit.png') }}" alt="deposit"
+                                                                    width="26" height="26">
+                                                            </div>
+                                                        @endif
                                                         <div class="d-flex align-items-center mt-2 choose"
                                                             style="border-bottom: 1px solid rgba(0,0,0,.125);">
                                                             <div class="flex-grow-1 custom-control custom-checkbox"
@@ -434,7 +460,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-5 mt-2">
+                            <div class="col-md-5">
                                 <div class="card " style="border:none;">
                                     <div class="card-body payment-1">
                                         <div class="d-flex-flex-column">
@@ -513,6 +539,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
     <script src="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.js') }}"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.min.js') }}"></script>
     <script>
         $(document).ready(function() {
@@ -554,6 +581,22 @@
                 }
             });
 
+            $(document).on('change', '#customCheck8', function(e) {
+                let saldo = $('#balance').data('balance');
+                if ($(this).is(':checked')) {
+                    $('#balance').text(formatIDR(saldo - saldo) + ',00');
+                    $.toast({
+                        text: 'Saldo telah dipilih',
+                        position: 'top-right',
+                        loaderBg: '#fec107',
+                        icon: 'success',
+                        hideAfter: 700,
+                    });
+                } else {
+                    $('#balance').text(formatIDR(saldo) + ',00');
+                }
+            });
+
             $(document).on('input', '.bayar-input', function(e) {
                 e.preventDefault();
                 let total = $('.nilai-total1-td').data('total');
@@ -589,6 +632,10 @@
                                                     </div>`
                         ).show().prev().removeClass('mb-2');
                     } else {
+                        $('#return').text('-').css({
+                            "background-color": "rgba(25, 216, 149, 0.2)",
+                            "color": "#19d895"
+                        });
                         $('#cashtransfer').html(
                             `<div class="input-group">
                                                         <div class="input-group-prepend">

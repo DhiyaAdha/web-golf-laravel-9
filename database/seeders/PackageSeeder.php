@@ -20,7 +20,7 @@ class PackageSeeder extends Seeder
         for ($i = 1; $i <= 30; $i++) {
             DB::table('packages')->insert([
                 'name' => $faker->word,
-                'category' => $faker->randomElement(['default', 'additional']),
+                'category' => $faker->randomElement(['default', 'additional', 'others']),
                 'price_weekdays' => $faker->randomFloat(2, 0, 10000),
                 'price_weekend' => $faker->randomFloat(2, 0, 10000),
                 'status' => $faker->randomElement([0, 1]),
