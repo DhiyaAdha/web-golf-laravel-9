@@ -98,9 +98,13 @@
                     }
                 },
                 {
+<<<<<<< HEAD
                     "data": function(data) {
                         console.log(JSON.parse(data.payment_type));
                     }
+=======
+                    data: 'payment_type'
+>>>>>>> 0990ab4d59da43166a4c7821ab28b919872362e2
                 },
                 {
                     data: 'total'

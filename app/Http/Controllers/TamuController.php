@@ -496,15 +496,16 @@ class TamuController extends Controller
                 return $data->order_number;
             })
             ->addColumn('information', function ($data) {
-                if($data->payment_type == 'limit'){
-                    return '<p>Transaksi berhasil ! <b>'. $data->name.'</b> telah melakukan pembayaran menggunakan <b>limit</b></p>';
-                } else if ($data->payment_type == 'kupon') {
-                    return '<p>Transaksi berhasil ! <b>'. $data->name.'</b> telah melakukan pembayaran menggunakan <b>kupon</b></p>';
-                } else if ($data->payment_type == 'cash/transfer') {
-                    return '<p>Transaksi berhasil ! <b>'. $data->name.'</b> telah melakukan pembayaran <b>cash/transfer</b> sebesar <b>Rp. '.\formatrupiah($data->total).'</b></p>';
-                } else{
-                    return '<p>Transaksi berhasil ! <b>'. $data->name.'</b> telah melakukan pembayaran menggunakan <b>saldo deposit</b> sebesar <b>Rp. '.\formatrupiah($data->total).'</b></p>';
-                }
+                // if($data->payment_type == 'limit'){
+                //     return '<p>Transaksi berhasil ! <b>'. $data->name.'</b> telah melakukan pembayaran menggunakan <b>limit</b></p>';
+                // } else if ($data->payment_type == 'kupon') {
+                //     return '<p>Transaksi berhasil ! <b>'. $data->name.'</b> telah melakukan pembayaran menggunakan <b>kupon</b></p>';
+                // } else if ($data->payment_type == 'cash/transfer') {
+                //     return '<p>Transaksi berhasil ! <b>'. $data->name.'</b> telah melakukan pembayaran <b>cash/transfer</b> sebesar <b>Rp. '.\formatrupiah($data->total).'</b></p>';
+                // } else{
+                    // return '<p>Transaksi berhasil ! <b>'. $data->name.'</b> telah melakukan pembayaran menggunakan <b>saldo deposit</b> sebesar <b>Rp. '.\formatrupiah($data->total).'</b></p>';
+                    return '<p>Transaksi berhasil ! <b>'. $data->name.'</b> telah melakukan pembayaran </p>';
+                    // }
             })
             ->addColumn('status', function ($data) {
                 if ($data->payment_status == 'paid'){

@@ -31,7 +31,6 @@ class SendMailJobDeposit implements ShouldQueue
      */
     public function handle()
     {
-        // dd($this->data);
         $email = new SendEmailDeposit($this->data);
         Mail::to($this->data['email'])->send($email);
     }
