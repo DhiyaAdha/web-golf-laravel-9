@@ -405,6 +405,15 @@ class OrderController extends Controller
                                     'type' => 'CREATE',
                                     'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
                                 ]);
+
+                                ReportDeposit::create([
+                                    'payment_type' => 'Deposit',
+                                    'report_balance' => $deposit->balance,
+                                    'visitor_id' => $req->get('page'),
+                                    'user_id' => Auth()->id(),
+                                    'activities' => '<b>Saldo Berkurang !</b> Anda telah melakukan pembayaran menggunakan<b> deposit</b>',
+                                    'created_at' => Carbon::now(),
+                                ]);
                                 
                                 \Cart::session($req->get('page'))->clear();
         
@@ -561,6 +570,16 @@ class OrderController extends Controller
                                         'type' => 'CREATE',
                                         'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
                                     ]);
+
+                                    // informasi limit kupon
+                                    ReportLimit::create([
+                                        'status' => 'Berkurang',
+                                        'report_quota_kupon' => $log_limit->quota_kupon,
+                                        'visitor_id' => $req->get('page'),
+                                        'user_id' => Auth()->id(),
+                                        'activities' => 'Limit Kupon <b>Berkurang</b> menjadi <b>' . $log_limit->quota_kupon . ' ! </b>  Anda telah melakukan pembayaran menggunakan<b> quota kupon</b>',
+                                        'created_at' => Carbon::now(),
+                                    ]);
             
                                     \Cart::session($req->get('page'))->clear();
 
@@ -642,6 +661,15 @@ class OrderController extends Controller
                                         'user_id' => Auth::id(),
                                         'type' => 'CREATE',
                                         'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                    ]);
+
+                                    ReportLimit::create([
+                                        'status' => 'Berkurang',
+                                        'report_quota' => $report_limit->report_quota,
+                                        'visitor_id' => $req->get('page'),
+                                        'user_id' => Auth()->id(),
+                                        'activities' => '<b>Limit Bulanan Berkurang menjadi '.$report_limit->report_quota.' ! </b>  Anda telah melakukan pembayaran menggunakan<b> quota bulanan</b>',
+                                        'created_at' => Carbon::now(),
                                     ]);
             
                                     \Cart::session($req->get('page'))->clear();

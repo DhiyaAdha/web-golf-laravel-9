@@ -59,7 +59,8 @@
         /* RESET STYLES */
         img {
             border: 0;
-            height: auto;
+            height: 60px;
+            width: 50px;
             line-height: 100%;
             outline: none;
             text-decoration: none;
@@ -142,7 +143,7 @@
                             style="padding: 
                             1.1px 0px 50px 1.11px; color: #000000; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
                                 <img src="{{ $message->embed(public_path().'/tgcc144.png') }}" height="
-                                60px" width="30px"> <strong style="vertical-align:25%; font-size: 25px;">TGCC</strong>
+                                60px" width="30px"> <strong style="vertical-align:75%; font-size: 25px;">TGCC</strong>
                             </td>
                         </tr>
                     <tr>

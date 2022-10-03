@@ -29,6 +29,6 @@ class SendEmailReset extends Mailable
      */
     public function build()
     {
-        return $this->view('email-test', $this->data);
+        return $this->view('emails.email_resetPassword', $this->data);
     }
 }
