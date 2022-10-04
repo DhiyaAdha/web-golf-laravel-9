@@ -424,15 +424,15 @@ class OrderController extends Controller
                         $this->setResponse('INVALID', "Saldo tidak terpenuhi");
                         return response()->json($this->getResponse());
                     } else {
-                        $id_package = [];
-                        foreach ($items as $sd) {
-                            $id_package[] = $sd['id'];
-                        }
-                        $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
-                        if (count($package_default) == 0) {
-                            $this->setResponse('INVALID', "Setidaknya pilih satu jenis permainan default");
-                            return response()->json($this->getResponse());
-                        } else {
+                        // $id_package = [];
+                        // foreach ($items as $sd) {
+                        //     $id_package[] = $sd['id'];
+                        // }
+                        // $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
+                        // if (count($package_default) == 0) {
+                        //     $this->setResponse('INVALID', "Setidaknya pilih satu jenis permainan default");
+                        //     return response()->json($this->getResponse());
+                        // } else {
                             try {
                                 $deposit->balance = $deposit->balance - $totalPrice;
                                 $report_deposit = ReportDeposit::where('visitor_id', $req->get('page'))->first();
@@ -500,7 +500,7 @@ class OrderController extends Controller
                             } catch (Throwable $e) {
                                 return response()->json($this->getResponse());
                             }
-                        }
+                        // }
                     }
                 } else if ($req->get('type_single') == 3) {
                     if (is_null($req->get('bayar_input'))) {

@@ -303,7 +303,6 @@
                             </div>
                         </div>
                         {{-- limit --}}
-
                         <div id="limit_tabs" class="tab-pane fade" role="tabpanel">
                             <div class="panel panel-default card-view">
                                 <div class="panel-heading">
