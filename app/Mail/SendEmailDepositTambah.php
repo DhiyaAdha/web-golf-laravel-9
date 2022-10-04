@@ -29,6 +29,6 @@ class SendEmailDepositTambah extends Mailable
      */
     public function build()
     {
-        return $this->view('tambahdepositemail')->subject('Tambah Deposit');
+        return $this->view('emails.tambahdepositemail')->subject('Tambah Deposit');
     }
 }

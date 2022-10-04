@@ -69,7 +69,7 @@ class OrderController extends Controller
         $default = Package::where('category', 'default')->where('status', 0)->get();
         $additional = Package::where('category', 'additional')->where('status', 0)->get();
         $others = Package::where('category', 'others')->where('status', 0)->get();
-        if(request()->tax){
+        if (request()->tax) {
             $tax = "+10%";
         } else {
             $tax = "0%";
@@ -144,7 +144,7 @@ class OrderController extends Controller
                 // \Cart::session($request->get('page'))->update($id[3], array(
                 //     'quantity' => 1
                 // ));
-                if( $cek_itemId[$id[3]]->quantity >= 1){
+                if ($cek_itemId[$id[3]]->quantity >= 1) {
                     $this->setResponse('INVALID', "Sudah ditambahkan");
                     return response()->json($this->getResponse());
                 }
@@ -165,24 +165,21 @@ class OrderController extends Controller
                 'quantity' => 1,
                 'attributes' => array(
                     'created_at' => date('Y-m-d H:i:s')
-                    )          
+                )
             ));
             $id_package = [];
-            foreach(\Cart::session($request->get('page'))->getContent() as $sd){
+            foreach (\Cart::session($request->get('page'))->getContent() as $sd) {
                 $id_package[] = $sd['id'];
             }
             $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
-            if(count($package_default) == 0){
-                \Cart::session($request->get('page'))->clear();
-                $this->setResponse('INVALID', "Setidaknya pilih satu jenis permainan default");
-                return response()->json($this->getResponse());
-            } else {
+            $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
+            if (count($package_additional) == 0) {
                 $cart = \Cart::session($request->get('page'))->getContent();
                 $cek_itemId = $cart->whereIn('id', $id[3]);
-                if(\Cart::isEmpty()){
-                    $cart_data = [];            
+                if (\Cart::isEmpty()) {
+                    $cart_data = [];
                 } else {
-                    foreach($cart as $row) {
+                    foreach ($cart as $row) {
                         $cart[] = [
                             'rowId' => $row->id,
                             'name' => $row->name,
@@ -190,23 +187,56 @@ class OrderController extends Controller
                             'pricesingle' => $row->price,
                             'price' => $row->getPriceSum(),
                             'created_at' => $row->attributes['created_at'],
-                        ];           
+                        ];
                     }
                     $cart_data = collect($cart)->sortBy('created_at');
                 }
                 $get_total = \Cart::session($request->get('page'))->getTotal();
-                $counted = ucwords(counted($get_total). ' Rupiah');
+                $counted = ucwords(counted($get_total) . ' Rupiah');
                 return response()->json([
-                    'id'=>$id[3], 
+                    'id' => $id[3],
                     'total' => $get_total,
                     'counted' => $counted,
                     'cart' => $cart_data,
-                    'qty' => $cek_itemId[$id[3]]->quantity, 
-                    'name' => $cek_itemId[$id[3]]->name, 
+                    'qty' => $cek_itemId[$id[3]]->quantity,
+                    'name' => $cek_itemId[$id[3]]->name,
+                    'price' => $cek_itemId[$id[3]]->price
+                ], 200);
+            } elseif(count($package_default) == 0) {
+                \Cart::session($request->get('page'))->clear();
+                $this->setResponse('INVALID', "Setidaknya pilih satu jenis permainan default");
+                return response()->json($this->getResponse());
+            } else {
+                $cart = \Cart::session($request->get('page'))->getContent();
+                $cek_itemId = $cart->whereIn('id', $id[3]);
+                if (\Cart::isEmpty()) {
+                    $cart_data = [];
+                } else {
+                    foreach ($cart as $row) {
+                        $cart[] = [
+                            'rowId' => $row->id,
+                            'name' => $row->name,
+                            'qty' => $row->quantity,
+                            'pricesingle' => $row->price,
+                            'price' => $row->getPriceSum(),
+                            'created_at' => $row->attributes['created_at'],
+                        ];
+                    }
+                    $cart_data = collect($cart)->sortBy('created_at');
+                }
+                $get_total = \Cart::session($request->get('page'))->getTotal();
+                $counted = ucwords(counted($get_total) . ' Rupiah');
+                return response()->json([
+                    'id' => $id[3],
+                    'total' => $get_total,
+                    'counted' => $counted,
+                    'cart' => $cart_data,
+                    'qty' => $cek_itemId[$id[3]]->quantity,
+                    'name' => $cek_itemId[$id[3]]->name,
                     'price' => $cek_itemId[$id[3]]->price
                 ], 200);
             }
-        }  
+        }
     }
 
     public function update_qty(Request $request)
@@ -434,7 +464,6 @@ class OrderController extends Controller
                                     'activities' => '<b>Saldo Berkurang !</b> Anda telah melakukan pembayaran menggunakan<b> deposit</b>',
                                     'created_at' => Carbon::now(),
                                 ]);
-
                                 \Cart::session($req->get('page'))->clear();
 
                                 $data['qty'] = $row->quantity;
@@ -487,11 +516,8 @@ class OrderController extends Controller
                                 $id_package[] = $sd['id'];
                             }
                             $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
-
-                            if(count($package_default) == 0){
-                                $this->setResponse('INVALID', "Setidaknya pilih satu jenis permainan default");
-                                return response()->json($this->getResponse());
-                            } else {
+                            $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
+                            if (count($package_additional) == 0) {
                                 try {
                                     LogTransaction::create([
                                         'order_number' => $req->get('order_number'),
@@ -513,7 +539,7 @@ class OrderController extends Controller
 
                                     $data['qty'] = $row->quantity;
                                     $total_qty = 0;
-                                    foreach($cart_data as $get) {
+                                    foreach ($cart_data as $get) {
                                         $total_qty += $get['qty'];
                                     }
                                     $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
@@ -601,7 +627,6 @@ class OrderController extends Controller
                                         'activities' => 'Limit Kupon <b>Berkurang</b> menjadi <b>' . $log_limit->quota_kupon . ' ! </b>  Anda telah melakukan pembayaran menggunakan<b> quota kupon</b>',
                                         'created_at' => Carbon::now(),
                                     ]);
-
                                     \Cart::session($req->get('page'))->clear();
 
                                     $log_limit = LogLimit::where('visitor_id', $req->get('page'))->first();
@@ -690,10 +715,9 @@ class OrderController extends Controller
                                         'report_quota' => $report_limit->report_quota,
                                         'visitor_id' => $req->get('page'),
                                         'user_id' => Auth()->id(),
-                                        'activities' => '<b>Limit Bulanan Berkurang menjadi '.$report_limit->report_quota.' ! </b>  Anda telah melakukan pembayaran menggunakan<b> quota bulanan</b>',
+                                        'activities' => '<b>Limit Bulanan Berkurang menjadi ' . $report_limit->report_quota . ' ! </b>  Anda telah melakukan pembayaran menggunakan<b> quota bulanan</b>',
                                         'created_at' => Carbon::now(),
                                     ]);
-
                                     \Cart::session($req->get('page'))->clear();
 
                                     $log_limit = LogLimit::where('visitor_id', $req->get('page'))->first();
@@ -748,7 +772,7 @@ class OrderController extends Controller
                 $report_deposit->report_balance = $report_deposit->report_balance - $report_deposit->report_balance;
                 $deposit->save();
                 $report_deposit->save();
-                
+
                 LogTransaction::create([
                     'order_number' => $req->get('order_number'),
                     'visitor_id' => $req->get('page'),
@@ -763,13 +787,13 @@ class OrderController extends Controller
                     'payment_status' => 'paid',
                     'total' => $totalPrice
                 ]);
-                
+
                 // LogAdmin::create([
                 //     'user_id' => Auth::id(),
                 //     'type' => 'CREATE',
                 //     'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
                 // ]);
-                
+
                 // \Cart::session($req->get('page'))->clear();
 
                 // $data['qty'] = $row->quantity;

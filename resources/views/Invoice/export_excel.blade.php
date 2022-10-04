@@ -12,6 +12,7 @@
             <tr>
                 <th class="" style="text-align:center"><strong>Nama</strong></th>
                 <th class="" style="text-align:center"><strong>Kategori Tamu</strong></th>
+                <th class="" style="text-align:center"><strong>Metode Pembayaran</strong></th>
                 <th class="" style="text-align:center"><strong>Total Bayar</strong></th>
                 <th class="" style="text-align:center"><strong>Tanggal Bayar</strong></th>
             </tr>
@@ -21,6 +22,7 @@
             <tr>
                 <td>{{ $item->name }}</td>
                 <td style="text-align: center">{{ $item->tipe_member }}</td>
+                <td>{{ $item->payment_type }}</td>
                 <td>{{ $item->total }}</td>
                 <td>{{ $item->created_at->format('d F Y | H:i:s') }}</td>
             </tr>

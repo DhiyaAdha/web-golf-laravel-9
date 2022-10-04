@@ -1,5 +1,4 @@
 @extends('Layouts.Main')
-
 @section('content')
 <div class="page-wrapper">
     <div class="container-fluid">
@@ -41,21 +40,26 @@
                                     <div class="text-danger"> {{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="form-group password-container @error('password') has-error @enderror">
+                                <div class="form-group password-container">
                                     <label class="pull-left control-label mb-10" for="password">Password</label>
-                                    <input type="password" name="password" class="form-control" id="password" placeholder="Masukan Password">
-                                    <i class="fa-solid fa-eye fa-eye-slash" id="eye"></i>
-                                    @error('password1')
-                                    <div class="text-danger">{{ $message }}</div>
+                                    <input type="password" name="password"
+                                        class="form-control @error('password') has-error @enderror"
+                                        id="password" placeholder="Masukan Password">
+                                        <i class="fa-solid fa-eye1 fa-eye fa-eye-slash" id="eye"></i>
+
+                                    @error('password')
+                                        <div class="text-danger"> {{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="form-group password-container @error('password') has-error @enderror">
-                                    <label class="pull-left control-label mb-10" for="confirm_password">Konfirmasi Password</label>
-                                    <input type="password" name="password" class="form-control" id="confirm_password" placeholder="Masukan Ulang Password" required>
-                                    <i class="fa-solid fa-eye fa-eye-slash" id="eye2"></i>
-                                    @error('password1')
-                                    <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                <div class="form-group password-container">
+                                    <label class="pull-left control-label mb-10"
+                                        for="password_confirmation">Konfirmasi Password</label>
+                                    <div class="clearfix"></div>
+                                    <input type="password" name="password_confirmation"
+                                        class="form-control @error('password') is-invalid @enderror"
+                                        id="password_confirmation" placeholder="Masukan Ulang Password">
+                                        <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
+                                    <i class="fa-solid fa-eye2 fa-eye fa-eye-slash" id="eyee"></i>
                                 </div>
                                 <div class="form-group @error('phone') has-error @enderror">
                                     <label class="control-label mb-10" for="">Nomer Hp</label>
@@ -96,62 +100,42 @@
 </div>
 @endsection
 @push('scripts')
-<script>
-    function myfunction() {
-        var x = document.getElementById("password");
-        var y = document.getElementById("hide1");
-        var z = document.getElementById("hide2");
-        if (x.type === 'password') {
-            x.type = "text";
-            y.style.display = "block";
-            z.style.display = "none";
-        } else {
-            x.type = "password";
-            y.style.display = "none";
-            z.style.display = "block";
-        }
-    }
+<script src="../../vendors/bower_components/jquery/dist/jquery.min.js"></script>
 
-    function myfunction2() {
-        var x = document.getElementById("confirm_password");
-        var y = document.getElementById("hide3");
-        var z = document.getElementById("hide4");
-        if (x.type === 'password') {
-            x.type = "text";
-            y.style.display = "block";
-            z.style.display = "none";
-        } else {
-            x.type = "password";
-            y.style.display = "none";
-            z.style.display = "block";
-        }
-    }
+<!-- Bootstrap Core JavaScript -->
+<script src="../../vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../../vendors/bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js"></script>
 
-    $("#confirm_password").on('keyup', function() {
-        var password = $("#password").val();
-        var confirmPassword = $("#confirm_password").val();
-        if (password != confirmPassword)
-            $("#CheckPasswordMatch").html("Password does not match !").css("color", "red");
-        else
-            $("#CheckPasswordMatch").html("Password match !").css("color", "green");
-    });
-</script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+<!-- Slimscroll JavaScript -->
+<script src="/dist/js/jquery.slimscroll.js"></script>
+
+<!-- Init JavaScript -->
+<script src="/dist/js/init.js"></script>
 <script>
     const passwordField = document.querySelector("#password");
+    const passwordCon = document.querySelector("#password_confirmation");
     const eyeIcon = document.querySelector("#eye");
-    const passwordField2 = document.querySelector("#confirm_password");
-    const eyeIcon2 = document.querySelector("#eye2");
+    const eyeeIcon = document.querySelector("#eyee");
 
     eye.addEventListener("click", function() {
         this.classList.toggle("fa-eye-slash");
         const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
         passwordField.setAttribute("type", type);
     })
-    eye2.addEventListener("click", function() {
+    eyee.addEventListener("click", function() {
         this.classList.toggle("fa-eye-slash");
-        const type2 = passwordField2.getAttribute("type") === "password" ? "text" : "password";
-        passwordField2.setAttribute("type", type2);
+        const typee = passwordCon.getAttribute("type") === "password" ? "text" : "password";
+        passwordCon.setAttribute("type", typee);
     })
+</script>
+<script>
+    $("#password_confirmation").on('keyup', function() {
+        var password = $("#password").val();
+        var confirmPassword = $("#password_confirmation").val();
+        if (password != confirmPassword)
+            $("#CheckPasswordMatch").html("Password does not match !").css("color", "red");
+        else
+            $("#CheckPasswordMatch").html("Password match !").css("color", "green");
+    });
 </script>
 @endpush
