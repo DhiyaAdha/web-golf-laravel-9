@@ -29,6 +29,7 @@ class ReportLimitSeeder extends Seeder
                 'visitor_id' => $i,
                 'user_id' => User::all()->random()->id,
                 'status' => $faker->randomElement(['Reset', 'Bertambah','Berkurang']),
+                'fund_limit' => $faker->default(0),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 ]);
