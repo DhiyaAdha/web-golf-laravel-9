@@ -461,7 +461,8 @@ class OrderController extends Controller
                                     'report_balance' => $deposit->balance,
                                     'visitor_id' => $req->get('page'),
                                     'user_id' => Auth()->id(),
-                                    'activities' => '<b>Saldo Berkurang !</b> Anda telah melakukan pembayaran menggunakan<b> deposit</b>',
+                                    // 'activities' => '<b>Saldo Berkurang !</b> Anda telah melakukan pembayaran menggunakan<b> deposit</b>',
+                                    'status' => 'Berkurang',
                                     'created_at' => Carbon::now(),
                                 ]);
                                 \Cart::session($req->get('page'))->clear();
@@ -715,6 +716,7 @@ class OrderController extends Controller
                                         'report_quota' => $report_limit->report_quota,
                                         'visitor_id' => $req->get('page'),
                                         'user_id' => Auth()->id(),
+                                        'report_quota' => $log_limit->quota,
                                         'activities' => '<b>Limit Bulanan Berkurang menjadi ' . $report_limit->report_quota . ' ! </b>  Anda telah melakukan pembayaran menggunakan<b> quota bulanan</b>',
                                         'created_at' => Carbon::now(),
                                     ]);

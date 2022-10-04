@@ -440,7 +440,7 @@
                     orderable: false
                 },
                 {
-                    data: 'information',
+                    data: 'transaction',
                     searchable: true,
                     orderable: false
                 },
@@ -450,7 +450,7 @@
                     orderable: false
                 },
                 {
-                    data: 'payment_type',
+                    data: 'status',
                     searchable: true,
                     orderable: false
                 },
@@ -498,12 +498,12 @@
             },
             "render": $.fn.dataTable.render.text(),
             "columns": [{
-                    data: 'information',
+                    data: 'limit',
                     searchable: true,
                     orderable: false
                 },
                 {
-                    data: 'status',
+                    data: 'jumlah_transaksi',
                     searchable: true,
                     orderable: false
                 },
