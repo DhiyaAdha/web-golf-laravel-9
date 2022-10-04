@@ -232,7 +232,7 @@
                             <li class="active" role="presentation"><a class="tabs-log" aria-expanded="true"
                                     data-toggle="tab" role="tab" href="#transaction_tabs">Transaksi</a></li>
                             <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
-                                    href="#deposit_tabs" aria-expanded="false">Saldo</a></li>
+                                    href="#deposit_tabs" aria-expanded="false">Deposit</a></li>
                             <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
                                     href="#limit_tabs" aria-expanded="false">Limit</a></li>
                         </ul>
@@ -283,12 +283,14 @@
                                     <div class="panel-body">
                                         <div class="table-wrap">
                                             <div class="table-responsive">
-                                                <table width="100%" class="table table-hover mb-0" id="dt-tamu-deposit">
+                                                <table width="100%" class="table table-hover mb-0"
+                                                    id="dt-tamu-deposit">
                                                     <thead>
                                                         <tr>
                                                             <th>Saldo</th>
-                                                            <th>Informasi</th>
+                                                            <th>Jumlah Transaksi</th>
                                                             <th class="text-center">Tipe Pembayaran</th>
+                                                            <th class="text-center">Status</th>
                                                             <th class="text-center">Tanggal</th>
                                                         </tr>
                                                     </thead>
@@ -317,8 +319,9 @@
                                                 <table width="100%" class="table table-hover mb-0" id="dt-tamu-limit">
                                                     <thead>
                                                         <tr>
-                                                            <th >Informasi</th>
-                                                            <th style="padding-left: 10px">Tipe</th>
+                                                            <th>Sisa Limit</th>
+                                                            <th>Jumlah Transaksi</th>
+                                                            <th style="padding-left: 10px">Status</th>
                                                             <th>Tanggal</th>
                                                         </tr>
                                                     </thead>
@@ -330,25 +333,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <div id="limit_tabs" class="tab-pane fade" role="tabpanel">
-                            <div class="table-wrap">
-                                <div class="table-responsive">
-                                    <table width="100%" class="table table-hover" style="margin: 10px;"
-                                        id="dt-tamu-limit">
-                                        <thead>
-                                            <tr>
-                                                <th >Informasi</th>
-                                                <th>Tipe</th>
-                                                <th style="text-align: center;">Tanggal</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            
-                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -466,6 +450,11 @@
                     orderable: false
                 },
                 {
+                    data: 'payment_type',
+                    searchable: true,
+                    orderable: false
+                },
+                {
                     data: 'created_at',
                     searchable: true,
                     orderable: false
@@ -485,10 +474,10 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [0, 1, 2, 3]
+                targets: [0, 1, 2, 3, 4]
             }]
         });
-        
+
         // Limit Activity
         $('#dt-tamu-limit').DataTable({
             "processing": true,
@@ -519,6 +508,11 @@
                     orderable: false
                 },
                 {
+                    data: 'status',
+                    searchable: true,
+                    orderable: false
+                },
+                {
                     data: 'created_at',
                     searchable: true,
                     orderable: false
@@ -536,7 +530,7 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [0, 1, 2]
+                targets: [0, 1, 2, 3]
             }]
         });
         // End Of Limit Activity
