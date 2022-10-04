@@ -593,11 +593,12 @@ class TamuController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Visitor  $visitor
-     * @return \Illuminate\Http\Response
+    * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id, Loglimit $limit)
     {
-        $request->validate([
+        $this->validate(
+            $request, [
             'name' => 'required',
             'address' => 'required',
             'gender' => 'required',
@@ -606,8 +607,15 @@ class TamuController extends Controller
             'company' => 'required',
             'position' => 'required',
             'tipe_member' => 'required',
-            // 'quota' => 'required',
-        ]);
+        ], [
+            'name.required' => 'Nama Tamu masih kosong.',
+            'address.required' => 'Alamat Tamu masih kosong.',
+                'email.required' => 'Email Tamu masih kosong.',
+                'phone.required' => 'Nomer Hp Tamu masih kosong.',
+                'company.required' => 'Nama perusahaan masih kosong.',
+                'position.required' => 'Posisi masih kosong.',
+        ]
+    );
         $visitor = Visitor::find($id);
         $visitor->fill($request->post())->save();
         $limit = LogLimit::find($id);
