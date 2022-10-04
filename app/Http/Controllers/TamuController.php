@@ -148,20 +148,22 @@ class TamuController extends Controller
             $report_quota = ReportLimit::create([
                 'visitor_id' => $visitors->id,
                 'user_id' =>    Auth::user()->id,
-                'report_quota' => $request->tipe_member == 'VIP' ? '4' : '10',
+                'report_quota' => 4,
+                // 'fund_limit' => 4,
                 'status' => 'Bertambah',
                 // 'activities'=> 'Limit ' . $request->name . ' bertambah menjadi ' . $request->tipe_member == 'VIP' ? '4' : '10',
-                'activities' => 'Limit <b>' . $request->name . '</b> bertambah menjadi <b> 4</b>',
+                // 'activities' => 'Limit <b>' . $request->name . '</b> bertambah menjadi <b> 4</b>',
                 'created_at' => Carbon::now(),
             ]);
         } else {
             $report_quota = ReportLimit::create([
                 'visitor_id' => $visitors->id,
                 'user_id' =>    Auth::user()->id,
-                'report_quota' => $request->tipe_member == 'VIP' ? '4' : '10',
+                'report_quota' => 10,
+                // 'fund_limit' => 10,
                 'status' => 'Bertambah',
                 // 'activities'=> 'Limit ' . $request->name . ' bertambah menjadi ' . $request->tipe_member == 'VIP' ? '4' : '10',
-                'activities' => 'Limit <b>' . $request->name . '</b> bertambah menjadi <b> 10</b>',
+                // 'activities' => 'Limit <b>' . $request->name . '</b> bertambah menjadi <b> 10</b>',
                 'created_at' => Carbon::now(),
             ]);
         }
@@ -320,7 +322,7 @@ class TamuController extends Controller
     {
         $decrypt_id = Crypt::decryptString($id);
         $aktifitas_limit =
-            ReportLimit::select('id', 'report_quota', 'status', 'visitor_id', 'activities', 'user_id', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
+            ReportLimit::select('id', 'report_quota', 'status', 'visitor_id',  'user_id', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
 
         if ($request->ajax()) {
             return datatables()->of($aktifitas_limit)

@@ -714,11 +714,11 @@ class OrderController extends Controller
                                     // informasi limit bulanan
                                     ReportLimit::create([
                                         'status' => 'Berkurang',
-                                        'report_quota' => $report_limit->report_quota,
+                                        'report_quota' => 1,
                                         'visitor_id' => $req->get('page'),
                                         'user_id' => Auth()->id(),
-                                        'report_quota' => $log_limit->quota,
-                                        'activities' => '<b>Limit Bulanan Berkurang menjadi ' . $report_limit->report_quota . ' ! </b>  Anda telah melakukan pembayaran menggunakan<b> quota bulanan</b>',
+                                        // 'fund_limit' => $report_limit->report_quota,
+                                        // 'activities' => '<b>Limit Bulanan Berkurang menjadi ' . $report_limit->report_quota . ' ! </b>  Anda telah melakukan pembayaran menggunakan<b> quota bulanan</b>',
                                         'created_at' => Carbon::now(),
                                     ]);
                                     \Cart::session($req->get('page'))->clear();
