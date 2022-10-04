@@ -299,12 +299,14 @@ class TamuController extends Controller
                     return '<p class="label label-success">' . $data->payment_type . '</p>';
                 } else if ($data->payment_type == 'transfer') {
                     return '<p class="label label-warning">' . $data->payment_type . '</p>';
+                } else {
+                    return '<p class="label label-danger">' . $data->payment_type . '</p>';
                 }
             })->addColumn('status', function ($data) {
                 if ($data->status == 'Bertambah') {
                     return '<p class="label label-success">' . $data->status . '</p>';
                 } elseif ($data->status == 'Berkurang') {
-                    return '<p class="label label-warning">' . $data->status . '</p>';
+                    return '<p class="label label-danger">' . $data->status . '</p>';
                 }
             })->editColumn('created_at', function ($data) {
                 return $data->created_at->format('d-m-Y ');
@@ -319,13 +321,6 @@ class TamuController extends Controller
         $decrypt_id = Crypt::decryptString($id);
         $aktifitas_limit =
             ReportLimit::select('id', 'report_quota', 'status', 'visitor_id', 'activities', 'user_id', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
-
-        // ReportLimit::join('id', 'report_quota', 'status', 'visitor_id','activities', 'user_id', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('report_limits.created_at', 'desc')->get();
-
-        // LogAdmin::join('users', 'log_admins.user_id', '=', 'users.id')
-        // ->join('roles', 'users.role_id', '=', 'roles.id')
-        // ->orderBy('log_admins.id', 'desc')
-        // ->get(['log_admins.*', 'users.name as name', 'roles.name as role']);
 
         if ($request->ajax()) {
             return datatables()->of($aktifitas_limit)

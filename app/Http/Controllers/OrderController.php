@@ -457,10 +457,11 @@ class OrderController extends Controller
                                 ]);
 
                                 ReportDeposit::create([
-                                    'payment_type' => 'Deposit',
-                                    'report_balance' => $deposit->balance,
+                                    'payment_type' => 'deposit',
+                                    'report_balance' => $totalPrice,
                                     'visitor_id' => $req->get('page'),
                                     'user_id' => Auth()->id(),
+                                    'fund' => $deposit->balance,
                                     // 'activities' => '<b>Saldo Berkurang !</b> Anda telah melakukan pembayaran menggunakan<b> deposit</b>',
                                     'status' => 'Berkurang',
                                     'created_at' => Carbon::now(),
