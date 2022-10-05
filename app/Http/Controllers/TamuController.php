@@ -311,7 +311,7 @@ class TamuController extends Controller
                     return '<p class="label label-danger">' . $data->status . '</p>';
                 }
             })->editColumn('created_at', function ($data) {
-                return $data->created_at->format('d-m-Y ');
+                return $data->created_at->format('d-m-Y H:i');
             })->rawColumns(['report_balance', 'transaction', 'status', 'payment_type', 'created_at'])->make(true);
         }
     }
@@ -328,7 +328,7 @@ class TamuController extends Controller
             return datatables()->of($aktifitas_limit)
                 ->addColumn('limit', function ($data) {
                     return $data->report_quota;
-                })->addColumn('jumlah_transaksi', function ($data) {
+                })->addColumn('Informasi', function ($data) {
                     return $data->report_quota;
                 })
                 ->addColumn('status', function ($data) {
@@ -340,7 +340,7 @@ class TamuController extends Controller
                         return '<p class="label label-warning">' . $data->status . '<div>';
                     }
                 })->editColumn('created_at', function ($data) {
-                    return date_format($data->created_at, 'd-m-Y');
+                    return date_format($data->created_at, 'd-m-Y H:i');
                 })->rawColumns(['limit', 'jumlah_transaksi', 'status', 'created_at'])->make(true);
         }
     }
@@ -504,7 +504,9 @@ class TamuController extends Controller
                 })
                 ->editColumn('created_at', function ($data) {
                     return date_format($data->created_at, 'd-m-Y H:i');
-                })->rawColumns(['order_number', 'information', 'status', 'created_at'])->make(true);
+                })->editColumn('total', function($data) {
+                    return $data->total;
+                })->rawColumns(['order_number', 'total', 'information', 'status', 'created_at'])->make(true);
         }
     }
     /* END data aktifitas tamu transaksi*/

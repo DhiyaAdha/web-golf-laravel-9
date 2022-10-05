@@ -258,6 +258,7 @@
                                                         <tr>
                                                             <th>Order ID</th>
                                                             <th>Informasi</th>
+                                                            <th>Total Transaksi</th>
                                                             <th style="text-align: center;">Status</th>
                                                             <th style="text-align: center;">Tanggal</th>
                                                         </tr>
@@ -379,6 +380,11 @@
                     orderable: false
                 },
                 {
+                    data: 'total',
+                    searchable: true,
+                    orderable: false
+                },
+                {
                     data: 'status',
                     searchable: true,
                     orderable: false
@@ -401,16 +407,19 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [0, 1, 2, 3]
+                targets: [0, 1, 2, 3, 4]
             }, {
                 width: '20%',
                 targets: [0]
             }, {
-                width: '50%',
+                width: '30%',
                 targets: [1]
             }, {
                 width: '10%',
-                targets: [2, 3]
+                targets: [2, 4]
+            }, {
+                width: '7%',
+                targets: [3]
             }]
         });
         // End Of Transaction Activity
@@ -503,7 +512,7 @@
                     orderable: false
                 },
                 {
-                    data: 'jumlah_transaksi',
+                    data: 'Informasi',
                     searchable: true,
                     orderable: false
                 },

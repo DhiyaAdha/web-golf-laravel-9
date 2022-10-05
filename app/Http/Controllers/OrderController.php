@@ -435,10 +435,7 @@ class OrderController extends Controller
                         } else {
                             try {
                                 $deposit->balance = $deposit->balance - $totalPrice;
-                                $report_deposit = ReportDeposit::where('visitor_id', $req->get('page'))->first();
-                                $report_deposit->report_balance = $report_deposit->report_balance - $totalPrice;
                                 $deposit->save();
-                                $report_deposit->save();
 
                                 LogTransaction::create([
                                     'order_number' => $req->get('order_number'),
@@ -462,7 +459,6 @@ class OrderController extends Controller
                                     'visitor_id' => $req->get('page'),
                                     'user_id' => Auth()->id(),
                                     'fund' => $deposit->balance,
-                                    // 'activities' => '<b>Saldo Berkurang !</b> Anda telah melakukan pembayaran menggunakan<b> deposit</b>',
                                     'status' => 'Berkurang',
                                     'created_at' => Carbon::now(),
                                 ]);
@@ -482,7 +478,7 @@ class OrderController extends Controller
                                     'address' => $visitor->address,
                                     'phone' => $visitor->phone,
                                     'type_member' => $visitor->tipe_member,
-                                    'sisasaldo' => $report_deposit->report_balance,
+                                    'sisasaldo' => $deposit->balance,
                                     'order_number' => $req->get('order_number'),
                                     'payment_type' => $payment_type,
                                     'date' => $row->attributes['created_at'],
