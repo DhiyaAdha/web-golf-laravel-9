@@ -124,7 +124,9 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     //route 4 notifikasi email pembayaran sukses
     Route::get('/test_payment', function(){
         return view('emails.paymentsuccess4_');
-    
+    });
+    Route::get('/reguler', function(){
+        return view('reguler.cart');
     });
 
 });
