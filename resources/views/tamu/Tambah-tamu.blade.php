@@ -25,6 +25,7 @@
                         <h6 class="control-label mb-10">Tambah Tamu</h6>
                         <div class="panel-body">
                             <div class="form-wrap">
+                                
                                 <form action="{{ route('inserttamu') }}" method="POST">
                                     @csrf
                                     <div class="form-group @error('name') has-error @enderror">
