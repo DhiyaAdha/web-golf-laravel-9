@@ -11,27 +11,29 @@
 
 	<!-- Favicon -->
 	<link rel="shortcut icon" href="favicon.ico">
-	<link rel="icon" href="favicon.ico" type="image/x-icon">
-
+	<link rel="icon" href="{{ asset('tgcc144.PNG') }}" type="image/x-icon">
+	
 	<!-- vector map CSS -->
-	<link href="../../vendors/bower_components/jasny-bootstrap/dist/css/jasny-bootstrap.min.css" rel="stylesheet" type="text/css" />
-
-
-
+	<link href="../../vendors/bower_components/jasny-bootstrap/dist/css/jasny-bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	
+	
+	
 	<!-- Custom CSS -->
 	<link href="/dist/css/style.css" rel="stylesheet" type="text/css">
+	<style>
+		.brand-img{
+			margin-top: 0px;
+			margin-left: 10px;
+		}
+	</style>
 </head>
 
 <body>
 	<div class=" error-page pa-0">
-		<header class="sp-header">
-			<div class="sp-logo-wrap pull-left">
-				<a href="index.html">
-					<img class="brand-img mr-10" src="/dist/img/tgcc.svg" alt="brand" />
-				</a>
-			</div>
-		</header>
-
+		{{-- <header class="sp-header"> --}}
+					<img class="brand-img mr-10" src="/dist/img/tgcc.svg" alt="brand"/>
+		{{-- </header> --}}
+		
 		<!-- Main Content -->
 		<div class="">
 			<div class="container-fluid">
@@ -44,7 +46,7 @@
 									<div class="mb-50">
 										<h2 class="block error-head text-center mb-10" style="font-family: arial black; font-size: 100px; background: -webkit-gradient(linear, left bottom, right top, from(#171d18),to(#15e26a)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
 											400</h2>
-										<span class="text-center nonecase-font mb-20 block error-comment">Bad Request</span>
+										<span class="text-center nonecase-font mb-20 block error-comment"><strong>Server Tidak Mendukung Permintaan</strong></span>
 										<div class="col text-center">
 											<a class="text-center btn btn-outlen btn-info" style="{text-align: center;}" href="/login">Kembali ke Dashboard</a>
 										</div>

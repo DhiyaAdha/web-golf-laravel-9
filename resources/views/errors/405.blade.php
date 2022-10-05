@@ -10,7 +10,7 @@
 		
 		<!-- Favicon -->
 		<link rel="shortcut icon" href="favicon.ico">
-		<link rel="icon" href="favicon.ico" type="image/x-icon">
+		<link rel="icon" href="{{ asset('tgcc144.PNG') }}" type="image/x-icon">
 		
 		<!-- vector map CSS -->
 		<link href="../../vendors/bower_components/jasny-bootstrap/dist/css/jasny-bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -19,16 +19,18 @@
 		
 		<!-- Custom CSS -->
 		<link href="/dist/css/style.css" rel="stylesheet" type="text/css">
+		<style>
+			.brand-img{
+				margin-top: 0px;
+				margin-left: 10px;
+			}
+		</style>
 	</head>
 	<body>
 		<div class=" error-page pa-0">
-			<header class="sp-header">
-				<div class="sp-logo-wrap pull-left">
-					<a href="index.html">
+			{{-- <header class="sp-header"> --}}
 						<img class="brand-img mr-10" src="/dist/img/tgcc.svg" alt="brand"/>
-					</a>
-				</div>
-			</header>
+			{{-- </header> --}}
 			
 			<!-- Main Content -->
 			<div class="">
@@ -43,7 +45,7 @@
                                             <h2 class="block error-head text-center mb-10"
                                             style="font-family: arial black; font-size: 100px; background: -webkit-gradient(linear, left bottom, right top, from(#171d18),to(#15e26a)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                                             405</h2>
-											<span class="text-center nonecase-font mb-20 block error-comment">Method Not Allowed</span>
+											<span class="text-center nonecase-font mb-20 block error-comment"><strong>Maaf, Metode tidak diizinkan pada halaman ini</strong></span>
 											<div class="col text-center">
 											<a class="text-center btn btn-outlen btn-info" style="{text-align: center;}" 
 											 
