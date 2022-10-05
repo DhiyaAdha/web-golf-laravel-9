@@ -45,6 +45,7 @@ class InvoiceController extends Controller
                 return $data->created_at->format('d F Y');
             })
             ->editColumn('payment_type', function ($data) {
+                // dd($data->payment_type);
                 return ($data->payment_type);
             })
             ->editColumn('total', function ($data) {
