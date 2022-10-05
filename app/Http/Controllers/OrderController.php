@@ -398,6 +398,7 @@ class OrderController extends Controller
         $items = \Cart::session($req->get('page'))->getContent();
         $deposit = Deposit::where('visitor_id', $req->get('page'))->first();
         $log_limit = LogLimit::where('visitor_id', $req->get('page'))->first();
+        $report_limit = ReportLimit::where('visitor_id', $req->get('page'))->first();
         $totalPrice = \Cart::session($req->get('page'))->getTotal();
         if (\Cart::isEmpty()) {
             $cart_data = [];
@@ -594,11 +595,10 @@ class OrderController extends Controller
                                 return response()->json($this->getResponse());
                             } else {
                                 try {
+                                    // $log_limit = LogLimit::where('visitor_id', $request->get('param'))->first();
+                                    
                                     $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
-                                    $report_limit = ReportLimit::where('visitor_id', $req->get('page'))->first();
-                                    $report_limit->report_quota_kupon = $report_limit->report_quota_kupon - 1;
                                     $log_limit->save();
-                                    $report_limit->save();
 
                                     LogTransaction::create([
                                         'order_number' => $req->get('order_number'),
@@ -618,11 +618,11 @@ class OrderController extends Controller
 
                                     // informasi limit kupon
                                     ReportLimit::create([
-                                        'status' => 'Berkurang',
-                                        'report_quota_kupon' => $log_limit->quota_kupon,
                                         'visitor_id' => $req->get('page'),
                                         'user_id' => Auth()->id(),
-                                        'activities' => 'Limit Kupon <b>Berkurang</b> menjadi <b>' . $log_limit->quota_kupon . ' ! </b>  Anda telah melakukan pembayaran menggunakan<b> quota kupon</b>',
+                                        'report_quota' => $report_limit->report_quota,
+                                        'report_quota_kupon' => $log_limit->quota_kupon,
+                                        'status' => 'Berkurang',
                                         'created_at' => Carbon::now(),
                                     ]);
                                     \Cart::session($req->get('page'))->clear();
@@ -686,10 +686,7 @@ class OrderController extends Controller
                             } else {
                                 try {
                                     $log_limit->quota = $log_limit->quota - 1;
-                                    $report_limit = ReportLimit::where('visitor_id', $req->get('page'))->first();
-                                    $report_limit->report_quota = $report_limit->report_quota - 1;
                                     $log_limit->save();
-                                    $report_limit->save();
 
                                     LogTransaction::create([
                                         'order_number' => $req->get('order_number'),
@@ -710,11 +707,9 @@ class OrderController extends Controller
                                     // informasi limit bulanan
                                     ReportLimit::create([
                                         'status' => 'Berkurang',
-                                        'report_quota' => 1,
+                                        'report_quota' => $log_limit->quota,
                                         'visitor_id' => $req->get('page'),
                                         'user_id' => Auth()->id(),
-                                        // 'fund_limit' => $report_limit->report_quota,
-                                        // 'activities' => '<b>Limit Bulanan Berkurang menjadi ' . $report_limit->report_quota . ' ! </b>  Anda telah melakukan pembayaran menggunakan<b> quota bulanan</b>',
                                         'created_at' => Carbon::now(),
                                     ]);
                                     \Cart::session($req->get('page'))->clear();

@@ -235,6 +235,8 @@
                                     href="#deposit_tabs" aria-expanded="false">Deposit</a></li>
                             <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
                                     href="#limit_tabs" aria-expanded="false">Limit</a></li>
+                            <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
+                                    href="#limit_kupon_tabs" aria-expanded="false">Kupon</a></li>
                         </ul>
                     </div>
                 </div>
@@ -304,7 +306,6 @@
                             </div>
                         </div>
                         {{-- limit --}}
-
                         <div id="limit_tabs" class="tab-pane fade" role="tabpanel">
                             <div class="panel panel-default card-view">
                                 <div class="panel-heading">
@@ -334,6 +335,36 @@
                                 </div>
                             </div>
                         </div>
+                        {{-- limit-kupon --}}
+                        <div id="limit_kupon_tabs" class="tab-pane fade" role="tabpanel">
+                            <div class="panel panel-default card-view">
+                                <div class="panel-heading">
+                                    <div class="pull-left">
+                                        <h6 class="panel-title txt-dark">Riwayat Kupon</h6>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="panel-wrapper collapse in">
+                                    <div class="panel-body">
+                                        <div class="table-wrap">
+                                            <div class="table-responsive">
+                                                <table width="100%" class="table table-hover mb-0" id="dt-tamu-kupon">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Sisa Kupon </th>
+                                                            <th>Jumlah Transaksi</th>
+                                                            <th style="padding-left: 10px">Status</th>
+                                                            <th>Tanggal</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -344,12 +375,7 @@
 
 @push('scripts')
     <script>
-        // $('.download-kartu-tamu').on("click", function() {
-        //     $('#cetak-kartu').printThis({
-        //         printContainer: true,
-        //     });
-        // });
-
+        
         // Transaction Activity
         $('#dt-tamu-transaksi').DataTable({
             "processing": true,
@@ -543,5 +569,62 @@
             }]
         });
         // End Of Limit Activity
+
+        // Kupon Activity
+        $('#dt-tamu-kupon').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "lengthChange": false,
+            "bDestroy": true,
+            "searching": false,
+            "paginate": {
+                "first": "First",
+                "last": "Last",
+                "next": "Next",
+                "previous": "Previous"
+            },
+            "ajax": {
+                "url": "{{ route('kupon.report.data', Request::segment(2)) }}",
+                "type": "GET",
+                "datatype": "json"
+            },
+            "render": $.fn.dataTable.render.text(),
+            "columns": [{
+                    data: 'kupon',
+                    searchable: true,
+                    orderable: false
+                },
+                {
+                    data: 'Informasi',
+                    searchable: true,
+                    orderable: false
+                },
+                {
+                    data: 'status',
+                    searchable: true,
+                    orderable: false
+                },
+                {
+                    data: 'created_at',
+                    searchable: true,
+                    orderable: false
+                }
+            ],
+            order: [],
+            responsive: true,
+            language: {
+                emptyTable: "Tidak ada data pada tabel ini",
+                info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+                infoFiltered: "(difilter dari _MAX_ total data)",
+                infoEmpty: "Tidak ada data pada tabel ini",
+                lengthMenu: "Menampilkan _MENU_ data",
+                zeroRecords: "Tidak ada data pada tabel ini"
+            },
+            columnDefs: [{
+                className: 'text-left',
+                targets: [0, 1, 2, 3]
+            }]
+        });
+        // End Of Kupon Activity
     </script>
 @endpush
