@@ -15,8 +15,9 @@ class ReportLimit extends Model
         'user_id',
         'report_quota',
         'report_quota_kupon',
+        // 'fund_limit',
         'status',
-        'activities',
+        // 'activities',
         'created_at',
         'updated_at', 
     ];

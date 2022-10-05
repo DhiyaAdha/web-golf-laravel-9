@@ -167,8 +167,8 @@
                                                     <div class="input-group-dropdown">
                                                         <select name="payment_type" id="payment_type" class="form-control" required>
                                                             <option disabled selected value="">Pilih Pembayaran</option>
-                                                            <option value="Cash" name="payment_type" id="payment_type">Cash</option>
-                                                            <option value="Transfer" name="payment_type" id="payment_type">Transfer</option>
+                                                            <option value="cash" name="payment_type" id="payment_type">Cash</option>
+                                                            <option value="transfer" name="payment_type" id="payment_type">Transfer</option>
                                                         </select>
                                                     </div>
                                                 </div> 
