@@ -24,7 +24,7 @@
                     <div style="height: 387px;" class="panel panel-default card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
-                                <strong class="panel-title txt-dark">Default</strong>
+                                <strong class="panel-title txt-dark">Jenis Permainan</strong>
                             </div>
                             <div class="pull-right">
                                 <div class='d-flex '>
@@ -45,7 +45,7 @@
                         </div>
                         <div class="panel-heading">
                             <div class="pull-left">
-                                <strong class="panel-title txt-dark">Tambahan</strong>
+                                <strong class="panel-title txt-dark">Fasilitas</strong>
                             </div>
                             <div class="clearfix"></div>
                         </div>
