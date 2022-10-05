@@ -420,6 +420,14 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="card mt-2 d-none">
+                                                <div class="card-body">
+                                                    <div class="d-flex flex-column">
+                                                        <span>Uang kembali</span>
+                                                        <span class="green" id="return">-</span>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="card mt-2">
                                                 <div class="card-body">
                                                     <div class="d-flex">
@@ -481,20 +489,15 @@
                                                 <strong class="flex-grow-1">Item</strong>
                                                 <strong style="font-size: small;">Harga</strong>
                                             </div>
-                                            @foreach ($orders as $cart)
-                                                <div class="d-flex">
-                                                    <span class="flex-grow-1">{{ $cart['name'] }}</span>
-                                                    <small>Rp. {{ formatrupiah($cart['price']) }}</small>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card mt-2">
-                                    <div class="card-body">
-                                        <div class="d-flex flex-column">
-                                            <span>Uang kembali</span>
-                                            <span class="green" id="return">-</span>
+                                            <div class="items"></div>
+                                            <div class="items-default">
+                                                @foreach ($orders as $cart)
+                                                    <div class="d-flex">
+                                                        <span class="flex-grow-1">{{ $cart['name'] }}</span>
+                                                        <small>Rp. {{ formatrupiah($cart['price']) }}</small>
+                                                    </div>
+                                                @endforeach
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -536,11 +539,25 @@
                         $("input[name='payment-type[]']").prop('checked', false);
                         $('#single').show();
                         $('#multiple').hide().addClass('d-none');
+                        $('.summary').hide();
                         break;
                     case 'multiple':
                         $("input[name=payment-type]").prop('checked', false);
                         $('#single').hide();
                         $('#multiple').show().removeClass('d-none');
+                        $('.bayar-input').val(null);
+                        $('.card:nth-child(4)').addClass('d-none');
+                        $('#cash-transfer').hide();
+                        $(`<div class="card mt-2 summary">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex">
+                                                <span class="flex-grow-1">Ringkasan Pembayaran Split</span>
+                                            </div>
+                                            <div id="point-summary"></div>
+                                        </div>
+                                    </div>
+                                </div>`).insertAfter('.card:nth-child(3)');
                         break;
                 }
             });
@@ -591,38 +608,38 @@
             });
 
             $(document).on('click', 'input[name="payment-type[]"]', function(e) {
-                if ($(this).val() == 'cash/transfer') {
-                    if ($(this).is(':checked')) {
+                if ($(this).is(':checked')) {
+                    if ($(this).val() == 'cash/transfer') {
                         $('#cashtransfer').html(
                             `<div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">Rp.</div>
-                                                        </div>
-                                                        <input type="text" min="0"
-                                                            onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                                            class="form-control number-input input-notzero bayar-input"
-                                                            name="bayar" placeholder="Masukkan nominal bayar"
-                                                            autocomplete="off">
-                                                    </div>`
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Rp.</div>
+                                </div>
+                                <input type="text" min="0"
+                                    onkeypress="return event.charCode >= 48 && event.charCode <=57"
+                                    class="form-control number-input input-notzero bayar-input"
+                                    name="bayar" placeholder="Masukkan nominal bayar"
+                                    autocomplete="off">
+                            </div>`
                         ).show().prev().removeClass('mb-2');
-                    } else {
-                        $('#return').text('-').css({
-                            "background-color": "rgba(25, 216, 149, 0.2)",
-                            "color": "#19d895"
-                        });
-                        $('#cashtransfer').html(
-                            `<div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">Rp.</div>
-                                                        </div>
-                                                        <input type="text" min="0"
-                                                            onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                                            class="form-control number-input input-notzero bayar-input"
-                                                            name="bayar" placeholder="Masukkan nominal bayar"
-                                                            autocomplete="off">
-                                                    </div>`
-                        ).hide().prev().addClass('mb-2');
                     }
+                } else {
+                    $('#return').text('-').css({
+                        "background-color": "rgba(25, 216, 149, 0.2)",
+                        "color": "#19d895"
+                    });
+                    $('#cashtransfer').html(
+                        `<div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Rp.</div>
+                            </div>
+                            <input type="text" min="0"
+                                onkeypress="return event.charCode >= 48 && event.charCode <=57"
+                                class="form-control number-input input-notzero bayar-input"
+                                name="bayar" placeholder="Masukkan nominal bayar"
+                                autocomplete="off">
+                        </div>`
+                    ).hide().prev().addClass('mb-2');
                 }
             });
 
@@ -648,7 +665,9 @@
                                                     autocomplete="off">
                                             </div>`
                     ).show().prev().removeClass('mb-2');
+                    $('.card:nth-child(4)').removeClass('d-none');
                 } else {
+                    $('.card:nth-child(4)').addClass('d-none');
                     $('#return').text('-').css({
                         "background-color": "rgba(25, 216, 149, 0.2)",
                         "color": "#19d895"
@@ -696,10 +715,20 @@
                     },
                     success: function(response) {
                         $.unblockUI();
-                        $('#balance').text(formatIDR(response.price) + ',00');
-                        $('#kupon').text(formatIDR(parseInt(response.kupon)));
-                        $('#limit').text(formatIDR(parseInt(response.limit)));
                         if (response.status == "VALID") {
+                            $('#balance').text(formatIDR(response.price) + ',00');
+                            $('#kupon').text(formatIDR(parseInt(response.kupon)));
+                            $('#limit').text(formatIDR(parseInt(response.limit)));
+
+                            if (type == 1) {
+                                $('.nilai-total1-td').text('Rp. ' + formatIDR(response
+                                    .total_price - response
+                                    .price_default) + ',00');
+                            } else {
+                                $('.nilai-total1-td').text('Rp. ' + formatIDR(response
+                                    .total_price) + ',00');
+                            }
+
                             $.toast({
                                 text: response.message,
                                 position: 'top-right',

@@ -1787,3 +1787,7 @@ button {
 .even:hover {
     background-color: rgb(215, 250, 187);
 }
+
+.table-hover > tbody > tr:hover {
+    background-color: rgba(215, 250, 187) !important;
+}

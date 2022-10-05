@@ -354,14 +354,37 @@ class OrderController extends Controller
     public function select(Request $request)
     {
         $type = $request->get('type');
+        $items = \Cart::session($request->get('param'))->getContent();
         $totalPrice = \Cart::session($request->get('param'))->getTotal();
         $deposit = Deposit::where('visitor_id', $request->get('param'))->first();
-        $log_limit = LogLimit::where('visitor_id', $request->get('param'))->first();
+        $log_limit = LogLimit::where('visitor_id', $request->get('param'))->first();        
+        $today = Carbon::now()->isoFormat('dddd');
+        $id_package = [];
+        foreach ($items as $row) {
+            $package = Package::find($row->id);
+            $id_package[] = $row->id;
+            $cart[] = [
+                'rowId' => $row->id,
+                'name' => $row->name,
+                'qty' => $row->quantity,
+                'pricesingle' => $row->price,
+                'price' => $row->getPriceSum(),
+                'created_at' => $row->attributes['created_at'],
+                'category' => $package->category
+            ];
+        }
+        $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
+        $price_default = 0;
+        foreach($package_default as $default){
+            $price_default += $today === 'Minggu' ? $default['price_weekend'] : $default['price_weekdays'];
+        }
+        $orders = collect($cart)->sortBy('created_at');
+
         if ($type == 4) {
             $resultPrice =  $deposit->balance - $totalPrice;
             if ($resultPrice > 0) {
                 try {
-                    return response(['limit' => $log_limit->quota, 'price' => $resultPrice, 'kupon' => $log_limit->quota_kupon, 'status' => 'VALID', 'message' => 'Saldo telah dipilih']);
+                    return response(['limit' => $log_limit->quota, 'total_price' => $totalPrice, 'price_default' => $price_default, 'orders' => $orders, 'price' => $resultPrice, 'kupon' => $log_limit->quota_kupon, 'status' => 'VALID', 'message' => 'Saldo telah dipilih']);
                 } catch (\Throwable $th) {
                     return response()->json($this->getResponse());
                 }
@@ -371,7 +394,7 @@ class OrderController extends Controller
             }
         } else if ($type == 3) {
             try {
-                return response(['limit' => $log_limit->quota, 'price' => $deposit->balance, 'kupon' => $log_limit->quota_kupon, 'status' => 'VALID', 'message' => 'Cash/Transfer telah dipilih']);
+                return response(['limit' => $log_limit->quota, 'total_price' => $totalPrice, 'price_default' => $price_default, 'orders' => $orders, 'price' => $deposit->balance, 'kupon' => $log_limit->quota_kupon, 'status' => 'VALID', 'message' => 'Cash/Transfer telah dipilih']);
             } catch (\Throwable $th) {
                 return response()->json($this->getResponse());
             }
@@ -380,14 +403,27 @@ class OrderController extends Controller
             if ($log_limit->quota_kupon == 0) {
                 return response(['price' => $deposit->balance, 'limit' => $log_limit->quota, 'kupon' => 0, 'status' => 'INVALID', 'message' => 'Kupon tidak terpenuhi']);
             } else {
-                return response(['price' => $deposit->balance, 'limit' => $log_limit->quota, 'kupon' => $resultKupon, 'status' => 'VALID', 'message' => 'Limit telah dipilih']);
+                foreach ($items as $row) {
+                    $package = Package::find($row->id);
+                    $cart[] = [
+                        'rowId' => $row->id,
+                        'name' => $row->name,
+                        'qty' => $row->quantity,
+                        'pricesingle' => $row->price,
+                        'price' => $row->getPriceSum(),
+                        'created_at' => $row->attributes['created_at'],
+                        'category' => $package->category
+                    ];
+                }
+                $orders = collect($cart)->sortBy('created_at');
+                return response(['price' => $deposit->balance, 'orders' => $orders, 'limit' => $log_limit->quota, 'kupon' => $resultKupon, 'status' => 'VALID', 'message' => 'Limit telah dipilih']);
             }
         } else if ($type == 1) {
             $resultLimit =  $log_limit->quota - 1;
             if ($log_limit->quota == 0) {
-                return response(['price' => $deposit->balance, 'limit' => 0, 'kupon' => $log_limit->quota_kupon, 'status' => 'INVALID', 'message' => 'Limit tidak terpenuhi']);
+                return response(['price' => $deposit->balance, 'total_price' => $totalPrice, 'price_default' => $price_default, 'orders' => $orders, 'limit' => 0, 'kupon' => $log_limit->quota_kupon, 'status' => 'INVALID', 'message' => 'Limit tidak terpenuhi']);
             } else {
-                return response(['price' => $deposit->balance, 'limit' => $resultLimit, 'kupon' => $log_limit->quota_kupon, 'status' => 'VALID', 'message' => 'Limit telah dipilih']);
+                return response(['price' => $deposit->balance, 'total_price' => $totalPrice, 'price_default' => $price_default, 'orders' => $orders, 'limit' => $resultLimit, 'kupon' => $log_limit->quota_kupon, 'status' => 'VALID', 'message' => 'Limit telah dipilih']);
             }
         }
     }
