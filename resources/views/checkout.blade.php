@@ -720,11 +720,28 @@
                             $('#kupon').text(formatIDR(parseInt(response.kupon)));
                             $('#limit').text(formatIDR(parseInt(response.limit)));
 
-                            if (type == 1) {
+                            let html = '';
+                            if ((type == 1) || (type == 2)) {
+                                $.each(response.orders, function(b, val) {
+                                    html += `<div class="d-flex">
+                                                <span class="flex-grow-1">${val.name}</span>
+                                                <small>${response.orders[b].category == 'default' ? 'limit gratis' : 'Rp. ' + formatIDR(val.pricesingle) + ',00'}</small>
+                                            </div>`;
+                                });
+
+                                $('.items-default').html(html);
                                 $('.nilai-total1-td').text('Rp. ' + formatIDR(response
                                     .total_price - response
                                     .price_default) + ',00');
                             } else {
+                                $.each(response.orders, function(b, val) {
+                                    html += `<div class="d-flex">
+                                                <span class="flex-grow-1">${val.name}</span>
+                                                <small>${'Rp. ' + formatIDR(val.pricesingle) + ',00'}</small>
+                                            </div>`;
+                                });
+
+                                $('.items-default').html(html);
                                 $('.nilai-total1-td').text('Rp. ' + formatIDR(response
                                     .total_price) + ',00');
                             }

@@ -403,25 +403,12 @@ class OrderController extends Controller
             if ($log_limit->quota_kupon == 0) {
                 return response(['price' => $deposit->balance, 'limit' => $log_limit->quota, 'kupon' => 0, 'status' => 'INVALID', 'message' => 'Kupon tidak terpenuhi']);
             } else {
-                foreach ($items as $row) {
-                    $package = Package::find($row->id);
-                    $cart[] = [
-                        'rowId' => $row->id,
-                        'name' => $row->name,
-                        'qty' => $row->quantity,
-                        'pricesingle' => $row->price,
-                        'price' => $row->getPriceSum(),
-                        'created_at' => $row->attributes['created_at'],
-                        'category' => $package->category
-                    ];
-                }
-                $orders = collect($cart)->sortBy('created_at');
-                return response(['price' => $deposit->balance, 'orders' => $orders, 'limit' => $log_limit->quota, 'kupon' => $resultKupon, 'status' => 'VALID', 'message' => 'Limit telah dipilih']);
+                return response(['price' => $deposit->balance, 'total_price' => $totalPrice, 'price_default' => $price_default, 'orders' => $orders, 'limit' => $log_limit->quota, 'kupon' => $resultKupon, 'status' => 'VALID', 'message' => 'Limit telah dipilih']);
             }
         } else if ($type == 1) {
             $resultLimit =  $log_limit->quota - 1;
             if ($log_limit->quota == 0) {
-                return response(['price' => $deposit->balance, 'total_price' => $totalPrice, 'price_default' => $price_default, 'orders' => $orders, 'limit' => 0, 'kupon' => $log_limit->quota_kupon, 'status' => 'INVALID', 'message' => 'Limit tidak terpenuhi']);
+                return response(['price' => $deposit->balance, 'limit' => 0, 'kupon' => $log_limit->quota_kupon, 'status' => 'INVALID', 'message' => 'Limit tidak terpenuhi']);
             } else {
                 return response(['price' => $deposit->balance, 'total_price' => $totalPrice, 'price_default' => $price_default, 'orders' => $orders, 'limit' => $resultLimit, 'kupon' => $log_limit->quota_kupon, 'status' => 'VALID', 'message' => 'Limit telah dipilih']);
             }
