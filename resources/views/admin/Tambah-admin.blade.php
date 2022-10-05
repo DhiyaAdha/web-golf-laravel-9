@@ -49,7 +49,7 @@
                                     <label class="pull-left control-label mb-10" for="password">Password</label>
                                     <input type="password" name="password" class="form-control" id="password" placeholder="Masukan Password">
                                     <span class="show-hide1" onclick="myfunction()">
-                                        <i style="color: gray;" id="hide1" class="fa-solid fa-eye"></i>
+                                        <i style="color: gray; width:50px; height:50px;" id="hide1" class="fa-solid fa-eye"></i>
                                         <i style="color: gray;" id="hide2" class="fa-solid fa-eye-slash"></i>
                                     </span>
                                     @error('password')

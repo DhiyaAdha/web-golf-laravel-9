@@ -27,7 +27,7 @@ class InvoiceController extends Controller
         $riwayat_invoice = LogTransaction::select(['log_transactions.id', 'log_transactions.total', 'visitors.name', 'visitors.tipe_member', 
         'log_transactions.created_at', 'log_transactions.payment_type'])
         ->leftJoin('visitors', 'visitors.id', '=', 'log_transactions.visitor_id')->get();
-        // if($request->ajax()){
+        if($request->ajax()){
             return datatables()->of($riwayat_invoice)->addColumn('action', function ($data) {
                 $button = 
                     '<div class="align-items-center"><a href="'.url('invoice_cetakpdf/'.$data->id).'" target="_blank" name="pdf" data-toggle="tooltip" data-placement="top" title="download pdf"><img src="dist/img/pdf.svg" width="23px" height="23px"></a></div>';
@@ -52,9 +52,10 @@ class InvoiceController extends Controller
             })
             ->rawColumns(['name','action'])
             ->make(true);
-            // }
+            }
         return view('invoice.riwayat-invoice');
     }
+
     /**
      * Show the form for creating a new resource.
      *
