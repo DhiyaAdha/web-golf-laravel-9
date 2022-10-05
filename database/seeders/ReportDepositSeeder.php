@@ -28,7 +28,9 @@ class ReportDepositSeeder extends Seeder
             'visitor_id' => $i,
             'user_id' => $faker->randomElement([1,2]),
             'report_balance' => $faker->randomFloat(2, 0, 10000000),
-            'payment_type' => $faker->randomElement(['Tidak ada','Cash','Transfer']),
+            'fund' => $faker->randomFloat(2, 0, 10000000),
+            'payment_type' => $faker->randomElement(['cash','transfer','deposit']),
+            'status' => $faker->randomElement(['Bertambah','Berkurang']),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             ]);

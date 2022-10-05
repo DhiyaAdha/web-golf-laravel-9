@@ -457,11 +457,13 @@ class OrderController extends Controller
                                 ]);
 
                                 ReportDeposit::create([
-                                    'payment_type' => 'Deposit',
-                                    'report_balance' => $deposit->balance,
+                                    'payment_type' => 'deposit',
+                                    'report_balance' => $totalPrice,
                                     'visitor_id' => $req->get('page'),
                                     'user_id' => Auth()->id(),
-                                    'activities' => '<b>Saldo Berkurang !</b> Anda telah melakukan pembayaran menggunakan<b> deposit</b>',
+                                    'fund' => $deposit->balance,
+                                    // 'activities' => '<b>Saldo Berkurang !</b> Anda telah melakukan pembayaran menggunakan<b> deposit</b>',
+                                    'status' => 'Berkurang',
                                     'created_at' => Carbon::now(),
                                 ]);
                                 \Cart::session($req->get('page'))->clear();
@@ -712,10 +714,11 @@ class OrderController extends Controller
                                     // informasi limit bulanan
                                     ReportLimit::create([
                                         'status' => 'Berkurang',
-                                        'report_quota' => $report_limit->report_quota,
+                                        'report_quota' => 1,
                                         'visitor_id' => $req->get('page'),
                                         'user_id' => Auth()->id(),
-                                        'activities' => '<b>Limit Bulanan Berkurang menjadi ' . $report_limit->report_quota . ' ! </b>  Anda telah melakukan pembayaran menggunakan<b> quota bulanan</b>',
+                                        // 'fund_limit' => $report_limit->report_quota,
+                                        // 'activities' => '<b>Limit Bulanan Berkurang menjadi ' . $report_limit->report_quota . ' ! </b>  Anda telah melakukan pembayaran menggunakan<b> quota bulanan</b>',
                                         'created_at' => Carbon::now(),
                                     ]);
                                     \Cart::session($req->get('page'))->clear();

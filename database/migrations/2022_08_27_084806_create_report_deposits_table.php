@@ -18,8 +18,9 @@ class CreateReportDepositsTable extends Migration
             $table->integer('visitor_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('report_balance')->default(0);
-            $table->enum('payment_type',['Tidak ada','Cash', 'Transfer', 'Deposit']);
-            $table->string('activities')->nullable();
+            $table->integer('fund');
+            $table->enum('payment_type',['cash', 'transfer','deposit']);
+            $table->enum('status',['Bertambah','Berkurang']);
             $table->timestamps();
             
             $table->foreign('visitor_id')

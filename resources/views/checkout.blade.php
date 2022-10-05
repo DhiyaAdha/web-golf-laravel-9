@@ -205,7 +205,7 @@
                                                         <input type="radio" name="payment" id="kw"
                                                             class="custom-control-input" value="multiple">
                                                         <label class="custom-control-label cursor"
-                                                            for="kw">Multiple</label>
+                                                            for="kw">Split</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -309,52 +309,26 @@
                                             <div id="multiple" class="d-none">
                                                 <div class="card mt-2">
                                                     <div class="card-body">
-                                                        @if ($deposit->balance > $totalPrice)
-                                                            <div class="d-flex align-items-center choose"
-                                                                style="border-bottom: 1px solid rgba(0,0,0,.125);"
-                                                                data-toggle="tooltip" title="Saldo mencukupi">
-                                                                <div class="flex-grow-1 custom-control custom-checkbox"
-                                                                    style="width:100%;">
-                                                                    <input type="checkbox"
-                                                                        class="custom-control-input" id="customCheck8"
-                                                                        disabled>
-                                                                    <label class="custom-control-label"
-                                                                        for="customCheck8"
-                                                                        style="width: 100%; cursor:pointer;">
-                                                                        <div
-                                                                            class="d-flex flex-column flex-grow-1 justify-content-center">
-                                                                            <strong>Deposit</strong>
-                                                                            <small class="text-muted mb-2">Deposit akan
-                                                                                berkurang sesuai dengan tagihan</small>
-                                                                        </div>
-                                                                    </label>
-                                                                </div>
-                                                                <img src="{{ asset('deposit.png') }}" alt="deposit"
-                                                                    width="26" height="26">
+                                                        <div class="d-flex align-items-center choose"
+                                                            style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                                                            <div class="flex-grow-1 custom-control custom-checkbox"
+                                                                style="width:100%;">
+                                                                <input type="checkbox" name="payment-type[]"
+                                                                    value="deposit" class="custom-control-input"
+                                                                    id="customCheck8">
+                                                                <label class="custom-control-label" for="customCheck8"
+                                                                    style="width: 100%; cursor:pointer;">
+                                                                    <div
+                                                                        class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                        <strong>Deposit</strong>
+                                                                        <small class="text-muted mb-2">Deposit akan
+                                                                            berkurang sesuai dengan tagihan</small>
+                                                                    </div>
+                                                                </label>
                                                             </div>
-                                                        @else
-                                                            <div class="d-flex align-items-center choose"
-                                                                style="border-bottom: 1px solid rgba(0,0,0,.125);">
-                                                                <div class="flex-grow-1 custom-control custom-checkbox"
-                                                                    style="width:100%;">
-                                                                    <input type="checkbox" name="payment-type[]"
-                                                                        value="deposit" class="custom-control-input"
-                                                                        id="customCheck8">
-                                                                    <label class="custom-control-label"
-                                                                        for="customCheck8"
-                                                                        style="width: 100%; cursor:pointer;">
-                                                                        <div
-                                                                            class="d-flex flex-column flex-grow-1 justify-content-center">
-                                                                            <strong>Deposit</strong>
-                                                                            <small class="text-muted mb-2">Deposit akan
-                                                                                berkurang sesuai dengan tagihan</small>
-                                                                        </div>
-                                                                    </label>
-                                                                </div>
-                                                                <img src="{{ asset('deposit.png') }}" alt="deposit"
-                                                                    width="26" height="26">
-                                                            </div>
-                                                        @endif
+                                                            <img src="{{ asset('deposit.png') }}" alt="deposit"
+                                                                width="26" height="26">
+                                                        </div>
                                                         <div class="d-flex align-items-center mt-2 choose"
                                                             style="border-bottom: 1px solid rgba(0,0,0,.125);">
                                                             <div class="flex-grow-1 custom-control custom-checkbox"
