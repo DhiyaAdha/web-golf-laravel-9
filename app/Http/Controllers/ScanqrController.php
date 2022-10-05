@@ -215,6 +215,7 @@ class ScanqrController extends Controller
                 'visitor_id' => $get_uri[3],
                 'user_id' => Auth::id(),
                 'fund' => $deposit->balance,
+                'status' => 'Bertambah',
                 'report_balance' => $request->balance,
             ]);
 
