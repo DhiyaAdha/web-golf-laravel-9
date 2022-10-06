@@ -98,7 +98,7 @@
                     }
                 },
                 {
-                    data: 'payment_type'
+                    data: 'payment_type.0.payment_type'
                 },
                 {
                     data: 'total'

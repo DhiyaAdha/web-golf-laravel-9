@@ -27,37 +27,34 @@ class InvoiceController extends Controller
         $riwayat_invoice = LogTransaction::select(['log_transactions.id', 'log_transactions.total', 'visitors.name', 'visitors.tipe_member', 
         'log_transactions.created_at', 'log_transactions.payment_type'])
         ->leftJoin('visitors', 'visitors.id', '=', 'log_transactions.visitor_id')->get();
-        // if($request->ajax()){
+        if($request->ajax()){
             return datatables()->of($riwayat_invoice)->addColumn('action', function ($data) {
-                // $button = 
-                //     '<div class="align-items-center"><a href="'.url('invoice_cetakpdf/'.$data->id).'" target="_blank" name="pdf" data-toggle="tooltip" data-placement="top" title="download pdf"><img src="dist/img/pdf.svg" width="23px" height="23px"></a></div>';
+                $button = 
+                    '<div class="align-items-center"><a href="'.url('invoice_cetakpdf/'.$data->id).'" target="_blank" name="pdf" data-toggle="tooltip" data-placement="top" title="download pdf"><img src="dist/img/pdf.svg" width="23px" height="23px"></a></div>';
                 
-                // return $button;
+                return $button;
             })
             ->editColumn('name', function ($data) {
-                // return '<a data-toggle="tooltip" title="klik untuk melihat detail invoice" href="
-                // '.url('invoice/'.$data->id).'
-                // ">'
-                // .$data->name.
-                // "</a>";
+                return '<a data-toggle="tooltip" title="klik untuk melihat detail invoice" href="
+                '.url('invoice/'.$data->id).'
+                ">'
+                .$data->name.
+                "</a>";
             })
             ->editColumn('created_at', function ($data) {
-                // return $data->created_at->format('d F Y');
+                return $data->created_at->format('d F Y');
             })
             ->editColumn('payment_type', function ($data) {
                 $un = unserialize($data->payment_type);
                 // dd($un);
                 return ($un);
-                // dd($data->payment_type);
-                // $un = unserialize($data->payment_type);
-                // dd($un);
             })
             ->editColumn('total', function ($data) {
-                // return  ('Rp. ' .formatrupiah($data->total));
+                return  ('Rp. ' .formatrupiah($data->total));
             })
             ->rawColumns(['name','action'])
             ->make(true);
-            // }
+            }
         return view('invoice.riwayat-invoice');
     }
 
