@@ -202,7 +202,7 @@ class OrderController extends Controller
                     'name' => $cek_itemId[$id[3]]->name,
                     'price' => $cek_itemId[$id[3]]->price
                 ], 200);
-            } elseif(count($package_default) == 0) {
+            } else if(count($package_default) == 0) {
                 \Cart::session($request->get('page'))->clear();
                 $this->setResponse('INVALID', "Setidaknya pilih satu jenis permainan");
                 return response()->json($this->getResponse());
@@ -332,6 +332,8 @@ class OrderController extends Controller
         } else {
             foreach ($items as $row) {
                 $id_package[] = $row->id;
+                $item_default = 0;
+                $cek_itemId = $items->whereIn('id', $id_package);
                 $cart[] = [
                     'rowId' => $row->id,
                     'name' => $row->name,
@@ -340,6 +342,9 @@ class OrderController extends Controller
                     'price' => $row->getPriceSum(),
                     'created_at' => $row->attributes['created_at'],
                 ];
+                foreach($cek_itemId as $item){
+                    $item_default += $item['quantity'];
+                }
             }
             $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
             $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
@@ -352,7 +357,7 @@ class OrderController extends Controller
         if ($request->ajax()) {
             return response()->json(['order_number' => $order_number]);
         }
-        return view("checkout", compact('log_limit', 'package_default', 'package_additional', 'package_others', 'visitor', 'deposit', 'totalPrice', 'order_number', 'orders'))->render();
+        return view("checkout", compact('log_limit', 'item_default', 'package_default', 'package_additional', 'package_others', 'visitor', 'deposit', 'totalPrice', 'order_number', 'orders'))->render();
     }
 
     public function select(Request $request)
@@ -451,81 +456,71 @@ class OrderController extends Controller
                         $this->setResponse('INVALID', "Saldo tidak terpenuhi");
                         return response()->json($this->getResponse());
                     } else {
-                        // $id_package = [];
-                        // foreach ($items as $sd) {
-                        //     $id_package[] = $sd['id'];
-                        // }
-                        // $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
-                        // if (count($package_default) == 0) {
-                        //     $this->setResponse('INVALID', "Setidaknya pilih satu jenis permainan default");
-                        //     return response()->json($this->getResponse());
-                        // } else {
-                            try {
-                                $deposit->balance = $deposit->balance - $totalPrice;
-                                $deposit->save();
+                        try {
+                            $deposit->balance = $deposit->balance - $totalPrice;
+                            $deposit->save();
 
-                                LogTransaction::create([
-                                    'order_number' => $req->get('order_number'),
-                                    'visitor_id' => $req->get('page'),
-                                    'user_id' => Auth()->id(),
-                                    'cart' => serialize($cart_data),
-                                    'payment_type' => serialize([['payment_type' => 'deposit', 'balance' => $deposit->balance]]),
-                                    'payment_status' => 'paid',
-                                    'total' => $totalPrice
-                                ]);
+                            LogTransaction::create([
+                                'order_number' => $req->get('order_number'),
+                                'visitor_id' => $req->get('page'),
+                                'user_id' => Auth()->id(),
+                                'cart' => serialize($cart_data),
+                                'payment_type' => serialize([['payment_type' => 'deposit', 'balance' => $deposit->balance]]),
+                                'payment_status' => 'paid',
+                                'total' => $totalPrice
+                            ]);
 
-                                LogAdmin::create([
-                                    'user_id' => Auth::id(),
-                                    'type' => 'CREATE',
-                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                ]);
+                            LogAdmin::create([
+                                'user_id' => Auth::id(),
+                                'type' => 'CREATE',
+                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                            ]);
 
-                                ReportDeposit::create([
-                                    'payment_type' => 'deposit',
-                                    'report_balance' => $totalPrice,
-                                    'visitor_id' => $req->get('page'),
-                                    'user_id' => Auth()->id(),
-                                    'fund' => $deposit->balance,
-                                    'status' => 'Berkurang',
-                                    'created_at' => Carbon::now(),
-                                ]);
-                                \Cart::session($req->get('page'))->clear();
+                            ReportDeposit::create([
+                                'payment_type' => 'deposit',
+                                'report_balance' => $totalPrice,
+                                'visitor_id' => $req->get('page'),
+                                'user_id' => Auth()->id(),
+                                'fund' => $deposit->balance,
+                                'status' => 'Berkurang',
+                                'created_at' => Carbon::now(),
+                            ]);
+                            \Cart::session($req->get('page'))->clear();
 
-                                $data['qty'] = $row->quantity;
-                                $total_qty = 0;
-                                foreach ($cart_data as $get) {
-                                    $total_qty += $get['qty'];
-                                }
-                                $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
-                                $payment_type = unserialize($log_transaction->payment_type);
+                            $data['qty'] = $row->quantity;
+                            $total_qty = 0;
+                            foreach ($cart_data as $get) {
+                                $total_qty += $get['qty'];
+                            }
+                            $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
+                            $payment_type = unserialize($log_transaction->payment_type);
 
-                                $data = [
-                                    'name' => $visitor->name,
-                                    'email' => $visitor->email,
-                                    'address' => $visitor->address,
-                                    'phone' => $visitor->phone,
-                                    'type_member' => $visitor->tipe_member,
-                                    'sisasaldo' => $deposit->balance,
-                                    'order_number' => $req->get('order_number'),
-                                    'payment_type' => $payment_type,
-                                    'date' => $row->attributes['created_at'],
-                                    'pricesingle' => $row->price,
-                                    'price' => $row->getPriceSum(),
-                                    'total' => $totalPrice,
-                                    'qty' => $row->quantity,
-                                    'total_qty' => $total_qty,
-                                    'cart' => $cart_data,
-                                ];
-                                dispatch(new SendMailPaymentsuccess4Job($data));
+                            $data = [
+                                'name' => $visitor->name,
+                                'email' => $visitor->email,
+                                'address' => $visitor->address,
+                                'phone' => $visitor->phone,
+                                'type_member' => $visitor->tipe_member,
+                                'sisasaldo' => $deposit->balance,
+                                'order_number' => $req->get('order_number'),
+                                'payment_type' => $payment_type,
+                                'date' => $row->attributes['created_at'],
+                                'pricesingle' => $row->price,
+                                'price' => $row->getPriceSum(),
+                                'total' => $totalPrice,
+                                'qty' => $row->quantity,
+                                'total_qty' => $total_qty,
+                                'cart' => $cart_data,
+                            ];
+                            dispatch(new SendMailPaymentsuccess4Job($data));
 
-                                if ($req->ajax()) {
-                                    $this->setResponse('VALID', "Pembayaran berhasil");
-                                    return response()->json($this->getResponse());
-                                }
-                            } catch (Throwable $e) {
+                            if ($req->ajax()) {
+                                $this->setResponse('VALID', "Pembayaran berhasil");
                                 return response()->json($this->getResponse());
                             }
-                        // }
+                        } catch (Throwable $e) {
+                            return response()->json($this->getResponse());
+                        }
                     }
                 } else if ($req->get('type_single') == 3) {
                     if (is_null($req->get('bayar_input'))) {

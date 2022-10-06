@@ -155,11 +155,11 @@
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Riwayat</span>
                                 </a>
-                                <a href="javascript:void(0)" type="button" id="checkout"
+                                <button type="button" id="checkout"
                                     class="mt-15 mb-15 btn-xs btn btn-success btn-anim">
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Checkout</span>
-                                </a>
+                                </button>
                             </div>
                         @else
                             <button type="submit" class="mt-15 mb-15 btn-xs btn-block btn btn-success btn-anim"
@@ -484,6 +484,7 @@
             page = tg[tg.length - 1];
             let url = "{{ route('checkout', ':id') }}";
             url = url.replace(':id', page);
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -505,6 +506,7 @@
                         confirmButtonColor: "#01c853",
                     }, function(isConfirm) {
                         checkout(url, response.order_number);
+                        $('#checkout').attr('disabled', true);
                     });
                 }
             });
