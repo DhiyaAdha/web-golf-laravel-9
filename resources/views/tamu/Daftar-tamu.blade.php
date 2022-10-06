@@ -3,29 +3,29 @@
     <!-- Main Content -->
     <div class="page-wrapper">
         <div class="container-fluid">
-           <!-- Title -->
-           <div class="row heading-bg">
-            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h5 class="txt-dark">Daftar Tamu</h5>
+            <!-- Title -->
+            <div class="row heading-bg">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h5 class="txt-dark">Daftar Tamu</h5>
+                </div>
+                <!-- Breadcrumb -->
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <ol class="breadcrumb">
+                        <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
+                        <li class="active"><span>Daftar Tamu</span></li>
+                    </ol>
+                </div>
+                <!-- /Breadcrumb -->
             </div>
-            <!-- Breadcrumb -->
-            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                <ol class="breadcrumb">
-                    <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
-                    <li class="active"><span>Daftar Tamu</span></li>
-                </ol>
-            </div>
-            <!-- /Breadcrumb -->
-        </div>
-        <!-- /Title -->
+            <!-- /Title -->
 
             <div class="row">
                 <!-- Basic Table -->
                 <div class="col-sm-12">
                     <div class="panel panel-default card-view">
                         <div class="panel-heading">
-                            <div class="pull-right" >
-                                
+                            <div class="pull-right">
+
                             </div>
                             <div class="pull-left">
                                 {{-- <h6 class="panel-title txt-dark">Daftar Tamu</h6> --}}
@@ -33,10 +33,11 @@
                                     Tamu</a>
                             </div>
                             <div class="pull-right">
-                                
-                                    <a href="{{ url('export_excel_tamu') }}" target="_blank" name="excel" data-toggle="tooltip" data-placement="top" title="Download Excel">
-                                        <img src="dist/img/excel.svg" width="25px" height="25px">
-                                    </a>
+
+                                <a href="{{ url('export_excel_tamu') }}" target="_blank" name="excel"
+                                    data-toggle="tooltip" data-placement="top" title="Download Excel">
+                                    <img src="dist/img/excel.svg" width="25px" height="25px">
+                                </a>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -55,7 +56,7 @@
                                                     <th class="">Email</th>
                                                     <th class="">Phone</th>
                                                     <th class="">Tipe</th>
-                                                    <th class="">Opsi</th>
+                                                    <th class="" style="text-align: center">Opsi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -64,6 +65,42 @@
                                         </table>
                                     </div>
                                 </div>
+                            </div>
+                            <div id="myModal" class="modal fade" tabindex="-1" role="dialog"
+                                aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-hidden="true">×</button>
+                                            <h5 class="modal-title" id="myModalLabel">
+                                            </h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="#" method="POST">
+                                                @csrf
+                                                <div class="form-group">
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon"><img src="dist/img/ticket.svg"
+                                                                alt=""></div>
+                                                        <input type="text" min="0"
+                                                            onkeypress="return event.charCode >= 48 && event.charCode <=57"
+                                                            class="form-control" name="balance" data-id=""
+                                                            placeholder="Masukan jumlah Kupon" required>
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-success btn-anim">
+                                                    <i class="icon-rocket"></i>
+                                                    <span class="btn-text">submit</span>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
                             </div>
                         </div>
                     </div>
@@ -140,9 +177,14 @@
                 zeroRecords: "Tidak ada data pada tabel ini"
             },
             columnDefs: [{
-                className: 'text-left',
-                targets: [0, 1, 2, 3, 4]
-            }],
+                    className: 'text-left',
+                    targets: [0, 1, 2, 3],
+                },
+                {
+                    className: 'text-center',
+                    targets: [4]
+                }
+            ],
         });
         /* data tamu */
 

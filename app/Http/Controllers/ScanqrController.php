@@ -114,30 +114,34 @@ class ScanqrController extends Controller
         //
     }
     // Scantamu-berhasil
-    public function scantamuberhasil(){
-            return view('/scan-tamu-berhasil');
+    public function scantamuberhasil()
+    {
+        return view('/scan-tamu-berhasil');
     }
 
-    public function proses (){
-            return view('proses');
+    public function proses()
+    {
+        return view('proses');
     }
 
-    public function kartutamu($id){
+    public function kartutamu($id)
+    {
 
         $visitor = Visitor::findOrFail($id);
         $qrcode = QrCode::size(180)->generate($visitor->unique_qr);
         $data['visitor'] =  Visitor::find($id);
-        return view('tamu.kartu-tamu',compact('qrcode'),$data);
-
+        return view('tamu.kartu-tamu', compact('qrcode'), $data);
     }
 
     //penghubung route dengan view
-    public function detailscan(){
+    public function detailscan()
+    {
         return view('detail_scan');
     }
 
     //penghubung method dengan view yang akan ditampilkan
-    public function show_detail($id = null){
+    public function show_detail($id = null)
+    {
         $visitor = Visitor::find($id);
         $deposit = Deposit::where('visitor_id', $id)->first();
         $log_limit = LogLimit::where('visitor_id', $id)->first();
@@ -151,7 +155,7 @@ class ScanqrController extends Controller
     {
         $url_qr = explode("/", parse_url($request->get('qrCode'), PHP_URL_PATH));
         $get_visitor = Visitor::where("id", $url_qr[2])->first();
-        if($get_visitor == null) {
+        if ($get_visitor == null) {
             $this->setResponse('INVALID', "Data tidak ditemukan!");
             return response()->json($this->getResponse());
         } else {
@@ -207,7 +211,7 @@ class ScanqrController extends Controller
             LogAdmin::create([
                 'user_id' => Auth::id(),
                 'type' => 'CREATE',
-                'activities' => 'Berhasil menambah deposit <b>'.$request->balance.'</b> atas nama <b>'.$visitor->name.'</b>',
+                'activities' => 'Berhasil menambah deposit <b>' . $request->balance . '</b> atas nama <b>' . $visitor->name . '</b>',
             ]);
 
             ReportDeposit::create([
@@ -219,7 +223,50 @@ class ScanqrController extends Controller
                 'report_balance' => $request->balance,
             ]);
 
-            return redirect()->back()->with('success','Berhasil menambah deposit');
+            return redirect()->back()->with('success', 'Berhasil menambah deposit');
+        } catch (\Throwable $th) {
+            return response()->json($this->getResponse());
+        }
+    }
+
+    public function update_kupon(Request $request, $id)
+    {
+        try {
+            $get_uri = explode("/", parse_url($request->getRequestUri(), PHP_URL_PATH));
+            $visitor = LogLimit::join('visitors', 'log_limits.visitor_id', '=', 'visitors.id')->where('log_limits.visitor_id', $get_uri[3])->first();
+            $limit_kupon = LogLimit::where('visitor_id', $get_uri[3])->first();
+            $limit_kupon->quota_kupon = $request->quota_kupon + $limit_kupon->quota_kupon;
+            $limit_kupon->save();
+
+            //notifikasi email
+            $log_limit = LogLimit::where('visitor_id', $id)->first();
+            $data = $request->all();
+            $datav = Visitor::find($id);
+            $data['name'] = $datav->name;
+            $data['tambahdeposit'] = $request->quota_kupon;
+            $data['sebelumdeposit'] = $limit_kupon->quota_kupon - $request->quota_kupon;
+            $data['setelahdeposit'] = $limit_kupon->quota_kupon;
+            $data['quota'] = $log_limit->quota;
+            $data['quota_kupon'] = $log_limit->quota_kupon;
+            $data['email'] = $visitor->email;
+            // dispatch(new SendMailJobDepositTambah($data));
+
+            LogAdmin::create([
+                'user_id' => Auth::id(),
+                'type' => 'CREATE',
+                'activities' => 'Berhasil menambah deposit <b>' . $request->quota_kupon . '</b> atas nama <b>' . $visitor->name . '</b>',
+            ]);
+
+            ReportDeposit::create([
+                'payment_type' => $request->payment_type,
+                'visitor_id' => $visitor->id,
+                'user_id' => Auth::id(),
+                'fund' => $limit_kupon->quota_kupon,
+                'status' => 'Bertambah',
+                'report_quota_kupon' => $request->quota_kupon,
+            ]);
+
+            return redirect()->back()->with('success', 'Berhasil menambah kupon');
         } catch (\Throwable $th) {
             return response()->json($this->getResponse());
         }
