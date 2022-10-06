@@ -305,13 +305,12 @@
                                                                                     class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                                     <strong>Limit</strong>
                                                                                     <small class="text-muted">Limit
-                                                                                        otomatis
-                                                                                        akan
+                                                                                        otomatis akan
                                                                                         berkurang</small>
                                                                                     <small
                                                                                         class="text-muted mb-2">Limit
-                                                                                        berlaku
-                                                                                        hanya untuk 1 game</small>
+                                                                                        berlaku hanya untuk 1
+                                                                                        game</small>
                                                                                 </div>
                                                                             </label>
                                                                         </div>

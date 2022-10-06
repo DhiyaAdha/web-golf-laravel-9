@@ -24,9 +24,40 @@ class InvoiceController extends Controller
      */
     public function index(Request $request)
     {
-        $riwayat_invoice = LogTransaction::select(['log_transactions.id', 'log_transactions.total', 'visitors.name', 'visitors.tipe_member', 
-        'log_transactions.created_at', 'log_transactions.payment_type'])
-        ->leftJoin('visitors', 'visitors.id', '=', 'log_transactions.visitor_id')->get();
+        $phonesList = [
+            0 => [
+                'Manufacturer' => 'Apple',
+                'Model' => 'iPhone 3G 8GB',
+                'Carrier' => 'AT&T',
+                'Cost' => 100000
+            ],
+            1 => [
+                'Manufacturer' => 'Motorola',
+                'Model' => 'Droid X2',
+                'Carrier' => 'Verizon',
+                'Cost' => 120000
+            ],
+            2 => [
+                'Manufacturer' => 'Motorola',
+                'Model' => 'Droid X2',
+                'Carrier' => 'Verizon',
+                'Cost' => 150000
+            ]
+        ];
+
+        $riwayat_invoice = LogTransaction::join('visitors', 'log_transactions.visitor_id', '=', 'visitors.id')->orderBy('log_transactions.created_at', 'desc')->get(['log_transactions.*', 'visitors.name as name', 'visitors.tipe_member as tipe_member']);
+        $list_invoice = [];
+        foreach($riwayat_invoice as $invoice){
+            $list_invoice += [
+                'id'=> $invoice['id'],
+                'payment_type'=> unserialize($invoice['payment_type']),
+                'total'=> $invoice['total'],
+                'created_at'=> $invoice['created_at'],
+                'name'=> $invoice['name'],
+                'tipe_member'=> $invoice['tipe_member'],
+            ];
+        }
+        // dd($list_invoice['payment_type']);
         if($request->ajax()){
             return datatables()->of($riwayat_invoice)->addColumn('action', function ($data) {
                 $button = 
@@ -35,17 +66,22 @@ class InvoiceController extends Controller
                 return $button;
             })
             ->editColumn('name', function ($data) {
-                    return '<a data-toggle="tooltip" title="klik untuk melihat detail invoice" href="
-                    '.url('invoice/'.$data->id).'
-                    ">'
-                    .$data->name.
-                    "</a>";
+                return '<a data-toggle="tooltip" title="klik untuk melihat detail invoice" href="'.url('invoice/'.$data->id).'">'.$data->name."</a>";
             })
             ->editColumn('created_at', function ($data) {
                 return $data->created_at->format('d F Y');
             })
             ->editColumn('payment_type', function ($data) {
-                return ($data->payment_type);
+                $type = unserialize($data->payment_type);
+                if (isset($type[0]['payment_type'])) {
+                    return $type[0]['payment_type'];
+                } else {
+                    $datax = array();
+                    foreach ($type[0] as $i => $t) {
+                        $datax[$i] = $t['payment_type'];
+                    }
+                    return implode(", ", $datax);
+                }
             })
             ->editColumn('total', function ($data) {
                 return  ('Rp. ' .formatrupiah($data->total));
@@ -55,6 +91,8 @@ class InvoiceController extends Controller
         }
         return view('invoice.riwayat-invoice');
     }
+
+
     /**
      * Show the form for creating a new resource.
      *
