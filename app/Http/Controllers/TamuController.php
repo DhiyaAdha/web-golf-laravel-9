@@ -339,7 +339,8 @@ class TamuController extends Controller
     public function reportdeposit(Request $request, $id)
     {
         $decrypt_id = Crypt::decryptString($id);
-        $aktifitas_deposit = ReportDeposit::select('id', 'report_balance', 'payment_type', 'status', 'visitor_id', 'user_id', 'fund', 'created_at')->where('visitor_id', $decrypt_id)->where('fund','!=',0)->orderBy('created_at', 'desc')->get();
+        $aktifitas_deposit = ReportDeposit::select('id', 'report_balance', 'payment_type', 'status', 'visitor_id', 'user_id', 'fund', 'created_at')
+        ->where('visitor_id', $decrypt_id)->where('fund','!=',0)->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
             return datatables()->of($aktifitas_deposit)->editColumn('report_balance', function ($data) {
                 return 'Rp. ' . number_format($data->fund, 0, ',', '.');
@@ -374,7 +375,7 @@ class TamuController extends Controller
     {
         $decrypt_id = Crypt::decryptString($id);
         $aktifitas_limit =
-            ReportLimit::select('id', 'report_quota', 'status', 'visitor_id',  'user_id', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
+            ReportLimit::select('id', 'report_quota', 'status', 'visitor_id',  'user_id', 'created_at')->where('report_quota','!=',0)->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
 
         if ($request->ajax()) {
             return datatables()->of($aktifitas_limit)
@@ -408,7 +409,7 @@ class TamuController extends Controller
     {
         $decrypt_id = Crypt::decryptString($id);
         $aktifitas_limit =
-            ReportLimit::select('id', 'report_quota_kupon', 'status', 'visitor_id',  'user_id', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
+            ReportLimit::select('id', 'report_quota_kupon', 'status', 'visitor_id',  'user_id', 'created_at')->where('visitor_id', $decrypt_id)->where('report_quota_kupon','!=',0)->orderBy('created_at', 'desc')->get();
 
         if ($request->ajax()) {
             return datatables()->of($aktifitas_limit)
