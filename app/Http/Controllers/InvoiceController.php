@@ -45,9 +45,16 @@ class InvoiceController extends Controller
                 return $data->created_at->format('d F Y');
             })
             ->editColumn('payment_type', function ($data) {
-                $un = unserialize($data->payment_type);
-                // dd($un);
-                return ($un);
+                $type = unserialize($data->payment_type);
+                if (isset($type[0]['payment_type'])) {
+                    return $type[0]['payment_type'];
+                } else {
+                    $datax = array();
+                    foreach ($type[0] as $i => $t) {
+                        $datax[$i] = $t['payment_type'];
+                    }
+                    return implode(", ", $datax);
+                }
             })
             ->editColumn('total', function ($data) {
                 return  ('Rp. ' .formatrupiah($data->total));

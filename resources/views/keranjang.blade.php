@@ -24,7 +24,7 @@
                     <div style="height: 387px;" class="panel panel-default card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
-                                <strong class="panel-title txt-dark">Default</strong>
+                                <strong class="panel-title txt-dark">Jenis Permainan</strong>
                             </div>
                             <div class="pull-right">
                                 <div class='d-flex '>
@@ -45,7 +45,7 @@
                         </div>
                         <div class="panel-heading">
                             <div class="pull-left">
-                                <strong class="panel-title txt-dark">Tambahan</strong>
+                                <strong class="panel-title txt-dark">Fasilitas</strong>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -155,11 +155,11 @@
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Riwayat</span>
                                 </a>
-                                <a href="javascript:void(0)" type="button" id="checkout"
+                                <button type="button" id="checkout"
                                     class="mt-15 mb-15 btn-xs btn btn-success btn-anim">
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Checkout</span>
-                                </a>
+                                </button>
                             </div>
                         @else
                             <button type="submit" class="mt-15 mb-15 btn-xs btn-block btn btn-success btn-anim"
@@ -442,7 +442,6 @@
                     $('.counted').text(response.counted);
                     var qty = $('#qty').text();
                     $('#qty').text(qty - 1);
-                    console.log(response.cart.length)
                     if (response.cart.length == 0) {
                         $('#isi-').html(`<span class="not-found text-muted">Keranjang masih kosong</span>`)
                             .addClass('d-flex justify-content-center align-items-center');
@@ -516,6 +515,7 @@
             page = tg[tg.length - 1];
             let url = "{{ route('checkout', ':id') }}";
             url = url.replace(':id', page);
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -537,6 +537,8 @@
                         confirmButtonColor: "#01c853",
                     }, function(isConfirm) {
                         checkout(url, response.order_number);
+                        $('#checkout').attr('disabled', true);
+                        window.close();
                     });
                 }
             });

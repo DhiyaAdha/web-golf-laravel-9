@@ -26,6 +26,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Cache\RateLimiting\Limit;
+use PhpParser\Node\Stmt\Return_;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 
@@ -149,10 +150,7 @@ class TamuController extends Controller
                 'visitor_id' => $visitors->id,
                 'user_id' =>    Auth::user()->id,
                 'report_quota' => 4,
-                // 'fund_limit' => 4,
                 'status' => 'Bertambah',
-                // 'activities'=> 'Limit ' . $request->name . ' bertambah menjadi ' . $request->tipe_member == 'VIP' ? '4' : '10',
-                // 'activities' => 'Limit <b>' . $request->name . '</b> bertambah menjadi <b> 4</b>',
                 'created_at' => Carbon::now(),
             ]);
         } else {
@@ -160,14 +158,12 @@ class TamuController extends Controller
                 'visitor_id' => $visitors->id,
                 'user_id' =>    Auth::user()->id,
                 'report_quota' => 10,
-                // 'fund_limit' => 10,
                 'status' => 'Bertambah',
-                // 'activities'=> 'Limit ' . $request->name . ' bertambah menjadi ' . $request->tipe_member == 'VIP' ? '4' : '10',
-                // 'activities' => 'Limit <b>' . $request->name . '</b> bertambah menjadi <b> 10</b>',
                 'created_at' => Carbon::now(),
             ]);
         }
         $report_quota->save();
+
         $quota = LogLimit::create([
             'visitor_id' => $visitors->id,
             'report_limit_id' => $report_quota->id,
@@ -175,6 +171,23 @@ class TamuController extends Controller
             'created_at' => Carbon::now(),
         ]);
         $quota->save();
+
+        $report_deposit = ReportDeposit::create([
+            'payment_type' => 'cash',
+            'visitor_id' => $visitors->id,
+            'user_id' => Auth::user()->id,
+            'report_balance' => 0,
+            'status' => 'Bertambah',
+        ]);
+        $report_deposit->save();
+
+        $deposit = Deposit::create([
+            'visitor_id' => $visitors->id,
+            'user_id' =>    Auth::user()->id,
+            'report_deposit_id' => $report_deposit->id,
+        ]);
+        $deposit->save();
+
         $data = $request->all();
         dispatch(new SendMailJob($data));
         // dispatch(new SendMailJobDeposit($data));
@@ -227,13 +240,9 @@ class TamuController extends Controller
         }
 
         $report_deposit->save();
-        $deposit = Deposit::create([
-            'visitor_id' => $request->visitor_id,
-            'user_id' =>    Auth::user()->id,
-            'report_deposit_id' => $report_deposit->id,
-            'type' => 'CREATE',
-            'balance' => $request->balance,
-        ]);
+
+        $deposit = Deposit::where('visitor_id', $request->visitor_id)->first();
+        $deposit->balance = $request->balance + $deposit->balance;
         $deposit->save();
         $data_deposit = array(
             "visitor_id" => $request->visitor_id,
@@ -287,7 +296,7 @@ class TamuController extends Controller
     public function reportdeposit(Request $request, $id)
     {
         $decrypt_id = Crypt::decryptString($id);
-        $aktifitas_deposit = ReportDeposit::select('id', 'report_balance', 'payment_type', 'status', 'visitor_id', 'user_id', 'fund', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
+        $aktifitas_deposit = ReportDeposit::select('id', 'report_balance', 'payment_type', 'status', 'visitor_id', 'user_id', 'fund', 'created_at')->where('visitor_id', $decrypt_id)->where('fund','!=',0)->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
             return datatables()->of($aktifitas_deposit)->editColumn('report_balance', function ($data) {
                 return 'Rp. ' . number_format($data->fund, 0, ',', '.');
@@ -329,8 +338,13 @@ class TamuController extends Controller
                 ->addColumn('limit', function ($data) {
                     return $data->report_quota;
                 })->addColumn('Informasi', function ($data) {
-                    return $data->report_quota;
-                })
+                    if($data->status == 'Bertambah'){
+                        return ' Limit anda bertambah!';
+                } elseif($data->status == 'Berkurang'){
+                    return ' Limit anda berkurang! ';
+                } else {
+                    return 'Limit Bulanan melakukan Reset ';
+                }})
                 ->addColumn('status', function ($data) {
                     if ($data->status == 'Bertambah') {
                         return '<p class="label label-success">' . $data->status . '<div>';
@@ -341,10 +355,52 @@ class TamuController extends Controller
                     }
                 })->editColumn('created_at', function ($data) {
                     return date_format($data->created_at, 'd-m-Y H:i');
-                })->rawColumns(['limit', 'jumlah_transaksi', 'status', 'created_at'])->make(true);
-        }
+                })->rawColumns(['limit', 'informasi', 'status', 'created_at'])->make(true);
+    }
     }
     /* end data aktifitas tamu limit */
+
+    /* data aktifitas tamu kupon */
+    public function reportkupon(Request $request, $id)
+    {
+        $decrypt_id = Crypt::decryptString($id);
+        $aktifitas_limit =
+            ReportLimit::select('id', 'report_quota_kupon', 'status', 'visitor_id',  'user_id', 'created_at')->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
+
+        if ($request->ajax()) {
+            return datatables()->of($aktifitas_limit)
+                ->addColumn('kupon', function ($data) {
+                    if ($data->report_quota_kupon > 0){
+                        return $data->report_quota_kupon;
+                    } else {
+                        return ;
+                    }
+                })->addColumn('Informasi', function ($data) {
+                    if($data->status == 'Bertambah'){
+                        return ' Limit Anda Bertambah!';
+                } elseif($data->status == 'Berkurang'){
+                    return ' Limit Anda Berkurang! ';
+                } else {
+                    
+                }})
+                ->addColumn('status', function ($data) {
+                    if ($data->status == 'Bertambah') {
+                        return '<p class="label label-success">' . $data->status . '<div>';
+                    } elseif ($data->status == 'Berkurang') {
+                        return '<p class="label label-danger">' . $data->status . '<div>';
+                    } else {
+                        
+                    }
+                })->editColumn('created_at', function ($data) {
+                    if ($data->report_quota_kupon > 0){
+                    return date_format($data->created_at, 'd-m-Y H:i');
+                    }else{
+                    return '<input type="hidden">';
+                    }
+                })->rawColumns(['kupon', 'Informasi', 'status', 'created_at'])->make(true);
+        }
+    }
+    /* end data aktifitas tamu kupon */
 
     /*UPDATE BERKURANG deposit */
     public function updatedeposit(Request $request, $id)
@@ -375,9 +431,8 @@ class TamuController extends Controller
         ]);
         Deposit::create([
             'visitor_id' => $request->visitor_id,
-            'status' => 'UPDATE',
             'balance' => $request->balance,
-            'activities' => 'Deposit <b>' . $visitor->name . ' berkurang sebesar <b>' . $request->balance . '</b>',
+            // 'activities' => 'Deposit <b>' . $visitor->name . ' berkurang sebesar <b>' . $request->balance . '</b>',
         ]);
         $visitor->save();
         return redirect()->route('/aktifitas-kartu-tamu/' . $visitor->id)->with('status', 'Data Tamu Berhasil Diupdate');
@@ -418,7 +473,7 @@ class TamuController extends Controller
             'visitor_id' => $request->visitor_id,
             'status' => 'CREATE',
             'quota' => $request->quota,
-            'activities' => 'Limit <b>' . $visitor->name . ' sebesar <b>' . $request->quota . '</b>',
+            // 'activities' => 'Limit <b>' . $visitor->name . ' sebesar <b>' . $request->quota . '</b>',
         ]);
 
         $visitor->save();
@@ -505,7 +560,7 @@ class TamuController extends Controller
                 ->editColumn('created_at', function ($data) {
                     return date_format($data->created_at, 'd-m-Y H:i');
                 })->editColumn('total', function($data) {
-                    return $data->total;
+                    return 'Rp. ' . number_format($data->total, 0, ',', '.');
                 })->rawColumns(['order_number', 'total', 'information', 'status', 'created_at'])->make(true);
         }
     }
