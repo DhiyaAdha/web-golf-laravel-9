@@ -139,10 +139,23 @@
                 lengthMenu: "Menampilkan _MENU_ data",
                 zeroRecords: "Tidak ada data pada tabel ini"
             },
+            
             columnDefs: [{
                 className: 'text-left',
                 targets: [0, 1, 2, 3, 4]
-            }],
+            }, {
+                width: '20%',
+                targets: [0]
+            }, {
+                width: '30%',
+                targets: [1]
+            }, {
+                width: '15%',
+                targets: [2]
+            }, {
+                width: '10%',
+                targets: [3, 4]
+            }]
         });
         /* data tamu */
 
