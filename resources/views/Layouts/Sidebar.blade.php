@@ -23,36 +23,78 @@
             </li>
         @endif
         <li>
-            <a class="{{ Request::is('scan-tamu') ? 'active' : '' }}" href="{{ route('scan-tamu') }}">
-                <div class="pull-left">
-                    <i class="fa fa-camera-retro mr-20"></i>
-                    <span class="right-nav-text">Scan Tamu</span>
-                </div>
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#pages_dr"
+                class="collapsed {{ Request::is('scan-tamu') || Request::is('reguler') ? 'active' : '' }}"
+                aria-expanded="false">
+                <div class="pull-left"><i class="zmdi zmdi-google-pages mr-20"></i><span class="right-nav-text">Point of
+                        Sales</span></div>
+                <div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div>
                 <div class="clearfix"></div>
             </a>
+            <ul id="pages_dr" class="collapse-level-1 two-col-list collapse" aria-expanded="false"
+                style="height: 0px;">
+                <li>
+                    <a class="{{ Request::is('scan-tamu') ? 'active-page' : '' }}" href="{{ route('scan-tamu') }}">
+                        <div class="pull-left">
+                            <span class="right-nav-text">Scan QR Code</span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </a>
+                </li>
+                <li>
+                    <a class="{{ Request::is('reguler') ? 'active-page' : '' }}" href="#">
+                        <div class="pull-left">
+                            <span class="right-nav-text">Reguler</span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </a>
+                </li>
+            </ul>
         </li>
-        <li>
-            <a class="{{ Request::is('daftar-tamu') ? 'active' : '' }}" href="{{ route('daftar-tamu') }}">
-                <div class="pull-left">
-                    <i class="fa fa-users mr-20"></i>
-                    <span class="right-nav-text">Daftar Tamu</span>
-                </div>
-                <div class="clearfix"></div>
-            </a>
-        </li>
-        {{-- hideadmin --}}
-        @if (auth()->user()->role_id == '2')
+        @if (auth()->user()->role_id == '1')
             <li>
-                <a class="{{ Request::is('daftar-admin') ? 'active' : '' }}" href="{{ route('daftar-admin') }}">
+                <a class="{{ Request::is('daftar-tamu') ? 'active' : '' }}" href="{{ route('daftar-tamu') }}">
                     <div class="pull-left">
                         <i class="fa fa-user mr-20"></i>
-                        <span class="right-nav-text">Daftar Admin</span>
+                        <span class="right-nav-text">Daftar Tamu</span>
                     </div>
                     <div class="clearfix"></div>
                 </a>
             </li>
         @endif
-        @if (Auth::user()->role_id == '2')
+        {{-- hideadmin --}}
+        @if (auth()->user()->role_id == '2')
+            <li>
+                <a href="javascript:void(0);" data-toggle="collapse" data-target="#pages_users"
+                    class="collapsed {{ Request::is('daftar-admin') || Request::is('daftar-tamu') ? 'active' : '' }}"
+                    aria-expanded="false">
+                    <div class="pull-left"><i class="fa fa-user mr-20"></i><span class="right-nav-text">Daftar
+                            Pengguna</span></div>
+                    <div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div>
+                    <div class="clearfix"></div>
+                </a>
+                <ul id="pages_users" class="collapse-level-1 two-col-list collapse" aria-expanded="false"
+                    style="height: 0px;">
+                    <li>
+                        <a class="{{ Request::is('daftar-admin') ? 'active-page' : '' }}"
+                            href="{{ route('daftar-admin') }}">
+                            <div class="pull-left">
+                                <span class="right-nav-text">Daftar Admin</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="{{ Request::is('daftar-tamu') ? 'active-page' : '' }}"
+                            href="{{ route('daftar-tamu') }}">
+                            <div class="pull-left">
+                                <span class="right-nav-text">Daftar Tamu</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
             <li>
                 <a class="{{ Request::is('riwayat-invoice') ? 'active' : '' }}"
                     href="{{ route('riwayat-invoice.index') }}">
@@ -63,11 +105,9 @@
                     <div class="clearfix"></div>
                 </a>
             </li>
-        @endif
-        <li>
-            <hr class="light-grey-hr mb-10" />
-        </li>
-        @if (Auth::user()->role_id == '2')
+            <li>
+                <hr class="light-grey-hr mb-10" />
+            </li>
             <li class="navigation-header">
                 <span>PRODUK</span>
                 <i class="zmdi zmdi-more"></i>

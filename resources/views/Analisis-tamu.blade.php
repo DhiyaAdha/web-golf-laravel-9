@@ -40,9 +40,10 @@
                                                 <div class="col-xs-6 text-left data-wrap-left">
                                                     <span class="txt-light block counter"><span
                                                             class="counter-anim">{{ $visitor_vvip }}</span></span>
-                                                    <span class="weight-500 uppercase-font txt-light block font-13">Total transaksi
+                                                    <span class="weight-500 uppercase-font txt-light block font-13">Total
+                                                        transaksi
                                                         VVIP PERTAHUN
-                                                        </span>
+                                                    </span>
                                                 </div>
                                                 <div class="col-xs-6 text-right data-wrap-right">
                                                     <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i>
@@ -66,7 +67,8 @@
                                                 <div class="col-xs-6 text-left data-wrap-left">
                                                     <span class="txt-light block counter"><span
                                                             class="counter-anim">{{ $visitor_vip }}</span></span>
-                                                    <span class="weight-500 uppercase-font txt-light block font-13">Total transaksi
+                                                    <span class="weight-500 uppercase-font txt-light block font-13">Total
+                                                        transaksi
                                                         VIP PERTAHUN
                                                     </span>
                                                 </div>
@@ -226,7 +228,7 @@
                                 <div class="panel-body">
                                     <div class="table-wrap">
                                         <div class="table-responsive">
-                                            <table class="table mb-0" id="dt-analisis">
+                                            <table class="table table-hover mb-0" id="dt-analisis">
                                                 <thead>
                                                     <tr>
                                                         <th class="">NAMA TAMU</th>
@@ -283,7 +285,7 @@
                         data: 'name'
                     },
                     {
-                        data: 'created_at'
+                        data: 'updated_at'
                     },
                     {
                         "data": function(data) {

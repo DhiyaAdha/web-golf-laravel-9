@@ -232,9 +232,11 @@
                             <li class="active" role="presentation"><a class="tabs-log" aria-expanded="true"
                                     data-toggle="tab" role="tab" href="#transaction_tabs">Transaksi</a></li>
                             <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
-                                    href="#deposit_tabs" aria-expanded="false">Saldo</a></li>
+                                    href="#deposit_tabs" aria-expanded="false">Deposit</a></li>
                             <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
                                     href="#limit_tabs" aria-expanded="false">Limit</a></li>
+                            <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
+                                    href="#limit_kupon_tabs" aria-expanded="false">Kupon</a></li>
                         </ul>
                     </div>
                 </div>
@@ -258,6 +260,7 @@
                                                         <tr>
                                                             <th>Order ID</th>
                                                             <th>Informasi</th>
+                                                            <th>Total Transaksi</th>
                                                             <th style="text-align: center;">Status</th>
                                                             <th style="text-align: center;">Tanggal</th>
                                                         </tr>
@@ -283,12 +286,14 @@
                                     <div class="panel-body">
                                         <div class="table-wrap">
                                             <div class="table-responsive">
-                                                <table width="100%" class="table table-hover mb-0" id="dt-tamu-deposit">
+                                                <table width="100%" class="table table-hover mb-0"
+                                                    id="dt-tamu-deposit">
                                                     <thead>
                                                         <tr>
                                                             <th>Saldo</th>
-                                                            <th>Informasi</th>
+                                                            <th>Jumlah Transaksi</th>
                                                             <th class="text-center">Tipe Pembayaran</th>
+                                                            <th class="text-center">Status</th>
                                                             <th class="text-center">Tanggal</th>
                                                         </tr>
                                                     </thead>
@@ -301,7 +306,6 @@
                             </div>
                         </div>
                         {{-- limit --}}
-
                         <div id="limit_tabs" class="tab-pane fade" role="tabpanel">
                             <div class="panel panel-default card-view">
                                 <div class="panel-heading">
@@ -317,8 +321,9 @@
                                                 <table width="100%" class="table table-hover mb-0" id="dt-tamu-limit">
                                                     <thead>
                                                         <tr>
-                                                            <th >Informasi</th>
-                                                            <th style="padding-left: 10px">Tipe</th>
+                                                            <th>Sisa Limit</th>
+                                                            <th>Jumlah Transaksi</th>
+                                                            <th style="padding-left: 10px">Status</th>
                                                             <th>Tanggal</th>
                                                         </tr>
                                                     </thead>
@@ -330,25 +335,36 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <div id="limit_tabs" class="tab-pane fade" role="tabpanel">
-                            <div class="table-wrap">
-                                <div class="table-responsive">
-                                    <table width="100%" class="table table-hover" style="margin: 10px;"
-                                        id="dt-tamu-limit">
-                                        <thead>
-                                            <tr>
-                                                <th >Informasi</th>
-                                                <th>Tipe</th>
-                                                <th style="text-align: center;">Tanggal</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
+                        {{-- limit-kupon --}}
+                        <div id="limit_kupon_tabs" class="tab-pane fade" role="tabpanel">
+                            <div class="panel panel-default card-view">
+                                <div class="panel-heading">
+                                    <div class="pull-left">
+                                        <h6 class="panel-title txt-dark">Riwayat Kupon</h6>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="panel-wrapper collapse in">
+                                    <div class="panel-body">
+                                        <div class="table-wrap">
+                                            <div class="table-responsive">
+                                                <table width="100%" class="table table-hover mb-0" id="dt-tamu-kupon">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Sisa Kupon </th>
+                                                            <th>Jumlah Transaksi</th>
+                                                            <th style="padding-left: 10px">Status</th>
+                                                            <th>Tanggal</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -359,12 +375,7 @@
 
 @push('scripts')
     <script>
-        // $('.download-kartu-tamu').on("click", function() {
-        //     $('#cetak-kartu').printThis({
-        //         printContainer: true,
-        //     });
-        // });
-
+        
         // Transaction Activity
         $('#dt-tamu-transaksi').DataTable({
             "processing": true,
@@ -395,6 +406,11 @@
                     orderable: false
                 },
                 {
+                    data: 'total',
+                    searchable: true,
+                    orderable: false
+                },
+                {
                     data: 'status',
                     searchable: true,
                     orderable: false
@@ -417,16 +433,19 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [0, 1, 2, 3]
+                targets: [0, 1, 2, 3, 4]
             }, {
                 width: '20%',
                 targets: [0]
             }, {
-                width: '50%',
+                width: '30%',
                 targets: [1]
             }, {
                 width: '10%',
-                targets: [2, 3]
+                targets: [2, 4]
+            }, {
+                width: '7%',
+                targets: [3]
             }]
         });
         // End Of Transaction Activity
@@ -456,12 +475,17 @@
                     orderable: false
                 },
                 {
-                    data: 'information',
+                    data: 'transaction',
                     searchable: true,
                     orderable: false
                 },
                 {
                     data: 'payment_type',
+                    searchable: true,
+                    orderable: false
+                },
+                {
+                    data: 'status',
                     searchable: true,
                     orderable: false
                 },
@@ -485,10 +509,10 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [0, 1, 2, 3]
+                targets: [0, 1, 2, 3, 4]
             }]
         });
-        
+
         // Limit Activity
         $('#dt-tamu-limit').DataTable({
             "processing": true,
@@ -509,7 +533,12 @@
             },
             "render": $.fn.dataTable.render.text(),
             "columns": [{
-                    data: 'information',
+                    data: 'limit',
+                    searchable: true,
+                    orderable: false
+                },
+                {
+                    data: 'Informasi',
                     searchable: true,
                     orderable: false
                 },
@@ -536,9 +565,66 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [0, 1, 2]
+                targets: [0, 1, 2, 3]
             }]
         });
         // End Of Limit Activity
+
+        // Kupon Activity
+        $('#dt-tamu-kupon').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "lengthChange": false,
+            "bDestroy": true,
+            "searching": false,
+            "paginate": {
+                "first": "First",
+                "last": "Last",
+                "next": "Next",
+                "previous": "Previous"
+            },
+            "ajax": {
+                "url": "{{ route('kupon.report.data', Request::segment(2)) }}",
+                "type": "GET",
+                "datatype": "json"
+            },
+            "render": $.fn.dataTable.render.text(),
+            "columns": [{
+                    data: 'kupon',
+                    searchable: true,
+                    orderable: false
+                },
+                {
+                    data: 'Informasi',
+                    searchable: true,
+                    orderable: false
+                },
+                {
+                    data: 'status',
+                    searchable: true,
+                    orderable: false
+                },
+                {
+                    data: 'created_at',
+                    searchable: true,
+                    orderable: false
+                }
+            ],
+            order: [],
+            responsive: true,
+            language: {
+                emptyTable: "Tidak ada data pada tabel ini",
+                info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+                infoFiltered: "(difilter dari _MAX_ total data)",
+                infoEmpty: "Tidak ada data pada tabel ini",
+                lengthMenu: "Menampilkan _MENU_ data",
+                zeroRecords: "Tidak ada data pada tabel ini"
+            },
+            columnDefs: [{
+                className: 'text-left',
+                targets: [0, 1, 2, 3]
+            }]
+        });
+        // End Of Kupon Activity
     </script>
 @endpush
