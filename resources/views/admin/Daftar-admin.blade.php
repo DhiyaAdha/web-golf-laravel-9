@@ -152,9 +152,12 @@
                 className: 'text-left',
                 targets: [0, 1, 2, 3]
             }, {
-                orderable: false,
-                targets: [0, 1, 2, 3]
-            }],
+                width: '25%',
+                targets: [0, 1]
+            }, {
+                width: '20%',
+                targets: [2, 3]
+            }], 
         });
         /* daftar admin */
 
