@@ -442,7 +442,6 @@
                     $('.counted').text(response.counted);
                     var qty = $('#qty').text();
                     $('#qty').text(qty - 1);
-                    console.log(response.cart.length)
                     if (response.cart.length == 0) {
                         $('#isi-').html(`<span class="not-found text-muted">Keranjang masih kosong</span>`)
                             .addClass('d-flex justify-content-center align-items-center');
@@ -539,6 +538,7 @@
                     }, function(isConfirm) {
                         checkout(url, response.order_number);
                         $('#checkout').attr('disabled', true);
+                        window.close();
                     });
                 }
             });
