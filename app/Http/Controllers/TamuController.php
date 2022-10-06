@@ -73,7 +73,7 @@ class TamuController extends Controller
                                 <button type="button" class="close" data-dismiss="modal"
                                     aria-hidden="true">×</button>
                                 <h5 class="modal-title" id="myModalLabel">
-                                </h5>
+                                Tambah Kupon</h5>
                             </div>
                             <div class="modal-body">
                                 <form action="'. url('update/kupon/' . $visitor->id) . '" method="POST">
