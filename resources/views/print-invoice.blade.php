@@ -385,7 +385,8 @@
                     height="30" width="150" alt="barcode" />
             </section>
             <section class="info-area align-center footer-area">
-                <span class="block">Permainan Golf Tidak Ada Klaim, Tidak Ada Perubahan</span>
+                <span class="block">Yuk kita hidupkan lagi kebiasaan berolahraga untuk pola hidup yang lebih
+                    sehat</span>
                 <span class="block bold">Terima kasih telah bermain di tgcc!</span>
             </section>
         </section>
