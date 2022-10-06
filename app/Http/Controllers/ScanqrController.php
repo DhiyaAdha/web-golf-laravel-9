@@ -189,11 +189,7 @@ class ScanqrController extends Controller
             $visitor = Deposit::join('visitors', 'deposits.visitor_id', '=', 'visitors.id')->where('deposits.visitor_id', $get_uri[3])->first();
             $deposit = Deposit::where('visitor_id', $get_uri[3])->first();
             $deposit->balance = $request->balance + $deposit->balance;
-
-            $report_deposit = ReportDeposit::where('visitor_id', $get_uri[3])->first();
-            $report_deposit->report_balance = $request->balance + $report_deposit->report_balance;
             $deposit->save();
-            $report_deposit->save();
 
             //notifikasi email
             $log_limit = LogLimit::where('visitor_id', $id)->first();
@@ -202,7 +198,7 @@ class ScanqrController extends Controller
             $data['name'] = $datav->name;
             $data['tambahdeposit'] = $request->balance;
             $data['sebelumdeposit'] = $deposit->balance - $request->balance;
-            $data['setelahdeposit'] = $report_deposit->report_balance;
+            $data['setelahdeposit'] = $deposit->balance;
             $data['quota'] = $log_limit->quota;
             $data['quota_kupon'] = $log_limit->quota_kupon;
             $data['email'] = $visitor->email;
@@ -218,7 +214,8 @@ class ScanqrController extends Controller
                 'payment_type' => $request->payment_type,
                 'visitor_id' => $get_uri[3],
                 'user_id' => Auth::id(),
-                'activities' => 'Saldo <b>' . $datav->name . '</b> bertambah menjadi <b>Rp.' .number_format($request->balance, 0, ',', '.') . '</b>',
+                'fund' => $deposit->balance,
+                'status' => 'Bertambah',
                 'report_balance' => $request->balance,
             ]);
 

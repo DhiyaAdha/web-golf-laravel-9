@@ -147,7 +147,7 @@ class DashboardController extends Controller
             'created_at', now()->format('Y')
         )->count();
 
-        $data['visitor_vip'] = LogTransaction::distinct('visitor_id')->where('payment_status', 'paid')->whereHas('visitor', function (
+        $data['visitor_vip'] = LogTransaction::where('payment_status', 'paid')->whereHas('visitor', function (
             Builder $query
         ) {
             $query->where('tipe_member', 'VIP');
@@ -193,66 +193,44 @@ class DashboardController extends Controller
             }
         )->count();
 
-        // data-table analisis tamu
-        // $visitor = Visitor::distinct([
-        //     'visitors.id',
-        //     'visitors.name',
-        //     'visitors.created_at',
-        //     'visitors.tipe_member',
-        // ])->rightJoin('log_transactions', 'log_transactions.visitor_id', '=', 'visitors.id')
-        // ->where('log_transactions.payment_status', '=', 'paid')
-        //     ->orderBy('log_transactions.created_at', 'DESC')
-        //     ->get();
-        // if ($request->ajax()) {
-        //     return datatables()
-        //         ->of($visitor)
-        //         ->editColumn('created_at', function ($data) {
-        //             return empty($data->transaction($data->id))
-        //                 ? '-' : $data->transaction($data->id)->created_at->translatedFormat('d F Y');
-        //         })
-        //         ->addColumn('times', function ($data) {
-        //             return empty($data->transaction($data->id))
-        //                 ? '-' : $data->transaction($data->id)->created_at->translatedFormat('h:i a');
-        //         })
-        //         ->editColumn('tipe_member', function ($data) {
-        //             return $data->tipe_member;
-        //         })
-        //         ->rawColumns(['name', 'action'])
-        //         ->make(true);
-        // }
-        $Log = LogTransaction::select([
-            'log_transactions.id',
-            'log_transactions.visitor_id',
-            'log_transactions.created_at',
-            'log_transactions.payment_status',
-            'visitors.name',
-            'visitors.tipe_member',
+
+        $visitor = Visitor::select([
+            'id',
+            'name',
+            'created_at',
+            'tipe_member',
+            'updated_at',
         ])
-        ->crossJoin('visitors', 'visitors.id', '=', 'log_transactions.visitor_id')
-        ->where('log_transactions.payment_status', '=', 'paid')
-            ->orderBy('log_transactions.created_at', 'desc')
+            ->orderBy('updated_at', 'desc')
             ->get();
         if ($request->ajax()) {
             return datatables()
-                ->of($Log)
-                ->editColumn('created_at', function ($data) {
-                    return $data->created_at->translatedFormat('d F Y');
-                })
-                ->addColumn('name', function ($data) {
-                    return $data->name;
+                ->of($visitor)
+                ->editColumn('updated_at', function ($data) {
+                    return empty($data->transaction($data->id))
+                        ? '-'
+                        : $data
+                        ->transaction($data->id)
+                        ->created_at->translatedFormat('d F Y');
                 })
                 ->addColumn('times', function ($data) {
-                    return $data->created_at->translatedFormat('h:i a');
+                    return empty($data->transaction($data->id))
+                        ? '-'
+                        : $data
+                        ->transaction($data->id)
+                        ->created_at->translatedFormat('h:i a');
                 })
-                ->addColumn('tipe_member', function ($data) {
+                ->editColumn('tipe_member', function ($data) {
                     return $data->tipe_member;
                 })
                 ->rawColumns(['name', 'action'])
                 ->make(true);
         }
-        
+        // dd($visitor);
         return view('/Analisis-tamu', $data);
     }
+    
+    
 
     /**
      * Show the form for creating a new resource.

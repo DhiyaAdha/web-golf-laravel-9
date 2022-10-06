@@ -44,7 +44,6 @@ class Kernel extends ConsoleKernel
                         'user_id' => '1',
                         'report_quota' => $value['tipe_member'] == 'VIP' ? '4' : '10',
                         'status' => 'Reset',
-                        'activities' => 'Limit <b>'.$value['name'].'</b> berhasil di reset menjadi <b>10x</b> main gratis pada bulan <b>'. Carbon::now()->format('M') .'</b> tahun <b>'. Carbon::now()->year .'</b>',
                         'created_at' => Carbon::now(),
                     ]);
                 }else{
@@ -53,7 +52,6 @@ class Kernel extends ConsoleKernel
                         'user_id' => '1',
                         'report_quota' => $value['tipe_member'] == 'VIP' ? '4' : '10',
                         'status' => 'Reset',
-                        'activities' => 'Limit <b>'.$value['name'].'</b> berhasil di reset menjadi <b>4x</b> main gratis pada bulan <b>'. Carbon::now()->format('M').'</b> tahun <b>'. Carbon::now()->year .'</b>',
                         'created_at' => Carbon::now(),
                     ]);
                 }
