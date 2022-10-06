@@ -145,8 +145,8 @@
                                 </div>
                                 <a href="javascript:void(0)" class="btn btn-block btn-outline-success btn-sm"
                                     data-toggle="modal" data-target="#myModal">Deposit</a>
-                                <a href="javascript:void(0)" class="btn btn-block btn-outline-success btn-sm"
-                                    data-toggle="modal" data-target="#myModal2">Tambah Kupon</a>
+                                {{-- <a href="javascript:void(0)" class="btn btn-block btn-outline-success btn-sm"
+                                    data-toggle="modal" data-target="#myModal2">Tambah Kupon</a> --}}
                                 {{-- {{ URL::signedRoute('order.cart', now()->addMinutes(10), ['id' => $visitor->id]) }} --}}
                                 <a href="{{ URL::signedRoute('order.cart', ['id' => $visitor->id]) }}"
                                     class="btn btn-block btn-success btn-sm" target="_blank">Pilih paket bermain</a>
@@ -198,7 +198,7 @@
                                 </div>
                                 <!-- /.modal-dialog -->
                             </div>
-                            <div id="myModal2" class="modal fade" tabindex="-1" role="dialog"
+                            {{-- <div id="myModal2" class="modal fade" tabindex="-1" role="dialog"
                                 aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -206,7 +206,7 @@
                                             <button type="button" class="close" data-dismiss="modal"
                                                 aria-hidden="true">×</button>
                                             <h5 class="modal-title" id="myModalLabel2">
-                                                {{ $limit_kupon->quota_kupon == 0 ? 'Tambah Kupon' : 'Update Kupon' }}</h5>
+                                                {{ $log_limit->quota_kupon == 0 ? 'Tambah Kupon' : 'Update Kupon' }}</h5>
                                         </div>
                                         <div class="modal-body">
                                             <form action="{{ URL::signedRoute('update.kupon', ['id' => $visitor->id]) }}" method="POST">
@@ -219,7 +219,7 @@
                                                                 alt=""></div>
                                                         <input type="text" min="0"
                                                             onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                                            class="form-control" name="balance" data-id=""
+                                                            class="form-control" name="quota_kupon" data-id=""
                                                             placeholder="Masukan jumlah Kupon" required>
                                                     </div>
                                                 </div>
@@ -233,7 +233,7 @@
                                     <!-- /.modal-content -->
                                 </div>
                                 <!-- /.modal-dialog -->
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>

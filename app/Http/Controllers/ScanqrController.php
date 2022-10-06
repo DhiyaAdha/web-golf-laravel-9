@@ -7,11 +7,13 @@ use App\Models\Visitor;
 use App\Models\LogAdmin;
 use App\Models\LogLimit;
 use Illuminate\View\View;
+use App\Models\ReportLimit;
 use Illuminate\Http\Request;
 use App\Models\ReportDeposit;
 use Illuminate\Support\Carbon;
 use App\Jobs\SendMailJobDeposit;
 use illuminate\support\facades\DB;
+use App\Jobs\SendMailJobKuponTambah;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use App\Jobs\SendMailJobDepositTambah;
@@ -234,36 +236,35 @@ class ScanqrController extends Controller
         try {
             $get_uri = explode("/", parse_url($request->getRequestUri(), PHP_URL_PATH));
             $visitor = LogLimit::join('visitors', 'log_limits.visitor_id', '=', 'visitors.id')->where('log_limits.visitor_id', $get_uri[3])->first();
-            $limit_kupon = LogLimit::where('visitor_id', $get_uri[3])->first();
-            $limit_kupon->quota_kupon = $request->quota_kupon + $limit_kupon->quota_kupon;
-            $limit_kupon->save();
+            $log_limit = LogLimit::where('visitor_id', $get_uri[3])->first();
+            $log_limit->quota_kupon = $request->quota_kupon + $log_limit->quota_kupon;
+            $log_limit->save();
 
             //notifikasi email
             $log_limit = LogLimit::where('visitor_id', $id)->first();
             $data = $request->all();
             $datav = Visitor::find($id);
             $data['name'] = $datav->name;
-            $data['tambahdeposit'] = $request->quota_kupon;
-            $data['sebelumdeposit'] = $limit_kupon->quota_kupon - $request->quota_kupon;
-            $data['setelahdeposit'] = $limit_kupon->quota_kupon;
+            $data['tambahkupon'] = $request->quota_kupon;
+            $data['sebelumkupon'] = $log_limit->quota_kupon - $request->quota_kupon;
+            $data['setelahkupon'] = $log_limit->quota_kupon;
             $data['quota'] = $log_limit->quota;
             $data['quota_kupon'] = $log_limit->quota_kupon;
             $data['email'] = $visitor->email;
-            // dispatch(new SendMailJobDepositTambah($data));
+            dispatch(new SendMailJobKuponTambah($data));
 
             LogAdmin::create([
                 'user_id' => Auth::id(),
                 'type' => 'CREATE',
-                'activities' => 'Berhasil menambah deposit <b>' . $request->quota_kupon . '</b> atas nama <b>' . $visitor->name . '</b>',
+                'activities' => 'Berhasil menambah kupon <b>' . $request->quota_kupon . '</b> atas nama <b>' . $visitor->name . '</b>',
             ]);
+            
 
-            ReportDeposit::create([
-                'payment_type' => $request->payment_type,
-                'visitor_id' => $visitor->id,
+            ReportLimit::create([
+                'report_quota_kupon' => $log_limit->quota_kupon,
+                'visitor_id' => $get_uri[3],
                 'user_id' => Auth::id(),
-                'fund' => $limit_kupon->quota_kupon,
                 'status' => 'Bertambah',
-                'report_quota_kupon' => $request->quota_kupon,
             ]);
 
             return redirect()->back()->with('success', 'Berhasil menambah kupon');

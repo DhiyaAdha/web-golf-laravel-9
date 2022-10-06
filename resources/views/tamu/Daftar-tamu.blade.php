@@ -66,42 +66,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="myModal" class="modal fade" tabindex="-1" role="dialog"
-                                aria-labelledby="myModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                aria-hidden="true">×</button>
-                                            <h5 class="modal-title" id="myModalLabel">
-                                            </h5>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form action="#" method="POST">
-                                                @csrf
-                                                <div class="form-group">
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <div class="input-group-addon"><img src="dist/img/ticket.svg"
-                                                                alt=""></div>
-                                                        <input type="text" min="0"
-                                                            onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                                            class="form-control" name="balance" data-id=""
-                                                            placeholder="Masukan jumlah Kupon" required>
-                                                    </div>
-                                                </div>
-                                                <button type="submit" class="btn btn-success btn-anim">
-                                                    <i class="icon-rocket"></i>
-                                                    <span class="btn-text">submit</span>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <!-- /.modal-content -->
-                                </div>
-                                <!-- /.modal-dialog -->
-                            </div>
+                           
                         </div>
                     </div>
                 </div>

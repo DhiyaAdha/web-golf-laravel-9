@@ -17,16 +17,17 @@ use App\Models\ReportDeposit;
 use App\Models\DepositHistory;
 use App\Models\LogTransaction;
 use App\Jobs\SendMailJobDeposit;
+use PhpParser\Node\Stmt\Return_;
 use App\Exports\DaftarTamuExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
+use App\Jobs\SendMailJobKuponTambah;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Cache\RateLimiting\Limit;
-use PhpParser\Node\Stmt\Return_;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 
@@ -63,7 +64,43 @@ class TamuController extends Controller
                     
                     $button .= '&nbsp;&nbsp;';
                     $button .= '<a data-toggle="modal" data-placement="top" title="Tambah Kupon" data-target="#myModal" href="javascript:void(0)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#787878" d="M9,10a1,1,0,0,0-1,1v2a1,1,0,0,0,2,0V11A1,1,0,0,0,9,10Zm12,1a1,1,0,0,0,1-1V6a1,1,0,0,0-1-1H3A1,1,0,0,0,2,6v4a1,1,0,0,0,1,1,1,1,0,0,1,0,2,1,1,0,0,0-1,1v4a1,1,0,0,0,1,1H21a1,1,0,0,0,1-1V14a1,1,0,0,0-1-1,1,1,0,0,1,0-2ZM20,9.18a3,3,0,0,0,0,5.64V17H10a1,1,0,0,0-2,0H4V14.82A3,3,0,0,0,4,9.18V7H8a1,1,0,0,0,2,0H20Z"/></svg></a></div>';
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#787878" d="M9,10a1,1,0,0,0-1,1v2a1,1,0,0,0,2,0V11A1,1,0,0,0,9,10Zm12,1a1,1,0,0,0,1-1V6a1,1,0,0,0-1-1H3A1,1,0,0,0,2,6v4a1,1,0,0,0,1,1,1,1,0,0,1,0,2,1,1,0,0,0-1,1v4a1,1,0,0,0,1,1H21a1,1,0,0,0,1-1V14a1,1,0,0,0-1-1,1,1,0,0,1,0-2ZM20,9.18a3,3,0,0,0,0,5.64V17H10a1,1,0,0,0-2,0H4V14.82A3,3,0,0,0,4,9.18V7H8a1,1,0,0,0,2,0H20Z"/></svg></a></div>
+                    <div id="myModal" class="modal fade" tabindex="-1" role="dialog"
+                    aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"
+                                    aria-hidden="true">×</button>
+                                <h5 class="modal-title" id="myModalLabel">
+                                </h5>
+                            </div>
+                            <div class="modal-body">
+                                <form action="'. url('update/kupon/' . $visitor->id) . '" method="POST">
+                                    <input type="hidden" name="_token" value=" '.csrf_token().' ">
+                                    <div class="form-group">
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><img src="dist/img/ticket.svg"
+                                                    alt=""></div>
+                                            <input type="text" min="0"
+                                                onkeypress="return event.charCode >= 48 && event.charCode <=57"
+                                                class="form-control" name="quota_kupon" data-id=""
+                                                placeholder="Masukan jumlah Kupon" required>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-success btn-anim">
+                                        <i class="icon-rocket"></i>
+                                        <span class="btn-text">submit</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>';
                     return $button;
                 } else {
                     $button = '<div class="d-flex align-items-center"><a data-toggle="tooltip" data-placement="top" title="Detail Tamu" href="' . url('kartu-tamu/' . Crypt::encryptString($visitor->id)) . '"><img src="' . url('dist/img/Card-Tamu.svg') . '"></a>';
@@ -781,40 +818,40 @@ class TamuController extends Controller
     public function update_kupon(Request $request, $id)
     {
         try {
-            $visitor = LogLimit::join('visitors', 'log_limits.visitor_id', '=', 'visitors.id')->where('log_limits.visitor_id', $id)->first();
-            $limit_kupon = LogLimit::where('visitor_id', $id)->first();
-            $limit_kupon->quota_kupon = $request->quota_kupon + $limit_kupon->quota_kupon;
-            $limit_kupon->save();
+            $get_uri = explode("/", parse_url($request->getRequestUri(), PHP_URL_PATH));
+            $visitor = LogLimit::join('visitors', 'log_limits.visitor_id', '=', 'visitors.id')->where('log_limits.visitor_id', $get_uri[3])->first();
+            $log_limit = LogLimit::where('visitor_id', $get_uri[3])->first();
+            $log_limit->quota_kupon = $request->quota_kupon + $log_limit->quota_kupon;
+            $log_limit->save();
 
             //notifikasi email
             $log_limit = LogLimit::where('visitor_id', $id)->first();
             $data = $request->all();
             $datav = Visitor::find($id);
             $data['name'] = $datav->name;
-            $data['tambahdeposit'] = $request->quota_kupon;
-            $data['sebelumdeposit'] = $limit_kupon->quota_kupon - $request->quota_kupon;
-            $data['setelahdeposit'] = $limit_kupon->quota_kupon;
+            $data['tambahkupon'] = $request->quota_kupon;
+            $data['sebelumkupon'] = $log_limit->quota_kupon - $request->quota_kupon;
+            $data['setelahkupon'] = $log_limit->quota_kupon;
             $data['quota'] = $log_limit->quota;
             $data['quota_kupon'] = $log_limit->quota_kupon;
             $data['email'] = $visitor->email;
-            // dispatch(new SendMailJobDepositTambah($data));
+            dispatch(new SendMailJobKuponTambah($data));
 
             LogAdmin::create([
                 'user_id' => Auth::id(),
                 'type' => 'CREATE',
-                'activities' => 'Berhasil menambah deposit <b>'.$request->quota_kupon.'</b> atas nama <b>'.$visitor->name.'</b>',
+                'activities' => 'Berhasil menambah kupon <b>' . $request->quota_kupon . '</b> atas nama <b>' . $visitor->name . '</b>',
             ]);
+            
 
-            ReportDeposit::create([
-                'payment_type' => $request->payment_type,
-                'visitor_id' => $visitor->id,
+            ReportLimit::create([
+                'report_quota_kupon' => $log_limit->quota_kupon,
+                'visitor_id' => $get_uri[3],
                 'user_id' => Auth::id(),
-                'fund' => $limit_kupon->quota_kupon,
                 'status' => 'Bertambah',
-                'report_quota_kupon' => $request->quota_kupon,
             ]);
 
-            return redirect()->back()->with('success','Berhasil menambah kupon');
+            return redirect()->back()->with('success', 'Berhasil menambah kupon');
         } catch (\Throwable $th) {
             return response()->json($this->getResponse());
         }
