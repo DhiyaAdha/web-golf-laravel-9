@@ -28,9 +28,15 @@
                             </div>
                             <div class="pull-right">
                                 <div class='d-flex '>
-                                    <span class="text-muted mr-15" style="float: right;">,
+                                    <span class="text-muted mr-15" style="float: right;">@php
+                                        echo date('d M Y');
+                                    @endphp,
                                     </span>
-                                    <span class="label label-default" id='time-part' style="float: right;"></span>
+                                    <span class="label label-default" id='time-part' style="float: right;">
+                                        @php
+                                            echo date('h:i:s A');
+                                        @endphp
+                                    </span>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
