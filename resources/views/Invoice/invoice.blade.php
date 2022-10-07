@@ -131,7 +131,10 @@
                                                 <strong>Order
                                                     #{{ $transaction->order_number }}</strong><br />
                                                 <strong>Metode Pembayaran:</strong><br>
-                                                <p style="color: #616161;">{{ $transaction->payment_type }}</p><br />
+                                                <p style="color: #616161;">@php
+                                                    $un = unserialize($transaction->payment_type);
+                                                    dd($un[0]);
+                                                @endphp</p><br/>
 
                                             </td>
                                         </tr>
