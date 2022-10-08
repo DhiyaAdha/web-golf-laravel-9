@@ -1,16 +1,17 @@
 <?php
 
+use App\Mail\SendEmailReset;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ScanqrController;
 use App\Http\Controllers\TamuController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ScanqrController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PackageController;
-use App\Mail\SendEmailReset;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\OrderRegulerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +76,11 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     route::get('/invoice_cetakpdf/{id}', [InvoiceController::class, 'cetak_pdf'])->name('cetak_pdf');
     route::get('/export_excel', [InvoiceController::class, 'export_excel'])->name('export_excel');
     Route::get('/package/destroy/{id}', [PackageController::class,'destroy'])->name('package.destroy');
+
+    // cart-reguler
+    Route::resource('cart-reguler', OrderRegulerController::class);
+    Route::get('/cart-reguler',[ OrderRegulerController::class, 'index'])->name('cart-reguler.index');
+
 });
 
 //Level admin dan superadmin
@@ -126,5 +132,6 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/test_payment', function(){
         return view('emails.paymentsuccess4_');
     });
+
 
 });
