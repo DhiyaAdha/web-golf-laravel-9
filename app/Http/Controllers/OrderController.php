@@ -202,7 +202,7 @@ class OrderController extends Controller
                     'name' => $cek_itemId[$id[3]]->name,
                     'price' => $cek_itemId[$id[3]]->price
                 ], 200);
-            } else if(count($package_default) == 0) {
+            } else if (count($package_default) == 0) {
                 \Cart::session($request->get('page'))->clear();
                 $this->setResponse('INVALID', "Setidaknya pilih satu jenis permainan");
                 return response()->json($this->getResponse());
@@ -342,7 +342,7 @@ class OrderController extends Controller
                     'price' => $row->getPriceSum(),
                     'created_at' => $row->attributes['created_at'],
                 ];
-                foreach($cek_itemId as $item){
+                foreach ($cek_itemId as $item) {
                     $item_default += $item['quantity'];
                 }
             }
@@ -366,7 +366,7 @@ class OrderController extends Controller
         $items = \Cart::session($request->get('param'))->getContent();
         $totalPrice = \Cart::session($request->get('param'))->getTotal();
         $deposit = Deposit::where('visitor_id', $request->get('param'))->first();
-        $log_limit = LogLimit::where('visitor_id', $request->get('param'))->first();        
+        $log_limit = LogLimit::where('visitor_id', $request->get('param'))->first();
         $today = Carbon::now()->isoFormat('dddd');
         $id_package = [];
         foreach ($items as $row) {
@@ -384,7 +384,7 @@ class OrderController extends Controller
         }
         $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
         $price_default = 0;
-        foreach($package_default as $default){
+        foreach ($package_default as $default) {
             $price_default += $today === 'Minggu' ? $default['price_weekend'] : $default['price_weekdays'];
         }
         $orders = collect($cart)->sortBy('created_at');
@@ -618,7 +618,7 @@ class OrderController extends Controller
                             } else {
                                 $cek_itemId = $items->whereIn('id', $id_package);
                                 $item_default = 0;
-                                foreach($cek_itemId as $item){
+                                foreach ($cek_itemId as $item) {
                                     $item_default += $item['quantity'];
                                 }
                                 if ($item_default != 1) {
@@ -631,7 +631,7 @@ class OrderController extends Controller
                                         $report_limit->report_quota_kupon = $report_limit->report_quota_kupon - 1;
                                         $log_limit->save();
                                         $report_limit->save();
-    
+
                                         LogTransaction::create([
                                             'order_number' => $req->get('order_number'),
                                             'visitor_id' => $req->get('page'),
@@ -641,13 +641,13 @@ class OrderController extends Controller
                                             'payment_status' => 'paid',
                                             'total' => $totalPrice
                                         ]);
-    
+
                                         LogAdmin::create([
                                             'user_id' => Auth::id(),
                                             'type' => 'CREATE',
                                             'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
                                         ]);
-    
+
                                         // informasi limit kupon
                                         ReportLimit::create([
                                             'status' => 'Berkurang',
@@ -658,7 +658,7 @@ class OrderController extends Controller
                                             'created_at' => Carbon::now(),
                                         ]);
                                         \Cart::session($req->get('page'))->clear();
-    
+
                                         $log_limit = LogLimit::where('visitor_id', $req->get('page'))->first();
                                         $data['qty'] = $row->quantity;
                                         $total_qty = 0;
@@ -667,7 +667,7 @@ class OrderController extends Controller
                                         }
                                         $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
                                         $payment_type = unserialize($log_transaction->payment_type);
-    
+
                                         $data = [
                                             'name' => $visitor->name,
                                             'email' => $visitor->email,
@@ -686,7 +686,7 @@ class OrderController extends Controller
                                             'sisakupon' => $log_limit->quota_kupon,
                                         ];
                                         dispatch(new SendMailPaymentsuccess4Job($data));
-    
+
                                         if ($req->ajax()) {
                                             $this->setResponse('VALID', "Pembayaran berhasil");
                                             return response()->json($this->getResponse());
@@ -719,7 +719,7 @@ class OrderController extends Controller
                             } else {
                                 $cek_itemId = $items->whereIn('id', $id_package);
                                 $item_default = 0;
-                                foreach($cek_itemId as $item){
+                                foreach ($cek_itemId as $item) {
                                     $item_default += $item['quantity'];
                                 }
                                 if ($item_default != 1) {
@@ -732,7 +732,7 @@ class OrderController extends Controller
                                         $report_limit->report_quota = $report_limit->report_quota - 1;
                                         $log_limit->save();
                                         $report_limit->save();
-    
+
                                         LogTransaction::create([
                                             'order_number' => $req->get('order_number'),
                                             'visitor_id' => $req->get('page'),
@@ -742,13 +742,13 @@ class OrderController extends Controller
                                             'payment_status' => 'paid',
                                             'total' => $totalPrice
                                         ]);
-    
+
                                         LogAdmin::create([
                                             'user_id' => Auth::id(),
                                             'type' => 'CREATE',
                                             'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
                                         ]);
-    
+
                                         // informasi limit bulanan
                                         ReportLimit::create([
                                             'status' => 'Berkurang',
@@ -760,7 +760,7 @@ class OrderController extends Controller
                                             'created_at' => Carbon::now(),
                                         ]);
                                         \Cart::session($req->get('page'))->clear();
-    
+
                                         $log_limit = LogLimit::where('visitor_id', $req->get('page'))->first();
                                         $data['qty'] = $row->quantity;
                                         $total_qty = 0;
@@ -769,7 +769,7 @@ class OrderController extends Controller
                                         }
                                         $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
                                         $payment_type = unserialize($log_transaction->payment_type);
-    
+
                                         $data = [
                                             'name' => $visitor->name,
                                             'email' => $visitor->email,
@@ -788,7 +788,7 @@ class OrderController extends Controller
                                             'sisabulanan' => $log_limit->quota,
                                         ];
                                         dispatch(new SendMailPaymentsuccess4Job($data));
-    
+
                                         if ($req->ajax()) {
                                             $this->setResponse('VALID', "Pembayaran berhasil");
                                             return response()->json($this->getResponse());
