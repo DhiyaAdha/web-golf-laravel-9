@@ -48,6 +48,7 @@ class InvoiceController extends Controller
             })
             ->editColumn('payment_type', function ($data) {
                 $type = unserialize($data->payment_type);
+                // dd($type[1]['payment_type']);
                 if (isset($type[0]['payment_type'])) {
                     return sprintf('<div class="d-flex flex-wrap justify-content-center align-items-center"><span class="label mr-5 label-primary">'.$type[0]['payment_type'].'</span></div>');
                 } else {
@@ -56,6 +57,7 @@ class InvoiceController extends Controller
                         $datax[$i] = $t['payment_type'];
                     }
                     $tagsString = implode("</span> <span class='label mr-5 label-primary'>", $datax);
+                    dd($tagsString);
                     return sprintf('<div class="d-flex flex-wrap justify-content-center align-items-center"><span class="label mr-5 label-primary">'.$tagsString.'</span></div>');
                 }
             })

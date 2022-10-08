@@ -347,7 +347,7 @@
                             <td>0.00</td>
                         </tr>
                         <tr>
-                            <td class="w-70">Jumlah Pembayaran:</td>
+                            <td class="w-70">Total Tagihan:</td>
                             <td>{{ formatrupiah($total) }}</td>
                         </tr>
                     </tbody>
@@ -364,7 +364,8 @@
                     <thead>
                         <tr>
                             <td class="w-10 text-center">No.</td>
-                            <td class="w-50">Cara Pembayaran</td>
+                            <td class="w-50">Pembayaran</td>
+                            <td class="w-50">Transaksi</td>
                             <td class="w-20">Balance</td>
                         </tr>
                     </thead>
@@ -374,6 +375,7 @@
                             <tr>
                                 <td class="text-center">{{ $i++ }}</td>
                                 <td>{{ $type['payment_type'] }}</td>
+                                <td>{{ $type['transaction_amount'] }}</td>
                                 <td>{{ $type['balance'] }}</td>
                             </tr>
                         @endforeach
@@ -381,8 +383,7 @@
                 </table>
             </section>
             <section class="info-area barcode-area">
-                <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($log_transaction->order_number, 'C128', 3, 33) }}"
-                    height="30" width="150" alt="barcode" />
+                {{ QrCode::size(50)->eye('circle')->style('round')->generate($log_transaction->order_number) }}
             </section>
             <section class="info-area align-center footer-area">
                 <span class="block">Yuk kita hidupkan lagi kebiasaan berolahraga untuk pola hidup yang lebih
