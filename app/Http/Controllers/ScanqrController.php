@@ -7,11 +7,13 @@ use App\Models\Visitor;
 use App\Models\LogAdmin;
 use App\Models\LogLimit;
 use Illuminate\View\View;
+use App\Models\ReportLimit;
 use Illuminate\Http\Request;
 use App\Models\ReportDeposit;
 use Illuminate\Support\Carbon;
 use App\Jobs\SendMailJobDeposit;
 use illuminate\support\facades\DB;
+use App\Jobs\SendMailJobKuponTambah;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use App\Jobs\SendMailJobDepositTambah;
@@ -114,30 +116,34 @@ class ScanqrController extends Controller
         //
     }
     // Scantamu-berhasil
-    public function scantamuberhasil(){
-            return view('/scan-tamu-berhasil');
+    public function scantamuberhasil()
+    {
+        return view('/scan-tamu-berhasil');
     }
 
-    public function proses (){
-            return view('proses');
+    public function proses()
+    {
+        return view('proses');
     }
 
-    public function kartutamu($id){
+    public function kartutamu($id)
+    {
 
         $visitor = Visitor::findOrFail($id);
         $qrcode = QrCode::size(180)->generate($visitor->unique_qr);
         $data['visitor'] =  Visitor::find($id);
-        return view('tamu.kartu-tamu',compact('qrcode'),$data);
-
+        return view('tamu.kartu-tamu', compact('qrcode'), $data);
     }
 
     //penghubung route dengan view
-    public function detailscan(){
+    public function detailscan()
+    {
         return view('detail_scan');
     }
 
     //penghubung method dengan view yang akan ditampilkan
-    public function show_detail($id = null){
+    public function show_detail($id = null)
+    {
         $visitor = Visitor::find($id);
         $deposit = Deposit::where('visitor_id', $id)->first();
         $log_limit = LogLimit::where('visitor_id', $id)->first();
@@ -151,7 +157,7 @@ class ScanqrController extends Controller
     {
         $url_qr = explode("/", parse_url($request->get('qrCode'), PHP_URL_PATH));
         $get_visitor = Visitor::where("id", $url_qr[2])->first();
-        if($get_visitor == null) {
+        if ($get_visitor == null) {
             $this->setResponse('INVALID', "Data tidak ditemukan!");
             return response()->json($this->getResponse());
         } else {
@@ -207,7 +213,7 @@ class ScanqrController extends Controller
             LogAdmin::create([
                 'user_id' => Auth::id(),
                 'type' => 'CREATE',
-                'activities' => 'Berhasil menambah deposit <b>'.$request->balance.'</b> atas nama <b>'.$visitor->name.'</b>',
+                'activities' => 'Berhasil menambah deposit <b>' . $request->balance . '</b> atas nama <b>' . $visitor->name . '</b>',
             ]);
 
             ReportDeposit::create([
@@ -219,7 +225,49 @@ class ScanqrController extends Controller
                 'report_balance' => $request->balance,
             ]);
 
-            return redirect()->back()->with('success','Berhasil menambah deposit');
+            return redirect()->back()->with('success', 'Berhasil menambah deposit');
+        } catch (\Throwable $th) {
+            return response()->json($this->getResponse());
+        }
+    }
+
+    public function update_kupon(Request $request, $id)
+    {
+        try {
+            $get_uri = explode("/", parse_url($request->getRequestUri(), PHP_URL_PATH));
+            $visitor = LogLimit::join('visitors', 'log_limits.visitor_id', '=', 'visitors.id')->where('log_limits.visitor_id', $get_uri[3])->first();
+            $log_limit = LogLimit::where('visitor_id', $get_uri[3])->first();
+            $log_limit->quota_kupon = $request->quota_kupon + $log_limit->quota_kupon;
+            $log_limit->save();
+
+            //notifikasi email
+            $log_limit = LogLimit::where('visitor_id', $id)->first();
+            $data = $request->all();
+            $datav = Visitor::find($id);
+            $data['name'] = $datav->name;
+            $data['tambahkupon'] = $request->quota_kupon;
+            $data['sebelumkupon'] = $log_limit->quota_kupon - $request->quota_kupon;
+            $data['setelahkupon'] = $log_limit->quota_kupon;
+            $data['quota'] = $log_limit->quota;
+            $data['quota_kupon'] = $log_limit->quota_kupon;
+            $data['email'] = $visitor->email;
+            dispatch(new SendMailJobKuponTambah($data));
+
+            LogAdmin::create([
+                'user_id' => Auth::id(),
+                'type' => 'CREATE',
+                'activities' => 'Berhasil menambah kupon <b>' . $request->quota_kupon . '</b> atas nama <b>' . $visitor->name . '</b>',
+            ]);
+            
+
+            ReportLimit::create([
+                'report_quota_kupon' => $log_limit->quota_kupon,
+                'visitor_id' => $get_uri[3],
+                'user_id' => Auth::id(),
+                'status' => 'Bertambah',
+            ]);
+
+            return redirect()->back()->with('success', 'Berhasil menambah kupon');
         } catch (\Throwable $th) {
             return response()->json($this->getResponse());
         }

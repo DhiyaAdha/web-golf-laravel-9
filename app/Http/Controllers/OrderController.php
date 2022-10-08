@@ -45,7 +45,7 @@ class OrderController extends Controller
         $this->data = [];
     }
 
-    public function index(Request $request)
+    public function index(Request $request, $id)
     {
         $products = Package::orderBy('id', 'desc')->where('status', '0')->get();
         if ($request->ajax()) {
@@ -82,6 +82,13 @@ class OrderController extends Controller
             'value' => $tax,
             'order' => 1
         ));
+        $id_package = [];
+        foreach (\Cart::session(request()->segment(2))->getContent() as $sd) {
+            $id_package[] = $sd['id'];
+        }
+        $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
+        $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
+        $package = Package::find(request()->segment(2));
         \Cart::session(request()->segment(2))->condition($condition);
         $items = \Cart::session(request()->segment(2))->getContent();
         if (\Cart::isEmpty()) {
@@ -95,10 +102,14 @@ class OrderController extends Controller
                     'pricesingle' => $row->price,
                     'price' => $row->getPriceSum(),
                     'created_at' => $row->attributes['created_at'],
+                    'category' => $row->category,
                 ];
             }
+            
+
             $cart_data = collect($cart)->sortBy('created_at');
         }
+        // dd($cart_data);
 
         $sub_total = \Cart::session(request()->segment(2))->getSubTotal();
         $total = \Cart::session(request()->segment(2))->getTotal();
@@ -111,6 +122,14 @@ class OrderController extends Controller
             'total' => $total,
             'tax' => $pajak
         ];
+
+        // $id_package = [];
+        // foreach (\Cart::session(request()->segment(2))->getContent() as $sd) {
+        //     $id_package[] = $sd['id'];
+        // }
+        // $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
+        // $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
+        // dd($package_default);
 
         return view('keranjang', compact(
             'url_checkout',
@@ -165,7 +184,7 @@ class OrderController extends Controller
                 'quantity' => 1,
                 'attributes' => array(
                     'created_at' => date('Y-m-d H:i:s')
-                )
+                ),
             ));
             $id_package = [];
             foreach (\Cart::session($request->get('page'))->getContent() as $sd) {
@@ -173,6 +192,7 @@ class OrderController extends Controller
             }
             $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
             $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
+            
             if (count($package_additional) == 0) {
                 $cart = \Cart::session($request->get('page'))->getContent();
                 $cek_itemId = $cart->whereIn('id', $id[3]);
@@ -187,10 +207,12 @@ class OrderController extends Controller
                             'pricesingle' => $row->price,
                             'price' => $row->getPriceSum(),
                             'created_at' => $row->attributes['created_at'],
+                            'category' => $package->category
                         ];
                     }
                     $cart_data = collect($cart)->sortBy('created_at');
                 }
+                // dd($cart_data);
                 $get_total = \Cart::session($request->get('page'))->getTotal();
                 $counted = ucwords(counted($get_total) . ' Rupiah');
                 return response()->json([
@@ -220,10 +242,12 @@ class OrderController extends Controller
                             'pricesingle' => $row->price,
                             'price' => $row->getPriceSum(),
                             'created_at' => $row->attributes['created_at'],
+                            'category' => $package->category
                         ];
                     }
                     $cart_data = collect($cart)->sortBy('created_at');
                 }
+                // dd($cart_data);
                 $get_total = \Cart::session($request->get('page'))->getTotal();
                 $counted = ucwords(counted($get_total) . ' Rupiah');
                 return response()->json([
@@ -236,7 +260,9 @@ class OrderController extends Controller
                     'price' => $cek_itemId[$id[3]]->price
                 ], 200);
             }
+            
         }
+        return back();
     }
 
     public function update_qty(Request $request)
@@ -298,9 +324,14 @@ class OrderController extends Controller
 
     public function remove(Request $request)
     {
+        $items = \Cart::session($request->get('page'))->getContent();
+
+        // $counts = $items->where('is_default', 'default')->count();
+        // $counts = $items->where('is_default', 'default')->count();
+        // return $counts;
+        
         $id = explode("/", parse_url($request->get('url'), PHP_URL_PATH));
         \Cart::session($request->get('page'))->remove($id[3]);
-        $items = \Cart::session($request->get('page'))->getContent();
         $get_total = \Cart::session($request->get('page'))->getTotal();
         $counted = '';
         if (\Cart::isEmpty()) {
@@ -564,6 +595,66 @@ class OrderController extends Controller
                                         'user_id' => Auth()->id(),
                                         'cart' => serialize($cart_data),
                                         'payment_type' => serialize([['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0]]),
+                                        'payment_status' => 'paid',
+                                        'total' => $totalPrice
+                                    ]);
+
+                                    LogAdmin::create([
+                                        'user_id' => Auth::id(),
+                                        'type' => 'CREATE',
+                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                    ]);
+
+                                    \Cart::session($req->get('page'))->clear();
+
+                                    $data['qty'] = $row->quantity;
+                                    $total_qty = 0;
+                                    foreach ($cart_data as $get) {
+                                        $total_qty += $get['qty'];
+                                    }
+                                    $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
+                                    $payment_type = unserialize($log_transaction->payment_type);
+
+                                    $data = [
+                                        'name' => $visitor->name,
+                                        'email' => $visitor->email,
+                                        'address' => $visitor->address,
+                                        'phone' => $visitor->phone,
+                                        'type_member' => $visitor->tipe_member,
+                                        'order_number' => $req->get('order_number'),
+                                        'payment_type' => $payment_type,
+                                        'date' => $row->attributes['created_at'],
+                                        'pricesingle' => $row->price,
+                                        'price' => $row->getPriceSum(),
+                                        'total' => $totalPrice,
+                                        'qty' => $row->quantity,
+                                        'total_qty' => $total_qty,
+                                        'cart' => $cart_data,
+                                    ];
+                                    dispatch(new SendMailPaymentsuccess4Job($data));
+
+                                    if ($req->ajax()) {
+                                        return response()->json([
+                                            'status' => 'VALID',
+                                            'message' => 'Pembayaran berhasil',
+                                            'return' => $req->get('bayar_input')
+                                        ]);
+                                    }
+                                } catch (Throwable $e) {
+                                    return response()->json($this->getResponse());
+                                }
+                            }
+                            elseif (count($package_default) == 0) {
+                                $this->setResponse('INVALID', "Setidaknya pilih satu jenis permainan default");
+                                return response()->json($this->getResponse());
+                            } else {
+                                try {
+                                    LogTransaction::create([
+                                        'order_number' => $req->get('order_number'),
+                                        'visitor_id' => $req->get('page'),
+                                        'user_id' => Auth()->id(),
+                                        'cart' => serialize($cart_data),
+                                        'payment_type' => serialize([['payment_type' => 'cash/transfer', 'balance' => 0]]),
                                         'payment_status' => 'paid',
                                         'total' => $totalPrice
                                     ]);

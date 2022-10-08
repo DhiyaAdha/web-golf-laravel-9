@@ -119,11 +119,11 @@
                                             Rp.{{ number_format($item['price'], 0, ',', '.') }}</p>
                                         <button onclick="updateQTY({{ $item['rowId'] }}, 'minus')"><i
                                                 class="cart-qty-minus-{{ $item['rowId'] }} fa fa-minus-square"></i></button>
-                                        <input type="number" min="0" class="qty-{{ $item['rowId'] }}"
+                                        <input type="number" min="1" class="qty-{{ $item['rowId'] }}"
                                             value="{{ $item['qty'] }}" style="width: 30px;" readonly />
                                         <button onclick="updateQTY({{ $item['rowId'] }}, 'plus')"><i
                                                 class="cart-qty-plus-{{ $item['rowId'] }} fa fa-plus-square"></i></button>
-                                        <button class="mr-10 ml-10" data-toggle="tooltip" title="Hapus"
+                                        <button class="mr-10 ml-10" data-category="{{ $item['category'] }}" data-toggle="tooltip" title="Hapus"
                                             onclick="removeItem({{ $item['rowId'] }})" id="remove-item"
                                             style="color:red;"><i class="fa fa-trash-o"></i></button>
                                     </div>
@@ -377,18 +377,50 @@
         }
 
         function removeItem(id) {
-            var tg = window.location.href;
-            tg = tg.split("?")
-            tg = tg[0];
-            tg = tg.split("/");
-            page = tg[tg.length - 1];
 
-            var url = "{{ route('remove.item', ':package') }}";
-            url = url.replace(':package', id);
-            $('.disabled-cart-' + id).css('background', 'tomato');
-            $('.disabled-cart-' + id).fadeOut(800, function() {
-                $(this).remove();
-            });
+                var tg = window.location.href;
+                tg = tg.split("?")
+                tg = tg[0];
+                tg = tg.split("/");
+                page = tg[tg.length - 1];
+                var url = "{{ route('remove.item', ':package') }}";
+                url = url.replace(':package', id);
+                $('.disabled-cart-' + id).css('background', 'tomato');
+                $('.disabled-cart-' + id).fadeOut(800, function() {
+                    $(this).remove();
+                });
+                
+            // if (!$package_additional == 0) {
+            //     var tg = window.location.href;
+
+            //     tg = tg.split("?")
+            //     tg = tg[0];
+            //     tg = tg.split("/");
+            //     page = tg[tg.length - 1];
+            //     var url = "{{ route('remove.item', ':package') }}";
+            //     url = url.replace(':package', id);
+            //     $('.disabled-cart-' + id).css('background', 'tomato');
+            //     $('.disabled-cart-' + id).fadeOut(800, function() {
+            //         $(this).remove();
+            //     });
+            // } else {
+            //     swal({
+            //         title: "",
+            //         type: "error",
+            //         text: "Hapus Item Tambahan Terlebih Dahulu",
+            //         confirmButtonColor: "#01c853",
+            //     });
+            // }
+
+            // swal({
+            //         title: "",
+            //         type: "error",
+            //         text: "Hapus Item Tambahan Terlebih Dahulu",
+            //         confirmButtonColor: "#01c853",
+            //     });
+
+
+
             $.ajax({
                 async: true,
                 type: 'POST',

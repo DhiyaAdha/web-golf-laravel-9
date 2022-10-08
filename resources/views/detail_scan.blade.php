@@ -145,6 +145,8 @@
                                 </div>
                                 <a href="javascript:void(0)" class="btn btn-block btn-outline-success btn-sm"
                                     data-toggle="modal" data-target="#myModal">Deposit</a>
+                                {{-- <a href="javascript:void(0)" class="btn btn-block btn-outline-success btn-sm"
+                                    data-toggle="modal" data-target="#myModal2">Tambah Kupon</a> --}}
                                 {{-- {{ URL::signedRoute('order.cart', now()->addMinutes(10), ['id' => $visitor->id]) }} --}}
                                 <a href="{{ URL::signedRoute('order.cart', ['id' => $visitor->id]) }}"
                                     class="btn btn-block btn-success btn-sm" target="_blank">Pilih paket bermain</a>
@@ -165,13 +167,17 @@
                                                 @csrf
                                                 <div class="form-group">
                                                     <div class="input-group-dropdown">
-                                                        <select name="payment_type" id="payment_type" class="form-control" required>
-                                                            <option disabled selected value="">Pilih Pembayaran</option>
-                                                            <option value="cash" name="payment_type" id="payment_type">Cash</option>
-                                                            <option value="transfer" name="payment_type" id="payment_type">Transfer</option>
+                                                        <select name="payment_type" id="payment_type" class="form-control"
+                                                            required>
+                                                            <option disabled selected value="">Pilih Pembayaran
+                                                            </option>
+                                                            <option value="cash" name="payment_type" id="payment_type">
+                                                                Cash</option>
+                                                            <option value="transfer" name="payment_type"
+                                                                id="payment_type">Transfer</option>
                                                         </select>
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <div class="form-group">
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
@@ -192,6 +198,42 @@
                                 </div>
                                 <!-- /.modal-dialog -->
                             </div>
+                            {{-- <div id="myModal2" class="modal fade" tabindex="-1" role="dialog"
+                                aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-hidden="true">×</button>
+                                            <h5 class="modal-title" id="myModalLabel2">
+                                                {{ $log_limit->quota_kupon == 0 ? 'Tambah Kupon' : 'Update Kupon' }}</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ URL::signedRoute('update.kupon', ['id' => $visitor->id]) }}" method="POST">
+                                                @csrf
+                                                <div class="form-group">
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon"><img src="/dist/img/ticket.svg"
+                                                                alt=""></div>
+                                                        <input type="text" min="0"
+                                                            onkeypress="return event.charCode >= 48 && event.charCode <=57"
+                                                            class="form-control" name="quota_kupon" data-id=""
+                                                            placeholder="Masukan jumlah Kupon" required>
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-success btn-anim">
+                                                    <i class="icon-rocket"></i>
+                                                    <span class="btn-text">submit</span>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div> --}}
                         </div>
                     </div>
                 </div>
