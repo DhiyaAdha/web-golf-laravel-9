@@ -235,8 +235,10 @@
                                     href="#deposit_tabs" aria-expanded="false">Deposit</a></li>
                             <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
                                     href="#limit_tabs" aria-expanded="false">Limit</a></li>
-                            <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
-                                    href="#limit_kupon_tabs" aria-expanded="false">Kupon</a></li>
+                            @if ($quota_kupon != 0)
+                                <li role="presentation" class=""><a class="tabs-log" data-toggle="tab"
+                                        role="tab" href="#limit_kupon_tabs" aria-expanded="false">Kupon</a></li>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -336,35 +338,38 @@
                             </div>
                         </div>
                         {{-- limit-kupon --}}
-                        <div id="limit_kupon_tabs" class="tab-pane fade" role="tabpanel">
-                            <div class="panel panel-default card-view">
-                                <div class="panel-heading">
-                                    <div class="pull-left">
-                                        <h6 class="panel-title txt-dark">Riwayat Kupon</h6>
+                        @if ($quota_kupon != 0)
+                            <div id="limit_kupon_tabs" class="tab-pane fade" role="tabpanel">
+                                <div class="panel panel-default card-view">
+                                    <div class="panel-heading">
+                                        <div class="pull-left">
+                                            <h6 class="panel-title txt-dark">Riwayat Kupon</h6>
+                                        </div>
+                                        <div class="clearfix"></div>
                                     </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="panel-wrapper collapse in">
-                                    <div class="panel-body">
-                                        <div class="table-wrap">
-                                            <div class="table-responsive">
-                                                <table width="100%" class="table table-hover mb-0" id="dt-tamu-kupon">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Sisa Kupon </th>
-                                                            <th>Jumlah Transaksi</th>
-                                                            <th style="padding-left: 10px">Status</th>
-                                                            <th>Tanggal</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody></tbody>
-                                                </table>
+                                    <div class="panel-wrapper collapse in">
+                                        <div class="panel-body">
+                                            <div class="table-wrap">
+                                                <div class="table-responsive">
+                                                    <table width="100%" class="table table-hover mb-0"
+                                                        id="dt-tamu-kupon">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Sisa Kupon </th>
+                                                                <th>Jumlah Transaksi</th>
+                                                                <th style="padding-left: 10px">Status</th>
+                                                                <th>Tanggal</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -375,7 +380,6 @@
 
 @push('scripts')
     <script>
-        
         // Transaction Activity
         $('#dt-tamu-transaksi').DataTable({
             "processing": true,

@@ -335,16 +335,20 @@
                 <table>
                     <tbody>
                         <tr>
-                            <td class="w-70">Total Item:</td>
+                            <td class="w-70">Jumlah Item:</td>
                             <td>{{ count($cart) }}</td>
                         </tr>
                         <tr>
-                            <td class="w-70">Total Order:</td>
+                            <td class="w-70">Jumlah Order:</td>
                             <td>{{ $qty }}</td>
                         </tr>
                         <tr>
-                            <td class="w-70">Discount:</td>
-                            <td>0.00</td>
+                            <td class="w-70">Diskon:</td>
+                            <td>{{ formatrupiah($discount) }}</td>
+                        </tr>
+                        <tr>
+                            <td class="w-70">Total Bayar:</td>
+                            <td>{{ formatrupiah($log_transaction->total) }}</td>
                         </tr>
                         <tr>
                             <td class="w-70">Total Tagihan:</td>
@@ -358,13 +362,13 @@
             </section>
             <section class="listing-area payment-list">
                 <div class="heading">
-                    <h2 class="sub-title">Payments</h2>
+                    <h2 class="sub-title">Pembayaran</h2>
                 </div>
                 <table>
                     <thead>
                         <tr>
                             <td class="w-10 text-center">No.</td>
-                            <td class="w-50">Pembayaran</td>
+                            <td class="w-50">Metode</td>
                             <td class="w-50">Transaksi</td>
                             <td class="w-20">Balance</td>
                         </tr>
@@ -396,14 +400,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="{{ asset('/dist/js/printThis.js') }}"></script>
     <script>
-        31
-        $(document).ready(function() {
-            $('#print').printThis({
-                printContainer: true,
-            });
-            var back = $("input[name=back]").val();
-            console.log(history.go(-1))
-        });
+        // $(document).ready(function() {
+        //     $('#print').printThis({
+        //         printContainer: true,
+        //     });
+        //     var back = $("input[name=back]").val();
+        // });
     </script>
 </body>
 
