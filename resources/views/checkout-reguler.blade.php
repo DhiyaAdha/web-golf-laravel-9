@@ -142,6 +142,50 @@
                 <div class="col-md-12">
                     <div class="card" style="border: none !important;">
                         <div class="d-flex flex-wrap pd-1">
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body panel-green">
+                                        <div class="d-flex-flex-column">
+                                            <span class="text-capitalize">Saldo</span>
+                                            <div class="d-flex">
+                                                <span class="flex-grow-1 text-big">Rp</span>
+                                                {{-- <span class=" text-big" id="balance"
+                                                    data-balance="{{ $deposit->balance }}">{{ formatrupiah($deposit->balance) ?? '0' }}</span> --}}
+                                            </div>
+                                        </div>
+                                        <img src="{{ asset('img/circle.svg') }}" class="card-img-absolute"
+                                            alt="circle-image">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body panel-black">
+                                        <div class="d-flex-flex-column">
+                                            <span class="text-capitalize">Kupon</span>
+                                            <div class="d-flex">
+                                                <span class=" text-big"
+                                                    id="kupon">{{ $log_limit->quota_kupon ?? '0' }}</span>
+                                                <span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body panel-black">
+                                        <div class="d-flex-flex-column">
+                                            <span class="text-capitalize">Limit</span>
+                                            <div class="d-flex">
+                                                <span class="text-big"
+                                                    id="limit">{{ $log_limit->quota ?? '0' }}</span>
+                                                <span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="d-flex flex-wrap pd-1">
                             <div class="col-md-7 mb-2">
@@ -157,11 +201,38 @@
                                                         <label class="custom-control-label cursor"
                                                             for="wk">Single</label>
                                                     </div>
+                                                    <div class="custom-control custom-radio">
+                                                        <input type="radio" name="payment" id="kw"
+                                                            class="custom-control-input" value="multiple">
+                                                        <label class="custom-control-label cursor"
+                                                            for="kw">Split</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div id="single">
                                                 <div class="card mt-2">
                                                     <div class="card-body">
+                                                        <div class="d-flex align-items-center choose"
+                                                            style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                                                            <div class="flex-grow-1 custom-control custom-radio custom-control-inline"
+                                                                style="width:100%;">
+                                                                <input type="radio" id="customRadioInline4"
+                                                                    name="payment-type" value="4"
+                                                                    class="custom-control-input">
+                                                                <label class="custom-control-label"
+                                                                    for="customRadioInline4"
+                                                                    style="width: 100%;cursor:pointer;">
+                                                                    <div
+                                                                        class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                        <strong>Deposit</strong>
+                                                                        <small class="text-muted mb-2">Deposit akan
+                                                                            berkurang sesuai dengan tagihan</small>
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                            <img src="{{ asset('deposit.png') }}" alt="deposit"
+                                                                width="26" height="26">
+                                                        </div>
                                                         <div class="d-flex align-items-center mt-2 choose"
                                                             style="border-bottom: 1px solid rgba(0,0,0,.125);">
                                                             <div class="flex-grow-1 custom-control custom-radio custom-control-inline"
@@ -186,6 +257,70 @@
                                                             <img src="{{ asset('cash-on-delivery.png') }}"
                                                                 alt="cash" width="30" height="30">
                                                         </div>
+
+                                                        @if (count($package_default) == 1)
+                                                            @if ($item_default == 1)
+                                                                @if (count($package_additional) == 0 && count($package_others) == 0)
+                                                                    <div class="d-flex align-items-center mt-2 choose"
+                                                                        style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                                                                        <div class="flex-grow-1 custom-control custom-radio custom-control-inline"
+                                                                            style="width:100%;">
+                                                                            <input type="radio"
+                                                                                id="customRadioInline2"
+                                                                                name="payment-type" value="2"
+                                                                                class="custom-control-input">
+                                                                            <label class="custom-control-label"
+                                                                                for="customRadioInline2"
+                                                                                style="width: 100%;cursor:pointer;">
+                                                                                <div
+                                                                                    class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                                    <strong>Kupon</strong>
+                                                                                    <small class="text-muted">Kupon
+                                                                                        otomatis
+                                                                                        akan
+                                                                                        berkurang</small>
+                                                                                    <small
+                                                                                        class="text-muted mb-2">Kupon
+                                                                                        berlaku
+                                                                                        hanya untuk 1 game</small>
+                                                                                </div>
+                                                                            </label>
+                                                                        </div>
+                                                                        <img src="{{ asset('coupon.png') }}"
+                                                                            alt="cash" width="30"
+                                                                            height="30">
+                                                                    </div>
+                                                                    <div class="d-flex align-items-center mt-2 choose"
+                                                                        style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                                                                        <div class="flex-grow-1 custom-control custom-radio custom-control-inline"
+                                                                            style="width:100%;">
+                                                                            <input type="radio"
+                                                                                id="customRadioInline1"
+                                                                                name="payment-type" value="1"
+                                                                                class="custom-control-input">
+                                                                            <label class="custom-control-label"
+                                                                                for="customRadioInline1"
+                                                                                style="width: 100%;cursor:pointer;">
+                                                                                <div
+                                                                                    class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                                    <strong>Limit</strong>
+                                                                                    <small class="text-muted">Limit
+                                                                                        otomatis akan
+                                                                                        berkurang</small>
+                                                                                    <small
+                                                                                        class="text-muted mb-2">Limit
+                                                                                        berlaku hanya untuk 1
+                                                                                        game</small>
+                                                                                </div>
+                                                                            </label>
+                                                                        </div>
+                                                                        <img src="{{ asset('credit-limit.png') }}"
+                                                                            alt="cash" width="30"
+                                                                            height="30">
+                                                                    </div>
+                                                                @endif
+                                                            @endif
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
