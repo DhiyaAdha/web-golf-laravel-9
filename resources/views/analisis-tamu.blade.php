@@ -11,14 +11,14 @@
                                     <div class="sm-data-box today" style="background-color:#01C853;">
                                         <div class="container-fluid">
                                             <div class="row p-2">
-                                                <div class="col-xs-7 text-left data-wrap-left">
+                                                <div class="col-xs-8 text-left data-wrap-left">
                                                     <span class="txt-light block counter"><span
                                                             class="counter-anim">{{ $visitor_today }}</span></span>
                                                     <span class="weight-500 uppercase-font txt-light block font-13">Jumlah
                                                         Transaksi <br>hari ini
                                                     </span>
                                                 </div>
-                                                <div class="col-xs-5 text-right data-wrap-right">
+                                                <div class="col-xs-4 text-right data-wrap-right">
                                                     <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i>
                                                 </div>
                                                 <img src="{{ asset('/img/circle.svg') }}" class="card-img-absolute"
@@ -37,7 +37,7 @@
                                     <div class="sm-data-box vvip">
                                         <div class="container-fluid">
                                             <div class="row p-2">
-                                                <div class="col-xs-6 text-left data-wrap-left">
+                                                <div class="col-xs-8 text-left data-wrap-left">
                                                     <span class="txt-light block counter"><span
                                                             class="counter-anim">{{ $visitor_vvip }}</span></span>
                                                     <span class="weight-500 uppercase-font txt-light block font-13">Total
@@ -45,7 +45,7 @@
                                                         VVIP PERTAHUN
                                                     </span>
                                                 </div>
-                                                <div class="col-xs-6 text-right data-wrap-right">
+                                                <div class="col-xs-4 text-right data-wrap-right">
                                                     <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i>
                                                 </div>
                                                 <img src="{{ asset('/img/circle.svg') }}" class="card-img-absolute"
@@ -64,7 +64,7 @@
                                     <div class="sm-data-box vip" style="background-color: #32FFC1;">
                                         <div class="container-fluid">
                                             <div class="row p-2">
-                                                <div class="col-xs-6 text-left data-wrap-left">
+                                                <div class="col-xs-8 text-left data-wrap-left">
                                                     <span class="txt-light block counter"><span
                                                             class="counter-anim">{{ $visitor_vip }}</span></span>
                                                     <span class="weight-500 uppercase-font txt-light block font-13">Total
@@ -72,7 +72,34 @@
                                                         VIP PERTAHUN
                                                     </span>
                                                 </div>
-                                                <div class="col-xs-6 text-right data-wrap-right">
+                                                <div class="col-xs-4 text-right data-wrap-right">
+                                                    <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i>
+                                                </div>
+                                                <img src="{{ asset('/img/circle.svg') }}" class="card-img-absolute"
+                                                    alt="circle-image">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="panel panel-default card-view pa-0">
+                            <div class="panel-wrapper collapse in">
+                                <div class="panel-body pa-0">
+                                    <div class="sm-data-box vip" style="background-color: #32FFC1;">
+                                        <div class="container-fluid">
+                                            <div class="row p-2">
+                                                <div class="col-xs-8 text-left data-wrap-left">
+                                                    <span class="txt-light block counter"><span
+                                                            class="counter-anim">{{ $visitor_vip }}</span></span>
+                                                    <span class="weight-500 uppercase-font txt-light block font-13">Total
+                                                        transaksi
+                                                        VIP PERTAHUN
+                                                    </span>
+                                                </div>
+                                                <div class="col-xs-4 text-right data-wrap-right">
                                                     <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i>
                                                 </div>
                                                 <img src="{{ asset('/img/circle.svg') }}" class="card-img-absolute"
