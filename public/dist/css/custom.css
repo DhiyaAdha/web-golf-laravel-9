@@ -534,7 +534,14 @@ element.style {
     ) !important;
     background: linear-gradient(to right, #81efce, #32ffc1) !important;
 }
-
+.sm-data-box.reguler {
+    background: -webkit-gradient(
+        linear,
+        left top,
+        right top
+    ) !important;
+    background: linear-gradient(to right, #464a49, #3235ff) !important;
+}
 div[data-size="A4"] {
     background: #edf2f9;
     display: block;
