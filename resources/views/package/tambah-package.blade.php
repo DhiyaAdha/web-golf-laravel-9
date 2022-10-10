@@ -1,4 +1,4 @@
-@extends('Layouts.main')
+@extends('layouts.main')
 @section('content')
     <div class="page-wrapper" style="min-height: 259px;">
         <div class="container-fluid">
@@ -140,7 +140,7 @@
             <!-- /Row -->
         </div>
         <!-- Footer -->
-        @include('Layouts.Footer')
+        @include('layouts.footer')
         <!-- /Footer -->
     </div>
 @endsection

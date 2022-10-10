@@ -1,4 +1,4 @@
-@extends('Layouts.Main', ['title' => 'TGCC | Invoice'])
+@extends('layouts.main', ['title' => 'TGCC | Invoice'])
 @section('content')
     {{-- Main Content --}}
     <div class="page-wrapper">
@@ -217,7 +217,8 @@
                             </tr>
                         </table>
                     </div>
-                    @include('Layouts.Footer')
+
+                    @include('layouts.footer')
             </div>
         </div>
     </div>

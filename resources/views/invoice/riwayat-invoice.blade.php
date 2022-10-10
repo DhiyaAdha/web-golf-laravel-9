@@ -1,4 +1,4 @@
-@extends('Layouts.Main', ['title' => 'TGCC | Invoice'])
+@extends('layouts.main', ['title' => 'TGCC | Invoice'])
 @section('content')
     <!-- Main Content -->
     <div class="page-wrapper">
@@ -63,7 +63,7 @@
             </div>
         </div>
         <!-- Footer -->
-        @include('Layouts.Footer')
+        @include('layouts.footer')
         <!-- /Footer -->
     </div>
     <!-- /Main Content -->

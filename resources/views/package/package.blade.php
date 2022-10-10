@@ -1,4 +1,4 @@
-@extends('Layouts.Main', ['title' => 'TGCC | Paket Bermain'])
+@extends('layouts.main', ['title' => 'TGCC | Paket Bermain'])
 @section('content')
     <!-- Main Content -->
     <div class="page-wrapper">
@@ -62,7 +62,7 @@
                     </div>
                 </div>
             </div>
-            @include('Layouts.Footer')
+            @include('layouts.footer')
         </div>
     </div>
 @endsection
