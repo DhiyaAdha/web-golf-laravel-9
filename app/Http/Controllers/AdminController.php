@@ -33,7 +33,7 @@ class AdminController extends Controller
                 return $button;
             })->rawColumns(['action'])->make(true);
         }
-        return view('admin.Daftar-admin', compact('user'));
+        return view('admin.daftar-admin', compact('user'));
     }
 
     /**

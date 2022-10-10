@@ -1,4 +1,4 @@
-@extends('Layouts.Main')
+@extends('layouts.main')
 @section('content')
 <div class=""></div>
 
@@ -102,7 +102,7 @@
                     </div>
                 </div>
             </div>
-            @include('Layouts.Footer')
+            @include('layouts.footer')
         </div>
     </div>
 @endsection

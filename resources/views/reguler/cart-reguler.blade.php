@@ -1,4 +1,4 @@
-@extends('Layouts.main', ['title' => 'TGCC | Pilih Permainan'])
+@extends('layouts.main', ['title' => 'TGCC | Pilih Permainan'])
 @section('content')
     <!-- Main Content -->
     <div class="page-wrapper">
@@ -178,7 +178,7 @@
             </div>
             <div class="row">
             </div>
-            @include('Layouts.Footer')
+            @include('layouts.footer')
             <div id="lds-facebook"></div>
         </div>
     </div>
