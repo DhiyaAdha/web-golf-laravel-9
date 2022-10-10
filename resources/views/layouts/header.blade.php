@@ -1,19 +1,18 @@
 <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="{{ asset('tgcc144.PNG') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>{{ $title ?? 'TGCC' }}</title>
     <meta name="description" content="Aplikasi TGCC Member" />
     <meta name="author" content="tgcc" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    @routes
     <!-- PWA  -->
     <meta name="theme-color" content="#6777ef" />
-    <link rel="apple-touch-icon" href="{{ asset('tgcc144.PNG') }}">
+    <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
 
     <!-- Favicon -->
-    <link rel="icon" href="{{ asset('tgcc144.PNG') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
 
     <!-- Morris Charts CSS -->
     <script src="{{ asset('vendors/bower_components/jquery/dist/jquery.min.js') }}"></script>

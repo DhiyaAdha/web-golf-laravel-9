@@ -1,4 +1,4 @@
-@extends('Layouts.main')
+@extends('layouts.main')
 @section('content')
     <div class="page-wrapper">
         <div class="container-fluid">
@@ -132,7 +132,7 @@
                     </div>
                 </div>
             </div>
-            @include('Layouts.Footer')
+            @include('layouts.footer')
         </div>
     </div>
 @endsection
