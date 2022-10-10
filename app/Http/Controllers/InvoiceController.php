@@ -52,16 +52,14 @@ class InvoiceController extends Controller
             })
             ->editColumn('payment_type', function ($data) {
                 $type = unserialize($data->payment_type);
-                // dd($type[1]['payment_type']);
-                if (isset($type[0]['payment_type'])) {
+                if (isset($type['payment_type'])) {
                     return sprintf('<div class="d-flex flex-wrap justify-content-center align-items-center"><span class="label mr-5 label-primary">'.$type[0]['payment_type'].'</span></div>');
                 } else {
                     $datax = array();
-                    foreach ($type[0] as $i => $t) {
+                    foreach ($type as $i => $t) {
                         $datax[$i] = $t['payment_type'];
                     }
                     $tagsString = implode("</span> <span class='label mr-5 label-primary'>", $datax);
-                    dd($tagsString);
                     return sprintf('<div class="d-flex flex-wrap justify-content-center align-items-center"><span class="label mr-5 label-primary">'.$tagsString.'</span></div>');
                 }
             })
@@ -104,18 +102,21 @@ class InvoiceController extends Controller
     
      public function show($id)
     {
-        $transaction = LogTransaction::find($id);
-        $detail = Detail::where('log_transaction_id',$id)->first();
-        $data['transaction'] = $transaction;
-        $data['visitor'] = Visitor::find($transaction->visitor_id);
-        if ($detail) {
-            $data['package'] = Package::find($detail->package_id);  
-            $data['detail'] = Detail::find($detail->id);
-        } else {
-            $data['package'] = null;  
-            $data['detail'] = null;
+        try {
+            $transaction = LogTransaction::find($id);
+            $detail = Detail::where('log_transaction_id',$id)->first();
+            $payment_type = unserialize($transaction->payment_type);
+            $datax = array();
+            foreach ($payment_type as $i => $t) {
+                $datax[$i] = $t['payment_type'];
+            }
+            $method_payment = implode(", ", $datax);
+            $cart = unserialize($transaction->cart);
+            $visitor = Visitor::find($transaction->visitor_id);
+            return view('invoice.invoice', compact('method_payment','transaction', 'visitor', 'cart'));
+        } catch (\Throwable $th) {
+            return redirect()->route('invoice',$id);
         }
-        return view('invoice.invoice', $data);
     }
 
     /**
