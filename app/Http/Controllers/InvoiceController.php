@@ -113,8 +113,17 @@ class InvoiceController extends Controller
             $method_payment = implode(", ", $datax);
             $cart = unserialize($transaction->cart);
             $visitor = Visitor::find($transaction->visitor_id);
+            $total = 0;
             $qty = 0;
-            return view('invoice.invoice', compact('method_payment','transaction', 'visitor', 'cart'));
+            $discount = 0;
+            foreach ($cart as $get) {
+                $qty += $get['qty'];
+                $total += $get['price'];
+            }
+            foreach ($payment_type as $get) {
+                $discount += $get['discount'];
+            }
+            return view('invoice.invoice', compact('method_payment','transaction', 'visitor', 'cart', 'qty', 'discount', 'total'));
         } catch (\Throwable $th) {
             return redirect()->route('invoice',$id);
         }
