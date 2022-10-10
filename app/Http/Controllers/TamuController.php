@@ -45,7 +45,7 @@ class TamuController extends Controller
             'email',
             'phone',
             'tipe_member',
-        ])->orderBy('created_at', 'desc')->get();
+        ])->where('tipe_member','!=','REGULER')->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
             return datatables()->of($visitor)->addColumn('action', function ($visitor) {
                 if (auth()->user()->role_id == '2') {
@@ -332,7 +332,8 @@ class TamuController extends Controller
     {
         $decrypt_id = Crypt::decryptString($id);
         $aktifitas_limit =
-            ReportLimit::select('id', 'report_quota', 'status', 'visitor_id',  'user_id', 'created_at')->where('report_quota','!=',0)->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
+            ReportLimit::select('id', 'report_quota', 'status', 'visitor_id',  'user_id', 'created_at')
+            ->where('report_quota','!=' ,0)->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
 
         if ($request->ajax()) {
             return datatables()->of($aktifitas_limit)

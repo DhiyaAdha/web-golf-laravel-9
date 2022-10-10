@@ -1,16 +1,17 @@
 <?php
 
+use App\Mail\SendEmailReset;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ScanqrController;
 use App\Http\Controllers\TamuController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ScanqrController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PackageController;
-use App\Mail\SendEmailReset;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\OrderRegulerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +76,9 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     route::get('/invoice_cetakpdf/{id}', [InvoiceController::class, 'cetak_pdf'])->name('cetak_pdf');
     route::get('/export_excel', [InvoiceController::class, 'export_excel'])->name('export_excel');
     Route::get('/package/destroy/{id}', [PackageController::class,'destroy'])->name('package.destroy');
+
+    
+
 });
 
 //Level admin dan superadmin
@@ -110,6 +114,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('reporttransaksi/{id}', [TamuController::class, 'reporttransaksi'])->name('transaksi.report.data');
     Route::post('/tambah-deposit', [TamuController::class, 'insertdeposit'])->name('insertdeposit');
     route::get('/export_excel_tamu', [TamuController::class, 'export_excel_tamu'])->name('export_excel_tamu');
+    
     Route::get('/proses', [OrderController::class, 'index'])->name('proses');
     Route::get('/cart/{id}', [OrderController::class, 'index'])->name('order.cart');
     Route::resource('cart', OrderController::class);
@@ -122,9 +127,30 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::post('/update/qty/{id}', [OrderController::class,'update_qty'])->name('update.qty');
     Route::post('/pay', [OrderController::class,'pay'])->name('pay');
     Route::get('/print_invoice/{id}', [OrderController::class,'print_invoice'])->name('invoice.print');
+    
+    // cart-reguler
+    Route::resource('cart-reguler', OrderRegulerController::class);
+    Route::post('/tamureguler', [OrderRegulerController::class, 'tamureguler'])->name('tamureguler');
+    Route::get('/keranjang-reguler/{id}', [OrderRegulerController::class, 'orderreguler'])->name('order.cart.reguler');
+    // Route::get('/cart-reguler',[ OrderRegulerController::class, 'index'])->name('cart-reguler.index');
+    // Route::resource('cart', OrderRegulerController::class);
+    Route::post('/keranjang-reguler/add/{package}', [OrderRegulerController::class, 'add'])->name('cart.add.reguler');
+    Route::post('/keranjang-reguler/remove/{package}',[OrderRegulerController::class, 'remove'])->name('remove.item.reguler');
+    Route::post('/keranjang-reguler/clear',[OrderRegulerController::class, 'clear_cart'])->name('cart.clear.reguler');
+    Route::get('/checkout-reguler/{id}', [OrderRegulerController::class,'checkout'])->name('checkout.reguler');
+    Route::get('/select-reguler', [OrderRegulerController::class,'select'])->name('select.type.reguler');
+    Route::post('/qty-reguler/minus/{id}', [OrderRegulerController::class,'minus'])->name('qty.minus.reguler');
+    Route::post('/update-reguler/qty/{id}', [OrderRegulerController::class,'update_qty'])->name('update.qty.reguler');
+    Route::post('/pay-reguler', [OrderRegulerController::class,'pay'])->name('pay.reguler');
+    Route::get('/print_invoice_reguler/{id}', [OrderRegulerController::class,'print_invoice'])->name('invoice.print.reguler');
+
+    
     //route 4 notifikasi email pembayaran sukses
     Route::get('/test_payment', function(){
         return view('emails.paymentsuccess4_');
+
     });
+
+
 
 });

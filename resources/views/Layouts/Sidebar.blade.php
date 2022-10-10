@@ -42,7 +42,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="{{ Request::is('reguler') ? 'active-page' : '' }}" href="/reguler">
+                    <a class="{{ Request::is('reguler') ? 'active-page' : '' }}" href="{{ route('cart-reguler.index') }}">
                         <div class="pull-left">
                             <span class="right-nav-text">Reguler</span>
                         </div>
