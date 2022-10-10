@@ -151,7 +151,15 @@
                                 <img src="{{ env('APP_URL') . 'img/success.svg' }}" width="50" height="50"
                                     style="display: block; border: 0px; margin: 15px;" />
                             </div> --}}
+                            @if ($data['tipe_member'] == 'VIP')
                             <p style="color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px; margin: 0;text-align: center;">Member Terdaftar</p>
+                            @endif
+                            @if ($data['tipe_member'] == 'VVIP')
+                            <p style="color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px; margin: 0;text-align: center;">Member Terdaftar</p>
+                            @endif
+                            @if ($data['tipe_member'] == 'REGULER')
+                            
+                            @endif
                         </td>
                     </tr>
                 </table>
@@ -167,10 +175,24 @@
                         </td>
                     </tr>
                     <tr>
+                        @if ($data['tipe_member'] == 'VIP')
                         <td bgcolor="#ffffff" align="left"
                             style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16x; font-weight: 400; line-height: 25px;">
                             <p style="margin: 0;">Anda telah terdaftar sebagai membership TGGC : </p>
                         </td>
+                        @endif
+                        @if ($data['tipe_member'] == 'VVIP')
+                        <td bgcolor="#ffffff" align="left"
+                            style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16x; font-weight: 400; line-height: 25px;">
+                            <p style="margin: 0;">Anda telah terdaftar sebagai membership TGGC : </p>
+                        </td>
+                        @endif
+                        @if ($data['tipe_member'] == 'REGULER')
+                        <td bgcolor="#ffffff" align="left"
+                            style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16x; font-weight: 400; line-height: 25px;">
+                            <p style="margin: 0;">Anda telah terdaftar sebagai Reguler TGGC : </p>
+                        </td>
+                        @endif
                     </tr>
                     <tr>
                         <td bgcolor="#ffffff" align="left"
@@ -187,6 +209,7 @@
                                 <p style="margin: 0;">Phone: </p>
                                 <p style="margin: 0;">&nbsp; {{ $data['phone'] }}</p>
                             </div>
+                            @if ($data['tipe_member'] == 'VIP')
                             <div style="display:flex;">
                                 <p style="margin: 0;">Perusahaan: </p>
                                 <p style="margin: 0;">&nbsp; {{ $data['company'] }}</p>
@@ -195,6 +218,25 @@
                                 <p style="margin: 0;">Jabatan: </p>
                                 <p style="margin: 0;">&nbsp; {{ $data['position'] }}</p>
                             </div>
+                            @endif
+                            @if ($data['tipe_member'] == 'VVIP')
+                            <div style="display:flex;">
+                                <p style="margin: 0;">Perusahaan: </p>
+                                <p style="margin: 0;">&nbsp; {{ $data['company'] }}</p>
+                            </div>
+                            <div style="display:flex;">
+                                <p style="margin: 0;">Jabatan: </p>
+                                <p style="margin: 0;">&nbsp; {{ $data['position'] }}</p>
+                            </div>
+                            @endif
+                            @if ($data['tipe_member'] == 'REGULER')
+                            <div style="display:flex;">
+                                
+                            </div>
+                            <div style="display:flex;">
+                                
+                            </div>
+                            @endif
                             <div style="display:flex;">
                                 <p style="margin: 0;">Tipe Member: </p>
                                 <p style="margin: 0;">&nbsp; {{ $data['tipe_member'] }}</< /p>
