@@ -182,7 +182,13 @@
                             <tr>
                                 <td class="thick-line"></td>
                                 <td class="thick-line"></td>
-                                <td class="thick-line text-right">Subtotal</td>
+                                <td class="thick-line text-right">Jumlah Item</td>
+                                <td class="thick-line text-right">{{ count($cart) }}</td>
+                            </tr>
+                            <tr>
+                                <td class="thick-line"></td>
+                                <td class="thick-line"></td>
+                                <td class="thick-line text-right">Jumlah Order</td>
                                 <td class="thick-line text-right">
                                 </td>
                             </tr>
