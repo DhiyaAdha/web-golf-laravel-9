@@ -777,6 +777,7 @@ class TamuController extends Controller
 
         return redirect()->route('daftar-tamu')->with('success', 'Berhasil edit tamu');
     }
+    
     public function tambahtamu()
     {
         return view('tamu.tambah-tamu');
