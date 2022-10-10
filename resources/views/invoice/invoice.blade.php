@@ -214,7 +214,6 @@
                             </tr>
                         </table>
                     </div>
-
                     @include('layouts.footer')
             </div>
         </div>
