@@ -178,6 +178,9 @@
                                         <td class="text-right">Rp. {{ formatrupiah($item['price']) }}</td>
                                     </tr>
                                 @endforeach
+                                {{-- @php
+                                    dd($item);
+                                @endphp --}}
                             </tr>
                             <tr>
                                 <td class="thick-line"></td>
@@ -189,32 +192,31 @@
                                 <td class="thick-line"></td>
                                 <td class="thick-line"></td>
                                 <td class="thick-line text-right">Jumlah Order</td>
-                                <td class="thick-line text-right">
+                                <td class="thick-line text-right">{{ $qty }}
                                 </td>
                             </tr>
                             <tr>
                                 <td class="no-line"></td>
                                 <td class="no-line"></td>
-                                <td class="no-line text-right">Limit Bulanan</td>
-                                <td class="no-line text-right">Rp. -</td>
+                                <td class="no-line text-right">Diskon</td>
+                                <td class="no-line text-right">Rp. {{ formatrupiah($discount) }}</td>
                             </tr>
                             <tr>
                                 <td class="no-line"></td>
                                 <td class="no-line"></td>
-                                <td class="no-line text-right">Deposit</td>
-                                <td class="no-line text-right">Rp. -</td>
+                                <td class="no-line text-right">Total Bayar</td>
+                                <td class="no-line text-right">Rp. {{ formatrupiah($transaction->total) }}</td>
                             </tr>
                             <tr>
                                 <td class="no-line"></td>
                                 <td class="no-line"></td>
-                                <td class="no-line text-right"><strong>Total Bayar</strong></td>
+                                <td class="no-line text-right"><strong>Total Tagihan</strong></td>
                                 <td class="no-line text-right">
-                                    <span>Rp. {{ formatrupiah($transaction->total) }}</span>
+                                    <span>Rp. {{ formatrupiah($total) }}</span>
                                 </td>
                             </tr>
                         </table>
                     </div>
-
                     @include('layouts.footer')
             </div>
         </div>

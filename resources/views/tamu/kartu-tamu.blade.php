@@ -204,7 +204,7 @@
                         </div>
                         <div>
                             <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
-                                <img src="/dist/img/money.svg">
+                                <img src="{{asset('/dist/img/money.svg')}}">
                                 <h6 class="text-center">IDR {{ number_format($balance, 0, '', '.') }}</h6>
                             </div>
                         </div>
