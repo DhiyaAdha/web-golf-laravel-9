@@ -187,12 +187,12 @@ class TamuController extends Controller
         $get_visitor->unique_qr = $link_qr;
         $get_visitor->save();
 
-
         if ($request->tipe_member == 'VIP') {
             $report_quota = ReportLimit::create([
                 'visitor_id' => $visitors->id,
                 'user_id' =>    Auth::user()->id,
                 'report_quota' => 4,
+                'report_quota_kupon' => 0,
                 'status' => 'Bertambah',
                 'created_at' => Carbon::now(),
             ]);
@@ -201,6 +201,7 @@ class TamuController extends Controller
                 'visitor_id' => $visitors->id,
                 'user_id' =>    Auth::user()->id,
                 'report_quota' => 10,
+                'report_quota_kupon' => 0,
                 'status' => 'Bertambah',
                 'created_at' => Carbon::now(),
             ]);
@@ -211,6 +212,7 @@ class TamuController extends Controller
             'visitor_id' => $visitors->id,
             'report_limit_id' => $report_quota->id,
             'quota' => $request->tipe_member == 'VIP' ? '4' : '10',
+            'quota_kupon' => 0,
             'created_at' => Carbon::now(),
         ]);
         $quota->save();
@@ -845,10 +847,10 @@ class TamuController extends Controller
                 'type' => 'CREATE',
                 'activities' => 'Berhasil menambah kupon <b>' . $request->quota_kupon . '</b> atas nama <b>' . $visitor->name . '</b>',
             ]);
-            
 
             ReportLimit::create([
                 'report_quota_kupon' => $log_limit->quota_kupon,
+                'report_quota' => $log_limit->quota,
                 'visitor_id' => $get_uri[3],
                 'user_id' => Auth::id(),
                 'status' => 'Bertambah',
