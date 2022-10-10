@@ -28,6 +28,6 @@ class SendEmailKuponTambah extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.tambahkuponemail')->subject('Tambah Deposit');
+        return $this->view('emails.tambahkuponemail')->subject('Tambah Kupon');
     }
 }
