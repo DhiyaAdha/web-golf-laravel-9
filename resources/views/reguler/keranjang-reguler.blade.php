@@ -1,4 +1,4 @@
-@extends('layouts.main', ['title' => 'TGCC | Pilih Permainan'])
+@extends('Layouts.main', ['title' => 'TGCC | Pilih Permainan'])
 @section('content')
     <!-- Main Content -->
     <div class="page-wrapper">
@@ -12,7 +12,7 @@
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
                         <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
-                        <li><a href="{{ url('cart-reguler') }}">Reguler</a></li>
+                        <li><a href="{{ url('scan-tamu') }}">Scan Tamu</a></li>
                         <li class="active"><span>Pilih Permainan</span></li>
                     </ol>
                 </div>
@@ -24,40 +24,38 @@
                     <div style="height: 387px;" class="panel panel-default card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
-                                <strong class="panel-title txt-dark">Default</strong>
+                                <strong class="panel-title txt-dark">Jenis Permainan</strong>
                             </div>
                             <div class="pull-right">
                                 <div class='d-flex '>
-                                    <span class="text-muted mr-15" style="float: right;">@php
-                                        echo date('d M Y');
-                                    @endphp,
+                                    <span class="text-muted mr-15" style="float: right;">{{ $date_now }},
                                     </span>
-                                    <span class="label label-default" id='time-part' style="float: right;">
-                                        @php
-                                            echo date('h:i:s A');
-                                        @endphp
-                                    </span>
+                                    <span class="label label-default" id='time-part' style="float: right;"></span>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
                         </div>
                         <div class="d-flex flex-wrap">
-                                <button type="button" id="package-"
-                                    onclick="addCart()" data-toggle="tooltip"
-                                    title="Rp." 
-                                    class="btn btn-default txt-success mr-15 mb-15"></button>
+                            @foreach ($default as $item)
+                                <button type="button" id="package-{{ $item->id }}"
+                                    onclick="addCart({{ $item->id }})" data-toggle="tooltip"
+                                    title="Rp. {{ number_format($today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
+                                    class="btn btn-default txt-success mr-15 mb-15">{{ $item->name }}</button>
+                            @endforeach
                         </div>
                         <div class="panel-heading">
                             <div class="pull-left">
-                                <strong class="panel-title txt-dark">Tambahan</strong>
+                                <strong class="panel-title txt-dark">Fasilitas</strong>
                             </div>
                             <div class="clearfix"></div>
                         </div>
                         <div class="d-flex flex-wrap">
-                                <button type="button" id="package-"
-                                    onclick="addCart()" data-toggle="tooltip"
-                                    title="Rp." 
-                                    class="btn btn-default txt-success mr-15 mb-15 package-"></button>
+                            @foreach ($additional as $item)
+                                <button type="button" id="package-{{ $item->id }}"
+                                    onclick="addCart({{ $item->id }})" data-toggle="tooltip"
+                                    title="Rp. {{ number_format($today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
+                                    class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
+                            @endforeach
                         </div>
                         <div class="panel-heading">
                             <div class="pull-left">
@@ -66,11 +64,25 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="d-flex flex-wrap mb-15">
-                                <button type="button" id="package-"
-                                    onclick="addCart()" data-toggle="tooltip"
-                                    title="Rp. "
-                                    class="btn btn-default txt-success mr-15 mb-15 package-"></button>
+                            @foreach ($others as $item)
+                                <button type="button" id="package-{{ $item->id }}"
+                                    onclick="addCart({{ $item->id }})" data-toggle="tooltip"
+                                    title="Rp. {{ number_format($today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
+                                    class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
+                            @endforeach
                         </div>
+                        {{-- <div class="panel-heading fk d-flex align-items-center">
+                            <div class="d-flex align-items-center justify-content-between" style="width: 100%">
+                                <span class="text-size">Terbilang</span>
+                                <span class="counted">
+                                    @if (count($cart_data) < 1)
+                                        -
+                                    @else
+                                        {{ $counted }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="col-lg-4 sticky">
@@ -81,7 +93,7 @@
                                 <a href="javascript:void(0)" style="position: relative">
                                     <i class="fa fa-shopping-cart"></i>
                                     <span class="top-nav-icon-badge" style="position: absolute"
-                                        id="qty"></span>
+                                        id="qty">{{ count($cart_data) }}</span>
                                 </a>
                                 <div class="clearfix"></div>
                             </div>
@@ -96,33 +108,40 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
+                        @if (count($cart_data) > 0)
                             <div style="overflow-y: scroll;height: 270px;" id="isi-">
-                                    <div class="d-flex pl disabled-cart"
+                                @foreach ($cart_data as $index => $item)
+                                    <div class="d-flex pl disabled-cart-{{ $item['rowId'] }}"
                                         style="padding: 10px 0px 10px 0px;">
-                                        <p class="flex-grow-1 text-muted mr-5">
+                                        <p class="flex-grow-1 text-muted mr-5">{{ Str::words($item['name'], 3) }}
                                         </p>
-                                        <p class="text-muted price-">
-                                            Rp.20.000</p>
-                                        <button onclick="updateQTY('minus')"><i
-                                                class="cart-qty-minus- fa fa-minus-square"></i></button>
-                                        <input type="number" min="0" class="qty-"
-                                            value="" style="width: 30px;" readonly />
-                                        <button onclick="updateQTY(, 'plus')"><i
-                                                class="cart-qty-plus- fa fa-plus-square"></i></button>
+                                        <p class="text-muted price-{{ $item['rowId'] }}">
+                                            Rp.{{ number_format($item['price'], 0, ',', '.') }}</p>
+                                        <button onclick="updateQTY({{ $item['rowId'] }}, 'minus')"><i
+                                                class="cart-qty-minus-{{ $item['rowId'] }} fa fa-minus-square"></i></button>
+                                        <input type="number" min="0" class="qty-{{ $item['rowId'] }}"
+                                            value="{{ $item['qty'] }}" style="width: 30px;" readonly />
+                                        <button onclick="updateQTY({{ $item['rowId'] }}, 'plus')"><i
+                                                class="cart-qty-plus-{{ $item['rowId'] }} fa fa-plus-square"></i></button>
                                         <button class="mr-10 ml-10" data-toggle="tooltip" title="Hapus"
-                                            onclick="removeItem()" id="remove-item"
+                                            onclick="removeItem({{ $item['rowId'] }})" id="remove-item"
                                             style="color:red;"><i class="fa fa-trash-o"></i></button>
                                     </div>
+                                @endforeach
                             </div>
+                        @else
                             <div id="disabled-empty" style="height: 270px;"
                                 class="d-flex justify-content-center align-items-center">
                                 <span class="not-found text-muted">Keranjang masih kosong</span>
                             </div>
+                        @endif
                         <div id="total"></div>
                         <div id="append-checkout"></div>
+                        @if (count($cart_data) > 0)
                             <div class="d-flex">
                                 <strong class="flex-grow-1 txt-dark">Total</strong>
-                                <strong class="txt-dark" id="total-pay">Rp.20.000</strong>
+                                <strong class="txt-dark" id="total-pay">Rp.
+                                    {{ number_format($data_total['total'], 0, ',', '.') }}</strong>
                             </div>
                             <div id="disabled-checkout"></div>
                             <div class="d-flex justify-content-between active-checkout">
@@ -131,22 +150,24 @@
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Reset</span>
                                 </a>
-                                <a href="#"
+                                {{-- <a href="{{ url('kartu-tamu/' . Crypt::encryptString($get_visitor->id)) }}"
                                     id="riwayat" class="mt-15 mb-15 btn-xs btn btn-primary btn-anim" target="_blank">
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Riwayat</span>
-                                </a>
-                                <a href="javascript:void(0)" type="button" id="checkout"
+                                </a> --}}
+                                <button type="button" id="checkout"
                                     class="mt-15 mb-15 btn-xs btn btn-success btn-anim">
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Checkout</span>
-                                </a>
+                                </button>
                             </div>
+                        @else
                             <button type="submit" class="mt-15 mb-15 btn-xs btn-block btn btn-success btn-anim"
                                 id="disabled-pay">
                                 <i class="icon-rocket"></i>
                                 <span class="btn-text">Checkout</span>
                             </button>
+                        @endif
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -178,26 +199,30 @@
             </div>
             <div class="row">
             </div>
-            @include('layouts.footer')
+            @include('Layouts.Footer')
             <div id="lds-facebook"></div>
         </div>
     </div>
 @endsection
-{{-- @push('scripts')
+@push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script>
         $('[data-toggle="tooltip"]').tooltip();
+
         function checkout(url, title) {
             popupCenter(url, title, 1000, 700);
         }
+
         function popupCenter(url, title, w, h) {
             const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
             const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+
             const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document
                 .documentElement.clientWidth : screen.width;
             const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document
                 .documentElement.clientHeight : screen.height;
+
             const systemZoom = width / window.screen.availWidth;
             const left = (width - w) / 2 / systemZoom + dualScreenLeft
             const top = (height - h) / 2 / systemZoom + dualScreenTop
@@ -206,6 +231,7 @@
             );
             if (window.focus) newWindow.focus();
         }
+
         function loading() {
             $.blockUI({
                 css: {
@@ -221,6 +247,7 @@
                 }
             });
         }
+
         function formatIDR(price) {
             var number_string = price.toString(),
                 split = number_string.split(','),
@@ -233,13 +260,15 @@
             }
             return split[1] != undefined ? idr + ',' + split[1] : idr;
         }
+
         function addCart(id) {
             var url = window.location.href;
             url = url.split("?")
             url = url[0];
             url = url.split("/");
             page = url[url.length - 1];
-            var url = "{{ route('cart.add', ':package') }}";
+
+            var url = "{{ route('cart.add.reguler', ':package') }}";
             url = url.replace(':package', id);
             $.ajax({
                 async: true,
@@ -271,12 +300,14 @@
                 }
             });
         }
+
         function updateQTY(id, type) {
             var tg = window.location.href;
             tg = tg.split("?")
             tg = tg[0];
             tg = tg.split("/");
             page = tg[tg.length - 1];
+
             let $n = $(".qty-" + id);
             if (type === 'plus') {
                 $n.val(Number($n.val()) + 1);
@@ -306,7 +337,7 @@
                     });
                 }
             }
-            let url = "{{ route('update.qty', ':id') }}";
+            let url = "{{ route('update.qty.reguler', ':id') }}";
             url = url.replace(':id', id);
             $.ajax({
                 async: true,
@@ -344,13 +375,15 @@
                 }
             });
         }
+
         function removeItem(id) {
             var tg = window.location.href;
             tg = tg.split("?")
             tg = tg[0];
             tg = tg.split("/");
             page = tg[tg.length - 1];
-            var url = "{{ route('remove.item', ':package') }}";
+
+            var url = "{{ route('remove.item.reguler', ':package') }}";
             url = url.replace(':package', id);
             $('.disabled-cart-' + id).css('background', 'tomato');
             $('.disabled-cart-' + id).fadeOut(800, function() {
@@ -377,7 +410,6 @@
                     $('.counted').text(response.counted);
                     var qty = $('#qty').text();
                     $('#qty').text(qty - 1);
-                    console.log(response.cart.length)
                     if (response.cart.length == 0) {
                         $('#isi-').html(`<span class="not-found text-muted">Keranjang masih kosong</span>`)
                             .addClass('d-flex justify-content-center align-items-center');
@@ -391,13 +423,15 @@
                 }
             });
         }
+
         $(document).on('click', '#reset-order', function() {
             var tg = window.location.href;
             tg = tg.split("?")
             tg = tg[0];
             tg = tg.split("/");
             page = tg[tg.length - 1];
-            var url = "{{ route('cart.clear') }}";
+
+            var url = "{{ route('cart.clear.reguler') }}";
             swal({
                 title: "Anda yakin ingin reset keranjang?",
                 imageUrl: "../img/Warning.svg",
@@ -440,14 +474,16 @@
             });
             return false;
         });
+
         $(document).on('click', '#checkout', function() {
             var tg = window.location.href;
             tg = tg.split("?")
             tg = tg[0];
             tg = tg.split("/");
             page = tg[tg.length - 1];
-            let url = "{{ route('checkout', ':id') }}";
+            let url = "{{ route('checkout.reguler', ':id') }}";
             url = url.replace(':id', page);
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -469,10 +505,13 @@
                         confirmButtonColor: "#01c853",
                     }, function(isConfirm) {
                         checkout(url, response.order_number);
+                        $('#checkout').attr('disabled', true);
+                        window.close();
                     });
                 }
             });
         });
+
         $(document).on('click', '#disabled-pay', function() {
             swal({
                 title: "",
@@ -482,10 +521,12 @@
             });
             return false;
         });
+
         var interval = setInterval(function() {
             var momentNow = moment().locale('fr');
             $('#time-part').html(momentNow.format('hh:mm:ss A'));
         }, 100);
+
         $('#dt-package').DataTable({
             "processing": true,
             "serverSide": true,
@@ -499,7 +540,7 @@
                 "previous": "Previous"
             },
             "ajax": {
-                "url": "",
+                "url": "{{ route('order.cart.reguler', Request::segment(2)) }}",
                 "type": "GET",
                 "datatype": "json"
             },
@@ -564,4 +605,4 @@
             }
         });
     </script>
-@endpush --}}
+@endpush

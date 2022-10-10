@@ -2862,7 +2862,7 @@ class OrderController extends Controller
                 'payment_type',
                 'cart',
                 'deposit',
-                'discount',
+                'discount', 
                 'counted',
                 'total',
                 'qty',

@@ -1,24 +1,19 @@
 @extends('layouts.main')
 @section('content')
-<div class=""></div>
-
-
-    <div class="page-wrapper">
-        <div class="container-fluid">
-            <!-- Title -->
-            <div class="row heading-bg">
-                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                    <h5 class="txt-dark">Tambah Admin</h5>
-                </div>
-                <!-- Breadcrumb -->
-                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                    <ol class="breadcrumb">
-                        <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
-                        <li><a href="{{ url('daftar-admin') }}"><span>Daftar Admin</span></a></li>
-                        <li class="active"><span>Tambah admin</span></li>
-                    </ol>
-                </div>
-                <!-- /Breadcrumb -->
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <!-- Title -->
+        <div class="row heading-bg">
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                <h5 class="txt-dark">Tambah Admin</h5>
+            </div>
+            <!-- Breadcrumb -->
+            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
+                    <li><a href="{{ url('daftar-admin') }}"><span>Daftar Admin</span></a></li>
+                    <li class="active"><span>Tambah admin</span></li>
+                </ol>
             </div>
             <!-- /Breadcrumb -->
         </div>
@@ -29,8 +24,8 @@
                     <h6 class="control-label mb-10">Tambah Admin</h6>
                     <div class="panel-body">
                         <div class="form-wrap">
-                            <form action="{{ route('insertadmin') }}" method="POST">
                                 @csrf
+                                <form action="{{ route('insertadmin') }}" method="POST">
                                 <div class="form-group @error('name') has-error @enderror">
                                     <label class="control-label mb-10" for="">Nama Lengkap</label>
                                     <input type="text" class="form-control" id="result" size="50px" placeholder="Masukan Nama" name="name" value="{{ old('name') }}">
@@ -49,8 +44,8 @@
                                     <label class="pull-left control-label mb-10" for="password">Password</label>
                                     <input type="password" name="password" class="form-control" id="password" placeholder="Masukan Password">
                                     <span class="show-hide1" onclick="myfunction()">
-                                        <i style="color: gray;" id="hide1" class="fa-solid fa-eye"></i>
-                                        <i style="color: gray;" id="hide2" class="fa-solid fa-eye-slash"></i>
+                                        <i style="color: gray;" id="hide1" class="fa-solid fa-eye fa-xs"></i>
+                                        <i style="color: gray;" id="hide2" class="fa-solid fa-eye-slash fa-xs"></i>
                                     </span>
                                     @error('password')
                                     <div class="text-danger"> {{ $message }}</div>
@@ -78,7 +73,7 @@
                                 </div>
                                 <div class="form-group @error('role_id') has-error @enderror">
                                     <label class="control-label mb-10 text-left">Role</label>
-                                    <div class="radio-list">
+                                    <div class="radio-list" >
                                         <div class="radio-inline pl-0">
                                             <span class="radio radio-info"> <input type="radio" name="role_id" id="radio_11" value="1" {{ old('role_id') == "1" ? 'checked' : '' }}>
                                                 <label for="radio_11">Admin</label>
@@ -96,15 +91,16 @@
                                     <div class="form-group text-left">
                                         <button type="" class="btn btn-info" id="gd">Tambah Admin</button>
                                     </div>
-                                </form>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
             @include('layouts.footer')
         </div>
+        @include('Layouts.Footer')
     </div>
+</div>
 @endsection
 @push('scripts')
     <script>

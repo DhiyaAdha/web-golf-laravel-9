@@ -19,9 +19,6 @@
                 <!-- /Breadcrumb -->
             </div>
             <!-- /Title -->
-            <!-- Ini untuk Tampilan Cetak Invoice -->
-
-            <!-- /Ini untuk Tampilan Cetak Invoice -->
 
             <a href="javascript:void(0)"><i class="fa fa-print pull-right" target="_blank" data-toggle="tooltip" title="Klik untuk Cetak"></i></a>
             <div class="row" id="cetak-invoice">
@@ -115,7 +112,6 @@
                     }
                 </style>
                 </head>
-
                 <body>
                     <div class="invoice-box">
                         <table cellpadding="0" cellspacing="0">
@@ -126,19 +122,16 @@
                                             <td class="title">
                                                 <h2 class="invoice">INVOICE</h2>
                                             </td>
-
                                             <td>
                                                 <strong>Order
-                                                    #{{ $transaction->order_number }}</strong><br />
+                                                    {{ $transaction->order_number }}</strong><br />
                                                 <strong>Metode Pembayaran:</strong><br>
-                                                <p style="color: #616161;">{{ $transaction->payment_type }}</p><br />
-
+                                                <p style="color: #616161;">{{ $method_payment }}</p><br/>
                                             </td>
                                         </tr>
                                     </table>
                                 </td>
                             </tr>
-
                             <tr class="information">
                                 <td colspan="4">
                                     <table>
@@ -149,7 +142,6 @@
                                                 <br />{{ $visitor->email }}<br>
                                                 {{ $visitor->phone }}<br>
                                             </td>
-
                                             <td>
                                                 <strong>Order Date:</strong><br>
                                                 <p style="color: #616161">
@@ -157,13 +149,10 @@
                                                 </p>
                                                 <br><br>
                                             </td>
-
                                         </tr>
                                     </table>
                                 </td>
                             </tr>
-
-
                             <tr class="details">
                                 <td>
                                     <strong>Katagori Tamu:&nbsp;</strong>
@@ -174,60 +163,60 @@
                                     @endif
                                 </td>
                             </tr>
-
                             <tr class="heading">
                                 <td>Nama Paket</td>
-
                                 <td style="text-align: center">Harga</td>
-
-                                <td style="text-align: center">Jumlah</td>
-
+                                <td style="text-align: center">Qty</td>
                                 <td style="text-align: right">Total</td>
                             </tr>
-
                             <tr class="item">
-                                <td>{{ ($package) ? $package->name : 'yntkts' }}</td>
-
-                                <td>Rp.{{ ($package) ? $package->price_weekdays : '-' }}</td>
-
-                                <td style="text-align: center">{{ ($detail) ? $detail->quantity  : '-'}}</td>
-
-                                <td style="text-align: right">Rp.{{ formatrupiah($transaction->total) }}</td>
+                                @foreach ($cart as $item)
+                                    <tr>
+                                        <td>{{ $item['name'] }}</td>
+                                        <td class="text-right">Rp. {{ formatrupiah($item['pricesingle']) }}</td>
+                                        <td class="text-center">{{ $item['qty'] }}</td>
+                                        <td class="text-right">Rp. {{ formatrupiah($item['price']) }}</td>
+                                    </tr>
+                                @endforeach
+                                {{-- @php
+                                    dd($item);
+                                @endphp --}}
                             </tr>
-
                             <tr>
                                 <td class="thick-line"></td>
                                 <td class="thick-line"></td>
-                                <td class="thick-line text-right">Subtotal</td>
-                                <td class="thick-line text-right">
-                                    <span>Rp. {{ ($detail) ? ($detail->harga * $detail->quantity * 2) : '-' }}</span>
+                                <td class="thick-line text-right">Jumlah Item</td>
+                                <td class="thick-line text-right">{{ count($cart) }}</td>
+                            </tr>
+                            <tr>
+                                <td class="thick-line"></td>
+                                <td class="thick-line"></td>
+                                <td class="thick-line text-right">Jumlah Order</td>
+                                <td class="thick-line text-right">{{ $qty }}
                                 </td>
                             </tr>
                             <tr>
                                 <td class="no-line"></td>
                                 <td class="no-line"></td>
-                                <td class="no-line text-right">Limit Bulanan</td>
-                                <td class="no-line text-right">Rp. -</td>
+                                <td class="no-line text-right">Diskon</td>
+                                <td class="no-line text-right">Rp. {{ formatrupiah($discount) }}</td>
                             </tr>
                             <tr>
                                 <td class="no-line"></td>
                                 <td class="no-line"></td>
-                                <td class="no-line text-right">Deposit</td>
-                                <td class="no-line text-right">Rp. -</td>
+                                <td class="no-line text-right">Total Bayar</td>
+                                <td class="no-line text-right">Rp. {{ formatrupiah($transaction->total) }}</td>
                             </tr>
                             <tr>
                                 <td class="no-line"></td>
                                 <td class="no-line"></td>
-                                <td class="no-line text-right"><strong>Total Bayar</strong></td>
+                                <td class="no-line text-right"><strong>Total Tagihan</strong></td>
                                 <td class="no-line text-right">
-                                    <span>Rp. {{ formatrupiah($transaction->total) }}</span>
+                                    <span>Rp. {{ formatrupiah($total) }}</span>
                                 </td>
                             </tr>
-
-
                         </table>
                     </div>
-
                     @include('layouts.footer')
             </div>
         </div>

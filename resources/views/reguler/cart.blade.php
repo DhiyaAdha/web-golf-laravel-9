@@ -21,41 +21,43 @@
             <!-- /Title -->
             <div class="row">
                 <div class="col-lg-8">
-                    <div class="panel panel-default card-view">
+                    <div style="height: 387px;" class="panel panel-default card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
-                                <strong class="panel-title txt-dark">Jenis Permainan</strong>
+                                <strong class="panel-title txt-dark">Default</strong>
                             </div>
                             <div class="pull-right">
                                 <div class='d-flex '>
-                                    <span class="text-muted mr-15" style="float: right;">{{ $date_now }},
+                                    <span class="text-muted mr-15" style="float: right;">@php
+                                        echo date('d M Y');
+                                    @endphp,
                                     </span>
-                                    <span class="label label-default" id='time-part' style="float: right;"></span>
+                                    <span class="label label-default" id='time-part' style="float: right;">
+                                        @php
+                                            echo date('h:i:s A');
+                                        @endphp
+                                    </span>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
                         </div>
                         <div class="d-flex flex-wrap">
-                            @foreach ($default as $item)
-                                <button type="button" id="package-{{ $item->id }}"
-                                    onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                    title="Rp. {{ number_format($today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
-                                    class="btn btn-default txt-success mr-15 mb-15">{{ $item->name }}</button>
-                            @endforeach
+                                <button type="button" id="package-"
+                                    onclick="addCart()" data-toggle="tooltip"
+                                    title="Rp." 
+                                    class="btn btn-default txt-success mr-15 mb-15"></button>
                         </div>
                         <div class="panel-heading">
                             <div class="pull-left">
-                                <strong class="panel-title txt-dark">Fasilitas</strong>
+                                <strong class="panel-title txt-dark">Tambahan</strong>
                             </div>
                             <div class="clearfix"></div>
                         </div>
                         <div class="d-flex flex-wrap">
-                            @foreach ($additional as $item)
-                                <button type="button" id="package-{{ $item->id }}"
-                                    onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                    title="Rp. {{ number_format($today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
-                                    class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
-                            @endforeach
+                                <button type="button" id="package-"
+                                    onclick="addCart()" data-toggle="tooltip"
+                                    title="Rp." 
+                                    class="btn btn-default txt-success mr-15 mb-15 package-"></button>
                         </div>
                         <div class="panel-heading">
                             <div class="pull-left">
@@ -64,25 +66,11 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="d-flex flex-wrap mb-15">
-                            @foreach ($others as $item)
-                                <button type="button" id="package-{{ $item->id }}"
-                                    onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                    title="Rp. {{ number_format($today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
-                                    class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
-                            @endforeach
+                                <button type="button" id="package-"
+                                    onclick="addCart()" data-toggle="tooltip"
+                                    title="Rp. "
+                                    class="btn btn-default txt-success mr-15 mb-15 package-"></button>
                         </div>
-                        {{-- <div class="panel-heading fk d-flex align-items-center">
-                            <div class="d-flex align-items-center justify-content-between" style="width: 100%">
-                                <span class="text-size">Terbilang</span>
-                                <span class="counted">
-                                    @if (count($cart_data) < 1)
-                                        -
-                                    @else
-                                        {{ $counted }}
-                                    @endif
-                                </span>
-                            </div>
-                        </div> --}}
                     </div>
                 </div>
                 <div class="col-lg-4 sticky">
@@ -93,7 +81,7 @@
                                 <a href="javascript:void(0)" style="position: relative">
                                     <i class="fa fa-shopping-cart"></i>
                                     <span class="top-nav-icon-badge" style="position: absolute"
-                                        id="qty">{{ count($cart_data) }}</span>
+                                        id="qty"></span>
                                 </a>
                                 <div class="clearfix"></div>
                             </div>
@@ -108,40 +96,33 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        @if (count($cart_data) > 0)
                             <div style="overflow-y: scroll;height: 270px;" id="isi-">
-                                @foreach ($cart_data as $index => $item)
-                                    <div class="d-flex pl disabled-cart-{{ $item['rowId'] }}"
+                                    <div class="d-flex pl disabled-cart"
                                         style="padding: 10px 0px 10px 0px;">
-                                        <p class="flex-grow-1 text-muted mr-5">{{ Str::words($item['name'], 3) }}
+                                        <p class="flex-grow-1 text-muted mr-5">
                                         </p>
-                                        <p class="text-muted price-{{ $item['rowId'] }}">
-                                            Rp.{{ number_format($item['price'], 0, ',', '.') }}</p>
-                                        <button onclick="updateQTY({{ $item['rowId'] }}, 'minus')"><i
-                                                class="cart-qty-minus-{{ $item['rowId'] }} fa fa-minus-square"></i></button>
-                                        <input type="number" min="1" class="qty-{{ $item['rowId'] }}"
-                                            value="{{ $item['qty'] }}" style="width: 30px;" readonly />
-                                        <button onclick="updateQTY({{ $item['rowId'] }}, 'plus')"><i
-                                                class="cart-qty-plus-{{ $item['rowId'] }} fa fa-plus-square"></i></button>
-                                        <button class="mr-10 ml-10" data-category="{{ $item['category'] }}"
-                                            data-toggle="tooltip" title="Hapus" onclick="removeItem({{ $item['rowId'] }})"
-                                            id="remove-item" style="color:red;"><i class="fa fa-trash-o"></i></button>
+                                        <p class="text-muted price-">
+                                            Rp.20.000</p>
+                                        <button onclick="updateQTY('minus')"><i
+                                                class="cart-qty-minus- fa fa-minus-square"></i></button>
+                                        <input type="number" min="0" class="qty-"
+                                            value="" style="width: 30px;" readonly />
+                                        <button onclick="updateQTY(, 'plus')"><i
+                                                class="cart-qty-plus- fa fa-plus-square"></i></button>
+                                        <button class="mr-10 ml-10" data-toggle="tooltip" title="Hapus"
+                                            onclick="removeItem()" id="remove-item"
+                                            style="color:red;"><i class="fa fa-trash-o"></i></button>
                                     </div>
-                                @endforeach
                             </div>
-                        @else
                             <div id="disabled-empty" style="height: 270px;"
                                 class="d-flex justify-content-center align-items-center">
                                 <span class="not-found text-muted">Keranjang masih kosong</span>
                             </div>
-                        @endif
                         <div id="total"></div>
                         <div id="append-checkout"></div>
-                        @if (count($cart_data) > 0)
                             <div class="d-flex">
                                 <strong class="flex-grow-1 txt-dark">Total</strong>
-                                <strong class="txt-dark" id="total-pay">Rp.
-                                    {{ number_format($data_total['total'], 0, ',', '.') }}</strong>
+                                <strong class="txt-dark" id="total-pay">Rp.20.000</strong>
                             </div>
                             <div id="disabled-checkout"></div>
                             <div class="d-flex justify-content-between active-checkout">
@@ -150,24 +131,22 @@
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Reset</span>
                                 </a>
-                                <a href="{{ url('kartu-tamu/' . Crypt::encryptString($get_visitor->id)) }}"
+                                <a href="#"
                                     id="riwayat" class="mt-15 mb-15 btn-xs btn btn-primary btn-anim" target="_blank">
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Riwayat</span>
                                 </a>
-                                <button type="button" id="checkout"
+                                <a href="javascript:void(0)" type="button" id="checkout"
                                     class="mt-15 mb-15 btn-xs btn btn-success btn-anim">
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Checkout</span>
-                                </button>
+                                </a>
                             </div>
-                        @else
                             <button type="submit" class="mt-15 mb-15 btn-xs btn-block btn btn-success btn-anim"
                                 id="disabled-pay">
                                 <i class="icon-rocket"></i>
                                 <span class="btn-text">Checkout</span>
                             </button>
-                        @endif
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -204,7 +183,7 @@
         </div>
     </div>
 @endsection
-@push('scripts')
+{{-- @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script>
@@ -377,50 +356,18 @@
         }
 
         function removeItem(id) {
-
             var tg = window.location.href;
             tg = tg.split("?")
             tg = tg[0];
             tg = tg.split("/");
             page = tg[tg.length - 1];
+
             var url = "{{ route('remove.item', ':package') }}";
             url = url.replace(':package', id);
             $('.disabled-cart-' + id).css('background', 'tomato');
             $('.disabled-cart-' + id).fadeOut(800, function() {
                 $(this).remove();
             });
-
-            // if (!$package_additional == 0) {
-            //     var tg = window.location.href;
-
-            //     tg = tg.split("?")
-            //     tg = tg[0];
-            //     tg = tg.split("/");
-            //     page = tg[tg.length - 1];
-            //     var url = "{{ route('remove.item', ':package') }}";
-            //     url = url.replace(':package', id);
-            //     $('.disabled-cart-' + id).css('background', 'tomato');
-            //     $('.disabled-cart-' + id).fadeOut(800, function() {
-            //         $(this).remove();
-            //     });
-            // } else {
-            //     swal({
-            //         title: "",
-            //         type: "error",
-            //         text: "Hapus Item Tambahan Terlebih Dahulu",
-            //         confirmButtonColor: "#01c853",
-            //     });
-            // }
-
-            // swal({
-            //         title: "",
-            //         type: "error",
-            //         text: "Hapus Item Tambahan Terlebih Dahulu",
-            //         confirmButtonColor: "#01c853",
-            //     });
-
-
-
             $.ajax({
                 async: true,
                 type: 'POST',
@@ -442,6 +389,7 @@
                     $('.counted').text(response.counted);
                     var qty = $('#qty').text();
                     $('#qty').text(qty - 1);
+                    console.log(response.cart.length)
                     if (response.cart.length == 0) {
                         $('#isi-').html(`<span class="not-found text-muted">Keranjang masih kosong</span>`)
                             .addClass('d-flex justify-content-center align-items-center');
@@ -515,7 +463,6 @@
             page = tg[tg.length - 1];
             let url = "{{ route('checkout', ':id') }}";
             url = url.replace(':id', page);
-
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -537,8 +484,6 @@
                         confirmButtonColor: "#01c853",
                     }, function(isConfirm) {
                         checkout(url, response.order_number);
-                        $('#checkout').attr('disabled', true);
-                        window.close();
                     });
                 }
             });
@@ -572,7 +517,7 @@
                 "previous": "Previous"
             },
             "ajax": {
-                "url": "{{ route('order.cart', Request::segment(2)) }}",
+                "url": "",
                 "type": "GET",
                 "datatype": "json"
             },
@@ -637,4 +582,4 @@
             }
         });
     </script>
-@endpush
+@endpush --}}

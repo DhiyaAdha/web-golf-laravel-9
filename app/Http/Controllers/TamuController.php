@@ -46,7 +46,7 @@ class TamuController extends Controller
             'email',
             'phone',
             'tipe_member',
-        ])->orderBy('created_at', 'desc')->get();
+        ])->where('tipe_member','!=','REGULER')->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
             return datatables()->of($visitor)->addColumn('action', function ($visitor) {
                 if (auth()->user()->role_id == '2') {
