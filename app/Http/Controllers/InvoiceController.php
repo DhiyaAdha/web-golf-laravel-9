@@ -48,6 +48,7 @@ class InvoiceController extends Controller
             })
             ->editColumn('payment_type', function ($data) {
                 $type = unserialize($data->payment_type);
+                // dd($type[1]['payment_type']);
                 if (isset($type[0]['payment_type'])) {
                     return sprintf('<div class="d-flex flex-wrap justify-content-center align-items-center"><span class="label mr-5 label-primary">'.$type[0]['payment_type'].'</span></div>');
                 } else {
@@ -56,6 +57,7 @@ class InvoiceController extends Controller
                         $datax[$i] = $t['payment_type'];
                     }
                     $tagsString = implode("</span> <span class='label mr-5 label-primary'>", $datax);
+                    dd($tagsString);
                     return sprintf('<div class="d-flex flex-wrap justify-content-center align-items-center"><span class="label mr-5 label-primary">'.$tagsString.'</span></div>');
                 }
             })
@@ -76,20 +78,7 @@ class InvoiceController extends Controller
      */
     public function create(Request $request)
     {
-        // $invoice = Detail::select(['packages.name', 'detail_transactions.harga', 'detail_transactions.quantity'])
-        // ->leftJoin('packages', 'packages.id', '=', 'detail_transactions.package_id')->get();
-        // if($request->ajax()){
-        //     return datatables()->of($invoice)
-        //     ->editColumn('harga', function ($data) {
-        //         return  ('Rp. ' .formatrupiah($data->harga));
-        //     })
-        //     ->editColumn('total', function ($data) {
-        //         return  ('Rp. ' .formatrupiah($data->harga * $data->quantity));
-        //     })
-        //     ->make(true);
-
-        // }
-        // return view('invoice.invoice');
+        //
     }
 
     /**
@@ -112,9 +101,7 @@ class InvoiceController extends Controller
     
      public function show($id)
     {
-        // $decrypt_id = Crypt::decryptString($id);
         $transaction = LogTransaction::find($id);
-        $package = Package::find($id);
         $detail = Detail::where('log_transaction_id',$id)->first();
         $data['transaction'] = $transaction;
         $data['visitor'] = Visitor::find($transaction->visitor_id);
@@ -125,7 +112,6 @@ class InvoiceController extends Controller
             $data['package'] = null;  
             $data['detail'] = null;
         }
-        // $data['detail'] = Detail::where('transaction_id', $id)->get();
         return view('invoice.invoice', $data);
     }
 
@@ -163,31 +149,24 @@ class InvoiceController extends Controller
         //
     }
 
-    // public function exportpdf () {
-    //     return 'berhasil';
-    // }
-
     public function metode_pembayaran () {
         return view('Invoice.metode_pembayaran');
     }
     public function cetak_pdf($id)
     {
-        $transaction = LogTransaction::find($id);
-        $package = Package::find($id);
-        $detail = Detail::find($id);
-        $data['transaction'] = $transaction;
-        $data['visitor'] = Visitor::find($transaction->visitor_id);
-        $data['package'] = Package::find($package->id);
-        $data['detail'] = Detail::find($detail->id);
-
-        
-        $pdf = PDF::loadView('invoice.cetak_invoice' , $data);
-
-        return $pdf->download('invoice.pdf');
-        // return view('invoice.cetak_invoice' ,$data);
-        
-    	// $pdf = PDF::loadView('invoice.invoice', ['cetak_invoice' => $riwayat_invoice])->setpaper('A4','potrait');
-    	// return $pdf->stream('laporan_invoice_pdf');
+        try {
+            $transaction = LogTransaction::find($id);
+            $package = Package::find($id);
+            $detail = Detail::find($id);
+            $data['transaction'] = $transaction;
+            $data['visitor'] = Visitor::find($transaction->visitor_id);
+            $data['package'] = Package::find($package->id);
+            $data['detail'] = Detail::find($detail->id);
+            $pdf = PDF::loadView('invoice.cetak_invoice' , $data);
+            return $pdf->download('invoice.pdf');
+        } catch (\Throwable $th) {
+            return redirect()->route('riwayat-invoice.index');
+        }
     }
     public function export_excel()
     {

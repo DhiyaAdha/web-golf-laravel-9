@@ -114,7 +114,8 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('reporttransaksi/{id}', [TamuController::class, 'reporttransaksi'])->name('transaksi.report.data');
     Route::post('/tambah-deposit', [TamuController::class, 'insertdeposit'])->name('insertdeposit');
     route::get('/export_excel_tamu', [TamuController::class, 'export_excel_tamu'])->name('export_excel_tamu');
-    
+    // Route::post('update/kupon/{id}', [ScanqrController::class, 'update_kupon'])->name('update.kupon')->middleware('signed');
+    Route::post('update/kupon/{id}', [TamuController::class, 'update_kupon'])->name('update.kupon');
     Route::get('/proses', [OrderController::class, 'index'])->name('proses');
     Route::get('/cart/{id}', [OrderController::class, 'index'])->name('order.cart');
     Route::resource('cart', OrderController::class);

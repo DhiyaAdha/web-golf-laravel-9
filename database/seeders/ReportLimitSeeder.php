@@ -22,14 +22,10 @@ class ReportLimitSeeder extends Seeder
         
         for($i = 1; $i <= 30; $i++) {        
             $faker = Faker::create('id_ID');
-            $visitor = Visitor::pluck('id');
-            
-            
             DB::table('report_limits')->insert([
                 'visitor_id' => $i,
                 'user_id' => User::all()->random()->id,
                 'status' => $faker->randomElement(['Reset', 'Bertambah','Berkurang']),
-                // 'fund_limit' => 0,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 ]);

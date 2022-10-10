@@ -3,29 +3,29 @@
     <!-- Main Content -->
     <div class="page-wrapper">
         <div class="container-fluid">
-           <!-- Title -->
-           <div class="row heading-bg">
-            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h5 class="txt-dark">Daftar Tamu</h5>
+            <!-- Title -->
+            <div class="row heading-bg">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h5 class="txt-dark">Daftar Tamu</h5>
+                </div>
+                <!-- Breadcrumb -->
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <ol class="breadcrumb">
+                        <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
+                        <li class="active"><span>Daftar Tamu</span></li>
+                    </ol>
+                </div>
+                <!-- /Breadcrumb -->
             </div>
-            <!-- Breadcrumb -->
-            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                <ol class="breadcrumb">
-                    <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
-                    <li class="active"><span>Daftar Tamu</span></li>
-                </ol>
-            </div>
-            <!-- /Breadcrumb -->
-        </div>
-        <!-- /Title -->
+            <!-- /Title -->
 
             <div class="row">
                 <!-- Basic Table -->
                 <div class="col-sm-12">
                     <div class="panel panel-default card-view">
                         <div class="panel-heading">
-                            <div class="pull-right" >
-                                
+                            <div class="pull-right">
+
                             </div>
                             <div class="pull-left">
                                 {{-- <h6 class="panel-title txt-dark">Daftar Tamu</h6> --}}
@@ -33,10 +33,11 @@
                                     Tamu</a>
                             </div>
                             <div class="pull-right">
-                                
-                                    <a href="{{ url('export_excel_tamu') }}" target="_blank" name="excel" data-toggle="tooltip" data-placement="top" title="Download Excel">
-                                        <img src="dist/img/excel.svg" width="25px" height="25px">
-                                    </a>
+
+                                <a href="{{ url('export_excel_tamu') }}" target="_blank" name="excel"
+                                    data-toggle="tooltip" data-placement="top" title="Download Excel">
+                                    <img src="dist/img/excel.svg" width="25px" height="25px">
+                                </a>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -55,7 +56,7 @@
                                                     <th class="">Email</th>
                                                     <th class="">Phone</th>
                                                     <th class="">Tipe</th>
-                                                    <th class="">Opsi</th>
+                                                    <th class="" style="text-align: center">Opsi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -65,6 +66,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -139,23 +141,28 @@
                 lengthMenu: "Menampilkan _MENU_ data",
                 zeroRecords: "Tidak ada data pada tabel ini"
             },
-            
+
             columnDefs: [{
-                className: 'text-left',
-                targets: [0, 1, 2, 3, 4]
-            }, {
-                width: '20%',
-                targets: [0]
-            }, {
-                width: '30%',
-                targets: [1]
-            }, {
-                width: '15%',
-                targets: [2]
-            }, {
-                width: '10%',
-                targets: [3, 4]
-            }]
+                    className: 'text-left',
+                    targets: [0, 1, 2, 3, 4]
+                },
+                {
+                    className: 'text-center',
+                    targets: [4]
+                }, {
+                    width: '20%',
+                    targets: [0]
+                }, {
+                    width: '30%',
+                    targets: [1]
+                }, {
+                    width: '15%',
+                    targets: [2]
+                }, {
+                    width: '10%',
+                    targets: [3, 4]
+                }
+            ]
         });
         /* data tamu */
 
