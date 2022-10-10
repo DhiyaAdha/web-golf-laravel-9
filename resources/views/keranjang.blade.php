@@ -21,7 +21,7 @@
             <!-- /Title -->
             <div class="row">
                 <div class="col-lg-8">
-                    <div style="height: 387px;" class="panel panel-default card-view">
+                    <div class="panel panel-default card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
                                 <strong class="panel-title txt-dark">Jenis Permainan</strong>
@@ -123,9 +123,9 @@
                                             value="{{ $item['qty'] }}" style="width: 30px;" readonly />
                                         <button onclick="updateQTY({{ $item['rowId'] }}, 'plus')"><i
                                                 class="cart-qty-plus-{{ $item['rowId'] }} fa fa-plus-square"></i></button>
-                                        <button class="mr-10 ml-10" data-category="{{ $item['category'] }}" data-toggle="tooltip" title="Hapus"
-                                            onclick="removeItem({{ $item['rowId'] }})" id="remove-item"
-                                            style="color:red;"><i class="fa fa-trash-o"></i></button>
+                                        <button class="mr-10 ml-10" data-category="{{ $item['category'] }}"
+                                            data-toggle="tooltip" title="Hapus" onclick="removeItem({{ $item['rowId'] }})"
+                                            id="remove-item" style="color:red;"><i class="fa fa-trash-o"></i></button>
                                     </div>
                                 @endforeach
                             </div>
@@ -378,18 +378,18 @@
 
         function removeItem(id) {
 
-                var tg = window.location.href;
-                tg = tg.split("?")
-                tg = tg[0];
-                tg = tg.split("/");
-                page = tg[tg.length - 1];
-                var url = "{{ route('remove.item', ':package') }}";
-                url = url.replace(':package', id);
-                $('.disabled-cart-' + id).css('background', 'tomato');
-                $('.disabled-cart-' + id).fadeOut(800, function() {
-                    $(this).remove();
-                });
-                
+            var tg = window.location.href;
+            tg = tg.split("?")
+            tg = tg[0];
+            tg = tg.split("/");
+            page = tg[tg.length - 1];
+            var url = "{{ route('remove.item', ':package') }}";
+            url = url.replace(':package', id);
+            $('.disabled-cart-' + id).css('background', 'tomato');
+            $('.disabled-cart-' + id).fadeOut(800, function() {
+                $(this).remove();
+            });
+
             // if (!$package_additional == 0) {
             //     var tg = window.location.href;
 
