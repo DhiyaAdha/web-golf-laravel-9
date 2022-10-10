@@ -2,7 +2,7 @@
 <html lang="id">
 
 {{-- Head --}}
-@include('Layouts.Header')
+@include('layouts.header')
 {{-- /Head --}}
 
 <body>
@@ -14,11 +14,11 @@
     <div class="wrapper theme-1-active pimary-color-red">
 
         <!-- Top Menu Items -->
-        @include('Layouts.Nav')
+        @include('layouts.nav')
         <!-- /Top Menu Items -->
 
         <!-- Left Sidebar Menu -->
-        @include('Layouts.Sidebar')
+        @include('layouts.sidebar')
         <!-- /Left Sidebar Menu -->
 
 
@@ -29,7 +29,7 @@
 
     </div>
     {{-- Script --}}
-    @include('Layouts.Script')
+    @include('layouts.script')
     @stack('scripts')
 
     {{-- /Script --}}

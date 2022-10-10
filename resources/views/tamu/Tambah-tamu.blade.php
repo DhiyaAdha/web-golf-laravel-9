@@ -1,4 +1,4 @@
-@extends('Layouts.Main')
+@extends('layouts.main')
 
 @section('content')
     <div class="page-wrapper">

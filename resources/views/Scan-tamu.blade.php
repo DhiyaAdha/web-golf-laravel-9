@@ -1,4 +1,4 @@
-@extends('Layouts.Main', ['title' => 'TGCC | Scan Tamu'])
+@extends('layouts.main', ['title' => 'TGCC | Scan Tamu'])
 @section('content')
     <div class="page-wrapper">
         <div class="container-fluid">
@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            @include('Layouts.Footer')
+            @include('layouts.footer')
         </div>
     </div>
 @endsection
