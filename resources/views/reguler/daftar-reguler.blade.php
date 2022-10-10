@@ -118,6 +118,7 @@
                                                 <!--END-->
                                             </div>
                                         </label> --}}
+                                        {{-- <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" value="REGULER" --}}
                                         <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" value="REGULER"
                                             name="tipe_member">
                                     </div>
