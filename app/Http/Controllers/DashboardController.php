@@ -158,6 +158,12 @@ class DashboardController extends Controller
         ) {
             $query->where('tipe_member', 'VVIP');
         })->count();
+        
+        $data['visitor_reguler'] = LogTransaction::where('payment_status', 'paid')->whereHas('visitor', function (
+            Builder $query
+        ) {
+            $query->where('tipe_member', 'REGULER');
+        })->count();
 
         // total female male VVIP & VIP
         $data['visitor_vvip_female'] = LogTransaction::where('payment_status', 'paid')->whereHas(
