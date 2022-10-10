@@ -35,7 +35,7 @@
     <div class="wrapper pa-0">
         <header class="sp-header">
             <div class="sp-logo-wrap pull-left">
-                <a href="Analisis-tamu">
+                <a href="analisis-tamu">
                     <img class="brand-img mr-10" src="dist/img/tgcc.svg" alt="brand" />
                 </a>
             </div>

@@ -1,5 +1,5 @@
 @if (auth()->user()->role_id == '2')
-    @extends('Layouts.Main', ['title' => 'TGCC | Analisis Tamu'])
+    @extends('layouts.main', ['title' => 'TGCC | Analisis Tamu'])
     @section('content')
         <div class="page-wrapper">
             <div class="container-fluid pt-25">
@@ -249,7 +249,7 @@
                 </div>
             </div>
             <!-- Footer -->
-            @include('Layouts.Footer')
+            @include('layouts.footer')
             <!-- /Footer -->
         </div>
         </div>
