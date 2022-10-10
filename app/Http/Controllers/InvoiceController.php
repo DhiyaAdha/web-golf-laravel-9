@@ -41,23 +41,25 @@ class InvoiceController extends Controller
                 return '<div class="align-items-center"><a href="'.url('invoice_cetakpdf/'.$data->id).'" target="_blank" name="pdf" data-toggle="tooltip" data-placement="top" title="download pdf"><img src="dist/img/pdf.svg" width="23px" height="23px"></a></div>';
             })
             ->editColumn('name', function ($data) {
-                return '<a data-toggle="tooltip" title="klik untuk melihat detail invoice" href="'.url('invoice/'.$data->id).'">'.$data->name."</a>";
+                return '<a data-toggle="tooltip" title="klik untuk melihat detail invoice" href="
+                '.url('invoice/'.$data->id).'
+                ">'
+                .$data->name.
+                "</a>";
             })
             ->editColumn('created_at', function ($data) {
                 return $data->created_at->format('d F Y');
             })
             ->editColumn('payment_type', function ($data) {
                 $type = unserialize($data->payment_type);
-                // dd($type[1]['payment_type']);
-                if (isset($type[0]['payment_type'])) {
+                if (isset($type['payment_type'])) {
                     return sprintf('<div class="d-flex flex-wrap justify-content-center align-items-center"><span class="label mr-5 label-primary">'.$type[0]['payment_type'].'</span></div>');
                 } else {
                     $datax = array();
-                    foreach ($type[0] as $i => $t) {
+                    foreach ($type as $i => $t) {
                         $datax[$i] = $t['payment_type'];
                     }
                     $tagsString = implode("</span> <span class='label mr-5 label-primary'>", $datax);
-                    dd($tagsString);
                     return sprintf('<div class="d-flex flex-wrap justify-content-center align-items-center"><span class="label mr-5 label-primary">'.$tagsString.'</span></div>');
                 }
             })
@@ -66,10 +68,9 @@ class InvoiceController extends Controller
             })
             ->rawColumns(['name','action', 'payment_type'])
             ->make(true);
-        }
+            }
         return view('invoice.riwayat-invoice');
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -101,18 +102,22 @@ class InvoiceController extends Controller
     
      public function show($id)
     {
-        $transaction = LogTransaction::find($id);
-        $detail = Detail::where('log_transaction_id',$id)->first();
-        $data['transaction'] = $transaction;
-        $data['visitor'] = Visitor::find($transaction->visitor_id);
-        if ($detail) {
-            $data['package'] = Package::find($detail->package_id);  
-            $data['detail'] = Detail::find($detail->id);
-        } else {
-            $data['package'] = null;  
-            $data['detail'] = null;
+        try {
+            $transaction = LogTransaction::find($id);
+            $detail = Detail::where('log_transaction_id',$id)->first();
+            $payment_type = unserialize($transaction->payment_type);
+            $datax = array();
+            foreach ($payment_type as $i => $t) {
+                $datax[$i] = $t['payment_type'];
+            }
+            $method_payment = implode(", ", $datax);
+            $cart = unserialize($transaction->cart);
+            $visitor = Visitor::find($transaction->visitor_id);
+            $qty = 0;
+            return view('invoice.invoice', compact('method_payment','transaction', 'visitor', 'cart'));
+        } catch (\Throwable $th) {
+            return redirect()->route('invoice',$id);
         }
-        return view('invoice.invoice', $data);
     }
 
     /**

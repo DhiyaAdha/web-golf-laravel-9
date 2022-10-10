@@ -45,7 +45,7 @@
                                     <input type="password" name="password"
                                         class="form-control @error('password') has-error @enderror"
                                         id="password" placeholder="Masukan Password">
-                                        <i class="fa-solid fa-eye1 fa-eye fa-eye-slash" id="eye"></i>
+                                        <i class="fa-solid fa-eye-slash fa-eye " id="eye"></i>
 
                                     @error('password')
                                         <div class="text-danger"> {{ $message }}</div>
@@ -59,7 +59,7 @@
                                         class="form-control @error('password') is-invalid @enderror"
                                         id="password_confirmation" placeholder="Masukan Ulang Password">
                                         <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
-                                    <i class="fa-solid fa-eye2 fa-eye fa-eye-slash" id="eyee"></i>
+                                    <i class="fa-solid fa-eye fa-eye-slash" id="eyee"></i>
                                 </div>
                                 <div class="form-group @error('phone') has-error @enderror">
                                     <label class="control-label mb-10" for="">Nomer Hp</label>

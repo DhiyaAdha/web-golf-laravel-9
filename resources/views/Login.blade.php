@@ -56,7 +56,7 @@
             top: 60%;
             right: 4%;
             cursor: pointer;
-            color: rgb(114, 114, 114);
+            color: lightgray;
         }
 
         #toast-container>.toast-success {
@@ -135,7 +135,7 @@
                                                     for="password">Password</label>
                                                 <input type="password" name="password" class="form-control"
                                                     id="password" placeholder="Masukan Password" required>
-                                                <i class="fa-solid fa-eye fa-eye-slash" id="eye"></i>
+                                                <i class="fa-solid fa-eye fa-eye-slash " id="eye"></i>
                                             </div>
                                             <div class="form-group text-center">
                                                 <button type="submit" class="btn btn-info btn-rounded">sign
