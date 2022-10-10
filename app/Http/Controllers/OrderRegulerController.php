@@ -136,16 +136,6 @@ class OrderRegulerController extends Controller
                 'phone.required' => 'Nomer Hp masih kosong.',
             ]
         );
-        $visitors = Visitor::create([
-            'name' => $request->name,
-            'address' => $request->address,
-            'gender' => $request->gender,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'tipe_member' => $request->tipe_member,
-            'created_at' => Carbon::now(),
-        ]); 
-
         $random = Str::random(15);
         $random_unique = Carbon::now()->format('Y-m');
         $token = $random_unique . '-' . $random;
@@ -163,7 +153,14 @@ class OrderRegulerController extends Controller
         $get_visitor->unique_qr = $link_qr;
         $get_visitor->save();
 
-        $data = $request->all();
+        // $data = $request->all();
+        $data['name'] = $visitors->name;
+        $data['address'] = $visitors->address;
+        $data['gender'] = $visitors->gender;
+        $data['email'] = $visitors->email;
+        $data['phone'] = $visitors->phone;
+        $data['tipe_member'] = $visitors->tipe_member;
+        // dd($data);
         dispatch(new SendMailJob($data));
         // dispatch(new SendMailJobDeposit($data));
         LogAdmin::create([
