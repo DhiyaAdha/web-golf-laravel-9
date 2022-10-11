@@ -79,6 +79,21 @@ class DashboardController extends Controller
                 $value[1]
             )
                 ->count();
+
+            // REGULER
+            $data['visitor'][$key]['REGULER'] = LogTransaction::where('payment_status', 'paid')->whereHas(
+                'visitor',
+                function (Builder $query) {
+                    $query->where('tipe_member', 'REGULER');
+                }
+            )->whereMonth(
+                'created_at',
+                strlen($value[0]) == 1 ? '0' . $value[0] : $value[0]
+            )->whereYear(
+                'created_at',
+                $value[1]
+            )
+                ->count();
         }
 
         //statistika mingguan bar-chart 
@@ -113,6 +128,13 @@ class DashboardController extends Controller
                 }
             )->whereDate('created_at', $day_period[$key])
                 ->count();
+            $data['visitor_daily'][$key]['c'] = LogTransaction::where('payment_status', 'paid')->whereHas(
+                'visitor',
+                function (Builder $query) {
+                    $query->where('tipe_member', 'REGULER');
+                }
+            )->whereDate('created_at', $day_period[$key])
+                ->count();
         }
 
 
@@ -130,8 +152,8 @@ class DashboardController extends Controller
         //     ->where('payment_status', 'paid')
         //     ->count();
         $data['visitor_today'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))
-        ->where('payment_status', 'paid')
-        ->count();
+            ->where('payment_status', 'paid')
+            ->count();
         // 
 
         $data['visitor_month'] = Visitor::whereMonth(
@@ -144,7 +166,8 @@ class DashboardController extends Controller
         //     $request->year ? $request->year : date('Y')
         // )->count();
         $data['visitor_year'] = LogTransaction::where('payment_status', 'paid')->whereYear(
-            'created_at', now()->format('Y')
+            'created_at',
+            now()->format('Y')
         )->count();
 
         $data['visitor_vip'] = LogTransaction::where('payment_status', 'paid')->whereHas('visitor', function (
@@ -158,7 +181,8 @@ class DashboardController extends Controller
         ) {
             $query->where('tipe_member', 'VVIP');
         })->count();
-        
+
+
         $data['visitor_reguler'] = LogTransaction::where('payment_status', 'paid')->whereHas('visitor', function (
             Builder $query
         ) {
@@ -166,39 +190,35 @@ class DashboardController extends Controller
         })->count();
 
         // total female male VVIP & VIP
-        $data['visitor_vvip_female'] = LogTransaction::where('payment_status', 'paid')->whereHas(
-            'visitor',
-            function (Builder $query) {
-                $query
-                    ->where('tipe_member', 'VVIP')
-                    ->where('gender', 'perempuan');
-            }
-        )->count();
-        $data['visitor_vvip_male'] = LogTransaction::where('payment_status', 'paid')->whereHas(
-            'visitor',
-            function (Builder $query) {
-                $query
-                    ->where('tipe_member', 'VVIP')
-                    ->where('gender', 'laki-laki');
-            }
-        )->count();
-        $data['visitor_vip_female'] = LogTransaction::where('payment_status', 'paid')->whereHas(
-            'visitor',
-            function (Builder $query) {
-                $query
-                    ->where('tipe_member', 'VIP')
-                    ->where('gender', 'perempuan');
-            }
-        )->count();
-        $data['visitor_vip_male'] = LogTransaction::where('payment_status', 'paid')->whereHas(
-            'visitor',
-            function (Builder $query) {
-                $query
-                    ->where('tipe_member', 'VIP')
-                    ->where('gender', 'laki-laki');
-            }
-        )->count();
+        // VVIP
+        $data['visitor_vvip_female'] = Visitor::where([
+            ['tipe_member', 'VVIP'],
+            ['gender', 'perempuan'],
+        ])->count();
+        $data['visitor_vvip_male'] = Visitor::where([
+            ['tipe_member', 'VVIP'],
+            ['gender', 'laki-laki'],
+        ])->count();
 
+        //VIP 
+        $data['visitor_vip_female'] = Visitor::where([
+            ['tipe_member', 'VIP'],
+            ['gender', 'perempuan'],
+        ])->count();
+        $data['visitor_vip_male'] = Visitor::where([
+            ['tipe_member', 'VIP'],
+            ['gender', 'laki-laki'],
+        ])->count();
+
+        //REGULER
+        $data['visitor_reguler_female'] = Visitor::where([
+            ['tipe_member', 'REGULER'],
+            ['gender', 'perempuan'],
+        ])->count();
+        $data['visitor_reguler_male'] = Visitor::where([
+            ['tipe_member', 'REGULER'],
+            ['gender', 'laki-laki'],
+        ])->count();
 
         $visitor = Visitor::select([
             'id',
@@ -235,8 +255,8 @@ class DashboardController extends Controller
         // dd($visitor);
         return view('/analisis-tamu', $data);
     }
-    
-    
+
+
 
     /**
      * Show the form for creating a new resource.

@@ -84,6 +84,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                         <div class="panel panel-default card-view pa-0">
                             <div class="panel-wrapper collapse in">
@@ -181,7 +182,7 @@
                             <div class="label-chatrs col-lg-6 mb-15">
                                 <span class="clabels-text inline-block txt-dark capitalize-font">
                                     <span class="block font-22 weight-500 mb-5">
-                                        <span class="counter-anim">{{ $visitor_vip_male }}</span>
+                                        <span class="counter-anim">{{ $visitor_reguler_male }}</span>
                                     </span>
                                     <span class="block txt-grey">Laki-laki</span>
                                 </span>
@@ -191,7 +192,7 @@
                             <div class="label-chatrs col-lg-6 mb-15">
                                 <span class="clabels-text inline-block txt-dark capitalize-font">
                                     <span class="block font-22 weight-500 mb-5">
-                                        <span class="counter-anim">{{ $visitor_vip_female }}</span>
+                                        <span class="counter-anim">{{ $visitor_reguler_female }}</span>
                                     </span>
                                     <span class="block txt-grey">Perempuan</span>
                                 </span>
