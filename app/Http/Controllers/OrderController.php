@@ -153,7 +153,7 @@ class OrderController extends Controller
         $cart = \Cart::session($request->get('page'))->getContent();
         $cek_itemId = $cart->whereIn('id', $id[3]);
         $today = Carbon::now()->isoFormat('dddd');
-        $price = $today === 'Sabtu' || $today === 'Minggu' ? $item->price_weekend : $item->price_weekdays;
+        $price = $today === 'Sabtu' || $today === 'Minggu' ? $package->price_weekend : $package->price_weekdays;
         $get_total = \Cart::session($request->get('page'))->getTotal();
         $counted = ucwords(counted($get_total) . ' Rupiah');
         if ($cek_itemId->isNotEmpty()) {
