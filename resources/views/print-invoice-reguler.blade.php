@@ -291,14 +291,6 @@
                             <td>{{ $visitor->name }}</td>
                         </tr>
                         <tr>
-                            <td class="w-30">Phone:</td>
-                            <td>{{ $visitor->phone }}</td>
-                        </tr>
-                        <tr>
-                            <td class="w-30">Address:</td>
-                            <td>{{ $visitor->address }}</td>
-                        </tr>
-                        <tr>
                             <td class="w-30">Tipe Member:</td>
                             <td>{{ $visitor->tipe_member }}</td>
                         </tr>
@@ -364,8 +356,7 @@
                     <thead>
                         <tr>
                             <td class="w-10 text-center">No.</td>
-                            <td class="w-50">Cara Pembayaran</td>
-                            <td class="w-20">Balance</td>
+                            <td class="w-70">Cara Pembayaran</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -374,7 +365,7 @@
                             <tr>
                                 <td class="text-center">{{ $i++ }}</td>
                                 <td>{{ $type['payment_type'] }}</td>
-                                <td>{{ $type['balance'] }}</td>
+                                
                             </tr>
                         @endforeach
                     </tbody>

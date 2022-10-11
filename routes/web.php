@@ -131,7 +131,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     
     // cart-reguler
     Route::resource('cart-reguler', OrderRegulerController::class);
-    Route::post('/tamureguler', [OrderRegulerController::class, 'tamureguler'])->name('tamureguler');
+    Route::post('/cart-reguler', [OrderRegulerController::class, 'tamureguler'])->name('tamureguler');
     Route::get('/keranjang-reguler/{id}', [OrderRegulerController::class, 'orderreguler'])->name('order.cart.reguler');
     // Route::get('/cart-reguler',[ OrderRegulerController::class, 'index'])->name('cart-reguler.index');
     // Route::resource('cart', OrderRegulerController::class);

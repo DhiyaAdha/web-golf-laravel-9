@@ -40,12 +40,28 @@ class OrderRegulerController extends Controller
         $this->data = [];
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $user_id = Auth::id();
+        $products = Package::orderBy('id', 'desc')->where('status', '0')->get();
+        if ($request->ajax()) {
+            return datatables()
+                ->of($products)->editColumn('price_weekdays', function ($data) {
+                    return formatrupiah($data->price_weekdays);
+                })->editColumn('price_weekend', function ($data) {
+                    return formatrupiah($data->price_weekend);
+                })
+                ->addIndexColumn()
+                ->make(true);
+        }
+        $today = Carbon::now()->isoFormat('dddd');
+        $default = Package::where('category', 'default')->where('status', 0)->get();
+        $additional = Package::where('category', 'additional')->where('status', 0)->get();
+        $others = Package::where('category', 'others')->where('status', 0)->get();
+        $date_now = Carbon::now()->translatedFormat('d F Y');
 
         return view('reguler.daftar-reguler', compact(
-            'user_id',
+            'user_id', 'default', 'additional', 'others', 'today', 'date_now',
         ));
     }
 
@@ -122,18 +138,10 @@ class OrderRegulerController extends Controller
             $request,
             [
                 'name' => 'required',
-                'address' => 'required',
-                'gender' => 'required',
-                'email' => 'required|email|unique:visitors,email',
-                'phone' => 'required|min:12',
                 'tipe_member' => 'required',
             ],
             [
                 'name.required' => 'Nama Lengkap masih kosong.',
-                'address.required' => 'Alamat masih kosong.',
-                'gender.required' => 'Jenis Kelamin masih kosong.',
-                'email.required' => 'Email masih kosong.',
-                'phone.required' => 'Nomer Hp masih kosong.',
             ]
         );
         $random = Str::random(15);
@@ -141,10 +149,6 @@ class OrderRegulerController extends Controller
         $token = $random_unique . '-' . $random;
         $visitors = Visitor::create([
             'name' => $request->name,
-            'address' => $request->address,
-            'gender' => $request->gender,
-            'email' => $request->email,
-            'phone' => $request->phone,
             'tipe_member' => $request->tipe_member,
             'created_at' => Carbon::now(),
         ]);
@@ -155,10 +159,10 @@ class OrderRegulerController extends Controller
 
         // $data = $request->all();
         $data['name'] = $visitors->name;
-        $data['address'] = $visitors->address;
-        $data['gender'] = $visitors->gender;
-        $data['email'] = $visitors->email;
-        $data['phone'] = $visitors->phone;
+        // $data['address'] = $visitors->address;
+        // $data['gender'] = $visitors->gender;
+        // $data['email'] = $visitors->email;
+        // $data['phone'] = $visitors->phone;
         $data['tipe_member'] = $visitors->tipe_member;
         // dd($data);
         dispatch(new SendMailJob($data));
@@ -645,6 +649,7 @@ class OrderRegulerController extends Controller
                                 'qty' => $row->quantity,
                                 'total_qty' => $total_qty,
                                 'cart' => $cart_data,
+                                'bayar_input' => $req->get('bayar_input'),
                             ];
                             dispatch(new SendMailPaymentsuccess4Job($data));
 
@@ -714,6 +719,7 @@ class OrderRegulerController extends Controller
                                         'qty' => $row->quantity,
                                         'total_qty' => $total_qty,
                                         'cart' => $cart_data,
+                                        'bayar_input' => $req->get('bayar_input'),
                                     ];
                                     dispatch(new SendMailPaymentsuccess4Job($data));
 
@@ -759,7 +765,7 @@ class OrderRegulerController extends Controller
             'total',
             'counted',
             'qty',
-            'user'
+            'user',
         ));
     }
 

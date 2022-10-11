@@ -22,7 +22,7 @@ class CreateVisitorsTable extends Migration
             $table->string('address')->nullable();
             $table->string('position')->nullable();
             $table->string('company')->nullable();
-            $table->enum('gender',['laki-laki', 'perempuan']);
+            $table->enum('gender',['laki-laki', 'perempuan'])->nullable();
             $table->enum('tipe_member',['VVIP', 'VIP', 'REGULER']);
             $table->timestamps();
         });
