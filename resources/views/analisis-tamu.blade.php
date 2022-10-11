@@ -81,6 +81,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                         <div class="panel panel-default card-view pa-0">
                             <div class="panel-wrapper collapse in">
@@ -111,7 +112,7 @@
 
                 {{-- Total tamu VIP & VVIP --}}
                 <div class="row">
-                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ol-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 ol-lg-6 col-md-12 col-sm-12 col-xs-12">
                         <div class="panel panel-default card-view panel-refresh">
                             <h6>Total Tamu VVIP</h6>
                             <hr class="light-grey-hr row mt-10 mb-15" />
@@ -140,7 +141,7 @@
                     </div>
                     {{-- Total tamu VIP & VIP --}}
                     <div
-                        class="col-lg-4 col-md-12 col-sm-12 col-xs-12
+                        class="col-lg-6 col-md-12 col-sm-12 col-xs-12
                                 ol-lg-6 col-md-12 col-sm-12 col-xs-12">
                         <div class="panel panel-default card-view panel-refresh">
                             <h6>Total Tamu VIP</h6>
@@ -343,9 +344,12 @@
                         "data": function(data) {
                             if (data.tipe_member == 'VIP') {
                                 return `<span class='label label-success'>${data.tipe_member}</span>`;
-                            } else {
+                            } else if (data.tipe_member == 'VVIP') {
                                 return `<span class='label label-warning'>${data.tipe_member}</span>`;
+                            } else {
+                                return `<span class='label label-primary'>${data.tipe_member}</span>`;
                             }
+
                         }
                     },
                     {
@@ -353,7 +357,7 @@
                     }
                 ],
                 order: [
-                    [1, 'asc']
+                    [1, 'desc']
                 ],
                 responsive: true,
                 language: {

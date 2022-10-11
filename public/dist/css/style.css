@@ -23182,6 +23182,7 @@ a.compose-mail {
 .sm-data-box .data-wrap-right {
     padding-top: 19px;
     min-height: 99px;
+    padding-right: 2px;
 }
 .sm-data-box .data-wrap-right .data-right-rep-icon {
     font-size: 60px;

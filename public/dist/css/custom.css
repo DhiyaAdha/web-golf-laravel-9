@@ -540,7 +540,7 @@ element.style {
         left top,
         right top
     ) !important;
-    background: linear-gradient(to right, #464a49, #3235ff) !important;
+    background: linear-gradient(to right, #464a49, #21E1E1) !important;
 }
 div[data-size="A4"] {
     background: #edf2f9;
