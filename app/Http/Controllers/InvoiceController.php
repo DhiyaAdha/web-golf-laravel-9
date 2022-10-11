@@ -170,13 +170,26 @@ class InvoiceController extends Controller
     {
         try {
             $transaction = LogTransaction::find($id);
-            $package = Package::find($id);
-            $detail = Detail::find($id);
-            $data['transaction'] = $transaction;
-            $data['visitor'] = Visitor::find($transaction->visitor_id);
-            $data['package'] = Package::find($package->id);
-            $data['detail'] = Detail::find($detail->id);
-            $pdf = PDF::loadView('invoice.cetak_invoice' , $data);
+            $detail = Detail::where('log_transaction_id',$id)->first();
+            $payment_type = unserialize($transaction->payment_type);
+            $datax = array();
+            foreach ($payment_type as $i => $t) {
+                $datax[$i] = $t['payment_type'];
+            }
+            $method_payment = implode(", ", $datax);
+            $cart = unserialize($transaction->cart);
+            $visitor = Visitor::find($transaction->visitor_id);
+            $total = 0;
+            $qty = 0;
+            $discount = 0;
+            foreach ($cart as $get) {
+                $qty += $get['qty'];
+                $total += $get['price'];
+            }
+            foreach ($payment_type as $get) {
+                $discount += $get['discount'];
+            }
+            $pdf = PDF::loadView('invoice.cetak_invoice', compact('method_payment','transaction', 'visitor', 'cart', 'qty', 'discount', 'total'));
             return $pdf->download('invoice.pdf');
         } catch (\Throwable $th) {
             return redirect()->route('riwayat-invoice.index');

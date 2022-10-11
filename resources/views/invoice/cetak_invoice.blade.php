@@ -125,7 +125,7 @@
                                 <strong>Order
                                     #{{ $transaction->order_number }}</strong><br />
                                 <strong>Metode Pembayaran:</strong><br>
-                                <p style="color: #616161;">{{ $transaction->payment_type }}</p><br />
+                                <p style="color: #616161;">{{ $method_payment }}</p><br />
 
                             </td>
                         </tr>
@@ -139,14 +139,14 @@
                         <tr>
                             <td>
                                 <strong>Nama Tamu:</strong><br />
-                                <span class="weight-500">{{ ($visitor) ? $visitor->name : '-' }}</span>
+                                <span class="weight-500">{{ $visitor->name }}</span>
                                 <br />{{ $visitor->email }}<br>
                                 {{ $visitor->phone }}<br>
                             </td>
 
                             <td>
                                 <strong>Order Date:</strong><br>
-                                <p style="color: #616161">{{ ($transaction) ? $transaction->created_at : '-'}}
+                                <p style="color: #616161">{{ $transaction->created_at->format('d F Y | H:i:s') }}
                                 </p>
                                 <br><br>
                             </td>
@@ -170,52 +170,58 @@
 
             <tr class="heading">
                 <td>Nama Paket</td>
-
                 <td style="text-align: center">Harga</td>
-
-                <td style="text-align: center">Jumlah</td>
-
-                <td>Total</td>
+                <td style="text-align: center">Qty</td>
+                <td style="text-align: right">Total</td>
             </tr>
 
             <tr class="item">
-                <td>{{ ($package) ? $package->name : '-' }}</td>
-
-                <td>Rp.{{ ($package) ? formatrupiah($package->price_weekdays) : '-' }}</td>
-
-                <td style="text-align: center">{{ ($detail) ? $detail->quantity : '-' }}</td>
-
-                <td>Rp.{{ ($transaction) ? formatrupiah($transaction->total) : '-' }}</td>
+                @foreach ($cart as $item)
+                    <tr>
+                        <td>{{ $item['name'] }}</td>
+                        <td class="text-right">Rp. {{ formatrupiah($item['pricesingle']) }}</td>
+                        <td class="text-center" style="text-align: center;">{{ $item['qty'] }}</td>
+                        <td class="text-right" style="text-align: right;">Rp. {{ formatrupiah($item['price']) }}</td>
+                    </tr>
+                @endforeach
+                {{-- @php
+                    dd($item);
+                @endphp --}}
             </tr>
 
 			<tr>
-				<td class="thick-line"></td>
-				<td class="thick-line"></td>
-				<td class="thick-line text-right">Subtotal</td>
-				<td class="thick-line text-right">
-					<span>Rp. {{ ($detail) ? formatrupiah($detail->harga * $detail->quantity * 2) : '-' }}</span>
-				</td>
-			</tr>
-			<tr>
-				<td class="no-line"></td>
-				<td class="no-line"></td>
-				<td class="no-line text-right">Limit Bulanan</td>
-				<td class="no-line text-right">Rp. -</td>
-			</tr>
-			<tr>
-				<td class="no-line"></td>
-				<td class="no-line"></td>
-				<td class="no-line text-right">Deposit</td>
-				<td class="no-line text-right">Rp. -</td>
-			</tr>
-			<tr>
-				<td class="no-line"></td>
-				<td class="no-line"></td>
-				<td class="no-line text-right"><strong>Total Bayar</strong></td>
-				<td class="no-line text-right">
-					<span>Rp. {{ formatrupiah($transaction->total) }}</span>
-				</td>
-			</tr>
+                <td class="thick-line"></td>
+                <td class="thick-line"></td>
+                <td class="thick-line text-right" style="text-align: right;">Jumlah Item</td>
+                <td class="thick-line text-right" style="text-align: right;">{{ count($cart) }}</td>
+            </tr>
+            <tr>
+                <td class="thick-line"></td>
+                <td class="thick-line"></td>
+                <td class="thick-line text-right" style="text-align: right;">Jumlah Order</td>
+                <td class="thick-line text-right" style="text-align: right;">{{ $qty }}
+                </td>
+            </tr>
+            <tr>
+                <td class="no-line"></td>
+                <td class="no-line"></td>
+                <td class="no-line text-right" style="text-align: right;">Diskon</td>
+                <td class="no-line text-right" style="text-align: right;">Rp. {{ formatrupiah($discount) }}</td>
+            </tr>
+            <tr>
+                <td class="no-line"></td>
+                <td class="no-line"></td>
+                <td class="no-line text-right" style="text-align: right;">Total Bayar</td>
+                <td class="no-line text-right" style="text-align: right;">Rp. {{ formatrupiah($transaction->total) }}</td>
+            </tr>
+            <tr>
+                <td class="no-line"></td>
+                <td class="no-line"></td>
+                <td class="no-line text-right" style="text-align: right;"><strong>Total Tagihan</strong></td>
+                <td class="no-line text-right" style="text-align: right;">
+                    <span>Rp. {{ formatrupiah($total) }}</span>
+                </td>
+            </tr>
 
 
         </table>
