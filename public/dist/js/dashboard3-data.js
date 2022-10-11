@@ -133,9 +133,9 @@ $(document).ready(function(){
 			// 	{ y: 'Mgg', a: 7, b: 7 }
 			// ],
 			xkey: 'y',
-			ykeys: ['a'	, 'b', ],
-			labels: ['VVIP', 'VIP', ],
-			barColors:['#fec107', '#32FFC1',],
+			ykeys: ['a'	, 'b', 'c' ],
+			labels: ['VVIP', 'VIP', 'REGULER' ],
+			barColors:['#fec107', '#32FFC1', '#21E1E1'],
 			hideHover: 'auto',
 			gridLineColor: '#878787',
 			resize: true,

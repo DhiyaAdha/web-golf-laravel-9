@@ -79,6 +79,21 @@ class DashboardController extends Controller
                 $value[1]
             )
                 ->count();
+
+            // REGULER
+            $data['visitor'][$key]['REGULER'] = LogTransaction::where('payment_status', 'paid')->whereHas(
+                'visitor',
+                function (Builder $query) {
+                    $query->where('tipe_member', 'REGULER');
+                }
+            )->whereMonth(
+                'created_at',
+                strlen($value[0]) == 1 ? '0' . $value[0] : $value[0]
+            )->whereYear(
+                'created_at',
+                $value[1]
+            )
+                ->count();
         }
 
         //statistika mingguan bar-chart 
@@ -110,6 +125,13 @@ class DashboardController extends Controller
                 'visitor',
                 function (Builder $query) {
                     $query->where('tipe_member', 'VIP');
+                }
+            )->whereDate('created_at', $day_period[$key])
+                ->count();
+            $data['visitor_daily'][$key]['c'] = LogTransaction::where('payment_status', 'paid')->whereHas(
+                'visitor',
+                function (Builder $query) {
+                    $query->where('tipe_member', 'REGULER');
                 }
             )->whereDate('created_at', $day_period[$key])
                 ->count();
