@@ -167,8 +167,8 @@ class DashboardController extends Controller
             $query->where('tipe_member', 'REGULER');
         })->count();
 
-
         // total female male VVIP & VIP
+        // VVIP
         $data['visitor_vvip_female'] = Visitor::where([
             ['tipe_member', 'VVIP'],
             ['gender', 'perempuan'],
@@ -187,6 +187,7 @@ class DashboardController extends Controller
             ['tipe_member', 'VIP'],
             ['gender', 'laki-laki'],
         ])->count();
+
         //REGULER
         $data['visitor_reguler_female'] = Visitor::where([
             ['tipe_member', 'REGULER'],
