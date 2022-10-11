@@ -84,7 +84,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                         <div class="panel panel-default card-view pa-0">
                             <div class="panel-wrapper collapse in">
@@ -118,6 +118,9 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 ol-lg-6 col-md-12 col-sm-12 col-xs-12">
                         <div class="panel panel-default card-view panel-refresh">
+                            {{-- dropdown --}}
+                            
+                            {{-- end of dropdown --}}
                             <h6>Detail Tamu VVIP Pertahun</h6>
                             <hr class="light-grey-hr row mt-10 mb-15" />
                             <div class="label-chatrs col-lg-6 mb-15">
@@ -321,10 +324,10 @@
                                 return `<span class='label label-success'>${data.tipe_member}</span>`;
                             } else if (data.tipe_member == 'VVIP') {
                                 return `<span class='label label-warning'>${data.tipe_member}</span>`;
-                            } else{
+                            } else {
                                 return `<span class='label label-primary'>${data.tipe_member}</span>`;
                             }
-                            
+
                         }
                     },
                     {
