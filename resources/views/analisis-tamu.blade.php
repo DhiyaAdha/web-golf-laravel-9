@@ -169,35 +169,6 @@
                             <hr class="light-grey-hr row mt-10 mb-15" />
                         </div>
                     </div>
-                    <div
-                        class="col-lg-4 col-md-12 col-sm-12 col-xs-12
-                                ol-lg-6 col-md-12 col-sm-12 col-xs-12">
-                        <div class="panel panel-default card-view panel-refresh">
-                            <h6>Total Tamu REGULER</h6>
-                            <hr class="light-grey-hr row mt-10 mb-15" />
-                            <div class="label-chatrs col-lg-6 mb-15">
-                                <span class="clabels-text inline-block txt-dark capitalize-font">
-                                    <span class="block font-22 weight-500 mb-5">
-                                        <span class="counter-anim">{{ $visitor_vip_male }}</span>
-                                    </span>
-                                    <span class="block txt-grey">Laki-laki</span>
-                                </span>
-                                <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-success"></i>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="label-chatrs col-lg-6 mb-15">
-                                <span class="clabels-text inline-block txt-dark capitalize-font">
-                                    <span class="block font-22 weight-500 mb-5">
-                                        <span class="counter-anim">{{ $visitor_vip_female }}</span>
-                                    </span>
-                                    <span class="block txt-grey">Perempuan</span>
-                                </span>
-                                <i class="big-rpsn-icon zmdi zmdi-female pull-right txt-warning"></i>
-                                <div class="clearfix"></div>
-                            </div>
-                            <hr class="light-grey-hr row mt-10 mb-15" />
-                        </div>
-                    </div>
                 </div>
 
                 {{-- Row Statistika Tamu --}}
