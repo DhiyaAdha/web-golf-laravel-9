@@ -127,7 +127,7 @@
                             style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #111111; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; letter-spacing: 4px; line-height: 48px;">
                             {{-- <img src="{{ $message->embed(public_path() . '/img/icon-logo.svg') }}" width="90"
                                 height="90" style="display: block; border: 0px;" /> --}}
-                                {{-- <img src="{{ $message->embed(public_path(). '/tgcc144.PNG') }}" alt=""
+                                {{-- <img src="{{ $message->embed(public_path(). '/tgcc144.png') }}" alt=""
                                 height="60px" width="30px"> <strong style="vertical-align: 25%; font-size:25px;">TGCC</strong> --}}
                         </td>
                     </tr>

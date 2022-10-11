@@ -30,14 +30,6 @@ Route::get('/', function () {
     }
     return view('Login');
 });
-// Route::get('/', function () {
-//     if (Auth::user('role_id') == '2') {
-//         return redirect('/analisis-tamu');
-//     }else {
-//         return redirect('/scan-tamu');
-//     }
-//     return view('Login');
-// });
 
 Route::post('/lupa-pasword',[AuthController::class, 'email_test'])->name('email_test');
 
@@ -77,8 +69,6 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     route::get('/export_excel', [InvoiceController::class, 'export_excel'])->name('export_excel');
     Route::get('/package/destroy/{id}', [PackageController::class,'destroy'])->name('package.destroy');
 
-    
-
 });
 
 //Level admin dan superadmin
@@ -114,7 +104,6 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('reporttransaksi/{id}', [TamuController::class, 'reporttransaksi'])->name('transaksi.report.data');
     Route::post('/tambah-deposit', [TamuController::class, 'insertdeposit'])->name('insertdeposit');
     route::get('/export_excel_tamu', [TamuController::class, 'export_excel_tamu'])->name('export_excel_tamu');
-    // Route::post('update/kupon/{id}', [ScanqrController::class, 'update_kupon'])->name('update.kupon')->middleware('signed');
     Route::post('update/kupon/{id}', [TamuController::class, 'update_kupon'])->name('update.kupon');
     Route::get('/proses', [OrderController::class, 'index'])->name('proses');
     Route::get('/cart/{id}', [OrderController::class, 'index'])->name('order.cart');
@@ -128,13 +117,9 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::post('/update/qty/{id}', [OrderController::class,'update_qty'])->name('update.qty');
     Route::post('/pay', [OrderController::class,'pay'])->name('pay');
     Route::get('/print_invoice/{id}', [OrderController::class,'print_invoice'])->name('invoice.print');
-    
-    // cart-reguler
     Route::resource('cart-reguler', OrderRegulerController::class);
     Route::post('/tamureguler', [OrderRegulerController::class, 'tamureguler'])->name('tamureguler');
     Route::get('/keranjang-reguler/{id}', [OrderRegulerController::class, 'orderreguler'])->name('order.cart.reguler');
-    // Route::get('/cart-reguler',[ OrderRegulerController::class, 'index'])->name('cart-reguler.index');
-    // Route::resource('cart', OrderRegulerController::class);
     Route::post('/keranjang-reguler/add/{package}', [OrderRegulerController::class, 'add'])->name('cart.add.reguler');
     Route::post('/keranjang-reguler/remove/{package}',[OrderRegulerController::class, 'remove'])->name('remove.item.reguler');
     Route::post('/keranjang-reguler/clear',[OrderRegulerController::class, 'clear_cart'])->name('cart.clear.reguler');

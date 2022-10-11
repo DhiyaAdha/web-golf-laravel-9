@@ -24,7 +24,7 @@
         @endif
         <li>
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#pages_dr"
-                class="collapsed {{ Request::is('scan-tamu') || Request::is('reguler') ? 'active' : '' }}"
+                class="collapsed {{ Request::is('scan-tamu') || Request::is('cart-reguler') ? 'active' : '' }}"
                 aria-expanded="false">
                 <div class="pull-left"><i class="zmdi zmdi-google-pages mr-20"></i><span class="right-nav-text">Point of
                         Sales</span></div>
@@ -42,7 +42,8 @@
                     </a>
                 </li>
                 <li>
-                    <a class="{{ Request::is('reguler') ? 'active-page' : '' }}" href="{{ route('cart-reguler.index') }}">
+                    <a class="{{ Request::is('cart-reguler') ? 'active-page' : '' }}"
+                        href="{{ route('cart-reguler.index') }}">
                         <div class="pull-left">
                             <span class="right-nav-text">Reguler</span>
                         </div>

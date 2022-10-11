@@ -14,8 +14,8 @@
                                                 <div class="col-xs-8 text-left data-wrap-left">
                                                     <span class="txt-light block counter"><span
                                                             class="counter-anim">{{ $visitor_today }}</span></span>
-                                                    <span class="weight-500 uppercase-font txt-light block font-13">Jumlah
-                                                        Transaksi <br>hari ini
+                                                    <span class="weight-500 txt-light block">
+                                                        Transaksi hari ini
                                                     </span>
                                                 </div>
                                                 <div class="col-xs-4 text-right data-wrap-right">
@@ -40,9 +40,7 @@
                                                 <div class="col-xs-8 text-left data-wrap-left">
                                                     <span class="txt-light block counter"><span
                                                             class="counter-anim">{{ $visitor_vvip }}</span></span>
-                                                    <span class="weight-500 uppercase-font txt-light block font-13">Total
-                                                        transaksi
-                                                        VVIP PERTAHUN
+                                                    <span class="weight-500 txt-light block">Transaksi VVIP
                                                     </span>
                                                 </div>
                                                 <div class="col-xs-4 text-right data-wrap-right">
@@ -67,9 +65,8 @@
                                                 <div class="col-xs-8 text-left data-wrap-left">
                                                     <span class="txt-light block counter"><span
                                                             class="counter-anim">{{ $visitor_vip }}</span></span>
-                                                    <span class="weight-500 uppercase-font txt-light block font-13">Total
-                                                        transaksi
-                                                        VIP PERTAHUN
+                                                    <span class="weight-500 txt-light block">Transaksi
+                                                        VIP
                                                     </span>
                                                 </div>
                                                 <div class="col-xs-4 text-right data-wrap-right">
@@ -94,9 +91,8 @@
                                                 <div class="col-xs-8 text-left data-wrap-left">
                                                     <span class="txt-light block counter"><span
                                                             class="counter-anim">{{ $visitor_reguler }}</span></span>
-                                                    <span class="weight-500 uppercase-font txt-light block font-13">Total
-                                                        transaksi
-                                                        REGULER PERTAHUN
+                                                    <span class="weight-500 txt-light block">Transaksi
+                                                        REGULER
                                                     </span>
                                                 </div>
                                                 <div class="col-xs-4 text-right data-wrap-right">
@@ -117,7 +113,7 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ol-lg-6 col-md-12 col-sm-12 col-xs-12">
                         <div class="panel panel-default card-view panel-refresh">
-                            <h6>Detail Tamu VVIP Pertahun</h6>
+                            <h6>Total Tamu VVIP</h6>
                             <hr class="light-grey-hr row mt-10 mb-15" />
                             <div class="label-chatrs col-lg-6 mb-15">
                                 <span class="clabels-text inline-block txt-dark capitalize-font">
@@ -147,7 +143,7 @@
                         class="col-lg-4 col-md-12 col-sm-12 col-xs-12
                                 ol-lg-6 col-md-12 col-sm-12 col-xs-12">
                         <div class="panel panel-default card-view panel-refresh">
-                            <h6>Detail Tamu VIP Pertahun</h6>
+                            <h6>Total Tamu VIP</h6>
                             <hr class="light-grey-hr row mt-10 mb-15" />
                             <div class="label-chatrs col-lg-6 mb-15">
                                 <span class="clabels-text inline-block txt-dark capitalize-font">
@@ -176,7 +172,7 @@
                         class="col-lg-4 col-md-12 col-sm-12 col-xs-12
                                 ol-lg-6 col-md-12 col-sm-12 col-xs-12">
                         <div class="panel panel-default card-view panel-refresh">
-                            <h6>Detail Tamu REGULER Pertahun</h6>
+                            <h6>Total Tamu REGULER</h6>
                             <hr class="light-grey-hr row mt-10 mb-15" />
                             <div class="label-chatrs col-lg-6 mb-15">
                                 <span class="clabels-text inline-block txt-dark capitalize-font">
@@ -209,7 +205,7 @@
                         <div class="panel panel-default card-view">
                             <div class="panel-heading">
                                 <div class="pull-left">
-                                    <h6 class="panel-title txt-dark">Statistika Transaksi Pertahun</h6>
+                                    <h6 class="panel-title txt-dark">Statistika Transaksi</h6>
                                 </div>
                                 <a href="javascript:void(0)" class="pull-right inline-block full-screen mr-15"
                                     data-toggle="tooltip" title="Fullscreen">
