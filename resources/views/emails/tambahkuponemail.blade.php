@@ -142,7 +142,7 @@
                             <td bgcolor="#ffffff" align="center"
                             style="padding: 
                             1.1px 0px 50px 1.11px; color: #000000; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                                <img src="{{ $message->embed(public_path().'/tgcc144.PNG') }}" height="
+                                <img src="{{ $message->embed(public_path().'/tgcc144.png') }}" height="
                                 60px" width="30px"> <strong style="vertical-align:75%; font-size: 25px;">TGCC</strong>
                             </td>
                         </tr>

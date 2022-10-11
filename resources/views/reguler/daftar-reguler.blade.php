@@ -1,4 +1,4 @@
-@extends('Layouts.Main')
+@extends('layouts.main')
 
 @section('content')
     <div class="page-wrapper">
@@ -24,7 +24,7 @@
                         <h6 class="control-label mb-10">Tamu Reguler</h6>
                         <div class="panel-body">
                             <div class="form-wrap">
-                                
+
                                 <form action="{{ route('tamureguler') }}" method="POST">
                                     @csrf
                                     <div class="form-group @error('name') has-error @enderror">
@@ -75,15 +75,18 @@
                                     @error('gender')
                                         <div class="text-danger"> {{ $message }}</div>
                                     @enderror
-                                </div>
-                                <div class="form-group @error('phone') has-error @enderror">
-                                    <label class="control-label mb-10" for="">Nomer Hp</label>
-                                    <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" name="phone" class="form-control" id="phone" size="50px" value="{{ old('phone') }}" placeholder="Masukan Nomer Hp">
-                                    @error('phone')
-                                        <div class="text-danger"> {{ $message }}</div>
-                                    @enderror
-                                </div>
-                                {{-- <div class="form-group @error('company') has-error @enderror">
+                            </div>
+                            <div class="form-group @error('phone') has-error @enderror">
+                                <label class="control-label mb-10" for="">Nomer Hp</label>
+                                <input type="text" min="0"
+                                    onkeypress="return event.charCode >= 48 && event.charCode <=57" name="phone"
+                                    class="form-control" id="phone" size="50px" value="{{ old('phone') }}"
+                                    placeholder="Masukan Nomer Hp">
+                                @error('phone')
+                                    <div class="text-danger"> {{ $message }}</div>
+                                @enderror
+                            </div>
+                            {{-- <div class="form-group @error('company') has-error @enderror">
                                     <label class="control-label mb-10" for="">Perusahaan</label>
                                     <input type="text" name="company" class="form-control" id="company" size="50px"  value="{{ old('company') }}" placeholder="Masukan Nama Perusahaan">
                                     @error('company')
@@ -97,15 +100,15 @@
                                         <div class="text-danger"> {{ $message }}</div>
                                     @enderror
                                 </div> --}}
-                                <div class="form-group">
-                                            {{-- <label class="control-label mb-10" for="">Tamu Ini Adalah Tamu VIP
+                            <div class="form-group">
+                                {{-- <label class="control-label mb-10" for="">Tamu Ini Adalah Tamu VIP
                                                 <div class="switch">
                                                     <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" value="VVIP" name="tipe_member">
                                                     <input id="cmn-toggle-4" class="cmn-toggle cmn-toggle-round-flat" name="tipe_member" type="checkbox" value="VIP">
                                                     <label for="cmn-toggle-4"></label>
                                                 </div>
                                             </label> --}}
-                                        {{-- <label class="control-label mb-10" for="">Tipe Member Tamu Ini
+                                {{-- <label class="control-label mb-10" for="">Tipe Member Tamu Ini
                                             Adalah</label>
                                         <label class="switch">
                                             <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" value="VIP"
@@ -118,20 +121,20 @@
                                                 <!--END-->
                                             </div>
                                         </label> --}}
-                                        {{-- <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" value="REGULER" --}}
-                                        <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" value="REGULER"
-                                            name="tipe_member">
-                                    </div>
-                                    <br>
-                                    <div class="form-group text-left">
-                                        <button type="submit" class="btn btn-info">Selanjutnya</button>
-                                    </div>
-                                </form>
+                                {{-- <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" value="REGULER" --}}
+                                <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" value="REGULER"
+                                    name="tipe_member">
+                            </div>
+                            <br>
+                            <div class="form-group text-left">
+                                <button type="submit" class="btn btn-info">Selanjutnya</button>
                             </div>
                             </form>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
-    @endsection
+@endsection

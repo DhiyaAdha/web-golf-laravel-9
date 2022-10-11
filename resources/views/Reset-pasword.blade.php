@@ -12,7 +12,7 @@
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="favicon.ico">
-    <link rel="icon" href="{{ asset('tgcc144.PNG') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
 
     <!-- vector map CSS -->
     <link href="../../vendors/bower_components/jasny-bootstrap/dist/css/jasny-bootstrap.min.css" rel="stylesheet"

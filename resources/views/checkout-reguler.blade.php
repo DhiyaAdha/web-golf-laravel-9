@@ -7,8 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>Metode Pembayaran</title>
-    <link rel="apple-touch-icon" href="{{ asset('tgcc144.PNG') }}">
-    <link rel="icon" href="{{ asset('tgcc144.PNG') }}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
+    <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
     <link href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet"
