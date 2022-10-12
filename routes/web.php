@@ -131,19 +131,19 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     
     // cart-reguler
     Route::resource('cart-reguler', OrderRegulerController::class);
-    Route::post('/cart-reguler', [OrderRegulerController::class, 'tamureguler'])->name('tamureguler');
-    Route::get('/keranjang-reguler/{id}', [OrderRegulerController::class, 'orderreguler'])->name('order.cart.reguler');
+    // Route::post('/cart-reguler', [OrderRegulerController::class, 'tamureguler'])->name('tamureguler');
+    // Route::get('/keranjang-reguler/{id}', [OrderRegulerController::class, 'orderreguler'])->name('order.cart.reguler');
     // Route::get('/cart-reguler',[ OrderRegulerController::class, 'index'])->name('cart-reguler.index');
     // Route::resource('cart', OrderRegulerController::class);
-    Route::post('/keranjang-reguler/add/{package}', [OrderRegulerController::class, 'add'])->name('cart.add.reguler');
-    Route::post('/keranjang-reguler/remove/{package}',[OrderRegulerController::class, 'remove'])->name('remove.item.reguler');
-    Route::post('/keranjang-reguler/clear',[OrderRegulerController::class, 'clear_cart'])->name('cart.clear.reguler');
-    Route::get('/checkout-reguler/{id}', [OrderRegulerController::class,'checkout'])->name('checkout.reguler');
-    Route::get('/select-reguler', [OrderRegulerController::class,'select'])->name('select.type.reguler');
-    Route::post('/qty-reguler/minus/{id}', [OrderRegulerController::class,'minus'])->name('qty.minus.reguler');
-    Route::post('/update-reguler/qty/{id}', [OrderRegulerController::class,'update_qty'])->name('update.qty.reguler');
-    Route::post('/pay-reguler', [OrderRegulerController::class,'pay'])->name('pay.reguler');
-    Route::get('/print_invoice_reguler/{id}', [OrderRegulerController::class,'print_invoice'])->name('invoice.print.reguler');
+    // Route::post('/keranjang-reguler/add/{package}', [OrderRegulerController::class, 'add'])->name('cart.add.reguler');
+    // Route::post('/keranjang-reguler/remove/{package}',[OrderRegulerController::class, 'remove'])->name('remove.item.reguler');
+    // Route::post('/keranjang-reguler/clear',[OrderRegulerController::class, 'clear_cart'])->name('cart.clear.reguler');
+    // Route::get('/checkout-reguler/{id}', [OrderRegulerController::class,'checkout'])->name('checkout.reguler');
+    // Route::get('/select-reguler', [OrderRegulerController::class,'select'])->name('select.type.reguler');
+    // Route::post('/qty-reguler/minus/{id}', [OrderRegulerController::class,'minus'])->name('qty.minus.reguler');
+    // Route::post('/update-reguler/qty/{id}', [OrderRegulerController::class,'update_qty'])->name('update.qty.reguler');
+    // Route::post('/pay-reguler', [OrderRegulerController::class,'pay'])->name('pay.reguler');
+    // Route::get('/print_invoice_reguler/{id}', [OrderRegulerController::class,'print_invoice'])->name('invoice.print.reguler');
 
     
     //route 4 notifikasi email pembayaran sukses

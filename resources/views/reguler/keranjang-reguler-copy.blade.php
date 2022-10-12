@@ -1,4 +1,4 @@
-@extends('layouts.main', ['title' => 'TGCC | Pilih Permainan'])
+@extends('Layouts.main', ['title' => 'TGCC | Pilih Permainan'])
 @section('content')
     <!-- Main Content -->
     <div class="page-wrapper">
@@ -21,7 +21,7 @@
             <!-- /Title -->
             <div class="row">
                 <div class="col-lg-8">
-                    <div class="panel panel-default card-view">
+                    <div style="height: 387px;" class="panel panel-default card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
                                 <strong class="panel-title txt-dark">Jenis Permainan</strong>
@@ -39,7 +39,7 @@
                             @foreach ($default as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                    title="Rp. {{ number_format($today === 'Sabtu' || $today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
+                                    title="Rp. {{ number_format($today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
                                     class="btn btn-default txt-success mr-15 mb-15">{{ $item->name }}</button>
                             @endforeach
                         </div>
@@ -53,7 +53,7 @@
                             @foreach ($additional as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                    title="Rp. {{ number_format($today === 'Sabtu' || $today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
+                                    title="Rp. {{ number_format($today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
                                     class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
                             @endforeach
                         </div>
@@ -67,7 +67,7 @@
                             @foreach ($others as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                    title="Rp. {{ number_format($today === 'Sabtu' || $today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
+                                    title="Rp. {{ number_format($today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
                                     class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
                             @endforeach
                         </div>
@@ -119,13 +119,13 @@
                                             Rp.{{ number_format($item['price'], 0, ',', '.') }}</p>
                                         <button onclick="updateQTY({{ $item['rowId'] }}, 'minus')"><i
                                                 class="cart-qty-minus-{{ $item['rowId'] }} fa fa-minus-square"></i></button>
-                                        <input type="number" min="1" class="qty-{{ $item['rowId'] }}"
+                                        <input type="number" min="0" class="qty-{{ $item['rowId'] }}"
                                             value="{{ $item['qty'] }}" style="width: 30px;" readonly />
                                         <button onclick="updateQTY({{ $item['rowId'] }}, 'plus')"><i
                                                 class="cart-qty-plus-{{ $item['rowId'] }} fa fa-plus-square"></i></button>
-                                        <button class="mr-10 ml-10" data-category="{{ $item['category'] }}"
-                                            data-toggle="tooltip" title="Hapus" onclick="removeItem({{ $item['rowId'] }})"
-                                            id="remove-item" style="color:red;"><i class="fa fa-trash-o"></i></button>
+                                        <button class="mr-10 ml-10" data-toggle="tooltip" title="Hapus"
+                                            onclick="removeItem({{ $item['rowId'] }})" id="remove-item"
+                                            style="color:red;"><i class="fa fa-trash-o"></i></button>
                                     </div>
                                 @endforeach
                             </div>
@@ -138,6 +138,7 @@
                         <div id="total"></div>
                         <div id="append-checkout"></div>
                         @if (count($cart_data) > 0)
+                        {{-- <input type="text" class="form-control" name="name" readonly><br> --}}
                             <div class="d-flex">
                                 <strong class="flex-grow-1 txt-dark">Total</strong>
                                 <strong class="txt-dark" id="total-pay">Rp.
@@ -150,6 +151,8 @@
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Reset</span>
                                 </a>
+                                
+                                
                                 {{-- <a href="{{ url('kartu-tamu/' . Crypt::encryptString($get_visitor->id)) }}"
                                     id="riwayat" class="mt-15 mb-15 btn-xs btn btn-primary btn-anim" target="_blank">
                                     <i class="icon-rocket"></i>
@@ -199,7 +202,7 @@
             </div>
             <div class="row">
             </div>
-            @include('layouts.footer')
+            @include('Layouts.Footer')
             <div id="lds-facebook"></div>
         </div>
     </div>
@@ -268,7 +271,7 @@
             url = url.split("/");
             page = url[url.length - 1];
 
-            var url = "{{ route('cart.add', ':package') }}";
+            var url = "{{ route('cart.add.reguler', ':package') }}";
             url = url.replace(':package', id);
             $.ajax({
                 async: true,
@@ -337,7 +340,7 @@
                     });
                 }
             }
-            let url = "{{ route('update.qty', ':id') }}";
+            let url = "{{ route('update.qty.reguler', ':id') }}";
             url = url.replace(':id', id);
             $.ajax({
                 async: true,
@@ -377,50 +380,18 @@
         }
 
         function removeItem(id) {
-
             var tg = window.location.href;
             tg = tg.split("?")
             tg = tg[0];
             tg = tg.split("/");
             page = tg[tg.length - 1];
-            var url = "{{ route('remove.item', ':package') }}";
+
+            var url = "{{ route('remove.item.reguler', ':package') }}";
             url = url.replace(':package', id);
             $('.disabled-cart-' + id).css('background', 'tomato');
             $('.disabled-cart-' + id).fadeOut(800, function() {
                 $(this).remove();
             });
-
-            // if (!$package_additional == 0) {
-            //     var tg = window.location.href;
-
-            //     tg = tg.split("?")
-            //     tg = tg[0];
-            //     tg = tg.split("/");
-            //     page = tg[tg.length - 1];
-            //     var url = "{{ route('remove.item', ':package') }}";
-            //     url = url.replace(':package', id);
-            //     $('.disabled-cart-' + id).css('background', 'tomato');
-            //     $('.disabled-cart-' + id).fadeOut(800, function() {
-            //         $(this).remove();
-            //     });
-            // } else {
-            //     swal({
-            //         title: "",
-            //         type: "error",
-            //         text: "Hapus Item Tambahan Terlebih Dahulu",
-            //         confirmButtonColor: "#01c853",
-            //     });
-            // }
-
-            // swal({
-            //         title: "",
-            //         type: "error",
-            //         text: "Hapus Item Tambahan Terlebih Dahulu",
-            //         confirmButtonColor: "#01c853",
-            //     });
-
-
-
             $.ajax({
                 async: true,
                 type: 'POST',
@@ -463,7 +434,7 @@
             tg = tg.split("/");
             page = tg[tg.length - 1];
 
-            var url = "{{ route('cart.clear') }}";
+            var url = "{{ route('cart.clear.reguler') }}";
             swal({
                 title: "Anda yakin ingin reset keranjang?",
                 imageUrl: "../img/Warning.svg",
@@ -513,7 +484,7 @@
             tg = tg[0];
             tg = tg.split("/");
             page = tg[tg.length - 1];
-            let url = "{{ route('checkout', ':id') }}";
+            let url = "{{ route('checkout.reguler', ':id') }}";
             url = url.replace(':id', page);
 
             $.ajaxSetup({
@@ -572,7 +543,7 @@
                 "previous": "Previous"
             },
             "ajax": {
-                "url": "{{ route('order.cart', Request::segment(2)) }}",
+                "url": "{{ route('order.cart.reguler', Request::segment(2)) }}",
                 "type": "GET",
                 "datatype": "json"
             },
