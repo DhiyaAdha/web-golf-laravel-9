@@ -283,11 +283,6 @@ class OrderRegulerController extends Controller
     public function remove(Request $request)
     {
         $items = \Cart::session(auth()->id())->getContent();
-
-        // $counts = $items->where('is_default', 'default')->count();
-        // $counts = $items->where('is_default', 'default')->count();
-        // return $counts;
-        
         \Cart::session(auth()->id())->remove($request->get('id'));
         $get_total = \Cart::session(auth()->id())->getTotal();
         $counted = '';
@@ -313,16 +308,13 @@ class OrderRegulerController extends Controller
     public function checkout(Request $request)
     {
         try {
-            $items = \Cart::session($request->get('id'))->getContent();
-            $totalPrice = \Cart::session($request->get('id'))->getTotal();
+            $items = \Cart::session(auth()->id())->getContent();
+            $totalPrice = \Cart::session(auth()->id())->getTotal();
             $today = Carbon::now()->isoFormat('dddd');
             if (\Cart::isEmpty()) {
                 $cart_data = [];
             } else {
                 foreach ($items as $row) {
-                    $id_package[] = $row->id;
-                    $item_default = 0;
-                    $cek_itemId = $items->whereIn('id', $id_package);
                     $cart[] = [
                         'rowId' => $row->id,
                         'name' => $row->name,
@@ -331,130 +323,77 @@ class OrderRegulerController extends Controller
                         'price' => $row->getPriceSum(),
                         'created_at' => $row->attributes['created_at'],
                     ];
-                    foreach($cek_itemId as $item){
-                        $item_default += $item['quantity'];
-                    }
                 }
-                $price_single = 0;
-                $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
-                $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
-                $package_others = Package::whereIn('id', $id_package)->where('category', 'others')->get();
                 $orders = collect($cart)->sortBy('created_at');
-                foreach($package_default as $default){
-                    $price_single += $today === 'Sabtu' || $today === 'Minggu' ? $default['price_weekend'] : $default['price_weekdays'];
-                }
             }
-            return view("reguler.checkout_reguler", compact('log_limit', 'price_single', 'item_default', 'package_default', 'package_additional', 'package_others', 'deposit', 'totalPrice', 'order_number', 'orders'))->render();
+            $order_number = 'INV/' . Carbon::now()->format('Ymd') . '/' . Carbon::now()->format('his');
+            if ($request->ajax()) {
+                return response()->json(['order_number' => $order_number]);
+            }
+            return view("reguler.checkout_reguler", compact('totalPrice', 'order_number', 'orders'))->render();
         } catch (\Throwable $th) {
             return redirect()->route('scan-tamu');
         }
     }
 
-    public function select(Request $request)
-    {
-        $type = $request->get('type');
-        $items = \Cart::session($request->get('param'))->getContent();
-        $totalPrice = \Cart::session($request->get('param'))->getTotal();
-        $deposit = Deposit::where('visitor_id', $request->get('param'))->first();
-        $log_limit = LogLimit::where('visitor_id', $request->get('param'))->first();        
-        $today = Carbon::now()->isoFormat('dddd');
-        $id_package = [];
-        foreach ($items as $row) {
-            $package = Package::find($row->id);
-            $id_package[] = $row->id;
-            $cart[] = [
-                'rowId' => $row->id,
-                'name' => $row->name,
-                'qty' => $row->quantity,
-                'pricesingle' => $row->price,
-                'price' => $row->getPriceSum(),
-                'created_at' => $row->attributes['created_at'],
-                'category' => $package->category
-            ];
+    public function pay_reguler(Request $request) {
+        $items = \Cart::session(auth()->id())->getContent();
+        $totalPrice = \Cart::session(auth()->id())->getTotal();
+        if (\Cart::isEmpty()) {
+            $cart_data = [];
+        } else {
+            foreach ($items as $row) {
+                $cart[] = [
+                    'rowId' => $row->id,
+                    'name' => $row->name,
+                    'qty' => $row->quantity,
+                    'pricesingle' => $row->price,
+                    'price' => $row->getPriceSum(),
+                    'created_at' => $row->attributes['created_at'],
+                ];
+            }
+            $cart_data = collect($cart)->sortBy('created_at');
         }
-        $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
-        $price_default = 0;
-        foreach($package_default as $default){
-            $price_default += $today === 'Sabtu' || $today === 'Minggu' ? $default['price_weekend'] : $default['price_weekdays'];
-        }
-        $orders = collect($cart)->sortBy('created_at');
+        try {
+            Visitor::create([
+                'name' => $request->get('name'),
+                'tipe_member' => 'REGULER',
+                'created_at' => Carbon::now(),
+            ]);
 
-        if ($type == 4) {
-            $resultPrice =  $deposit->balance - $totalPrice;
-            if ($resultPrice == 0) {
-                try {
-                    return response(['limit' => $log_limit->quota, 'total_price' => $totalPrice, 'price_default' => $price_default, 'orders' => $orders, 'price' => $resultPrice, 'kupon' => $log_limit->quota_kupon, 'status' => 'VALID', 'message' => 'Saldo telah dipilih']);
-                } catch (\Throwable $th) {
-                    return response()->json($this->getResponse());
-                }
-            } else {
-                if ($resultPrice > 0) {
-                    try {
-                        return response(['limit' => $log_limit->quota, 'total_price' => $totalPrice, 'price_default' => $price_default, 'orders' => $orders, 'price' => $resultPrice, 'kupon' => $log_limit->quota_kupon, 'status' => 'VALID', 'message' => 'Saldo telah dipilih']);
-                    } catch (\Throwable $th) {
-                        return response()->json($this->getResponse());
-                    }
-                } else {
-                    $this->setResponse('INVALID', "Saldo tidak terpenuhi");
-                    return response()->json($this->getResponse());
-                }
-            }
-        } else if ($type == 3) {
-            try {
-                return response(['limit' => $log_limit->quota, 'total_price' => $totalPrice, 'price_default' => $price_default, 'orders' => $orders, 'price' => $deposit->balance, 'kupon' => $log_limit->quota_kupon, 'status' => 'VALID', 'message' => 'Cash/Transfer telah dipilih']);
-            } catch (\Throwable $th) {
-                return response()->json($this->getResponse());
-            }
-        } else if ($type == 2) {
-            $resultKupon =  $log_limit->quota_kupon - 1;
-            if ($log_limit->quota_kupon == 0) {
-                return response(['price' => $deposit->balance, 'limit' => $log_limit->quota, 'kupon' => 0, 'status' => 'INVALID', 'message' => 'Kupon tidak terpenuhi']);
-            } else {
-                return response(['price' => $deposit->balance, 'total_price' => $totalPrice, 'price_default' => $price_default, 'orders' => $orders, 'limit' => $log_limit->quota, 'kupon' => $resultKupon, 'status' => 'VALID', 'message' => 'Limit telah dipilih']);
-            }
-        } else if ($type == 1) {
-            $resultLimit =  $log_limit->quota - 1;
-            if ($log_limit->quota == 0) {
-                return response(['price' => $deposit->balance, 'limit' => 0, 'kupon' => $log_limit->quota_kupon, 'status' => 'INVALID', 'message' => 'Limit tidak terpenuhi']);
-            } else {
-                return response(['price' => $deposit->balance, 'total_price' => $totalPrice, 'price_default' => $price_default, 'orders' => $orders, 'limit' => $resultLimit, 'kupon' => $log_limit->quota_kupon, 'status' => 'VALID', 'message' => 'Limit telah dipilih']);
-            }
-        }
-    }
+            LogTransaction::create([
+                'order_number' => $request->get('order_number'),
+                'visitor_id' =>  Visitor::latest()->first()->id,
+                'user_id' => Auth()->id(),
+                'cart' => serialize($cart_data),
+                'payment_type' => serialize([[
+                    'payment_type' => 'cash/transfer', 
+                    'transaction_amount' => $request->get('pay_amount'),
+                    'balance' => 0,
+                    'discount' => 0,
+                    'refund' => $request->get('refund')
+                ]]),
+                'payment_status' => 'paid',
+                'total' => $totalPrice
+            ]);
 
-    public function print_invoice($id) {
-        try{
-            $visitor = Visitor::find($id);
-            $log_transaction = LogTransaction::where('visitor_id', $id)->latest()->first();
-            $user = User::find($log_transaction->user_id);
-            $cart = unserialize($log_transaction->cart);
-            $payment_type = unserialize($log_transaction->payment_type);
-            $deposit = Deposit::where('visitor_id', $id)->first();
-            $total = 0;
-            $qty = 0;
-            $discount = 0;
-            foreach ($cart as $get) {
-                $qty += $get['qty'];
-                $total += $get['price'];
+            LogAdmin::create([
+                'user_id' => Auth::id(),
+                'type' => 'CREATE',
+                'activities' => 'Melakukan transaksi tamu <b>' . Visitor::latest()->first()->name . '</b>'
+            ]);
+
+            \Cart::session(auth()->id())->clear();
+
+            if ($request->ajax()) {
+                return response()->json([
+                    'status' => 'VALID',
+                    'message' => 'Pembayaran berhasil',
+                    'return' => $request->get('pay_amount')
+                ]);
             }
-            foreach ($payment_type as $get) {
-                $discount += $get['discount'];
-            }
-            $counted = ucwords(counted($log_transaction->total) . ' Rupiah');
-            return view('print-invoice', compact(
-                'visitor',
-                'log_transaction',
-                'payment_type',
-                'cart',
-                'deposit',
-                'discount', 
-                'counted',
-                'total',
-                'qty',
-                'user'
-            ));
         } catch (Throwable $e) {
-            return redirect()->route('scan-tamu');
+            return response()->json($this->getResponse());
         }
     }
 

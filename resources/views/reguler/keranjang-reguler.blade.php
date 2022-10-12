@@ -138,7 +138,7 @@
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Reset</span>
                                 </a>
-                                <button type="button" id="checkout_reguler"
+                                <button type="button" id="checkout"
                                     class="mt-15 mb-15 btn-xs btn btn-success btn-anim">
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Checkout</span>
@@ -433,15 +433,8 @@
             return false;
         });
 
-        $(document).on('click', '#checkout_reguler', function() {
-            var tg = window.location.href;
-            tg = tg.split("?")
-            tg = tg[0];
-            tg = tg.split("/");
-            id = tg[tg.length - 1];
-            let url = "{{ route('checkout_reguler', ':id') }}";
-            url = url.replace(':id', id);
-
+        $(document).on('click', '#checkout', function() {
+            let url = "{{ route('checkout_reguler') }}";
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

@@ -123,8 +123,8 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::post('/cart_remove/reguler/{package}',[OrderRegulerController::class, 'remove'])->name('cart_remove.reguler');
     Route::post('/reguler_update/qty/{id}', [OrderRegulerController::class,'update_qty'])->name('reguler_update.qty');
     Route::post('/cart_reguler/clear',[OrderRegulerController::class, 'clear_cart'])->name('cart_reguler.clear');
-    Route::get('/checkout_reguler/{id}', [OrderRegulerController::class,'checkout'])->name('checkout_reguler');
-
+    Route::get('/checkout_reguler', [OrderRegulerController::class,'checkout'])->name('checkout_reguler');
+    Route::post('/pay_reguler', [OrderRegulerController::class,'pay_reguler'])->name('pay_reguler');
     
     //route 4 notifikasi email pembayaran sukses
     Route::get('/test_payment', function(){

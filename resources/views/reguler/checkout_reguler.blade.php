@@ -142,168 +142,35 @@
                 <div class="col-md-12">
                     <div class="card" style="border: none !important;">
                         <div class="d-flex flex-wrap pd-1">
-                        </div>
-                        <div class="d-flex flex-wrap pd-1">
                             <div class="col-md-7 mb-2">
                                 <div class="card">
                                     <div class="card-body">
                                         <form>
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Metode Pembayaran</span>
-                                                <div class="d-flex">
-                                                    <div class="custom-control custom-radio mr-2">
-                                                        <input type="radio" name="payment" id="wk"
-                                                            class="custom-control-input" value="single" checked>
-                                                        <label class="custom-control-label cursor"
-                                                            for="wk">Single</label>
-                                                    </div>
-                                                </div>
                                             </div>
-                                            <div id="single">
-                                                <div class="card mt-2">
-                                                    <div class="card-body">
-                                                        <div class="d-flex align-items-center mt-2 choose"
-                                                            style="border-bottom: 1px solid rgba(0,0,0,.125);">
-                                                            <div class="flex-grow-1 custom-control custom-radio custom-control-inline"
-                                                                style="width:100%;">
-                                                                <input type="radio" id="customRadioInline3"
-                                                                    name="payment-type" value="3"
-                                                                    class="custom-control-input">
-                                                                <label class="custom-control-label"
-                                                                    for="customRadioInline3"
-                                                                    style="width: 100%;cursor:pointer;">
-                                                                    <div
-                                                                        class="d-flex flex-column flex-grow-1 justify-content-center">
-                                                                        <strong>Cash/Transfer</strong>
-                                                                        <small class="text-muted">Tunjukan bukti
-                                                                            transfer</small>
-                                                                        <div class="form-group mt-2 mb-2"
-                                                                            id="cash-transfer">
-                                                                        </div>
-                                                                    </div>
-                                                                </label>
-                                                            </div>
-                                                            <img src="{{ asset('cash-on-delivery.png') }}"
-                                                                alt="cash" width="30" height="30">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="multiple" class="d-none">
-                                                <div class="card mt-2">
-                                                    <div class="card-body">
-                                                        <div class="d-flex align-items-center choose"
-                                                            style="border-bottom: 1px solid rgba(0,0,0,.125);">
-                                                            <div class="flex-grow-1 custom-control custom-checkbox"
-                                                                style="width:100%;">
-                                                                <input type="checkbox" name="payment-type[]"
-                                                                    value="deposit" class="custom-control-input"
-                                                                    id="customCheck8">
-                                                                <label class="custom-control-label" for="customCheck8"
-                                                                    style="width: 100%; cursor:pointer;">
-                                                                    <div
-                                                                        class="d-flex flex-column flex-grow-1 justify-content-center">
-                                                                        <strong>Deposit</strong>
-                                                                        <small class="text-muted mb-2">Deposit akan
-                                                                            berkurang sesuai dengan tagihan</small>
-                                                                    </div>
-                                                                </label>
-                                                            </div>
-                                                            <img src="{{ asset('deposit.png') }}" alt="deposit"
-                                                                width="26" height="26">
-                                                        </div>
-                                                        <div class="d-flex align-items-center mt-2 choose"
-                                                            style="border-bottom: 1px solid rgba(0,0,0,.125);">
-                                                            <div class="flex-grow-1 custom-control custom-checkbox"
-                                                                style="width:100%;">
-                                                                <input type="checkbox" name="payment-type[]"
-                                                                    value="cash/transfer" class="custom-control-input"
-                                                                    id="customCheck7">
-                                                                <label class="custom-control-label" for="customCheck7"
-                                                                    style="width: 100%; cursor:pointer;">
-                                                                    <div
-                                                                        class="d-flex flex-column flex-grow-1 justify-content-center">
-                                                                        <strong>Cash/Transfer</strong>
-                                                                        <small class="text-muted">Tunjukan bukti
-                                                                            transfer</small>
-                                                                        <div class="form-group mt-2 mb-2"
-                                                                            id="cashtransfer">
-                                                                        </div>
-                                                                    </div>
-                                                                </label>
-                                                            </div>
-                                                            <img src="{{ asset('cash-on-delivery.png') }}"
-                                                                alt="cash" width="30" height="30">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card mt-2">
-                                                    <div class="card-body">
-                                                        <div class="d-flex">
-                                                            <strong class="flex-grow-1">Gunakan Limit/Kupon</strong>
-                                                            <div class="custom-control custom-switch">
-                                                                <input type="checkbox" class="custom-control-input"
-                                                                    id="customSwitch2">
-                                                                <label class="custom-control-label cursor"
-                                                                    for="customSwitch2"></label>
-                                                            </div>
-                                                        </div>
-                                                        <div id="hide-limit" class="d-none">
-                                                            <div class="d-flex align-items-center mt-2 choose"
-                                                                style="border-bottom: 1px solid rgba(0,0,0,.125);">
-                                                                <div class="flex-grow-1 custom-control custom-radio custom-control-inline"
-                                                                    style="width:100%;">
-                                                                    <input type="radio" id="customRadioInline6"
-                                                                        name="payment-type[]" value="kupon"
-                                                                        class="custom-control-input">
-                                                                    <label class="custom-control-label"
-                                                                        for="customRadioInline6"
-                                                                        style="width: 100%; cursor:pointer;">
-                                                                        <div
-                                                                            class="d-flex flex-column flex-grow-1 justify-content-center">
-                                                                            <strong>Kupon</strong>
-                                                                            <small class="text-muted">Kupon otomatis
-                                                                                akan
-                                                                                berkurang</small>
-                                                                            <small class="text-muted mb-2">Kupon
-                                                                                berlaku hanya
-                                                                                untuk 1 game</small>
-                                                                        </div>
-                                                                    </label>
+                                            <div class="card mt-2">
+                                                <div class="card-body">
+                                                    <div class="d-flex align-items-center" style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                                                        <div class="d-flex flex-column flex-grow-1">
+                                                            <strong>Cash/Transfer</strong>
+                                                            <small class="text-muted">Tunjukan bukti transfer</small>
+                                                            <div class="input-group mb-2">
+                                                                <div class="input-group-prepend">
+                                                                    <div class="input-group-text">Rp.</div>
                                                                 </div>
-                                                                <img src="{{ asset('coupon.png') }}" alt="cash"
-                                                                    width="30" height="30">
-                                                            </div>
-                                                            <div class="d-flex align-items-center mt-2 choose"
-                                                                style="border-bottom: 1px solid rgba(0,0,0,.125);">
-                                                                <div class="flex-grow-1 custom-control custom-radio custom-control-inline"
-                                                                    style="width:100%;">
-                                                                    <input type="radio" id="customRadioInline5"
-                                                                        name="payment-type[]" value="limit"
-                                                                        class="custom-control-input">
-                                                                    <label class="custom-control-label"
-                                                                        for="customRadioInline5"
-                                                                        style="width: 100%; cursor:pointer;">
-                                                                        <div
-                                                                            class="d-flex flex-column flex-grow-1 justify-content-center">
-                                                                            <strong>Limit</strong>
-                                                                            <small class="text-muted">Limit otomatis
-                                                                                akan
-                                                                                berkurang</small>
-                                                                            <small class="text-muted mb-2">Limit
-                                                                                berlaku hanya
-                                                                                untuk 1 game</small>
-                                                                        </div>
-                                                                    </label>
-                                                                </div>
-                                                                <img src="{{ asset('credit-limit.png') }}"
-                                                                    alt="cash" width="30" height="30">
+                                                                <input type="text" min="0"
+                                                                    onkeypress="return event.charCode >= 48 && event.charCode <=57"
+                                                                    class="form-control bayar-input"
+                                                                    name="bayar" placeholder="Masukkan nominal bayar">
                                                             </div>
                                                         </div>
+                                                        <img src="{{ asset('cash-on-delivery.png') }}"
+                                                            alt="cash" width="30" height="30">
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="card mt-2 d-none">
+                                            <div class="card mt-2">
                                                 <div class="card-body">
                                                     <div class="d-flex flex-column">
                                                         <span>Uang kembali</span>
@@ -351,12 +218,11 @@
                                         <div class="d-flex flex-column">
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Invoice</span>
-                                                {{-- <span style="font-size: small;"
-                                                    id="order-number">#{{ $order_number }}</span> --}}
+                                                <span style="font-size: small;" id="order-number">#{{ $order_number }}</span>
                                             </div>
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Tamu</span>
-                                                {{-- <span>{{ $visitor->name }}</span> --}}
+                                                <a href="javascript:void(0)"><i class="fa fa-plus-square add-name"></i></a>
                                             </div>
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Jumlah Item</span>
@@ -401,7 +267,139 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.min.js') }}"></script>
-    
-</body>
 
+    <script>
+        function formatIDR(price) {
+            var number_string = price.toString(),
+                split = number_string.split(','),
+                remainder = split[0].length % 3,
+                idr = split[0].substr(0, remainder),
+                thousand = split[0].substr(remainder).match(/\d{1,3}/gi);
+            if (thousand) {
+                separator = remainder ? '.' : '';
+                idr += separator + thousand.join('.');
+            }
+            return split[1] != undefined ? idr + ',' + split[1] : idr;
+        }
+
+        $(document).on('input', '.bayar-input', function(e) {
+            e.preventDefault();
+            let total = $('.nilai-total1-td').data('total');
+            let return_pay = parseInt($(this).val()) - parseInt(total);
+
+            if ($(this).val() < total) {
+                $(this).addClass('is-invalid');
+                $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                    "background-color": "rgba(216, 25, 25, 0.2)",
+                    "color": "#d81c19d1"
+                }).data('refund', return_pay);
+            } else {
+                $(this).removeClass('is-invalid');
+                $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                    "background-color": "rgba(25, 216, 149, 0.2)",
+                    "color": "#19d895"
+                }).data('refund', return_pay);
+            }
+        });
+
+        $(document).on('click', '.add-name', function(e) {
+            e.preventDefault();
+            $('.add-name').hide();
+            $(`<div class="d-flex align-items-center">
+                <input type="text" class="name" placeholder="Masukkan nama">
+            </div>`).insertAfter($('.add-name'));
+        });
+
+        $(document).on('click', '#pay', function(e) {
+            e.preventDefault();
+            let refund = $('#return').data('refund');
+            let pay_amount = $('.bayar-input').val();
+            let order_number = $('#order-number').text();
+            let name = '';
+            if (!pay_amount) {
+                swal({
+                    title: "",
+                    type: "error",
+                    text: "Nominal wajib diisi",
+                    confirmButtonColor: "#01c853",
+                });
+                return false;
+            } else {
+                if($('.name').val() == '' || $('.name').val() == null){
+                    name = 'reguler';
+                } else {
+                    name = $('.name').val();
+                }
+            }
+
+            swal({
+                title: "",
+                text: "Lakukan pembayaran ?",
+                type: "info",
+                showCancelButton: true,
+                confirmButtonColor: "#01c853",
+                confirmButtonText: "Bayar",
+                cancelButtonText: "Batal",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function(isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        async: true,
+                        type: 'POST',
+                        data: {
+                            refund: refund,
+                            order_number: order_number,
+                            pay_amount: pay_amount,
+                            name: name
+                        },
+                        url: "{{ route('pay_reguler') }}",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        beforeSend: function(request) {
+                            $.blockUI({
+                                css: {
+                                    backgroundColor: 'transparent',
+                                    border: 'none'
+                                },
+                                message: '<img src="../img/rolling.svg">',
+                                baseZ: 1500,
+                                overlayCSS: {
+                                    backgroundColor: '#7C7C7C',
+                                    opacity: 0.4,
+                                    cursor: 'wait'
+                                }
+                            });
+                        },
+                        success: function(response) {
+                            $.unblockUI();
+                            if (response.status == "INVALID") {
+                                swal({
+                                    title: "",
+                                    type: "error",
+                                    text: response.message,
+                                    confirmButtonColor: "#01c853",
+                                });
+                            } else {
+                                swal({
+                                    title: '',
+                                    type: "success",
+                                    text: response.message,
+                                    confirmButtonColor: "#01c853",
+                                }, function(isConfirm) {
+                                    invoice(url,
+                                        'Print Invoice');
+                                    window.close();
+                                });
+                            }
+                        }
+                    });
+                } else {
+                    swal("Dibatalkan", "", "info");
+                }
+            });
+        });
+    </script>
+</body>
 </html>

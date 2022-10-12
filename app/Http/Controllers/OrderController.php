@@ -325,11 +325,6 @@ class OrderController extends Controller
     public function remove(Request $request)
     {
         $items = \Cart::session($request->get('page'))->getContent();
-
-        // $counts = $items->where('is_default', 'default')->count();
-        // $counts = $items->where('is_default', 'default')->count();
-        // return $counts;
-        
         $id = explode("/", parse_url($request->get('url'), PHP_URL_PATH));
         \Cart::session($request->get('page'))->remove($id[3]);
         $get_total = \Cart::session($request->get('page'))->getTotal();
