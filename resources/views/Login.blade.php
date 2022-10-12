@@ -12,11 +12,11 @@
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="favicon.ico">
-    <link rel="icon" href="{{ asset('tgcc144.PNG') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
 
     <!-- PWA  -->
     <meta name="theme-color" content="#6777ef" />
-    <link rel="apple-touch-icon" href="{{ asset('tgcc144.PNG') }}">
+    <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
 
     <!-- vector map CSS -->

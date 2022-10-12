@@ -22,7 +22,17 @@
             <tr>
                 <td>{{ $item->name }}</td>
                 <td style="text-align: center">{{ $item->tipe_member }}</td>
-                <td>{{ $item->payment_type }}</td>
+                <td>
+                    @php
+                        $un = unserialize($item->payment_type);
+                        $datax = array();
+                        foreach ($un as $i => $t) {
+                            $datax[$i] = $t['payment_type'];
+                        }
+                        $method_payment = implode(", ", $datax);
+                        echo $method_payment;
+                    @endphp
+                </td>
                 <td>{{ $item->total }}</td>
                 <td>{{ $item->created_at->format('d F Y | H:i:s') }}</td>
             </tr>

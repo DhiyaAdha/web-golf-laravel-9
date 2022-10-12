@@ -824,7 +824,8 @@ class TamuController extends Controller
     {
         try {
             $get_uri = explode("/", parse_url($request->getRequestUri(), PHP_URL_PATH));
-            $visitor = LogLimit::join('visitors', 'log_limits.visitor_id', '=', 'visitors.id')->where('log_limits.visitor_id', $get_uri[3])->first();
+            $visitor = LogLimit::join('visitors', 'log_limits.visitor_id', '=', 'visitors.id')
+            ->where('log_limits.visitor_id', $get_uri[3])->first();
             $log_limit = LogLimit::where('visitor_id', $get_uri[3])->first();
             $log_limit->quota_kupon = $request->quota_kupon + $log_limit->quota_kupon;
             $log_limit->save();

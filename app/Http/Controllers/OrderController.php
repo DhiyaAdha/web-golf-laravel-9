@@ -153,7 +153,7 @@ class OrderController extends Controller
         $cart = \Cart::session($request->get('page'))->getContent();
         $cek_itemId = $cart->whereIn('id', $id[3]);
         $today = Carbon::now()->isoFormat('dddd');
-        $price = $today === 'Minggu' ? $package->price_weekend : $package->price_weekdays;
+        $price = $today === 'Sabtu' || $today === 'Minggu' ? $package->price_weekend : $package->price_weekdays;
         $get_total = \Cart::session($request->get('page'))->getTotal();
         $counted = ucwords(counted($get_total) . ' Rupiah');
         if ($cek_itemId->isNotEmpty()) {
@@ -385,7 +385,7 @@ class OrderController extends Controller
                 $package_others = Package::whereIn('id', $id_package)->where('category', 'others')->get();
                 $orders = collect($cart)->sortBy('created_at');
                 foreach($package_default as $default){
-                    $price_single += $today === 'Minggu' ? $default['price_weekend'] : $default['price_weekdays'];
+                    $price_single += $today === 'Sabtu' || $today === 'Minggu' ? $default['price_weekend'] : $default['price_weekdays'];
                 }
             }
             $order_number = 'INV/' . Carbon::now()->format('Ymd') . '/' . $visitor->tipe_member . '/' . Carbon::now()->format('his');
@@ -425,7 +425,7 @@ class OrderController extends Controller
         $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
         $price_default = 0;
         foreach($package_default as $default){
-            $price_default += $today === 'Minggu' ? $default['price_weekend'] : $default['price_weekdays'];
+            $price_default += $today === 'Sabtu' || $today === 'Minggu' ? $default['price_weekend'] : $default['price_weekdays'];
         }
         $orders = collect($cart)->sortBy('created_at');
 
@@ -504,7 +504,7 @@ class OrderController extends Controller
         }
         $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
         foreach($package_default as $default){
-            $price_single += $today === 'Minggu' ? $default['price_weekend'] : $default['price_weekdays'];
+            $price_single += $today === 'Sabtu' || $today === 'Minggu' ? $default['price_weekend'] : $default['price_weekdays'];
         }
 
         if ($req->get('type') == 'single') {

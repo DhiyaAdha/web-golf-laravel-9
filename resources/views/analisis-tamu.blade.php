@@ -14,8 +14,8 @@
                                                 <div class="col-xs-8 text-left data-wrap-left">
                                                     <span class="txt-light block counter"><span
                                                             class="counter-anim">{{ $visitor_today }}</span></span>
-                                                    <span class="weight-500 uppercase-font txt-light block font-13">Jumlah
-                                                        Transaksi <br>hari ini
+                                                    <span class="weight-500 txt-light block">
+                                                        Transaksi hari ini
                                                     </span>
                                                 </div>
                                                 <div class="col-xs-4 text-right data-wrap-right">
@@ -40,9 +40,7 @@
                                                 <div class="col-xs-8 text-left data-wrap-left">
                                                     <span class="txt-light block counter"><span
                                                             class="counter-anim">{{ $visitor_vvip }}</span></span>
-                                                    <span class="weight-500 uppercase-font txt-light block font-13">Total
-                                                        transaksi
-                                                        VVIP PERTAHUN
+                                                    <span class="weight-500 txt-light block">Transaksi VVIP
                                                     </span>
                                                 </div>
                                                 <div class="col-xs-4 text-right data-wrap-right">
@@ -67,9 +65,8 @@
                                                 <div class="col-xs-8 text-left data-wrap-left">
                                                     <span class="txt-light block counter"><span
                                                             class="counter-anim">{{ $visitor_vip }}</span></span>
-                                                    <span class="weight-500 uppercase-font txt-light block font-13">Total
-                                                        transaksi
-                                                        VIP PERTAHUN
+                                                    <span class="weight-500 txt-light block">Transaksi
+                                                        VIP
                                                     </span>
                                                 </div>
                                                 <div class="col-xs-4 text-right data-wrap-right">
@@ -84,7 +81,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                         <div class="panel panel-default card-view pa-0">
                             <div class="panel-wrapper collapse in">
@@ -95,9 +92,8 @@
                                                 <div class="col-xs-8 text-left data-wrap-left">
                                                     <span class="txt-light block counter"><span
                                                             class="counter-anim">{{ $visitor_reguler }}</span></span>
-                                                    <span class="weight-500 uppercase-font txt-light block font-13">Total
-                                                        transaksi
-                                                        REGULER PERTAHUN
+                                                    <span class="weight-500 txt-light block">Transaksi
+                                                        REGULER
                                                     </span>
                                                 </div>
                                                 <div class="col-xs-4 text-right data-wrap-right">
@@ -113,102 +109,167 @@
                         </div>
                     </div>
                 </div>
-                {{-- Total tamu VIP & VVIP --}}
-                <div class="row">
-                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ol-lg-6 col-md-12 col-sm-12 col-xs-12">
-                        <div class="panel panel-default card-view panel-refresh">
-                            <h6>Detail Tamu VVIP Pertahun</h6>
-                            <hr class="light-grey-hr row mt-10 mb-15" />
-                            <div class="label-chatrs col-lg-6 mb-15">
-                                <span class="clabels-text inline-block txt-dark capitalize-font">
-                                    <span class="block font-22 weight-500 mb-5">
-                                        <span class="counter-anim">{{ $visitor_vvip_male }}</span>
-                                    </span>
-                                    <span class="block txt-grey">Laki-laki</span>
-                                </span>   
-                                <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-success"></i>
-                                <div class="clearfix"></div>
+
+                    {{-- Total tamu VIP & VVIP --}}
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="panel panel-default card-view">
+                                <div class="panel-heading">
+                                    <div class="pull-right">
+                                        <ul role="tablist" class="nav nav-pills nav-pills-rounded" id="myTabs_6">
+                                            <li class="active" role="presentation"><a aria-expanded="true" data-toggle="tab" role="tab" id="home_tab_6" href="#home_6">visitors</a></li>
+                                            <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_6" role="tab" href="#profile_6" aria-expanded="false">transactions</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="pull-left">
+                                        <h6 class="panel-title txt-dark">Total Tamu VVIP</h6>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <hr class="light-grey-hr row mt-10 mb-15" />
+                                </div>
+                                <div class="panel-wrapper collapse in">
+                                    <div class="panel-body" style="margin-top: -80px; margin-bottom:-10px;">
+                                        <div class="pills-struct mt-40">
+                                            
+                                            <div class="tab-content" id="myTabContent_6">
+                                                <div id="home_6" class="tab-pane fade active in" role="tabpanel" style="margin-top: 50px;">
+                                                    <div class="label-chatrs col-lg-6 mb-15">
+                                                        <span class="clabels-text inline-block txt-dark capitalize-font">
+                                                            <span class="block font-22 weight-500 mb-5">
+                                                                <span class="counter-anim">{{ $visitor_vvip_male }}</span>
+                                                            </span>
+                                                            <span class="block txt-grey">Laki-laki</span>
+                                                        </span>
+                                                        <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-success"></i>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <div class="label-chatrs col-lg-6 mb-15">
+                                                        <span class="clabels-text inline-block txt-dark capitalize-font">
+                                                            <span class="block font-22 weight-500 mb-5">
+                                                                <span class="counter-anim">{{ $visitor_vvip_female }}</span>
+                                                            </span>
+                                                            <span class="block txt-grey">Perempuan</span>
+                                                        </span>
+                                                        <i class="big-rpsn-icon zmdi zmdi-female pull-right txt-warning"></i>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                <hr class="light-grey-hr row mt-10 mb-15"/>
+
+                                                </div>
+                                                <div id="profile_6" class="tab-pane fade" role="tabpanel" style="margin-top: 50px;">
+                                                    <div class="label-chatrs col-lg-6 mb-15">
+                                                        <span class="clabels-text inline-block txt-dark capitalize-font">
+                                                            <span class="block font-22 weight-500 mb-5">
+                                                                <span class="counter-anim">{{ $visitor_transaction_vvip_male }}</span>
+                                                            </span>
+                                                            <span class="block txt-grey">Laki-laki</span>
+                                                        </span>
+                                                        <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-success"></i>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <div class="label-chatrs col-lg-6 mb-15">
+                                                        <span class="clabels-text inline-block txt-dark capitalize-font">
+                                                            <span class="block font-22 weight-500 mb-5">
+                                                                <span class="counter-anim">{{ $visitor_transaction_vvip_female }}</span>
+                                                            </span>
+                                                            <span class="block txt-grey">Perempuan</span>
+                                                        </span>
+                                                        <i class="big-rpsn-icon zmdi zmdi-female pull-right txt-warning"></i>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <hr class="light-grey-hr row mt-10 mb-15"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="label-chatrs col-lg-6 mb-15">
-                                <span class="clabels-text inline-block txt-dark capitalize-font">
-                                    <span class="block font-22 weight-500 mb-5">
-                                        <span class="counter-anim">{{ $visitor_vvip_female }}</span>
-                                    </span>
-                                    <span class="block txt-grey">Perempuan</span>
-                                </span>
-                                <i class="big-rpsn-icon zmdi zmdi-female pull-right txt-warning"></i>
-                                <div class="clearfix"></div>
-                            </div>
-                            <hr class="light-grey-hr row mt-10 mb-15" />
                         </div>
-                    </div>
-                    {{-- Total tamu VIP & VIP --}}
-                    <div
-                        class="col-lg-4 col-md-12 col-sm-12 col-xs-12
-                                ol-lg-6 col-md-12 col-sm-12 col-xs-12">
-                        <div class="panel panel-default card-view panel-refresh">
-                            <h6>Detail Tamu VIP Pertahun</h6>
-                            <hr class="light-grey-hr row mt-10 mb-15" />
-                            <div class="label-chatrs col-lg-6 mb-15">
-                                <span class="clabels-text inline-block txt-dark capitalize-font">
-                                    <span class="block font-22 weight-500 mb-5">
-                                        <span class="counter-anim">{{ $visitor_vip_male }}</span>
-                                    </span>
-                                    <span class="block txt-grey">Laki-laki</span>
-                                </span>
-                                <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-success"></i>
-                                <div class="clearfix"></div>
+                        {{-- pembatas --}}
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="panel panel-default card-view">
+                                <div class="panel-heading">
+                                    <div class="pull-right">
+                                        <ul role="tablist" class="nav nav-pills nav-pills-rounded" id="myTabs_7">
+                                            <li class="active" role="presentation"><a aria-expanded="true" data-toggle="tab" role="tab" id="home_tab_7" href="#home_7">visitors</a></li>
+                                            <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_7" role="tab" href="#profile_7" aria-expanded="false">transactions</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="pull-left">
+                                        <h6 class="panel-title txt-dark">Total Tamu VIP</h6>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <hr class="light-grey-hr row mt-10 mb-15" />
+                                </div>
+                                <div class="panel-wrapper collapse in">
+                                    <div class="panel-body" style="margin-top: -80px; margin-bottom:-10px;">
+                                        <div class="pills-struct mt-40">
+                                            
+                                            <div class="tab-content" id="myTabContent_7">
+                                                <div id="home_7" class="tab-pane fade active in" role="tabpanel" style="margin-top: 50px;">
+                                                    <div class="label-chatrs col-lg-6 mb-15">
+                                                        <span class="clabels-text inline-block txt-dark capitalize-font">
+                                                            <span class="block font-22 weight-500 mb-5">
+                                                                <span class="counter-anim">{{ $visitor_vip_male }}</span>
+                                                            </span>
+                                                            <span class="block txt-grey">Laki-laki</span>
+                                                        </span>
+                                                        <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-success"></i>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <div class="label-chatrs col-lg-6 mb-15">
+                                                        <span class="clabels-text inline-block txt-dark capitalize-font">
+                                                            <span class="block font-22 weight-500 mb-5">
+                                                                <span class="counter-anim">{{ $visitor_vip_female }}</span>
+                                                            </span>
+                                                            <span class="block txt-grey">Perempuan</span>
+                                                        </span>
+                                                        <i class="big-rpsn-icon zmdi zmdi-female pull-right txt-warning"></i>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                <hr class="light-grey-hr row mt-10 mb-15"/>
+
+                                                </div>
+                                                <div id="profile_7" class="tab-pane fade" role="tabpanel" style="margin-top: 50px;">
+                                                    <div class="label-chatrs col-lg-6 mb-15">
+                                                        <span class="clabels-text inline-block txt-dark capitalize-font">
+                                                            <span class="block font-22 weight-500 mb-5">
+                                                                <span class="counter-anim">{{ $visitor_transaction_vip_male }}</span>
+                                                            </span>
+                                                            <span class="block txt-grey">Laki-laki</span>
+                                                        </span>
+                                                        <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-success"></i>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <div class="label-chatrs col-lg-6 mb-15">
+                                                        <span class="clabels-text inline-block txt-dark capitalize-font">
+                                                            <span class="block font-22 weight-500 mb-5">
+                                                                <span class="counter-anim">{{ $visitor_transaction_vip_female }}</span>
+                                                            </span>
+                                                            <span class="block txt-grey">Perempuan</span>
+                                                        </span>
+                                                        <i class="big-rpsn-icon zmdi zmdi-female pull-right txt-warning"></i>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <hr class="light-grey-hr row mt-10 mb-15"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="label-chatrs col-lg-6 mb-15">
-                                <span class="clabels-text inline-block txt-dark capitalize-font">
-                                    <span class="block font-22 weight-500 mb-5">
-                                        <span class="counter-anim">{{ $visitor_vip_female }}</span>
-                                    </span>
-                                    <span class="block txt-grey">Perempuan</span>
-                                </span>
-                                <i class="big-rpsn-icon zmdi zmdi-female pull-right txt-warning"></i>
-                                <div class="clearfix"></div>
-                            </div>
-                            <hr class="light-grey-hr row mt-10 mb-15" />
                         </div>
-                    </div>
-                    <div
-                        class="col-lg-4 col-md-12 col-sm-12 col-xs-12
-                                ol-lg-6 col-md-12 col-sm-12 col-xs-12">
-                        <div class="panel panel-default card-view panel-refresh">
-                            <h6>Detail Tamu REGULER Pertahun</h6>
-                            <hr class="light-grey-hr row mt-10 mb-15" />
-                            <div class="label-chatrs col-lg-6 mb-15">
-                                <span class="clabels-text inline-block txt-dark capitalize-font">
-                                    <span class="block font-22 weight-500 mb-5">
-                                        <span class="counter-anim">{{ $visitor_reguler_male }}</span>
-                                    </span>
-                                    <span class="block txt-grey">Laki-laki</span>
-                                </span>
-                                <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-success"></i>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="label-chatrs col-lg-6 mb-15">
-                                <span class="clabels-text inline-block txt-dark capitalize-font">
-                                    <span class="block font-22 weight-500 mb-5">
-                                        <span class="counter-anim">{{ $visitor_reguler_female }}</span>
-                                    </span>
-                                    <span class="block txt-grey">Perempuan</span>
-                                </span>
-                                <i class="big-rpsn-icon zmdi zmdi-female pull-right txt-warning"></i>
-                                <div class="clearfix"></div>
-                            </div>
-                            <hr class="light-grey-hr row mt-10 mb-15" />
-                        </div>
-                    </div>
-                </div>
+                        {{-- pembatas --}}
+                    </div>    
+                    {{-- End of Total tamu VIP & VVIP --}}
+                    {{-- Total tamu VIP & VVIP --}}
                 {{-- Row Statistika Tamu --}}
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="panel panel-default card-view">
                             <div class="panel-heading">
                                 <div class="pull-left">
-                                    <h6 class="panel-title txt-dark">Statistika Transaksi Pertahun</h6>
+                                    <h6 class="panel-title txt-dark">Statistika Transaksi</h6>
                                 </div>
                                 <a href="javascript:void(0)" class="pull-right inline-block full-screen mr-15"
                                     data-toggle="tooltip" title="Fullscreen">
@@ -286,7 +347,7 @@
                                                     <tr>
                                                         <th class="">NAMA TAMU</th>
                                                         <th class="">TANGGAL</th>
-                                                        <th class="">KATAGORI TAMU</th>
+                                                        <th class="">KATEGORI TAMU</th>
                                                         <th class="table-th">PUKUL</th>
                                                     </tr>
                                                 </thead>
@@ -343,9 +404,12 @@
                         "data": function(data) {
                             if (data.tipe_member == 'VIP') {
                                 return `<span class='label label-success'>${data.tipe_member}</span>`;
-                            } else {
+                            } else if (data.tipe_member == 'VVIP') {
                                 return `<span class='label label-warning'>${data.tipe_member}</span>`;
+                            } else {
+                                return `<span class='label label-primary'>${data.tipe_member}</span>`;
                             }
+
                         }
                     },
                     {
@@ -353,7 +417,7 @@
                     }
                 ],
                 order: [
-                    [1, 'asc']
+                    [1, 'desc']
                 ],
                 responsive: true,
                 language: {
@@ -369,8 +433,11 @@
                 columnDefs: [{
                         className: 'text-left',
                         targets: [0, 1, 2, 3, ]
+                    },
+                    {
+                        className: 'text-right',
+                        targets: [2]
                     }
-
                 ],
                 dom: "<'row mb-3'<'col-sm-12 col-md-8 pull-right'f><'toolbar col-sm-12 col-md-4 float-left'B>>" +
                     "<'row'<'col-sm-12'tr>>" +
