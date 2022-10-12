@@ -385,6 +385,7 @@
                 }
             });
             /* data analisis */
+
         </script>
     @endpush
 @else

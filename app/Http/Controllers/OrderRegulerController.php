@@ -42,28 +42,30 @@ class OrderRegulerController extends Controller
 
     public function index(Request $request)
     {
-        // $user_id = Auth::id();
-        // $products = Package::orderBy('id', 'desc')->where('status', '0')->get();
-        // if ($request->ajax()) {
-        //     return datatables()
-        //         ->of($products)->editColumn('price_weekdays', function ($data) {
-        //             return formatrupiah($data->price_weekdays);
-        //         })->editColumn('price_weekend', function ($data) {
-        //             return formatrupiah($data->price_weekend);
-        //         })
-        //         ->addIndexColumn()
-        //         ->make(true);
-        // }
-        // $today = Carbon::now()->isoFormat('dddd');
-        // $default = Package::where('category', 'default')->where('status', 0)->get();
-        // $additional = Package::where('category', 'additional')->where('status', 0)->get();
-        // $others = Package::where('category', 'others')->where('status', 0)->get();
-        // $date_now = Carbon::now()->translatedFormat('d F Y');
+        $user_id = Auth::id();
+        $products = Package::orderBy('id', 'desc')->where('status', '0')->get();
+        if ($request->ajax()) {
+            return datatables()
+                ->of($products)->editColumn('price_weekdays', function ($data) {
+                    return formatrupiah($data->price_weekdays);
+                })->editColumn('price_weekend', function ($data) {
+                    return formatrupiah($data->price_weekend);
+                })
+                ->addIndexColumn()
+                ->make(true);       
+        }
+        $today = Carbon::now()->isoFormat('dddd');
+        $default = Package::where('category', 'default')->where('status', 0)->get();
+        $additional = Package::where('category', 'additional')->where('status', 0)->get();
+        $others = Package::where('category', 'others')->where('status', 0)->get();
+        $date_now = Carbon::now()->translatedFormat('d F Y');
 
         // return view('reguler.daftar-reguler', compact(
         //     'user_id', 'default', 'additional', 'others', 'today', 'date_now',
         // ));
-        return view('reguler.keranjang-reguler');
+        return view('reguler.keranjang-reguler', compact(
+                'user_id', 'today', 'default', 'additional', 'others', 'date_now',
+            ));
     }
 
     /**
