@@ -113,7 +113,6 @@
                         </div>
                     </div>
                 </div>
-
                 {{-- Total tamu VIP & VVIP --}}
                 <div class="row">
                     <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ol-lg-6 col-md-12 col-sm-12 col-xs-12">
@@ -126,7 +125,7 @@
                                         <span class="counter-anim">{{ $visitor_vvip_male }}</span>
                                     </span>
                                     <span class="block txt-grey">Laki-laki</span>
-                                </span>
+                                </span>   
                                 <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-success"></i>
                                 <div class="clearfix"></div>
                             </div>
@@ -203,7 +202,6 @@
                         </div>
                     </div>
                 </div>
-
                 {{-- Row Statistika Tamu --}}
                 <div class="row">
                     <div class="col-lg-6">
@@ -239,7 +237,6 @@
                             </div>
                         </div>
                     </div>
-
                     {{-- Chart Rekap Harian --}}
                     <div class="col-lg-6">
                         <div class="panel panel-default card-view panel-refresh relative">
@@ -275,7 +272,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Row Tabel Tamu-->
                 <div class="row">
                     <div class="col-lg-12">
@@ -311,7 +307,6 @@
         </div>
         </div>
     @endsection
-
     @push('scripts')
         <script>
             // fungsi grafik-line & Grafik-bar
