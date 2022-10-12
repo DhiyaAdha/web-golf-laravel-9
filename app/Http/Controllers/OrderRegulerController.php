@@ -332,7 +332,7 @@ class OrderRegulerController extends Controller
             }
             return view("reguler.checkout_reguler", compact('totalPrice', 'order_number', 'orders'))->render();
         } catch (\Throwable $th) {
-            return redirect()->route('scan-tamu');
+            return redirect()->route('proses_reguler');
         }
     }
 

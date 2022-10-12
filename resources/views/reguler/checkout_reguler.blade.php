@@ -396,10 +396,11 @@
                         }
                     });
                 } else {
-                    swal("Dibatalkan", "", "info");
-                }
+                        swal("Dibatalkan", "", "info");
+                    }
+                });
+                return false;
             });
-        });
     </script>
 </body>
 </html>
