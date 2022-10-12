@@ -76,6 +76,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::resource('analisis-tamu', DashboardController::class);
     Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name('scan-tamu');
     Route::get('/visitor/qrcode', [ScanqrController::class, 'checkQRCode'])->name('visitor.qrcode');
+    Route::get('/visitor/phone', [ScanqrController::class, 'checkNoHp'])->name('visitor.phone');
     Route::get('qrcode/{id}', [ScanqrController::class, 'generate'])->name('generate');
     Route::get('/kartu-tamu', [ScanqrController::class, 'kartutamu'])->name('kartu-tamu');
     Route::get('/kartu-member/{e}', [ScanqrController::class, 'show_detail'])->name('detail-scan')->middleware('signed');
@@ -131,7 +132,6 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     // Route::post('/pay_reguler', [OrderRegulerController::class,'pay'])->name('pay_reguler');
     // Route::get('/print_invoice_reguler/{id}', [OrderRegulerController::class,'print_invoice'])->name('invoice_reguler.print');
 
-    
     //route 4 notifikasi email pembayaran sukses
     Route::get('/test_payment', function(){
         return view('emails.paymentsuccess4_');
