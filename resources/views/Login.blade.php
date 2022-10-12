@@ -39,8 +39,8 @@
 
         #eye {
             position: absolute;
-            top: 236;
-            right: 30;
+            top: 236px;
+            right: 30px;
         }
 
         #toast-container>.toast-success {
