@@ -28,7 +28,7 @@ Route::get('/', function () {
     if (Auth::user()) {
         return redirect('/analisis-tamu');
     }
-    return view('Login');
+    return view('login');
 });
 
 Route::post('/lupa-pasword',[AuthController::class, 'email_test'])->name('email_test');
