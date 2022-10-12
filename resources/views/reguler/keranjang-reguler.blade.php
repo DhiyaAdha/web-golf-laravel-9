@@ -232,6 +232,19 @@
             });
         }
 
+        function formatIDR(price) {
+            var number_string = price.toString(),
+                split = number_string.split(','),
+                remainder = split[0].length % 3,
+                idr = split[0].substr(0, remainder),
+                thousand = split[0].substr(remainder).match(/\d{1,3}/gi);
+            if (thousand) {
+                separator = remainder ? '.' : '';
+                idr += separator + thousand.join('.');
+            }
+            return split[1] != undefined ? idr + ',' + split[1] : idr;
+        }
+
         function addCart(id) {
             var url = "{{ route('cart_add.reguler', ':package') }}";
             url = url.replace(':package', id);
