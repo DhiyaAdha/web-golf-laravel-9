@@ -463,6 +463,16 @@
             });
         });
 
+        $(document).on('click', '#disabled-pay', function() {
+            swal({
+                title: "",
+                type: "error",
+                text: "Pilih item terlebih dahulu",
+                confirmButtonColor: "#01c853",
+            });
+            return false;
+        });
+
         $('#dt-package-reguler').DataTable({
             "processing": true,
             "serverSide": true,
