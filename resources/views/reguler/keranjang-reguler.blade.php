@@ -28,7 +28,7 @@
                             </div>
                             <div class="pull-right">
                                 <div class='d-flex '>
-                                    <span class="text-muted mr-15" style="float: right;">{{ $date_now }},
+                                    {{-- <span class="text-muted mr-15" style="float: right;">{{ $date_now }}, --}}
                                     </span>
                                     <span class="label label-default" id='time-part' style="float: right;"></span>
                                 </div>
@@ -36,12 +36,12 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="d-flex flex-wrap">
-                            @foreach ($default as $item)
+                            {{-- @foreach ($default as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
                                     title="Rp. {{ number_format($today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
                                     class="btn btn-default txt-success mr-15 mb-15">{{ $item->name }}</button>
-                            @endforeach
+                            @endforeach --}}
                         </div>
                         <div class="panel-heading">
                             <div class="pull-left">
@@ -50,12 +50,12 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="d-flex flex-wrap">
-                            @foreach ($additional as $item)
+                            {{-- @foreach ($additional as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
                                     title="Rp. {{ number_format($today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
                                     class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
-                            @endforeach
+                            @endforeach --}}
                         </div>
                         <div class="panel-heading">
                             <div class="pull-left">
@@ -64,12 +64,12 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="d-flex flex-wrap mb-15">
-                            @foreach ($others as $item)
+                            {{-- @foreach ($others as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
                                     title="Rp. {{ number_format($today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
                                     class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
-                            @endforeach
+                            @endforeach --}}
                         </div>
                         {{-- <div class="panel-heading fk d-flex align-items-center">
                             <div class="d-flex align-items-center justify-content-between" style="width: 100%">
@@ -93,7 +93,7 @@
                                 <a href="javascript:void(0)" style="position: relative">
                                     <i class="fa fa-shopping-cart"></i>
                                     <span class="top-nav-icon-badge" style="position: absolute"
-                                        id="qty">{{ count($cart_data) }}</span>
+                                        {{-- id="qty">{{ count($cart_data) }}</span> --}}
                                 </a>
                                 <div class="clearfix"></div>
                             </div>
@@ -108,7 +108,7 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        @if (count($cart_data) > 0)
+                        {{-- @if (count($cart_data) > 0)
                             <div style="overflow-y: scroll;height: 270px;" id="isi-">
                                 @foreach ($cart_data as $index => $item)
                                     <div class="d-flex pl disabled-cart-{{ $item['rowId'] }}"
@@ -129,15 +129,15 @@
                                     </div>
                                 @endforeach
                             </div>
-                        @else
+                        @else --}}
                             <div id="disabled-empty" style="height: 270px;"
                                 class="d-flex justify-content-center align-items-center">
                                 <span class="not-found text-muted">Keranjang masih kosong</span>
                             </div>
-                        @endif
+                        {{-- @endif --}}
                         <div id="total"></div>
                         <div id="append-checkout"></div>
-                        @if (count($cart_data) > 0)
+                        {{-- @if (count($cart_data) > 0)
                             <div class="d-flex">
                                 <strong class="flex-grow-1 txt-dark">Total</strong>
                                 <strong class="txt-dark" id="total-pay">Rp.
@@ -150,24 +150,19 @@
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Reset</span>
                                 </a>
-                                {{-- <a href="{{ url('kartu-tamu/' . Crypt::encryptString($get_visitor->id)) }}"
-                                    id="riwayat" class="mt-15 mb-15 btn-xs btn btn-primary btn-anim" target="_blank">
-                                    <i class="icon-rocket"></i>
-                                    <span class="btn-text">Riwayat</span>
-                                </a> --}}
                                 <button type="button" id="checkout"
                                     class="mt-15 mb-15 btn-xs btn btn-success btn-anim">
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Checkout</span>
                                 </button>
                             </div>
-                        @else
+                        @else --}}
                             <button type="submit" class="mt-15 mb-15 btn-xs btn-block btn btn-success btn-anim"
                                 id="disabled-pay">
                                 <i class="icon-rocket"></i>
                                 <span class="btn-text">Checkout</span>
                             </button>
-                        @endif
+                        {{-- @endif --}}
                         <div class="clearfix"></div>
                     </div>
                 </div>
