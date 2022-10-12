@@ -118,9 +118,6 @@ class OrderRegulerController extends Controller
             if ($package->quantity == $cek_itemId[$request->get('id')]->quantity) {
                 return redirect()->back()->with('error', 'jumlah item kurang');
             } else {
-                // \Cart::session($request->get('page'))->update($request->get('id'), array(
-                //     'quantity' => 1
-                // ));
                 if ($cek_itemId[$request->get('id')]->quantity >= 1) {
                     $this->setResponse('INVALID', "Sudah ditambahkan");
                     return response()->json($this->getResponse());
@@ -170,7 +167,6 @@ class OrderRegulerController extends Controller
                     }
                     $cart_data = collect($cart)->sortBy('created_at');
                 }
-                // dd($cart_data);
                 $get_total = \Cart::session(auth()->id())->getTotal();
                 $counted = ucwords(counted($get_total) . ' Rupiah');
                 return response()->json([
@@ -205,7 +201,6 @@ class OrderRegulerController extends Controller
                     }
                     $cart_data = collect($cart)->sortBy('created_at');
                 }
-                // dd($cart_data);
                 $get_total = \Cart::session(auth()->id())->getTotal();
                 $counted = ucwords(counted($get_total) . ' Rupiah');
                 return response()->json([
@@ -326,7 +321,7 @@ class OrderRegulerController extends Controller
                 }
                 $orders = collect($cart)->sortBy('created_at');
             }
-            $order_number = 'INV/' . Carbon::now()->format('Ymd') . '/' . Carbon::now()->format('his');
+            $order_number = 'INV/' . Carbon::now()->format('Ymd') . '/REGULER/' . Carbon::now()->format('his');
             if ($request->ajax()) {
                 return response()->json(['order_number' => $order_number]);
             }
