@@ -43,6 +43,24 @@
             right: 30px;
         }
 
+        @media screen and (min-width: 250px) {
+            #eye {
+                top: 315px;
+            }
+        }
+
+        @media screen and (min-width: 320px) {
+            #eye {
+                top: 276px;
+            }
+        }
+
+        @media screen and (min-width: 480px) {
+            #eye {
+                top: 237px;
+            }
+        }
+
         #toast-container>.toast-success {
             background-color: #01C853;
             font-family: Arial;
