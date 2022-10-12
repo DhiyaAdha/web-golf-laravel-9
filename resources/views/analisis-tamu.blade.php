@@ -436,8 +436,11 @@
                 columnDefs: [{
                         className: 'text-left',
                         targets: [0, 1, 2, 3, ]
+                    },
+                    {
+                        className: 'text-right',
+                        targets: [2]
                     }
-
                 ],
                 dom: "<'row mb-3'<'col-sm-12 col-md-8 pull-right'f><'toolbar col-sm-12 col-md-4 float-left'B>>" +
                     "<'row'<'col-sm-12'tr>>" +
