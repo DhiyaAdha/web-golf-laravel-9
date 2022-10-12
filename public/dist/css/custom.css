@@ -493,8 +493,8 @@ element.style {
 .panel-scan-qr {
     border-radius: 10px;
     border: 1.8px solid gray;
-    width: 500px;
-    height: 400px;
+    width: 400px;
+    height: 250px;
 }
 
 .card-img-absolute {

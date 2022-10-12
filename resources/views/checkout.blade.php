@@ -889,7 +889,6 @@
     <script src="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-
             function formatIDR(price) {
                 var number_string = price.toString(),
                     split = number_string.split(','),

@@ -158,12 +158,31 @@ class ScanqrController extends Controller
         $url_qr = explode("/", parse_url($request->get('qrCode'), PHP_URL_PATH));
         $get_visitor = Visitor::where("id", $url_qr[2])->first();
         if ($get_visitor == null) {
-            $this->setResponse('INVALID', "Data tidak ditemukan!");
+            $this->setResponse('INVALID', "Qr Code tidak ditemukan!");
             return response()->json($this->getResponse());
         } else {
             try {
                 $this->setResponse('VALID', "Valid QR code", [
                     'name' => $get_visitor->name,
+                ]);
+                return response()->json($this->getResponse());
+            } catch (\Throwable $th) {
+                return response()->json($this->getResponse());
+            }
+        }
+    }
+
+    public function checkNoHp(Request $request)
+    {
+        $phone_visitor = Visitor::where("phone", $request->get('phone'))->first();
+        if (is_null($phone_visitor)) {
+            $this->setResponse('INVALID', "No hp tidak ditemukan!");
+            return response()->json($this->getResponse());
+        } else {
+            try {
+                $this->setResponse('VALID', "Valid No Hp", [
+                    'name' => $phone_visitor->name,
+                    'unique_qr' => $phone_visitor->unique_qr,
                 ]);
                 return response()->json($this->getResponse());
             } catch (\Throwable $th) {
