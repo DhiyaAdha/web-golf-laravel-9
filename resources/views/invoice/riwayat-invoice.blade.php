@@ -130,14 +130,11 @@
                 lengthMenu: "Menampilkan _MENU_ data",
                 zeroRecords: "Tidak ada data pada tabel ini"
             },
-            columnDefs: [{
-                className: 'text-center',
-                targets: [1, 2, 3, 4]
-                // {"width" : "5%", "targets" : [2]}
-            }, {
-                orderable: false,
-                targets: [0, 1, 2, 3, 4]
-            }],
+            columnDefs: [
+                { className: 'text-center', targets: [1, 2, 3, 4]}, 
+                { orderable: false, targets: [0, 1, 2, 3, 4]},
+                { width: '15%', targets: [0]}
+            ],
         });
         /* daftar invoice */
     </script>
