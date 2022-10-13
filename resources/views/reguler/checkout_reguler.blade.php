@@ -318,9 +318,9 @@
             let name = '';
             
             //Kendala Mencari Id Terakhir Log_Transcation 
-            let url = "{{ route('invoice.print', ':id') }}";
+            let url = "{{ route('invoice.print.reguler') }}";
             //Sentara Menggunakan Id Static
-            url = url.replace(':id', '75');
+            // url = url.replace(':id', '75');
 
             // var url = "{{ route('invoice.print.reguler', ':id') }}";
             // url = url.replace(':id', id);
@@ -397,7 +397,7 @@
                                         text: response.message,
                                         confirmButtonColor: "#01c853",
                                     }, function(isConfirm) {
-                                        invoice(url,
+                                        invoice("{{ route('invoice.print.reguler') }}",
                                             'Print Invoice');
                                         window.close();
                                     });

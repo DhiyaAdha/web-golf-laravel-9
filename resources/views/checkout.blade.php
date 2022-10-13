@@ -1252,7 +1252,6 @@
                     }).get();
                 let order_number = $('#order-number').text();
                 let bayar_input = $('.bayar-input').val();
-                console.log(bayar_input);
                 let refund = $('#return').data('refund');
                 let tg = window.location.href;
                 tg = tg.split("?");
