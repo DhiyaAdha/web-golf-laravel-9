@@ -202,7 +202,7 @@
                                     <hr class="light-grey-hr row mt-10 mb-15" />
                                 </div>
                                 <div class="panel-wrapper collapse in">
-                                    <div class="panel-body" style="margin-top: -80px; margin-bottom:-10px;">
+                                    <div class="panel-body" style="margin-top:-80px; margin-bottom:-10px;">
                                         <div class="pills-struct mt-40">
                                             
                                             <div class="tab-content" id="myTabContent_7">
