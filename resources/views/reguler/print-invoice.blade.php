@@ -1,12 +1,13 @@
 <html>
 
 <head>
-    <title>12022/00000001</title>
+    <title>{{ $log_transaction->order_number }}</title>
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
     <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-    <link href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet"
+        type="text/css">
     <link href="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.css') }}" rel="stylesheet"type="text/css">
     <style type="text/css">
         /* width */
@@ -62,7 +63,6 @@
             line-height: 30px;
             text-align: center;
             cursor: pointer;
-        }
     </style>
 </head>
 
@@ -335,16 +335,18 @@
                             <td>{{ $qty }}</td>
                         </tr>
                         <tr>
-                            <td class="w-70">Diskon:</td>
-                            <td>{{ formatrupiah($discount) }}</td>
-                        </tr>
-                        <tr>
                             <td class="w-70">Total Bayar:</td>
-                            <td>{{ formatrupiah($log_transaction->total) }}</td>
+                            <td>{{ formatrupiah($transaction_amount) }}</td>
                         </tr>
+                        @if ($refund != 0)
+                            <tr>
+                                <td class="w-70">Kembalian:</td>
+                                <td>{{ formatrupiah($refund) }}</td>
+                            </tr>
+                        @endif
                         <tr>
                             <td class="w-70">Total Tagihan:</td>
-                            <td>{{ formatrupiah($total) }}</td>
+                            <td>{{ formatrupiah($log_transaction->total) }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -362,7 +364,7 @@
                             <td class="w-10 text-center">No.</td>
                             <td class="w-50">Metode</td>
                             <td class="w-50">Transaksi</td>
-                            <td class="w-20">Balance</td>
+                            <td class="w-20">Sisa</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -392,12 +394,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="{{ asset('/dist/js/printThis.js') }}"></script>
     <script>
-        // $(document).ready(function() {
-        //     $('#print').printThis({
-        //         printContainer: true,
-        //     });
-        //     var back = $("input[name=back]").val();
-        // });
+        $(document).ready(function() {
+            $('#print').printThis({
+                printContainer: true,
+            });
+        });
     </script>
 </body>
 

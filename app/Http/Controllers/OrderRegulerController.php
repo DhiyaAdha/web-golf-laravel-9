@@ -302,7 +302,7 @@ class OrderRegulerController extends Controller
 
     public function checkout(Request $request)
     {
-        // try {
+        try {
             $items = \Cart::session(auth()->id())->getContent();
             $totalPrice = \Cart::session(auth()->id())->getTotal();
             $today = Carbon::now()->isoFormat('dddd');
@@ -326,9 +326,9 @@ class OrderRegulerController extends Controller
                 return response()->json(['order_number' => $order_number]);
             }
             return view("reguler.checkout_reguler", compact('totalPrice', 'order_number', 'orders'))->render();
-        // } catch (\Throwable $th) {
-        //     return redirect()->route('proses_reguler');
-        // }
+        } catch (\Throwable $th) {
+            return redirect()->route('proses_reguler');
+        }
     }
 
     public function pay_reguler(Request $request) {
@@ -393,21 +393,23 @@ class OrderRegulerController extends Controller
     }
 
     public function print_invoice(Request $request) {
-        // try{
-            $visitor = Visitor::find(auth()->id());
-            $log_transaction = LogTransaction::latest()->first()->id;
-            $user = User::latest()->first()->user_id;
+        try {
+            $visitor = Visitor::latest()->first();
+            $log_transaction = LogTransaction::latest()->first();
+            $user = User::find($log_transaction->user_id);
             $cart = unserialize($log_transaction->cart);
             $payment_type = unserialize($log_transaction->payment_type);
             $total = 0;
             $qty = 0;
-            $discount = 0;
+            $refund = 0;
+            $transaction_amount = 0;
             foreach ($cart as $get) {
                 $qty += $get['qty'];
                 $total += $get['price'];
             }
             foreach ($payment_type as $get) {
-                $discount += $get['discount'];
+                $refund += $get['refund'];
+                $transaction_amount += $get['transaction_amount'];
             }
             $counted = ucwords(counted($log_transaction->total) . ' Rupiah');
             return view('reguler.print-invoice', compact(
@@ -415,15 +417,16 @@ class OrderRegulerController extends Controller
                 'log_transaction',
                 'payment_type',
                 'cart',
-                'discount', 
                 'counted',
                 'total',
                 'qty',
-                'user'
+                'user',
+                'refund',
+                'transaction_amount'
             ));
-        // } catch (Throwable $e) {
-        //     return redirect()->route('proses_reguler');
-        // }
+        } catch (Throwable $e) {
+            return redirect()->route('proses_reguler');
+        }
     }
 
     private function setResponse($status = "INVALID", $message = "Ada sesuatu yang salah!", $data = []) {

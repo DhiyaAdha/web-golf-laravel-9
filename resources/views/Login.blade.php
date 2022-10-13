@@ -25,6 +25,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,400;1,500&display=swap"
         rel="stylesheet">
     <style>
+        #bg {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+        }
+
+        #bg img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            min-width: 50%;
+            min-height: 50%;
+        }
+
         .password-container {
             width: 400px;
             position: relative;
@@ -69,6 +88,9 @@
 </head>
 
 <body>
+    <div id="bg">
+        <img src="{{ asset('bg.png') }}">
+    </div>
     <div class="preloader-it">
         <div class="la-anim-1"></div>
     </div>
