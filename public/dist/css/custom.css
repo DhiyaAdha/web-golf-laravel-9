@@ -1816,16 +1816,16 @@ input.cmn-toggle-round-flat:checked+label:after {
         border-radius: 5px;
     }
 }
-@media screen and (max-width: 383px) {
+@media screen and (max-width: 384px) {
     .panel-black1 {
-        padding: 10px 50px 10px 20px;
+        padding: 10px 20px 10px 20px;
         width: auto;
         height: 75px;
         background: #000000;
         border-radius: 5px;
     }
     .panel-black2 {
-        padding: 10px 40px 10px 20px;
+        padding: 10px 10px 10px 20px;
         width: auto;
         height: 75px;
         background: #000000;
