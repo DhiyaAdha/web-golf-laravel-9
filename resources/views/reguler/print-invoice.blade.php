@@ -6,8 +6,7 @@
     <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-    <link href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet"
-        type="text/css">
+    <link href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.css') }}" rel="stylesheet"type="text/css">
     <style type="text/css">
         /* width */
@@ -63,6 +62,7 @@
             line-height: 30px;
             text-align: center;
             cursor: pointer;
+        }
     </style>
 </head>
 
@@ -291,14 +291,6 @@
                             <td>{{ $visitor->name }}</td>
                         </tr>
                         <tr>
-                            <td class="w-30">Phone:</td>
-                            <td>{{ $visitor->phone }}</td>
-                        </tr>
-                        <tr>
-                            <td class="w-30">Address:</td>
-                            <td>{{ $visitor->address }}</td>
-                        </tr>
-                        <tr>
                             <td class="w-30">Tipe Member:</td>
                             <td>{{ $visitor->tipe_member }}</td>
                         </tr>
@@ -342,22 +334,14 @@
                             <td class="w-70">Jumlah Order:</td>
                             <td>{{ $qty }}</td>
                         </tr>
-                        @if ($discount != 0)
-                            <tr>
-                                <td class="w-70">Diskon:</td>
-                                <td>{{ formatrupiah($discount) }}</td>
-                            </tr>
-                        @endif
+                        <tr>
+                            <td class="w-70">Diskon:</td>
+                            <td>{{ formatrupiah($discount) }}</td>
+                        </tr>
                         <tr>
                             <td class="w-70">Total Bayar:</td>
-                            <td>{{ formatrupiah($transaction_amount) }}</td>
+                            <td>{{ formatrupiah($log_transaction->total) }}</td>
                         </tr>
-                        @if ($refund != 0)
-                            <tr>
-                                <td class="w-70">Kembalian:</td>
-                                <td>{{ formatrupiah($refund) }}</td>
-                            </tr>
-                        @endif
                         <tr>
                             <td class="w-70">Total Tagihan:</td>
                             <td>{{ formatrupiah($total) }}</td>
@@ -378,7 +362,7 @@
                             <td class="w-10 text-center">No.</td>
                             <td class="w-50">Metode</td>
                             <td class="w-50">Transaksi</td>
-                            <td class="w-20">Sisa</td>
+                            <td class="w-20">Balance</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -387,7 +371,7 @@
                             <tr>
                                 <td class="text-center">{{ $i++ }}</td>
                                 <td>{{ $type['payment_type'] }}</td>
-                                <td>{{ $type['discount'] }}</td>
+                                <td>{{ $type['transaction_amount'] }}</td>
                                 <td>{{ $type['balance'] }}</td>
                             </tr>
                         @endforeach
@@ -408,11 +392,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="{{ asset('/dist/js/printThis.js') }}"></script>
     <script>
-        $(document).ready(function() {
-            $('#print').printThis({
-                printContainer: true,
-            });
-        });
+        // $(document).ready(function() {
+        //     $('#print').printThis({
+        //         printContainer: true,
+        //     });
+        //     var back = $("input[name=back]").val();
+        // });
     </script>
 </body>
 

@@ -29,7 +29,7 @@ class AuthController extends Controller {
 
     //ini untuk route get pada web.php
     public function index(){
-            return view('/Login');
+            return view('/login');
         }
 
     public function forgot_password(){

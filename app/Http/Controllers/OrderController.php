@@ -325,11 +325,6 @@ class OrderController extends Controller
     public function remove(Request $request)
     {
         $items = \Cart::session($request->get('page'))->getContent();
-
-        // $counts = $items->where('is_default', 'default')->count();
-        // $counts = $items->where('is_default', 'default')->count();
-        // return $counts;
-        
         $id = explode("/", parse_url($request->get('url'), PHP_URL_PATH));
         \Cart::session($request->get('page'))->remove($id[3]);
         $get_total = \Cart::session($request->get('page'))->getTotal();
@@ -530,7 +525,8 @@ class OrderController extends Controller
                                     ['payment_type' => 'deposit', 
                                     'transaction_amount' => $totalPrice, 
                                     'balance' => $deposit->balance,
-                                    'discount' => 0
+                                    'discount' => 0,
+                                    'refund' => 0
                                 ]]),
                                 'payment_status' => 'paid',
                                 'total' => $totalPrice
@@ -607,7 +603,8 @@ class OrderController extends Controller
                                         'payment_type' => 'cash/transfer', 
                                         'transaction_amount' => $req->get('bayar_input'), 
                                         'balance' => 0,
-                                        'discount' => 0
+                                        'discount' => 0,
+                                        'refund' => $req->get('refund')
                                     ]]),
                                     'payment_status' => 'paid',
                                     'total' => $totalPrice
@@ -698,9 +695,10 @@ class OrderController extends Controller
                                             'cart' => serialize($cart_data),
                                             'payment_type' => serialize([[
                                                 'payment_type' => 'kupon', 
-                                                'transaction_amount' => $price_single, 
+                                                'transaction_amount' => 0, 
                                                 'balance' => $log_limit->quota_kupon,
-                                                'discount' => $price_single
+                                                'discount' => $price_single,
+                                                'refund' => 0
                                             ]]),
                                             'payment_status' => 'paid',
                                             'total' => $totalPrice - $price_single
@@ -801,9 +799,10 @@ class OrderController extends Controller
                                             'cart' => serialize($cart_data),
                                             'payment_type' => serialize([[
                                                 'payment_type' => 'limit', 
-                                                'transaction_amount' => $price_single, 
+                                                'transaction_amount' => 0, 
                                                 'balance' => $log_limit->quota,
-                                                'discount' => $price_single
+                                                'discount' => $price_single,
+                                                'refund' => 0
                                             ]]),
                                             'payment_status' => 'paid',
                                             'total' => $totalPrice - $price_single
@@ -888,7 +887,8 @@ class OrderController extends Controller
                                         'payment_type' => 'deposit',
                                         'transaction_amount' => $deposit_before,
                                         'balance' => $deposit->balance,
-                                        'discount' => 0
+                                        'discount' => 0,
+                                        'refund' => 0
                                     ]]),
                                     'payment_status' => 'paid',
                                     'total' => $totalPrice
@@ -943,7 +943,8 @@ class OrderController extends Controller
                                                 'payment_type' => 'cash/transfer', 
                                                 'transaction_amount' => $req->get('bayar_input'), 
                                                 'balance' => 0,
-                                                'discount' => 0
+                                                'discount' => 0,
+                                                'refund' => 0
                                             ]]),
                                             'payment_status' => 'paid',
                                             'total' => $totalPrice
@@ -987,7 +988,8 @@ class OrderController extends Controller
                                             'payment_type' => 'kupon',
                                             'transaction_amount' => $price_single,
                                             'balance' => $log_limit->quota_kupon,
-                                            'discount' => $price_single
+                                            'discount' => $price_single,
+                                            'refund' => 0
                                         ]]),
                                         'payment_status' => 'paid',
                                         'total' => $totalPrice - $price_single
@@ -1036,7 +1038,8 @@ class OrderController extends Controller
                                             'payment_type' => 'limit',
                                             'transaction_amount' => $price_single,
                                             'balance' => $log_limit->quota,
-                                            'discount' => $price_single
+                                            'discount' => $price_single,
+                                            'refund' => 0
                                         ]]),
                                         'payment_status' => 'paid',
                                         'total' => $totalPrice - $price_single
@@ -1080,8 +1083,8 @@ class OrderController extends Controller
                                         'user_id' => Auth()->id(),
                                         'cart' => serialize($cart_data),
                                         'payment_type' => serialize([
-                                            ['payment_type' => 'deposit','transaction_amount' => $remaining_balance,'balance' => $deposit->balance, 'discount' => 0],
-                                            ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single]
+                                            ['payment_type' => 'deposit','transaction_amount' => $remaining_balance,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
+                                            ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
                                         ]),
                                         'payment_status' => 'paid',
                                         'total' => $remaining_balance
@@ -1135,8 +1138,8 @@ class OrderController extends Controller
                                         'user_id' => Auth()->id(),
                                         'cart' => serialize($cart_data),
                                         'payment_type' => serialize([
-                                            ['payment_type' => 'deposit','transaction_amount' => $remaining_balance,'balance' => $deposit->balance, 'discount' => 0],
-                                            ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single]
+                                            ['payment_type' => 'deposit','transaction_amount' => $remaining_balance,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
+                                            ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single, 'refund' => 0]
                                         ]),
                                         'payment_status' => 'paid',
                                         'total' => $remaining_balance
@@ -1199,8 +1202,8 @@ class OrderController extends Controller
                                                 'user_id' => Auth()->id(),
                                                 'cart' => serialize($cart_data),
                                                 'payment_type' => serialize([
-                                                    ['payment_type' => 'deposit', 'transaction_amount' => $minus_deposit, 'balance' => $deposit->balance,'discount' => 0],
-                                                    ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0]
+                                                    ['payment_type' => 'deposit', 'transaction_amount' => $minus_deposit, 'balance' => $deposit->balance,'discount' => 0, 'refund' => 0],
+                                                    ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => 0]
                                                 ]),
                                                 'payment_status' => 'paid',
                                                 'total' => $totalPrice
@@ -1260,8 +1263,8 @@ class OrderController extends Controller
                                                 'user_id' => Auth()->id(),
                                                 'cart' => serialize($cart_data),
                                                 'payment_type' => serialize([
-                                                    ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0],
-                                                    ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single]
+                                                    ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => 0],
+                                                    ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
                                                 ]),
                                                 'payment_status' => 'paid',
                                                 'total' => $totalPrice - $price_single
@@ -1314,8 +1317,8 @@ class OrderController extends Controller
                                             'user_id' => Auth()->id(),
                                             'cart' => serialize($cart_data),
                                             'payment_type' => serialize([
-                                                ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0],
-                                                ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single]
+                                                ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => 0],
+                                                ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single, 'refund' => 0]
                                             ]),
                                             'payment_status' => 'paid',
                                             'total' => $totalPrice - $price_single
@@ -1376,9 +1379,9 @@ class OrderController extends Controller
                                                 'user_id' => Auth()->id(),
                                                 'cart' => serialize($cart_data),
                                                 'payment_type' => serialize([
-                                                    ['payment_type' => 'deposit', 'transaction_amount' => $minus_deposit, 'balance' => $deposit->balance,'discount' => 0],
-                                                    ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0],
-                                                    ['payment_type' => 'kupon', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota_kupon - 1,'discount' => $price_single]
+                                                    ['payment_type' => 'deposit', 'transaction_amount' => $minus_deposit, 'balance' => $deposit->balance,'discount' => 0, 'refund' => 0],
+                                                    ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => 0],
+                                                    ['payment_type' => 'kupon', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota_kupon - 1,'discount' => $price_single, 'refund' => 0]
                                                 ]),
                                                 'payment_status' => 'paid',
                                                 'total' => $remaining_balance
@@ -1451,9 +1454,9 @@ class OrderController extends Controller
                                                 'user_id' => Auth()->id(),
                                                 'cart' => serialize($cart_data),
                                                 'payment_type' => serialize([
-                                                    ['payment_type' => 'deposit', 'transaction_amount' => $minus_deposit, 'balance' => $deposit->balance,'discount' => 0],
-                                                    ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0],
-                                                    ['payment_type' => 'limit', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota - 1,'discount' => $price_single]
+                                                    ['payment_type' => 'deposit', 'transaction_amount' => $minus_deposit, 'balance' => $deposit->balance,'discount' => 0, 'refund' => 0],
+                                                    ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => 0],
+                                                    ['payment_type' => 'limit', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota - 1,'discount' => $price_single, 'refund' => 0]
                                                 ]),
                                                 'payment_status' => 'paid',
                                                 'total' => $remaining_balance
@@ -1525,7 +1528,8 @@ class OrderController extends Controller
                                                 'payment_type' => 'kupon',
                                                 'transaction_amount' => $price_single,
                                                 'balance' => $log_limit->quota_kupon,
-                                                'discount' => $price_single
+                                                'discount' => $price_single,
+                                                'refund' => 0
                                             ]]),
                                             'payment_status' => 'paid',
                                             'total' => $totalPrice - $price_single
@@ -1574,7 +1578,8 @@ class OrderController extends Controller
                                                 'payment_type' => 'limit',
                                                 'transaction_amount' => $price_single,
                                                 'balance' => $log_limit->quota,
-                                                'discount' => $price_single
+                                                'discount' => $price_single,
+                                                'refund' => 0
                                             ]]),
                                             'payment_status' => 'paid',
                                             'total' => $totalPrice - $price_single
@@ -1629,7 +1634,8 @@ class OrderController extends Controller
                                                     'payment_type' => 'cash/transfer', 
                                                     'transaction_amount' => $req->get('bayar_input'), 
                                                     'balance' => 0,
-                                                    'discount' => 0
+                                                    'discount' => 0,
+                                                    'refund' => 0
                                                 ]]),
                                                 'payment_status' => 'paid',
                                                 'total' => $totalPrice
@@ -1671,7 +1677,8 @@ class OrderController extends Controller
                                                 'payment_type' => 'deposit',
                                                 'transaction_amount' => $deposit_before,
                                                 'balance' => $deposit->balance,
-                                                'discount' => 0
+                                                'discount' => 0,
+                                                'refund' => 0
                                             ]]),
                                             'payment_status' => 'paid',
                                             'total' => $totalPrice
@@ -1734,8 +1741,8 @@ class OrderController extends Controller
                                                     'user_id' => Auth()->id(),
                                                     'cart' => serialize($cart_data),
                                                     'payment_type' => serialize([
-                                                        ['payment_type' => 'deposit','transaction_amount' => $deposit_before,'balance' => $deposit->balance, 'discount' => 0],
-                                                        ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0]
+                                                        ['payment_type' => 'deposit','transaction_amount' => $deposit_before,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
+                                                        ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => 0]
                                                     ]),
                                                     'payment_status' => 'paid',
                                                     'total' => $totalPrice
@@ -1792,8 +1799,8 @@ class OrderController extends Controller
                                                 'user_id' => Auth()->id(),
                                                 'cart' => serialize($cart_data),
                                                 'payment_type' => serialize([
-                                                    ['payment_type' => 'deposit','transaction_amount' => $deposit_before,'balance' => $deposit->balance, 'discount' => 0],
-                                                    ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon, 'discount' => $price_single]
+                                                    ['payment_type' => 'deposit','transaction_amount' => $deposit_before,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
+                                                    ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon, 'discount' => $price_single, 'refund' => 0]
                                                 ]),
                                                 'payment_status' => 'paid',
                                                 'total' => $deposit_before
@@ -1858,8 +1865,8 @@ class OrderController extends Controller
                                                 'user_id' => Auth()->id(),
                                                 'cart' => serialize($cart_data),
                                                 'payment_type' => serialize([
-                                                    ['payment_type' => 'deposit','transaction_amount' => $deposit_before,'balance' => $deposit->balance, 'discount' => 0],
-                                                    ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota, 'discount' => $price_single]
+                                                    ['payment_type' => 'deposit','transaction_amount' => $deposit_before,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
+                                                    ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota, 'discount' => $price_single, 'refund' => 0]
                                                 ]),
                                                 'payment_status' => 'paid',
                                                 'total' => $deposit_before
@@ -1927,8 +1934,8 @@ class OrderController extends Controller
                                                     'user_id' => Auth()->id(),
                                                     'cart' => serialize($cart_data),
                                                     'payment_type' => serialize([
-                                                        ['payment_type' => 'cash/transfer', 'transaction_amount' => $coupon_free, 'balance' => 0,'discount' => 0],
-                                                        ['payment_type' => 'kupon', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota_kupon,'discount' => $price_single]
+                                                        ['payment_type' => 'cash/transfer', 'transaction_amount' => $coupon_free, 'balance' => 0,'discount' => 0, 'refund' => 0],
+                                                        ['payment_type' => 'kupon', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota_kupon,'discount' => $price_single, 'refund' => 0]
                                                     ]),
                                                     'payment_status' => 'paid',
                                                     'total' => $totalPrice - $price_single
@@ -1987,8 +1994,8 @@ class OrderController extends Controller
                                                     'user_id' => Auth()->id(),
                                                     'cart' => serialize($cart_data),
                                                     'payment_type' => serialize([
-                                                        ['payment_type' => 'cash/transfer', 'transaction_amount' => $limit_free, 'balance' => 0,'discount' => 0],
-                                                        ['payment_type' => 'limit', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota,'discount' => $price_single]
+                                                        ['payment_type' => 'cash/transfer', 'transaction_amount' => $limit_free, 'balance' => 0,'discount' => 0, 'refund' => 0],
+                                                        ['payment_type' => 'limit', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota,'discount' => $price_single, 'refund' => 0]
                                                     ]),
                                                     'payment_status' => 'paid',
                                                     'total' => $totalPrice - $price_single
@@ -2060,9 +2067,9 @@ class OrderController extends Controller
                                                         'user_id' => Auth()->id(),
                                                         'cart' => serialize($cart_data),
                                                         'payment_type' => serialize([
-                                                            ['payment_type' => 'deposit', 'transaction_amount' => $deposit_before, 'balance' => $deposit->balance,'discount' => 0],
-                                                            ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0],
-                                                            ['payment_type' => 'kupon', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota_kupon - 1,'discount' => $price_single]
+                                                            ['payment_type' => 'deposit', 'transaction_amount' => $deposit_before, 'balance' => $deposit->balance,'discount' => 0, 'refund' => 0],
+                                                            ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => 0],
+                                                            ['payment_type' => 'kupon', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota_kupon - 1,'discount' => $price_single, 'refund' => 0]
                                                         ]),
                                                         'payment_status' => 'paid',
                                                         'total' => $totalPrice - $price_single
@@ -2146,9 +2153,9 @@ class OrderController extends Controller
                                                         'user_id' => Auth()->id(),
                                                         'cart' => serialize($cart_data),
                                                         'payment_type' => serialize([
-                                                            ['payment_type' => 'deposit', 'transaction_amount' => $deposit_before, 'balance' => $deposit->balance,'discount' => 0],
-                                                            ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0],
-                                                            ['payment_type' => 'limit', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota - 1,'discount' => $price_single]
+                                                            ['payment_type' => 'deposit', 'transaction_amount' => $deposit_before, 'balance' => $deposit->balance,'discount' => 0, 'refund' => 0],
+                                                            ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => 0],
+                                                            ['payment_type' => 'limit', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota - 1,'discount' => $price_single, 'refund' => 0]
                                                         ]),
                                                         'payment_status' => 'paid',
                                                         'total' => $totalPrice - $price_single
@@ -2216,7 +2223,8 @@ class OrderController extends Controller
                                             'payment_type' => 'deposit',
                                             'transaction_amount' => $totalPrice,
                                             'balance' => $deposit->balance,
-                                            'discount' => 0
+                                            'discount' => 0,
+                                            'refund' => 0
                                         ]]),
                                         'payment_status' => 'paid',
                                         'total' => $totalPrice
@@ -2270,7 +2278,8 @@ class OrderController extends Controller
                                                     'payment_type' => 'cash/transfer', 
                                                     'transaction_amount' => $req->get('bayar_input'), 
                                                     'balance' => 0,
-                                                    'discount' => 0
+                                                    'discount' => 0,
+                                                    'refund' => 0
                                                 ]]),
                                                 'payment_status' => 'paid',
                                                 'total' => $totalPrice
@@ -2314,7 +2323,8 @@ class OrderController extends Controller
                                                 'payment_type' => 'kupon',
                                                 'transaction_amount' => $price_single,
                                                 'balance' => $log_limit->quota_kupon,
-                                                'discount' => $price_single
+                                                'discount' => $price_single,
+                                                'refund' => 0
                                             ]]),
                                             'payment_status' => 'paid',
                                             'total' => $totalPrice - $price_single
@@ -2363,7 +2373,8 @@ class OrderController extends Controller
                                                 'payment_type' => 'limit',
                                                 'transaction_amount' => $price_single,
                                                 'balance' => $log_limit->quota,
-                                                'discount' => $price_single
+                                                'discount' => $price_single,
+                                                'refund' => 0
                                             ]]),
                                             'payment_status' => 'paid',
                                             'total' => $totalPrice - $price_single
@@ -2416,8 +2427,8 @@ class OrderController extends Controller
                                                     'user_id' => Auth()->id(),
                                                     'cart' => serialize($cart_data),
                                                     'payment_type' => serialize([
-                                                        ['payment_type' => 'deposit', 'transaction_amount' => $minus_deposit, 'balance' => $deposit->balance,'discount' => 0],
-                                                        ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0]
+                                                        ['payment_type' => 'deposit', 'transaction_amount' => $minus_deposit, 'balance' => $deposit->balance,'discount' => 0, 'refund' => 0],
+                                                        ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => 0]
                                                     ]),
                                                     'payment_status' => 'paid',
                                                     'total' => $totalPrice
@@ -2463,8 +2474,8 @@ class OrderController extends Controller
                                             'user_id' => Auth()->id(),
                                             'cart' => serialize($cart_data),
                                             'payment_type' => serialize([
-                                                ['payment_type' => 'deposit','transaction_amount' => $remaining_balance,'balance' => $deposit->balance, 'discount' => 0],
-                                                ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single]
+                                                ['payment_type' => 'deposit','transaction_amount' => $remaining_balance,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
+                                                ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
                                             ]),
                                             'payment_status' => 'paid',
                                             'total' => $remaining_balance
@@ -2518,8 +2529,8 @@ class OrderController extends Controller
                                             'user_id' => Auth()->id(),
                                             'cart' => serialize($cart_data),
                                             'payment_type' => serialize([
-                                                ['payment_type' => 'deposit','transaction_amount' => $remaining_balance,'balance' => $deposit->balance, 'discount' => 0],
-                                                ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single]
+                                                ['payment_type' => 'deposit','transaction_amount' => $remaining_balance,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
+                                                ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single, 'refund' => 0]
                                             ]),
                                             'payment_status' => 'paid',
                                             'total' => $remaining_balance
@@ -2587,8 +2598,8 @@ class OrderController extends Controller
                                                     'user_id' => Auth()->id(),
                                                     'cart' => serialize($cart_data),
                                                     'payment_type' => serialize([
-                                                        ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0],
-                                                        ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single]
+                                                        ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => 0],
+                                                        ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
                                                     ]),
                                                     'payment_status' => 'paid',
                                                     'total' => $totalPrice - $price_single
@@ -2641,8 +2652,8 @@ class OrderController extends Controller
                                                 'user_id' => Auth()->id(),
                                                 'cart' => serialize($cart_data),
                                                 'payment_type' => serialize([
-                                                    ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0],
-                                                    ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single]
+                                                    ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => 0],
+                                                    ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single, 'refund' => 0]
                                                 ]),
                                                 'payment_status' => 'paid',
                                                 'total' => $totalPrice - $price_single
@@ -2703,9 +2714,9 @@ class OrderController extends Controller
                                                     'user_id' => Auth()->id(),
                                                     'cart' => serialize($cart_data),
                                                     'payment_type' => serialize([
-                                                        ['payment_type' => 'deposit', 'transaction_amount' => $minus_deposit, 'balance' => $deposit->balance,'discount' => 0],
-                                                        ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0],
-                                                        ['payment_type' => 'kupon', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota_kupon - 1,'discount' => $price_single]
+                                                        ['payment_type' => 'deposit', 'transaction_amount' => $minus_deposit, 'balance' => $deposit->balance,'discount' => 0, 'refund' => 0],
+                                                        ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => 0],
+                                                        ['payment_type' => 'kupon', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota_kupon - 1,'discount' => $price_single, 'refund' => 0]
                                                     ]),
                                                     'payment_status' => 'paid',
                                                     'total' => $remaining_balance
@@ -2778,9 +2789,9 @@ class OrderController extends Controller
                                                     'user_id' => Auth()->id(),
                                                     'cart' => serialize($cart_data),
                                                     'payment_type' => serialize([
-                                                        ['payment_type' => 'deposit', 'transaction_amount' => $minus_deposit, 'balance' => $deposit->balance,'discount' => 0],
-                                                        ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0],
-                                                        ['payment_type' => 'limit', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota - 1,'discount' => $price_single]
+                                                        ['payment_type' => 'deposit', 'transaction_amount' => $minus_deposit, 'balance' => $deposit->balance,'discount' => 0, 'refund' => 0],
+                                                        ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => 0],
+                                                        ['payment_type' => 'limit', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota - 1,'discount' => $price_single, 'refund' => 0]
                                                     ]),
                                                     'payment_status' => 'paid',
                                                     'total' => $remaining_balance
@@ -2848,12 +2859,16 @@ class OrderController extends Controller
             $total = 0;
             $qty = 0;
             $discount = 0;
+            $refund = 0;
+            $transaction_amount = 0;
             foreach ($cart as $get) {
                 $qty += $get['qty'];
                 $total += $get['price'];
             }
             foreach ($payment_type as $get) {
                 $discount += $get['discount'];
+                $refund += $get['refund'];
+                $transaction_amount += $get['transaction_amount'];
             }
             $counted = ucwords(counted($log_transaction->total) . ' Rupiah');
             return view('print-invoice', compact(
@@ -2866,7 +2881,9 @@ class OrderController extends Controller
                 'counted',
                 'total',
                 'qty',
-                'user'
+                'user',
+                'refund',
+                'transaction_amount'
             ));
         } catch (Throwable $e) {
             return redirect()->route('scan-tamu');
