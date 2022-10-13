@@ -394,12 +394,12 @@ class OrderRegulerController extends Controller
 
     public function print_invoice() {
         try{
-            $visitor = Visitor::find($id);
-            $log_transaction = LogTransaction::where('visitor_id', $id)->latest()->first();
+            $visitor = Visitor::find(auth()->id());
+            $log_transaction = LogTransaction::where('visitor_id', auth()->id())->latest()->first();
             $user = User::find($log_transaction->user_id);
             $cart = unserialize($log_transaction->cart);
             $payment_type = unserialize($log_transaction->payment_type);
-            $deposit = Deposit::where('visitor_id', $id)->first();
+            $deposit = Deposit::where('visitor_id', auth()->id())->first();
             $total = 0;
             $qty = 0;
             $discount = 0;

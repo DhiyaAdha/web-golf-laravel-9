@@ -316,6 +316,11 @@
             let pay_amount = $('.bayar-input').val();
             let order_number = $('#order-number').text();
             let name = '';
+            
+            //Kendala Mencari Id Terakhir Log_Transcation 
+            let url = "{{ route('invoice.print', ':id') }}";
+            //Sentara Menggunakan Id Static
+            url = url.replace(':id', '32');
             if (!pay_amount) {
                 swal({
                     title: "",
@@ -382,16 +387,16 @@
                                     confirmButtonColor: "#01c853",
                                 });
                             } else {
-                                swal({
-                                    title: '',
-                                    type: "success",
-                                    text: response.message,
-                                    confirmButtonColor: "#01c853",
-                                }, function(isConfirm) {
-                                    invoice(url,
-                                        'Print Invoice');
-                                    window.close();
-                                });
+                                    swal({
+                                        title: '',
+                                        type: "success",
+                                        text: response.message,
+                                        confirmButtonColor: "#01c853",
+                                    }, function(isConfirm) {
+                                        invoice(url,
+                                            'Print Invoice');
+                                        window.close();
+                                    });
                             }
                         }
                     });
@@ -401,6 +406,32 @@
                 });
                 return false;
             });
+
+            function invoice(url, title) {
+                popupCenter(url, title, 340, 550);
+            }
+
+            function popupCenter(url, title, w, h) {
+                const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window
+                    .screenX;
+                const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window
+                    .screenY;
+                const width = window.innerWidth ? window.innerWidth : document.documentElement
+                    .clientWidth ?
+                    document
+                    .documentElement.clientWidth : screen.width;
+                const height = window.innerHeight ? window.innerHeight : document.documentElement
+                    .clientHeight ?
+                    document
+                    .documentElement.clientHeight : screen.height;
+                const systemZoom = width / window.screen.availWidth;
+                const left = (width - w) / 2 / systemZoom + dualScreenLeft
+                const top = (height - h) / 2 / systemZoom + dualScreenTop
+                const newWindow = window.open(url, title,
+                    `scrollbars=yes,width  = ${w / systemZoom}, height = ${h / systemZoom}, top    = ${top}, left   = ${left}`
+                );
+                if (window.focus) newWindow.focus();
+            }
     </script>
 </body>
 </html>

@@ -126,7 +126,8 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::post('/cart_reguler/clear',[OrderRegulerController::class, 'clear_cart'])->name('cart_reguler.clear');
     Route::get('/checkout_reguler', [OrderRegulerController::class,'checkout'])->name('checkout_reguler');
     Route::post('/pay_reguler', [OrderRegulerController::class,'pay_reguler'])->name('pay_reguler');
-    Route::get('/print_invoice/{id}', [OrderRegulerController::class,'print_invoice'])->name('invoice.print');
+
+    Route::get('/print_invoice_reguler', [OrderRegulerController::class,'print_invoice'])->name('invoice.print.reguler');
     
     //route 4 notifikasi email pembayaran sukses
     Route::get('/test_payment', function(){
