@@ -34,8 +34,44 @@
             padding: 12px 36px 12px 12px;
             box-sizing: border-box;
         }
+        
+        #eye {
+            position: absolute;
+            margin-top: -100px;
+            top: 236px;
+            right: 30px;
+        }
+        #eyee {
+            position: absolute;
+            margin-top: -13px;
+            top: 236px;
+            right: 30px;
+        }
 
-        .fa-eye1 {
+        /* @media screen and (min-width: 250px) {
+            #eye {
+                top: 315px;
+            }
+        } */
+
+        /* @media screen and (min-width: 320px) {
+            #eye {
+                top: 276px;
+            }
+        } */
+
+        @media screen and (min-width: 480px) {
+            #eye {
+                top: 237px;
+            }
+        }
+
+        #toast-container>.toast-success {
+            background-color: #01C853;
+            font-family: Arial;
+        }
+
+        /* .fa-eye1 {
             position: absolute;
             margin-top: -27px;
             margin-left: 90%;
@@ -52,7 +88,7 @@
             right: 10px;
             cursor: pointer;
             color: lightgray;
-        }
+        } */
     </style>
 </head>
 
@@ -120,7 +156,7 @@
                                                     value="{{ $email ?? old('email') }}">
                                                 <span class="text-danger">
                                             </div>
-                                            <div class="form-group password-container">
+                                            <div class="form-group">
                                                 <label class="pull-left control-label mb-10" for="password">Password
                                                     Baru</label>
                                                 <input type="password" name="password"
@@ -133,7 +169,7 @@
                                                     <div class="text-danger"> {{ $message }}</div>
                                                 @enderror
                                             </div>
-                                            <div class="form-group password-container">
+                                            <div class="form-group">
                                                 <label class="pull-left control-label mb-10"
                                                     for="password_confirmation">Ulangi Password</label>
                                                 <div class="clearfix"></div>
