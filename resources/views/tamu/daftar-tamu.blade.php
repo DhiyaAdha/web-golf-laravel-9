@@ -32,13 +32,15 @@
                                 <a href="{{ route('tambah-tamu') }}" class="btn btn-xs btn-success">Tambah
                                     Tamu</a>
                             </div>
-                            <div class="pull-right">
+                            @if (auth()->user()->role_id == '2')
+                                <div class="pull-right">
 
-                                <a href="{{ url('export_excel_tamu') }}" target="_blank" name="excel"
-                                    data-toggle="tooltip" data-placement="top" title="Download Excel">
-                                    <img src="dist/img/excel.svg" width="25px" height="25px">
-                                </a>
-                            </div>
+                                    <a href="{{ url('export_excel_tamu') }}" target="_blank" name="excel"
+                                        data-toggle="tooltip" data-placement="top" title="Download Excel">
+                                        <img src="dist/img/excel.svg" width="25px" height="25px">
+                                    </a>
+                                </div>
+                            @endif
                             <div class="clearfix"></div>
                         </div>
                         <div class="clearfix"></div>
