@@ -117,8 +117,8 @@
                                 <div class="panel-heading">
                                     <div class="pull-right">
                                         <ul role="tablist" class="nav nav-pills nav-pills-rounded" id="myTabs_6">
-                                            <li class="active" role="presentation"><a aria-expanded="true" data-toggle="tab" role="tab" id="home_tab_6" href="#home_6">visitors</a></li>
-                                            <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_6" role="tab" href="#profile_6" aria-expanded="false">transactions</a></li>
+                                            <li class="active" role="presentation"><a aria-expanded="true" data-toggle="tab" role="tab" id="home_tab_6" href="#home_6" style="padding: 2px 20px;">visitors</a></li>
+                                            <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_6" role="tab" href="#profile_6" aria-expanded="false" style="padding: 2px 20px;">transactions</a></li>
                                         </ul>
                                     </div>
                                     <div class="pull-left">
@@ -191,8 +191,8 @@
                                 <div class="panel-heading">
                                     <div class="pull-right">
                                         <ul role="tablist" class="nav nav-pills nav-pills-rounded" id="myTabs_7">
-                                            <li class="active" role="presentation"><a aria-expanded="true" data-toggle="tab" role="tab" id="home_tab_7" href="#home_7">visitors</a></li>
-                                            <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_7" role="tab" href="#profile_7" aria-expanded="false">transactions</a></li>
+                                            <li class="active" role="presentation"><a aria-expanded="true" data-toggle="tab" role="tab" id="home_tab_7" href="#home_7" style="padding: 2px 20px;">visitors</a></li>
+                                            <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_7" role="tab" href="#profile_7" aria-expanded="false" style="padding: 2px 20px;">transactions</a></li>
                                         </ul>
                                     </div>
                                     <div class="pull-left">

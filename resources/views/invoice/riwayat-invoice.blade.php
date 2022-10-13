@@ -94,7 +94,13 @@
                 },
                 {
                     "data": function(data) {
-                        return `<span class="label ${data.tipe_member == 'VIP' ? 'label-success' : 'label-warning'}">${data.tipe_member}</span>`;
+                        if (data.tipe_member == 'VIP') {
+                                return `<span class='label label-success'>${data.tipe_member}</span>`;
+                            } else if (data.tipe_member == 'VVIP') {
+                                return `<span class='label label-warning'>${data.tipe_member}</span>`;
+                            } else {
+                                return `<span class='label label-primary'>${data.tipe_member}</span>`;
+                            }
                     }
                 },
                 {

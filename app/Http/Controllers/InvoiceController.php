@@ -53,14 +53,14 @@ class InvoiceController extends Controller
             ->editColumn('payment_type', function ($data) {
                 $type = unserialize($data->payment_type);
                 if (isset($type['payment_type'])) {
-                    return sprintf('<div class="d-flex flex-wrap justify-content-center align-items-center"><span class="label mr-5 label-primary">'.$type[0]['payment_type'].'</span></div>');
+                    return sprintf('<div class="d-flex flex-wrap justify-content-center align-items-center"><span class="label mr-5 label-info">'.$type[0]['payment_type'].'</span></div>');
                 } else {
                     $datax = array();
                     foreach ($type as $i => $t) {
                         $datax[$i] = $t['payment_type'];
                     }
-                    $tagsString = implode("</span> <span class='label mr-5 label-primary'>", $datax);
-                    return sprintf('<div class="d-flex flex-wrap justify-content-center align-items-center"><span class="label mr-5 label-primary">'.$tagsString.'</span></div>');
+                    $tagsString = implode("</span> <span class='label mr-5 label-info'>", $datax);
+                    return sprintf('<div class="d-flex flex-wrap justify-content-center align-items-center"><span class="label mr-5 label-info">'.$tagsString.'</span></div>');
                 }
             })
             ->editColumn('total', function ($data) {

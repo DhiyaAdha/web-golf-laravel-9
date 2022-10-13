@@ -73,9 +73,6 @@
                                             <div class="text-danger"> {{ $message }}</div>
                                         @enderror
                                     </div>
-                                    @error('gender')
-                                        <div class="text-danger"> {{ $message }}</div>
-                                    @enderror
                                 </div>
                                 <div class="form-group @error('phone') has-error @enderror">
                                     <label class="control-label mb-10" for="">Nomer Hp</label>
