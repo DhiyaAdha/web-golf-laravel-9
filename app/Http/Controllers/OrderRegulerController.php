@@ -394,9 +394,9 @@ class OrderRegulerController extends Controller
 
     public function print_invoice(Request $request) {
         // try{
-            $visitor = Visitor::find(auth()->id());
-            $log_transaction = LogTransaction::latest()->first()->id;
-            $user = User::latest()->first()->user_id;
+            $visitor = Visitor::latest()->first();
+            $log_transaction = LogTransaction::latest()->first();
+            $user = User::find($log_transaction->user_id);
             $cart = unserialize($log_transaction->cart);
             $payment_type = unserialize($log_transaction->payment_type);
             $total = 0;
