@@ -302,7 +302,7 @@ class OrderRegulerController extends Controller
 
     public function checkout(Request $request)
     {
-        try {
+        // try {
             $items = \Cart::session(auth()->id())->getContent();
             $totalPrice = \Cart::session(auth()->id())->getTotal();
             $today = Carbon::now()->isoFormat('dddd');
@@ -326,9 +326,9 @@ class OrderRegulerController extends Controller
                 return response()->json(['order_number' => $order_number]);
             }
             return view("reguler.checkout_reguler", compact('totalPrice', 'order_number', 'orders'))->render();
-        } catch (\Throwable $th) {
-            return redirect()->route('proses_reguler');
-        }
+        // } catch (\Throwable $th) {
+        //     return redirect()->route('proses_reguler');
+        // }
     }
 
     public function pay_reguler(Request $request) {
@@ -392,14 +392,13 @@ class OrderRegulerController extends Controller
         }
     }
 
-    public function print_invoice() {
-        try{
+    public function print_invoice(Request $request) {
+        // try{
             $visitor = Visitor::find(auth()->id());
-            $log_transaction = LogTransaction::where('visitor_id', auth()->id())->latest()->first();
-            $user = User::find($log_transaction->user_id);
+            $log_transaction = LogTransaction::latest()->first()->id;
+            $user = User::latest()->first()->user_id;
             $cart = unserialize($log_transaction->cart);
             $payment_type = unserialize($log_transaction->payment_type);
-            $deposit = Deposit::where('visitor_id', auth()->id())->first();
             $total = 0;
             $qty = 0;
             $discount = 0;
@@ -416,16 +415,15 @@ class OrderRegulerController extends Controller
                 'log_transaction',
                 'payment_type',
                 'cart',
-                'deposit',
                 'discount', 
                 'counted',
                 'total',
                 'qty',
                 'user'
             ));
-        } catch (Throwable $e) {
-            return redirect()->route('proses_reguler');
-        }
+        // } catch (Throwable $e) {
+        //     return redirect()->route('proses_reguler');
+        // }
     }
 
     private function setResponse($status = "INVALID", $message = "Ada sesuatu yang salah!", $data = []) {
