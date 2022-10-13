@@ -84,10 +84,10 @@
                                                                             {{ $visitor->tipe_member }}</p>
                                                                     </div>
                                                                     <br>
-                                                                    <div class="d-flex-justify-content-center ">
+                                                                    <div class="d-flex-justify-content-center">
                                                                         <p class="text-center text-muted">
                                                                             {{ $visitor->phone }}</p>
-                                                                        <p class="text-center text-muted text-lowercase" >
+                                                                        <p class="text-center text-muted text-lowercase" style="word-wrap: break-word;">
                                                                             {{ $visitor->email }}</p>
                                                                     </div>
                                                                 </div>
