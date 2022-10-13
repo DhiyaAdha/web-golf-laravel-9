@@ -360,7 +360,7 @@
                         @endif
                         <tr>
                             <td class="w-70">Total Tagihan:</td>
-                            <td>{{ formatrupiah($total) }}</td>
+                            <td>{{ formatrupiah($log_transaction->total) }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -387,7 +387,7 @@
                             <tr>
                                 <td class="text-center">{{ $i++ }}</td>
                                 <td>{{ $type['payment_type'] }}</td>
-                                <td>{{ $type['discount'] }}</td>
+                                <td>{{ $type['transaction_amount'] }}</td>
                                 <td>{{ $type['balance'] }}</td>
                             </tr>
                         @endforeach
