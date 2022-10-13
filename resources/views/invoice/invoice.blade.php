@@ -158,8 +158,10 @@
                                     <strong>Katagori Tamu:&nbsp;</strong>
                                     @if ($visitor->tipe_member == 'VIP')
                                         <span class="label label-success">{{ $visitor->tipe_member }}</span>
-                                    @else
+                                    @elseif ($visitor->tipe_member == 'VVIP')
                                         <span class="label label-warning">{{ $visitor->tipe_member }}</span>
+                                    @else
+                                    <span class="label label-primary">{{ $visitor->tipe_member }}</span>
                                     @endif
                                 </td>
                             </tr>
