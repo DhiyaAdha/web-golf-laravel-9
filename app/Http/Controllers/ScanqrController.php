@@ -37,7 +37,7 @@ class ScanqrController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return view('Scan-tamu');
+        return view('scan-tamu');
     }
 
     /**

@@ -106,19 +106,17 @@
                                         </div>
                                     @endif
                                     <div class="mb-30">
-                                        <h3 class="text-center txt-dark mb-10">Masuk Tritih Golf & Country Club</h3>
+                                        <h3 class="text-center txt-dark mb-10">Tritih Golf & Country Club</h3>
                                         <h6 class="text-center nonecase-font txt-grey">Masukan Akun Anda</h6>
                                     </div>
                                     <div class="form-wrap">
                                         <form action="{{ route('login') }}" method="post">
                                             @csrf
                                             <div class="form-group">
-                                                <label class="control-label mb-10" for="email">Email / Nomor
-                                                    Telpon</label>
+                                                <label class="control-label mb-10" for="email">Email</label>
                                                 <input type="email" name="email" class="form-control" id="email"
-                                                    placeholder="Masukan Email Nomor Telepon"
-                                                    @error('email') is-invalid @enderror autofocus required
-                                                    value="{{ old('email') }}">
+                                                    placeholder="Masukan email" @error('email') is-invalid @enderror
+                                                    autofocus required value="{{ old('email') }}">
                                                 @error('email')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
