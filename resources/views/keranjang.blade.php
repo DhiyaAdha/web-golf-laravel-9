@@ -71,18 +71,6 @@
                                     class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
                             @endforeach
                         </div>
-                        {{-- <div class="panel-heading fk d-flex align-items-center">
-                            <div class="d-flex align-items-center justify-content-between" style="width: 100%">
-                                <span class="text-size">Terbilang</span>
-                                <span class="counted">
-                                    @if (count($cart_data) < 1)
-                                        -
-                                    @else
-                                        {{ $counted }}
-                                    @endif
-                                </span>
-                            </div>
-                        </div> --}}
                     </div>
                 </div>
                 <div class="col-lg-4 sticky">
