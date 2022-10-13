@@ -1,4 +1,4 @@
-@extends('Layouts.main', ['title' => 'TGCC | Pilih Permainan'])
+@extends('layouts.main', ['title' => 'TGCC | Pilih Permainan'])
 @section('content')
     <!-- Main Content -->
     <div class="page-wrapper">
@@ -12,7 +12,7 @@
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
                         <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
-                        <li><a href="{{ url('scan-tamu') }}">Scan Tamu</a></li>
+                        <li><a href="{{ url('proses_reguler') }}">Reguler</a></li>
                         <li class="active"><span>Pilih Permainan</span></li>
                     </ol>
                 </div>
@@ -71,18 +71,6 @@
                                     class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
                             @endforeach
                         </div>
-                        {{-- <div class="panel-heading fk d-flex align-items-center">
-                            <div class="d-flex align-items-center justify-content-between" style="width: 100%">
-                                <span class="text-size">Terbilang</span>
-                                <span class="counted">
-                                    @if (count($cart_data) < 1)
-                                        -
-                                    @else
-                                        {{ $counted }}
-                                    @endif
-                                </span>
-                            </div>
-                        </div> --}}
                     </div>
                 </div>
                 <div class="col-lg-4 sticky">
@@ -145,16 +133,11 @@
                             </div>
                             <div id="disabled-checkout"></div>
                             <div class="d-flex justify-content-between active-checkout">
-                                <a href="javascript:void(0)" id="reset-order"
+                                <a href="javascript:void(0)" id="reset-order-reguler"
                                     class="mt-15 mb-15 btn-xs btn btn-danger btn-anim">
                                     <i class="icon-rocket"></i>
                                     <span class="btn-text">Reset</span>
                                 </a>
-                                {{-- <a href="{{ url('kartu-tamu/' . Crypt::encryptString($get_visitor->id)) }}"
-                                    id="riwayat" class="mt-15 mb-15 btn-xs btn btn-primary btn-anim" target="_blank">
-                                    <i class="icon-rocket"></i>
-                                    <span class="btn-text">Riwayat</span>
-                                </a> --}}
                                 <button type="button" id="checkout"
                                     class="mt-15 mb-15 btn-xs btn btn-success btn-anim">
                                     <i class="icon-rocket"></i>
@@ -177,7 +160,7 @@
                             <div class="panel-body">
                                 <div class="table-wrap">
                                     <div class="table-responsive">
-                                        <table class="table table-hover mb-0" id="dt-package">
+                                        <table class="table table-hover mb-0" id="dt-package-reguler">
                                             <thead>
                                                 <tr>
                                                     <th class="table-th">Nama Produk</th>
@@ -199,7 +182,7 @@
             </div>
             <div class="row">
             </div>
-            @include('Layouts.Footer')
+            @include('layouts.footer')
             <div id="lds-facebook"></div>
         </div>
     </div>
@@ -207,6 +190,7 @@
 @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
+
     <script>
         $('[data-toggle="tooltip"]').tooltip();
 
@@ -262,13 +246,7 @@
         }
 
         function addCart(id) {
-            var url = window.location.href;
-            url = url.split("?")
-            url = url[0];
-            url = url.split("/");
-            page = url[url.length - 1];
-
-            var url = "{{ route('cart.add.reguler', ':package') }}";
+            var url = "{{ route('cart_add.reguler', ':package') }}";
             url = url.replace(':package', id);
             $.ajax({
                 async: true,
@@ -276,7 +254,7 @@
                 url: url,
                 data: {
                     url: url,
-                    page: page
+                    id: id
                 },
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -302,12 +280,6 @@
         }
 
         function updateQTY(id, type) {
-            var tg = window.location.href;
-            tg = tg.split("?")
-            tg = tg[0];
-            tg = tg.split("/");
-            page = tg[tg.length - 1];
-
             let $n = $(".qty-" + id);
             if (type === 'plus') {
                 $n.val(Number($n.val()) + 1);
@@ -337,7 +309,7 @@
                     });
                 }
             }
-            let url = "{{ route('update.qty.reguler', ':id') }}";
+            let url = "{{ route('reguler_update.qty', ':id') }}";
             url = url.replace(':id', id);
             $.ajax({
                 async: true,
@@ -345,8 +317,7 @@
                 url: url,
                 data: {
                     id: id,
-                    type: type,
-                    page: page
+                    type: type
                 },
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -377,25 +348,20 @@
         }
 
         function removeItem(id) {
-            var tg = window.location.href;
-            tg = tg.split("?")
-            tg = tg[0];
-            tg = tg.split("/");
-            page = tg[tg.length - 1];
-
-            var url = "{{ route('remove.item.reguler', ':package') }}";
+            var url = "{{ route('cart_remove.reguler', ':package') }}";
             url = url.replace(':package', id);
             $('.disabled-cart-' + id).css('background', 'tomato');
             $('.disabled-cart-' + id).fadeOut(800, function() {
                 $(this).remove();
             });
+
             $.ajax({
                 async: true,
                 type: 'POST',
                 url: url,
                 data: {
                     url: url,
-                    page: page
+                    id: id
                 },
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -415,23 +381,28 @@
                             .addClass('d-flex justify-content-center align-items-center');
                         $('.active-checkout').remove();
                         $('#disabled-checkout').html(`<button type="submit" class="mt-15 mb-15 btn-xs btn-block btn btn-success btn-anim"
-                                                        id="disabled-pay">
-                                                        <i class="icon-rocket"></i>
-                                                        <span class="btn-text">Checkout</span>
-                                                    </button>`);
+                                            id="disabled-pay">
+                                            <i class="icon-rocket"></i>
+                                            <span class="btn-text">Checkout</span>
+                                        </button>`);
                     }
                 }
             });
         }
 
-        $(document).on('click', '#reset-order', function() {
+        var interval = setInterval(function() {
+            var momentNow = moment().locale('fr');
+            $('#time-part').html(momentNow.format('hh:mm:ss A'));
+        }, 100);
+
+        $(document).on('click', '#reset-order-reguler', function() {
             var tg = window.location.href;
             tg = tg.split("?")
             tg = tg[0];
             tg = tg.split("/");
-            page = tg[tg.length - 1];
+            id = tg[tg.length - 1];
 
-            var url = "{{ route('cart.clear.reguler') }}";
+            var url = "{{ route('cart_reguler.clear') }}";
             swal({
                 title: "Anda yakin ingin reset keranjang?",
                 imageUrl: "../img/Warning.svg",
@@ -448,7 +419,7 @@
                         type: 'POST',
                         url: url,
                         data: {
-                            page: page
+                            id: id
                         },
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -476,14 +447,7 @@
         });
 
         $(document).on('click', '#checkout', function() {
-            var tg = window.location.href;
-            tg = tg.split("?")
-            tg = tg[0];
-            tg = tg.split("/");
-            page = tg[tg.length - 1];
-            let url = "{{ route('checkout.reguler', ':id') }}";
-            url = url.replace(':id', page);
-
+            let url = "{{ route('checkout_reguler') }}";
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -522,12 +486,7 @@
             return false;
         });
 
-        var interval = setInterval(function() {
-            var momentNow = moment().locale('fr');
-            $('#time-part').html(momentNow.format('hh:mm:ss A'));
-        }, 100);
-
-        $('#dt-package').DataTable({
+        $('#dt-package-reguler').DataTable({
             "processing": true,
             "serverSide": true,
             "lengthChange": false,
@@ -540,7 +499,7 @@
                 "previous": "Previous"
             },
             "ajax": {
-                "url": "{{ route('order.cart.reguler', Request::segment(2)) }}",
+                "url": "{{ route('proses_reguler') }}",
                 "type": "GET",
                 "datatype": "json"
             },

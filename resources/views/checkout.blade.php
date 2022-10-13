@@ -889,7 +889,6 @@
     <script src="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-
             function formatIDR(price) {
                 var number_string = price.toString(),
                     split = number_string.split(','),
@@ -954,13 +953,13 @@
                         $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
                             "background-color": "rgba(216, 25, 25, 0.2)",
                             "color": "#d81c19d1"
-                        });
+                        }).data('refund', return_pay);
                     } else {
                         $(this).removeClass('is-invalid');
                         $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
                             "background-color": "rgba(25, 216, 149, 0.2)",
                             "color": "#19d895"
-                        });
+                        }).data('refund', return_pay);
                     }
                 } else {}
             });
@@ -1251,9 +1250,10 @@
                     .map(function() {
                         return $(this).val();
                     }).get();
-                console.log(type_multiple);
                 let order_number = $('#order-number').text();
                 let bayar_input = $('.bayar-input').val();
+                console.log(bayar_input);
+                let refund = $('#return').data('refund');
                 let tg = window.location.href;
                 tg = tg.split("?");
                 tg = tg[0];
@@ -1312,6 +1312,7 @@
                                 order_number: order_number,
                                 bayar_input: bayar_input,
                                 pay_deposit: pay_deposit,
+                                refund: refund
                             },
                             url: "{{ route('pay') }}",
                             headers: {
