@@ -210,15 +210,40 @@ class DashboardController extends Controller
             ['gender', 'laki-laki'],
         ])->count();
 
-        //REGULER
-        $data['visitor_reguler_female'] = Visitor::where([
-            ['tipe_member', 'REGULER'],
-            ['gender', 'perempuan'],
-        ])->count();
-        $data['visitor_reguler_male'] = Visitor::where([
-            ['tipe_member', 'REGULER'],
-            ['gender', 'laki-laki'],
-        ])->count();
+        // Transaction VVIP
+        $data['visitor_transaction_vvip_male'] = LogTransaction::where('payment_status', 'paid')->whereHas(
+            'visitor',
+            function(Builder $query){
+                $query
+                    ->where('tipe_member', 'VVIP')
+                    ->where('gender', 'laki-laki');
+            }
+        )->count();
+        $data['visitor_transaction_vvip_female'] = LogTransaction::where('payment_status', 'paid')->whereHas(
+            'visitor',
+            function(Builder $query){
+                $query
+                    ->where('tipe_member', 'VVIP')
+                    ->where('gender', 'perempuan');
+            }
+        )->count();
+        // Transaction VIP
+        $data['visitor_transaction_vip_male'] = LogTransaction::where('payment_status', 'paid')->whereHas(
+            'visitor',
+            function(Builder $query){
+                $query
+                    ->where('tipe_member', 'VIP')
+                    ->where('gender', 'laki-laki');
+            }
+        )->count();
+        $data['visitor_transaction_vip_female'] = LogTransaction::where('payment_status', 'paid')->whereHas(
+            'visitor',
+            function(Builder $query){
+                $query
+                    ->where('tipe_member', 'VIP')
+                    ->where('gender', 'perempuan');
+            }
+        )->count();
 
         $visitor = Visitor::select([
             'id',
@@ -228,6 +253,7 @@ class DashboardController extends Controller
             'updated_at',
         ])
             ->orderBy('updated_at', 'desc')
+            ->where('tipe_member', '!=', 'REGULER')
             ->get();
         if ($request->ajax()) {
             return datatables()

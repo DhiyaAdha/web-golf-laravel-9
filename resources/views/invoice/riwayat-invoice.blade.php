@@ -94,7 +94,13 @@
                 },
                 {
                     "data": function(data) {
-                        return `<span class="label ${data.tipe_member == 'VIP' ? 'label-success' : 'label-warning'}">${data.tipe_member}</span>`;
+                        if (data.tipe_member == 'VIP') {
+                                return `<span class='label label-success'>${data.tipe_member}</span>`;
+                            } else if (data.tipe_member == 'VVIP') {
+                                return `<span class='label label-warning'>${data.tipe_member}</span>`;
+                            } else {
+                                return `<span class='label label-primary'>${data.tipe_member}</span>`;
+                            }
                     }
                 },
                 {
@@ -124,14 +130,11 @@
                 lengthMenu: "Menampilkan _MENU_ data",
                 zeroRecords: "Tidak ada data pada tabel ini"
             },
-            columnDefs: [{
-                className: 'text-center',
-                targets: [1, 2, 3, 4]
-                // {"width" : "5%", "targets" : [2]}
-            }, {
-                orderable: false,
-                targets: [0, 1, 2, 3, 4]
-            }],
+            columnDefs: [
+                { className: 'text-center', targets: [1, 2, 3, 4]}, 
+                { orderable: false, targets: [0, 1, 2, 3, 4]},
+                { width: '15%', targets: [0]}
+            ],
         });
         /* daftar invoice */
     </script>
