@@ -604,7 +604,7 @@ class OrderController extends Controller
                                         'transaction_amount' => $req->get('bayar_input'), 
                                         'balance' => 0,
                                         'discount' => 0,
-                                        'refund' => 0
+                                        'refund' => $req->get('refund')
                                     ]]),
                                     'payment_status' => 'paid',
                                     'total' => $totalPrice
@@ -695,7 +695,7 @@ class OrderController extends Controller
                                             'cart' => serialize($cart_data),
                                             'payment_type' => serialize([[
                                                 'payment_type' => 'kupon', 
-                                                'transaction_amount' => $price_single, 
+                                                'transaction_amount' => 0, 
                                                 'balance' => $log_limit->quota_kupon,
                                                 'discount' => $price_single,
                                                 'refund' => 0
@@ -799,7 +799,7 @@ class OrderController extends Controller
                                             'cart' => serialize($cart_data),
                                             'payment_type' => serialize([[
                                                 'payment_type' => 'limit', 
-                                                'transaction_amount' => $price_single, 
+                                                'transaction_amount' => 0, 
                                                 'balance' => $log_limit->quota,
                                                 'discount' => $price_single,
                                                 'refund' => 0
@@ -2859,12 +2859,16 @@ class OrderController extends Controller
             $total = 0;
             $qty = 0;
             $discount = 0;
+            $refund = 0;
+            $transaction_amount = 0;
             foreach ($cart as $get) {
                 $qty += $get['qty'];
                 $total += $get['price'];
             }
             foreach ($payment_type as $get) {
                 $discount += $get['discount'];
+                $refund += $get['refund'];
+                $transaction_amount += $get['transaction_amount'];
             }
             $counted = ucwords(counted($log_transaction->total) . ' Rupiah');
             return view('print-invoice', compact(
@@ -2877,7 +2881,9 @@ class OrderController extends Controller
                 'counted',
                 'total',
                 'qty',
-                'user'
+                'user',
+                'refund',
+                'transaction_amount'
             ));
         } catch (Throwable $e) {
             return redirect()->route('scan-tamu');

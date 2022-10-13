@@ -342,14 +342,22 @@
                             <td class="w-70">Jumlah Order:</td>
                             <td>{{ $qty }}</td>
                         </tr>
-                        <tr>
-                            <td class="w-70">Diskon:</td>
-                            <td>{{ formatrupiah($discount) }}</td>
-                        </tr>
+                        @if ($discount != 0)
+                            <tr>
+                                <td class="w-70">Diskon:</td>
+                                <td>{{ formatrupiah($discount) }}</td>
+                            </tr>
+                        @endif
                         <tr>
                             <td class="w-70">Total Bayar:</td>
-                            <td>{{ formatrupiah($log_transaction->total) }}</td>
+                            <td>{{ formatrupiah($transaction_amount) }}</td>
                         </tr>
+                        @if ($refund != 0)
+                            <tr>
+                                <td class="w-70">Kembalian:</td>
+                                <td>{{ formatrupiah($refund) }}</td>
+                            </tr>
+                        @endif
                         <tr>
                             <td class="w-70">Total Tagihan:</td>
                             <td>{{ formatrupiah($total) }}</td>
@@ -370,7 +378,7 @@
                             <td class="w-10 text-center">No.</td>
                             <td class="w-50">Metode</td>
                             <td class="w-50">Transaksi</td>
-                            <td class="w-20">Balance</td>
+                            <td class="w-20">Sisa</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -379,7 +387,7 @@
                             <tr>
                                 <td class="text-center">{{ $i++ }}</td>
                                 <td>{{ $type['payment_type'] }}</td>
-                                <td>{{ $type['transaction_amount'] }}</td>
+                                <td>{{ $type['discount'] }}</td>
                                 <td>{{ $type['balance'] }}</td>
                             </tr>
                         @endforeach
@@ -400,12 +408,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="{{ asset('/dist/js/printThis.js') }}"></script>
     <script>
-        // $(document).ready(function() {
-        //     $('#print').printThis({
-        //         printContainer: true,
-        //     });
-        //     var back = $("input[name=back]").val();
-        // });
+        $(document).ready(function() {
+            $('#print').printThis({
+                printContainer: true,
+            });
+        });
     </script>
 </body>
 

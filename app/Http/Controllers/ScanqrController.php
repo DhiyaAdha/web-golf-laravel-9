@@ -26,8 +26,7 @@ class ScanqrController extends Controller
     private $data;
     private $user;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->status = "INVALID";
         $this->message = "Ada sesuatu yang salah!";
         $this->data = [];
@@ -37,14 +36,8 @@ class ScanqrController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-        // $visitors = Visitor::all();
-        // return View::make('Scan-tamu')
-        // ->with('visitors', $visitors);
-
-        return view('Scan-tamu');
+    public function index() {
+        return view('scan-tamu');
     }
 
     /**
@@ -52,8 +45,7 @@ class ScanqrController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -63,8 +55,7 @@ class ScanqrController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
@@ -74,12 +65,8 @@ class ScanqrController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //
-        // $visitor = Visitor::findOrFail($id);
-        // $qrcode = QrCode::size(400)->generate($visitor->id);
-        // return view('qrcode',compact('qrcode'));
     }
 
     /**
@@ -88,8 +75,7 @@ class ScanqrController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         //
     }
 
@@ -100,8 +86,7 @@ class ScanqrController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         //
     }
 
@@ -111,23 +96,19 @@ class ScanqrController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         //
     }
     // Scantamu-berhasil
-    public function scantamuberhasil()
-    {
+    public function scantamuberhasil() {
         return view('/scan-tamu-berhasil');
     }
 
-    public function proses()
-    {
+    public function proses() {
         return view('proses');
     }
 
-    public function kartutamu($id)
-    {
+    public function kartutamu($id) {
 
         $visitor = Visitor::findOrFail($id);
         $qrcode = QrCode::size(180)->generate($visitor->unique_qr);
@@ -135,15 +116,11 @@ class ScanqrController extends Controller
         return view('tamu.kartu-tamu', compact('qrcode'), $data);
     }
 
-    //penghubung route dengan view
-    public function detailscan()
-    {
+    public function detailscan() {
         return view('detail_scan');
     }
 
-    //penghubung method dengan view yang akan ditampilkan
-    public function show_detail($id = null)
-    {
+    public function show_detail($id = null){
         $visitor = Visitor::find($id);
         $deposit = Deposit::where('visitor_id', $id)->first();
         $log_limit = LogLimit::where('visitor_id', $id)->first();
@@ -153,8 +130,7 @@ class ScanqrController extends Controller
         return view('detail_scan', $data);
     }
 
-    public function checkQRCode(Request $request, $id = null)
-    {
+    public function checkQRCode(Request $request, $id = null) {
         $url_qr = explode("/", parse_url($request->get('qrCode'), PHP_URL_PATH));
         $get_visitor = Visitor::where("id", $url_qr[2])->first();
         if ($get_visitor == null) {
@@ -172,8 +148,7 @@ class ScanqrController extends Controller
         }
     }
 
-    public function checkNoHp(Request $request)
-    {
+    public function checkNoHp(Request $request) {
         $phone_visitor = Visitor::where("phone", $request->get('phone'))->first();
         if (is_null($phone_visitor)) {
             $this->setResponse('INVALID', "No hp tidak ditemukan!");
@@ -191,15 +166,13 @@ class ScanqrController extends Controller
         }
     }
 
-    private function setResponse($status = "INVALID", $message = "Ada sesuatu yang salah!", $data = [])
-    {
+    private function setResponse($status = "INVALID", $message = "Ada sesuatu yang salah!", $data = []) {
         $this->status = $status;
         $this->message = $message;
         $this->data = $data;
     }
 
-    private function getResponse()
-    {
+    private function getResponse() {
         return [
             'status' => $this->status,
             'message' => $this->message,
@@ -207,8 +180,7 @@ class ScanqrController extends Controller
         ];
     }
 
-    public function update_deposit(Request $request, $id)
-    {
+    public function update_deposit(Request $request, $id) {
         try {
             $get_uri = explode("/", parse_url($request->getRequestUri(), PHP_URL_PATH));
             $visitor = Deposit::join('visitors', 'deposits.visitor_id', '=', 'visitors.id')->where('deposits.visitor_id', $get_uri[3])->first();
@@ -250,8 +222,7 @@ class ScanqrController extends Controller
         }
     }
 
-    public function update_kupon(Request $request, $id)
-    {
+    public function update_kupon(Request $request, $id) {
         try {
             $get_uri = explode("/", parse_url($request->getRequestUri(), PHP_URL_PATH));
             $visitor = LogLimit::join('visitors', 'log_limits.visitor_id', '=', 'visitors.id')->where('log_limits.visitor_id', $get_uri[3])->first();
