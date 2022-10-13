@@ -320,7 +320,11 @@
             //Kendala Mencari Id Terakhir Log_Transcation 
             let url = "{{ route('invoice.print', ':id') }}";
             //Sentara Menggunakan Id Static
-            url = url.replace(':id', '32');
+            url = url.replace(':id', '75');
+
+            // var url = "{{ route('invoice.print.reguler', ':id') }}";
+            // url = url.replace(':id', id);
+
             if (!pay_amount) {
                 swal({
                     title: "",
