@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>12022/00000001</title>
+    <title>{{ $log_transaction->order_number }}</title>
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
     <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
@@ -360,7 +360,7 @@
                         @endif
                         <tr>
                             <td class="w-70">Total Tagihan:</td>
-                            <td>{{ formatrupiah($total) }}</td>
+                            <td>{{ formatrupiah($log_transaction->total) }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -387,7 +387,7 @@
                             <tr>
                                 <td class="text-center">{{ $i++ }}</td>
                                 <td>{{ $type['payment_type'] }}</td>
-                                <td>{{ $type['discount'] }}</td>
+                                <td>{{ $type['transaction_amount'] }}</td>
                                 <td>{{ $type['balance'] }}</td>
                             </tr>
                         @endforeach

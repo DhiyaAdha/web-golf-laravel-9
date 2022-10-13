@@ -21,7 +21,7 @@
             <!-- /Title -->
             <div class="row">
                 <div class="col-lg-8">
-                    <div style="height: 387px;" class="panel panel-default card-view">
+                    <div class="panel panel-default card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
                                 <strong class="panel-title txt-dark">Jenis Permainan</strong>
@@ -39,7 +39,7 @@
                             @foreach ($default as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                    title="Rp. {{ number_format($today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
+                                    title="Rp. {{ number_format($today === 'Sabtu' || $today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
                                     class="btn btn-default txt-success mr-15 mb-15">{{ $item->name }}</button>
                             @endforeach
                         </div>
@@ -53,7 +53,7 @@
                             @foreach ($additional as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                    title="Rp. {{ number_format($today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
+                                    title="Rp. {{ number_format($today === 'Sabtu' || $today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
                                     class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
                             @endforeach
                         </div>
@@ -67,7 +67,7 @@
                             @foreach ($others as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                    title="Rp. {{ number_format($today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
+                                    title="Rp. {{ number_format($today === 'Sabtu' || $today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
                                     class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
                             @endforeach
                         </div>
@@ -107,7 +107,7 @@
                                             Rp.{{ number_format($item['price'], 0, ',', '.') }}</p>
                                         <button onclick="updateQTY({{ $item['rowId'] }}, 'minus')"><i
                                                 class="cart-qty-minus-{{ $item['rowId'] }} fa fa-minus-square"></i></button>
-                                        <input type="number" min="0" class="qty-{{ $item['rowId'] }}"
+                                        <input type="number" min="1" class="qty-{{ $item['rowId'] }}"
                                             value="{{ $item['qty'] }}" style="width: 30px;" readonly />
                                         <button onclick="updateQTY({{ $item['rowId'] }}, 'plus')"><i
                                                 class="cart-qty-plus-{{ $item['rowId'] }} fa fa-plus-square"></i></button>

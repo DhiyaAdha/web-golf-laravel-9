@@ -392,23 +392,24 @@ class OrderRegulerController extends Controller
         }
     }
 
-    public function print_invoice() {
-        try{
-            $visitor = Visitor::find(auth()->id());
-            $log_transaction = LogTransaction::where('visitor_id', auth()->id())->latest()->first();
+    public function print_invoice(Request $request) {
+        try {
+            $visitor = Visitor::latest()->first();
+            $log_transaction = LogTransaction::latest()->first();
             $user = User::find($log_transaction->user_id);
             $cart = unserialize($log_transaction->cart);
             $payment_type = unserialize($log_transaction->payment_type);
-            $deposit = Deposit::where('visitor_id', auth()->id())->first();
             $total = 0;
             $qty = 0;
-            $discount = 0;
+            $refund = 0;
+            $transaction_amount = 0;
             foreach ($cart as $get) {
                 $qty += $get['qty'];
                 $total += $get['price'];
             }
             foreach ($payment_type as $get) {
-                $discount += $get['discount'];
+                $refund += $get['refund'];
+                $transaction_amount += $get['transaction_amount'];
             }
             $counted = ucwords(counted($log_transaction->total) . ' Rupiah');
             return view('reguler.print-invoice', compact(
@@ -416,12 +417,12 @@ class OrderRegulerController extends Controller
                 'log_transaction',
                 'payment_type',
                 'cart',
-                'deposit',
-                'discount', 
                 'counted',
                 'total',
                 'qty',
-                'user'
+                'user',
+                'refund',
+                'transaction_amount'
             ));
         } catch (Throwable $e) {
             return redirect()->route('proses_reguler');
