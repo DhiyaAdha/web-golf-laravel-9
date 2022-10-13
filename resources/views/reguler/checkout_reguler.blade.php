@@ -151,7 +151,8 @@
                                             </div>
                                             <div class="card mt-2">
                                                 <div class="card-body">
-                                                    <div class="d-flex align-items-center" style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                                                    <div class="d-flex align-items-center"
+                                                        style="border-bottom: 1px solid rgba(0,0,0,.125);">
                                                         <div class="d-flex flex-column flex-grow-1">
                                                             <strong>Cash/Transfer</strong>
                                                             <small class="text-muted">Tunjukan bukti transfer</small>
@@ -161,12 +162,12 @@
                                                                 </div>
                                                                 <input type="text" min="0"
                                                                     onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                                                    class="form-control bayar-input"
-                                                                    name="bayar" placeholder="Masukkan nominal bayar">
+                                                                    class="form-control bayar-input" name="bayar"
+                                                                    placeholder="Masukkan nominal bayar">
                                                             </div>
                                                         </div>
-                                                        <img src="{{ asset('cash-on-delivery.png') }}"
-                                                            alt="cash" width="30" height="30">
+                                                        <img src="{{ asset('cash-on-delivery.png') }}" alt="cash"
+                                                            width="30" height="30">
                                                     </div>
                                                 </div>
                                             </div>
@@ -218,11 +219,13 @@
                                         <div class="d-flex flex-column">
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Invoice</span>
-                                                <span style="font-size: small;" id="order-number">#{{ $order_number }}</span>
+                                                <span style="font-size: small;"
+                                                    id="order-number">#{{ $order_number }}</span>
                                             </div>
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Tamu</span>
-                                                <a href="javascript:void(0)"><i class="fa fa-plus-square add-name"></i></a>
+                                                <a href="javascript:void(0)"><i
+                                                        class="fa fa-plus-square add-name"></i></a>
                                             </div>
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Jumlah Item</span>
@@ -315,15 +318,9 @@
             let refund = $('#return').data('refund');
             let pay_amount = $('.bayar-input').val();
             let order_number = $('#order-number').text();
+            let total_payment = $('.nilai-total1-td').data('total');
             let name = '';
-            
-            //Kendala Mencari Id Terakhir Log_Transcation 
             let url = "{{ route('invoice.print.reguler') }}";
-            //Sentara Menggunakan Id Static
-            // url = url.replace(':id', '75');
-
-            // var url = "{{ route('invoice.print.reguler', ':id') }}";
-            // url = url.replace(':id', id);
 
             if (!pay_amount) {
                 swal({
@@ -334,63 +331,72 @@
                 });
                 return false;
             } else {
-                if($('.name').val() == '' || $('.name').val() == null){
+                if ($('.name').val() == '' || $('.name').val() == null) {
                     name = 'reguler';
                 } else {
                     name = $('.name').val();
                 }
             }
 
-            swal({
-                title: "",
-                text: "Lakukan pembayaran ?",
-                type: "info",
-                showCancelButton: true,
-                confirmButtonColor: "#01c853",
-                confirmButtonText: "Bayar",
-                cancelButtonText: "Batal",
-                closeOnConfirm: false,
-                closeOnCancel: false
-            }, function(isConfirm) {
-                if (isConfirm) {
-                    $.ajax({
-                        async: true,
-                        type: 'POST',
-                        data: {
-                            refund: refund,
-                            order_number: order_number,
-                            pay_amount: pay_amount,
-                            name: name
-                        },
-                        url: "{{ route('pay_reguler') }}",
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        beforeSend: function(request) {
-                            $.blockUI({
-                                css: {
-                                    backgroundColor: 'transparent',
-                                    border: 'none'
-                                },
-                                message: '<img src="../img/rolling.svg">',
-                                baseZ: 1500,
-                                overlayCSS: {
-                                    backgroundColor: '#7C7C7C',
-                                    opacity: 0.4,
-                                    cursor: 'wait'
-                                }
-                            });
-                        },
-                        success: function(response) {
-                            $.unblockUI();
-                            if (response.status == "INVALID") {
-                                swal({
-                                    title: "",
-                                    type: "error",
-                                    text: response.message,
-                                    confirmButtonColor: "#01c853",
+            if (pay_amount < total_payment) {
+                swal({
+                    title: "",
+                    type: "error",
+                    text: "Nominal tidak terpenuhi",
+                    confirmButtonColor: "#01c853",
+                });
+                return false;
+            } else {
+                swal({
+                    title: "",
+                    text: "Lakukan pembayaran ?",
+                    type: "info",
+                    showCancelButton: true,
+                    confirmButtonColor: "#01c853",
+                    confirmButtonText: "Bayar",
+                    cancelButtonText: "Batal",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                }, function(isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            async: true,
+                            type: 'POST',
+                            data: {
+                                refund: refund,
+                                order_number: order_number,
+                                pay_amount: pay_amount,
+                                name: name
+                            },
+                            url: "{{ route('pay_reguler') }}",
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            beforeSend: function(request) {
+                                $.blockUI({
+                                    css: {
+                                        backgroundColor: 'transparent',
+                                        border: 'none'
+                                    },
+                                    message: '<img src="../img/rolling.svg">',
+                                    baseZ: 1500,
+                                    overlayCSS: {
+                                        backgroundColor: '#7C7C7C',
+                                        opacity: 0.4,
+                                        cursor: 'wait'
+                                    }
                                 });
-                            } else {
+                            },
+                            success: function(response) {
+                                $.unblockUI();
+                                if (response.status == "INVALID") {
+                                    swal({
+                                        title: "",
+                                        type: "error",
+                                        text: response.message,
+                                        confirmButtonColor: "#01c853",
+                                    });
+                                } else {
                                     swal({
                                         title: '',
                                         type: "success",
@@ -401,41 +407,44 @@
                                             'Print Invoice');
                                         window.close();
                                     });
+                                }
                             }
-                        }
-                    });
-                } else {
+                        });
+                    } else {
                         swal("Dibatalkan", "", "info");
                     }
                 });
                 return false;
-            });
-
-            function invoice(url, title) {
-                popupCenter(url, title, 340, 550);
             }
 
-            function popupCenter(url, title, w, h) {
-                const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window
-                    .screenX;
-                const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window
-                    .screenY;
-                const width = window.innerWidth ? window.innerWidth : document.documentElement
-                    .clientWidth ?
-                    document
-                    .documentElement.clientWidth : screen.width;
-                const height = window.innerHeight ? window.innerHeight : document.documentElement
-                    .clientHeight ?
-                    document
-                    .documentElement.clientHeight : screen.height;
-                const systemZoom = width / window.screen.availWidth;
-                const left = (width - w) / 2 / systemZoom + dualScreenLeft
-                const top = (height - h) / 2 / systemZoom + dualScreenTop
-                const newWindow = window.open(url, title,
-                    `scrollbars=yes,width  = ${w / systemZoom}, height = ${h / systemZoom}, top    = ${top}, left   = ${left}`
-                );
-                if (window.focus) newWindow.focus();
-            }
+        });
+
+        function invoice(url, title) {
+            popupCenter(url, title, 340, 550);
+        }
+
+        function popupCenter(url, title, w, h) {
+            const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window
+                .screenX;
+            const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window
+                .screenY;
+            const width = window.innerWidth ? window.innerWidth : document.documentElement
+                .clientWidth ?
+                document
+                .documentElement.clientWidth : screen.width;
+            const height = window.innerHeight ? window.innerHeight : document.documentElement
+                .clientHeight ?
+                document
+                .documentElement.clientHeight : screen.height;
+            const systemZoom = width / window.screen.availWidth;
+            const left = (width - w) / 2 / systemZoom + dualScreenLeft
+            const top = (height - h) / 2 / systemZoom + dualScreenTop
+            const newWindow = window.open(url, title,
+                `scrollbars=yes,width  = ${w / systemZoom}, height = ${h / systemZoom}, top    = ${top}, left   = ${left}`
+            );
+            if (window.focus) newWindow.focus();
+        }
     </script>
 </body>
+
 </html>
