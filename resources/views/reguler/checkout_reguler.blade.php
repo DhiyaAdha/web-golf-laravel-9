@@ -389,14 +389,7 @@
                             },
                             success: function(response) {
                                 $.unblockUI();
-                                if (response.status == "INVALID") {
-                                    swal({
-                                        title: "",
-                                        type: "error",
-                                        text: response.message,
-                                        confirmButtonColor: "#01c853",
-                                    });
-                                } else {
+                                if (response.status == "VALID") {
                                     swal({
                                         title: '',
                                         type: "success",

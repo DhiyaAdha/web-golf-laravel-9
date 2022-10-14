@@ -201,7 +201,7 @@
                                                         <label class="custom-control-label cursor"
                                                             for="wk">Single</label>
                                                     </div>
-                                                    <div class="custom-control custom-radio">
+                                                    <div class="custom-control custom-radio d-none">
                                                         <input type="radio" name="payment" id="kw"
                                                             class="custom-control-input" value="multiple">
                                                         <label class="custom-control-label cursor"
@@ -638,7 +638,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <div class="card mt-2">
                                                     <div class="card-body">
                                                         <div class="d-flex">
