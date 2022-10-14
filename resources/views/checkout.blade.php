@@ -1289,7 +1289,7 @@
 
                 swal({
                     title: "",
-                    text: "Lakukan pembayaran ?",
+                    text: "Lakukan pembayaran?",
                     type: "info",
                     showCancelButton: true,
                     confirmButtonColor: "#01c853",
@@ -1335,14 +1335,7 @@
                             },
                             success: function(response) {
                                 $.unblockUI();
-                                if (response.status == "INVALID") {
-                                    swal({
-                                        title: "",
-                                        type: "error",
-                                        text: response.message,
-                                        confirmButtonColor: "#01c853",
-                                    });
-                                } else {
+                                if (response.status == "VALID") {
                                     swal({
                                         title: '',
                                         type: "success",
@@ -1351,7 +1344,7 @@
                                     }, function(isConfirm) {
                                         invoice(url,
                                             'Print Invoice');
-                                        window.close();
+                                        history.go(0);
                                     });
                                 }
                             }

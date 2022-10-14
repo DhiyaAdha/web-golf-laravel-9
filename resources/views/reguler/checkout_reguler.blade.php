@@ -398,7 +398,7 @@
                                     }, function(isConfirm) {
                                         invoice("{{ route('invoice.print.reguler') }}",
                                             'Print Invoice');
-                                        window.close();
+                                        history.go(0);
                                     });
                                 }
                             }
