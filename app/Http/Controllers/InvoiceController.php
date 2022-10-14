@@ -104,7 +104,6 @@ class InvoiceController extends Controller
     {
         try {
             $transaction = LogTransaction::find($id);
-            $detail = Detail::where('log_transaction_id',$id)->first();
             $payment_type = unserialize($transaction->payment_type);
             $datax = array();
             foreach ($payment_type as $i => $t) {
@@ -170,7 +169,6 @@ class InvoiceController extends Controller
     {
         try {
             $transaction = LogTransaction::find($id);
-            $detail = Detail::where('log_transaction_id',$id)->first();
             $payment_type = unserialize($transaction->payment_type);
             $datax = array();
             foreach ($payment_type as $i => $t) {
