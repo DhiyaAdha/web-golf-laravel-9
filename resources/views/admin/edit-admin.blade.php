@@ -44,7 +44,7 @@
                                     <label class="pull-left control-label mb-10" for="password">Password</label>
                                     <input type="password" name="password"
                                         class="form-control @error('password') has-error @enderror"
-                                        id="password" placeholder="Masukan Password">
+                                        id="password" placeholder="Masukan Password" value="{{ $users->password }}">
                                         <i class="fa-solid fa-eye-slash fa-eye " id="eye"></i>
 
                                     @error('password')
@@ -57,7 +57,7 @@
                                     <div class="clearfix"></div>
                                     <input type="password" name="password_confirmation"
                                         class="form-control @error('password') is-invalid @enderror"
-                                        id="password_confirmation" placeholder="Masukan Ulang Password">
+                                        id="password_confirmation" placeholder="Masukan Ulang Password" value="{{ $users->password }}">
                                         <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
                                     <i class="fa-solid fa-eye fa-eye-slash" id="eyee"></i>
                                 </div>
@@ -133,9 +133,9 @@
         var password = $("#password").val();
         var confirmPassword = $("#password_confirmation").val();
         if (password != confirmPassword)
-            $("#CheckPasswordMatch").html("Password does not match !").css("color", "red");
+            $("#CheckPasswordMatch").html("Password tidak sama !").css("color", "red");
         else
-            $("#CheckPasswordMatch").html("Password match !").css("color", "green");
+            $("#CheckPasswordMatch").html("Password sama !").css("color", "green");
     });
 </script>
 @endpush

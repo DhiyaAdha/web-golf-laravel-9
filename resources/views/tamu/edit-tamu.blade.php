@@ -23,7 +23,11 @@
             <!-- /Title -->
             <div class="row">
                 <div class="col-lg-12" style="position: relative;">
+<<<<<<< HEAD
                     <div class="panel panel-default card-view">
+=======
+                    <div style="" class="panel panel-default card-view">
+>>>>>>> 10790b37e1793b4bc71f50233d1b46c68297cf89
                         <h6 class="control-label mb-10">Edit Tamu</h6>
                         <div class="panel-body">
                             <div class="form-wrap">
