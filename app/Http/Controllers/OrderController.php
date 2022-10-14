@@ -348,8 +348,8 @@ class OrderController extends Controller
         return redirect()->back();
     }
 
-    public function checkout(Request $request, $id)
-    {
+    public function checkout(Request $request, $id) {
+        $link_pos = URL::signedRoute('order.cart', ['id' => $id]);
         try {
             $visitor = Visitor::find(request()->segment(2));
             $items = \Cart::session(request()->segment(2))->getContent();
@@ -391,7 +391,7 @@ class OrderController extends Controller
             }
             return view("checkout", compact('log_limit', 'price_single', 'item_default', 'package_default', 'package_additional', 'package_others', 'visitor', 'deposit', 'totalPrice', 'order_number', 'orders'))->render();
         } catch (\Throwable $th) {
-            return redirect()->route('scan-tamu');
+            return redirect()->to($link_pos); 
         }
     }
 

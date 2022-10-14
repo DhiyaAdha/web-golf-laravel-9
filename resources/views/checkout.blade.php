@@ -195,7 +195,7 @@
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Metode Pembayaran</span>
                                                 <div class="d-flex">
-                                                    <div class="custom-control custom-radio mr-2">
+                                                    <div class="custom-control custom-radio mr-2 d-none">
                                                         <input type="radio" name="payment" id="wk"
                                                             class="custom-control-input" value="single" checked>
                                                         <label class="custom-control-label cursor"
@@ -948,11 +948,19 @@
 
                 if ($('input[type=radio][name=payment]:checked').val() == 'single') {
                     if ($(this).val() < total) {
-                        $(this).addClass('is-invalid');
-                        $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
-                            "background-color": "rgba(216, 25, 25, 0.2)",
-                            "color": "#d81c19d1"
-                        }).data('refund', return_pay);
+                        if ($(this).val() == '') {
+                            $(this).removeClass('is-invalid');
+                            $('#return').text('-').css({
+                                "background-color": "rgba(25, 216, 149, 0.2)",
+                                "color": "#19d895"
+                            }).data('refund', return_pay);
+                        } else {
+                            $(this).addClass('is-invalid');
+                            $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                                "background-color": "rgba(216, 25, 25, 0.2)",
+                                "color": "#d81c19d1"
+                            }).data('refund', return_pay);
+                        }
                     } else {
                         $(this).removeClass('is-invalid');
                         $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
@@ -1289,7 +1297,7 @@
 
                 swal({
                     title: "",
-                    text: "Lakukan pembayaran ?",
+                    text: "Lakukan pembayaran?",
                     type: "info",
                     showCancelButton: true,
                     confirmButtonColor: "#01c853",
@@ -1335,14 +1343,7 @@
                             },
                             success: function(response) {
                                 $.unblockUI();
-                                if (response.status == "INVALID") {
-                                    swal({
-                                        title: "",
-                                        type: "error",
-                                        text: response.message,
-                                        confirmButtonColor: "#01c853",
-                                    });
-                                } else {
+                                if (response.status == "VALID") {
                                     swal({
                                         title: '',
                                         type: "success",
@@ -1351,7 +1352,7 @@
                                     }, function(isConfirm) {
                                         invoice(url,
                                             'Print Invoice');
-                                        window.close();
+                                        history.go(0);
                                     });
                                 }
                             }

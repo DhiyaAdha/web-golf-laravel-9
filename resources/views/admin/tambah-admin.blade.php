@@ -89,16 +89,15 @@
                                         @enderror
                                     </div>
                                     <div class="form-group text-left">
-                                        <button type="" class="btn btn-info" id="gd">Tambah Admin</button>
+                                        <button type="submit" class="btn btn-info" id="gd">Tambah Admin</button>
                                     </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            @include('layouts.footer')
         </div>
-        @include('Layouts.Footer')
+        @include('layouts.footer')
     </div>
 </div>
 @endsection

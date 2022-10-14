@@ -100,9 +100,8 @@ class InvoiceController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-     public function show($id)
-    {
-        // try {
+    public function show($id) {
+        try {
             $transaction = LogTransaction::find($id);
             $payment_type = unserialize($transaction->payment_type);
             $datax = array();
@@ -123,11 +122,9 @@ class InvoiceController extends Controller
                 $discount += $get['discount'];
             }
             return view('invoice.invoice', compact('method_payment','transaction', 'visitor', 'cart', 'qty', 'discount', 'total'));
-        // } 
-        // catch (\Throwable $th) 
-        // {
-        //     return redirect()->route('invoice',$id);
-        // }
+        } catch (\Throwable $th) {
+            return redirect()->route('invoice',$id);
+        }
     }
 
     /**
@@ -165,7 +162,7 @@ class InvoiceController extends Controller
     }
 
     public function metode_pembayaran () {
-        return view('Invoice.metode_pembayaran');
+        return view('invoice.metode_pembayaran');
     }
     public function cetak_pdf($id)
     {
@@ -190,7 +187,7 @@ class InvoiceController extends Controller
                 $discount += $get['discount'];
             }
             $pdf = PDF::loadView('invoice.cetak_invoice', compact('method_payment','transaction', 'visitor', 'cart', 'qty', 'discount', 'total'));
-            return $pdf->download('invoice.pdf');
+            return $pdf->download('invoice_'.$visitor->name.'.pdf');
         } catch (\Throwable $th) {
             return redirect()->route('riwayat-invoice.index');
         }
