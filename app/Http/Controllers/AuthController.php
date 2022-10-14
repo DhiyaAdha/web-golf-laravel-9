@@ -122,11 +122,15 @@ class AuthController extends Controller {
     }
     //ini untuk function reset password, email yang di input akan dicek
     public function resetPassword(Request $request){
-        $request->validate([
-            'email'=>'required|email|exists:users,email',
-            'password'=>'required|confirmed|min:8',
-            'password_confirmation'=>'required',
-        ]);
+            $validate = Validator::make($request->all(), [
+                'email'=>'required|email|exists:users,email',
+                'password'=>'required|confirmed|min:8',
+                'password_confirmation'=>'required',
+            ]);
+            if($validate->fails()){
+                // return response(['message'=> $validate->errors()], 200);
+                return back()->with('error', 'ada yang salah, pastikan password yang anda masukkan sama dan berisi minimal 8 karakter');
+            }
         //ini untuk function mengecek token dari database untuk mereset password
         $check_token = DB::table('password_resets')->where([
             'email'=>$request->email,

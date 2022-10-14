@@ -21,6 +21,7 @@
     <link href="/dist/css/style.css" rel="stylesheet" type="text/css">
     {{-- <link href="/dist/css/custom.css" rel="stylesheet" type="text/css"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
 
     <style>
         .password-container {
@@ -214,6 +215,9 @@
     <!-- Init JavaScript -->
     <script src="/dist/js/init.js"></script>
 
+    {{-- toast --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
     <script>
         const passwordField = document.querySelector("#password");
         const passwordCon = document.querySelector("#password_confirmation");
@@ -239,6 +243,53 @@
                 $("#CheckPasswordMatch").html("Password does not match !").css("color", "red");
             else
                 $("#CheckPasswordMatch").html("Password match !").css("color", "green");
+        });
+    </script>
+    <script>
+
+        $(document).ready(function() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "100",
+                "hideDuration": "100",
+                "timeOut": "6000",
+                "extendedTimeOut": "6000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+
+            @if (Session::has('error'))
+                toastr.error('{{ Session::get('error') }}');
+            @endif
+
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "10",
+                "hideDuration": "10",
+                "timeOut": "3000",
+                "extendedTimeOut": "3000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut",
+            };
+            @if (Session::has('success'))
+                toastr.success('{{ Session::get('success') }}');
+            @endif
         });
     </script>
 </body>
