@@ -24,8 +24,8 @@
                     <h6 class="control-label mb-10">Tambah Admin</h6>
                     <div class="panel-body">
                         <div class="form-wrap">
+                            <form action="{{ route('insertadmin') }}" method="POST">
                                 @csrf
-                                <form action="{{ route('insertadmin') }}" method="POST">
                                 <div class="form-group @error('name') has-error @enderror">
                                     <label class="control-label mb-10" for="">Nama Lengkap</label>
                                     <input type="text" class="form-control" id="result" size="50px" placeholder="Masukan Nama" name="name" value="{{ old('name') }}">
