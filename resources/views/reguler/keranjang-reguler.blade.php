@@ -468,9 +468,10 @@
                         text: "Order berhasil dibuat",
                         confirmButtonColor: "#01c853",
                     }, function(isConfirm) {
-                        checkout(url, response.order_number);
-                        $('#checkout').attr('disabled', true);
-                        window.close();
+                        window.open(url)
+                        // checkout(url, response.order_number);
+                        // $('#checkout').attr('disabled', true);
+                        // window.close();
                     });
                 }
             });
