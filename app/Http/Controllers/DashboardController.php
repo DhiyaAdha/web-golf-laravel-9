@@ -253,11 +253,7 @@ class DashboardController extends Controller
             'updated_at',
         ])
             ->orderBy('updated_at', 'desc')
-<<<<<<< HEAD
-            ->where('tipe_member', '!=','REGULER')
-=======
             ->where('tipe_member', '!=', 'REGULER')
->>>>>>> yudis
             ->get();
         if ($request->ajax()) {
             return datatables()
