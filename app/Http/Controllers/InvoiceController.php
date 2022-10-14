@@ -187,7 +187,7 @@ class InvoiceController extends Controller
                 $discount += $get['discount'];
             }
             $pdf = PDF::loadView('invoice.cetak_invoice', compact('method_payment','transaction', 'visitor', 'cart', 'qty', 'discount', 'total'));
-            return $pdf->download('invoice_'.$visitor.'.pdf');
+            return $pdf->download('invoice_'.$visitor->name.'.pdf');
         } catch (\Throwable $th) {
             return redirect()->route('riwayat-invoice.index');
         }
