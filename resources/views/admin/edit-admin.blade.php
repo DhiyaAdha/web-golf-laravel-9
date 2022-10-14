@@ -44,8 +44,8 @@
                                     <label class="pull-left control-label mb-10" for="password">Password</label>
                                     <input type="password" name="password"
                                         class="form-control @error('password') has-error @enderror"
-                                        id="password" placeholder="Masukan Password">
-                                        <i class="fa-solid fa-eye-slash fa-eye " id="eye"></i>
+                                        id="password" placeholder="Masukan Password Baru" value="{{ $users->password }}">
+                                    <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye1 fa-eye-slash" id="eye_edit_admin"></i>
 
                                     @error('password')
                                         <div class="text-danger"> {{ $message }}</div>
@@ -57,9 +57,9 @@
                                     <div class="clearfix"></div>
                                     <input type="password" name="password_confirmation"
                                         class="form-control @error('password') is-invalid @enderror"
-                                        id="password_confirmation" placeholder="Masukan Ulang Password">
+                                        id="password_confirmation" placeholder="Masukan Password Baru" value="{{ $users->password }}">
                                         <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
-                                    <i class="fa-solid fa-eye fa-eye-slash" id="eyee"></i>
+                                    <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye2 fa-eye-slash" id="eyee_edit_admin"></i>
                                 </div>
                                 <div class="form-group @error('phone') has-error @enderror">
                                     <label class="control-label mb-10" for="">Nomer Hp</label>
@@ -114,16 +114,16 @@
 <script>
     const passwordField = document.querySelector("#password");
     const passwordCon = document.querySelector("#password_confirmation");
-    const eyeIcon = document.querySelector("#eye");
-    const eyeeIcon = document.querySelector("#eyee");
+    const eyeIcon = document.querySelector("#eye_edit_admin");
+    const eyeeIcon = document.querySelector("#eyee_edit_admin");
 
-    eye.addEventListener("click", function() {
-        this.classList.toggle("fa-eye-slash");
+    eye_edit_admin.addEventListener("click", function() {
+        this.classList.toggle("fa-eye");
         const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
         passwordField.setAttribute("type", type);
     })
-    eyee.addEventListener("click", function() {
-        this.classList.toggle("fa-eye-slash");
+    eyee_edit_admin.addEventListener("click", function() {
+        this.classList.toggle("fa-eye");
         const typee = passwordCon.getAttribute("type") === "password" ? "text" : "password";
         passwordCon.setAttribute("type", typee);
     })

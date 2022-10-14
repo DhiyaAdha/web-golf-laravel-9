@@ -400,6 +400,19 @@ h6.panel-title.text-center {
     top: 236px;
     right: 40px;
 }
+/* untuk edit admin */
+#eye_edit_admin {
+    position: absolute;
+    margin-top: -190px;
+    top: 236px;
+    right: 30px;
+}
+#eyee_edit_admin {
+    position: absolute;
+    margin-top: -190px;
+    top: 236px;
+    right: 30px;
+}
 
 #toast-container>.toast-success {
     background-color: #01C853;
