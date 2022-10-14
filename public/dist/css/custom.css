@@ -367,6 +367,14 @@ h6.panel-title.text-center {
     padding: 15px;
 } */
 
+/* .fa-eye {
+    position: absolute;
+    top: 60%;
+    right: 1%;
+    cursor: pointer;
+} */
+
+
 /* pasword tambah admin */
 .password-container {
     width: 100%;
@@ -391,24 +399,6 @@ h6.panel-title.text-center {
     margin-top: 129px;
     top: 236px;
     right: 40px;
-}
-
-/* @media screen and (min-width: 250px) {
-    #eye {
-        top: 315px;
-    }
-} */
-
-/* @media screen and (min-width: 320px) {
-    #eye {
-        top: 276px;
-    }
-} */
-
-@media screen and (min-width: 480px) {
-    #eye {
-        top: 237px;
-    }
 }
 
 #toast-container>.toast-success {
