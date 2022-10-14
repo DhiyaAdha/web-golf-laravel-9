@@ -17,7 +17,7 @@
     <link href="../../vendors/bower_components/jasny-bootstrap/dist/css/jasny-bootstrap.min.css" rel="stylesheet"
         type="text/css" />
     <link href="dist/css/style.css" rel="stylesheet" type="text/css">
-    <link href="dist/css/custom.css" rel="stylesheet" type="text/css">
+    {{-- <link href="dist/css/custom.css" rel="stylesheet" type="text/css"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -152,7 +152,7 @@
                                                     for="password">Password</label>
                                                 <input type="password" name="password" class="form-control"
                                                     id="password" placeholder="Masukan Password" required>
-                                                <i class="fa-solid fa-eye fa-eye-slash " id="eye"></i>
+                                                <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye fa-eye-slash " id="eye"></i>
                                             </div>
                                             <div class="form-group text-center">
                                                 <button type="submit" class="btn btn-info btn-rounded">sign
