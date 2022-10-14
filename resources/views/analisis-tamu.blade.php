@@ -436,7 +436,7 @@
                     }
                 ],
                 order: [
-                    [1, 'desc']
+                    [1, 'asc']
                 ],
                 responsive: true,
                 language: {

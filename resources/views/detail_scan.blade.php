@@ -118,7 +118,7 @@
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between flex-wrap mt-15">
-                                    <div class="panel-black mb-15">
+                                    <div class="panel-black1 mb-15">
                                         <div class="d-flex flex-column color-white">
                                             Limit Kupon
                                             <div class="mt-15">
@@ -130,7 +130,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="panel-black mb-15">
+                                    <div class="panel-black2 mb-15">
                                         <div class="d-flex flex-column color-white">
                                             Limit Bulanan
                                             <div class="mt-15">
