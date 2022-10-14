@@ -102,9 +102,8 @@ class InvoiceController extends Controller
     
      public function show($id)
     {
-        try {
+        // try {
             $transaction = LogTransaction::find($id);
-            $detail = Detail::where('log_transaction_id',$id)->first();
             $payment_type = unserialize($transaction->payment_type);
             $datax = array();
             foreach ($payment_type as $i => $t) {
@@ -124,9 +123,11 @@ class InvoiceController extends Controller
                 $discount += $get['discount'];
             }
             return view('invoice.invoice', compact('method_payment','transaction', 'visitor', 'cart', 'qty', 'discount', 'total'));
-        } catch (\Throwable $th) {
-            return redirect()->route('invoice',$id);
-        }
+        // } 
+        // catch (\Throwable $th) 
+        // {
+        //     return redirect()->route('invoice',$id);
+        // }
     }
 
     /**
@@ -170,7 +171,6 @@ class InvoiceController extends Controller
     {
         try {
             $transaction = LogTransaction::find($id);
-            $detail = Detail::where('log_transaction_id',$id)->first();
             $payment_type = unserialize($transaction->payment_type);
             $datax = array();
             foreach ($payment_type as $i => $t) {

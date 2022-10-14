@@ -365,7 +365,6 @@
         }
 
         function removeItem(id) {
-
             var tg = window.location.href;
             tg = tg.split("?")
             tg = tg[0];
@@ -377,37 +376,6 @@
             $('.disabled-cart-' + id).fadeOut(800, function() {
                 $(this).remove();
             });
-
-            // if (!$package_additional == 0) {
-            //     var tg = window.location.href;
-
-            //     tg = tg.split("?")
-            //     tg = tg[0];
-            //     tg = tg.split("/");
-            //     page = tg[tg.length - 1];
-            //     var url = "{{ route('remove.item', ':package') }}";
-            //     url = url.replace(':package', id);
-            //     $('.disabled-cart-' + id).css('background', 'tomato');
-            //     $('.disabled-cart-' + id).fadeOut(800, function() {
-            //         $(this).remove();
-            //     });
-            // } else {
-            //     swal({
-            //         title: "",
-            //         type: "error",
-            //         text: "Hapus Item Tambahan Terlebih Dahulu",
-            //         confirmButtonColor: "#01c853",
-            //     });
-            // }
-
-            // swal({
-            //         title: "",
-            //         type: "error",
-            //         text: "Hapus Item Tambahan Terlebih Dahulu",
-            //         confirmButtonColor: "#01c853",
-            //     });
-
-
 
             $.ajax({
                 async: true,
@@ -524,9 +492,10 @@
                         text: "Order berhasil dibuat",
                         confirmButtonColor: "#01c853",
                     }, function(isConfirm) {
-                        checkout(url, response.order_number);
-                        $('#checkout').attr('disabled', true);
+                        window.open(url);
                         window.close();
+                        // checkout(url, response.order_number);
+                        // $('#checkout').attr('disabled', true);
                     });
                 }
             });
