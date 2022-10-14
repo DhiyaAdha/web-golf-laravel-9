@@ -110,7 +110,7 @@ i.fa.fa-trash-o {
 
 .label,
 .jvectormap-tip {
-    padding: 5px 6px 3px !important;
+    padding: 5px 10px 3px !important;
 }
 
 .text-size {
@@ -1720,13 +1720,120 @@ input.cmn-toggle-round-flat:checked+label:after {
     border-radius: 5px;
 }
 
-.panel-black {
+.panel-black1 {
     padding: 10px 100px 10px 20px;
     width: auto;
     height: 75px;
     background: #000000;
     border-radius: 5px;
 }
+.panel-black2 {
+    padding: 10px 90px 10px 20px;
+    width: auto;
+    height: 75px;
+    background: #000000;
+    border-radius: 5px;
+}
+
+
+@media screen and (max-width: 993px) {
+    .panel-black1 {
+        padding: 10px 253px 10px 20px;
+        width: auto;
+        height: 75px;
+        background: #000000;
+        border-radius: 5px;
+    }
+    .panel-black2 {
+        padding: 10px 243px 10px 20px;
+        width: auto;
+        height: 75px;
+        background: #000000;
+        border-radius: 5px;
+    }
+}
+@media screen and (max-width: 1024px) {
+    .panel-black1 {
+        padding: 10px 253px 10px 20px;
+        width: auto;
+        height: 75px;
+        background: #000000;
+        border-radius: 5px;
+    }
+    .panel-black2 {
+        padding: 10px 243px 10px 20px;
+        width: auto;
+        height: 75px;
+        background: #000000;
+        border-radius: 5px;
+    }
+}
+@media screen and (min-width: 1024px) {
+    .panel-black1 {
+        padding: 10px 60px 10px 20px;
+        width: auto;
+        height: 75px;
+        background: #000000;
+        border-radius: 5px;
+    }
+    .panel-black2 {
+        padding: 10px 50px 10px 20px;
+        width: auto;
+        height: 75px;
+        background: #000000;
+        border-radius: 5px;
+    }
+}
+@media screen and (max-width: 790px) {
+    .panel-black1 {
+        padding: 10px 100px 10px 20px;
+        width: auto;
+        height: 75px;
+        background: #000000;
+        border-radius: 5px;
+    }
+    .panel-black2 {
+        padding: 10px 100px 10px 20px;
+        width: auto;
+        height: 75px;
+        background: #000000;
+        border-radius: 5px;
+    }
+}
+@media screen and (max-width: 494px) {
+    .panel-black1 {
+        padding: 10px 50px 10px 20px;
+        width: auto;
+        height: 75px;
+        background: #000000;
+        border-radius: 5px;
+    }
+    .panel-black2 {
+        padding: 10px 40px 10px 20px;
+        width: auto;
+        height: 75px;
+        background: #000000;
+        border-radius: 5px;
+    }
+}
+@media screen and (max-width: 384px) {
+    .panel-black1 {
+        padding: 10px 20px 10px 20px;
+        width: auto;
+        height: 75px;
+        background: #000000;
+        border-radius: 5px;
+    }
+    .panel-black2 {
+        padding: 10px 10px 10px 20px;
+        width: auto;
+        height: 75px;
+        background: #000000;
+        border-radius: 5px;
+    }
+}
+
+
 
 .label-pembayaran-hijau {
     /* display: flex; */
