@@ -19,7 +19,7 @@
         type="text/css" />
     <!-- Custom CSS -->
     <link href="/dist/css/style.css" rel="stylesheet" type="text/css">
-    <link href="/dist/css/custom.css" rel="stylesheet" type="text/css">
+    {{-- <link href="/dist/css/custom.css" rel="stylesheet" type="text/css"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
     <style>
@@ -78,7 +78,6 @@
             top: 72px;
             right: 10px;
             cursor: pointer;
-            color: lightgray;
         }
         .fa-eye2 {
             position: absolute;
@@ -87,7 +86,6 @@
             top: 72px;
             right: 10px;
             cursor: pointer;
-            color: lightgray;
         } */
     </style>
 </head>
