@@ -291,11 +291,19 @@
             let return_pay = parseInt($(this).val()) - parseInt(total);
 
             if ($(this).val() < total) {
-                $(this).addClass('is-invalid');
-                $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
-                    "background-color": "rgba(216, 25, 25, 0.2)",
-                    "color": "#d81c19d1"
-                }).data('refund', return_pay);
+                if ($(this).val() == '') {
+                    $(this).removeClass('is-invalid');
+                    $('#return').text('-').css({
+                        "background-color": "rgba(25, 216, 149, 0.2)",
+                        "color": "#19d895"
+                    }).data('refund', return_pay);
+                } else {
+                    $(this).addClass('is-invalid');
+                    $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                        "background-color": "rgba(216, 25, 25, 0.2)",
+                        "color": "#d81c19d1"
+                    }).data('refund', return_pay);
+                }
             } else {
                 $(this).removeClass('is-invalid');
                 $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
@@ -349,7 +357,7 @@
             } else {
                 swal({
                     title: "",
-                    text: "Lakukan pembayaran ?",
+                    text: "Lakukan pembayaran?",
                     type: "info",
                     showCancelButton: true,
                     confirmButtonColor: "#01c853",

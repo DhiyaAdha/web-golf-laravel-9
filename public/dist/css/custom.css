@@ -490,6 +490,10 @@ element.style {
     padding: 0px !important;
 }
 
+.sm-data-box .counter {
+    font-size: 18px !important;
+}
+
 .panel-scan-qr {
     border-radius: 10px;
     border: 1.8px solid gray;

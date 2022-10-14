@@ -183,7 +183,6 @@
             <div class="row">
             </div>
             @include('layouts.footer')
-            <div id="lds-facebook"></div>
         </div>
     </div>
 @endsection
