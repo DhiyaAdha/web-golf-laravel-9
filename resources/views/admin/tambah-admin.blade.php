@@ -137,9 +137,9 @@
             var password = $("#password").val();
             var confirmPassword = $("#confirm_password").val();
             if (password != confirmPassword)
-                $("#CheckPasswordMatch").html("Password does not match !").css("color", "red");
+                $("#CheckPasswordMatch").html("Password tidak sama !").css("color", "red");
             else
-                $("#CheckPasswordMatch").html("Password match !").css("color", "green");
+                $("#CheckPasswordMatch").html("Password sama !").css("color", "green");
         });
     </script>
 @endpush
