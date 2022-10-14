@@ -195,7 +195,7 @@
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Metode Pembayaran</span>
                                                 <div class="d-flex">
-                                                    <div class="custom-control custom-radio mr-2">
+                                                    <div class="custom-control custom-radio mr-2 d-none">
                                                         <input type="radio" name="payment" id="wk"
                                                             class="custom-control-input" value="single" checked>
                                                         <label class="custom-control-label cursor"
