@@ -96,9 +96,8 @@
                     </div>
                 </div>
             </div>
-            @include('layouts.footer')
         </div>
-        @include('Layouts.Footer')
+        @include('layouts.footer')
     </div>
 </div>
 @endsection
