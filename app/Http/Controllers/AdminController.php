@@ -97,7 +97,6 @@ class AdminController extends Controller
                 'password' => 'required|min:8',
                 'phone' => 'required|min:12',
                 'role_id' => 'required',
-                'password_confirmation' => 'required_with:password|same:password|min:8',
             ],
             [
                 'name.required' => 'Nama admin masih kosong.',
