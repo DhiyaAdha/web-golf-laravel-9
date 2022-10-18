@@ -88,13 +88,17 @@
             },
             "render": $.fn.dataTable.render.text(),
             "columns": [{
-                    "data": function(data) {
-                        return data.name
-                    }
+                    data: 'name',
+                    searchable: true,
+                    orderable:false
                 },
                 {
                     "data": function(data) {
-                        return `<span class="label ${data.category == 'default' ? 'label-primary' : 'label-danger'}">${data.category}</span>`;
+                        if (data.category == 'default') {
+                            return `<span class="label label-primary">${data.category}</span>`;
+                        } else {
+                            return `<span class="label label-danger">${data.category}</span>`;
+                        }
                     }
                 },
                 {
