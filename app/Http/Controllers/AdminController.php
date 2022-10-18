@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Validator;
 use PHPUnit\Framework\Constraint\LogicalOr;
 
 class AdminController extends Controller
@@ -96,6 +97,7 @@ class AdminController extends Controller
                 'password' => 'required|min:8',
                 'phone' => 'required|min:12',
                 'role_id' => 'required',
+                'password_confirmation' => 'required_with:password|same:password|min:8',
             ],
             [
                 'name.required' => 'Nama admin masih kosong.',
@@ -119,30 +121,6 @@ class AdminController extends Controller
             'activities' => 'Mengubah user <b>' . $user->name . '</b>',
         ]);
         return redirect()->route('daftar-admin')->with('success', 'Berhasil Edit Admin');
-    }
-
-    public function update_password(Request $request, $id)
-    {
-        $this->validate(
-            $request,
-            [
-                'password' => 'min:8',
-                'password_confirmation' => 'required_with:password|same:password|min:8',
-            ],
-            [
-                'password' => 'Password admin masih kosong.',
-            ]
-        );
-        $user = User::findOrFail($id);
-        $user->password = Hash::make($request->password);
-        $user->save();
-        LogAdmin::create([
-            'user_id' => Auth::id(),
-            'type' => 'UPDATE',
-            'activities' => 'Mengubah password user <b>' . $user->name . '</b>',
-        ]);
-        return redirect()->route('daftar-admin')->with('success', 'Password Berhasil Diubah');
-
     }
 
     /**

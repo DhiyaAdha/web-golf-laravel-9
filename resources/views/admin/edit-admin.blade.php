@@ -145,6 +145,10 @@
                                             id="password_confirmation" placeholder="Masukan Password Baru" value="">
                                             <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
                                         <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye2 fa-eye-slash" id="eyee_edit_admin"></i>
+
+                                        @error('password_confirmation')
+                                            <div class="text-danger"> {{ $message }}</div>
+                                        @enderror
                                     </div>
                                 <div class="hidden">
                                     <div class="form-group @error('phone') has-error @enderror">
