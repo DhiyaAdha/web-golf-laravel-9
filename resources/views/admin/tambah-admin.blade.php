@@ -68,7 +68,7 @@
                                     {{-- <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye2 fa-eye-slash" id="eyee"></i> --}}
                                 </div>
                                 <div class="form-group @error('phone') has-error @enderror">
-                                    <label class="control-label mb-10" for="">Nomer Hp</label>
+                                    <label  class="control-label mb-10" for="">Nomer Hp</label>
                                     <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <=57" name="phone" class="form-control" id="result" size="50px" placeholder="Masukan Nomer Hp" value="{{ old('phone') }}">
                                     @error('phone')
                                     <div class="text-danger"> {{ $message }}</div>
@@ -127,9 +127,9 @@
         var password = $("#password").val();
         var confirmPassword = $("#password_confirmation").val();
         if (password != confirmPassword)
-            $("#CheckPasswordMatch").html("Password does not match !").css("color", "red");
+            $("#CheckPasswordMatch").html("Password tidak sama !").css("color", "red");
         else
-            $("#CheckPasswordMatch").html("Password match !").css("color", "green");
+            $("#CheckPasswordMatch").html("Password sama !").css("color", "green");
     });
 </script>
 {{-- checkbox --}}

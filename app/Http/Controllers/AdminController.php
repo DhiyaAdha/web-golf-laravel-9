@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Validator;
 use PHPUnit\Framework\Constraint\LogicalOr;
 
 class AdminController extends Controller
@@ -96,6 +97,7 @@ class AdminController extends Controller
                 'password' => 'required|min:8',
                 'phone' => 'required|min:12',
                 'role_id' => 'required',
+                'password_confirmation' => 'required_with:password|same:password|min:8',
             ],
             [
                 'name.required' => 'Nama admin masih kosong.',

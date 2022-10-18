@@ -107,8 +107,8 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label mb-10" for="">Tipe Member Tamu Ini Adalah
-                                                <label class="switch">
+                                            <label class="control-label mb-5" for="">Tipe Member Tamu Ini Adalah
+                                                <label class="switch" style="margin-top:10px;">
                                                     <input class="cmn-toggle cmn-toggle-round-flat" type="hidden"
                                                         value="VIP" name="tipe_member">
                                                     <input type="checkbox" name="tipe_member" type="checkbox"
