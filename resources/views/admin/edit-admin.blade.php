@@ -140,7 +140,7 @@
                                         <label class="pull-left control-label mb-10"
                                             for="password_confirmation2">Konfirmasi Password</label>
                                         <div class="clearfix"></div>
-                                        <input type="password" name="password_confirmation2"
+                                        <input type="password" name="password_confirmation"
                                             class="form-control @error('password') is-invalid @enderror"
                                             id="password_confirmation2" placeholder="Masukan Password Baru" value="">
                                             <div style="margin-top: 7px;" id="CheckPasswordMatch2"></div>
