@@ -129,7 +129,7 @@
                                         <label class="pull-left control-label mb-10" for="password">Password</label>
                                         <input type="password" name="password"
                                             class="form-control @error('password') has-error @enderror"
-                                            id="password" placeholder="Masukan Password Baru" value="">
+                                            id="password2" placeholder="Masukan Password Baru" value="">
                                         <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye1 fa-eye-slash" id="eye_edit_admin"></i>
     
                                         @error('password')
@@ -138,15 +138,15 @@
                                     </div>
                                     <div class="form-group password-container">
                                         <label class="pull-left control-label mb-10"
-                                            for="password_confirmation">Konfirmasi Password</label>
+                                            for="password_confirmation2">Konfirmasi Password</label>
                                         <div class="clearfix"></div>
-                                        <input type="password" name="password_confirmation"
+                                        <input type="password" name="password_confirmation2"
                                             class="form-control @error('password') is-invalid @enderror"
-                                            id="password_confirmation" placeholder="Masukan Password Baru" value="">
-                                            <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
+                                            id="password_confirmation2" placeholder="Masukan Password Baru" value="">
+                                            <div style="margin-top: 7px;" id="CheckPasswordMatch2"></div>
                                         <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye2 fa-eye-slash" id="eyee_edit_admin"></i>
 
-                                        @error('password_confirmation')
+                                        @error('password_confirmation2')
                                             <div class="text-danger"> {{ $message }}</div>
                                         @enderror
                                     </div>
@@ -229,6 +229,16 @@
             $("#CheckPasswordMatch").html("Password does not match !").css("color", "red");
         else
             $("#CheckPasswordMatch").html("Password match !").css("color", "green");
+    });
+</script>
+<script>
+    $("#password_confirmation2").on('keyup', function() {
+        var password = $("#password2").val();
+        var confirmPassword = $("#password_confirmation2").val();
+        if (password != confirmPassword)
+            $("#CheckPasswordMatch2").html("Password does not match !").css("color", "red");
+        else
+            $("#CheckPasswordMatch2").html("Password match !").css("color", "green");
     });
 </script>
 @endpush
