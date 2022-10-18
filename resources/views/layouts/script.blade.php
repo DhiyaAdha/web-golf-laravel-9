@@ -77,6 +77,18 @@
             });
         }, 1000);
     @endif
+    @if (Session::has('error'))
+        window.setTimeout(function() {
+            $.toast({
+                text: '{{ Session('error') }}',
+                position: 'top-right',
+                loaderBg: '#fec107',
+                icon: 'error',
+                hideAfter: 3000,
+                stack: 6
+            });
+        }, 1000);
+    @endif
     $(function() {
         $('[data-toogle="tooltip"]').tooltip()
     })
