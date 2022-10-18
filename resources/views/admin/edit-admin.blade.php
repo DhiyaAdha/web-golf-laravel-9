@@ -130,11 +130,12 @@
                                         <input type="password" name="password"
                                             class="form-control @error('password') has-error @enderror"
                                             id="password2" placeholder="Masukan Password Baru" value="">
-                                        <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye1 fa-eye-slash" id="eye_edit_admin"></i>
+                                            @error('password')
+                                                <div class="text-danger"> {{ $message }}</div>
+                                            @enderror
+                                            <input style="vertical-align: -3px" class="checkbox-showPW" type="checkbox" onclick="myFunction()">&nbsp;Lihat Password
+                                        {{-- <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye1 fa-eye-slash" id="eye_edit_admin"></i> --}}
     
-                                        @error('password')
-                                            <div class="text-danger"> {{ $message }}</div>
-                                        @enderror
                                     </div>
                                     <div class="form-group password-container">
                                         <label class="pull-left control-label mb-10"
@@ -144,7 +145,8 @@
                                             class="form-control @error('password') is-invalid @enderror"
                                             id="password_confirmation2" placeholder="Masukan Password Baru" value="">
                                             <div style="margin-top: 7px;" id="CheckPasswordMatch2"></div>
-                                        <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye2 fa-eye-slash" id="eyee_edit_admin"></i>
+                                            <input style="vertical-align: -3px" class="checkbox-showPW" type="checkbox" onclick="myFunction2()">&nbsp;Lihat Password
+                                        {{-- <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye2 fa-eye-slash" id="eyee_edit_admin"></i> --}}
 
                                         @error('password_confirmation2')
                                             <div class="text-danger"> {{ $message }}</div>
@@ -241,4 +243,23 @@
             $("#CheckPasswordMatch2").html("Password match !").css("color", "green");
     });
 </script>
+{{-- checkbox --}}
+<script>
+    function myFunction() {
+      var x = document.getElementById("password2");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+    function myFunction2() {
+      var y = document.getElementById("password_confirmation2");
+      if (y.type === "password") {
+        y.type = "text";
+      } else {
+        y.type = "password";
+      }
+    }
+    </script>
 @endpush
