@@ -64,6 +64,9 @@
                                         value="{{ old('password_confirmation') }}"
                                         autocomplete="current-password">
                                         <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
+                                        @error('password_confirmation')
+                                        <div class="text-danger"> {{ $message }}</div>
+                                        @enderror
                                         <input style="vertical-align: -3px" class="checkbox-showPW" type="checkbox" onclick="myFunction2()">&nbsp;Lihat Password
                                     {{-- <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye2 fa-eye-slash" id="eyee"></i> --}}
                                 </div>
