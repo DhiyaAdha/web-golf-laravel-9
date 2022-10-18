@@ -56,6 +56,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     Route::post('/insertadmin', [AdminController::class, 'insertadmin'])->name('insertadmin');
     Route::get('/edit-admin/{users}', [AdminController::class, 'edit'])->name('edit-admin');
     Route::post('/edit-admin/{users}', [AdminController::class, 'update'])->name('admin.edit');
+    Route::post('/edit-admin/{users}', [AdminController::class, 'update_password'])->name('admin.edit');
     Route::get('/daftar-admin/destroy/{id}', [AdminController::class,'delete',])->name('hapus-admin');
     Route::get('aktifitas', [AdminController::class, 'aktifitas'])->name('admin.aktifitas');
     Route::post('/package/store', [PackageController::class, 'store'])->name('package.store');

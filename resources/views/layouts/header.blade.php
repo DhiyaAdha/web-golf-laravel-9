@@ -58,6 +58,7 @@
     {{-- HTML5-QRCODE --}}
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     {{-- Bootstrap --}}
+    
 
 
 </head>
