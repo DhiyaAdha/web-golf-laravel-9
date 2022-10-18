@@ -95,8 +95,6 @@ class AdminController extends Controller
                 'name' => 'required',
                 'email' => 'required',
                 'password' => 'required|min:8',
-                // 'password_confirmation' => 'same:password|min:8',
-                // 'password_confirmation2' => 'same:password|min:8',
                 'password_confirmation' => 'required_with:password|same:password|min:8',
                 'phone' => 'required|min:12',
                 'role_id' => 'required',
