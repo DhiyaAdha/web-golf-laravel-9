@@ -138,7 +138,7 @@
                                     </div>
                                     <div class="form-group password-container">
                                         <label class="pull-left control-label mb-10"
-                                            for="password_confirmation2">Konfirmasi Password</label>
+                                            for="password_confirmation">Konfirmasi Password</label>
                                         <div class="clearfix"></div>
                                         <input type="password" name="password_confirmation"
                                             class="form-control @error('password') is-invalid @enderror"

@@ -376,6 +376,13 @@ h6.panel-title.text-center {
 
 
 /* pasword tambah admin */
+
+.checkbox-showPW {
+    height: 18px;
+    width: 18px;
+    background-color: #eee;
+}
+
 .password-container {
     width: 100%;
     position: relative;

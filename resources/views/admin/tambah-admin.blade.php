@@ -46,11 +46,13 @@
                                         class="form-control @error('password') has-error @enderror"
                                         id="password" placeholder="Masukan Password Baru"
                                         value="{{ old('password') }}" autocomplete="current-password">
-                                    <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye1 fa-eye-slash" id="eye"></i>
-
-                                    @error('password')
+                                        @error('password')
                                         <div class="text-danger"> {{ $message }}</div>
-                                    @enderror
+                                        @enderror    
+                                        <input style="vertical-align: -3px" class="checkbox-showPW" type="checkbox" onclick="myFunction()">&nbsp;Lihat Password
+                                    {{-- <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye1 fa-eye-slash" id="eye"></i> --}}
+
+                                       
                                 </div>
                                 <div class="form-group @error('password') has-error @enderror">
                                     <label class="pull-left control-label mb-10"
@@ -62,7 +64,8 @@
                                         value="{{ old('password_confirmation') }}"
                                         autocomplete="current-password">
                                         <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
-                                    <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye2 fa-eye-slash" id="eyee"></i>
+                                        <input style="vertical-align: -3px" class="checkbox-showPW" type="checkbox" onclick="myFunction2()">&nbsp;Lihat Password
+                                    {{-- <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye2 fa-eye-slash" id="eyee"></i> --}}
                                 </div>
                                 <div class="form-group @error('phone') has-error @enderror">
                                     <label  class="control-label mb-10" for="">Nomer Hp</label>
@@ -129,4 +132,23 @@
             $("#CheckPasswordMatch").html("Password sama !").css("color", "green");
     });
 </script>
+{{-- checkbox --}}
+<script>
+    function myFunction() {
+      var x = document.getElementById("password");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+    function myFunction2() {
+      var y = document.getElementById("password_confirmation");
+      if (y.type === "password") {
+        y.type = "text";
+      } else {
+        y.type = "password";
+      }
+    }
+    </script>
 @endpush
