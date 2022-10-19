@@ -28,7 +28,13 @@
                 <td>{{ $item->address }}</td>
                 <td>{{ $item->position }}</td>
                 <td>{{ $item->company }}</td>
-                <td>{{ $item->tipe_member }}</td>
+                @if ($item->tipe_member == 'VVIP')
+                    <td>{{ $item->tipe_member }}</td>
+                @endif
+                @if ($item->tipe_member == 'VIP')
+                    <td>Member</td>
+                @endif
+                {{-- <td>{{ $item->tipe_member }}</td> --}}
             </tr>
         @endforeach
         </tbody>
