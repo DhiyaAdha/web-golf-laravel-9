@@ -133,7 +133,7 @@
                                             @error('password')
                                                 <div class="text-danger"> {{ $message }}</div>
                                             @enderror
-                                            <input style="vertical-align: -3px" class="checkbox-showPW" type="checkbox" onclick="myFunction()">&nbsp;Lihat Password
+                                            <input style="vertical-align: -3px" class="checkbox-showPW" type="checkbox" onclick="myFunction()">&nbsp;<span style="color: #B2B2B2;">Lihat Password</span>
                                         {{-- <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye1 fa-eye-slash" id="eye_edit_admin"></i> --}}
     
                                     </div>
@@ -148,7 +148,7 @@
                                             @error('password_confirmation')
                                                 <div class="text-danger"> {{ $message }}</div>
                                             @enderror
-                                            <input style="vertical-align: -3px" class="checkbox-showPW" type="checkbox" onclick="myFunction2()">&nbsp;Lihat Password
+                                            <input style="vertical-align: -3px" class="checkbox-showPW" type="checkbox" onclick="myFunction2()">&nbsp;<span style="color: #B2B2B2;">Lihat Password</span>
                                         {{-- <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye2 fa-eye-slash" id="eyee_edit_admin"></i> --}}
 
                                     </div>
