@@ -35,7 +35,7 @@
                 <td>{{ $item->position }}</td>
                 <td>{{ $item->company }}</td>
                 @if ($item->tipe_member == 'VVIP')
-                    <td>{{ $item->tipe_member }}</td>
+                    <td>VIP</td>
                 @endif
                 @if ($item->tipe_member == 'VIP')
                     <td>Member</td>
