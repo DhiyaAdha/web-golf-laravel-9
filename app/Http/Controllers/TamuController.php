@@ -150,6 +150,7 @@ class TamuController extends Controller
                 'company' => 'required',
                 'position' => 'required',
                 'tipe_member' => 'required',
+                'category' => 'required',
             ],
             [
                 'name.required' => 'Nama Lengkap masih kosong.',
@@ -166,6 +167,7 @@ class TamuController extends Controller
                 'company.unique' => 'Perusahaan sudah ada',
                 'position.required' => 'Jabatan masih kosong.',
                 'position.unique' => 'Jabatan sudah ada',
+                'category.required' => 'Kategori masih kosong',
             ]
         );
         $random = Str::random(15);
@@ -180,6 +182,7 @@ class TamuController extends Controller
             'company' => $request->company,
             'position' => $request->position,
             'tipe_member' => $request->tipe_member,
+            'category' => $request->category,
             'created_at' => Carbon::now(),
         ]);
         $get_visitor = Visitor::where('id', $visitors->id)->latest()->first();
@@ -700,6 +703,7 @@ class TamuController extends Controller
                 'company' => 'required',
                 'position' => 'required',
                 'tipe_member' => 'required',
+                'category' => 'required',
             ],
             [
                 'name.required' => 'Nama Tamu masih kosong.',
@@ -708,6 +712,7 @@ class TamuController extends Controller
                 'phone.required' => 'Nomer Hp Tamu masih kosong.',
                 'company.required' => 'Nama perusahaan masih kosong.',
                 'position.required' => 'Posisi masih kosong.',
+                'category.required' => 'Kategori masih kosong.',
             ]
         );
         $visitor = Visitor::find($id);
