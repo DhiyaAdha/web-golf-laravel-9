@@ -115,10 +115,8 @@
                                                         id="tipe" value="VVIP"
                                                         {{ $visitor->tipe_member == 'VVIP' ? ' checked' : '' }}>
                                                     <div class="slider round switch">
-                                                        <!--ADDED HTML -->
-                                                        <span class="off">VIP</span>
-                                                        <span class="on">VVIP</span>
-                                                        <!--END-->
+                                                        <span class="off" style="margin-left: 10px !important;">Member</span>
+                                                        <span class="on">VIP</span>
                                                     </div>
                                                 </label>
                                         </div>

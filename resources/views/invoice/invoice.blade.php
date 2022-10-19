@@ -157,9 +157,9 @@
                                 <td>
                                     <strong>Katagori Tamu:&nbsp;</strong>
                                     @if ($visitor->tipe_member == 'VIP')
-                                        <span class="label label-success">{{ $visitor->tipe_member }}</span>
+                                        <span class="label label-success">{{ $visitor->tipe_member == 'VIP' ? 'Member' : 'VIP' }}</span>
                                     @elseif ($visitor->tipe_member == 'VVIP')
-                                        <span class="label label-warning">{{ $visitor->tipe_member }}</span>
+                                        <span class="label label-warning">{{ $visitor->tipe_member == 'VVIP' ? 'VIP' : 'Member' }}</span>
                                     @else
                                     <span class="label label-primary">{{ $visitor->tipe_member }}</span>
                                     @endif

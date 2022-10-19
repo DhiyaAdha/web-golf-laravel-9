@@ -82,7 +82,7 @@
                                         </div>
                                         <div class="col-lg-12 col-md-12">
                                             <span
-                                                class="{{ $visitor->tipe_member == 'VIP' ? 'label label-success' : 'label label-warning' }}">{{ $visitor->tipe_member }}</span>
+                                                class="{{ $visitor->tipe_member == 'VIP' ? 'label label-success' : 'label label-warning' }}">{{ $visitor->tipe_member == 'VIP' ? 'Member' : 'VIP' }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -124,7 +124,7 @@
                                             <div class="mt-15">
                                                 <div class="pull-left">
                                                     <strong>
-                                                        {{ $log_limit->quota_kupon ?? 'None' }}
+                                                        {{ $log_limit->quota_kupon ?? '0' }}
                                                     </strong>
                                                 </div>
                                             </div>
@@ -136,7 +136,7 @@
                                             <div class="mt-15">
                                                 <div class="pull-left">
                                                     <strong>
-                                                        {{ $log_limit->quota ?? 'None' }}
+                                                        {{ $log_limit->quota ?? '0' }}
                                                     </strong>
                                                 </div>
                                             </div>
@@ -198,42 +198,6 @@
                                 </div>
                                 <!-- /.modal-dialog -->
                             </div>
-                            {{-- <div id="myModal2" class="modal fade" tabindex="-1" role="dialog"
-                                aria-labelledby="myModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                aria-hidden="true">×</button>
-                                            <h5 class="modal-title" id="myModalLabel2">
-                                                {{ $log_limit->quota_kupon == 0 ? 'Tambah Kupon' : 'Update Kupon' }}</h5>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form action="{{ URL::signedRoute('update.kupon', ['id' => $visitor->id]) }}" method="POST">
-                                                @csrf
-                                                <div class="form-group">
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <div class="input-group-addon"><img src="/dist/img/ticket.svg"
-                                                                alt=""></div>
-                                                        <input type="text" min="0"
-                                                            onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                                            class="form-control" name="quota_kupon" data-id=""
-                                                            placeholder="Masukan jumlah Kupon" required>
-                                                    </div>
-                                                </div>
-                                                <button type="submit" class="btn btn-success btn-anim">
-                                                    <i class="icon-rocket"></i>
-                                                    <span class="btn-text">submit</span>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <!-- /.modal-content -->
-                                </div>
-                                <!-- /.modal-dialog -->
-                            </div> --}}
                         </div>
                     </div>
                 </div>

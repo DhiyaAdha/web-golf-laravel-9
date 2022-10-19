@@ -745,38 +745,6 @@ class TamuController extends Controller
                 ]);
             }
         }
-
-        // $limit['limit'] = LogLimit::where('quota', $request->quota)->first();
-        // $limit['quota'] = $request->quota;
-
-        // $visitor_report = LogLimit::findOrFail($visitor->id);
-        // $visitor_report->update([
-        //     'quota' => $request->tipe_member == 'VIP' ? '4' : '10',
-        // ]);
-
-        // update quota (percobaan)
-        // $visitor_report = LogLimit::find($visitor->id);
-        // if($request['tipe_member'] && $visitor['tipe_member'] == 'VIP'){
-        //         $visitor_report->update([
-        //         'quota' => $request->tipe_member == 'VIP' ? '4' : '10',
-
-        //     ]);
-        // }else{
-        //     // $visitor_report->update([
-        //     //     'quota' => $visitor_report->quota,
-        //     // ]);
-        // }
-
-        // $quota = LogLimit::find($request->quota);
-
-        // $report_quota = ReportLimit::findOrFail($visitor->id);
-        // $report_quota = ReportLimit::create([
-        //     'visitor_id' => $visitor->id,
-        //     'user_id' =>    Auth::user()->id,
-        //     'report_quota' => $request->tipe_member == 'VIP' ? '4' : '10',
-        //     'created_at' => Carbon::now(),
-        // ]);
-
         return redirect()->route('daftar-tamu')->with('success', 'Berhasil edit tamu');
     }
     
@@ -787,14 +755,8 @@ class TamuController extends Controller
 
     /* export exel analisi*/
 
-    public function export_excel_tamu()
-    {
+    public function export_excel_tamu() {
         return Excel::download(new DaftarTamuExport, 'daftar_tamu.xlsx');
-
-        // Excel::create();
-        // $riwayat_invoice = Excel::loadView('invoice.export_excel');
-        // $export = new Excel();
-        // return $export->download(new LogTransactionExport, 'riwayat_invoice.xlsx');
     }
 
     /* end export exel analisi*/
@@ -815,7 +777,6 @@ class TamuController extends Controller
             'type' => 'DELETE',
             'activities' => 'Menghapus member <b>' . $visitor->name . '</b>',
         ]);
-        // $visitor->delete($id);
         Visitor::destroy($id);
         return redirect()->route('daftar-tamu');
     }

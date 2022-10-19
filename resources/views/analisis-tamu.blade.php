@@ -40,7 +40,7 @@
                                                 <div class="col-xs-8 text-left data-wrap-left">
                                                     <span class="txt-light block counter"><span
                                                             class="counter-anim">{{ $visitor_vvip }}</span></span>
-                                                    <span class="weight-500 txt-light block">Transaksi VVIP
+                                                    <span class="weight-500 txt-light block">Transaksi VIP
                                                     </span>
                                                 </div>
                                                 <div class="col-xs-4 text-right data-wrap-right">
@@ -66,7 +66,7 @@
                                                     <span class="txt-light block counter"><span
                                                             class="counter-anim">{{ $visitor_vip }}</span></span>
                                                     <span class="weight-500 txt-light block">Transaksi
-                                                        VIP
+                                                        Member
                                                     </span>
                                                 </div>
                                                 <div class="col-xs-4 text-right data-wrap-right">
@@ -81,7 +81,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                         <div class="panel panel-default card-view pa-0">
                             <div class="panel-wrapper collapse in">
@@ -93,7 +92,7 @@
                                                     <span class="txt-light block counter"><span
                                                             class="counter-anim">{{ $visitor_reguler }}</span></span>
                                                     <span class="weight-500 txt-light block">Transaksi
-                                                        REGULER
+                                                        Reguler
                                                     </span>
                                                 </div>
                                                 <div class="col-xs-4 text-right data-wrap-right">
@@ -119,14 +118,14 @@
                                     <ul role="tablist" class="nav nav-pills nav-pills-rounded" id="myTabs_6">
                                         <li class="active" role="presentation"><a aria-expanded="true" data-toggle="tab"
                                                 role="tab" id="home_tab_6" href="#home_6"
-                                                style="padding: 2px 20px;">visitors</a></li>
+                                                style="padding: 2px 20px;">pengunjung</a></li>
                                         <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_6"
                                                 role="tab" href="#profile_6" aria-expanded="false"
-                                                style="padding: 2px 20px;">transactions</a></li>
+                                                style="padding: 2px 20px;">transaksi</a></li>
                                     </ul>
                                 </div>
                                 <div class="pull-left">
-                                    <h6 class="panel-title txt-dark">Total Tamu VVIP</h6>
+                                    <h6 class="panel-title txt-dark">Total VIP</h6>
                                 </div>
                                 <div class="clearfix"></div>
                                 <hr class="light-grey-hr row mt-10 mb-15" />
@@ -134,7 +133,6 @@
                             <div class="panel-wrapper collapse in">
                                 <div class="panel-body" style="margin-top: -80px; margin-bottom:-10px;">
                                     <div class="pills-struct mt-40">
-
                                         <div class="tab-content" id="myTabContent_6">
                                             <div id="home_6" class="tab-pane fade active in" role="tabpanel"
                                                 style="margin-top: 50px;">
@@ -201,14 +199,14 @@
                                     <ul role="tablist" class="nav nav-pills nav-pills-rounded" id="myTabs_7">
                                         <li class="active" role="presentation"><a aria-expanded="true" data-toggle="tab"
                                                 role="tab" id="home_tab_7" href="#home_7"
-                                                style="padding: 2px 20px;">visitors</a></li>
+                                                style="padding: 2px 20px;">pengunjung</a></li>
                                         <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_7"
                                                 role="tab" href="#profile_7" aria-expanded="false"
-                                                style="padding: 2px 20px;">transactions</a></li>
+                                                style="padding: 2px 20px;">transaksi</a></li>
                                     </ul>
                                 </div>
                                 <div class="pull-left">
-                                    <h6 class="panel-title txt-dark">Total Tamu VIP</h6>
+                                    <h6 class="panel-title txt-dark">Total Member</h6>
                                 </div>
                                 <div class="clearfix"></div>
                                 <hr class="light-grey-hr row mt-10 mb-15" />
@@ -216,7 +214,6 @@
                             <div class="panel-wrapper collapse in">
                                 <div class="panel-body" style="margin-top:-80px; margin-bottom:-10px;">
                                     <div class="pills-struct mt-40">
-
                                         <div class="tab-content" id="myTabContent_7">
                                             <div id="home_7" class="tab-pane fade active in" role="tabpanel"
                                                 style="margin-top: 50px;">
@@ -241,7 +238,6 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                                 <hr class="light-grey-hr row mt-10 mb-15" />
-
                                             </div>
                                             <div id="profile_7" class="tab-pane fade" role="tabpanel"
                                                 style="margin-top: 50px;">
@@ -303,7 +299,6 @@
                                                 <span class="">
                                                 </span>
                                         </li>
-                                        {{-- statistik pertahun --}}
                                         <li>
                                             <span class="block">Total </span>
                                             <span class="block txt-dark weight-500 font-18"><span
@@ -314,7 +309,6 @@
                             </div>
                         </div>
                     </div>
-
                     {{-- Chart Rekap Harian --}}
                     <div class="col-lg-6">
                         <div class="panel panel-default card-view panel-refresh relative">
@@ -350,7 +344,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Row Tabel Tamu-->
                 <div class="row">
                     <div class="col-lg-12">

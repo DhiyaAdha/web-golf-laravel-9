@@ -143,10 +143,8 @@ $(document).ready(function () {
         var lineChart = Morris.Line({
             element: "statistic_visitor_line",
             xkey: "period", 
-            // ykeys: ["visitor_id"],
-            // labels: ["visitor_id"],
-            ykeys: ["vvip", "vip","REGULER"],
-            labels: ["vvip", "vip", "REGULER"],
+            ykeys: ["VIP", "Member","Reguler"],
+            labels: ["VIP", "Member", "Reguler"],
             pointSize: 2,
             fillOpacity: 0,
             lineWidth: 2,
