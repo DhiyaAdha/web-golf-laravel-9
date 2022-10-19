@@ -46,7 +46,7 @@ class TamuController extends Controller
             'email',
             'phone',
             'tipe_member',
-        ])->where('tipe_member', '!=', 'REGULER')->orderBy('created_at', 'desc')->get();
+        ])->where('tipe_member','!=','REGULER')->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
             return datatables()->of($visitor)->addColumn('action', function ($visitor) {
                 if (auth()->user()->role_id == '2') {
@@ -61,7 +61,7 @@ class TamuController extends Controller
                     $button .= '<a href="javascript:void(0)" name="delete" data-toggle="tooltip" data-placement="top" title="Hapus" id="' . $visitor->id . '" class="delete-confirm"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.25 3.50004V1.24854C7.25 1.04962 7.32902 0.858857 7.46967 0.718205C7.61032 0.577553 7.80109 0.498535 8 0.498535H14C14.1989 0.498535 14.3897 0.577553 14.5303 0.718205C14.671 0.858857 14.75 1.04962 14.75 1.24854V3.50004H20.75C20.9489 3.50004 21.1397 3.57905 21.2803 3.71971C21.421 3.86036 21.5 4.05112 21.5 4.25004C21.5 4.44895 21.421 4.63971 21.2803 4.78036C21.1397 4.92102 20.9489 5.00004 20.75 5.00004H1.25C1.05109 5.00004 0.860322 4.92102 0.71967 4.78036C0.579018 4.63971 0.5 4.44895 0.5 4.25004C0.5 4.05112 0.579018 3.86036 0.71967 3.71971C0.860322 3.57905 1.05109 3.50004 1.25 3.50004H7.25ZM8.75 3.50004H13.25V2.00004H8.75V3.50004ZM3.5 21.5C3.30109 21.5 3.11032 21.421 2.96967 21.2804C2.82902 21.1397 2.75 20.9489 2.75 20.75V5.00004H19.25V20.75C19.25 20.9489 19.171 21.1397 19.0303 21.2804C18.8897 21.421 18.6989 21.5 18.5 21.5H3.5ZM8.75 17C8.94891 17 9.13968 16.921 9.28033 16.7804C9.42098 16.6397 9.5 16.4489 9.5 16.25V8.75004C9.5 8.55112 9.42098 8.36036 9.28033 8.21971C9.13968 8.07905 8.94891 8.00004 8.75 8.00004C8.55109 8.00004 8.36032 8.07905 8.21967 8.21971C8.07902 8.36036 8 8.55112 8 8.75004V16.25C8 16.4489 8.07902 16.6397 8.21967 16.7804C8.36032 16.921 8.55109 17 8.75 17ZM13.25 17C13.4489 17 13.6397 16.921 13.7803 16.7804C13.921 16.6397 14 16.4489 14 16.25V8.75004C14 8.55112 13.921 8.36036 13.7803 8.21971C13.6397 8.07905 13.4489 8.00004 13.25 8.00004C13.0511 8.00004 12.8603 8.07905 12.7197 8.21971C12.579 8.36036 12.5 8.55112 12.5 8.75004V16.25C12.5 16.4489 12.579 16.6397 12.7197 16.7804C12.8603 16.921 13.0511 17 13.25 17Z" fill="#787878"/>
                     </svg>
                     </a>';
-
+                    
                     $button .= '&nbsp;&nbsp;';
                     $button .= '<a data-toggle="modal" data-placement="top" title="Tambah Kupon" data-target="#myModal" href="javascript:void(0)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#787878" d="M9,10a1,1,0,0,0-1,1v2a1,1,0,0,0,2,0V11A1,1,0,0,0,9,10Zm12,1a1,1,0,0,0,1-1V6a1,1,0,0,0-1-1H3A1,1,0,0,0,2,6v4a1,1,0,0,0,1,1,1,1,0,0,1,0,2,1,1,0,0,0-1,1v4a1,1,0,0,0,1,1H21a1,1,0,0,0,1-1V14a1,1,0,0,0-1-1,1,1,0,0,1,0-2ZM20,9.18a3,3,0,0,0,0,5.64V17H10a1,1,0,0,0-2,0H4V14.82A3,3,0,0,0,4,9.18V7H8a1,1,0,0,0,2,0H20Z"/></svg></a></div>
@@ -76,8 +76,8 @@ class TamuController extends Controller
                                 Tambah Kupon</h5>
                             </div>
                             <div class="modal-body">
-                                <form action="' . url('update/kupon/' . $visitor->id) . '" method="POST">
-                                    <input type="hidden" name="_token" value=" ' . csrf_token() . ' ">
+                                <form action="'. url('update/kupon/' . $visitor->id) . '" method="POST">
+                                    <input type="hidden" name="_token" value=" '.csrf_token().' ">
                                     <div class="form-group">
                                     </div>
                                     <div class="form-group">
@@ -342,7 +342,7 @@ class TamuController extends Controller
     {
         $decrypt_id = Crypt::decryptString($id);
         $aktifitas_deposit = ReportDeposit::select('id', 'report_balance', 'payment_type', 'status', 'visitor_id', 'user_id', 'fund', 'created_at')
-            ->where('visitor_id', $decrypt_id)->where('fund', '!=', 0)->orderBy('created_at', 'desc')->get();
+        ->where('visitor_id', $decrypt_id)->where('fund','!=',0)->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
             return datatables()->of($aktifitas_deposit)->editColumn('report_balance', function ($data) {
                 return 'Rp. ' . number_format($data->fund, 0, ',', '.');
@@ -378,21 +378,20 @@ class TamuController extends Controller
         $decrypt_id = Crypt::decryptString($id);
         $aktifitas_limit =
             ReportLimit::select('id', 'report_quota', 'status', 'visitor_id',  'user_id', 'created_at')
-            ->where('report_quota', '!=', 0)->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
+            ->where('report_quota','!=' ,0)->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
 
         if ($request->ajax()) {
             return datatables()->of($aktifitas_limit)
                 ->addColumn('limit', function ($data) {
                     return $data->report_quota;
                 })->addColumn('Informasi', function ($data) {
-                    if ($data->status == 'Bertambah') {
+                    if($data->status == 'Bertambah'){
                         return ' Limit anda bertambah!';
-                    } elseif ($data->status == 'Berkurang') {
-                        return ' Limit anda berkurang! ';
-                    } else {
-                        return 'Limit Bulanan melakukan Reset ';
-                    }
-                })
+                } elseif($data->status == 'Berkurang'){
+                    return ' Limit anda berkurang! ';
+                } else {
+                    return 'Limit Bulanan melakukan Reset ';
+                }})
                 ->addColumn('status', function ($data) {
                     if ($data->status == 'Bertambah') {
                         return '<p class="label label-success">' . $data->status . '<div>';
@@ -404,7 +403,7 @@ class TamuController extends Controller
                 })->editColumn('created_at', function ($data) {
                     return date_format($data->created_at, 'd-m-Y H:i');
                 })->rawColumns(['limit', 'informasi', 'status', 'created_at'])->make(true);
-        }
+    }
     }
     /* end data aktifitas tamu limit */
 
@@ -413,36 +412,37 @@ class TamuController extends Controller
     {
         $decrypt_id = Crypt::decryptString($id);
         $aktifitas_limit =
-            ReportLimit::select('id', 'report_quota_kupon', 'status', 'visitor_id',  'user_id', 'created_at')->where('visitor_id', $decrypt_id)->where('report_quota_kupon', '!=', 0)->orderBy('created_at', 'desc')->get();
+            ReportLimit::select('id', 'report_quota_kupon', 'status', 'visitor_id',  'user_id', 'created_at')->where('visitor_id', $decrypt_id)->where('report_quota_kupon','!=',0)->orderBy('created_at', 'desc')->get();
 
         if ($request->ajax()) {
             return datatables()->of($aktifitas_limit)
                 ->addColumn('kupon', function ($data) {
-                    if ($data->report_quota_kupon > 0) {
+                    if ($data->report_quota_kupon > 0){
                         return $data->report_quota_kupon;
                     } else {
-                        return;
+                        return ;
                     }
                 })->addColumn('Informasi', function ($data) {
-                    if ($data->status == 'Bertambah') {
+                    if($data->status == 'Bertambah'){
                         return ' Limit Anda Bertambah!';
-                    } elseif ($data->status == 'Berkurang') {
-                        return ' Limit Anda Berkurang! ';
-                    } else {
-                    }
-                })
+                } elseif($data->status == 'Berkurang'){
+                    return ' Limit Anda Berkurang! ';
+                } else {
+                    
+                }})
                 ->addColumn('status', function ($data) {
                     if ($data->status == 'Bertambah') {
                         return '<p class="label label-success">' . $data->status . '<div>';
                     } elseif ($data->status == 'Berkurang') {
                         return '<p class="label label-danger">' . $data->status . '<div>';
                     } else {
+                        
                     }
                 })->editColumn('created_at', function ($data) {
-                    if ($data->report_quota_kupon > 0) {
-                        return date_format($data->created_at, 'd-m-Y H:i');
-                    } else {
-                        return '<input type="hidden">';
+                    if ($data->report_quota_kupon > 0){
+                    return date_format($data->created_at, 'd-m-Y H:i');
+                    }else{
+                    return '<input type="hidden">';
                     }
                 })->rawColumns(['kupon', 'Informasi', 'status', 'created_at'])->make(true);
         }
@@ -606,7 +606,7 @@ class TamuController extends Controller
                 })
                 ->editColumn('created_at', function ($data) {
                     return date_format($data->created_at, 'd-m-Y H:i');
-                })->editColumn('total', function ($data) {
+                })->editColumn('total', function($data) {
                     return 'Rp. ' . number_format($data->total, 0, ',', '.');
                 })->rawColumns(['order_number', 'total', 'information', 'status', 'created_at'])->make(true);
         }
@@ -779,7 +779,7 @@ class TamuController extends Controller
 
         return redirect()->route('daftar-tamu')->with('success', 'Berhasil edit tamu');
     }
-
+    
     public function tambahtamu()
     {
         return view('tamu.tambah-tamu');
@@ -825,7 +825,7 @@ class TamuController extends Controller
         try {
             $get_uri = explode("/", parse_url($request->getRequestUri(), PHP_URL_PATH));
             $visitor = LogLimit::join('visitors', 'log_limits.visitor_id', '=', 'visitors.id')
-                ->where('log_limits.visitor_id', $get_uri[3])->first();
+            ->where('log_limits.visitor_id', $get_uri[3])->first();
             $log_limit = LogLimit::where('visitor_id', $get_uri[3])->first();
             $log_limit->quota_kupon = $request->quota_kupon + $log_limit->quota_kupon;
             $log_limit->save();
