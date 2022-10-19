@@ -150,7 +150,7 @@
                                                 <label class="pull-left control-label mb-10"
                                                     for="password">Password</label>
                                                 <input type="password" name="password" class="form-control"
-                                                    id="password" placeholder="Masukan Password" required>
+                                                    id="password" placeholder="Masukan password" required>
                                                 <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye fa-eye-slash " id="eye"></i>
                                             </div>
                                             <div class="form-group text-center">

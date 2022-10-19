@@ -195,13 +195,13 @@
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Metode Pembayaran</span>
                                                 <div class="d-flex">
-                                                    <div class="custom-control custom-radio mr-2 d-none">
+                                                    <div class="custom-control custom-radio mr-2">
                                                         <input type="radio" name="payment" id="wk"
                                                             class="custom-control-input" value="single" checked>
                                                         <label class="custom-control-label cursor"
                                                             for="wk">Single</label>
                                                     </div>
-                                                    <div class="custom-control custom-radio d-none">
+                                                    <div class="custom-control custom-radio">
                                                         <input type="radio" name="payment" id="kw"
                                                             class="custom-control-input" value="multiple">
                                                         <label class="custom-control-label cursor"
@@ -217,19 +217,34 @@
                                                             <div class="flex-grow-1 custom-control custom-radio custom-control-inline"
                                                                 style="width:100%;">
                                                                 @if ($deposit->balance != 0)
-                                                                    <input type="radio" id="customRadioInline4"
-                                                                        name="payment-type" value="4"
-                                                                        class="custom-control-input">
-                                                                    <label class="custom-control-label"
-                                                                        for="customRadioInline4"
-                                                                        style="width: 100%;cursor:pointer;">
-                                                                        <div
-                                                                            class="d-flex flex-column flex-grow-1 justify-content-center">
-                                                                            <strong>Deposit</strong>
-                                                                            <small class="text-muted mb-2">Deposit akan
-                                                                                berkurang sesuai dengan tagihan</small>
-                                                                        </div>
-                                                                    </label>
+                                                                    @if($deposit->balance > $totalPrice)
+                                                                        <input type="radio" id="customRadioInline4"
+                                                                            name="payment-type" value="4"
+                                                                            class="custom-control-input">
+                                                                        <label class="custom-control-label"
+                                                                            for="customRadioInline4"
+                                                                            style="width: 100%;cursor:pointer;">
+                                                                            <div
+                                                                                class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                                <strong>Deposit</strong>
+                                                                                <small class="text-muted mb-2">Deposit akan
+                                                                                    berkurang sesuai dengan tagihan</small>
+                                                                            </div>
+                                                                        </label>
+                                                                    @else
+                                                                        <input type="radio" id="customRadioInline4"
+                                                                            class="custom-control-input" disabled>
+                                                                        <label class="custom-control-label"
+                                                                            for="customRadioInline4"
+                                                                            style="width: 100%;cursor:no-drop;">
+                                                                            <div
+                                                                                class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                                <strong>Deposit</strong>
+                                                                                <small class="text-muted mb-2"><i>Saldo
+                                                                                        tidak mencukupi</i></small>
+                                                                            </div>
+                                                                        </label>
+                                                                    @endif
                                                                 @else
                                                                     <input type="radio" id="customRadioInline4"
                                                                         class="custom-control-input" disabled>
@@ -946,7 +961,7 @@
                 let return_pay = parseInt($(this).val()) - parseInt(total);
                 let data_deposit = $('#customCheck8').data('deposit');
 
-                if ($('input[type=radio][name=payment]:checked').val() == 'single') {
+                // if ($('input[type=radio][name=payment]:checked').val() == 'single') {
                     if ($(this).val() < total) {
                         if ($(this).val() == '') {
                             $(this).removeClass('is-invalid');
@@ -968,7 +983,29 @@
                             "color": "#19d895"
                         }).data('refund', return_pay);
                     }
-                } else {}
+                // } else {
+                //     if ($(this).val() < total) {
+                //         if ($(this).val() == '') {
+                //             $(this).removeClass('is-invalid');
+                //             $('#return').text('-').css({
+                //                 "background-color": "rgba(25, 216, 149, 0.2)",
+                //                 "color": "#19d895"
+                //             }).data('refund', return_pay);
+                //         } else {
+                //             $(this).addClass('is-invalid');
+                //             $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                //                 "background-color": "rgba(216, 25, 25, 0.2)",
+                //                 "color": "#d81c19d1"
+                //             }).data('refund', return_pay);
+                //         }
+                //     } else {
+                //         $(this).removeClass('is-invalid');
+                //         $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                //             "background-color": "rgba(25, 216, 149, 0.2)",
+                //             "color": "#19d895"
+                //         }).data('refund', return_pay);
+                //     }
+                // }
             });
 
             $(document).on('change', 'input[name="payment-type[]"]', function(e) {
@@ -978,51 +1015,81 @@
                     .map(function() {
                         return $(this).val();
                     }).get();
+                let discount = '';
+
                 if ($(this).is(':checked')) {
-                    if (type_multiple.length == 1) {
-                        if (type_multiple[0] == 'cash/transfer') {
-                            $('#cashtransfer').html(
-                                `<div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">Rp.</div>
+                    if (type_multiple[0] == 'cash/transfer' || type_multiple[1] == 'cash/transfer') {
+                        $('#cashtransfer').html(
+                            `<div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Rp.</div>
+                                </div>
+                                <input type="text" min="0"
+                                    onkeypress="return event.charCode >= 48 && event.charCode <=57"
+                                    class="form-control number-input input-notzero bayar-input"
+                                    name="bayar" placeholder="Masukkan nominal bayar"
+                                    autocomplete="off">
+                            </div>`
+                        ).show().prev().removeClass('mb-2');
+                        $('.refund').removeClass('d-none');
+                        $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
+                    } else if ((type_multiple[0] == 'kupon') || (type_multiple[2] == 'kupon')) {
+                        discount += `<div class="card mt-2">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex">
+                                                <span class="flex-grow-1">Diskon</span>
+                                                <span>Rp. ${formatIDR(price_single)},00</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <input type="text" min="0"
-                                        onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                        class="form-control number-input input-notzero bayar-input"
-                                        name="bayar" placeholder="Masukkan nominal bayar"
-                                        autocomplete="off">
-                                </div>`
-                            ).show().prev().removeClass('mb-2');
-                        }
-                    } else if (type_multiple.length == 2) {
-                        if (type_multiple[1] == 'cash/transfer') {
-                            $('#cashtransfer').html(
-                                `<div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">Rp.</div>
+                                </div>`;
+                                $('.discount').html(discount).show();
+
+                    } else if ((type_multiple[0] == 'limit') || (type_multiple[2] == 'limit')) {
+                        discount += `<div class="card mt-2">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex">
+                                                <span class="flex-grow-1">Diskon</span>
+                                                <span>Rp. ${formatIDR(price_single)},00</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <input type="text" min="0"
-                                        onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                        class="form-control number-input input-notzero bayar-input"
-                                        name="bayar" placeholder="Masukkan nominal bayar"
-                                        autocomplete="off">
-                                </div>`
-                            ).show().prev().removeClass('mb-2');
-                        }
-                    }
+                                </div>`;
+                                $('.discount').html(discount).show();
+
+                    } 
                 } else {
-                    $('#cashtransfer').html(
-                        `<div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">Rp.</div>
-                            </div>
-                            <input type="text" min="0"
-                                onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                class="form-control number-input input-notzero bayar-input"
-                                name="bayar" placeholder="Masukkan nominal bayar"
-                                autocomplete="off">
-                        </div>`
-                    ).hide().prev().addClass('mb-2');
+                    if(((type_multiple[0] == 'cash/transfer') || (type_multiple[1] == 'cash/transfer')) == false) {
+                        $('#cashtransfer').html(
+                                    `<div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Rp.</div>
+                                        </div>
+                                        <input type="text" min="0"
+                                            onkeypress="return event.charCode >= 48 && event.charCode <=57"
+                                            class="form-control number-input input-notzero bayar-input"
+                                            name="bayar" placeholder="Masukkan nominal bayar"
+                                            autocomplete="off">
+                                    </div>`
+                        ).hide().prev().removeClass('mb-2');
+                        $('.refund').addClass('d-none');
+                        $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
+                    } else if (((type_multiple[0] == 'limit') || (type_multiple[2] == 'limit')) == false) {
+                        discount += `<div class="card mt-2">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex">
+                                                <span class="flex-grow-1">Diskon</span>
+                                                <span>Rp. ${formatIDR(price_single)},00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`;
+                                $('.discount').html(discount).hide();
+
+                    }
                 }
             });
 
@@ -1219,6 +1286,7 @@
                                                     <small>${'Rp. ' + formatIDR(val.price) + ',00'}</small>
                                                 </div>`;
                                 });
+
                                 $('.items-replace').html(html).removeClass('d-none');
                                 $('.items-default').addClass('d-none');
                                 $('.discount').hide();
@@ -1353,6 +1421,13 @@
                                         invoice(url,
                                             'Print Invoice');
                                         history.go(0);
+                                    });
+                                } else {
+                                    swal({
+                                        title: '',
+                                        type: "error",
+                                        text: response.message,
+                                        confirmButtonColor: "#01c853",
                                     });
                                 }
                             }
