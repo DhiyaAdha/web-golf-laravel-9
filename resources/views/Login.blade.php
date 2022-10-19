@@ -146,7 +146,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <a class="capitalize-font txt-primary block mb-10 pull-right font-12"
-                                                    href="{{ route('Lupa-pasword') }}">Lupa Password?</a>
+                                                    href="{{ route('forgot-password') }}">Lupa Password?</a>
                                                 <label class="pull-left control-label mb-10"
                                                     for="password">Password</label>
                                                 <input type="password" name="password" class="form-control"
