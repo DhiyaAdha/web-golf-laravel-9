@@ -23,11 +23,7 @@
             <!-- /Title -->
             <div class="row">
                 <div class="col-lg-12" style="position: relative;">
-<<<<<<< HEAD
-                    <div class="panel panel-default card-view">
-=======
                     <div style="" class="panel panel-default card-view">
->>>>>>> 10790b37e1793b4bc71f50233d1b46c68297cf89
                         <h6 class="control-label mb-10">Edit Tamu</h6>
                         <div class="panel-body">
                             <div class="form-wrap">
@@ -111,8 +107,8 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label mb-10" for="">Tipe Member Tamu Ini Adalah
-                                                <label class="switch">
+                                            <label class="control-label mb-5" for="">Tipe Member Tamu Ini Adalah
+                                                <label class="switch" style="margin-top: 10px">
                                                     <input class="cmn-toggle cmn-toggle-round-flat" type="hidden"
                                                         value="VIP" name="tipe_member">
                                                     <input type="checkbox" name="tipe_member" type="checkbox"
@@ -135,8 +131,8 @@
                         </div>
                     </div>
                 </div>
+                @include('layouts.footer')
             </div>
-            @include('layouts.footer')
         </div>
     </div>
 @endsection
