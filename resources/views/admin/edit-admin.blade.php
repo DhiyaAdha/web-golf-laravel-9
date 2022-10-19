@@ -228,9 +228,9 @@
         var password = $("#password").val();
         var confirmPassword = $("#password_confirmation").val();
         if (password != confirmPassword)
-            $("#CheckPasswordMatch").html("Password does not match !").css("color", "red");
+            $("#CheckPasswordMatch").html("Password tidak sama !").css("color", "red");
         else
-            $("#CheckPasswordMatch").html("Password match !").css("color", "green");
+            $("#CheckPasswordMatch").html("Password sama !").css("color", "green");
     });
 </script>
 <script>
@@ -238,9 +238,9 @@
         var password = $("#password2").val();
         var confirmPassword = $("#password_confirmation2").val();
         if (password != confirmPassword)
-            $("#CheckPasswordMatch2").html("Password does not match !").css("color", "red");
+            $("#CheckPasswordMatch2").html("Password tidak sama !").css("color", "red");
         else
-            $("#CheckPasswordMatch2").html("Password match !").css("color", "green");
+            $("#CheckPasswordMatch2").html("Password sama !").css("color", "green");
     });
 </script>
 {{-- checkbox --}}

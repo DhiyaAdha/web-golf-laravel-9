@@ -300,7 +300,7 @@
                         </tr>
                         <tr>
                             <td class="w-30">Tipe Member:</td>
-                            <td>{{ $visitor->tipe_member }}</td>
+                            <td>{{ $visitor->tipe_member == 'VIP' ? 'Member' : 'VIP' }}</td>
                         </tr>
                     </tbody>
                 </table>

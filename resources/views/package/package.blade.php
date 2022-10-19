@@ -15,7 +15,7 @@
                         <li class="active"><span>Daftar paket</span></li>
                     </ol>
                 </div>
-                <!-- /Breadcrumb -->
+                <!-- /Breadcrumb --> 
             </div>
             <!-- /Title -->
 
