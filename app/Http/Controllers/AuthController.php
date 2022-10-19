@@ -7,7 +7,6 @@ use Exception;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Order;
-// use App\Models\Invoice;
 use App\Models\Visitor;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -30,28 +29,22 @@ class AuthController extends Controller {
     //ini untuk route get pada web.php
     public function index(){
             return view('/login');
-        }
+    }
 
     public function forgot_password(){
             return view('/Lupa-pasword');
-
-        }
+    }
 
     public function password_baru(){
             return view('/Reset-pasword');
-        }
-
-
+    }
 
     //ini untuk function login
-    public function login(Request $request)
-    {
-        
+    public function login(Request $request) {
         $validate = Validator::make($request->all(), [
             'email' => 'required|email:dns',
             'password' => 'required',
         ]);
-
 
         //berfungsi jika format email salah
         if($validate->fails()){
@@ -68,9 +61,7 @@ class AuthController extends Controller {
                     'errors' => null,
                     'content' => null,
                 ];
-                return back()->with('error', 'Invalid! Email atau Password yang anda masukkan Salah!');
-                // return response(['message'=>'Invalid Credential'], 401);
-                // return response(['message'=>'Login Failed! Email atau Password yang anda masukkan Salah!'], 401);
+                return back()->with('error', 'Email atau Password yang anda masukkan salah!');
             }
             //ini untuk menangkap error login
             $user = User::where('email', $request->email)->first();
@@ -94,24 +85,8 @@ class AuthController extends Controller {
             }else {
                 return redirect()->intended('/scan-tamu')->with('success', 'Selamat Datang Admin '.$user->name.''); 
             }
-            // dd(session()->all());
         }
     }
-
-    // public function logout(Request $request){
-        //     $user = $request->user();
-        //     $user->currentAccessToken()->delete();
-        //     $respon = [
-            //             'status' => 'error',
-            //             'msg' => 'Logout Successfully',
-    //             'errors' => null,
-    //             'content' => null,
-    //     ];
-    //     // return response()->json($respon, 200);
-    //     return redirect()->intended('/login');
-    // }
-
-    
 
     //ini untuk function logout
     public function logout (Request $request) {
@@ -199,19 +174,8 @@ class AuthController extends Controller {
 
         $data['action_link'] = route('Reset-pasword',['token'=>$token,'email'=>$request->email]);
         $data['body'] = "Kami telah menerima permintaan untuk mengatur ulang kata sandi akun yang terkait dengan ".$request->email." pada <b>Tritih Golf & Country Club</b>. Anda dapat mengatur ulang kata sandi dengan mengklik tautan di bawah ini";
-
-            // Mail::send('email-test',['action_link'=>$data['action_link'],'body'=>$data['body']], function($message) use ($request){
-            // $message->from('imasnurdianto.stu@pnc.ac.id','Imas Nurdianto');
-            // $message->to($request->email, '')->subject('Reset Password');
-        // });
-        
-
         $data['email'] = $request->email;
-  
         dispatch(new SendEmailResetJob($data));
-        // dd(session()->all());
-    
-        // return back()->with('success', 'Reset Password sudah dikirim ke email anda! silahkan cek email');
         return redirect()->route('login')->with('success', 'Reset Password sudah dikirim ke email anda! silahkan cek email');
     }
 }

@@ -926,8 +926,41 @@ class OrderController extends Controller
                             } else {
                                 if ($req->get('bayar_input') != $totalPrice) {
                                     if ($req->get('bayar_input') >= $totalPrice){
-                                        $this->setResponse('INVALID', "Nominal melebihi total bayar");
-                                        return response()->json($this->getResponse());
+                                        try {
+                                            LogTransaction::create([
+                                                'order_number' => $req->get('order_number'),
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'cart' => serialize($cart_data),
+                                                'payment_type' => serialize([[
+                                                    'payment_type' => 'cash/transfer', 
+                                                    'transaction_amount' => $req->get('bayar_input'), 
+                                                    'balance' => 0,
+                                                    'discount' => 0,
+                                                    'refund' => $req->get('refund')
+                                                ]]),
+                                                'payment_status' => 'paid',
+                                                'total' => $totalPrice
+                                            ]);
+            
+                                            LogAdmin::create([
+                                                'user_id' => Auth::id(),
+                                                'type' => 'CREATE',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                            ]);
+            
+                                            \Cart::session($req->get('page'))->clear();
+            
+                                            if ($req->ajax()) {
+                                                return response()->json([
+                                                    'status' => 'VALID',
+                                                    'message' => 'Pembayaran berhasil',
+                                                    'return' => $req->get('bayar_input')
+                                                ]);
+                                            }
+                                        } catch (Throwable $e) {
+                                            return response()->json($this->getResponse());
+                                        }
                                     } else {
                                         $this->setResponse('INVALID', "Nominal yang harus dibayarkan $totalPrice");
                                         return response()->json($this->getResponse());
@@ -1616,9 +1649,42 @@ class OrderController extends Controller
                                     return response()->json($this->getResponse());
                                 } else {
                                     if ($req->get('bayar_input') != $totalPrice) {
-                                        if ($req->get('bayar_input') >= $totalPrice){
-                                            $this->setResponse('INVALID', "Nominal melebihi total bayar");
-                                            return response()->json($this->getResponse());
+                                        if ($req->get('bayar_input') >= $totalPrice) {
+                                            try {
+                                                LogTransaction::create([
+                                                    'order_number' => $req->get('order_number'),
+                                                    'visitor_id' => $req->get('page'),
+                                                    'user_id' => Auth()->id(),
+                                                    'cart' => serialize($cart_data),
+                                                    'payment_type' => serialize([[
+                                                        'payment_type' => 'cash/transfer', 
+                                                        'transaction_amount' => $req->get('bayar_input'), 
+                                                        'balance' => 0,
+                                                        'discount' => 0,
+                                                        'refund' => $req->get('refund')
+                                                    ]]),
+                                                    'payment_status' => 'paid',
+                                                    'total' => $totalPrice
+                                                ]);
+                
+                                                LogAdmin::create([
+                                                    'user_id' => Auth::id(),
+                                                    'type' => 'CREATE',
+                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                                ]);
+                
+                                                \Cart::session($req->get('page'))->clear();
+                
+                                                if ($req->ajax()) {
+                                                    return response()->json([
+                                                        'status' => 'VALID',
+                                                        'message' => 'Pembayaran berhasil',
+                                                        'return' => $req->get('bayar_input')
+                                                    ]);
+                                                }
+                                            } catch (Throwable $e) {
+                                                return response()->json($this->getResponse());
+                                            }
                                         } else {
                                             $this->setResponse('INVALID', "Nominal yang harus dibayarkan $totalPrice");
                                             return response()->json($this->getResponse());
@@ -1662,54 +1728,8 @@ class OrderController extends Controller
                                     }
                                 }
                             } else if ($req->get('type_multiple')[0] == 'deposit') {
-                                if ($deposit->balance > $price_single) {
-                                    try{
-                                        $deposit_before = $totalPrice - $price_single;
-                                        $deposit->balance = $deposit->balance - $deposit_before;
-                                        $deposit->save();
-                                        
-                                        LogTransaction::create([
-                                            'order_number' => $req->get('order_number'),
-                                            'visitor_id' => $req->get('page'),
-                                            'user_id' => Auth()->id(),
-                                            'cart' => serialize($cart_data),
-                                            'payment_type' => serialize([[
-                                                'payment_type' => 'deposit',
-                                                'transaction_amount' => $deposit_before,
-                                                'balance' => $deposit->balance,
-                                                'discount' => 0,
-                                                'refund' => 0
-                                            ]]),
-                                            'payment_status' => 'paid',
-                                            'total' => $totalPrice
-                                        ]);
-            
-                                        LogAdmin::create([
-                                            'user_id' => Auth::id(),
-                                            'type' => 'CREATE',
-                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                        ]);
-            
-                                        ReportDeposit::create([
-                                            'payment_type' => 'deposit',
-                                            'report_balance' => $deposit_before,
-                                            'visitor_id' => $req->get('page'),
-                                            'user_id' => Auth()->id(),
-                                            'fund' => $deposit->balance,
-                                            'status' => 'Berkurang',
-                                            'created_at' => Carbon::now(),
-                                        ]);
-                                        \Cart::session($req->get('page'))->clear();
-            
-                                        if ($req->ajax()) {
-                                            $this->setResponse('VALID', "Pembayaran berhasil");
-                                            return response()->json($this->getResponse());
-                                        }
-                                    } catch (Throwable $e) {
-                                        return response()->json($this->getResponse());
-                                    }
-                                } else {
-                                    $this->setResponse('INVALID', "Saldo tidak mencukupi");
+                                if ($deposit->balance < $price_single) {
+                                    $this->setResponse('INVALID', "Tambahkan metode lain untuk sisa pembayaran");
                                     return response()->json($this->getResponse());
                                 }
                             }
@@ -2261,8 +2281,41 @@ class OrderController extends Controller
                                 } else {
                                     if ($req->get('bayar_input') != $totalPrice) {
                                         if ($req->get('bayar_input') >= $totalPrice){
-                                            $this->setResponse('INVALID', "Nominal melebihi total bayar");
-                                            return response()->json($this->getResponse());
+                                            try {
+                                                LogTransaction::create([
+                                                    'order_number' => $req->get('order_number'),
+                                                    'visitor_id' => $req->get('page'),
+                                                    'user_id' => Auth()->id(),
+                                                    'cart' => serialize($cart_data),
+                                                    'payment_type' => serialize([[
+                                                        'payment_type' => 'cash/transfer', 
+                                                        'transaction_amount' => $req->get('bayar_input'), 
+                                                        'balance' => 0,
+                                                        'discount' => 0,
+                                                        'refund' => $req->get('refund')
+                                                    ]]),
+                                                    'payment_status' => 'paid',
+                                                    'total' => $totalPrice
+                                                ]);
+                
+                                                LogAdmin::create([
+                                                    'user_id' => Auth::id(),
+                                                    'type' => 'CREATE',
+                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                                ]);
+                
+                                                \Cart::session($req->get('page'))->clear();
+                
+                                                if ($req->ajax()) {
+                                                    return response()->json([
+                                                        'status' => 'VALID',
+                                                        'message' => 'Pembayaran berhasil',
+                                                        'return' => $req->get('bayar_input')
+                                                    ]);
+                                                }
+                                            } catch (Throwable $e) {
+                                                return response()->json($this->getResponse());
+                                            }
                                         } else {
                                             $this->setResponse('INVALID', "Nominal yang harus dibayarkan $totalPrice");
                                             return response()->json($this->getResponse());
