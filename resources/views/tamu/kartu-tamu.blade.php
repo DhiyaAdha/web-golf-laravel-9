@@ -163,6 +163,10 @@
                                         <span
                                             class="{{ $visitor->tipe_member == 'VIP' ? 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-success' : 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-warning' }}">{{ $visitor->tipe_member }}</span>
                                     </div>
+                                    <div class="mb-15 d-flex flex-column">
+                                        <span class="txt-muted">Kategori</span>
+                                        <span>{{ $visitor->category }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -170,7 +174,7 @@
                 </div>
                 <div class="col-lg-3">
                     {{-- Limit Bulanan --}}
-                    <div class="panel panel-default card-view limit" style="height: 181px;">
+                    <div class="panel panel-default card-view limit" style="height: 209.4px;">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Limit</h6>
                             <div class="clearfix"></div>
@@ -183,7 +187,7 @@
                         </div>
                     </div>
                     {{-- Limit Kupon --}}
-                    <div class="panel panel-default card-view limit" style="height: 181px;">
+                    <div class="panel panel-default card-view limit" style="height: 209.4px;">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Kupon</h6>
                             <div class="clearfix"></div>
@@ -197,7 +201,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    <div class="panel panel-default card-view limit" style="height: 181px;">
+                    <div class="panel panel-default card-view limit" style="height: 209.4px;">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Saldo</h6>
                             <div class="clearfix"></div>
@@ -209,7 +213,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default card-view b" style="height: 181px;">
+                    <div class="panel panel-default card-view b" style="height: 209.4px;">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Barcode</h6>
                             <div class="clearfix"></div>
