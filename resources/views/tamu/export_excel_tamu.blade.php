@@ -22,7 +22,13 @@
         <tbody>
         @foreach($visitor as $item)
             <tr>
-                <td>{{ $item->name }}</td>
+                {{-- <td>{{ $item->name }}</td> --}}
+                @if ($item->tipe_member == 'VVIP')
+                    <td>{{ $item->name }}</td>
+                @endif
+                @if ($item->tipe_member == 'VIP')
+                    <td>{{ $item->name }}</td>
+                @endif
                 <td style="text-align: center">{{ $item->email }}</td>
                 <td>{{ $item->phone }}</td>
                 <td>{{ $item->address }}</td>
