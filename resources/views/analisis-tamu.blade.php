@@ -314,7 +314,6 @@
                             </div>
                         </div>
                     </div>
-
                     {{-- Chart Rekap Harian --}}
                     <div class="col-lg-6">
                         <div class="panel panel-default card-view panel-refresh relative">
@@ -350,7 +349,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Row Tabel Tamu-->
                 <div class="row">
                     <div class="col-lg-12">
@@ -386,7 +384,6 @@
         </div>
         </div>
     @endsection
-
     @push('scripts')
         <script>
             // fungsi grafik-line & Grafik-bar
@@ -433,6 +430,7 @@
                     },
                     {
                         data: 'times',
+
                     }
                 ],
                 order: [

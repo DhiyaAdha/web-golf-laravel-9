@@ -120,6 +120,7 @@ class AdminController extends Controller
             'type' => 'UPDATE',
             'activities' => 'Mengubah user <b>' . $user->name . '</b>',
         ]);
+        
         return redirect()->route('daftar-admin')->with('success', 'Berhasil Edit Admin');
     }
 
