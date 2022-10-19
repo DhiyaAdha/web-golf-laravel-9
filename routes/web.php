@@ -31,16 +31,14 @@ Route::get('/', function () {
     return view('login');
 });
 
-Route::post('/lupa-pasword',[AuthController::class, 'email_test'])->name('email_test');
-
+Route::post('/forgot-password',[AuthController::class, 'email_test'])->name('email_test');
 //untuk route login
     Route::get('/login', [AuthController::class, 'index'])->Middleware('guest')->name('login');
     Route::post('/login', [AuthController::class, 'login']);
     //Route untuk sebelum Login
-    Route::get('/lupa-pasword', [AuthController::class, 'forgot_password'])->middleware('guest')->name('Lupa-pasword');
-    // Route::post('/lupa-pasword', [AuthController::class, 'sendresetlink'])->name('Lupa-pasword.link');
-    Route::get('/reset-pasword/{token}', [AuthController::class,'showResetForm'])->name('Reset-pasword');
-    Route::post('/reset-pasword', [AuthController::class, 'resetPassword'])     ->name('Reset-pasword.update');
+    Route::get('/forgot-password', [AuthController::class, 'forgot_password'])->middleware('guest')->name('forgot-password');
+    Route::get('/reset-password/{token}', [AuthController::class,'showResetForm'])->name('reset-password');
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('reset-password.update');
     //untuk route logout
     Route::get('/logout', [AuthController::class, 'logout']);
 
@@ -74,6 +72,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
 //Level admin dan superadmin
 Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::resource('analisis-tamu', DashboardController::class);
+    Route::get('/revenue', [DashboardController::class, 'revenue'])->name('revenue');
     Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name('scan-tamu');
     Route::get('/visitor/qrcode', [ScanqrController::class, 'checkQRCode'])->name('visitor.qrcode');
     Route::get('/visitor/phone', [ScanqrController::class, 'checkNoHp'])->name('visitor.phone');
@@ -126,7 +125,6 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::post('/cart_reguler/clear',[OrderRegulerController::class, 'clear_cart'])->name('cart_reguler.clear');
     Route::get('/checkout_reguler', [OrderRegulerController::class,'checkout'])->name('checkout_reguler');
     Route::post('/pay_reguler', [OrderRegulerController::class,'pay_reguler'])->name('pay_reguler');
-
     Route::get('/print_invoice_reguler', [OrderRegulerController::class,'print_invoice'])->name('invoice.print.reguler');
     
     //route 4 notifikasi email pembayaran sukses

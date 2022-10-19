@@ -37,7 +37,7 @@ class ScanqrController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return view('scan-tamu');
+        return view('membership.scan-tamu');
     }
 
     /**
@@ -99,10 +99,6 @@ class ScanqrController extends Controller
     public function destroy($id) {
         //
     }
-    // Scantamu-berhasil
-    public function scantamuberhasil() {
-        return view('/scan-tamu-berhasil');
-    }
 
     public function proses() {
         return view('proses');
@@ -117,7 +113,7 @@ class ScanqrController extends Controller
     }
 
     public function detailscan() {
-        return view('detail_scan');
+        return view('membership.detail_scan');
     }
 
     public function show_detail($id = null){
@@ -127,7 +123,7 @@ class ScanqrController extends Controller
         $data['visitor'] = $visitor;
         $data['deposit'] = $deposit;
         $data['log_limit'] = $log_limit;
-        return view('detail_scan', $data);
+        return view('membership.detail_scan', $data);
     }
 
     public function checkQRCode(Request $request, $id = null) {

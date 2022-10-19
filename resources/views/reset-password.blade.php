@@ -142,7 +142,7 @@
                                     </div>
                                     <div class="form-wrap">
 
-                                        <form action="{{ route('Reset-pasword.update') }}" method="post"
+                                        <form action="{{ route('reset-password.update') }}" method="post"
                                             autocomplete="off">
 
                                             @csrf

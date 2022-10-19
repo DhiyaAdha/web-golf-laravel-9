@@ -131,7 +131,7 @@ class OrderController extends Controller
         // $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
         // dd($package_default);
 
-        return view('keranjang', compact(
+        return view('membership.cart', compact(
             'url_checkout',
             'counted',
             'date_now',
@@ -389,7 +389,7 @@ class OrderController extends Controller
             if ($request->ajax()) {
                 return response()->json(['order_number' => $order_number]);
             }
-            return view("checkout", compact('log_limit', 'price_single', 'item_default', 'package_default', 'package_additional', 'package_others', 'visitor', 'deposit', 'totalPrice', 'order_number', 'orders'))->render();
+            return view("membership.checkout", compact('log_limit', 'price_single', 'item_default', 'package_default', 'package_additional', 'package_others', 'visitor', 'deposit', 'totalPrice', 'order_number', 'orders'))->render();
         } catch (\Throwable $th) {
             return redirect()->to($link_pos); 
         }
@@ -2924,7 +2924,7 @@ class OrderController extends Controller
                 $transaction_amount += $get['transaction_amount'];
             }
             $counted = ucwords(counted($log_transaction->total) . ' Rupiah');
-            return view('print-invoice', compact(
+            return view('membership.print-invoice', compact(
                 'visitor',
                 'log_transaction',
                 'payment_type',
