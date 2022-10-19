@@ -135,6 +135,4 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
         
     });
 
-
-
 });
