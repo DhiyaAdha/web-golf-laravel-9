@@ -2,12 +2,12 @@
     <ul class="nav navbar-nav side-nav nicescroll-bar">
         @if (auth()->user()->role_id == '2')
             <li class="navigation-header">
-                <span>Super Admin Dashboard</span>
+                <span>Super Admin</span>
                 <i class="zmdi zmdi-more"></i>
             </li>
         @else
             <li class="navigation-header">
-                <span>Admin Dashboard</span>
+                <span>Admin</span>
                 <i class="zmdi zmdi-more"></i>
             </li>
         @endif
