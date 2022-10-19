@@ -78,7 +78,7 @@
                                     </div>
                                     <div class="mb-15 d-flex">
                                         <div class="col-medium-3">
-                                            <span class="txt-muted">Kategori Tamu</span>
+                                            <span class="txt-muted">Tipe Tamu</span>
                                         </div>
                                         <div class="col-lg-12 col-md-12">
                                             <span
