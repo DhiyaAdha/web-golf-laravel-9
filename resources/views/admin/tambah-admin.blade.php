@@ -24,8 +24,8 @@
                     <h6 class="control-label mb-10">Tambah Admin</h6>
                     <div class="panel-body">
                         <div class="form-wrap">
+                            <form action="{{ route('insertadmin') }}" method="POST">
                                 @csrf
-                                <form action="{{ route('insertadmin') }}" method="POST">
                                 <div class="form-group @error('name') has-error @enderror">
                                     <label class="control-label mb-10" for="">Nama Lengkap</label>
                                     <input type="text" class="form-control" id="result" size="50px" placeholder="Masukan Nama" name="name" value="{{ old('name') }}">
@@ -42,30 +42,36 @@
                                 </div>
                                 <div class="form-group @error('password') has-error @enderror">
                                     <label class="pull-left control-label mb-10" for="password">Password</label>
-                                    <input type="password" name="password" class="form-control" id="password" placeholder="Masukan Password">
-                                    <span class="show-hide1" onclick="myfunction()">
-                                        <i style="color: gray;" id="hide1" class="fa-solid fa-eye fa-xs"></i>
-                                        <i style="color: gray;" id="hide2" class="fa-solid fa-eye-slash fa-xs"></i>
-                                    </span>
-                                    @error('password')
-                                    <div class="text-danger"> {{ $message }}</div>
-                                    @enderror
+                                    <input type="password" name="password"
+                                        class="form-control @error('password') has-error @enderror"
+                                        id="password" placeholder="Masukan Password Baru"
+                                        value="{{ old('password') }}" autocomplete="current-password">
+                                        @error('password')
+                                        <div class="text-danger"> {{ $message }}</div>
+                                        @enderror    
+                                        <input style="vertical-align: -3px" class="checkbox-showPW" type="checkbox" onclick="myFunction()">&nbsp;Lihat Password
+                                    {{-- <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye1 fa-eye-slash" id="eye"></i> --}}
+
+                                       
                                 </div>
                                 <div class="form-group @error('password') has-error @enderror">
-                                    <label class="pull-left control-label mb-10" for="confirm-password">Konfirmasi
-                                        Password</label>
-                                    <input type="password" name="password" class="form-control" id="confirm_password" placeholder="Masukan Ulang Password">
-                                    <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
-                                    <span class="show-hide2" onclick="myfunction2()">
-                                        <i id="hide3" class="fa-solid fa-eye"></i>
-                                        <i id="hide4" class="fa-solid fa-eye-slash"></i>
-                                    </span>
-                                    @error('password')
-                                    <div class="text-danger"> {{ $message }}</div>
-                                    @enderror
+                                    <label class="pull-left control-label mb-10"
+                                        for="password_confirmation">Ulangi Password</label>
+                                    <div class="clearfix"></div>
+                                    <input type="password" name="password_confirmation"
+                                        class="form-control @error('password') is-invalid @enderror"
+                                        id="password_confirmation" placeholder="Masukan Password Baru"
+                                        value="{{ old('password_confirmation') }}"
+                                        autocomplete="current-password">
+                                        <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
+                                        @error('password_confirmation')
+                                        <div class="text-danger"> {{ $message }}</div>
+                                        @enderror
+                                        <input style="vertical-align: -3px" class="checkbox-showPW" type="checkbox" onclick="myFunction2()">&nbsp;Lihat Password
+                                    {{-- <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye2 fa-eye-slash" id="eyee"></i> --}}
                                 </div>
                                 <div class="form-group @error('phone') has-error @enderror">
-                                    <label class="control-label mb-10" for="">Nomer Hp</label>
+                                    <label  class="control-label mb-10" for="">Nomer Hp</label>
                                     <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <=57" name="phone" class="form-control" id="result" size="50px" placeholder="Masukan Nomer Hp" value="{{ old('phone') }}">
                                     @error('phone')
                                     <div class="text-danger"> {{ $message }}</div>
@@ -102,44 +108,50 @@
 </div>
 @endsection
 @push('scripts')
-    <script>
-        function myfunction() {
-            var x = document.getElementById("password");
-            var y = document.getElementById("hide1");
-            var z = document.getElementById("hide2");
-            if (x.type === 'password') {
-                x.type = "text";
-                y.style.display = "block";
-                z.style.display = "none";
-            } else {
-                x.type = "password";
-                y.style.display = "none";
-                z.style.display = "block";
-            }
-        }
+<script>
+    const passwordField = document.querySelector("#password");
+    const passwordCon = document.querySelector("#password_confirmation");
+    const eyeIcon = document.querySelector("#eye");
+    const eyeeIcon = document.querySelector("#eyee");
 
-        function myfunction2() {
-            var x = document.getElementById("confirm_password");
-            var y = document.getElementById("hide3");
-            var z = document.getElementById("hide4");
-            if (x.type === 'password') {
-                x.type = "text";
-                y.style.display = "block";
-                z.style.display = "none";
-            } else {
-                x.type = "password";
-                y.style.display = "none";
-                z.style.display = "block";
-            }
-        }
-
-        $("#confirm_password").on('keyup', function() {
-            var password = $("#password").val();
-            var confirmPassword = $("#confirm_password").val();
-            if (password != confirmPassword)
-                $("#CheckPasswordMatch").html("Password tidak sama !").css("color", "red");
-            else
-                $("#CheckPasswordMatch").html("Password sama !").css("color", "green");
-        });
+    eye.addEventListener("click", function() {
+        this.classList.toggle("fa-eye");
+        const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+        passwordField.setAttribute("type", type);
+    })
+    eyee.addEventListener("click", function() {
+        this.classList.toggle("fa-eye");
+        const typee = passwordCon.getAttribute("type") === "password" ? "text" : "password";
+        passwordCon.setAttribute("type", typee);
+    })
+</script>
+<script>
+    $("#password_confirmation").on('keyup', function() {
+        var password = $("#password").val();
+        var confirmPassword = $("#password_confirmation").val();
+        if (password != confirmPassword)
+            $("#CheckPasswordMatch").html("Password tidak sama !").css("color", "red");
+        else
+            $("#CheckPasswordMatch").html("Password sama !").css("color", "green");
+    });
+</script>
+{{-- checkbox --}}
+<script>
+    function myFunction() {
+      var x = document.getElementById("password");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+    function myFunction2() {
+      var y = document.getElementById("password_confirmation");
+      if (y.type === "password") {
+        y.type = "text";
+      } else {
+        y.type = "password";
+      }
+    }
     </script>
 @endpush

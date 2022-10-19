@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Validator;
 use PHPUnit\Framework\Constraint\LogicalOr;
 
 class AdminController extends Controller
@@ -94,6 +95,7 @@ class AdminController extends Controller
                 'name' => 'required',
                 'email' => 'required',
                 'password' => 'required|min:8',
+                'password_confirmation' => 'required_with:password|same:password|min:8',
                 'phone' => 'required|min:12',
                 'role_id' => 'required',
             ],
@@ -118,6 +120,7 @@ class AdminController extends Controller
             'type' => 'UPDATE',
             'activities' => 'Mengubah user <b>' . $user->name . '</b>',
         ]);
+        
         return redirect()->route('daftar-admin')->with('success', 'Berhasil Edit Admin');
     }
 
@@ -192,6 +195,7 @@ class AdminController extends Controller
                 'name' => 'required|unique:users,name',
                 'email' => 'required|unique:users,email',
                 'password' => 'required|min:8',
+                'password_confirmation' => 'required_with:password|same:password|min:8',
                 'phone' => 'required|min:12',
                 'role_id' => 'required',
             ],

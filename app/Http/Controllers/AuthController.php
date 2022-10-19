@@ -56,7 +56,7 @@ class AuthController extends Controller {
         //berfungsi jika format email salah
         if($validate->fails()){
             // return response(['message'=> $validate->errors()], 200);
-            return back()->with('loginError', 'The email must be a valid email address!');
+            return back()->with('error', 'The email must be a valid email address!');
         } else {
             //berfungsi jika password salah/tidak sama
             $credentials = request(['email', 'password']);
@@ -68,7 +68,7 @@ class AuthController extends Controller {
                     'errors' => null,
                     'content' => null,
                 ];
-                return back()->with('loginError', 'Invalid! Email atau Password yang anda masukkan Salah!');
+                return back()->with('error', 'Invalid! Email atau Password yang anda masukkan Salah!');
                 // return response(['message'=>'Invalid Credential'], 401);
                 // return response(['message'=>'Login Failed! Email atau Password yang anda masukkan Salah!'], 401);
             }
@@ -122,11 +122,15 @@ class AuthController extends Controller {
     }
     //ini untuk function reset password, email yang di input akan dicek
     public function resetPassword(Request $request){
-        $request->validate([
-            'email'=>'required|email|exists:users,email',
-            'password'=>'required|confirmed|min:8',
-            'password_confirmation'=>'required',
-        ]);
+            $validate = Validator::make($request->all(), [
+                'email'=>'required|email|exists:users,email',
+                'password'=>'required|confirmed|min:8',
+                'password_confirmation'=>'required',
+            ]);
+            if($validate->fails()){
+                // return response(['message'=> $validate->errors()], 200);
+                return back()->with('error', 'ada yang salah, pastikan password yang anda masukkan sama dan berisi minimal 8 karakter');
+            }
         //ini untuk function mengecek token dari database untuk mereset password
         $check_token = DB::table('password_resets')->where([
             'email'=>$request->email,

@@ -19,8 +19,9 @@
         type="text/css" />
     <!-- Custom CSS -->
     <link href="/dist/css/style.css" rel="stylesheet" type="text/css">
-    <link href="/dist/css/custom.css" rel="stylesheet" type="text/css">
+    {{-- <link href="/dist/css/custom.css" rel="stylesheet" type="text/css"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
 
     <style>
         .password-container {
@@ -78,7 +79,6 @@
             top: 72px;
             right: 10px;
             cursor: pointer;
-            color: lightgray;
         }
         .fa-eye2 {
             position: absolute;
@@ -87,7 +87,6 @@
             top: 72px;
             right: 10px;
             cursor: pointer;
-            color: lightgray;
         } */
     </style>
 </head>
@@ -163,7 +162,7 @@
                                                     class="form-control @error('password') has-error @enderror"
                                                     id="password" placeholder="Masukan Password Baru"
                                                     value="{{ old('password') }}" autocomplete="current-password">
-                                                <i class="fa-solid fa-eye1 fa-eye fa-eye-slash" id="eye"></i>
+                                                <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye1 fa-eye fa-eye-slash" id="eye"></i>
 
                                                 @error('password')
                                                     <div class="text-danger"> {{ $message }}</div>
@@ -179,7 +178,7 @@
                                                     value="{{ old('password_confirmation') }}"
                                                     autocomplete="current-password">
                                                     <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
-                                                <i class="fa-solid fa-eye2 fa-eye fa-eye-slash" id="eyee"></i>
+                                                <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye2 fa-eye fa-eye-slash" id="eyee"></i>
                                             </div>
                                             <div class="form-group text-center">
                                                 <button type="submit" class="btn btn-info btn-rounded">Update
@@ -216,6 +215,9 @@
     <!-- Init JavaScript -->
     <script src="/dist/js/init.js"></script>
 
+    {{-- toast --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
     <script>
         const passwordField = document.querySelector("#password");
         const passwordCon = document.querySelector("#password_confirmation");
@@ -241,6 +243,53 @@
                 $("#CheckPasswordMatch").html("Password does not match !").css("color", "red");
             else
                 $("#CheckPasswordMatch").html("Password match !").css("color", "green");
+        });
+    </script>
+    <script>
+
+        $(document).ready(function() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "100",
+                "hideDuration": "100",
+                "timeOut": "6000",
+                "extendedTimeOut": "6000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+
+            @if (Session::has('error'))
+                toastr.error('{{ Session::get('error') }}');
+            @endif
+
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "10",
+                "hideDuration": "10",
+                "timeOut": "3000",
+                "extendedTimeOut": "3000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut",
+            };
+            @if (Session::has('success'))
+                toastr.success('{{ Session::get('success') }}');
+            @endif
         });
     </script>
 </body>
