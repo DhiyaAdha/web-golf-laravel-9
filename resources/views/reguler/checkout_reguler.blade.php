@@ -22,6 +22,44 @@
             background: linear-gradient(to right, #82eee5, #01c853) !important;
         }
 
+        #calculator .screen {
+            width: 161px;
+            height: 36px;
+            border-radius: 3px;
+            padding: 10px;
+            margin: 2px 24px;
+            font-size: 15px;
+            font-weight: 700;
+            background: #8e9eab;
+        }
+
+        #calculator input {
+            border: none;
+        }
+
+        #calculator .qt {
+            margin: 4px 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #calculator button {
+            height: 35px;
+            width: 35px;
+            margin: 2px 1px;
+            border: none!important;
+            padding: 6px 7px;
+        }
+
+        #allClear {
+            box-shadow: inset 1px 1px 50px #900;
+            border: none;
+        }
+
+        .btn-default {
+            background: #eeeeee;
+        }
+
         .return-true {
             border-radius: 5px;
             font-size: 18px;
@@ -148,6 +186,54 @@
                                         <form>
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Metode Pembayaran</span>
+                                                <button tabindex="0" type="button" class="btn btn-success btn-flat" title="Calculator" data-popover-content="#unique-id" data-toggle="popover" data-placement="bottom">
+                                                    <i class="fa fa-calculator fa-lg" aria-hidden="true"></i>
+                                                </button>
+                                                <div id="unique-id" style="display:none;">
+                                                    <h3 class="popover-header text-center">Calculator</h3>
+                                                    <div class="popover-body">
+                                                        <div id="calculator">
+                                                            <div class="row text-center" id="calc">
+                                                                <div class="calcBG col-md-12 text-center">
+                                                                    <div class="row" id="result">
+                                                                    <form name="calc">
+                                                                        <input type="text" class="screen text-right" name="result" readonly>
+                                                                    </form>
+                                                                    </div>
+                                                                    <div class="row qt">
+                                                                        <button id="allClear" type="button" class="btn btn-danger" onclick="clearScreen()">AC</button>
+                                                                        <button id="clear" type="button" class="btn btn-warning" onclick="clearScreen()">CE</button>
+                                                                        <button id="%" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">%</button>
+                                                                        <button id="/" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">÷</button>
+                                                                    </div>
+                                                                    <div class="row qt">
+                                                                        <button id="7" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">7</button>
+                                                                        <button id="8" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">8</button>
+                                                                        <button id="9" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">9</button>
+                                                                        <button id="*" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">x</button>
+                                                                    </div>
+                                                                    <div class="row qt">
+                                                                        <button id="4" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">4</button>
+                                                                        <button id="5" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">5</button>
+                                                                        <button id="6" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">6</button>
+                                                                        <button id="-" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">-</button>
+                                                                    </div>
+                                                                    <div class="row qt">
+                                                                        <button id="1" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">1</button>
+                                                                        <button id="2" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">2</button>
+                                                                        <button id="3" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">3</button>
+                                                                        <button id="+" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">+</button>
+                                                                    </div>
+                                                                    <div class="row qt">
+                                                                        <button id="0" style="width: 77px;" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">0</button>
+                                                                        <button id="." type="button" class="btn btn-default" onclick="calEnterVal(this.id)">.</button>
+                                                                        <button id="equals" type="button" class="btn btn-success" onclick="calculate()">=</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="card mt-2">
                                                 <div class="card-body">
@@ -245,7 +331,8 @@
                                             <div class="items-default">
                                                 @foreach ($orders as $cart)
                                                     <div class="d-flex">
-                                                        <span class="flex-grow-1">{{ $cart['name'] }}</span>
+                                                        <span class="flex-grow-1">{{ $cart['name'] }} x
+                                                            {{ $cart['qty'] }}</span>
                                                         <small>Rp. {{ formatrupiah($cart['price']) }}</small>
                                                     </div>
                                                 @endforeach
@@ -263,15 +350,29 @@
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
     <script src="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.js') }}"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.min.js') }}"></script>
 
     <script>
+        $("[data-toggle=popover]").popover({
+            html : true,
+            sanitize: false,
+            content: function() {
+                var content = $(this).attr("data-popover-content");
+                return $(content).children(".popover-body").html();
+            },
+            title: function() {
+                var title = $(this).attr("data-popover-content");
+                return $(title).children(".popover-header").html();
+            }
+        });
+        
         function formatIDR(price) {
             var number_string = price.toString(),
                 split = number_string.split(','),
