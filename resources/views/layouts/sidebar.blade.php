@@ -53,7 +53,7 @@
             </li>
         @endif
         <li>
-            <a href="javascript:void(0);" data-toggle="collapse" data-target="#pages_dr"
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#pos"
                 class="collapsed {{ Request::is('scan-tamu') || Request::is('proses_reguler') ? 'active' : '' }}"
                 aria-expanded="false">
                 <div class="pull-left"><i class="zmdi zmdi-google-pages mr-20"></i><span class="right-nav-text">Point of
@@ -61,7 +61,7 @@
                 <div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div>
                 <div class="clearfix"></div>
             </a>
-            <ul id="pages_dr" class="collapse-level-1 two-col-list collapse" aria-expanded="false"
+            <ul id="pos" class="collapse-level-1 two-col-list collapse" aria-expanded="false"
                 style="height: 0px;">
                 <li>
                     <a class="{{ Request::is('scan-tamu') ? 'active-page' : '' }}" href="{{ route('scan-tamu') }}">

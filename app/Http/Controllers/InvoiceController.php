@@ -22,8 +22,7 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
+    public function index(Request $request) {
         $riwayat_invoice = LogTransaction::join('visitors', 'log_transactions.visitor_id', '=', 'visitors.id')->orderBy('log_transactions.created_at', 'desc')->get(['log_transactions.*', 'visitors.name as name', 'visitors.tipe_member as tipe_member']);
         $list_invoice = [];
         foreach($riwayat_invoice as $invoice){
@@ -164,8 +163,8 @@ class InvoiceController extends Controller
     public function metode_pembayaran () {
         return view('invoice.metode_pembayaran');
     }
-    public function cetak_pdf($id)
-    {
+
+    public function cetak_pdf($id) {
         try {
             $transaction = LogTransaction::find($id);
             $payment_type = unserialize($transaction->payment_type);
@@ -187,7 +186,7 @@ class InvoiceController extends Controller
                 $discount += $get['discount'];
             }
             $pdf = PDF::loadView('invoice.cetak_invoice', compact('method_payment','transaction', 'visitor', 'cart', 'qty', 'discount', 'total'));
-            return $pdf->download('invoice_'.$visitor->name.'.pdf');
+            return $pdf->download('invoice_'.$visitor->name.'_'.date('YmdHis').'.pdf');
         } catch (\Throwable $th) {
             return redirect()->route('riwayat-invoice.index');
         }

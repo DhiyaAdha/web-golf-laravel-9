@@ -123,18 +123,9 @@ $(document).ready(function(){
 		Morris.Bar({
 			element: 'statistic_visitor_bar',
 			data: dataMingguan,
-			// data: [
-			// 	{ y: 'Sen', a: 1, b: 1 },
-			// 	{ y: 'Sel', a: 2,  b: 2 },
-			// 	{ y: 'Rab', a: 3,  b: 3 },
-			// 	{ y: 'Kam', a: 4,  b: 4 },
-			// 	{ y: 'Jum', a: 5,  b: 5 },
-			// 	{ y: 'Sab', a: 6,  b: 6 },
-			// 	{ y: 'Mgg', a: 7, b: 7 }
-			// ],
 			xkey: 'y',
 			ykeys: ['a'	, 'b', 'c' ],
-			labels: ['VVIP', 'VIP', 'REGULER' ],
+			labels: ['VIP', 'Member', 'Reguler' ],
 			barColors:['#fec107', '#32FFC1', '#21E1E1'],
 			hideHover: 'auto',
 			gridLineColor: '#878787',

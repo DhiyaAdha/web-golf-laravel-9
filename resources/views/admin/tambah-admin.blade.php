@@ -49,7 +49,7 @@
                                         @error('password')
                                         <div class="text-danger"> {{ $message }}</div>
                                         @enderror    
-                                        <input style="vertical-align: -3px" class="checkbox-showPW" type="checkbox" onclick="myFunction()">&nbsp;Lihat Password
+                                        <input style="vertical-align: -3px" class="checkbox-showPW" type="checkbox" onclick="myFunction()">&nbsp;<span style="color: #B2B2B2;">Lihat Password</span>
                                     {{-- <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye1 fa-eye-slash" id="eye"></i> --}}
 
                                        
@@ -63,11 +63,11 @@
                                         id="password_confirmation" placeholder="Masukan Password Baru"
                                         value="{{ old('password_confirmation') }}"
                                         autocomplete="current-password">
-                                        <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
+                                        <div id="CheckPasswordMatch"></div>
                                         @error('password_confirmation')
                                         <div class="text-danger"> {{ $message }}</div>
                                         @enderror
-                                        <input style="vertical-align: -3px" class="checkbox-showPW" type="checkbox" onclick="myFunction2()">&nbsp;Lihat Password
+                                        <input style="vertical-align: -3px" class="checkbox-showPW" type="checkbox" onclick="myFunction2()">&nbsp; <span style="color: #B2B2B2;">Lihat Password</span>
                                     {{-- <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye2 fa-eye-slash" id="eyee"></i> --}}
                                 </div>
                                 <div class="form-group @error('phone') has-error @enderror">

@@ -103,27 +103,65 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                {{-- <label class="control-label mb-10" for="">Tamu Ini Adalah Tamu VIP
-                                                <div class="switch">
-                                                    <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" value="VVIP" name="tipe_member">
-                                                    <input id="cmn-toggle-4" class="cmn-toggle cmn-toggle-round-flat" name="tipe_member" type="checkbox" value="VIP">
-                                                    <label for="cmn-toggle-4"></label>
-                                                </div>
-                                            </label> --}}
-                                <label class="control-label mb-10" for="">Tipe Member Tamu Ini
-                                    Adalah</label>
+                                <label class="control-label mb-10" for="">Tipe member</label>
                                 <label class="switch">
                                     <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" value="VIP"
                                         name="tipe_member">
                                     <input type="checkbox" name="tipe_member" type="checkbox" value="VVIP">
                                     <div class="slider round switch">
-                                        <!--ADDED HTML -->
-                                        <span class="off">VIP</span>
-                                        <span class="on">VVIP</span>
-                                        <!--END-->
+                                        <span class="off" style="margin-left: 10px !important;">Member</span>
+                                        <span class="on">VIP</span>
                                     </div>
                                 </label>
                             </div>
+                            {{-- <div>
+                                <input type="radio" id="huey" name="drone" value="pertamina">
+                                <label for="pertamina">PERTAMINA</label>
+                            </div> --}}
+                            <div class="form-group @error('category') has-error @enderror">
+                                <label class="control-label mb-10 text-left">Jenis Kategori</label>
+                                <div class="radio-list">
+                                    <div class="radio-inline pl-0">
+                                        <span class="radio radio-info"> <input type="radio" name="category"
+                                                id="category-a" value="pertamina"
+                                                {{ old('category') == 'pertamina' ? 'checked=' . '"' . 'checked' . '"' : '' }}>
+                                            <label for="category-a">PERTAMINA</label>
+                                        </span>
+                                    </div>
+                                    <div class="radio-inline pl-0">
+                                        <span class="radio radio-info"> <input type="radio" name="category"
+                                                id="category-b" value="pensiunan">
+                                            {{ old('category') == 'pensiunan' ? 'checked=' . '"' . 'checked' . '"' : '' }}
+                                            <label for="category-b">PENSIUNAN</label>
+                                        </span>
+                                    </div>
+                                    <div class="radio-inline pl-0">
+                                        <span class="radio radio-info"> <input type="radio" name="category"
+                                                id="category-c" value="forkopimda">
+                                            {{ old('category') == 'forkopimda' ? 'checked=' . '"' . 'checked' . '"' : '' }}
+                                            <label for="category-c">FORKOPIMDA</label>
+                                        </span>
+                                    </div>
+                                    <div class="radio-inline pl-0">
+                                        <span class="radio radio-info"> <input type="radio" name="category"
+                                                id="category-d" value="perpesi">
+                                            {{ old('category') == 'perpesi' ? 'checked=' . '"' . 'checked' . '"' : '' }}
+                                            <label for="category-d">PERPESI</label>
+                                        </span>
+                                    </div>
+                                    <div class="radio-inline pl-0">
+                                        <span class="radio radio-info"> <input type="radio" name="category"
+                                                id="category-e" value="umum">
+                                            {{ old('category') == 'umum' ? 'checked=' . '"' . 'checked' . '"' : '' }}
+                                            <label for="category-e">UMUM</label>
+                                        </span>
+                                    </div>
+                                </div>
+                                @error('category')
+                                    <div class="text-danger"> {{ $message }}</div>
+                                @enderror
+                            </div>
+                            <br>
                             <br>
                             <div class="form-group text-left">
                                 <button type="submit" class="btn btn-info">Selanjutnya</button>

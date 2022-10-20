@@ -32,11 +32,11 @@ class AuthController extends Controller {
     }
 
     public function forgot_password(){
-            return view('/Lupa-pasword');
+            return view('forgot-password');
     }
 
     public function password_baru(){
-            return view('/Reset-pasword');
+            return view('reset-password');
     }
 
     //ini untuk function login
@@ -152,7 +152,7 @@ class AuthController extends Controller {
         }else{
             //jika token yang dicek ada
             if (Carbon::now()->lte($check_expired->created_at)) {
-                return view('Reset-pasword')->with(['token' => $token, 'email' => $request->email]);
+                return view('reset-password')->with(['token' => $token, 'email' => $request->email]);
             }else {
                 return redirect()->route('login')->with('error', 'Link reset password telah expired');
             }
@@ -172,7 +172,7 @@ class AuthController extends Controller {
             'is_verified' => 0,
         ]);
 
-        $data['action_link'] = route('Reset-pasword',['token'=>$token,'email'=>$request->email]);
+        $data['action_link'] = route('reset-password',['token'=>$token,'email'=>$request->email]);
         $data['body'] = "Kami telah menerima permintaan untuk mengatur ulang kata sandi akun yang terkait dengan ".$request->email." pada <b>Tritih Golf & Country Club</b>. Anda dapat mengatur ulang kata sandi dengan mengklik tautan di bawah ini";
         $data['email'] = $request->email;
         dispatch(new SendEmailResetJob($data));
