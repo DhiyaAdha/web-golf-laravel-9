@@ -79,7 +79,7 @@ class OrderRegulerController extends Controller
                     'category' => $row->category,
                 ];
             }
-            
+
 
             $cart_data = collect($cart)->sortBy('created_at');
         }
@@ -147,7 +147,7 @@ class OrderRegulerController extends Controller
             }
             $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
             $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
-            
+
             if (count($package_additional) == 0) {
                 $cart = \Cart::session(auth()->id())->getContent();
                 $cek_itemId = $cart->whereIn('id', $request->get('id'));
@@ -178,7 +178,7 @@ class OrderRegulerController extends Controller
                     'name' => $cek_itemId[$request->get('id')]->name,
                     'price' => $cek_itemId[$request->get('id')]->price
                 ], 200);
-            } else if(count($package_default) == 0) {
+            } else if (count($package_default) == 0) {
                 \Cart::session(auth()->id())->clear();
                 $this->setResponse('INVALID', "Setidaknya pilih satu jenis permainan");
                 return response()->json($this->getResponse());
@@ -213,7 +213,6 @@ class OrderRegulerController extends Controller
                     'price' => $cek_itemId[$request->get('id')]->price
                 ], 200);
             }
-            
         }
         return back();
     }
@@ -331,7 +330,8 @@ class OrderRegulerController extends Controller
         }
     }
 
-    public function pay_reguler(Request $request) {
+    public function pay_reguler(Request $request)
+    {
         $items = \Cart::session(auth()->id())->getContent();
         $totalPrice = \Cart::session(auth()->id())->getTotal();
         if (\Cart::isEmpty()) {
@@ -362,7 +362,7 @@ class OrderRegulerController extends Controller
                 'user_id' => Auth()->id(),
                 'cart' => serialize($cart_data),
                 'payment_type' => serialize([[
-                    'payment_type' => 'cash/transfer', 
+                    'payment_type' => 'cash/transfer',
                     'transaction_amount' => $request->get('pay_amount'),
                     'balance' => 0,
                     'discount' => 0,
@@ -392,7 +392,8 @@ class OrderRegulerController extends Controller
         }
     }
 
-    public function print_invoice(Request $request) {
+    public function print_invoice(Request $request)
+    {
         try {
             $visitor = Visitor::latest()->first();
             $log_transaction = LogTransaction::latest()->first();
@@ -429,13 +430,15 @@ class OrderRegulerController extends Controller
         }
     }
 
-    private function setResponse($status = "INVALID", $message = "Ada sesuatu yang salah!", $data = []) {
+    private function setResponse($status = "INVALID", $message = "Ada sesuatu yang salah!", $data = [])
+    {
         $this->status = $status;
         $this->message = $message;
         $this->data = $data;
     }
 
-    private function getResponse() {
+    private function getResponse()
+    {
         return [
             'status' => $this->status,
             'message' => $this->message,
