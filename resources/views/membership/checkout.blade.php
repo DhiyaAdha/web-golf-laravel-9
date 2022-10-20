@@ -251,37 +251,36 @@
                                                                     <div class="calcBG col-md-12 text-center">
                                                                         <div class="row" id="result">
                                                                         <form name="calc">
-                                                                            <input type="text" class="screen text-right" name="result" readonly>
+                                                                            <input type="text" class="screen text-right inputDisplay" readonly>
                                                                         </form>
                                                                         </div>
                                                                         <div class="row qt">
-                                                                            <button id="allClear" type="button" class="btn btn-danger" onclick="clearScreen()">AC</button>
-                                                                            <button id="clear" type="button" class="btn btn-warning" onclick="clearScreen()">CE</button>
-                                                                            <button id="%" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">%</button>
-                                                                            <button id="/" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">÷</button>
+                                                                            <button id="allClear" type="button" class="btn btn-danger" onclick="clearInput()">AC</button>
+                                                                            <button id="clear" type="button" class="btn btn-warning" onclick="deleteCharacter()">CE</button>
+                                                                            <button id="." type="button" class="btn btn-default" onclick="insertCharacter('.')">.</button>
+                                                                            <button id="/" type="button" class="btn btn-default" onclick="insertCharacter('/')">÷</button>
                                                                         </div>
                                                                         <div class="row qt">
-                                                                            <button id="7" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">7</button>
-                                                                            <button id="8" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">8</button>
-                                                                            <button id="9" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">9</button>
-                                                                            <button id="*" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">x</button>
+                                                                            <button id="7" type="button" class="btn btn-default" onclick="insertCharacter(7)">7</button>
+                                                                            <button id="8" type="button" class="btn btn-default" onclick="insertCharacter(8)">8</button>
+                                                                            <button id="9" type="button" class="btn btn-default" onclick="insertCharacter(9)">9</button>
+                                                                            <button id="*" type="button" class="btn btn-default" onclick="insertCharacter('*')">x</button>
                                                                         </div>
                                                                         <div class="row qt">
-                                                                            <button id="4" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">4</button>
-                                                                            <button id="5" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">5</button>
-                                                                            <button id="6" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">6</button>
-                                                                            <button id="-" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">-</button>
+                                                                            <button id="4" type="button" class="btn btn-default" onclick="insertCharacter(4)">4</button>
+                                                                            <button id="5" type="button" class="btn btn-default" onclick="insertCharacter(5)">5</button>
+                                                                            <button id="6" type="button" class="btn btn-default" onclick="insertCharacter(6)">6</button>
+                                                                            <button id="-" type="button" class="btn btn-default" onclick="insertCharacter('-')">-</button>
                                                                         </div>
                                                                         <div class="row qt">
-                                                                            <button id="1" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">1</button>
-                                                                            <button id="2" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">2</button>
-                                                                            <button id="3" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">3</button>
-                                                                            <button id="+" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">+</button>
+                                                                            <button id="1" type="button" class="btn btn-default" onclick="insertCharacter(1)">1</button>
+                                                                            <button id="2" type="button" class="btn btn-default" onclick="insertCharacter(2)">2</button>
+                                                                            <button id="3" type="button" class="btn btn-default" onclick="insertCharacter(3)">3</button>
+                                                                            <button id="+" type="button" class="btn btn-default" onclick="insertCharacter('+')">+</button>
                                                                         </div>
                                                                         <div class="row qt">
-                                                                            <button id="0" style="width: 77px;" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">0</button>
-                                                                            <button id="." type="button" class="btn btn-default" onclick="calEnterVal(this.id)">.</button>
-                                                                            <button id="equals" type="button" class="btn btn-success" onclick="calculate()">=</button>
+                                                                            <button id="0" style="width: 75px;" type="button" class="btn btn-default" onclick="insertCharacter(0)">0</button>
+                                                                            <button id="equals" style="width: 75px;" type="button" class="btn btn-success d-flex justify-content-center align-items-center" onclick="result()">=</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -998,6 +997,48 @@
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.min.js') }}"></script>
     <script>
+        function deleteCharacter() {
+            let currentValue = $('.inputDisplay').val();
+            $('.inputDisplay').val(currentValue.substring(0, currentValue.length - 1));
+        }
+
+        function insertCharacter(char) {
+            let currentValue = $('.inputDisplay').val();
+            let length = currentValue.length;
+            let flag = false;
+            if(char == '+' || char == '-' || char == '*' || char == '/')
+                flag = true;
+            if(length == 0) {
+                if(flag)
+                return;
+            }
+            let flagNew = false;
+            let lastCharacter = currentValue[length-1];
+            if(lastCharacter == '+' || lastCharacter == '-' || lastCharacter == '*' || lastCharacter == '/')
+            flagNew = true;
+            if(flag && flagNew)
+                $('.inputDisplay').val(currentValue.substring(0,length-1) + char);
+            else
+                $('.inputDisplay').val($('.inputDisplay').val() + char);
+        }
+
+        function clearInput() {
+            $('.inputDisplay').val('');
+        }
+
+        function result() {
+            let currentValue = $('.inputDisplay').val();
+            let length = currentValue.length;
+            let flag = false;
+            let char = currentValue[length-1];
+            if(char == '+' || char == '-' || char == '*' || char == '/')
+            flag = true;
+            if(flag)
+                $('.inputDisplay').val("ERROR!");
+            else
+                $('.inputDisplay').val(eval($('.inputDisplay').val()));
+        }
+        
         $(document).ready(function() {
             $("[data-toggle=popover]").popover({
                 html : true,

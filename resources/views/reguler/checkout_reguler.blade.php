@@ -197,37 +197,36 @@
                                                                 <div class="calcBG col-md-12 text-center">
                                                                     <div class="row" id="result">
                                                                     <form name="calc">
-                                                                        <input type="text" class="screen text-right" name="result" readonly>
+                                                                        <input type="text" class="screen text-right inputDisplay" readonly>
                                                                     </form>
                                                                     </div>
                                                                     <div class="row qt">
-                                                                        <button id="allClear" type="button" class="btn btn-danger" onclick="clearScreen()">AC</button>
-                                                                        <button id="clear" type="button" class="btn btn-warning" onclick="clearScreen()">CE</button>
-                                                                        <button id="%" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">%</button>
-                                                                        <button id="/" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">÷</button>
+                                                                        <button id="allClear" type="button" class="btn btn-danger" onclick="clearInput()">AC</button>
+                                                                        <button id="clear" type="button" class="btn btn-warning" onclick="deleteCharacter()">CE</button>
+                                                                        <button id="." type="button" class="btn btn-default" onclick="insertCharacter('.')">.</button>
+                                                                        <button id="/" type="button" class="btn btn-default" onclick="insertCharacter('/')">÷</button>
                                                                     </div>
                                                                     <div class="row qt">
-                                                                        <button id="7" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">7</button>
-                                                                        <button id="8" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">8</button>
-                                                                        <button id="9" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">9</button>
-                                                                        <button id="*" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">x</button>
+                                                                        <button id="7" type="button" class="btn btn-default" onclick="insertCharacter(7)">7</button>
+                                                                        <button id="8" type="button" class="btn btn-default" onclick="insertCharacter(8)">8</button>
+                                                                        <button id="9" type="button" class="btn btn-default" onclick="insertCharacter(9)">9</button>
+                                                                        <button id="*" type="button" class="btn btn-default" onclick="insertCharacter('*')">x</button>
                                                                     </div>
                                                                     <div class="row qt">
-                                                                        <button id="4" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">4</button>
-                                                                        <button id="5" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">5</button>
-                                                                        <button id="6" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">6</button>
-                                                                        <button id="-" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">-</button>
+                                                                        <button id="4" type="button" class="btn btn-default" onclick="insertCharacter(4)">4</button>
+                                                                        <button id="5" type="button" class="btn btn-default" onclick="insertCharacter(5)">5</button>
+                                                                        <button id="6" type="button" class="btn btn-default" onclick="insertCharacter(6)">6</button>
+                                                                        <button id="-" type="button" class="btn btn-default" onclick="insertCharacter('-')">-</button>
                                                                     </div>
                                                                     <div class="row qt">
-                                                                        <button id="1" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">1</button>
-                                                                        <button id="2" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">2</button>
-                                                                        <button id="3" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">3</button>
-                                                                        <button id="+" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">+</button>
+                                                                        <button id="1" type="button" class="btn btn-default" onclick="insertCharacter(1)">1</button>
+                                                                        <button id="2" type="button" class="btn btn-default" onclick="insertCharacter(2)">2</button>
+                                                                        <button id="3" type="button" class="btn btn-default" onclick="insertCharacter(3)">3</button>
+                                                                        <button id="+" type="button" class="btn btn-default" onclick="insertCharacter('+')">+</button>
                                                                     </div>
                                                                     <div class="row qt">
-                                                                        <button id="0" style="width: 77px;" type="button" class="btn btn-default" onclick="calEnterVal(this.id)">0</button>
-                                                                        <button id="." type="button" class="btn btn-default" onclick="calEnterVal(this.id)">.</button>
-                                                                        <button id="equals" type="button" class="btn btn-success" onclick="calculate()">=</button>
+                                                                        <button id="0" style="width: 75px;" type="button" class="btn btn-default" onclick="insertCharacter(0)">0</button>
+                                                                        <button id="equals" style="width: 75px;" type="button" class="btn btn-success d-flex justify-content-center align-items-center" onclick="result()">=</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -360,192 +359,236 @@
     <script src="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.min.js') }}"></script>
 
     <script>
-        $("[data-toggle=popover]").popover({
-            html : true,
-            sanitize: false,
-            content: function() {
-                var content = $(this).attr("data-popover-content");
-                return $(content).children(".popover-body").html();
-            },
-            title: function() {
-                var title = $(this).attr("data-popover-content");
-                return $(title).children(".popover-header").html();
-            }
-        });
-        
-        function formatIDR(price) {
-            var number_string = price.toString(),
-                split = number_string.split(','),
-                remainder = split[0].length % 3,
-                idr = split[0].substr(0, remainder),
-                thousand = split[0].substr(remainder).match(/\d{1,3}/gi);
-            if (thousand) {
-                separator = remainder ? '.' : '';
-                idr += separator + thousand.join('.');
-            }
-            return split[1] != undefined ? idr + ',' + split[1] : idr;
+        function deleteCharacter() {
+            let currentValue = $('.inputDisplay').val();
+            $('.inputDisplay').val(currentValue.substring(0, currentValue.length - 1));
         }
 
-        $(document).on('input', '.bayar-input', function(e) {
-            e.preventDefault();
-            let total = $('.nilai-total1-td').data('total');
-            let return_pay = parseInt($(this).val()) - parseInt(total);
+        function insertCharacter(char) {
+            let currentValue = $('.inputDisplay').val();
+            let length = currentValue.length;
+            let flag = false;
+            if(char == '+' || char == '-' || char == '*' || char == '/')
+                flag = true;
+            if(length == 0) {
+                if(flag)
+                return;
+            }
+            let flagNew = false;
+            let lastCharacter = currentValue[length-1];
+            if(lastCharacter == '+' || lastCharacter == '-' || lastCharacter == '*' || lastCharacter == '/')
+            flagNew = true;
+            if(flag && flagNew)
+                $('.inputDisplay').val(currentValue.substring(0,length-1) + char);
+            else
+                $('.inputDisplay').val($('.inputDisplay').val() + char);
+        }
 
-            if ($(this).val() < total) {
-                if ($(this).val() == '') {
+        function clearInput() {
+            $('.inputDisplay').val('');
+        }
+
+        function result() {
+            let currentValue = $('.inputDisplay').val();
+            let length = currentValue.length;
+            let flag = false;
+            let char = currentValue[length-1];
+            if(char == '+' || char == '-' || char == '*' || char == '/')
+            flag = true;
+            if(flag)
+                $('.inputDisplay').val("ERROR!");
+            else
+                $('.inputDisplay').val(eval($('.inputDisplay').val()));
+        }
+        
+        $(document).ready(function() {
+            $("[data-toggle=popover]").popover({
+                html : true,
+                sanitize: false,
+                content: function() {
+                    var content = $(this).attr("data-popover-content");
+                    return $(content).children(".popover-body").html();
+                },
+                title: function() {
+                    var title = $(this).attr("data-popover-content");
+                    return $(title).children(".popover-header").html();
+                }
+            });
+            
+            function formatIDR(price) {
+                var number_string = price.toString(),
+                    split = number_string.split(','),
+                    remainder = split[0].length % 3,
+                    idr = split[0].substr(0, remainder),
+                    thousand = split[0].substr(remainder).match(/\d{1,3}/gi);
+                if (thousand) {
+                    separator = remainder ? '.' : '';
+                    idr += separator + thousand.join('.');
+                }
+                return split[1] != undefined ? idr + ',' + split[1] : idr;
+            }
+    
+            $(document).on('input', '.bayar-input', function(e) {
+                e.preventDefault();
+                let total = $('.nilai-total1-td').data('total');
+                let return_pay = parseInt($(this).val()) - parseInt(total);
+    
+                if ($(this).val() < total) {
+                    if ($(this).val() == '') {
+                        $(this).removeClass('is-invalid');
+                        $('#return').text('-').css({
+                            "background-color": "rgba(25, 216, 149, 0.2)",
+                            "color": "#19d895"
+                        }).data('refund', return_pay);
+                    } else {
+                        $(this).addClass('is-invalid');
+                        $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                            "background-color": "rgba(216, 25, 25, 0.2)",
+                            "color": "#d81c19d1"
+                        }).data('refund', return_pay);
+                    }
+                } else {
                     $(this).removeClass('is-invalid');
-                    $('#return').text('-').css({
+                    $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
                         "background-color": "rgba(25, 216, 149, 0.2)",
                         "color": "#19d895"
                     }).data('refund', return_pay);
-                } else {
-                    $(this).addClass('is-invalid');
-                    $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
-                        "background-color": "rgba(216, 25, 25, 0.2)",
-                        "color": "#d81c19d1"
-                    }).data('refund', return_pay);
                 }
-            } else {
-                $(this).removeClass('is-invalid');
-                $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
-                    "background-color": "rgba(25, 216, 149, 0.2)",
-                    "color": "#19d895"
-                }).data('refund', return_pay);
-            }
-        });
-
-        $(document).on('click', '.add-name', function(e) {
-            e.preventDefault();
-            $('.add-name').hide();
-            $(`<div class="d-flex align-items-center">
-                <input type="text" class="name" placeholder="Masukkan nama">
-            </div>`).insertAfter($('.add-name'));
-        });
-
-        $(document).on('click', '#pay', function(e) {
-            e.preventDefault();
-            let refund = $('#return').data('refund');
-            let pay_amount = $('.bayar-input').val();
-            let order_number = $('#order-number').text();
-            let total_payment = $('.nilai-total1-td').data('total');
-            let name = '';
-            let url = "{{ route('invoice.print.reguler') }}";
-
-            if (!pay_amount) {
-                swal({
-                    title: "",
-                    type: "error",
-                    text: "Nominal wajib diisi",
-                    confirmButtonColor: "#01c853",
-                });
-                return false;
-            } else {
-                if ($('.name').val() == '' || $('.name').val() == null) {
-                    name = 'reguler';
+            });
+    
+            $(document).on('click', '.add-name', function(e) {
+                e.preventDefault();
+                $('.add-name').hide();
+                $(`<div class="d-flex align-items-center">
+                    <input type="text" class="name" placeholder="Masukkan nama">
+                </div>`).insertAfter($('.add-name'));
+            });
+    
+            $(document).on('click', '#pay', function(e) {
+                e.preventDefault();
+                let refund = $('#return').data('refund');
+                let pay_amount = $('.bayar-input').val();
+                let order_number = $('#order-number').text();
+                let total_payment = $('.nilai-total1-td').data('total');
+                let name = '';
+                let url = "{{ route('invoice.print.reguler') }}";
+    
+                if (!pay_amount) {
+                    swal({
+                        title: "",
+                        type: "error",
+                        text: "Nominal wajib diisi",
+                        confirmButtonColor: "#01c853",
+                    });
+                    return false;
                 } else {
-                    name = $('.name').val();
-                }
-            }
-
-            if (pay_amount < total_payment) {
-                swal({
-                    title: "",
-                    type: "error",
-                    text: "Nominal tidak terpenuhi",
-                    confirmButtonColor: "#01c853",
-                });
-                return false;
-            } else {
-                swal({
-                    title: "",
-                    text: "Lakukan pembayaran?",
-                    type: "info",
-                    showCancelButton: true,
-                    confirmButtonColor: "#01c853",
-                    confirmButtonText: "Bayar",
-                    cancelButtonText: "Batal",
-                    closeOnConfirm: false,
-                    closeOnCancel: false
-                }, function(isConfirm) {
-                    if (isConfirm) {
-                        $.ajax({
-                            async: true,
-                            type: 'POST',
-                            data: {
-                                refund: refund,
-                                order_number: order_number,
-                                pay_amount: pay_amount,
-                                name: name
-                            },
-                            url: "{{ route('pay_reguler') }}",
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            beforeSend: function(request) {
-                                $.blockUI({
-                                    css: {
-                                        backgroundColor: 'transparent',
-                                        border: 'none'
-                                    },
-                                    message: '<img src="../img/rolling.svg">',
-                                    baseZ: 1500,
-                                    overlayCSS: {
-                                        backgroundColor: '#7C7C7C',
-                                        opacity: 0.4,
-                                        cursor: 'wait'
-                                    }
-                                });
-                            },
-                            success: function(response) {
-                                $.unblockUI();
-                                if (response.status == "VALID") {
-                                    swal({
-                                        title: '',
-                                        type: "success",
-                                        text: response.message,
-                                        confirmButtonColor: "#01c853",
-                                    }, function(isConfirm) {
-                                        invoice("{{ route('invoice.print.reguler') }}",
-                                            'Print Invoice');
-                                        history.go(0);
-                                    });
-                                }
-                            }
-                        });
+                    if ($('.name').val() == '' || $('.name').val() == null) {
+                        name = 'reguler';
                     } else {
-                        swal("Dibatalkan", "", "info");
+                        name = $('.name').val();
                     }
-                });
-                return false;
+                }
+    
+                if (pay_amount < total_payment) {
+                    swal({
+                        title: "",
+                        type: "error",
+                        text: "Nominal tidak terpenuhi",
+                        confirmButtonColor: "#01c853",
+                    });
+                    return false;
+                } else {
+                    swal({
+                        title: "",
+                        text: "Lakukan pembayaran?",
+                        type: "info",
+                        showCancelButton: true,
+                        confirmButtonColor: "#01c853",
+                        confirmButtonText: "Bayar",
+                        cancelButtonText: "Batal",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    }, function(isConfirm) {
+                        if (isConfirm) {
+                            $.ajax({
+                                async: true,
+                                type: 'POST',
+                                data: {
+                                    refund: refund,
+                                    order_number: order_number,
+                                    pay_amount: pay_amount,
+                                    name: name
+                                },
+                                url: "{{ route('pay_reguler') }}",
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                beforeSend: function(request) {
+                                    $.blockUI({
+                                        css: {
+                                            backgroundColor: 'transparent',
+                                            border: 'none'
+                                        },
+                                        message: '<img src="../img/rolling.svg">',
+                                        baseZ: 1500,
+                                        overlayCSS: {
+                                            backgroundColor: '#7C7C7C',
+                                            opacity: 0.4,
+                                            cursor: 'wait'
+                                        }
+                                    });
+                                },
+                                success: function(response) {
+                                    $.unblockUI();
+                                    if (response.status == "VALID") {
+                                        swal({
+                                            title: '',
+                                            type: "success",
+                                            text: response.message,
+                                            confirmButtonColor: "#01c853",
+                                        }, function(isConfirm) {
+                                            invoice("{{ route('invoice.print.reguler') }}",
+                                                'Print Invoice');
+                                            history.go(0);
+                                        });
+                                    }
+                                }
+                            });
+                        } else {
+                            swal("Dibatalkan", "", "info");
+                        }
+                    });
+                    return false;
+                }
+    
+            });
+    
+            function invoice(url, title) {
+                popupCenter(url, title, 340, 550);
             }
-
+    
+            function popupCenter(url, title, w, h) {
+                const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window
+                    .screenX;
+                const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window
+                    .screenY;
+                const width = window.innerWidth ? window.innerWidth : document.documentElement
+                    .clientWidth ?
+                    document
+                    .documentElement.clientWidth : screen.width;
+                const height = window.innerHeight ? window.innerHeight : document.documentElement
+                    .clientHeight ?
+                    document
+                    .documentElement.clientHeight : screen.height;
+                const systemZoom = width / window.screen.availWidth;
+                const left = (width - w) / 2 / systemZoom + dualScreenLeft
+                const top = (height - h) / 2 / systemZoom + dualScreenTop
+                const newWindow = window.open(url, title,
+                    `scrollbars=yes,width  = ${w / systemZoom}, height = ${h / systemZoom}, top    = ${top}, left   = ${left}`
+                );
+                if (window.focus) newWindow.focus();
+            }
         });
-
-        function invoice(url, title) {
-            popupCenter(url, title, 340, 550);
-        }
-
-        function popupCenter(url, title, w, h) {
-            const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window
-                .screenX;
-            const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window
-                .screenY;
-            const width = window.innerWidth ? window.innerWidth : document.documentElement
-                .clientWidth ?
-                document
-                .documentElement.clientWidth : screen.width;
-            const height = window.innerHeight ? window.innerHeight : document.documentElement
-                .clientHeight ?
-                document
-                .documentElement.clientHeight : screen.height;
-            const systemZoom = width / window.screen.availWidth;
-            const left = (width - w) / 2 / systemZoom + dualScreenLeft
-            const top = (height - h) / 2 / systemZoom + dualScreenTop
-            const newWindow = window.open(url, title,
-                `scrollbars=yes,width  = ${w / systemZoom}, height = ${h / systemZoom}, top    = ${top}, left   = ${left}`
-            );
-            if (window.focus) newWindow.focus();
-        }
     </script>
 </body>
 
