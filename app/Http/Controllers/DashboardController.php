@@ -279,7 +279,7 @@ class DashboardController extends Controller
                 ->make(true);
         }
         // dd($visitor);
-        return view('/analisis-tamu', $data);
+        return view('dashboard.analisis-tamu', $data);
     }
 
 
