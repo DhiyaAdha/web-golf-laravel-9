@@ -65,7 +65,6 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name('show');
     route::get('/invoice_cetakpdf/{id}', [InvoiceController::class, 'cetak_pdf'])->name('cetak_pdf');
     route::get('/export_excel', [InvoiceController::class, 'export_excel'])->name('export_excel');
-    Route::get('/package/destroy/{id}', [PackageController::class,'destroy'])->name('package.destroy');
 
 });
 
