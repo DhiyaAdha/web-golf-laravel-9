@@ -16,6 +16,39 @@
     <link href="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.css') }}" rel="stylesheet"type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
+        #calculator .screen {
+            width: 161px;
+            height: 36px;
+            border-radius: 3px;
+            padding: 10px;
+            margin: 2px 24px;
+            font-size: 15px;
+            font-weight: 700;
+            background: #8e9eab;
+        }
+        #calculator input {
+            border: none;
+        }
+        #calculator .qt {
+            margin: 4px 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        #calculator button {
+            height: 35px;
+            width: 35px;
+            margin: 2px 1px;
+            border: none!important;
+            padding: 6px 7px;
+        }
+
+        #allClear {
+            box-shadow: inset 1px 1px 50px #900;
+            border: none;
+        }
+        .btn-default {
+            background: #eeeeee;
+        }
         .panel-green {
             color: #fff;
             border-radius: 4px;
@@ -192,20 +225,67 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <form>
-                                            <div class="d-flex">
+                                            <div class="d-flex align-items-center">
                                                 <span class="flex-grow-1">Metode Pembayaran</span>
-                                                <div class="d-flex">
+                                                <div class="d-flex align-items-center">
                                                     <div class="custom-control custom-radio mr-2">
                                                         <input type="radio" name="payment" id="wk"
                                                             class="custom-control-input" value="single" checked>
                                                         <label class="custom-control-label cursor"
                                                             for="wk">Single</label>
                                                     </div>
-                                                    <div class="custom-control custom-radio">
+                                                    <div class="custom-control custom-radio mr-2">
                                                         <input type="radio" name="payment" id="kw"
                                                             class="custom-control-input" value="multiple">
                                                         <label class="custom-control-label cursor"
                                                             for="kw">Split</label>
+                                                    </div>
+                                                    <button tabindex="0" type="button" class="btn btn-success btn-flat" title="Calculator" data-popover-content="#unique-id" data-toggle="popover" data-placement="bottom">
+                                                        <i class="fa fa-calculator fa-lg" aria-hidden="true"></i>
+                                                    </button>
+                                                    <div id="unique-id" style="display:none;">
+                                                        <h3 class="popover-header text-center">Calculator</h3>
+                                                        <div class="popover-body">
+                                                            <div id="calculator">
+                                                                <div class="row text-center" id="calc">
+                                                                    <div class="calcBG col-md-12 text-center">
+                                                                        <div class="row" id="result">
+                                                                        <form name="calc">
+                                                                            <input type="text" class="screen text-right inputDisplay" readonly>
+                                                                        </form>
+                                                                        </div>
+                                                                        <div class="row qt">
+                                                                            <button id="allClear" type="button" class="btn btn-danger" onclick="clearInput()">AC</button>
+                                                                            <button id="clear" type="button" class="btn btn-warning" onclick="deleteCharacter()">CE</button>
+                                                                            <button id="." type="button" class="btn btn-default" onclick="insertCharacter('.')">.</button>
+                                                                            <button id="/" type="button" class="btn btn-default" onclick="insertCharacter('/')">÷</button>
+                                                                        </div>
+                                                                        <div class="row qt">
+                                                                            <button id="7" type="button" class="btn btn-default" onclick="insertCharacter(7)">7</button>
+                                                                            <button id="8" type="button" class="btn btn-default" onclick="insertCharacter(8)">8</button>
+                                                                            <button id="9" type="button" class="btn btn-default" onclick="insertCharacter(9)">9</button>
+                                                                            <button id="*" type="button" class="btn btn-default" onclick="insertCharacter('*')">x</button>
+                                                                        </div>
+                                                                        <div class="row qt">
+                                                                            <button id="4" type="button" class="btn btn-default" onclick="insertCharacter(4)">4</button>
+                                                                            <button id="5" type="button" class="btn btn-default" onclick="insertCharacter(5)">5</button>
+                                                                            <button id="6" type="button" class="btn btn-default" onclick="insertCharacter(6)">6</button>
+                                                                            <button id="-" type="button" class="btn btn-default" onclick="insertCharacter('-')">-</button>
+                                                                        </div>
+                                                                        <div class="row qt">
+                                                                            <button id="1" type="button" class="btn btn-default" onclick="insertCharacter(1)">1</button>
+                                                                            <button id="2" type="button" class="btn btn-default" onclick="insertCharacter(2)">2</button>
+                                                                            <button id="3" type="button" class="btn btn-default" onclick="insertCharacter(3)">3</button>
+                                                                            <button id="+" type="button" class="btn btn-default" onclick="insertCharacter('+')">+</button>
+                                                                        </div>
+                                                                        <div class="row qt">
+                                                                            <button id="0" style="width: 75px;" type="button" class="btn btn-default" onclick="insertCharacter(0)">0</button>
+                                                                            <button id="equals" style="width: 75px;" type="button" class="btn btn-success d-flex justify-content-center align-items-center" onclick="result()">=</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -875,6 +955,20 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{-- <div class="card mt-2 summary d-none">
+                                    <div class="card-body">
+                                        <strong>Ringkasan Pembayaran</strong>
+                                        <div id="summary"></div>
+                                    </div>
+                                </div> --}}
+                                <div class="card mt-2 remaining d-none">
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <span class="flex-grow-1">Sisa Pembayaran</span>
+                                            <span id="remaining"></span>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="card mt-2 refund d-none">
                                     <div class="card-body">
                                         <div class="d-flex">
@@ -894,6 +988,7 @@
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
@@ -902,7 +997,62 @@
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.min.js') }}"></script>
     <script>
+        function deleteCharacter() {
+            let currentValue = $('.inputDisplay').val();
+            $('.inputDisplay').val(currentValue.substring(0, currentValue.length - 1));
+        }
+
+        function insertCharacter(char) {
+            let currentValue = $('.inputDisplay').val();
+            let length = currentValue.length;
+            let flag = false;
+            if(char == '+' || char == '-' || char == '*' || char == '/')
+                flag = true;
+            if(length == 0) {
+                if(flag)
+                return;
+            }
+            let flagNew = false;
+            let lastCharacter = currentValue[length-1];
+            if(lastCharacter == '+' || lastCharacter == '-' || lastCharacter == '*' || lastCharacter == '/')
+            flagNew = true;
+            if(flag && flagNew)
+                $('.inputDisplay').val(currentValue.substring(0,length-1) + char);
+            else
+                $('.inputDisplay').val($('.inputDisplay').val() + char);
+        }
+
+        function clearInput() {
+            $('.inputDisplay').val('');
+        }
+
+        function result() {
+            let currentValue = $('.inputDisplay').val();
+            let length = currentValue.length;
+            let flag = false;
+            let char = currentValue[length-1];
+            if(char == '+' || char == '-' || char == '*' || char == '/')
+            flag = true;
+            if(flag)
+                $('.inputDisplay').val("ERROR!");
+            else
+                $('.inputDisplay').val(eval($('.inputDisplay').val()));
+        }
+        
         $(document).ready(function() {
+            $("[data-toggle=popover]").popover({
+                html : true,
+                sanitize: false,
+                content: function() {
+                    var content = $(this).attr("data-popover-content");
+                    return $(content).children(".popover-body").html();
+                },
+                title: function() {
+                    var title = $(this).attr("data-popover-content");
+                    return $(title).children(".popover-header").html();
+                }
+            });
+
             function formatIDR(price) {
                 var number_string = price.toString(),
                     split = number_string.split(','),
@@ -959,9 +1109,14 @@
                 e.preventDefault();
                 let total = $('.nilai-total1-td').data('total');
                 let return_pay = parseInt($(this).val()) - parseInt(total);
+                let remaining = parseInt(total) - parseInt($(this).val());
                 let data_deposit = $('#customCheck8').data('deposit');
+                let type_multiple = $('input[name="payment-type[]"]:checked')
+                    .map(function() {
+                        return $(this).val();
+                    }).get();
 
-                // if ($('input[type=radio][name=payment]:checked').val() == 'single') {
+                if ($('input[type=radio][name=payment]:checked').val() == 'single') {
                     if ($(this).val() < total) {
                         if ($(this).val() == '') {
                             $(this).removeClass('is-invalid');
@@ -983,84 +1138,157 @@
                             "color": "#19d895"
                         }).data('refund', return_pay);
                     }
-                // } else {
-                //     if ($(this).val() < total) {
-                //         if ($(this).val() == '') {
-                //             $(this).removeClass('is-invalid');
-                //             $('#return').text('-').css({
-                //                 "background-color": "rgba(25, 216, 149, 0.2)",
-                //                 "color": "#19d895"
-                //             }).data('refund', return_pay);
-                //         } else {
-                //             $(this).addClass('is-invalid');
-                //             $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
-                //                 "background-color": "rgba(216, 25, 25, 0.2)",
-                //                 "color": "#d81c19d1"
-                //             }).data('refund', return_pay);
-                //         }
-                //     } else {
-                //         $(this).removeClass('is-invalid');
-                //         $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
-                //             "background-color": "rgba(25, 216, 149, 0.2)",
-                //             "color": "#19d895"
-                //         }).data('refund', return_pay);
-                //     }
-                // }
+                } else {
+                    if(data_deposit < total) {
+                        let minus_deposit = total - data_deposit;
+                        if (type_multiple[0] == 'cash/transfer') {
+                            if ($(this).val() < total) {
+                                if ($(this).val() == '') {
+                                    $(this).removeClass('is-invalid');
+                                    $('#return').text('-').css({
+                                        "background-color": "rgba(25, 216, 149, 0.2)",
+                                        "color": "#19d895"
+                                    }).data('refund', return_pay);
+                                    $('#remaining').text('Rp. ' + formatIDR(remaining));
+                                } else {
+                                    $(this).addClass('is-invalid');
+                                    $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                                        "background-color": "rgba(216, 25, 25, 0.2)",
+                                        "color": "#d81c19d1"
+                                    }).data('refund', return_pay);
+                                    $('#remaining').text('Rp. ' + formatIDR(remaining));
+                                }
+                            } else {
+                                $(this).removeClass('is-invalid');
+                                $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                                    "background-color": "rgba(25, 216, 149, 0.2)",
+                                    "color": "#19d895"
+                                }).data('refund', return_pay);
+                                $('#remaining').text('Rp. ' +0);
+                            }
+                        } else if (type_multiple[1] == 'cash/transfer') {
+                            if ($(this).val() < minus_deposit) {
+                                if ($(this).val() == '') {
+                                    $(this).removeClass('is-invalid');
+                                    $('#return').text('-').css({
+                                        "background-color": "rgba(25, 216, 149, 0.2)",
+                                        "color": "#19d895"
+                                    }).data('refund', parseInt($(this).val()) - minus_deposit);
+                                    $('#remaining').text('Rp. ' + formatIDR(parseInt(minus_deposit) - parseInt($(this).val())));
+                                } else {
+                                    $(this).addClass('is-invalid');
+                                    $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - minus_deposit) + ',00').css({
+                                        "background-color": "rgba(216, 25, 25, 0.2)",
+                                        "color": "#d81c19d1"
+                                    }).data('refund', parseInt($(this).val()) - minus_deposit);
+                                    $('#remaining').text('Rp. ' + formatIDR(parseInt(minus_deposit) - parseInt($(this).val())));
+                                }
+                            } else {
+                                $(this).removeClass('is-invalid');
+                                $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - minus_deposit) + ',00').css({
+                                    "background-color": "rgba(25, 216, 149, 0.2)",
+                                    "color": "#19d895"
+                                }).data('refund', parseInt($(this).val()) - minus_deposit);
+                                $('#remaining').text('Rp. ' +0);
+                            }
+                        }
+                    }
+                }
             });
 
             $(document).on('change', 'input[name="payment-type[]"]', function(e) {
                 let data_bill = $('#customCheck8').data('bill');
+                let data_deposit = $('#customCheck8').data('deposit');
                 let price_single = $('.kmt').data('pricesingle');
                 let type_multiple = $('input[name="payment-type[]"]:checked')
                     .map(function() {
                         return $(this).val();
                     }).get();
+                let minus_deposit = data_bill - data_deposit;
                 let discount = '';
-
+                let deposit = '';
+                let cash_transfer = '';
+                
                 if ($(this).is(':checked')) {
-                    if (type_multiple[0] == 'cash/transfer' || type_multiple[1] == 'cash/transfer') {
-                        $('#cashtransfer').html(
-                            `<div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">Rp.</div>
-                                </div>
-                                <input type="text" min="0"
-                                    onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                    class="form-control number-input input-notzero bayar-input"
-                                    name="bayar" placeholder="Masukkan nominal bayar"
-                                    autocomplete="off">
-                            </div>`
-                        ).show().prev().removeClass('mb-2');
-                        $('.refund').removeClass('d-none');
-                        $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
-                    } else if ((type_multiple[0] == 'kupon') || (type_multiple[2] == 'kupon')) {
-                        discount += `<div class="card mt-2">
-                                    <div class="card-body">
-                                        <div class="d-flex flex-column">
-                                            <div class="d-flex">
-                                                <span class="flex-grow-1">Diskon</span>
-                                                <span>Rp. ${formatIDR(price_single)},00</span>
+                    $('.remaining').removeClass('d-none');
+                    // $('.summary').removeClass('d-none');
+                    if(data_deposit < data_bill) {
+                        if(type_multiple.length == 1) {
+                            if (type_multiple[0] == 'deposit') {
+                                $('#remaining').text('Rp. ' + formatIDR(minus_deposit));
+                            } else if (type_multiple[0] == 'cash/transfer') {
+                                $('#cashtransfer').html(
+                                    `<div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Rp.</div>
+                                        </div>
+                                        <input type="text" min="0"
+                                            onkeypress="return event.charCode >= 48 && event.charCode <=57"
+                                            class="form-control number-input input-notzero bayar-input"
+                                            name="bayar" placeholder="Masukkan nominal bayar"
+                                            autocomplete="off">
+                                    </div>`
+                                ).show().prev().removeClass('mb-2');
+                                $('.refund').removeClass('d-none');
+                                $('#return').addClass('green').text(0);
+                                $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
+                                $('.bayar-input').val(data_bill);
+                                $('#remaining').text('Rp. ' + 0);
+                            }
+                        } else if (type_multiple.length == 2) {
+                            if (type_multiple[1] == 'cash/transfer') {
+                                $('#cashtransfer').html(
+                                    `<div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Rp.</div>
+                                        </div>
+                                        <input type="text" min="0"
+                                            onkeypress="return event.charCode >= 48 && event.charCode <=57"
+                                            class="form-control number-input input-notzero bayar-input"
+                                            name="bayar" placeholder="Masukkan nominal bayar"
+                                            autocomplete="off">
+                                    </div>`
+                                ).show().prev().removeClass('mb-2');
+                                $('.refund').removeClass('d-none');
+                                $('#return').addClass('green').text(0);
+                                $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
+                                $('.bayar-input').val(minus_deposit);
+                                $('#remaining').text('Rp. ' + formatIDR(minus_deposit - minus_deposit));
+                            }
+                        }
+                        if ((type_multiple[0] == 'kupon') || (type_multiple[2] == 'kupon')) {
+                            discount += `<div class="card mt-2">
+                                        <div class="card-body">
+                                            <div class="d-flex flex-column">
+                                                <div class="d-flex">
+                                                    <span class="flex-grow-1">Diskon</span>
+                                                    <span>Rp. ${formatIDR(price_single)},00</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>`;
-                                $('.discount').html(discount).show();
-
-                    } else if ((type_multiple[0] == 'limit') || (type_multiple[2] == 'limit')) {
-                        discount += `<div class="card mt-2">
-                                    <div class="card-body">
-                                        <div class="d-flex flex-column">
-                                            <div class="d-flex">
-                                                <span class="flex-grow-1">Diskon</span>
-                                                <span>Rp. ${formatIDR(price_single)},00</span>
+                                    </div>`;
+                                    $('.discount').html(discount).show();
+    
+                        } else if ((type_multiple[0] == 'limit') || (type_multiple[2] == 'limit')) {
+                            discount += `<div class="card mt-2">
+                                        <div class="card-body">
+                                            <div class="d-flex flex-column">
+                                                <div class="d-flex">
+                                                    <span class="flex-grow-1">Diskon</span>
+                                                    <span>Rp. ${formatIDR(price_single)},00</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>`;
-                                $('.discount').html(discount).show();
-
-                    } 
+                                    </div>`;
+                                    $('.discount').html(discount).show();
+                        } 
+                    }
                 } else {
+                    if(type_multiple.length == 0){
+                        $('.remaining').addClass('d-none');
+                        // $('.summary').addClass('d-none');
+                    }
+
                     if(((type_multiple[0] == 'cash/transfer') || (type_multiple[1] == 'cash/transfer')) == false) {
                         $('#cashtransfer').html(
                                     `<div class="input-group">
@@ -1076,6 +1304,7 @@
                         ).hide().prev().removeClass('mb-2');
                         $('.refund').addClass('d-none');
                         $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
+                        $('#remaining').text('Rp. ' + formatIDR(data_bill - data_deposit));
                     } else if (((type_multiple[0] == 'limit') || (type_multiple[2] == 'limit')) == false) {
                         discount += `<div class="card mt-2">
                                     <div class="card-body">

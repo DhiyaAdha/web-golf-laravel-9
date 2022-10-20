@@ -21,8 +21,6 @@
         @include('layouts.sidebar')
         <!-- /Left Sidebar Menu -->
 
-
-
         <!-- Main Content -->
         @yield('content')
         <!-- /Main Content -->
