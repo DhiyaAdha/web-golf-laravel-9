@@ -956,6 +956,20 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{-- <div class="card mt-2 summary d-none">
+                                    <div class="card-body">
+                                        <strong>Ringkasan Pembayaran</strong>
+                                        <div id="summary"></div>
+                                    </div>
+                                </div> --}}
+                                <div class="card mt-2 remaining d-none">
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <span class="flex-grow-1">Sisa Pembayaran</span>
+                                            <span id="remaining"></span>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="card mt-2 refund d-none">
                                     <div class="card-body">
                                         <div class="d-flex">
@@ -1054,9 +1068,14 @@
                 e.preventDefault();
                 let total = $('.nilai-total1-td').data('total');
                 let return_pay = parseInt($(this).val()) - parseInt(total);
+                let remaining = parseInt(total) - parseInt($(this).val());
                 let data_deposit = $('#customCheck8').data('deposit');
+                let type_multiple = $('input[name="payment-type[]"]:checked')
+                    .map(function() {
+                        return $(this).val();
+                    }).get();
 
-                // if ($('input[type=radio][name=payment]:checked').val() == 'single') {
+                if ($('input[type=radio][name=payment]:checked').val() == 'single') {
                     if ($(this).val() < total) {
                         if ($(this).val() == '') {
                             $(this).removeClass('is-invalid');
@@ -1078,84 +1097,157 @@
                             "color": "#19d895"
                         }).data('refund', return_pay);
                     }
-                // } else {
-                //     if ($(this).val() < total) {
-                //         if ($(this).val() == '') {
-                //             $(this).removeClass('is-invalid');
-                //             $('#return').text('-').css({
-                //                 "background-color": "rgba(25, 216, 149, 0.2)",
-                //                 "color": "#19d895"
-                //             }).data('refund', return_pay);
-                //         } else {
-                //             $(this).addClass('is-invalid');
-                //             $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
-                //                 "background-color": "rgba(216, 25, 25, 0.2)",
-                //                 "color": "#d81c19d1"
-                //             }).data('refund', return_pay);
-                //         }
-                //     } else {
-                //         $(this).removeClass('is-invalid');
-                //         $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
-                //             "background-color": "rgba(25, 216, 149, 0.2)",
-                //             "color": "#19d895"
-                //         }).data('refund', return_pay);
-                //     }
-                // }
+                } else {
+                    if(data_deposit < total) {
+                        let minus_deposit = total - data_deposit;
+                        if (type_multiple[0] == 'cash/transfer') {
+                            if ($(this).val() < total) {
+                                if ($(this).val() == '') {
+                                    $(this).removeClass('is-invalid');
+                                    $('#return').text('-').css({
+                                        "background-color": "rgba(25, 216, 149, 0.2)",
+                                        "color": "#19d895"
+                                    }).data('refund', return_pay);
+                                    $('#remaining').text('Rp. ' + formatIDR(remaining));
+                                } else {
+                                    $(this).addClass('is-invalid');
+                                    $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                                        "background-color": "rgba(216, 25, 25, 0.2)",
+                                        "color": "#d81c19d1"
+                                    }).data('refund', return_pay);
+                                    $('#remaining').text('Rp. ' + formatIDR(remaining));
+                                }
+                            } else {
+                                $(this).removeClass('is-invalid');
+                                $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                                    "background-color": "rgba(25, 216, 149, 0.2)",
+                                    "color": "#19d895"
+                                }).data('refund', return_pay);
+                                $('#remaining').text('Rp. ' +0);
+                            }
+                        } else if (type_multiple[1] == 'cash/transfer') {
+                            if ($(this).val() < minus_deposit) {
+                                if ($(this).val() == '') {
+                                    $(this).removeClass('is-invalid');
+                                    $('#return').text('-').css({
+                                        "background-color": "rgba(25, 216, 149, 0.2)",
+                                        "color": "#19d895"
+                                    }).data('refund', parseInt($(this).val()) - minus_deposit);
+                                    $('#remaining').text('Rp. ' + formatIDR(parseInt(minus_deposit) - parseInt($(this).val())));
+                                } else {
+                                    $(this).addClass('is-invalid');
+                                    $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - minus_deposit) + ',00').css({
+                                        "background-color": "rgba(216, 25, 25, 0.2)",
+                                        "color": "#d81c19d1"
+                                    }).data('refund', parseInt($(this).val()) - minus_deposit);
+                                    $('#remaining').text('Rp. ' + formatIDR(parseInt(minus_deposit) - parseInt($(this).val())));
+                                }
+                            } else {
+                                $(this).removeClass('is-invalid');
+                                $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - minus_deposit) + ',00').css({
+                                    "background-color": "rgba(25, 216, 149, 0.2)",
+                                    "color": "#19d895"
+                                }).data('refund', parseInt($(this).val()) - minus_deposit);
+                                $('#remaining').text('Rp. ' +0);
+                            }
+                        }
+                    }
+                }
             });
 
             $(document).on('change', 'input[name="payment-type[]"]', function(e) {
                 let data_bill = $('#customCheck8').data('bill');
+                let data_deposit = $('#customCheck8').data('deposit');
                 let price_single = $('.kmt').data('pricesingle');
                 let type_multiple = $('input[name="payment-type[]"]:checked')
                     .map(function() {
                         return $(this).val();
                     }).get();
+                let minus_deposit = data_bill - data_deposit;
                 let discount = '';
-
+                let deposit = '';
+                let cash_transfer = '';
+                
                 if ($(this).is(':checked')) {
-                    if (type_multiple[0] == 'cash/transfer' || type_multiple[1] == 'cash/transfer') {
-                        $('#cashtransfer').html(
-                            `<div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">Rp.</div>
-                                </div>
-                                <input type="text" min="0"
-                                    onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                    class="form-control number-input input-notzero bayar-input"
-                                    name="bayar" placeholder="Masukkan nominal bayar"
-                                    autocomplete="off">
-                            </div>`
-                        ).show().prev().removeClass('mb-2');
-                        $('.refund').removeClass('d-none');
-                        $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
-                    } else if ((type_multiple[0] == 'kupon') || (type_multiple[2] == 'kupon')) {
-                        discount += `<div class="card mt-2">
-                                    <div class="card-body">
-                                        <div class="d-flex flex-column">
-                                            <div class="d-flex">
-                                                <span class="flex-grow-1">Diskon</span>
-                                                <span>Rp. ${formatIDR(price_single)},00</span>
+                    $('.remaining').removeClass('d-none');
+                    // $('.summary').removeClass('d-none');
+                    if(data_deposit < data_bill) {
+                        if(type_multiple.length == 1) {
+                            if (type_multiple[0] == 'deposit') {
+                                $('#remaining').text('Rp. ' + formatIDR(minus_deposit));
+                            } else if (type_multiple[0] == 'cash/transfer') {
+                                $('#cashtransfer').html(
+                                    `<div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Rp.</div>
+                                        </div>
+                                        <input type="text" min="0"
+                                            onkeypress="return event.charCode >= 48 && event.charCode <=57"
+                                            class="form-control number-input input-notzero bayar-input"
+                                            name="bayar" placeholder="Masukkan nominal bayar"
+                                            autocomplete="off">
+                                    </div>`
+                                ).show().prev().removeClass('mb-2');
+                                $('.refund').removeClass('d-none');
+                                $('#return').addClass('green').text(0);
+                                $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
+                                $('.bayar-input').val(data_bill);
+                                $('#remaining').text('Rp. ' + 0);
+                            }
+                        } else if (type_multiple.length == 2) {
+                            if (type_multiple[1] == 'cash/transfer') {
+                                $('#cashtransfer').html(
+                                    `<div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Rp.</div>
+                                        </div>
+                                        <input type="text" min="0"
+                                            onkeypress="return event.charCode >= 48 && event.charCode <=57"
+                                            class="form-control number-input input-notzero bayar-input"
+                                            name="bayar" placeholder="Masukkan nominal bayar"
+                                            autocomplete="off">
+                                    </div>`
+                                ).show().prev().removeClass('mb-2');
+                                $('.refund').removeClass('d-none');
+                                $('#return').addClass('green').text(0);
+                                $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
+                                $('.bayar-input').val(minus_deposit);
+                                $('#remaining').text('Rp. ' + formatIDR(minus_deposit - minus_deposit));
+                            }
+                        }
+                        if ((type_multiple[0] == 'kupon') || (type_multiple[2] == 'kupon')) {
+                            discount += `<div class="card mt-2">
+                                        <div class="card-body">
+                                            <div class="d-flex flex-column">
+                                                <div class="d-flex">
+                                                    <span class="flex-grow-1">Diskon</span>
+                                                    <span>Rp. ${formatIDR(price_single)},00</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>`;
-                                $('.discount').html(discount).show();
-
-                    } else if ((type_multiple[0] == 'limit') || (type_multiple[2] == 'limit')) {
-                        discount += `<div class="card mt-2">
-                                    <div class="card-body">
-                                        <div class="d-flex flex-column">
-                                            <div class="d-flex">
-                                                <span class="flex-grow-1">Diskon</span>
-                                                <span>Rp. ${formatIDR(price_single)},00</span>
+                                    </div>`;
+                                    $('.discount').html(discount).show();
+    
+                        } else if ((type_multiple[0] == 'limit') || (type_multiple[2] == 'limit')) {
+                            discount += `<div class="card mt-2">
+                                        <div class="card-body">
+                                            <div class="d-flex flex-column">
+                                                <div class="d-flex">
+                                                    <span class="flex-grow-1">Diskon</span>
+                                                    <span>Rp. ${formatIDR(price_single)},00</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>`;
-                                $('.discount').html(discount).show();
-
-                    } 
+                                    </div>`;
+                                    $('.discount').html(discount).show();
+                        } 
+                    }
                 } else {
+                    if(type_multiple.length == 0){
+                        $('.remaining').addClass('d-none');
+                        // $('.summary').addClass('d-none');
+                    }
+
                     if(((type_multiple[0] == 'cash/transfer') || (type_multiple[1] == 'cash/transfer')) == false) {
                         $('#cashtransfer').html(
                                     `<div class="input-group">
@@ -1171,6 +1263,7 @@
                         ).hide().prev().removeClass('mb-2');
                         $('.refund').addClass('d-none');
                         $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
+                        $('#remaining').text('Rp. ' + formatIDR(data_bill - data_deposit));
                     } else if (((type_multiple[0] == 'limit') || (type_multiple[2] == 'limit')) == false) {
                         discount += `<div class="card mt-2">
                                     <div class="card-body">
