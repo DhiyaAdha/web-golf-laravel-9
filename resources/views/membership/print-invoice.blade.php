@@ -342,6 +342,10 @@
                             <td class="w-70">Jumlah Order:</td>
                             <td>{{ $qty }}</td>
                         </tr>
+                        <tr>
+                            <td class="w-70">Total Bayar:</td>
+                            <td>{{ formatrupiah($transaction_amount) }}</td>
+                        </tr>
                         @if ($discount != 0)
                             <tr>
                                 <td class="w-70">Diskon:</td>
@@ -349,8 +353,8 @@
                             </tr>
                         @endif
                         <tr>
-                            <td class="w-70">Total Bayar:</td>
-                            <td>{{ formatrupiah($transaction_amount) }}</td>
+                            <td class="w-70">Total Tagihan:</td>
+                            <td>{{ formatrupiah($log_transaction->total) }}</td>
                         </tr>
                         @if ($refund != 0)
                             <tr>
@@ -358,10 +362,6 @@
                                 <td>{{ formatrupiah($refund) }}</td>
                             </tr>
                         @endif
-                        <tr>
-                            <td class="w-70">Total Tagihan:</td>
-                            <td>{{ formatrupiah($log_transaction->total) }}</td>
-                        </tr>
                     </tbody>
                 </table>
             </section>
