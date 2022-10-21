@@ -245,8 +245,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <div class="input-group-text">Rp.</div>
                                                                 </div>
-                                                                <input type="text" min="0"
-                                                                    onkeypress="return event.charCode >= 48 && event.charCode <=57"
+                                                                <input type="number" value="{{ $totalPrice }}"
                                                                     class="form-control bayar-input" name="bayar"
                                                                     placeholder="Masukkan nominal bayar">
                                                             </div>
@@ -260,7 +259,7 @@
                                                 <div class="card-body">
                                                     <div class="d-flex flex-column">
                                                         <span>Uang kembali</span>
-                                                        <span class="green" id="return">-</span>
+                                                        <span class="green" id="return">Rp. 0,00</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -360,11 +359,13 @@
 
     <script>
         function deleteCharacter() {
+            dlt();
             let currentValue = $('.inputDisplay').val();
             $('.inputDisplay').val(currentValue.substring(0, currentValue.length - 1));
         }
 
         function insertCharacter(char) {
+            beep();
             let currentValue = $('.inputDisplay').val();
             let length = currentValue.length;
             let flag = false;
@@ -385,10 +386,12 @@
         }
 
         function clearInput() {
+            dlt();
             $('.inputDisplay').val('');
         }
 
         function result() {
+            dlt();
             let currentValue = $('.inputDisplay').val();
             let length = currentValue.length;
             let flag = false;
@@ -399,6 +402,31 @@
                 $('.inputDisplay').val("ERROR!");
             else
                 $('.inputDisplay').val(eval($('.inputDisplay').val()));
+        }
+
+        function beep() {
+            var audio = new Audio('../sound/beep.mp3');
+            audio.play();
+        }
+
+        function dlt() {
+            var audio = new Audio('../sound/remove.mp3');
+            audio.play();
+        }
+
+        function rst() {
+            var audio = new Audio('../sound/reset.mp3');
+            audio.play();
+        }
+
+        function sword() {
+            var audio = new Audio('../sound/sword.mp3');
+            audio.play();
+        }
+
+        function bell() {
+            var audio = new Audio('../sound/bell.mp3');
+            audio.play();
         }
         
         $(document).ready(function() {
@@ -457,6 +485,7 @@
             });
     
             $(document).on('click', '.add-name', function(e) {
+                beep();
                 e.preventDefault();
                 $('.add-name').hide();
                 $(`<div class="d-flex align-items-center">
@@ -474,6 +503,7 @@
                 let url = "{{ route('invoice.print.reguler') }}";
     
                 if (!pay_amount) {
+                    sword();
                     swal({
                         title: "",
                         type: "error",
@@ -490,6 +520,7 @@
                 }
     
                 if (pay_amount < total_payment) {
+                    sword();
                     swal({
                         title: "",
                         type: "error",
@@ -541,6 +572,7 @@
                                 success: function(response) {
                                     $.unblockUI();
                                     if (response.status == "VALID") {
+                                        bell();
                                         swal({
                                             title: '',
                                             type: "success",

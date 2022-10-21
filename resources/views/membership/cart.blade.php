@@ -258,6 +258,7 @@
 
             var url = "{{ route('cart.add', ':package') }}";
             url = url.replace(':package', id);
+            beep();
             $.ajax({
                 async: true,
                 type: 'POST',
@@ -276,6 +277,7 @@
                 success: function(response) {
                     $.unblockUI();
                     if (response.status == "INVALID") {
+                        sword();
                         swal({
                             title: "",
                             type: "error",
@@ -327,6 +329,7 @@
             }
             let url = "{{ route('update.qty', ':id') }}";
             url = url.replace(':id', id);
+            beep();
             $.ajax({
                 async: true,
                 type: 'POST',
@@ -376,7 +379,7 @@
             $('.disabled-cart-' + id).fadeOut(800, function() {
                 $(this).remove();
             });
-
+            dlt();
             $.ajax({
                 async: true,
                 type: 'POST',
@@ -418,7 +421,7 @@
             tg = tg[0];
             tg = tg.split("/");
             page = tg[tg.length - 1];
-
+            
             var url = "{{ route('cart.clear') }}";
             swal({
                 title: "Anda yakin ingin reset keranjang?",
@@ -445,10 +448,11 @@
                             loading();
                         },
                         success: function(data) {
+                            rst();
                             swal({
                                 title: "",
                                 type: "success",
-                                text: "Order berhasil dihapus",
+                                text: "Keranjang berhasil direset",
                                 confirmButtonColor: "#01c853",
                             }, function(isConfirm) {
                                 $.unblockUI();
@@ -486,6 +490,7 @@
                 },
                 success: function(response) {
                     $.unblockUI();
+                    bell();
                     swal({
                         title: "",
                         type: "success",
@@ -493,13 +498,35 @@
                         confirmButtonColor: "#01c853",
                     }, function(isConfirm) {
                         window.location.href = url;
-                        // window.close();
-                        // checkout(url, response.order_number);
-                        // $('#checkout').attr('disabled', true);
                     });
                 }
             });
         });
+
+        function beep() {
+            var audio = new Audio('../sound/beep.mp3');
+            audio.play();
+        }
+
+        function dlt() {
+            var audio = new Audio('../sound/remove.mp3');
+            audio.play();
+        }
+
+        function rst() {
+            var audio = new Audio('../sound/reset.mp3');
+            audio.play();
+        }
+
+        function sword() {
+            var audio = new Audio('../sound/sword.mp3');
+            audio.play();
+        }
+
+        function bell() {
+            var audio = new Audio('../sound/bell.mp3');
+            audio.play();
+        }
 
         $(document).on('click', '#disabled-pay', function() {
             swal({
@@ -508,6 +535,7 @@
                 text: "Pilih item terlebih dahulu",
                 confirmButtonColor: "#01c853",
             });
+            sword();
             return false;
         });
 
