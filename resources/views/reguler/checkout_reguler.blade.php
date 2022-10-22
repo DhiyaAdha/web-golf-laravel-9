@@ -365,7 +365,7 @@
         }
 
         function insertCharacter(char) {
-            beep();
+            click();
             let currentValue = $('.inputDisplay').val();
             let length = currentValue.length;
             let flag = false;
@@ -404,8 +404,17 @@
                 $('.inputDisplay').val(eval($('.inputDisplay').val()));
         }
 
+        function add() {
+            var audio = new Audio('../sound/add.mp3');
+            audio.play();
+        }
+
         function beep() {
             var audio = new Audio('../sound/beep.mp3');
+            audio.play();
+        }
+        function click() {
+            var audio = new Audio('../sound/click.mp3');
             audio.play();
         }
 
@@ -485,7 +494,7 @@
             });
     
             $(document).on('click', '.add-name', function(e) {
-                beep();
+                click();
                 e.preventDefault();
                 $('.add-name').hide();
                 $(`<div class="d-flex align-items-center">

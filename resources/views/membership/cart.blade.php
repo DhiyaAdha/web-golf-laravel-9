@@ -258,7 +258,7 @@
 
             var url = "{{ route('cart.add', ':package') }}";
             url = url.replace(':package', id);
-            beep();
+            
             $.ajax({
                 async: true,
                 type: 'POST',
@@ -285,6 +285,8 @@
                             confirmButtonColor: "#01c853",
                         });
                         return false;
+                    } else {
+                        beep();
                     }
                     location.reload();
                 }
@@ -329,7 +331,7 @@
             }
             let url = "{{ route('update.qty', ':id') }}";
             url = url.replace(':id', id);
-            beep();
+            click();
             $.ajax({
                 async: true,
                 type: 'POST',
@@ -503,8 +505,17 @@
             });
         });
 
+        function add() {
+            var audio = new Audio('../sound/add.mp3');
+            audio.play();
+        }
+
         function beep() {
             var audio = new Audio('../sound/beep.mp3');
+            audio.play();
+        }
+        function click() {
+            var audio = new Audio('../sound/click.mp3');
             audio.play();
         }
 

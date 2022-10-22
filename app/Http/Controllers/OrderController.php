@@ -257,7 +257,8 @@ class OrderController extends Controller
                     'cart' => $cart_data,
                     'qty' => $cek_itemId[$id[3]]->quantity,
                     'name' => $cek_itemId[$id[3]]->name,
-                    'price' => $cek_itemId[$id[3]]->price
+                    'price' => $cek_itemId[$id[3]]->price,
+                    'status' => 'VALID'
                 ], 200);
             }
             

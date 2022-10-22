@@ -1012,7 +1012,7 @@
         }
 
         function insertCharacter(char) {
-            beep();
+            click();
             let currentValue = $('.inputDisplay').val();
             let length = currentValue.length;
             let flag = false;
@@ -1051,8 +1051,17 @@
                 $('.inputDisplay').val(eval($('.inputDisplay').val()));
         }
 
+        function add() {
+            var audio = new Audio('../sound/add.mp3');
+            audio.play();
+        }
+
         function beep() {
             var audio = new Audio('../sound/beep.mp3');
+            audio.play();
+        }
+        function click() {
+            var audio = new Audio('../sound/click.mp3');
             audio.play();
         }
 
@@ -1106,7 +1115,7 @@
             $('input[type=radio][name=payment]').on('change', function() {
                 switch ($(this).val()) {
                     case 'single':
-                        beep();
+                        click();
                         $("input[name='payment-type[]']").prop('checked', false);
                         $('#single').show();
                         $('#multiple').hide().addClass('d-none');
@@ -1117,7 +1126,7 @@
                         $('.refund').addClass('d-none');
                         break;
                     case 'multiple':
-                        beep();
+                        click();
                         $('.discount').hide();
                         $('.refund').addClass('d-none');
                         $("input[name=payment-type]").prop('checked', false);
@@ -1135,7 +1144,7 @@
             });
 
             $(document).on('change', '#customSwitch2', function(e) {
-                beep();
+                click();
                 let data_bill = $('#customCheck8').data('bill');
                 let data_deposit = $('#customCheck8').data('deposit');
                 let price_single = $('.kmt').data('pricesingle');
@@ -1291,7 +1300,7 @@
             });
 
             $(document).on('change', 'input[name="payment-type[]"]', function(e) {
-                beep();
+                click();
                 let data_bill = $('#customCheck8').data('bill');
                 let data_deposit = $('#customCheck8').data('deposit');
                 let price_single = $('.kmt').data('pricesingle');
@@ -1518,7 +1527,7 @@
 
             $(document).on('change', 'input[name="payment-type"]', function(e) {
                 e.preventDefault();
-                beep();
+                click();
                 let type_single = $(this).val();
                 let tg = window.location.href;
                 tg = tg.split("?")

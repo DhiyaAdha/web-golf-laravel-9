@@ -210,7 +210,8 @@ class OrderRegulerController extends Controller
                     'cart' => $cart_data,
                     'qty' => $cek_itemId[$request->get('id')]->quantity,
                     'name' => $cek_itemId[$request->get('id')]->name,
-                    'price' => $cek_itemId[$request->get('id')]->price
+                    'price' => $cek_itemId[$request->get('id')]->price,
+                    'status' => 'VALID'
                 ], 200);
             }
             
