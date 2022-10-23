@@ -361,6 +361,16 @@
                                                                         <div class="form-group mt-2 mb-2"
                                                                             id="cash-transfer">
                                                                         </div>
+                                                                        <div class="d-flex flex-wrap justify-content-between mb-2 ">
+                                                                            <input type="button" value="1000" onclick="cal(1000)" class="btn btn-sm btn-default">
+                                                                            <input type="button" value="2000" onclick="cal(2000)" class="btn btn-sm btn-default">
+                                                                            <input type="button" value="5000" onclick="cal(5000)" class="btn btn-sm btn-default">
+                                                                            <input type="button" value="10000" onclick="cal(10000)" class="btn btn-sm btn-default">
+                                                                            <input type="button" value="20000" onclick="cal(20000)" class="btn btn-sm btn-default">
+                                                                            <input type="button" value="50000" onclick="cal(50000)" class="btn btn-sm btn-default">
+                                                                            <input type="button" value="75000" onclick="cal(75000)" class="btn btn-sm btn-default">
+                                                                            <input type="button" value="100000" onclick="cal(100000)" class="btn btn-sm btn-default">
+                                                                        </div>
                                                                     </div>
                                                                 </label>
                                                             </div>
@@ -695,7 +705,17 @@
                                                                                         class="form-control number-input input-notzero bayar-input"
                                                                                         name="bayar" placeholder="Masukkan nominal bayar"
                                                                                         autocomplete="off">
-                                                                                </div>
+                                                                                    </div>
+                                                                            </div>
+                                                                            <div class="d-flex flex-wrap justify-content-between mb-2 ">
+                                                                                <input type="button" value="1000" onclick="cal(1000)" class="btn btn-sm btn-default">
+                                                                                <input type="button" value="2000" onclick="cal(2000)" class="btn btn-sm btn-default">
+                                                                                <input type="button" value="5000" onclick="cal(5000)" class="btn btn-sm btn-default">
+                                                                                <input type="button" value="10000" onclick="cal(10000)" class="btn btn-sm btn-default">
+                                                                                <input type="button" value="20000" onclick="cal(20000)" class="btn btn-sm btn-default">
+                                                                                <input type="button" value="50000" onclick="cal(50000)" class="btn btn-sm btn-default">
+                                                                                <input type="button" value="75000" onclick="cal(75000)" class="btn btn-sm btn-default">
+                                                                                <input type="button" value="100000" onclick="cal(100000)" class="btn btn-sm btn-default">
                                                                             </div>
                                                                         </div>
                                                                     </label>
@@ -953,8 +973,7 @@
                                             <div class="items-default">
                                                 @foreach ($orders as $cart)
                                                     <div class="d-flex">
-                                                        <span class="flex-grow-1">{{ $cart['name'] }} x
-                                                            {{ $cart['qty'] }}</span>
+                                                        <span class="flex-grow-1">{{ $cart['name'] }} {{ $cart['category'] == 'default' ? '| game' : '' }} x {{ $cart['qty'] }}</span>
                                                         <small>Rp. {{ formatrupiah($cart['price']) }}</small>
                                                     </div>
                                                 @endforeach
@@ -986,8 +1005,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="button" id="pay"
-                                    class="btn btn-sm btn-success btn-block mt-2">Bayar</button>
+                                <div class="d-flex justify-content-between">
+                                    <a href="{{ URL::signedRoute('order.cart', ['id' => $visitor->id]) }}" class="btn btn-primary btn-sm mt-2">Kembali</a>
+                                    <button type="submit" id="pay" class="btn btn-sm btn-success mt-2">Bayar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1084,6 +1105,27 @@
             var audio = new Audio('../sound/bell.mp3');
             audio.play();
         }
+
+        function remaining() {
+            var audio = new Audio('../sound/remaining.mp3');
+            audio.play();
+        }
+
+        function cal(price) {
+            if ($('.bayar-input').val() == '') {
+                sword();
+                swal({
+                    title: "",
+                    type: "error",
+                    text: "Nominal wajib diisi",
+                    confirmButtonColor: "#01c853",
+                });
+                return false;
+            } else {
+                let result = parseInt($('.bayar-input').val());
+                $('.bayar-input').val(result + price);
+            }
+        }
         
         $(document).ready(function() {
             $("[data-toggle=popover]").popover({
@@ -1124,6 +1166,7 @@
                         $('.items-replace').addClass('d-none');
                         $('.discount').hide();
                         $('.refund').addClass('d-none');
+                        $('.remaining').addClass('d-none');
                         break;
                     case 'multiple':
                         click();
@@ -1155,23 +1198,26 @@
                 let minus_deposit = data_bill - data_deposit;
                 let discount = '';
 
-                if ($(this).prop('checked')) {
+                if ($(this).is(':checked')) {
                     $('#hide-limit').removeClass('d-none');
                 } else {
-                    // if((type_multiple[0] == 'deposit') == true) {
-                    //     $('.refund').removeClass('d-none');
-                    //     $('#return').addClass('green').text(0);
-                    //     $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
-                    //     $('.bayar-input').val(minus_deposit);
-                    //     $('#remaining').text('Rp. ' + formatIDR(minus_deposit - minus_deposit));
-                    // } else {
 
+                    $("input[type=radio]").prop("checked", false);
+                    $("#customRadioInline5").prop('checked', false);
+                    console.log(type_multiple);
+                    // if((type_multiple.length == 0) == false ) {
+                    //     $('.discount').hide();
+                    //     $('#remaining').text('Rp. ' + formatIDR(data_bill));31
+                    // } else if ((type_multiple.length == 2) == false) {
+                    //     if((type_multiple[0] == 'deposit') == true) {
+                    //         $('.discount').hide();
+                    //         $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
+                    //         $('#remaining').text('Rp. ' + formatIDR(data_bill - data_deposit));
+                    //     } else if ((type_multiple[0] == 'cash/transfer') == true) {
+    
+                    //     }
                     // }
-
-
                     $('#hide-limit').addClass('d-none');
-                    $("#customRadioInline6").prop('checked', false).val(null);
-                    $("#customRadioInline5").prop('checked', false).val(null);
                 }
             });
 
@@ -1183,6 +1229,7 @@
                 let split = $('.nilai-total1-td').data('split') - parseInt($(this).val());
                 let return_split = parseInt($(this).val()) - $('.nilai-total1-td').data('split');
                 let data_deposit = $('#customCheck8').data('deposit');
+                let price_single = $('.kmt').data('pricesingle');
                 let type_multiple = $('input[name="payment-type[]"]:checked')
                     .map(function() {
                         return $(this).val();
@@ -1294,6 +1341,33 @@
                                     $('#remaining').text('Rp. ' +0);
                                 }
                             }
+                        } else if (type_multiple.length == 3) {
+                            if (type_multiple[1] == 'cash/transfer') {
+                                if ($(this).val() < (total - data_deposit)) {
+                                    if ($(this).val() == '') {
+                                        $(this).removeClass('is-invalid');
+                                        $('#return').text('-').css({
+                                            "background-color": "rgba(25, 216, 149, 0.2)",
+                                            "color": "#19d895"
+                                        }).data('refund', parseInt($(this).val()) - (total - data_deposit));
+                                        $('#remaining').text('Rp. ' + formatIDR(total - data_deposit));
+                                    } else {
+                                        $(this).addClass('is-invalid');
+                                        $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - (total - data_deposit)) + ',00').css({
+                                            "background-color": "rgba(216, 25, 25, 0.2)",
+                                            "color": "#d81c19d1"
+                                        }).data('refund', parseInt($(this).val()) - (total - data_deposit));
+                                        $('#remaining').text('Rp. ' + formatIDR(parseInt(total - data_deposit) - parseInt($(this).val())));
+                                    }
+                                } else {
+                                    $(this).removeClass('is-invalid');
+                                    $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - (total - data_deposit)) + ',00').css({
+                                        "background-color": "rgba(25, 216, 149, 0.2)",
+                                        "color": "#19d895"
+                                    }).data('refund', parseInt($(this).val()) - (total - data_deposit));
+                                    $('#remaining').text('Rp. ' +0);
+                                }
+                            }
                         }
                     }
                 }
@@ -1400,11 +1474,11 @@
                                     $('.discount').html(discount).show();
 
                                     if((data_bill - price_single) > data_deposit) {
-                                        sword();
+                                        remaining();
                                         swal({
                                             title: "",
                                             type: "error",
-                                            text: "Gunakan cash transfer untuk sisa pembayaran",
+                                            text: "Gunakan cash/transfer untuk sisa pembayaran",
                                             confirmButtonColor: "#01c853",
                                         });
                                         return false;
@@ -1472,8 +1546,27 @@
                                 $('.refund').removeClass('d-none');
                                 $('#return').addClass('green').text(0);
                                 $('.bayar-input').val((data_bill - price_single) - data_deposit);
-                                $('#remaining').text('Rp. 0');
+                                $('.nilai-total1-td').data('total', data_bill - price_single);
                                 $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill - price_single) + ',00');
+                                discount += `<div class="card mt-2">
+                                        <div class="card-body">
+                                            <div class="d-flex flex-column">
+                                                <div class="d-flex">
+                                                    <span class="flex-grow-1">Diskon</span>
+                                                    <span>Rp. ${formatIDR(price_single)},00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                                    $('.discount').html(discount).show();
+                                $.toast({
+                                    text: 'Kupon/limit ditambahkan',
+                                    position: 'top-right',
+                                    loaderBg: '#fec107',
+                                    icon: 'success',
+                                    hideAfter: 700,
+                                });
+                                $('#remaining').text('Rp. 0');
                             }
                         }
                     } else {
@@ -1575,9 +1668,10 @@
                             let price_discount = 0;
                             let price = 0;
                             if (type_single == 1) {
+                                console.table(response.orders);
                                 $.each(response.orders, function(b, val) {
                                     html += `<div class="d-flex">
-                                                <span class="flex-grow-1">${val.name} x ${val.qty}</span>
+                                                <span class="flex-grow-1">${val.name} ${response.orders[b].category == 'default' ? '| game' : ''} x ${val.qty}</span>
                                                 <small>${response.orders[b].category == 'default' ? 'limit gratis' : 'Rp. ' + formatIDR(val.pricesingle) + ',00'}</small>
                                             </div>`;
                                     price_discount += val.pricesingle;
@@ -1620,7 +1714,7 @@
                             } else if (type_single == 2) {
                                 $.each(response.orders, function(b, val) {
                                     html += `<div class="d-flex">
-                                                <span class="flex-grow-1">${val.name} x ${val.qty}</span>
+                                                <span class="flex-grow-1">${val.name} ${response.orders[b].category == 'default' ? '| game' : ''} x ${val.qty}</span>
                                                 <small>${response.orders[b].category == 'default' ? 'kupon gratis' : 'Rp. ' + formatIDR(val.pricesingle) + ',00'}</small>
                                             </div>`;
                                     price_discount += val.pricesingle;
@@ -1855,11 +1949,12 @@
                                 } else {
                                     sword();
                                     swal({
-                                        title: '',
+                                        title: "",
                                         type: "error",
                                         text: response.message,
                                         confirmButtonColor: "#01c853",
                                     });
+                                    return false;
                                 }
                             }
                         });
