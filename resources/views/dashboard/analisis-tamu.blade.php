@@ -415,11 +415,9 @@
                     {
                         "data": function(data) {
                             if (data.tipe_member == 'VIP') {
-                                return `<span class='label label-success'>${data.tipe_member}</span>`;
-                            } else if (data.tipe_member == 'VVIP') {
-                                return `<span class='label label-warning'>${data.tipe_member}</span>`;
+                                return `<span class='label label-success'>${data.tipe_member == 'VIP' ? 'Member' : 'VIP'}</span>`;
                             } else {
-                                return `<span class='label label-primary'>${data.tipe_member}</span>`;
+                                return `<span class='label label-warning'>${data.tipe_member == 'VVIP' ? 'VIP' : 'Member'}</span>`;
                             }
 
                         }
@@ -429,9 +427,9 @@
 
                     }
                 ],
-                order: [
-                    [1, 'asc']
-                ],
+                // order: [
+                //     [1, 'asc']
+                // ],
                 responsive: true,
                 language: {
                     search: "",
