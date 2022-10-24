@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <title>Metode Pembayaran</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>Metode Pembayaran</title>
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
     <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-    <link href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet"
-        type="text/css">
+    <link href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.css') }}" rel="stylesheet"type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
@@ -167,7 +165,6 @@
         }
     </style>
 </head>
-
 <body>
     <div class="row">
         <div class="container">
@@ -182,12 +179,10 @@
                                             <span class="text-capitalize">Saldo</span>
                                             <div class="d-flex">
                                                 <span class="flex-grow-1 text-big">Rp</span>
-                                                <span class=" text-big" id="balance"
-                                                    data-balance="{{ $deposit->balance }}">{{ formatrupiah($deposit->balance) ?? '0' }}</span>
+                                                <span class=" text-big" id="balance" data-balance="{{ $deposit->balance }}">{{ formatrupiah($deposit->balance) ?? '0' }}</span>
                                             </div>
                                         </div>
-                                        <img src="{{ asset('img/circle.svg') }}" class="card-img-absolute"
-                                            alt="circle-image">
+                                        <img src="{{ asset('img/circle.svg') }}" class="card-img-absolute" alt="circle-image">
                                     </div>
                                 </div>
                             </div>
@@ -197,8 +192,7 @@
                                         <div class="d-flex-flex-column">
                                             <span class="text-capitalize">Kupon</span>
                                             <div class="d-flex">
-                                                <span class=" text-big" id="kupon"
-                                                    data-kupon="{{ $log_limit->quota_kupon }}">{{ $log_limit->quota_kupon ?? '0' }}</span>
+                                                <span class=" text-big" id="kupon" data-kupon="{{ $log_limit->quota_kupon }}">{{ $log_limit->quota_kupon ?? '0' }}</span>
                                                 <span></span>
                                             </div>
                                         </div>
@@ -211,8 +205,7 @@
                                         <div class="d-flex-flex-column">
                                             <span class="text-capitalize">Limit</span>
                                             <div class="d-flex">
-                                                <span class="text-big" id="limit"
-                                                    data-limit="{{ $log_limit->quota }}">{{ $log_limit->quota ?? '0' }}</span>
+                                                <span class="text-big" id="limit" data-limit="{{ $log_limit->quota }}">{{ $log_limit->quota ?? '0' }}</span>
                                                 <span></span>
                                             </div>
                                         </div>
@@ -229,16 +222,12 @@
                                                 <span class="flex-grow-1">Metode Pembayaran</span>
                                                 <div class="d-flex align-items-center">
                                                     <div class="custom-control custom-radio mr-2">
-                                                        <input type="radio" name="payment" id="wk"
-                                                            class="custom-control-input" value="single" checked>
-                                                        <label class="custom-control-label cursor"
-                                                            for="wk">Single</label>
+                                                        <input type="radio" name="payment" id="wk" class="custom-control-input" value="single" checked>
+                                                        <label class="custom-control-label cursor" for="wk">Single</label>
                                                     </div>
                                                     <div class="custom-control custom-radio mr-2">
-                                                        <input type="radio" name="payment" id="kw"
-                                                            class="custom-control-input" value="multiple">
-                                                        <label class="custom-control-label cursor"
-                                                            for="kw">Split</label>
+                                                        <input type="radio" name="payment" id="kw" class="custom-control-input" value="multiple">
+                                                        <label class="custom-control-label cursor" for="kw">Split</label>
                                                     </div>
                                                     <button tabindex="0" type="button" class="btn btn-success btn-flat" title="Calculator" data-popover-content="#unique-id" data-toggle="popover" data-placement="bottom">
                                                         <i class="fa fa-calculator fa-lg" aria-hidden="true"></i>
@@ -292,294 +281,185 @@
                                             <div id="single">
                                                 <div class="card mt-2">
                                                     <div class="card-body">
-                                                        <div class="d-flex align-items-center choose"
-                                                            style="border-bottom: 1px solid rgba(0,0,0,.125);">
-                                                            <div class="flex-grow-1 custom-control custom-radio custom-control-inline"
-                                                                style="width:100%;">
+                                                        <div class="d-flex align-items-center choose" style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                                                            <div class="flex-grow-1 custom-control custom-radio custom-control-inline" style="width:100%;">
                                                                 @if ($deposit->balance != 0)
                                                                     @if($deposit->balance > $totalPrice)
-                                                                        <input type="radio" id="customRadioInline4"
-                                                                            name="payment-type" value="4"
-                                                                            class="custom-control-input">
-                                                                        <label class="custom-control-label"
-                                                                            for="customRadioInline4"
-                                                                            style="width: 100%;cursor:pointer;">
-                                                                            <div
-                                                                                class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                        <input type="radio" id="customRadioInline4" name="payment-type" value="4" class="custom-control-input">
+                                                                        <label class="custom-control-label" for="customRadioInline4" style="width: 100%;cursor:pointer;">
+                                                                            <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                                 <strong>Deposit</strong>
-                                                                                <small class="text-muted mb-2">Deposit akan
-                                                                                    berkurang sesuai dengan tagihan</small>
+                                                                                <small class="text-muted mb-2">Deposit akan berkurang sesuai dengan tagihan</small>
                                                                             </div>
                                                                         </label>
                                                                     @else
-                                                                        <input type="radio" id="customRadioInline4"
-                                                                            class="custom-control-input" disabled>
-                                                                        <label class="custom-control-label"
-                                                                            for="customRadioInline4"
-                                                                            style="width: 100%;cursor:no-drop;">
-                                                                            <div
-                                                                                class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                        <input type="radio" id="customRadioInline4" name="payment-type" value="4" class="custom-control-input" disabled>
+                                                                        <label class="custom-control-label" for="customRadioInline4" style="width: 100%;cursor:no-drop;">
+                                                                            <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                                 <strong>Deposit</strong>
-                                                                                <small class="text-muted mb-2"><i>Saldo
-                                                                                        tidak mencukupi</i></small>
+                                                                                <small class="text-muted mb-2"><i>Saldo tidak mencukupi</i></small>
                                                                             </div>
                                                                         </label>
                                                                     @endif
                                                                 @else
-                                                                    <input type="radio" id="customRadioInline4"
-                                                                        class="custom-control-input" disabled>
-                                                                    <label class="custom-control-label"
-                                                                        for="customRadioInline4"
-                                                                        style="width: 100%;cursor:no-drop;">
-                                                                        <div
-                                                                            class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                    <input type="radio" id="customRadioInline4" name="payment-type" value="4" class="custom-control-input" disabled>
+                                                                    <label class="custom-control-label" for="customRadioInline4" style="width: 100%;cursor:no-drop;">
+                                                                        <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                             <strong>Deposit</strong>
-                                                                            <small class="text-muted mb-2"><i>Saldo
-                                                                                    kosong</i></small>
+                                                                            <small class="text-muted mb-2"><i>Saldo kosong</i></small>
                                                                         </div>
                                                                     </label>
                                                                 @endif
                                                             </div>
-                                                            <img src="{{ asset('deposit.png') }}" alt="deposit"
-                                                                width="26" height="26">
+                                                            <img src="{{ asset('deposit.png') }}" alt="deposit" width="26" height="26">
                                                         </div>
-                                                        <div class="d-flex align-items-center mt-2 choose"
-                                                            style="border-bottom: 1px solid rgba(0,0,0,.125);">
-                                                            <div class="flex-grow-1 custom-control custom-radio custom-control-inline"
-                                                                style="width:100%;">
-                                                                <input type="radio" id="customRadioInline3"
-                                                                    name="payment-type" value="3"
-                                                                    class="custom-control-input">
-                                                                <label class="custom-control-label"
-                                                                    for="customRadioInline3"
-                                                                    style="width: 100%;cursor:pointer;">
-                                                                    <div
-                                                                        class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                        <div class="d-flex align-items-center mt-2 choose" style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                                                            <div class="flex-grow-1 custom-control custom-radio custom-control-inline" style="width:100%;">
+                                                                <input type="radio" id="customRadioInline3" name="payment-type" value="3" class="custom-control-input">
+                                                                <label class="custom-control-label" for="customRadioInline3" style="width: 100%;cursor:pointer;">
+                                                                    <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                         <strong>Cash/Transfer</strong>
-                                                                        <small class="text-muted">Tunjukan bukti
-                                                                            transfer</small>
-                                                                        <div class="form-group mt-2 mb-2"
-                                                                            id="cash-transfer">
+                                                                        <small class="text-muted">Tunjukan bukti transfer</small>
+                                                                        <div class="form-group mt-2 mb-2" id="cash-transfer">
                                                                         </div>
+                                                                        {{-- <div class="d-flex flex-wrap justify-content-around mb-2 ">
+                                                                            <input type="button" value="500" onclick="cal(500)" class="btn btn-sm btn-default">
+                                                                            <input type="button" value="1000" onclick="cal(1000)" class="btn btn-sm btn-default">
+                                                                            <input type="button" value="2000" onclick="cal(2000)" class="btn btn-sm btn-default">
+                                                                            <input type="button" value="5000" onclick="cal(5000)" class="btn btn-sm btn-default">
+                                                                            <input type="button" value="10000" onclick="cal(10000)" class="btn btn-sm btn-default">
+                                                                            <input type="button" value="20000" onclick="cal(20000)" class="btn btn-sm btn-default">
+                                                                            <input type="button" value="50000" onclick="cal(50000)" class="btn btn-sm btn-default">
+                                                                            <input type="button" value="100000" onclick="cal(100000)" class="btn btn-sm btn-default">
+                                                                        </div> --}}
                                                                     </div>
                                                                 </label>
                                                             </div>
-                                                            <img src="{{ asset('cash-on-delivery.png') }}"
-                                                                alt="cash" width="30" height="30">
+                                                            <img src="{{ asset('cash-on-delivery.png') }}" alt="cash" width="30" height="30">
                                                         </div>
-
-                                                        <div class="d-flex align-items-center mt-2 choose"
-                                                            style="border-bottom: 1px solid rgba(0,0,0,.125);">
-                                                            <div class="flex-grow-1 custom-control custom-radio custom-control-inline"
-                                                                style="width:100%;">
+                                                        <div class="d-flex align-items-center mt-2 choose" style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                                                            <div class="flex-grow-1 custom-control custom-radio custom-control-inline" style="width:100%;">
                                                                 @if (count($package_default) == 1)
                                                                     @if ($item_default == 1)
                                                                         @if (count($package_additional) == 0 && count($package_others) == 0)
                                                                             @if ($log_limit->quota_kupon != 0)
-                                                                                <input type="radio"
-                                                                                    id="customRadioInline2"
-                                                                                    name="payment-type" value="2"
-                                                                                    class="custom-control-input">
-                                                                                <label class="custom-control-label"
-                                                                                    for="customRadioInline2"
-                                                                                    style="width: 100%;cursor:pointer;">
-                                                                                    <div
-                                                                                        class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                                <input type="radio" id="customRadioInline2" name="payment-type" value="2" class="custom-control-input">
+                                                                                <label class="custom-control-label" for="customRadioInline2" style="width: 100%;cursor:pointer;">
+                                                                                    <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                                         <strong>Kupon</strong>
-                                                                                        <small class="text-muted">Kupon
-                                                                                            otomatis
-                                                                                            akan
-                                                                                            berkurang</small>
-                                                                                        <small
-                                                                                            class="text-muted mb-2">Kupon
-                                                                                            berlaku
-                                                                                            hanya untuk 1 game</small>
+                                                                                        <small class="text-muted">Kupon otomatis akan berkurang</small>
+                                                                                        <small class="text-muted mb-2">Kupon berlaku hanya untuk 1 game</small>
                                                                                     </div>
                                                                                 </label>
                                                                             @else
-                                                                                <input type="radio"
-                                                                                    id="customRadioInline2"
-                                                                                    class="custom-control-input"
-                                                                                    disabled>
-                                                                                <label class="custom-control-label"
-                                                                                    for="customRadioInline2"
-                                                                                    style="width: 100%;cursor:no-drop;">
-                                                                                    <div
-                                                                                        class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                                <input type="radio" id="customRadioInline2" name="payment-type" value="2" class="custom-control-input" disabled>
+                                                                                <label class="custom-control-label" for="customRadioInline2" style="width: 100%;cursor:no-drop;">
+                                                                                    <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                                         <strong>Kupon</strong>
-                                                                                        <small class="text-muted"><i>Tidak
-                                                                                                ada kupon</i></small>
+                                                                                        <small class="text-muted"><i>Tidak ada kupon</i></small>
                                                                                     </div>
                                                                                 </label>
                                                                             @endif
                                                                         @else
-                                                                            <input type="radio"
-                                                                                id="customRadioInline2"
-                                                                                class="custom-control-input" disabled>
-                                                                            <label class="custom-control-label"
-                                                                                for="customRadioInline2"
-                                                                                style="width: 100%;cursor:no-drop;">
-                                                                                <div
-                                                                                    class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                            <input type="radio" id="customRadioInline2" name="payment-type" value="2" class="custom-control-input" disabled>
+                                                                            <label class="custom-control-label" for="customRadioInline2" style="width: 100%;cursor:no-drop;">
+                                                                                <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                                     <strong>Kupon</strong>
                                                                                     <small class="mb-2">
-                                                                                        <i
-                                                                                            class="text-muted text-justify">
-                                                                                            Satu kupon hanya berlaku
-                                                                                            untuk satu jenis
-                                                                                            permainan
-                                                                                            golf</i>
+                                                                                        <i class="text-muted text-justify">
+                                                                                            Satu kupon hanya berlaku untuk satu jenis permainan golf</i>
                                                                                     </small>
                                                                                 </div>
                                                                             </label>
                                                                         @endif
                                                                     @else
-                                                                        <input type="radio" id="customRadioInline2"
-                                                                            class="custom-control-input" disabled>
-                                                                        <label class="custom-control-label"
-                                                                            for="customRadioInline2"
-                                                                            style="width: 100%;cursor:no-drop;">
-                                                                            <div
-                                                                                class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                        <input type="radio" id="customRadioInline2" name="payment-type" value="2" class="custom-control-input" disabled>
+                                                                        <label class="custom-control-label" for="customRadioInline2" style="width: 100%;cursor:no-drop;">
+                                                                            <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                                 <strong>Kupon</strong>
                                                                                 <small class="mb-2">
                                                                                     <i class="text-muted text-justify">
-                                                                                        Satu kupon hanya berlaku
-                                                                                        untuk satu jenis
-                                                                                        permainan
-                                                                                        golf</i>
+                                                                                        Satu kupon hanya berlaku untuk satu jenis permainan golf</i>
                                                                                 </small>
                                                                             </div>
                                                                         </label>
                                                                     @endif
                                                                 @else
-                                                                    <input type="radio" id="customRadioInline2"
-                                                                        class="custom-control-input" disabled>
-                                                                    <label class="custom-control-label"
-                                                                        for="customRadioInline2"
-                                                                        style="width: 100%;cursor:no-drop;">
-                                                                        <div
-                                                                            class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                    <input type="radio" id="customRadioInline2" name="payment-type" value="2" class="custom-control-input" disabled>
+                                                                    <label class="custom-control-label" for="customRadioInline2" style="width: 100%;cursor:no-drop;">
+                                                                        <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                             <strong>Kupon</strong>
                                                                             <small class="mb-2">
                                                                                 <i class="text-muted text-justify">
-                                                                                    Satu kupon hanya berlaku
-                                                                                    untuk satu jenis
-                                                                                    permainan
-                                                                                    golf</i>
+                                                                                    Satu kupon hanya berlaku untuk satu jenis permainan golf</i>
                                                                             </small>
                                                                         </div>
                                                                     </label>
                                                                 @endif
                                                             </div>
-                                                            <img src="{{ asset('coupon.png') }}" alt="cash"
-                                                                width="30" height="30">
+                                                            <img src="{{ asset('coupon.png') }}" alt="cash" width="30" height="30">
                                                         </div>
-                                                        <div class="d-flex align-items-center mt-2 choose"
-                                                            style="border-bottom: 1px solid rgba(0,0,0,.125);">
-                                                            <div class="flex-grow-1 custom-control custom-radio custom-control-inline"
-                                                                style="width:100%;">
+                                                        <div class="d-flex align-items-center mt-2 choose" style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                                                            <div class="flex-grow-1 custom-control custom-radio custom-control-inline" style="width:100%;">
                                                                 @if (count($package_default) == 1)
                                                                     @if ($item_default == 1)
                                                                         @if (count($package_additional) == 0 && count($package_others) == 0)
                                                                             @if ($log_limit->quota != 0)
-                                                                                <input type="radio"
-                                                                                    id="customRadioInline1"
-                                                                                    name="payment-type" value="1"
-                                                                                    class="custom-control-input">
-                                                                                <label class="custom-control-label"
-                                                                                    for="customRadioInline1"
-                                                                                    style="width: 100%;cursor:pointer;">
-                                                                                    <div
-                                                                                        class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                                <input type="radio" id="customRadioInline1" name="payment-type" value="1" class="custom-control-input">
+                                                                                <label class="custom-control-label" for="customRadioInline1" style="width: 100%;cursor:pointer;">
+                                                                                    <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                                         <strong>Limit</strong>
-                                                                                        <small class="text-muted">Limit
-                                                                                            otomatis akan
-                                                                                            berkurang</small>
-                                                                                        <small
-                                                                                            class="text-muted mb-2">Limit
-                                                                                            berlaku hanya untuk 1
-                                                                                            game</small>
+                                                                                        <small class="text-muted">Limit otomatis akan berkurang</small>
+                                                                                        <small class="text-muted mb-2">Limit berlaku hanya untuk 1 game</small>
                                                                                     </div>
                                                                                 </label>
                                                                             @else
-                                                                                <input type="radio"
-                                                                                    id="customRadioInline1"
-                                                                                    class="custom-control-input"
-                                                                                    disabled>
-                                                                                <label class="custom-control-label"
-                                                                                    for="customRadioInline1"
-                                                                                    style="width: 100%;cursor:pointer;">
-                                                                                    <div
-                                                                                        class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                                <input type="radio" id="customRadioInline1" name="payment-type" value="1" class="custom-control-input" disabled>
+                                                                                <label class="custom-control-label" for="customRadioInline1" style="width: 100%;cursor:pointer;">
+                                                                                    <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                                         <strong>Limit</strong>
-                                                                                        <small class="text-muted"><i>Tidak
-                                                                                                ada limit</i></small>
+                                                                                        <small class="text-muted"><i>Tidak ada limit</i></small>
                                                                                     </div>
                                                                                 </label>
                                                                             @endif
                                                                         @else
-                                                                            <input type="radio"
-                                                                                id="customRadioInline1"
-                                                                                class="custom-control-input" disabled>
-                                                                            <label class="custom-control-label"
-                                                                                for="customRadioInline1"
-                                                                                style="width: 100%;cursor:no-drop;">
-                                                                                <div
-                                                                                    class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                            <input type="radio" id="customRadioInline1" name="payment-type" value="1" class="custom-control-input" disabled>
+                                                                            <label class="custom-control-label" for="customRadioInline1" style="width: 100%;cursor:no-drop;">
+                                                                                <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                                     <strong>Limit</strong>
                                                                                     <small class="mb-2">
-                                                                                        <i
-                                                                                            class="text-muted text-justify">
-                                                                                            Satu limit hanya berlaku
-                                                                                            untuk satu jenis
-                                                                                            permainan
-                                                                                            golf</i>
+                                                                                        <i class="text-muted text-justify">
+                                                                                            Satu limit hanya berlaku untuk satu jenis permainan golf</i>
                                                                                     </small>
                                                                                 </div>
                                                                             </label>
                                                                         @endif
                                                                     @else
-                                                                        <input type="radio" id="customRadioInline1"
-                                                                            class="custom-control-input" disabled>
-                                                                        <label class="custom-control-label"
-                                                                            for="customRadioInline1"
-                                                                            style="width: 100%;cursor:no-drop;">
-                                                                            <div
-                                                                                class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                        <input type="radio" id="customRadioInline1" name="payment-type" value="1" class="custom-control-input" disabled>
+                                                                        <label class="custom-control-label" for="customRadioInline1" style="width: 100%;cursor:no-drop;">
+                                                                            <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                                 <strong>Limit</strong>
                                                                                 <small class="mb-2">
                                                                                     <i class="text-muted text-justify">
-                                                                                        Satu limit hanya berlaku
-                                                                                        untuk satu jenis
-                                                                                        permainan
-                                                                                        golf</i>
+                                                                                        Satu limit hanya berlaku untuk satu jenis permainan golf</i>
                                                                                 </small>
                                                                             </div>
                                                                         </label>
                                                                     @endif
                                                                 @else
-                                                                    <input type="radio" id="customRadioInline1"
-                                                                        class="custom-control-input" disabled>
-                                                                    <label class="custom-control-label"
-                                                                        for="customRadioInline1"
-                                                                        style="width: 100%;cursor:no-drop;">
-                                                                        <div
-                                                                            class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                    <input type="radio" id="customRadioInline1" name="payment-type" value="1" class="custom-control-input" disabled>
+                                                                    <label class="custom-control-label" for="customRadioInline1" style="width: 100%;cursor:no-drop;">
+                                                                        <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                             <strong>Limit</strong>
                                                                             <small class="mb-2">
                                                                                 <i class="text-muted text-justify">
-                                                                                    Satu limit hanya berlaku
-                                                                                    untuk satu jenis
-                                                                                    permainan
-                                                                                    golf</i>
+                                                                                    Satu limit hanya berlaku untuk satu jenis permainan golf</i>
                                                                             </small>
                                                                         </div>
                                                                     </label>
                                                                 @endif
                                                             </div>
-                                                            <img src="{{ asset('credit-limit.png') }}" alt="cash"
-                                                                width="30" height="30">
+                                                            <img src="{{ asset('credit-limit.png') }}" alt="cash" width="30" height="30">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -587,43 +467,24 @@
                                             <div id="multiple" class="d-none">
                                                 <div class="card mt-2">
                                                     <div class="card-body">
-                                                        <div class="d-flex align-items-center choose"
-                                                            style="border-bottom: 1px solid rgba(0,0,0,.125);">
-                                                            <div class="flex-grow-1 custom-control custom-checkbox"
-                                                                style="width:100%;">
+                                                        <div class="d-flex align-items-center choose" style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                                                            <div class="flex-grow-1 custom-control custom-checkbox" style="width:100%;">
                                                                 @if ($log_limit->quota != 0 || $log_limit->quota_kupon != 0)
                                                                     {{-- @if ($totalPrice != $price_single) --}}
                                                                     @if ($deposit->balance != 0)
-                                                                        <input type="checkbox" name="payment-type[]"
-                                                                            value="deposit"
-                                                                            data-deposit="{{ $deposit->balance }}"
-                                                                            data-bill="{{ (int) ceil($totalPrice) }}"
-                                                                            class="custom-control-input"
-                                                                            id="customCheck8">
-                                                                        <label class="custom-control-label"
-                                                                            for="customCheck8"
-                                                                            style="width: 100%; cursor:pointer;">
-                                                                            <div
-                                                                                class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                        <input type="checkbox" name="payment-type[]" value="deposit" data-deposit="{{ $deposit->balance }}" data-bill="{{ (int) ceil($totalPrice) }}" class="custom-control-input" id="customCheck8">
+                                                                        <label class="custom-control-label" for="customCheck8" style="width: 100%; cursor:pointer;">
+                                                                            <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                                 <strong>Deposit</strong>
-                                                                                <small class="text-muted mb-2">Deposit
-                                                                                    akan
-                                                                                    berkurang sesuai dengan
-                                                                                    tagihan</small>
+                                                                                <small class="text-muted mb-2"> Deposit akan berkurang sesuai dengan tagihan</small>
                                                                             </div>
                                                                         </label>
                                                                     @else
-                                                                        <input type="checkbox"
-                                                                            class="custom-control-input"
-                                                                            id="customCheck8" disabled>
-                                                                        <label class="custom-control-label"
-                                                                            for="customCheck8"
-                                                                            style="width: 100%; cursor:no-drop;">
-                                                                            <div
-                                                                                class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                        <input type="checkbox" name="payment-type[]" value="deposit" data-deposit="{{ $deposit->balance }}" data-bill="{{ (int) ceil($totalPrice) }}" class="custom-control-input" id="customCheck8" disabled>
+                                                                        <label class="custom-control-label" for="customCheck8" style="width: 100%; cursor:no-drop;">
+                                                                            <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                                 <strong>Deposit</strong>
-                                                                                <small class="text-muted mb-2"><i>Saldo
-                                                                                        kosong</i></small>
+                                                                                <small class="text-muted mb-2"><i>Saldo kosong</i></small>
                                                                             </div>
                                                                         </label>
                                                                     @endif
@@ -644,51 +505,44 @@
                                                                         </label>
                                                                     @endif --}}
                                                                 @else
-                                                                    <input type="checkbox" name="payment-type[]"
-                                                                        value="deposit"
-                                                                        data-deposit="{{ $deposit->balance }}"
-                                                                        data-bill="{{ (int) ceil($totalPrice) }}"
-                                                                        class="custom-control-input"
-                                                                        id="customCheck8">
-                                                                    <label class="custom-control-label"
-                                                                        for="customCheck8"
-                                                                        style="width: 100%; cursor:pointer;">
-                                                                        <div
-                                                                            class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                    <input type="checkbox" name="payment-type[]" value="deposit" data-deposit="{{ $deposit->balance }}" data-bill="{{ (int) ceil($totalPrice) }}" class="custom-control-input" id="customCheck8">
+                                                                    <label class="custom-control-label" for="customCheck8" style="width: 100%; cursor:pointer;">
+                                                                        <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                             <strong>Deposit</strong>
-                                                                            <small class="text-muted mb-2">Deposit
-                                                                                akan
-                                                                                berkurang sesuai dengan
-                                                                                tagihan</small>
+                                                                            <small class="text-muted mb-2">Deposit akan berkurang sesuai dengan tagihan</small>
                                                                         </div>
                                                                     </label>
                                                                 @endif
                                                             </div>
-                                                            <img src="{{ asset('deposit.png') }}" alt="deposit"
-                                                                width="26" height="26">
+                                                            <img src="{{ asset('deposit.png') }}" alt="deposit" width="26" height="26">
                                                         </div>
-                                                        <div class="d-flex align-items-center mt-2 choose"
-                                                            style="border-bottom: 1px solid rgba(0,0,0,.125);">
-                                                            <div class="flex-grow-1 custom-control custom-checkbox"
-                                                                style="width:100%;">
+                                                        <div class="d-flex align-items-center mt-2 choose" style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                                                            <div class="flex-grow-1 custom-control custom-checkbox" style="width:100%;">
                                                                 @if ($log_limit->quota != 0 || $log_limit->quota_kupon != 0)
                                                                     {{-- @if ($totalPrice != $price_single) --}}
-                                                                    <input type="checkbox" name="payment-type[]"
-                                                                        value="cash/transfer"
-                                                                        class="custom-control-input"
-                                                                        id="customCheck7">
-                                                                    <label class="custom-control-label"
-                                                                        for="customCheck7"
-                                                                        style="width: 100%; cursor:pointer;">
-                                                                        <div
-                                                                            class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                    <input type="checkbox" name="payment-type[]" value="cash/transfer" class="custom-control-input" id="customCheck7">
+                                                                    <label class="custom-control-label" for="customCheck7" style="width: 100%; cursor:pointer;">
+                                                                        <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                             <strong>Cash/Transfer</strong>
-                                                                            <small class="text-muted">Tunjukan
-                                                                                bukti
-                                                                                transfer</small>
-                                                                            <div class="form-group mt-2 mb-2"
-                                                                                id="cashtransfer">
+                                                                            <small class="text-muted">Tunjukan bukti transfer</small>
+                                                                            <div class="form-group mt-2 mb-2" id="cashtransfer">
+                                                                                <div class="input-group">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <div class="input-group-text">Rp.</div>
+                                                                                    </div>
+                                                                                    <input type="number" class="form-control number-input input-notzero bayar-input" name="bayar" placeholder="Masukkan nominal bayar" autocomplete="on">
+                                                                                    </div>
                                                                             </div>
+                                                                            {{-- <div class="d-flex flex-wrap justify-content-around mb-2 ">
+                                                                                <input type="button" value="500" onclick="cal(500)" class="btn btn-sm btn-default">
+                                                                                <input type="button" value="1000" onclick="cal(1000)" class="btn btn-sm btn-default">
+                                                                                <input type="button" value="2000" onclick="cal(2000)" class="btn btn-sm btn-default">
+                                                                                <input type="button" value="5000" onclick="cal(5000)" class="btn btn-sm btn-default">
+                                                                                <input type="button" value="10000" onclick="cal(10000)" class="btn btn-sm btn-default">
+                                                                                <input type="button" value="20000" onclick="cal(20000)" class="btn btn-sm btn-default">
+                                                                                <input type="button" value="50000" onclick="cal(50000)" class="btn btn-sm btn-default">
+                                                                                <input type="button" value="100000" onclick="cal(100000)" class="btn btn-sm btn-default">
+                                                                            </div> --}}
                                                                         </div>
                                                                     </label>
                                                                     {{-- @else
@@ -708,174 +562,104 @@
                                                                         </label>
                                                                     @endif --}}
                                                                 @else
-                                                                    <input type="checkbox" name="payment-type[]"
-                                                                        value="cash/transfer"
-                                                                        class="custom-control-input"
-                                                                        id="customCheck7">
-                                                                    <label class="custom-control-label"
-                                                                        for="customCheck7"
-                                                                        style="width: 100%; cursor:pointer;">
-                                                                        <div
-                                                                            class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                    <input type="checkbox" name="payment-type[]" value="cash/transfer" class="custom-control-input" id="customCheck7">
+                                                                    <label class="custom-control-label" for="customCheck7" style="width: 100%; cursor:pointer;">
+                                                                        <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                             <strong>Cash/Transfer</strong>
-                                                                            <small class="text-muted">Tunjukan
-                                                                                bukti
-                                                                                transfer</small>
-                                                                            <div class="form-group mt-2 mb-2"
-                                                                                id="cashtransfer">
+                                                                            <small class="text-muted">Tunjukan bukti transfer</small>
+                                                                            <div class="form-group mt-2 mb-2" id="cashtransfer">
                                                                             </div>
                                                                         </div>
                                                                     </label>
                                                                 @endif
                                                             </div>
-                                                            <img src="{{ asset('cash-on-delivery.png') }}"
-                                                                alt="cash" width="30" height="30">
+                                                            <img src="{{ asset('cash-on-delivery.png') }}" alt="cash" width="30" height="30">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="card mt-2">
                                                     <div class="card-body">
                                                         <div class="d-flex">
-                                                            <strong class="flex-grow-1">Gunakan
-                                                                Limit/Kupon</strong>
+                                                            <strong class="flex-grow-1">Gunakan Limit/Kupon</strong>
                                                             <div class="custom-control custom-switch">
-                                                                <input type="checkbox" class="custom-control-input"
-                                                                    id="customSwitch2">
-                                                                <label class="custom-control-label cursor"
-                                                                    for="customSwitch2"></label>
+                                                                <input type="checkbox" class="custom-control-input" id="customSwitch2">
+                                                                <label class="custom-control-label cursor" for="customSwitch2"></label>
                                                             </div>
                                                         </div>
                                                         <div id="hide-limit" class="d-none">
-                                                            <div class="d-flex align-items-center mt-2 choose"
-                                                                style="border-bottom: 1px solid rgba(0,0,0,.125);">
-                                                                <div class="flex-grow-1 custom-control custom-radio custom-control-inline"
-                                                                    style="width:100%;">
+                                                            <div class="d-flex align-items-center mt-2 choose" style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                                                                <div class="flex-grow-1 custom-control custom-radio custom-control-inline" style="width:100%;">
                                                                     @if (count($package_default) == 1)
                                                                         @if ($log_limit->quota_kupon != 0)
-                                                                            <input type="radio"
-                                                                                id="customRadioInline6"
-                                                                                name="payment-type[]" value="kupon"
-                                                                                class="custom-control-input">
-                                                                            <label class="custom-control-label"
-                                                                                for="customRadioInline6"
-                                                                                style="width: 100%; cursor:pointer;">
-                                                                                <div
-                                                                                    class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                            <input type="radio" id="customRadioInline6" name="payment-type[]" value="kupon" class="custom-control-input">
+                                                                            <label class="custom-control-label" for="customRadioInline6" style="width: 100%; cursor:pointer;">
+                                                                                <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                                     <strong>Kupon</strong>
-                                                                                    <div
-                                                                                        class="message-limit d-flex flex-column">
-                                                                                        <small class="text-muted">Kupon
-                                                                                            otomatis akan
-                                                                                            berkurang</small>
-                                                                                        <small
-                                                                                            class="text-muted mb-2">Kupon
-                                                                                            berlaku hanya
-                                                                                            untuk 1 game</small>
+                                                                                    <div class="message-limit d-flex flex-column">
+                                                                                        <small class="text-muted">Kupon otomatis akan berkurang</small>
+                                                                                        <small class="text-muted mb-2">Kupon berlaku hanya untuk 1 game</small>
                                                                                     </div>
                                                                                 </div>
                                                                             </label>
                                                                         @else
-                                                                            <input type="radio"
-                                                                                id="customRadioInline6"
-                                                                                class="custom-control-input" disabled>
-                                                                            <label class="custom-control-label"
-                                                                                for="customRadioInline6"
-                                                                                style="width: 100%; cursor:no-drop;">
-                                                                                <div
-                                                                                    class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                            <input type="radio" id="customRadioInline6" name="payment-type[]" value="kupon" class="custom-control-input" disabled>
+                                                                            <label class="custom-control-label" for="customRadioInline6" style="width: 100%; cursor:no-drop;">
+                                                                                <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                                     <strong>Kupon</strong>
-                                                                                    <small class="text-muted"><i>Tidak
-                                                                                            ada
-                                                                                            kupon</i></small>
+                                                                                    <small class="text-muted"><i>Tidak ada kupon</i></small>
                                                                                 </div>
                                                                             </label>
                                                                         @endif
                                                                     @else
-                                                                        <input type="radio" id="customRadioInline6"
-                                                                            class="custom-control-input" disabled>
-                                                                        <label class="custom-control-label"
-                                                                            for="customRadioInline6"
-                                                                            style="width: 100%; cursor:no-drop;">
-                                                                            <div
-                                                                                class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                        <input type="radio" id="customRadioInline6" name="payment-type[]" value="kupon" class="custom-control-input" disabled>
+                                                                        <label class="custom-control-label" for="customRadioInline6" style="width: 100%; cursor:no-drop;">
+                                                                            <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                                 <strong>Kupon</strong>
-                                                                                <small class="text-muted"><i>Kupon
-                                                                                        hanya berlaku satu jenis
-                                                                                        permainan</i></small>
+                                                                                <small class="text-muted"><i>Kupon hanya berlaku satu jenis permainan</i></small>
                                                                             </div>
                                                                         </label>
                                                                     @endif
                                                                 </div>
-                                                                <img src="{{ asset('coupon.png') }}" alt="cash"
-                                                                    width="30" height="30">
+                                                                <img src="{{ asset('coupon.png') }}" alt="cash" width="30" height="30">
                                                             </div>
-                                                            <div class="d-flex align-items-center mt-2 choose"
-                                                                style="border-bottom: 1px solid rgba(0,0,0,.125);">
-                                                                <div class="flex-grow-1 custom-control custom-radio custom-control-inline"
-                                                                    style="width:100%;">
+                                                            <div class="d-flex align-items-center mt-2 choose" style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                                                                <div class="flex-grow-1 custom-control custom-radio custom-control-inline" style="width:100%;">
                                                                     @if (count($package_default) == 1)
                                                                         @if ($log_limit->quota != 0)
-                                                                            <input type="radio"
-                                                                                id="customRadioInline5"
-                                                                                name="payment-type[]" value="limit"
-                                                                                class="custom-control-input">
-                                                                            <label class="custom-control-label"
-                                                                                for="customRadioInline5"
-                                                                                style="width: 100%; cursor:pointer;">
-                                                                                <div
-                                                                                    class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                            <input type="radio" id="customRadioInline5" name="payment-type[]" value="limit" class="custom-control-input">
+                                                                            <label class="custom-control-label" for="customRadioInline5" style="width: 100%; cursor:pointer;">
+                                                                                <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                                     <strong>Limit</strong>
-                                                                                    <div
-                                                                                        class="message-kupon d-flex flex-column">
-                                                                                        <small class="text-muted">Kupon
-                                                                                            otomatis akan
-                                                                                            berkurang</small>
-                                                                                        <small
-                                                                                            class="text-muted mb-2">Kupon
-                                                                                            berlaku hanya
-                                                                                            untuk 1 game</small>
+                                                                                    <div class="message-kupon d-flex flex-column">
+                                                                                        <small class="text-muted">Limit otomatis akan berkurang</small>
+                                                                                        <small class="text-muted mb-2">Limit berlaku hanya untuk 1 game</small>
                                                                                     </div>
                                                                                 </div>
                                                                             </label>
                                                                         @else
-                                                                            <input type="radio"
-                                                                                id="customRadioInline5"
-                                                                                class="custom-control-input" disabled>
-                                                                            <label class="custom-control-label"
-                                                                                for="customRadioInline5"
-                                                                                style="width: 100%; cursor:no-drop;">
-                                                                                <div
-                                                                                    class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                            <input type="radio" id="customRadioInline5" name="payment-type[]" value="limit" class="custom-control-input" disabled>
+                                                                            <label class="custom-control-label" for="customRadioInline5" style="width: 100%; cursor:no-drop;">
+                                                                                <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                                     <strong>Limit</strong>
-                                                                                    <div
-                                                                                        class="message-kupon d-flex flex-column">
-                                                                                        <small class="text-muted"><i>Tidak
-                                                                                                ada limit</i></small>
+                                                                                    <div class="message-kupon d-flex flex-column">
+                                                                                        <small class="text-muted"><i>Tidak ada limit</i></small>
                                                                                     </div>
                                                                                 </div>
                                                                             </label>
                                                                         @endif
                                                                     @else
-                                                                        <input type="radio" id="customRadioInline5"
-                                                                            class="custom-control-input" disabled>
-                                                                        <label class="custom-control-label"
-                                                                            for="customRadioInline5"
-                                                                            style="width: 100%; cursor:no-drop;">
-                                                                            <div
-                                                                                class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                        <input type="radio" id="customRadioInline5" name="payment-type[]" value="limit" class="custom-control-input" disabled>
+                                                                        <label class="custom-control-label" for="customRadioInline5" style="width: 100%; cursor:no-drop;">
+                                                                            <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                                 <strong>Limit</strong>
-                                                                                <div
-                                                                                    class="message-kupon d-flex flex-column">
-                                                                                    <small class="text-muted"><i>Limit
-                                                                                            hanya berlaku satu
-                                                                                            jenis permainan</i></small>
+                                                                                <div class="message-kupon d-flex flex-column">
+                                                                                    <small class="text-muted"><i>Limit hanya berlaku satu jenis permainan</i></small>
                                                                                 </div>
                                                                             </div>
                                                                         </label>
                                                                     @endif
                                                                 </div>
-                                                                <img src="{{ asset('credit-limit.png') }}"
-                                                                    alt="cash" width="30" height="30">
+                                                                <img src="{{ asset('credit-limit.png') }}" alt="cash" width="30" height="30">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -885,9 +669,7 @@
                                                 <div class="card-body">
                                                     <div class="d-flex">
                                                         <span class="flex-grow-1">Total tagihan</span>
-                                                        <span class="nilai-total1-td green"
-                                                            data-total="{{ $totalPrice }}">Rp.
-                                                            {{ formatrupiah($totalPrice) }}</span>
+                                                        <span class="nilai-total1-td green" data-total="{{ $totalPrice }}">Rp. {{ formatrupiah($totalPrice) }}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -921,8 +703,7 @@
                                         <div class="d-flex flex-column">
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Invoice</span>
-                                                <span style="font-size: small;"
-                                                    id="order-number">#{{ $order_number }}</span>
+                                                <span style="font-size: small;" id="order-number">#{{ $order_number }}</span>
                                             </div>
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Tamu</span>
@@ -945,8 +726,7 @@
                                             <div class="items-default">
                                                 @foreach ($orders as $cart)
                                                     <div class="d-flex">
-                                                        <span class="flex-grow-1">{{ $cart['name'] }} x
-                                                            {{ $cart['qty'] }}</span>
+                                                        <span class="flex-grow-1">{{ $cart['name'] }} {{ $cart['category'] == 'default' ? '| game' : '' }} x {{ $cart['qty'] }}</span>
                                                         <small>Rp. {{ formatrupiah($cart['price']) }}</small>
                                                     </div>
                                                 @endforeach
@@ -961,6 +741,7 @@
                                         <div id="summary"></div>
                                     </div>
                                 </div> --}}
+                                <div class="discount"></div>
                                 <div class="card mt-2 remaining d-none">
                                     <div class="card-body">
                                         <div class="d-flex">
@@ -977,9 +758,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="discount"></div>
-                                <button type="button" id="pay"
-                                    class="btn btn-sm btn-success btn-block mt-2">Bayar</button>
+                                <div class="d-flex justify-content-between">
+                                    <a href="{{ URL::signedRoute('order.cart', ['id' => $visitor->id]) }}" class="btn btn-primary btn-sm mt-2">Kembali</a>
+                                    <button type="submit" id="pay" class="btn btn-sm btn-success mt-2">Bayar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -993,16 +775,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
     <script src="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.js') }}"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.min.js') }}"></script>
     <script>
         function deleteCharacter() {
+            dlt();
             let currentValue = $('.inputDisplay').val();
             $('.inputDisplay').val(currentValue.substring(0, currentValue.length - 1));
         }
 
         function insertCharacter(char) {
+            click();
             let currentValue = $('.inputDisplay').val();
             let length = currentValue.length;
             let flag = false;
@@ -1023,10 +806,12 @@
         }
 
         function clearInput() {
+            dlt();
             $('.inputDisplay').val('');
         }
 
         function result() {
+            dlt();
             let currentValue = $('.inputDisplay').val();
             let length = currentValue.length;
             let flag = false;
@@ -1038,6 +823,54 @@
             else
                 $('.inputDisplay').val(eval($('.inputDisplay').val()));
         }
+
+        function add() {
+            var audio = new Audio('../sound/add.mp3');
+            audio.play();
+        }
+
+        function beep() {
+            var audio = new Audio('../sound/beep.mp3');
+            audio.play();
+        }
+        function click() {
+            var audio = new Audio('../sound/click.mp3');
+            audio.play();
+        }
+
+        function dlt() {
+            var audio = new Audio('../sound/remove.mp3');
+            audio.play();
+        }
+
+        function rst() {
+            var audio = new Audio('../sound/reset.mp3');
+            audio.play();
+        }
+
+        function sword() {
+            var audio = new Audio('../sound/sword.mp3');
+            audio.play();
+        }
+
+        function bell() {
+            var audio = new Audio('../sound/bell.mp3');
+            audio.play();
+        }
+
+        function remaining() {
+            var audio = new Audio('../sound/remaining.mp3');
+            audio.play();
+        }
+
+        // function cal(price) {
+        //     if ($('.bayar-input').val() == '') {
+        //         $('.bayar-input').val(price);
+        //     } else {
+        //         let result = parseInt($('.bayar-input').val());
+        //         $('.bayar-input').val(result + price);
+        //     }
+        // }
         
         $(document).ready(function() {
             $("[data-toggle=popover]").popover({
@@ -1069,6 +902,7 @@
             $('input[type=radio][name=payment]').on('change', function() {
                 switch ($(this).val()) {
                     case 'single':
+                        click();
                         $("input[name='payment-type[]']").prop('checked', false);
                         $('#single').show();
                         $('#multiple').hide().addClass('d-none');
@@ -1077,8 +911,10 @@
                         $('.items-replace').addClass('d-none');
                         $('.discount').hide();
                         $('.refund').addClass('d-none');
+                        $('.remaining').addClass('d-none');
                         break;
                     case 'multiple':
+                        click();
                         $('.discount').hide();
                         $('.refund').addClass('d-none');
                         $("input[name=payment-type]").prop('checked', false);
@@ -1096,12 +932,50 @@
             });
 
             $(document).on('change', '#customSwitch2', function(e) {
-                if ($(this).prop('checked')) {
+                click();
+                let data_bill = $('#customCheck8').data('bill');
+                let data_deposit = $('#customCheck8').data('deposit');
+                let price_single = $('.kmt').data('pricesingle');
+                let type_multiple = $('input[name="payment-type[]"]:checked')
+                    .map(function() {
+                        return $(this).val();
+                    }).get();
+                let minus_deposit = data_bill - data_deposit;
+                let discount = '';
+
+                if ($(this).is(':checked')) {
                     $('#hide-limit').removeClass('d-none');
                 } else {
+                    $("#customRadioInline5").prop('checked', false);
+                    $("#customRadioInline6").prop("checked", false);
+                    if(type_multiple.length == 1) {
+                        type_multiple.splice(0,1);
+                        $('.discount').hide();
+                        $('.remaining').addClass('d-none');
+                        $('#remaining').text('Rp. 0');
+                    } else if (type_multiple.length == 2) {
+                        type_multiple.splice(1,1);
+                        $('.discount').hide();
+                        if(type_multiple[0] == 'deposit') {
+                            $('.bayar-input').val('');
+                            $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
+                            $('.nilai-total1-td').data('total', data_bill);
+                            $('#remaining').text('Rp. ' + formatIDR(data_bill - data_deposit));
+                        } else if (type_multiple[0] == 'cash/transfer') {
+                            $('#remaining').text('Rp. 0');
+                            $('.bayar-input').val(data_bill);
+                            $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
+                            $('.nilai-total1-td').data('total', data_bill);
+                        }
+                    } else if (type_multiple.length == 3) {
+                        type_multiple.splice(2,1);
+                        $('.discount').hide();
+                        $('.bayar-input').val(data_bill - data_deposit);
+                        $('#remaining').text('Rp. 0');
+                        $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
+                        $('.nilai-total1-td').data('total', data_bill);
+                    }
                     $('#hide-limit').addClass('d-none');
-                    $("#customRadioInline6").prop('checked', false).val(null);
-                    $("#customRadioInline5").prop('checked', false).val(null);
                 }
             });
 
@@ -1110,7 +984,10 @@
                 let total = $('.nilai-total1-td').data('total');
                 let return_pay = parseInt($(this).val()) - parseInt(total);
                 let remaining = parseInt(total) - parseInt($(this).val());
+                let split = $('.nilai-total1-td').data('split') - parseInt($(this).val());
+                let return_split = parseInt($(this).val()) - $('.nilai-total1-td').data('split');
                 let data_deposit = $('#customCheck8').data('deposit');
+                let price_single = $('.kmt').data('pricesingle');
                 let type_multiple = $('input[name="payment-type[]"]:checked')
                     .map(function() {
                         return $(this).val();
@@ -1141,62 +1018,149 @@
                 } else {
                     if(data_deposit < total) {
                         let minus_deposit = total - data_deposit;
-                        if (type_multiple[0] == 'cash/transfer') {
-                            if ($(this).val() < total) {
-                                if ($(this).val() == '') {
-                                    $(this).removeClass('is-invalid');
-                                    $('#return').text('-').css({
-                                        "background-color": "rgba(25, 216, 149, 0.2)",
-                                        "color": "#19d895"
-                                    }).data('refund', return_pay);
-                                    $('#remaining').text('Rp. ' + formatIDR(remaining));
+                        if(type_multiple.length == 1) {
+                            if (type_multiple[0] == 'cash/transfer') {
+                                if ($(this).val() < total) {
+                                    if ($(this).val() == '') {
+                                        $(this).removeClass('is-invalid');
+                                        $('#return').text('-').css({
+                                            "background-color": "rgba(25, 216, 149, 0.2)",
+                                            "color": "#19d895"
+                                        }).data('refund', return_pay);
+                                        $('#remaining').text('Rp. ' + formatIDR(total));
+                                        $('#return').text('-')
+                                    } else {
+                                        $(this).addClass('is-invalid');
+                                        $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                                            "background-color": "rgba(216, 25, 25, 0.2)",
+                                            "color": "#d81c19d1"
+                                        }).data('refund', return_pay);
+                                        $('#remaining').text('Rp. ' + formatIDR(remaining));
+                                    }
                                 } else {
-                                    $(this).addClass('is-invalid');
+                                    $(this).removeClass('is-invalid');
                                     $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
-                                        "background-color": "rgba(216, 25, 25, 0.2)",
-                                        "color": "#d81c19d1"
+                                        "background-color": "rgba(25, 216, 149, 0.2)",
+                                        "color": "#19d895"
                                     }).data('refund', return_pay);
-                                    $('#remaining').text('Rp. ' + formatIDR(remaining));
+                                    $('#remaining').text('Rp. ' +0);
                                 }
-                            } else {
-                                $(this).removeClass('is-invalid');
-                                $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
-                                    "background-color": "rgba(25, 216, 149, 0.2)",
-                                    "color": "#19d895"
-                                }).data('refund', return_pay);
-                                $('#remaining').text('Rp. ' +0);
                             }
-                        } else if (type_multiple[1] == 'cash/transfer') {
-                            if ($(this).val() < minus_deposit) {
-                                if ($(this).val() == '') {
+                        } else if (type_multiple.length == 2 ) {
+                            if (type_multiple[0] == 'cash/transfer') {
+                                if ($(this).val() < $('.nilai-total1-td').data('split')) {
+                                    if ($(this).val() == '') {
+                                        $(this).removeClass('is-invalid');
+                                        $('#return').text('-').css({
+                                            "background-color": "rgba(25, 216, 149, 0.2)",
+                                            "color": "#19d895"
+                                        }).data('refund', return_split);
+                                        $('#remaining').text('Rp. ' + formatIDR($('.nilai-total1-td').data('split')));
+                                        $('#return').text('-')
+                                    } else {
+                                        $(this).addClass('is-invalid');
+                                        $('#return').text(' Rp. ' + formatIDR(return_split) + ',00').css({
+                                            "background-color": "rgba(216, 25, 25, 0.2)",
+                                            "color": "#d81c19d1"
+                                        }).data('refund', return_split);
+                                        $('#remaining').text('Rp. ' + formatIDR(split));
+                                    }
+                                } else {
                                     $(this).removeClass('is-invalid');
-                                    $('#return').text('-').css({
+                                    $('#return').text(' Rp. ' + formatIDR(return_split) + ',00').css({
+                                        "background-color": "rgba(25, 216, 149, 0.2)",
+                                        "color": "#19d895"
+                                    }).data('refund', return_split);
+                                    $('#remaining').text('Rp. ' +0);
+                                }
+                            } else if (type_multiple[1] == 'cash/transfer') {
+                                if ($(this).val() < minus_deposit) {
+                                    if ($(this).val() == '') {
+                                        $(this).removeClass('is-invalid');
+                                        $('#return').text('-').css({
+                                            "background-color": "rgba(25, 216, 149, 0.2)",
+                                            "color": "#19d895"
+                                        }).data('refund', parseInt($(this).val()) - minus_deposit);
+                                        $('#remaining').text('Rp. ' + formatIDR(minus_deposit));
+                                    } else {
+                                        $(this).addClass('is-invalid');
+                                        $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - minus_deposit) + ',00').css({
+                                            "background-color": "rgba(216, 25, 25, 0.2)",
+                                            "color": "#d81c19d1"
+                                        }).data('refund', parseInt($(this).val()) - minus_deposit);
+                                        $('#remaining').text('Rp. ' + formatIDR(parseInt(minus_deposit) - parseInt($(this).val())));
+                                    }
+                                } else {
+                                    $(this).removeClass('is-invalid');
+                                    $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - minus_deposit) + ',00').css({
                                         "background-color": "rgba(25, 216, 149, 0.2)",
                                         "color": "#19d895"
                                     }).data('refund', parseInt($(this).val()) - minus_deposit);
-                                    $('#remaining').text('Rp. ' + formatIDR(parseInt(minus_deposit) - parseInt($(this).val())));
-                                } else {
-                                    $(this).addClass('is-invalid');
-                                    $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - minus_deposit) + ',00').css({
-                                        "background-color": "rgba(216, 25, 25, 0.2)",
-                                        "color": "#d81c19d1"
-                                    }).data('refund', parseInt($(this).val()) - minus_deposit);
-                                    $('#remaining').text('Rp. ' + formatIDR(parseInt(minus_deposit) - parseInt($(this).val())));
+                                    $('#remaining').text(0);
                                 }
-                            } else {
-                                $(this).removeClass('is-invalid');
-                                $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - minus_deposit) + ',00').css({
-                                    "background-color": "rgba(25, 216, 149, 0.2)",
-                                    "color": "#19d895"
-                                }).data('refund', parseInt($(this).val()) - minus_deposit);
-                                $('#remaining').text('Rp. ' +0);
+                            }
+                        } else if (type_multiple.length == 3) {
+                            if (type_multiple[1] == 'cash/transfer') {
+                                if ($(this).val() < (total - data_deposit)) {
+                                    if ($(this).val() == '') {
+                                        $(this).removeClass('is-invalid');
+                                        $('#return').text('-').css({
+                                            "background-color": "rgba(25, 216, 149, 0.2)",
+                                            "color": "#19d895"
+                                        }).data('refund', parseInt($(this).val()) - (total - data_deposit));
+                                        $('#remaining').text('Rp. ' + formatIDR(total - data_deposit));
+                                    } else {
+                                        $(this).addClass('is-invalid');
+                                        $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - (total - data_deposit)) + ',00').css({
+                                            "background-color": "rgba(216, 25, 25, 0.2)",
+                                            "color": "#d81c19d1"
+                                        }).data('refund', parseInt($(this).val()) - (total - data_deposit));
+                                        $('#remaining').text('Rp. ' + formatIDR(parseInt(total - data_deposit) - parseInt($(this).val())));
+                                    }
+                                } else {
+                                    $(this).removeClass('is-invalid');
+                                    $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - (total - data_deposit)) + ',00').css({
+                                        "background-color": "rgba(25, 216, 149, 0.2)",
+                                        "color": "#19d895"
+                                    }).data('refund', parseInt($(this).val()) - (total - data_deposit));
+                                    $('#remaining').text('Rp. ' +0);
+                                }
                             }
                         }
+                    } else {
+                        if (type_multiple[0] == 'cash/transfer') {
+                                if ($(this).val() < total) {
+                                    if ($(this).val() == '') {
+                                        $(this).removeClass('is-invalid');
+                                        $('#return').text('-').css({
+                                            "background-color": "rgba(25, 216, 149, 0.2)",
+                                            "color": "#19d895"
+                                        }).data('refund', return_pay);
+                                        $('#remaining').text('Rp. ' + formatIDR(total));
+                                        $('#return').text('0')
+                                    } else {
+                                        $(this).addClass('is-invalid');
+                                        $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                                            "background-color": "rgba(216, 25, 25, 0.2)",
+                                            "color": "#d81c19d1"
+                                        }).data('refund', return_pay);
+                                        $('#remaining').text('Rp. ' + formatIDR(remaining));
+                                    }
+                                } else {
+                                    $(this).removeClass('is-invalid');
+                                    $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                                        "background-color": "rgba(25, 216, 149, 0.2)",
+                                        "color": "#19d895"
+                                    }).data('refund', return_pay);
+                                    $('#remaining').text('Rp. ' +0);
+                                }
+                            }
                     }
                 }
             });
 
             $(document).on('change', 'input[name="payment-type[]"]', function(e) {
+                click();
                 let data_bill = $('#customCheck8').data('bill');
                 let data_deposit = $('#customCheck8').data('deposit');
                 let price_single = $('.kmt').data('pricesingle');
@@ -1215,115 +1179,319 @@
                     if(data_deposit < data_bill) {
                         if(type_multiple.length == 1) {
                             if (type_multiple[0] == 'deposit') {
+                                $.toast({
+                                    text: 'Deposit ditambahkan',
+                                    position: 'top-right',
+                                    loaderBg: '#fec107',
+                                    icon: 'success',
+                                    hideAfter: 700,
+                                });
                                 $('#remaining').text('Rp. ' + formatIDR(minus_deposit));
                             } else if (type_multiple[0] == 'cash/transfer') {
-                                $('#cashtransfer').html(
-                                    `<div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">Rp.</div>
-                                        </div>
-                                        <input type="text" min="0"
-                                            onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                            class="form-control number-input input-notzero bayar-input"
-                                            name="bayar" placeholder="Masukkan nominal bayar"
-                                            autocomplete="off">
-                                    </div>`
-                                ).show().prev().removeClass('mb-2');
+                                $.toast({
+                                    text: 'Cash/transfer ditambahkan',
+                                    position: 'top-right',
+                                    loaderBg: '#fec107',
+                                    icon: 'success',
+                                    hideAfter: 700,
+                                });
+
                                 $('.refund').removeClass('d-none');
                                 $('#return').addClass('green').text(0);
                                 $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
                                 $('.bayar-input').val(data_bill);
                                 $('#remaining').text('Rp. ' + 0);
+                            } else if (type_multiple[0] == 'kupon' || type_multiple[0] == 'limit') {
+                                $.toast({
+                                    text: 'Kupon/limit ditambahkan',
+                                    position: 'top-right',
+                                    loaderBg: '#fec107',
+                                    icon: 'success',
+                                    hideAfter: 700,
+                                });
+                                
+                                discount += `<div class="card mt-2">
+                                        <div class="card-body">
+                                            <div class="d-flex flex-column">
+                                                <div class="d-flex">
+                                                    <span class="flex-grow-1">Diskon</span>
+                                                    <span>Rp. ${formatIDR(price_single)},00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                                    $('.discount').html(discount).show();
+
+                                $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill - price_single) + ',00');
+                                $('#remaining').text('Rp. ' + formatIDR(data_bill - price_single) + ',00');
                             }
                         } else if (type_multiple.length == 2) {
-                            if (type_multiple[1] == 'cash/transfer') {
-                                $('#cashtransfer').html(
-                                    `<div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">Rp.</div>
+                            if (type_multiple[0] == 'deposit') {
+                                if (type_multiple[1] == 'cash/transfer') {
+                                    $.toast({
+                                        text: 'Cash/transfer ditambahkan',
+                                        position: 'top-right',
+                                        loaderBg: '#fec107',
+                                        icon: 'success',
+                                        hideAfter: 700,
+                                    });
+
+                                    $('.refund').removeClass('d-none');
+                                    $('#return').addClass('green').text(0);
+                                    $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
+                                    $('.bayar-input').val(minus_deposit);
+                                    $('#remaining').text('Rp. ' + formatIDR(minus_deposit - minus_deposit));
+                                } else if (type_multiple[1] == 'kupon' || type_multiple[1] == 'limit') {
+                                    if (((data_bill - price_single) - data_deposit) < price_single) {
+                                        type_multiple.splice(0,1)
+                                        $("#customRadioInline6").prop("checked", false);
+                                        $("#customRadioInline5").prop('checked', false);
+                                        sword();
+                                        swal({
+                                            title: "",
+                                            type: "error",
+                                            text: 'Harga satuan limit/kupon tidak terpenuhi',
+                                            confirmButtonColor: "#01c853",
+                                        });
+                                        return false;
+                                    } else {
+                                        $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill - price_single) + ',00');
+                                        $('.nilai-total1-td').data('total', data_bill - price_single);
+                                        $('#remaining').text('Rp. ' + formatIDR((data_bill - price_single) - data_deposit));
+                                        $('.bayar-input').val((data_bill - price_single) - data_deposit);
+                                        discount += `<div class="card mt-2">
+                                            <div class="card-body">
+                                                <div class="d-flex flex-column">
+                                                    <div class="d-flex">
+                                                        <span class="flex-grow-1">Diskon</span>
+                                                        <span>Rp. ${formatIDR(price_single)},00</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>`;
+                                        $('.discount').html(discount).show();
+    
+                                        if((data_bill - price_single) > data_deposit) {
+                                            remaining();
+                                            swal({
+                                                title: "",
+                                                type: "error",
+                                                text: "Gunakan cash/transfer untuk sisa pembayaran",
+                                                confirmButtonColor: "#01c853",
+                                            });
+                                            return false;
+                                        }
+                                    }
+                                }
+                            } else if (type_multiple[0] == 'cash/transfer') {
+                                if (type_multiple[1] == 'kupon') {
+                                    $.toast({
+                                        text: 'Kupon ditambahkan',
+                                        position: 'top-right',
+                                        loaderBg: '#fec107',
+                                        icon: 'success',
+                                        hideAfter: 700,
+                                    });
+                                    $('#kupon').text($('#kupon').data('kupon') - 1);
+
+                                    discount += `<div class="card mt-2">
+                                        <div class="card-body">
+                                            <div class="d-flex flex-column">
+                                                <div class="d-flex">
+                                                    <span class="flex-grow-1">Diskon</span>
+                                                    <span>Rp. ${formatIDR(price_single)},00</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <input type="text" min="0"
-                                            onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                            class="form-control number-input input-notzero bayar-input"
-                                            name="bayar" placeholder="Masukkan nominal bayar"
-                                            autocomplete="off">
-                                    </div>`
-                                ).show().prev().removeClass('mb-2');
+                                    </div>`;
+                                    $('.refund').removeClass('d-none');
+                                    $('.discount').html(discount).show();
+                                    $('.bayar-input').val(data_bill - price_single);
+                                    $('#return').addClass('green').text(0);
+                                    $('#remaining').text('Rp. 0');
+                                    $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill - price_single) + ',00');
+                                    $('.nilai-total1-td').data('split', data_bill - price_single);
+                                } else if (type_multiple[1] == 'limit') {
+                                    $('#limit').text($('#limit').data('limit') - 1);
+                                    $.toast({
+                                        text: 'Limit ditambahkan',
+                                        position: 'top-right',
+                                        loaderBg: '#fec107',
+                                        icon: 'success',
+                                        hideAfter: 700,
+                                    });
+
+                                    discount += `<div class="card mt-2">
+                                        <div class="card-body">
+                                            <div class="d-flex flex-column">
+                                                <div class="d-flex">
+                                                    <span class="flex-grow-1">Diskon</span>
+                                                    <span>Rp. ${formatIDR(price_single)},00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                                    $('.discount').html(discount).show();
+
+                                    $('.bayar-input').val(data_bill - price_single);
+                                    $('#return').addClass('green').text(0);
+                                    $('#remaining').text('Rp. 0');
+                                    $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill - price_single) + ',00');
+                                    $('.nilai-total1-td').data('split', data_bill - price_single);
+                                }
+                            }
+                        } else if (type_multiple.length == 3) {
+                            if (type_multiple[2] == 'kupon' || type_multiple[2] == 'limit') {
+                                if (((data_bill - price_single) - data_deposit) < price_single) {
+                                    type_multiple.splice(0,1)
+                                    $("#customRadioInline6").prop("checked", false);
+                                    $("#customRadioInline5").prop('checked', false);
+                                    sword();
+                                    swal({
+                                        title: "",
+                                        type: "error",
+                                        text: 'Harga satuan limit/kupon tidak terpenuhi',
+                                        confirmButtonColor: "#01c853",
+                                    });
+                                    return false;
+                                } else {
+                                    $('.refund').removeClass('d-none');
+                                    $('#return').addClass('green').text(0);
+                                    $('.bayar-input').val((data_bill - price_single) - data_deposit);
+                                    $('.nilai-total1-td').data('total', data_bill - price_single);
+                                    $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill - price_single) + ',00');
+                                    discount += `<div class="card mt-2">
+                                            <div class="card-body">
+                                                <div class="d-flex flex-column">
+                                                    <div class="d-flex">
+                                                        <span class="flex-grow-1">Diskon</span>
+                                                        <span>Rp. ${formatIDR(price_single)},00</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>`;
+                                        $('.discount').html(discount).show();
+                                    $.toast({
+                                        text: 'Kupon/limit ditambahkan',
+                                        position: 'top-right',
+                                        loaderBg: '#fec107',
+                                        icon: 'success',
+                                        hideAfter: 700,
+                                    });
+                                    $('#remaining').text('Rp. 0');
+                                }
+                            }
+                        }
+                    } else {
+                        if(type_multiple.length == 1) {
+                            if (type_multiple[0] == 'deposit') {
+                                $.toast({
+                                    text: 'Deposit ditambahkan',
+                                    position: 'top-right',
+                                    loaderBg: '#fec107',
+                                    icon: 'success',
+                                    hideAfter: 700,
+                                });
+                                $('#balance').text(formatIDR($('#balance').data('balance') - data_bill));
+                                $('#remaining').text('Rp. 0');
+                            } else if (type_multiple[0] == 'cash/transfer') {
+                                $.toast({
+                                    text: 'Cash/transfer ditambahkan',
+                                    position: 'top-right',
+                                    loaderBg: '#fec107',
+                                    icon: 'success',
+                                    hideAfter: 700,
+                                });
                                 $('.refund').removeClass('d-none');
                                 $('#return').addClass('green').text(0);
                                 $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
-                                $('.bayar-input').val(minus_deposit);
-                                $('#remaining').text('Rp. ' + formatIDR(minus_deposit - minus_deposit));
+                                $('.bayar-input').val(data_bill);
+                                $('#remaining').text('Rp. ' + 0);
+                            } else if (type_multiple[0] == 'kupon' || type_multiple[0] == 'limit') {
+                                $.toast({
+                                    text: 'Kupon/limit ditambahkan',
+                                    position: 'top-right',
+                                    loaderBg: '#fec107',
+                                    icon: 'success',
+                                    hideAfter: 700,
+                                });
+                                
+                                discount += `<div class="card mt-2">
+                                        <div class="card-body">
+                                            <div class="d-flex flex-column">
+                                                <div class="d-flex">
+                                                    <span class="flex-grow-1">Diskon</span>
+                                                    <span>Rp. ${formatIDR(price_single)},00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                                    $('.discount').html(discount).show();
+
+                                $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill - price_single) + ',00');
+                                $('#remaining').text('Rp. ' + formatIDR(data_bill - price_single) + ',00');
                             }
                         }
-                        if ((type_multiple[0] == 'kupon') || (type_multiple[2] == 'kupon')) {
-                            discount += `<div class="card mt-2">
-                                        <div class="card-body">
-                                            <div class="d-flex flex-column">
-                                                <div class="d-flex">
-                                                    <span class="flex-grow-1">Diskon</span>
-                                                    <span>Rp. ${formatIDR(price_single)},00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>`;
-                                    $('.discount').html(discount).show();
-    
-                        } else if ((type_multiple[0] == 'limit') || (type_multiple[2] == 'limit')) {
-                            discount += `<div class="card mt-2">
-                                        <div class="card-body">
-                                            <div class="d-flex flex-column">
-                                                <div class="d-flex">
-                                                    <span class="flex-grow-1">Diskon</span>
-                                                    <span>Rp. ${formatIDR(price_single)},00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>`;
-                                    $('.discount').html(discount).show();
-                        } 
                     }
                 } else {
-                    if(type_multiple.length == 0){
+                    if(type_multiple.length == 0) {
                         $('.remaining').addClass('d-none');
                         // $('.summary').addClass('d-none');
-                    }
-
-                    if(((type_multiple[0] == 'cash/transfer') || (type_multiple[1] == 'cash/transfer')) == false) {
-                        $('#cashtransfer').html(
-                                    `<div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">Rp.</div>
-                                        </div>
-                                        <input type="text" min="0"
-                                            onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                            class="form-control number-input input-notzero bayar-input"
-                                            name="bayar" placeholder="Masukkan nominal bayar"
-                                            autocomplete="off">
-                                    </div>`
-                        ).hide().prev().removeClass('mb-2');
-                        $('.refund').addClass('d-none');
-                        $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
-                        $('#remaining').text('Rp. ' + formatIDR(data_bill - data_deposit));
-                    } else if (((type_multiple[0] == 'limit') || (type_multiple[2] == 'limit')) == false) {
-                        discount += `<div class="card mt-2">
-                                    <div class="card-body">
-                                        <div class="d-flex flex-column">
-                                            <div class="d-flex">
-                                                <span class="flex-grow-1">Diskon</span>
-                                                <span>Rp. ${formatIDR(price_single)},00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>`;
-                                $('.discount').html(discount).hide();
-
+                        if ((type_multiple[0] == 'cash/transfer') == false) {
+                            $('.refund').addClass('d-none');
+                            $('.bayar-input').val('').removeClass('is-invalid');
+                            $('#return').text('-').css({
+                                            "background-color": "rgba(25, 216, 149, 0.2)",
+                                            "color": "#19d895"
+                                        }).data('refund', 0);
+                            $('#return').text('0')
+                        }
+                    } else if (type_multiple.length == 1) {
+                        if((type_multiple[0] == 'deposit') == false) {
+                            if(type_multiple[0] == 'cash/transfer') {
+                                $('.bayar-input').val(data_bill);
+                                $('#return').addClass('green').text('0');
+                                $('#remaining').text('Rp. 0');
+                            } else if (type_multiple[0] == 'kupon' || type_multiple[0] == 'limit') {
+                                $('#remaining').text('Rp. ' + formatIDR(data_bill - price_single));
+                                $('.refund').addClass('d-none');
+                                $('.bayar-input').val('').removeClass('is-invalid');
+                                $('#return').text('-').css({
+                                                "background-color": "rgba(25, 216, 149, 0.2)",
+                                                "color": "#19d895"
+                                            }).data('refund', 0);
+                                $('#return').text('0');
+                            }
+                        } else if (((type_multiple[0] || type_multiple[1]) == 'cash/transfer') == false) {
+                            $('.bayar-input').val('').removeClass('is-invalid');
+                            $('.refund').addClass('d-none');
+                            $('#remaining').text('Rp. ' + formatIDR(data_bill - data_deposit));
+                            $('#return').text('-').css({
+                                            "background-color": "rgba(25, 216, 149, 0.2)",
+                                            "color": "#19d895"
+                                        }).data('refund', 0);
+                            $('#return').text('0')
+                        } 
+                    } else if (type_multiple.length == 2) {
+                        if((type_multiple[0] == 'deposit') == false) {
+                            $('.bayar-input').val(data_bill - price_single);
+                            $('.nilai-total1-td').data('split', data_bill - price_single);
+                        } else if ((type_multiple[1] == 'cash/transfer') == false) {
+                            $('.bayar-input').val('').removeClass('is-invalid');
+                            $('.refund').addClass('d-none');
+                            $('#return').text('-').css({
+                                            "background-color": "rgba(25, 216, 149, 0.2)",
+                                            "color": "#19d895"
+                                        }).data('refund', 0);
+                            $('#remaining').text('Rp. ' + formatIDR((data_bill - price_single) - data_deposit));
+                        }
                     }
                 }
             });
 
             $(document).on('change', 'input[name="payment-type"]', function(e) {
                 e.preventDefault();
+                click();
                 let type_single = $(this).val();
                 let tg = window.location.href;
                 tg = tg.split("?")
@@ -1373,7 +1541,7 @@
                             if (type_single == 1) {
                                 $.each(response.orders, function(b, val) {
                                     html += `<div class="d-flex">
-                                                <span class="flex-grow-1">${val.name} x ${val.qty}</span>
+                                                <span class="flex-grow-1">${val.name} ${response.orders[b].category == 'default' ? '| game' : ''} x ${val.qty}</span>
                                                 <small>${response.orders[b].category == 'default' ? 'limit gratis' : 'Rp. ' + formatIDR(val.pricesingle) + ',00'}</small>
                                             </div>`;
                                     price_discount += val.pricesingle;
@@ -1394,15 +1562,13 @@
                                     </div>
                                 </div>`;
                                 $('.discount').html(discount).show();
-
-                                $('.nilai-total1-td').text('Rp. ' + formatIDR(response
-                                    .total_price - response
-                                    .price_default) + ',00');
+                                $('.nilai-total1-td').text('Rp. ' + formatIDR(response.total_price - response.price_default) + ',00');
 
                                 $('#return').text('-').addClass('green').css({
                                     "background-color": "rgba(25, 216, 149, 0.2)",
                                     "color": "#19d895"
                                 });
+
                                 $('#cash-transfer').html(
                                     `<div class="input-group">
                                         <div class="input-group-prepend">
@@ -1418,7 +1584,7 @@
                             } else if (type_single == 2) {
                                 $.each(response.orders, function(b, val) {
                                     html += `<div class="d-flex">
-                                                <span class="flex-grow-1">${val.name} x ${val.qty}</span>
+                                                <span class="flex-grow-1">${val.name} ${response.orders[b].category == 'default' ? '| game' : ''} x ${val.qty}</span>
                                                 <small>${response.orders[b].category == 'default' ? 'kupon gratis' : 'Rp. ' + formatIDR(val.pricesingle) + ',00'}</small>
                                             </div>`;
                                     price_discount += val.pricesingle;
@@ -1440,9 +1606,7 @@
                                 </div>`;
                                 $('.discount').html(discount).show();
 
-                                $('.nilai-total1-td').text('Rp. ' + formatIDR(response
-                                    .total_price - response
-                                    .price_default) + ',00');
+                                $('.nilai-total1-td').text('Rp. ' + formatIDR(response.total_price - response.price_default) + ',00');
 
                                 $('#return').text('-').addClass('green').css({
                                     "background-color": "rgba(25, 216, 149, 0.2)",
@@ -1471,9 +1635,7 @@
                                 $('.items-default').addClass('d-none');
                                 $('.discount').hide();
                                 $('.refund').addClass('d-none');
-
-                                $('.nilai-total1-td').text('Rp. ' + formatIDR(response
-                                    .total_price) + ',00');
+                                $('.nilai-total1-td').text('Rp. ' + formatIDR(response.total_price) + ',00');
 
                                 $('#return').text('-').addClass('green').css({
                                     "background-color": "rgba(25, 216, 149, 0.2)",
@@ -1520,9 +1682,9 @@
                                 $('.items-default').addClass('d-none');
                                 $('.discount').hide();
                                 $('.refund').removeClass('d-none');
-
-                                $('.nilai-total1-td').text('Rp. ' + formatIDR(response
-                                    .total_price) + ',00');
+                                $('#return').text('Rp. ' + 0);
+                                $('.bayar-input').val(response.total_price);
+                                $('.nilai-total1-td').text('Rp. ' + formatIDR(response.total_price) + ',00');
                             }
 
                             $.toast({
@@ -1554,6 +1716,7 @@
                     .map(function() {
                         return $(this).val();
                     }).get();
+                    console.log(type_multiple.length)
                 let order_number = $('#order-number').text();
                 let bayar_input = $('.bayar-input').val();
                 let refund = $('#return').data('refund');
@@ -1572,6 +1735,7 @@
 
                 if (type_multiple[0] == 'cash/transfer') {
                     if (!bayar_input) {
+                        sword();
                         swal({
                             title: "",
                             type: "error",
@@ -1582,6 +1746,7 @@
                     }
                 } else if (type_multiple[1] == 'cash/transfer') {
                     if (!bayar_input) {
+                        sword();
                         swal({
                             title: "",
                             type: "error",
@@ -1641,6 +1806,7 @@
                             success: function(response) {
                                 $.unblockUI();
                                 if (response.status == "VALID") {
+                                    bell();
                                     swal({
                                         title: '',
                                         type: "success",
@@ -1652,12 +1818,14 @@
                                         history.go(0);
                                     });
                                 } else {
+                                    sword();
                                     swal({
-                                        title: '',
+                                        title: "",
                                         type: "error",
                                         text: response.message,
                                         confirmButtonColor: "#01c853",
                                     });
+                                    return false;
                                 }
                             }
                         });

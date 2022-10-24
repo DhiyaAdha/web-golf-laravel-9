@@ -210,7 +210,8 @@ class OrderRegulerController extends Controller
                     'cart' => $cart_data,
                     'qty' => $cek_itemId[$request->get('id')]->quantity,
                     'name' => $cek_itemId[$request->get('id')]->name,
-                    'price' => $cek_itemId[$request->get('id')]->price
+                    'price' => $cek_itemId[$request->get('id')]->price,
+                    'status' => 'VALID'
                 ], 200);
             }
         }
@@ -289,7 +290,7 @@ class OrderRegulerController extends Controller
             'id' => $request->get('id'),
             'total' => $get_total,
             'counted' => $counted,
-            'cart' => $items,
+            'cart' => count($items),
         ], 200);
     }
 
@@ -309,6 +310,7 @@ class OrderRegulerController extends Controller
                 $cart_data = [];
             } else {
                 foreach ($items as $row) {
+                    $package = Package::find($row->id);
                     $cart[] = [
                         'rowId' => $row->id,
                         'name' => $row->name,
@@ -316,6 +318,7 @@ class OrderRegulerController extends Controller
                         'pricesingle' => $row->price,
                         'price' => $row->getPriceSum(),
                         'created_at' => $row->attributes['created_at'],
+                        'category' => $package->category
                     ];
                 }
                 $orders = collect($cart)->sortBy('created_at');

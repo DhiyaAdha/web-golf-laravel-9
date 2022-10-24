@@ -245,11 +245,20 @@
                                                                 <div class="input-group-prepend">
                                                                     <div class="input-group-text">Rp.</div>
                                                                 </div>
-                                                                <input type="text" min="0"
-                                                                    onkeypress="return event.charCode >= 48 && event.charCode <=57"
+                                                                <input type="number" value="{{ $totalPrice }}"
                                                                     class="form-control bayar-input" name="bayar"
                                                                     placeholder="Masukkan nominal bayar">
                                                             </div>
+                                                            {{-- <div class="d-flex flex-wrap justify-content-around mb-2 ">
+                                                                <input type="button" value="500" onclick="cal(500)" class="btn btn-sm btn-default">
+                                                                <input type="button" value="1000" onclick="cal(1000)" class="btn btn-sm btn-default">
+                                                                <input type="button" value="2000" onclick="cal(2000)" class="btn btn-sm btn-default">
+                                                                <input type="button" value="5000" onclick="cal(5000)" class="btn btn-sm btn-default">
+                                                                <input type="button" value="10000" onclick="cal(10000)" class="btn btn-sm btn-default">
+                                                                <input type="button" value="20000" onclick="cal(20000)" class="btn btn-sm btn-default">
+                                                                <input type="button" value="50000" onclick="cal(50000)" class="btn btn-sm btn-default">
+                                                                <input type="button" value="100000" onclick="cal(100000)" class="btn btn-sm btn-default">
+                                                            </div> --}}
                                                         </div>
                                                         <img src="{{ asset('cash-on-delivery.png') }}" alt="cash"
                                                             width="30" height="30">
@@ -260,7 +269,7 @@
                                                 <div class="card-body">
                                                     <div class="d-flex flex-column">
                                                         <span>Uang kembali</span>
-                                                        <span class="green" id="return">-</span>
+                                                        <span class="green" id="return">Rp. 0,00</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -330,8 +339,7 @@
                                             <div class="items-default">
                                                 @foreach ($orders as $cart)
                                                     <div class="d-flex">
-                                                        <span class="flex-grow-1">{{ $cart['name'] }} x
-                                                            {{ $cart['qty'] }}</span>
+                                                        <span class="flex-grow-1">{{ $cart['name'] }} {{ $cart['category'] == 'default' ? '| game' : '' }} x {{ $cart['qty'] }}</span>
                                                         <small>Rp. {{ formatrupiah($cart['price']) }}</small>
                                                     </div>
                                                 @endforeach
@@ -339,8 +347,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="button" id="pay"
-                                    class="btn btn-sm btn-success btn-block mt-2">Bayar</button>
+                                <div class="d-flex justify-content-between">
+                                    <a href="{{ route('proses_reguler') }}" class="btn btn-primary btn-sm mt-2">Kembali</a>
+                                    <button type="submit" id="pay" class="btn btn-sm btn-success mt-2">Bayar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -360,11 +370,13 @@
 
     <script>
         function deleteCharacter() {
+            dlt();
             let currentValue = $('.inputDisplay').val();
             $('.inputDisplay').val(currentValue.substring(0, currentValue.length - 1));
         }
 
         function insertCharacter(char) {
+            click();
             let currentValue = $('.inputDisplay').val();
             let length = currentValue.length;
             let flag = false;
@@ -385,10 +397,12 @@
         }
 
         function clearInput() {
+            dlt();
             $('.inputDisplay').val('');
         }
 
         function result() {
+            dlt();
             let currentValue = $('.inputDisplay').val();
             let length = currentValue.length;
             let flag = false;
@@ -400,6 +414,49 @@
             else
                 $('.inputDisplay').val(eval($('.inputDisplay').val()));
         }
+
+        function add() {
+            var audio = new Audio('../sound/add.mp3');
+            audio.play();
+        }
+
+        function beep() {
+            var audio = new Audio('../sound/beep.mp3');
+            audio.play();
+        }
+        function click() {
+            var audio = new Audio('../sound/click.mp3');
+            audio.play();
+        }
+
+        function dlt() {
+            var audio = new Audio('../sound/remove.mp3');
+            audio.play();
+        }
+
+        function rst() {
+            var audio = new Audio('../sound/reset.mp3');
+            audio.play();
+        }
+
+        function sword() {
+            var audio = new Audio('../sound/sword.mp3');
+            audio.play();
+        }
+
+        function bell() {
+            var audio = new Audio('../sound/bell.mp3');
+            audio.play();
+        }
+
+        // function cal(price) {
+        //     if ($('.bayar-input').val() == '') {
+        //         $('.bayar-input').val(price);
+        //     } else {
+        //         let result = parseInt($('.bayar-input').val());
+        //         $('.bayar-input').val(result + price);
+        //     }
+        // }
         
         $(document).ready(function() {
             $("[data-toggle=popover]").popover({
@@ -457,6 +514,7 @@
             });
     
             $(document).on('click', '.add-name', function(e) {
+                click();
                 e.preventDefault();
                 $('.add-name').hide();
                 $(`<div class="d-flex align-items-center">
@@ -474,6 +532,7 @@
                 let url = "{{ route('invoice.print.reguler') }}";
     
                 if (!pay_amount) {
+                    sword();
                     swal({
                         title: "",
                         type: "error",
@@ -490,6 +549,7 @@
                 }
     
                 if (pay_amount < total_payment) {
+                    sword();
                     swal({
                         title: "",
                         type: "error",
@@ -541,6 +601,7 @@
                                 success: function(response) {
                                     $.unblockUI();
                                     if (response.status == "VALID") {
+                                        bell();
                                         swal({
                                             title: '',
                                             type: "success",
