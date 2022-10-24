@@ -77,7 +77,7 @@ class AdminController extends Controller
      */
     public function edit(User $users)
     {
-        return view('admin.edit-admin', \compact('users'));
+        return view('admin.edit-admin', compact('users'));
     }
 
     /**
