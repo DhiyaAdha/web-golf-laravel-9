@@ -2254,8 +2254,103 @@ class OrderController extends Controller
                         } else if (count($req->get('type_multiple')) == 2) {
                             if($req->get('type_multiple')[0] == 'deposit') {
                                 if($req->get('type_multiple')[1] == 'cash/transfer') {
-                                    $this->setResponse('INVALID', "Silahkan gunakan deposit");
-                                    return response()->json($this->getResponse());
+                                    if (is_null($req->get('bayar_input'))) {
+                                        $this->setResponse('INVALID', "Nominal wajib diisi");
+                                        return response()->json($this->getResponse());
+                                    } else {
+                                        if ($req->get('bayar_input') > ceil($totalPrice)) {
+                                            try {
+                                                LogTransaction::create([
+                                                    'order_number' => $req->get('order_number'),
+                                                    'visitor_id' => $req->get('page'),
+                                                    'user_id' => Auth()->id(),
+                                                    'cart' => serialize($cart_data),
+                                                    'payment_type' => serialize([
+                                                        ['payment_type' => 'deposit', 'transaction_amount' => 0, 'balance' => $deposit->balance,'discount' => 0, 'refund' => 0],
+                                                        ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => $req->get('refund')]
+                                                    ]),
+                                                    'payment_status' => 'paid',
+                                                    'total' => $totalPrice
+                                                ]);
+
+                                                LogAdmin::create([
+                                                    'user_id' => Auth::id(),
+                                                    'type' => 'CREATE',
+                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                                ]);
+
+                                                ReportDeposit::create([
+                                                    'payment_type' => 'deposit',
+                                                    'report_balance' => 0,
+                                                    'visitor_id' => $req->get('page'),
+                                                    'user_id' => Auth()->id(),
+                                                    'fund' => $deposit->balance,
+                                                    'status' => 'Berkurang',
+                                                    'created_at' => Carbon::now(),
+                                                ]);
+
+                                                \Cart::session($req->get('page'))->clear();
+                
+                                                if ($req->ajax()) {
+                                                    return response()->json([
+                                                        'status' => 'VALID',
+                                                        'message' => 'Pembayaran berhasil',
+                                                        'return' => $req->get('bayar_input')
+                                                    ]);
+                                                }
+
+                                            } catch (\Throwable $th) {
+                                                return response()->json($this->getResponse());
+                                            }
+                                        } else {
+                                            $minus_deposit = $totalPrice - $req->get('bayar_input');
+                                            $deposit->balance = $deposit->balance - $minus_deposit;
+                                            $deposit->save();
+                                            try {
+                                                LogTransaction::create([
+                                                    'order_number' => $req->get('order_number'),
+                                                    'visitor_id' => $req->get('page'),
+                                                    'user_id' => Auth()->id(),
+                                                    'cart' => serialize($cart_data),
+                                                    'payment_type' => serialize([
+                                                        ['payment_type' => 'deposit', 'transaction_amount' => $minus_deposit, 'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
+                                                        ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0, 'discount' => 0, 'refund' => 0]
+                                                    ]),
+                                                    'payment_status' => 'paid',
+                                                    'total' => $totalPrice
+                                                ]);
+
+                                                LogAdmin::create([
+                                                    'user_id' => Auth::id(),
+                                                    'type' => 'CREATE',
+                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                                ]);
+
+                                                ReportDeposit::create([
+                                                    'payment_type' => 'deposit',
+                                                    'report_balance' => $minus_deposit,
+                                                    'visitor_id' => $req->get('page'),
+                                                    'user_id' => Auth()->id(),
+                                                    'fund' => $deposit->balance,
+                                                    'status' => 'Berkurang',
+                                                    'created_at' => Carbon::now(),
+                                                ]);
+
+                                                \Cart::session($req->get('page'))->clear();
+                
+                                                if ($req->ajax()) {
+                                                    return response()->json([
+                                                        'status' => 'VALID',
+                                                        'message' => 'Pembayaran berhasil',
+                                                        'return' => $req->get('bayar_input')
+                                                    ]);
+                                                }
+
+                                            } catch (\Throwable $th) {
+                                                return response()->json($this->getResponse());
+                                            }
+                                        }
+                                    }
                                 } else if ($req->get('type_multiple')[1] == 'kupon') {
                                     $this->setResponse('INVALID', "Silahkan gunakan deposit");
                                     return response()->json($this->getResponse());
