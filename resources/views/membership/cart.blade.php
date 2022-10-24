@@ -340,7 +340,7 @@
                     if (response.cart.length != 0) {
                         $('#qty').text(response.cart.length);
                     } else {
-                        $('#isi-').append(`<span class="not-found text-muted">Keranjang masih kosong</span>`)
+                        $('#isi-').html(`<span class="not-found text-muted">Keranjang masih kosong</span>`)
                             .addClass('d-flex justify-content-center align-items-center');
                         $('.active-checkout').remove();
                         $('#disabled-checkout').html(`<button type="submit" class="mt-15 mb-15 btn-xs btn-block btn btn-success btn-anim"
@@ -388,15 +388,15 @@
                     $('.counted').text(response.counted);
                     var qty = $('#qty').text();
                     $('#qty').text(qty - 1);
-                    if (response.cart.length == 0) {
-                        $('#isi-').html(`<span class="not-found text-muted">Keranjang masih kosong</span>`)
+                    if (response.cart == 1) {
+                        $('#isi-').append(`<span class="not-found text-muted">Keranjang masih kosong</span>`)
                             .addClass('d-flex justify-content-center align-items-center');
                         $('.active-checkout').remove();
                         $('#disabled-checkout').html(`<button type="submit" class="mt-15 mb-15 btn-xs btn-block btn btn-success btn-anim"
-                                                        id="disabled-pay">
-                                                        <i class="icon-rocket"></i>
-                                                        <span class="btn-text">Checkout</span>
-                                                    </button>`);
+                                                            id="disabled-pay">
+                                                            <i class="icon-rocket"></i>
+                                                            <span class="btn-text">Checkout</span>
+                                                        </button>`);
                     }
                 }
             });

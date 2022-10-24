@@ -249,7 +249,7 @@
                                                                     class="form-control bayar-input" name="bayar"
                                                                     placeholder="Masukkan nominal bayar">
                                                             </div>
-                                                            <div class="d-flex flex-wrap justify-content-around mb-2 ">
+                                                            {{-- <div class="d-flex flex-wrap justify-content-around mb-2 ">
                                                                 <input type="button" value="500" onclick="cal(500)" class="btn btn-sm btn-default">
                                                                 <input type="button" value="1000" onclick="cal(1000)" class="btn btn-sm btn-default">
                                                                 <input type="button" value="2000" onclick="cal(2000)" class="btn btn-sm btn-default">
@@ -258,7 +258,7 @@
                                                                 <input type="button" value="20000" onclick="cal(20000)" class="btn btn-sm btn-default">
                                                                 <input type="button" value="50000" onclick="cal(50000)" class="btn btn-sm btn-default">
                                                                 <input type="button" value="100000" onclick="cal(100000)" class="btn btn-sm btn-default">
-                                                            </div>
+                                                            </div> --}}
                                                         </div>
                                                         <img src="{{ asset('cash-on-delivery.png') }}" alt="cash"
                                                             width="30" height="30">
@@ -347,8 +347,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="button" id="pay"
-                                    class="btn btn-sm btn-success btn-block mt-2">Bayar</button>
+                                <div class="d-flex justify-content-between">
+                                    <a href="{{ route('proses_reguler') }}" class="btn btn-primary btn-sm mt-2">Kembali</a>
+                                    <button type="submit" id="pay" class="btn btn-sm btn-success mt-2">Bayar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -447,14 +449,14 @@
             audio.play();
         }
 
-        function cal(price) {
-            if ($('.bayar-input').val() == '') {
-                $('.bayar-input').val(price);
-            } else {
-                let result = parseInt($('.bayar-input').val());
-                $('.bayar-input').val(result + price);
-            }
-        }
+        // function cal(price) {
+        //     if ($('.bayar-input').val() == '') {
+        //         $('.bayar-input').val(price);
+        //     } else {
+        //         let result = parseInt($('.bayar-input').val());
+        //         $('.bayar-input').val(result + price);
+        //     }
+        // }
         
         $(document).ready(function() {
             $("[data-toggle=popover]").popover({

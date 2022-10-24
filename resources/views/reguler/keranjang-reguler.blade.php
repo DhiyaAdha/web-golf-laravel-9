@@ -380,7 +380,7 @@
                     $('.counted').text(response.counted);
                     var qty = $('#qty').text();
                     $('#qty').text(qty - 1);
-                    if (response.cart.length == 0) {
+                    if (response.cart == 1) {
                         $('#isi-').html(`<span class="not-found text-muted">Keranjang masih kosong</span>`)
                             .addClass('d-flex justify-content-center align-items-center');
                         $('.active-checkout').remove();

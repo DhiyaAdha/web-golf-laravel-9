@@ -339,7 +339,7 @@ class OrderController extends Controller
             'id' => $request->get('id'),
             'total' => $get_total,
             'counted' => $counted,
-            'cart' => $items,
+            'cart' => count($items),
         ], 200);
     }
 

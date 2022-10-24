@@ -322,7 +322,7 @@
                                                                         <small class="text-muted">Tunjukan bukti transfer</small>
                                                                         <div class="form-group mt-2 mb-2" id="cash-transfer">
                                                                         </div>
-                                                                        <div class="d-flex flex-wrap justify-content-around mb-2 ">
+                                                                        {{-- <div class="d-flex flex-wrap justify-content-around mb-2 ">
                                                                             <input type="button" value="500" onclick="cal(500)" class="btn btn-sm btn-default">
                                                                             <input type="button" value="1000" onclick="cal(1000)" class="btn btn-sm btn-default">
                                                                             <input type="button" value="2000" onclick="cal(2000)" class="btn btn-sm btn-default">
@@ -331,7 +331,7 @@
                                                                             <input type="button" value="20000" onclick="cal(20000)" class="btn btn-sm btn-default">
                                                                             <input type="button" value="50000" onclick="cal(50000)" class="btn btn-sm btn-default">
                                                                             <input type="button" value="100000" onclick="cal(100000)" class="btn btn-sm btn-default">
-                                                                        </div>
+                                                                        </div> --}}
                                                                     </div>
                                                                 </label>
                                                             </div>
@@ -533,7 +533,7 @@
                                                                                     <input type="number" class="form-control number-input input-notzero bayar-input" name="bayar" placeholder="Masukkan nominal bayar" autocomplete="on">
                                                                                     </div>
                                                                             </div>
-                                                                            <div class="d-flex flex-wrap justify-content-around mb-2 ">
+                                                                            {{-- <div class="d-flex flex-wrap justify-content-around mb-2 ">
                                                                                 <input type="button" value="500" onclick="cal(500)" class="btn btn-sm btn-default">
                                                                                 <input type="button" value="1000" onclick="cal(1000)" class="btn btn-sm btn-default">
                                                                                 <input type="button" value="2000" onclick="cal(2000)" class="btn btn-sm btn-default">
@@ -542,7 +542,7 @@
                                                                                 <input type="button" value="20000" onclick="cal(20000)" class="btn btn-sm btn-default">
                                                                                 <input type="button" value="50000" onclick="cal(50000)" class="btn btn-sm btn-default">
                                                                                 <input type="button" value="100000" onclick="cal(100000)" class="btn btn-sm btn-default">
-                                                                            </div>
+                                                                            </div> --}}
                                                                         </div>
                                                                     </label>
                                                                     {{-- @else
@@ -863,14 +863,14 @@
             audio.play();
         }
 
-        function cal(price) {
-            if ($('.bayar-input').val() == '') {
-                $('.bayar-input').val(price);
-            } else {
-                let result = parseInt($('.bayar-input').val());
-                $('.bayar-input').val(result + price);
-            }
-        }
+        // function cal(price) {
+        //     if ($('.bayar-input').val() == '') {
+        //         $('.bayar-input').val(price);
+        //     } else {
+        //         let result = parseInt($('.bayar-input').val());
+        //         $('.bayar-input').val(result + price);
+        //     }
+        // }
         
         $(document).ready(function() {
             $("[data-toggle=popover]").popover({
