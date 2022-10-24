@@ -72,7 +72,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="{{ Request::is('proses_reguler') ? 'active-page' : '' }}" href="{{ route('proses_reguler') }}" target="_blank">
+                    <a class="{{ Request::is('proses_reguler') ? 'active-page' : '' }}" href="{{ route('proses_reguler') }}">
                         <div class="pull-left">
                             <span class="right-nav-text">Reguler</span>
                         </div>

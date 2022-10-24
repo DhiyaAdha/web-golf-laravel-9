@@ -6,8 +6,7 @@
     <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-    <link href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet"
-        type="text/css">
+    <link href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.css') }}" rel="stylesheet"type="text/css">
     <style type="text/css">
         /* width */
@@ -266,8 +265,7 @@
                 <h5 class="mt-2">Tritih Golf & Country Club</h5>
                 <div class="address-area">
                     <div class="block">
-                        <span class="info phone">Jl. Kemuning, Sawah, Tritih Kulon, Kec. Cilacap Utara, Kabupaten
-                            Cilacap, Jawa Tengah 53253</span>
+                        <span class="info phone">Jl. Kemuning, Sawah, Tritih Kulon, Kec. Cilacap Utara, Kabupaten Cilacap, Jawa Tengah 53253</span>
                     </div>
                 </div>
             </header>
@@ -342,6 +340,10 @@
                             <td class="w-70">Jumlah Order:</td>
                             <td>{{ $qty }}</td>
                         </tr>
+                        <tr>
+                            <td class="w-70">Total Bayar:</td>
+                            <td>{{ formatrupiah($transaction_amount) }}</td>
+                        </tr>
                         @if ($discount != 0)
                             <tr>
                                 <td class="w-70">Diskon:</td>
@@ -349,8 +351,8 @@
                             </tr>
                         @endif
                         <tr>
-                            <td class="w-70">Total Bayar:</td>
-                            <td>{{ formatrupiah($transaction_amount) }}</td>
+                            <td class="w-70">Total Tagihan:</td>
+                            <td>{{ formatrupiah($log_transaction->total) }}</td>
                         </tr>
                         @if ($refund != 0)
                             <tr>
@@ -358,10 +360,6 @@
                                 <td>{{ formatrupiah($refund) }}</td>
                             </tr>
                         @endif
-                        <tr>
-                            <td class="w-70">Total Tagihan:</td>
-                            <td>{{ formatrupiah($log_transaction->total) }}</td>
-                        </tr>
                     </tbody>
                 </table>
             </section>
@@ -398,8 +396,7 @@
                 {{ QrCode::size(50)->eye('circle')->style('round')->generate($log_transaction->order_number) }}
             </section>
             <section class="info-area align-center footer-area">
-                <span class="block">Yuk kita hidupkan lagi kebiasaan berolahraga untuk pola hidup yang lebih
-                    sehat</span>
+                <span class="block">Yuk kita hidupkan lagi kebiasaan berolahraga untuk pola hidup yang lebih sehat</span>
                 <span class="block bold">Terima kasih telah bermain di tgcc!</span>
             </section>
         </section>

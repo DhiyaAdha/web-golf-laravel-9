@@ -247,6 +247,7 @@
         function addCart(id) {
             var url = "{{ route('cart_add.reguler', ':package') }}";
             url = url.replace(':package', id);
+            
             $.ajax({
                 async: true,
                 type: 'POST',
@@ -265,6 +266,7 @@
                 success: function(response) {
                     $.unblockUI();
                     if (response.status == "INVALID") {
+                        sword();
                         swal({
                             title: "",
                             type: "error",
@@ -272,6 +274,8 @@
                             confirmButtonColor: "#01c853",
                         });
                         return false;
+                    } else {
+                        beep();
                     }
                     location.reload();
                 }
@@ -310,6 +314,7 @@
             }
             let url = "{{ route('reguler_update.qty', ':id') }}";
             url = url.replace(':id', id);
+            click();
             $.ajax({
                 async: true,
                 type: 'POST',
@@ -353,7 +358,7 @@
             $('.disabled-cart-' + id).fadeOut(800, function() {
                 $(this).remove();
             });
-
+            dlt();
             $.ajax({
                 async: true,
                 type: 'POST',
@@ -375,7 +380,7 @@
                     $('.counted').text(response.counted);
                     var qty = $('#qty').text();
                     $('#qty').text(qty - 1);
-                    if (response.cart.length == 0) {
+                    if (response.cart == 1) {
                         $('#isi-').html(`<span class="not-found text-muted">Keranjang masih kosong</span>`)
                             .addClass('d-flex justify-content-center align-items-center');
                         $('.active-checkout').remove();
@@ -427,10 +432,11 @@
                             loading();
                         },
                         success: function(data) {
+                            rst();
                             swal({
                                 title: "",
                                 type: "success",
-                                text: "Order berhasil dihapus",
+                                text: "Keranjang berhasil direset",
                                 confirmButtonColor: "#01c853",
                             }, function(isConfirm) {
                                 $.unblockUI();
@@ -461,6 +467,7 @@
                 },
                 success: function(response) {
                     $.unblockUI();
+                    bell();
                     swal({
                         title: "",
                         type: "success",
@@ -477,6 +484,7 @@
         });
 
         $(document).on('click', '#disabled-pay', function() {
+            sword();
             swal({
                 title: "",
                 type: "error",
@@ -485,6 +493,40 @@
             });
             return false;
         });
+
+        function add() {
+            var audio = new Audio('../sound/add.mp3');
+            audio.play();
+        }
+
+        function beep() {
+            var audio = new Audio('../sound/beep.mp3');
+            audio.play();
+        }
+        function click() {
+            var audio = new Audio('../sound/click.mp3');
+            audio.play();
+        }
+
+        function dlt() {
+            var audio = new Audio('../sound/remove.mp3');
+            audio.play();
+        }
+
+        function rst() {
+            var audio = new Audio('../sound/reset.mp3');
+            audio.play();
+        }
+
+        function sword() {
+            var audio = new Audio('../sound/sword.mp3');
+            audio.play();
+        }
+
+        function bell() {
+            var audio = new Audio('../sound/bell.mp3');
+            audio.play();
+        }
 
         $('#dt-package-reguler').DataTable({
             "processing": true,
