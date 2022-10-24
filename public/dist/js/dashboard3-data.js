@@ -135,34 +135,25 @@ $(document).ready(function(){
 			gridTextFamily:"Roboto",
 			// yLabelFormat: function(y){ return y != Math.round(y)?'':y; }
 		});
-		
-        // var doughnutChart = new Chart(ctx7, {
-        //     type: "doughnut",
-        //     data: data7,
-        //     options: {
-        //         animation: {
-        //             duration: 2000,
-        //         },
-        //         responsive: true,
-        //         maintainAspectRatio: false,
-        //         legend: {
-        //             labels: {
-        //                 fontFamily: "Roboto",
-        //                 fontColor: "#878787",
-        //             },
-        //         },
-        //         elements: {
-        //             arc: {
-        //                 borderWidth: 0,
-        //             },
-        //         },
-        //         tooltip: {
-        //             backgroundColor: "rgba(33,33,33,1)",
-        //             cornerRadius: 0,
-        //             footerFontFamily: "'Roboto'",
-        //         },
-        //     },
-        // });
+    }
+
+	if($('#revenue_trendline').length > 0) {
+		// Morris bar chart
+		Morris.Bar({
+			element: 'revenue_trendline',
+			data: dataMingguan,
+			xkey: 'y',
+			ykeys: ['a'	, 'b', 'c' ],
+			labels: ['VIP', 'Member', 'Reguler' ],
+			barColors:['#fec107', '#32FFC1', '#21E1E1'],
+			hideHover: 'auto',
+			gridLineColor: '#878787',
+			resize: true,
+			barGap: 4,
+			gridTextColor:'#878787',
+			gridTextFamily:"Roboto",
+			// yLabelFormat: function(y){ return y != Math.round(y)?'':y; }
+		});
     }
     // ERORR
     if ($("#chart_6").length > 0) {

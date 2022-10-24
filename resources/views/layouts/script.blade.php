@@ -244,16 +244,88 @@
         data: {
             labels: xValues,
             datasets: [{
-                data: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200],
+                data: [1, 2, 1, 2, 1, 2, 1, 2, 2, 1, 2, 1],
                 borderColor: "#fb4141",
                 fill: false
             }, {
-                data: [200, 400, 600, 800, 1000, 800, 1000, 800, 600, 400, 200, 100],
+                data: [2, 1, 3, 2, 1, 1, 2, 3, 2, 1, 2, 1],
                 borderColor: "#2ecc71",
                 fill: false
             }, {
-                data: [300, 700, 200, 200, 1000, 250, 200, 1000, 200, 100, 1000, 1000],
+                data: [1, 2, 3, 1, 2, 2, 3, 1, 2, 1, 1, 2],
                 borderColor: "#4da9ff",
+                fill: false
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            }
+        }
+    });
+</script>
+
+<script>
+    var xValues = ['Jan', 'Feb', 'Mar', 'Apr', 'Mey', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    new Chart("permainan-chart", {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+                data: [1, 2, 1, 2, 1, 2, 1, 2, 2, 1, 2, 1],
+                borderColor: "#fb4141",
+                fill: false
+            }, {
+                data: [1, 2, 1, 2, 1, 2, 1, 2, 2, 1, 2, 1],
+                borderColor: "#2ecc71",
+                fill: false
+            }, {
+                data: [1, 2, 3, 1, 2, 2, 3, 1, 2, 1, 1, 2],
+                borderColor: "#4da9ff",
+                fill: false
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            }
+        }
+    });
+</script>
+<script>
+    var xValues = ['Jan', 'Feb', 'Mar', 'Apr', 'Mey', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    new Chart("proshop-chart", {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+                data: [1, 2, 1, 2, 1, 2, 1, 2, 2, 1, 2, 1],
+                borderColor: "#fb4141",
+                fill: false
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            }
+        }
+    });
+</script>
+
+
+
+<script>
+    var xValues = ['Jan', 'Feb', 'Mar', 'Apr', 'Mey', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    new Chart("kantin-chart", {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+                data: [1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2],
+                borderColor: "#2ecc71",
                 fill: false
             }]
         },

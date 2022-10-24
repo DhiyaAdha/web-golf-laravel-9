@@ -134,7 +134,6 @@
                             <div class="panel-wrapper collapse in">
                                 <div class="panel-body" style="margin-top: -80px; margin-bottom:-10px;">
                                     <div class="pills-struct mt-40">
-
                                         <div class="tab-content" id="myTabContent_6">
                                             <div id="home_6" class="tab-pane fade active in" role="tabpanel"
                                                 style="margin-top: 50px;">
