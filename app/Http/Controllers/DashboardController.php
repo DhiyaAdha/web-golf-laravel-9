@@ -47,7 +47,7 @@ class DashboardController extends Controller
         }
         foreach (array_values($month_new) as $key => $value) {
             $data['visitor'][$key]['period'] = $months[$value[0]];
-            $data['visitor'][$key]['vvip'] = LogTransaction::where('payment_status', 'paid')->whereHas(
+            $data['visitor'][$key]['VIP'] = LogTransaction::where('payment_status', 'paid')->whereHas(
                 'visitor',
                 function (Builder $query) {
                     $query->where('tipe_member', 'VVIP');
@@ -61,7 +61,7 @@ class DashboardController extends Controller
             )
                 ->count();
 
-            $data['visitor'][$key]['vip'] = LogTransaction::where('payment_status', 'paid')->whereHas(
+            $data['visitor'][$key]['Member'] = LogTransaction::where('payment_status', 'paid')->whereHas(
                 'visitor',
                 function (Builder $query) {
                     $query->where('tipe_member', 'VIP');
@@ -76,7 +76,7 @@ class DashboardController extends Controller
                 ->count();
 
             // REGULER
-            $data['visitor'][$key]['REGULER'] = LogTransaction::where('payment_status', 'paid')->whereHas(
+            $data['visitor'][$key]['Reguler'] = LogTransaction::where('payment_status', 'paid')->whereHas(
                 'visitor',
                 function (Builder $query) {
                     $query->where('tipe_member', 'REGULER');
