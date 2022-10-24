@@ -249,6 +249,16 @@
                                                                     class="form-control bayar-input" name="bayar"
                                                                     placeholder="Masukkan nominal bayar">
                                                             </div>
+                                                            <div class="d-flex flex-wrap justify-content-around mb-2 ">
+                                                                <input type="button" value="500" onclick="cal(500)" class="btn btn-sm btn-default">
+                                                                <input type="button" value="1000" onclick="cal(1000)" class="btn btn-sm btn-default">
+                                                                <input type="button" value="2000" onclick="cal(2000)" class="btn btn-sm btn-default">
+                                                                <input type="button" value="5000" onclick="cal(5000)" class="btn btn-sm btn-default">
+                                                                <input type="button" value="10000" onclick="cal(10000)" class="btn btn-sm btn-default">
+                                                                <input type="button" value="20000" onclick="cal(20000)" class="btn btn-sm btn-default">
+                                                                <input type="button" value="50000" onclick="cal(50000)" class="btn btn-sm btn-default">
+                                                                <input type="button" value="100000" onclick="cal(100000)" class="btn btn-sm btn-default">
+                                                            </div>
                                                         </div>
                                                         <img src="{{ asset('cash-on-delivery.png') }}" alt="cash"
                                                             width="30" height="30">
@@ -329,8 +339,7 @@
                                             <div class="items-default">
                                                 @foreach ($orders as $cart)
                                                     <div class="d-flex">
-                                                        <span class="flex-grow-1">{{ $cart['name'] }} x
-                                                            {{ $cart['qty'] }}</span>
+                                                        <span class="flex-grow-1">{{ $cart['name'] }} {{ $cart['category'] == 'default' ? '| game' : '' }} x {{ $cart['qty'] }}</span>
                                                         <small>Rp. {{ formatrupiah($cart['price']) }}</small>
                                                     </div>
                                                 @endforeach
@@ -436,6 +445,15 @@
         function bell() {
             var audio = new Audio('../sound/bell.mp3');
             audio.play();
+        }
+
+        function cal(price) {
+            if ($('.bayar-input').val() == '') {
+                $('.bayar-input').val(price);
+            } else {
+                let result = parseInt($('.bayar-input').val());
+                $('.bayar-input').val(result + price);
+            }
         }
         
         $(document).ready(function() {

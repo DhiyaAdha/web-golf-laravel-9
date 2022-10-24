@@ -311,6 +311,7 @@ class OrderRegulerController extends Controller
                 $cart_data = [];
             } else {
                 foreach ($items as $row) {
+                    $package = Package::find($row->id);
                     $cart[] = [
                         'rowId' => $row->id,
                         'name' => $row->name,
@@ -318,6 +319,7 @@ class OrderRegulerController extends Controller
                         'pricesingle' => $row->price,
                         'price' => $row->getPriceSum(),
                         'created_at' => $row->attributes['created_at'],
+                        'category' => $package->category
                     ];
                 }
                 $orders = collect($cart)->sortBy('created_at');

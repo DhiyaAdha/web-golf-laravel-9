@@ -149,7 +149,7 @@
                                     data-toggle="modal" data-target="#myModal2">Tambah Kupon</a> --}}
                                 {{-- {{ URL::signedRoute('order.cart', now()->addMinutes(10), ['id' => $visitor->id]) }} --}}
                                 <a href="{{ URL::signedRoute('order.cart', ['id' => $visitor->id]) }}"
-                                    class="btn btn-block btn-success btn-sm" target="_blank">Pilih paket bermain</a>
+                                    class="btn btn-block btn-success btn-sm">Pilih paket bermain</a>
                             </div>
                             <div id="myModal" class="modal fade" tabindex="-1" role="dialog"
                                 aria-labelledby="myModalLabel" aria-hidden="true">
