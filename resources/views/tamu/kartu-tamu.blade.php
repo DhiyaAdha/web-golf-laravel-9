@@ -46,36 +46,35 @@
                                     <div class="modal-body">
                                         <div class="d-flex justify-content-center align-items-center flex-column">
                                             <div class="d-flex justify-content-center flex-wrap" id="cetak-kartu">
-                                                <div class="col-md-card d-flex justify-content-center mb-10">
+                                                <div class="col-lg-card d-flex justify-content-center mb-10">
                                                     <div class="panel panel-default card-view card-visitor">
                                                         <div class="panel-heading">
                                                             <div class="pull-left">
                                                                 <div class="d-flex title-card">
-                                                                    <img src="{{ asset('/dist/img/tgcc-icon-small.svg') }}">
-                                                                    <div class="d-flex flex-column">
-                                                                        <h6 class="panel-title txt-dark label-visitor">
-                                                                            tritih golf</h6>
-                                                                        <h6 class="panel-title txt-dark label-visitor">
-                                                                            country & club</h6>
-                                                                    </div>
+                                                                    <img style="width: 100%;" src="{{ asset('/dist/img/kartutamu/top.png') }}">
                                                                 </div>
                                                             </div>
                                                             <div class="clearfix"></div>
                                                         </div>
                                                         <div class="panel-wrapper collapse in">
-                                                            <div class="panel-body card">
+                                                            <div class="front-qr">
                                                                 <div
                                                                     class="d-flex justify-content-center align-items-center bg-front">
                                                                     <div class="pull-left">
-                                                                        <img class="front-qr"
-                                                                            src="{{ asset('/dist/img/icon-golf1.svg') }}">
+                                                                        <img class="main-logo"
+                                                                            src="{{ asset('/dist/img/tgcc_icon.svg') }}">
                                                                     </div>
-                                                                    <div class="pull-right">
+                                                                    <div class="d-flex">
+                                                                        <div class="tipe_member">
+                                                                            <h3 style="color: #01C853;">{{ $visitor->tipe_member }}</>
+                                                                        </div>
+                                                                    </div>
+                                                                    {{-- <div class="pull-right">
                                                                         <img class="front-qr"
                                                                             src="{{ asset('/dist/img/icon-golf2.svg') }}">
-                                                                    </div>
+                                                                    </div> --}}
                                                                 </div>
-                                                                <div class=" text-name-card">
+                                                                {{-- <div class=" text-name-card">
                                                                     <div class="d-flex-justify-content-center">
                                                                         <strong>
                                                                             <p class="text-center">{{ $visitor->name }}</p>
@@ -90,14 +89,14 @@
                                                                         <p class="text-center text-muted text-lowercase" style="word-wrap: break-word;">
                                                                             {{ $visitor->email }}</p>
                                                                     </div>
-                                                                </div>
+                                                                </div> --}}
                                                                 <img class="align-self-end img-footer"
                                                                     src="{{ asset('/dist/img/golf-footer.svg') }}">
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-card d-flex justify-content-center mb-10">
+                                                {{-- <div class="col-md-card d-flex justify-content-center mb-10">
                                                     <div class="panel panel-default card-view card-visitor">
                                                         <div class="panel-heading wave">
                                                             <div class="pull-left">
@@ -129,7 +128,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                             <button type="button" class="btn download-kartu-tamu"><i
                                                     class="fa fa-download"></i> Download Kartu (PDF)</button>
