@@ -18,9 +18,13 @@
                                                     <span class="weight-500 txt-light block">
                                                         Revenue Today
                                                     </span>
+                                                    <div class="dhiya mt-10" style="margin-left: -4px;">
+                                                    <span class="label label-info">{{ date('d-m-Y'); }}</span>
+                                                    </div>
                                                 </div>
                                                 <div class="col-xs-4 text-right data-wrap-right">
-                                                    <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i>
+                                                    {{-- <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i> --}}
+                                                    <i class="zmdi zmdi-money txt-light data-right-rep-icon"></i>
                                                 </div>
                                                 <img src="{{ asset('/img/circle.svg') }}" class="card-img-absolute"
                                                     alt="circle-image">
@@ -47,7 +51,8 @@
                                                     </span>
                                                 </div>
                                                 <div class="col-xs-4 text-right data-wrap-right">
-                                                    <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i>
+                                                    {{-- <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i> --}}
+                                                    <i class="zmdi zmdi-case-play txt-light data-right-rep-icon"></i>
                                                 </div>
                                                 <img src="{{ asset('/img/circle.svg') }}" class="card-img-absolute"
                                                     alt="circle-image">
@@ -74,7 +79,8 @@
                                                     </span>
                                                 </div>
                                                 <div class="col-xs-4 text-right data-wrap-right">
-                                                    <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i>
+                                                    <i class="zmdi zmdi-shopping-cart txt-light data-right-rep-icon"></i>
+                                                    {{-- <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i> --}}
                                                 </div>
                                                 <img src="{{ asset('/img/circle.svg') }}" class="card-img-absolute"
                                                     alt="circle-image">
