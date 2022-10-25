@@ -1602,6 +1602,7 @@
                             }
                         } else if (type_multiple.length == 3) {
                             if(type_multiple[2] == 'kupon' || type_multiple[2] == 'limit') {
+                                $('.bayar-input').val('');
                                 $('.deposit').removeClass('d-none');
                                 $('#deposit').text('Rp. 0');
                                 $('.refund').removeClass('d-none');
