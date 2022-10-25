@@ -956,34 +956,57 @@
                 } else {
                     $("#customRadioInline5").prop('checked', false);
                     $("#customRadioInline6").prop("checked", false);
-                    if(type_multiple.length == 1) {
-                        type_multiple.splice(0,1);
-                        $('.discount').hide();
-                        $('.remaining').addClass('d-none');
-                        $('#remaining').text('Rp. 0');
-                    } else if (type_multiple.length == 2) {
-                        type_multiple.splice(1,1);
-                        $('.discount').hide();
-                        if(type_multiple[0] == 'deposit') {
-                            $('.bayar-input').val('');
-                            $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
-                            $('.nilai-total1-td').data('total', data_bill);
-                            $('#remaining').text('Rp. ' + formatIDR(data_bill - data_deposit));
-                        } else if (type_multiple[0] == 'cash/transfer') {
+                    $('#hide-limit').addClass('d-none');
+                    if(data_deposit < data_bill) {
+                        if(type_multiple.length == 1) {
+                            type_multiple.splice(0,1);
+                            $('.discount').hide();
+                            $('.remaining').addClass('d-none');
                             $('#remaining').text('Rp. 0');
-                            $('.bayar-input').val(data_bill);
+                        } else if (type_multiple.length == 2) {
+                            type_multiple.splice(1,1);
+                            $('.discount').hide();
+                            if(type_multiple[0] == 'deposit') {
+                                $('.bayar-input').val('');
+                                $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
+                                $('.nilai-total1-td').data('total', data_bill);
+                                $('#remaining').text('Rp. ' + formatIDR(data_bill - data_deposit));
+                            } else if (type_multiple[0] == 'cash/transfer') {
+                                $('#remaining').text('Rp. 0');
+                                $('.bayar-input').val(data_bill);
+                                $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
+                                $('.nilai-total1-td').data('total', data_bill);
+                            }
+                        } else if (type_multiple.length == 3) {
+                            type_multiple.splice(2,1);
+                            $('.discount').hide();
+                            $('.bayar-input').val(data_bill - data_deposit);
+                            $('#remaining').text('Rp. 0');
                             $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
                             $('.nilai-total1-td').data('total', data_bill);
                         }
-                    } else if (type_multiple.length == 3) {
-                        type_multiple.splice(2,1);
-                        $('.discount').hide();
-                        $('.bayar-input').val(data_bill - data_deposit);
-                        $('#remaining').text('Rp. 0');
-                        $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
-                        $('.nilai-total1-td').data('total', data_bill);
+                    } else {
+                        if(type_multiple.length == 2) {
+                            if(type_multiple[0] == 'deposit') {
+                                type_multiple.splice(1,1);
+                                $('.deposit').addClass('d-none');
+                                $('#deposit').text('Rp. 0');
+                                $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
+                                $('.discount').hide();
+                            } else if (type_multiple[0] == 'cash/transfer') {
+                                $('.discount').removeClass();
+                                $('.bayar-input').val(data_bill).removeClass('is-invalid');
+                                $('#return').text('-').css({
+                                    "background-color": "rgba(25, 216, 149, 0.2)",
+                                    "color": "#19d895"
+                                }).data('refund', 0);
+                            }
+                        } else if (type_multiple.length == 3) {
+                            type_multiple.splice(2,1);
+                            $('.discount').hide();
+                            $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00').data('total', data_bill);
+                        }
                     }
-                    $('#hide-limit').addClass('d-none');
                 }
             });
 
@@ -1162,7 +1185,30 @@
                                 }
                             }
                         } else if (type_multiple.length == 2) {
-                            if (type_multiple[1] == 'cash/transfer') {
+                            if (type_multiple[0] == 'cash/transfer') {
+                                let remain = total - price_single;;
+                                if($(this).val() > remain) {
+                                    $(this).removeClass('is-invalid');
+                                    $('#return').text(' Rp. ' + formatIDR($(this).val() - remain) + ',00').css({
+                                        "background-color": "rgba(25, 216, 149, 0.2)",
+                                        "color": "#19d895"
+                                    }).data('refund', $(this).val() - remain);
+                                } else {
+                                    if($(this).val() == '') {
+                                        $(this).removeClass('is-invalid');
+                                        $('#return').text('-').css({
+                                            "background-color": "rgba(25, 216, 149, 0.2)",
+                                            "color": "#19d895"
+                                        }).data('refund', 0);
+                                    } else {
+                                        $(this).addClass('is-invalid');
+                                        $('#return').text(' Rp. ' + formatIDR($(this).val() - remain) + ',00').css({
+                                            "background-color": "rgba(216, 25, 25, 0.2)",
+                                            "color": "#d81c19d1"
+                                        }).data('refund', $(this).val() - remain);
+                                    }
+                                }
+                            } else if (type_multiple[1] == 'cash/transfer') {
                                 let remain = total - $(this).val();
                                 if($(this).val() > total) {
                                     $('#deposit').text('Rp. 0');
@@ -1172,7 +1218,7 @@
                                             }).data('refund', return_pay);
                                 } else {
                                     if($(this).val() == '') {
-                                        $('#return').text('0').css({
+                                        $('#return').text('-').css({
                                                     "background-color": "rgba(25, 216, 149, 0.2)",
                                                     "color": "#19d895"
                                                 }).data('refund', 0);
@@ -1183,6 +1229,31 @@
                                                     "color": "#19d895"
                                                 }).data('refund', 0);
                                         $('#deposit').text('Rp. -' + formatIDR(remain));
+                                    }
+                                }
+                            }
+                        } else if (type_multiple.length == 3) {
+                            if (type_multiple[1] == 'cash/transfer') {
+                                let remain = total - price_single;
+                                if($(this).val() > remain) {
+                                    $('#deposit').text('Rp. 0');
+                                    $('#return').text(' Rp. ' + formatIDR($(this).val() - remain) + ',00').css({
+                                                "background-color": "rgba(25, 216, 149, 0.2)",
+                                                "color": "#19d895"
+                                            }).data('refund', $(this).val() - remain);
+                                } else {
+                                    if($(this).val() == '') {
+                                        $('#return').text('-').css({
+                                                    "background-color": "rgba(25, 216, 149, 0.2)",
+                                                    "color": "#19d895"
+                                                }).data('refund', 0);
+                                        $('#deposit').text('Rp. 0');
+                                    } else {
+                                        $('#return').text('0').css({
+                                                    "background-color": "rgba(25, 216, 149, 0.2)",
+                                                    "color": "#19d895"
+                                                }).data('refund', 0);
+                                        $('#deposit').text('Rp. -' + formatIDR(remain - $(this).val()));
                                     }
                                 }
                             }
@@ -1200,6 +1271,7 @@
                     .map(function() {
                         return $(this).val();
                     }).get();
+                    console.log(type_multiple)
                 let minus_deposit = data_bill - data_deposit;
                 let discount = '';
                 let deposit = '';
@@ -1474,7 +1546,61 @@
                                     $('.deposit').removeClass('d-none');
                                     $('#deposit').text('Rp. 0');
                                     $('.bayar-input').val('');
+                                } else if (type_multiple[1] == 'kupon' || type_multiple[1] == 'limit') {
+                                    $('.deposit').removeClass('d-none');
+                                    $('#deposit').text('Rp. -' + formatIDR(data_bill - price_single));
+                                    $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill - price_single) + ',00');
+                                    discount += `<div class="card mt-2">
+                                            <div class="card-body">
+                                                <div class="d-flex flex-column">
+                                                    <div class="d-flex">
+                                                        <span class="flex-grow-1">Diskon</span>
+                                                        <span>Rp. ${formatIDR(price_single)},00</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>`;
+                                        $('.discount').html(discount).show();
                                 }
+                            } else if (type_multiple[0] == 'cash/transfer') {
+                                if(type_multiple[1] == 'kupon' || type_multiple[1] == 'limit') {
+                                    $('.bayar-input').val(data_bill - price_single).removeClass('is-invalid');
+                                    $('#return').text('0').css({
+                                        "background-color": "rgba(25, 216, 149, 0.2)",
+                                        "color": "#19d895"
+                                    }).data('refund', 0);
+                                    discount += `<div class="card mt-2">
+                                            <div class="card-body">
+                                                <div class="d-flex flex-column">
+                                                    <div class="d-flex">
+                                                        <span class="flex-grow-1">Diskon</span>
+                                                        <span>Rp. ${formatIDR(price_single)},00</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>`;
+                                        $('.discount').html(discount).show();
+                                    $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill - price_single) + ',00');
+                                }
+                            }
+                        } else if (type_multiple.length == 3) {
+                            if(type_multiple[2] == 'kupon' || type_multiple[2] == 'limit') {
+                                $('.deposit').removeClass('d-none');
+                                $('#deposit').text('Rp. 0');
+                                $('.refund').removeClass('d-none');
+                                $('#return').addClass('green').text('-');
+                                discount += `<div class="card mt-2">
+                                            <div class="card-body">
+                                                <div class="d-flex flex-column">
+                                                    <div class="d-flex">
+                                                        <span class="flex-grow-1">Diskon</span>
+                                                        <span>Rp. ${formatIDR(price_single)},00</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>`;
+                                        $('.discount').html(discount).show();
+                                $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill - price_single) + ',00');
                             }
                         }
                     }
@@ -1552,16 +1678,39 @@
                                             }).data('refund', 0).addClass('green');
                                     $('.bayar-input').val('');
                                     $('.deposit').addClass('d-none');
+                                    $('#deposit').text('Rp. 0');
                                 }
                             } else if (type_multiple[0] == 'cash/transfer') {
                                 if((type_multiple[0] == 'deposit') == false) {
                                     $('.deposit').addClass('d-none');
+                                    $('#deposit').text('Rp. 0');
                                     $('.bayar-input').val(data_bill);
                                     $('#return').text('0').css({
+                                        "background-color": "rgba(25, 216, 149, 0.2)",
+                                        "color": "#19d895"
+                                    }).data('refund', 0).addClass('green');
+                                }
+                            } else if (type_multiple[0] == 'kupon' || type_multiple[0] == 'limit') {
+                                if((type_multiple[0] == 'deposit') == false) {
+                                    $('.deposit').addClass('d-none');
+                                    $('#deposit').text('Rp. 0');
+                                    $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00').data('total', data_bill);
+                                } else if ((type_multiple[0] == 'cash/transfer') == false) {
+                                    alert('jkj');
+                                }
+                            }
+                        } else if (type_multiple.length == 2) {
+                            if((type_multiple[0] == 'deposit') == false) {
+                                $('.deposit').addClass('d-none');
+                                $('#deposit').text('Rp. 0');
+                            } else if ((type_multiple[1] == 'cash/transfer') == false) {
+                                $('.bayar-input').val('');
+                                $('.refund').addClass('d-none');
+                                $('#return').text('-').css({
                                                 "background-color": "rgba(25, 216, 149, 0.2)",
                                                 "color": "#19d895"
-                                            }).data('refund', 0).addClass('green');
-                                }
+                                            }).data('refund', 0);
+                                $('#deposit').text('Rp. ' + formatIDR((data_bill - price_single)));
                             }
                         }
                     }
