@@ -345,6 +345,25 @@ class OrderRegulerController extends Controller
     public function pay_reguler(Request $request)
     {
         $items = \Cart::session(auth()->id())->getContent();
+        //jml_default
+        $jml_default = 0;
+        $jml_additional = 0;
+        $jml_other = 0;
+        foreach ($items as $get) {
+            if($get->category == 'default')
+            {
+                $jml_default += $get->getPriceSum();
+            }
+            elseif($get->category == 'additional')
+            {
+                $jml_additional += $get->getPriceSum();
+            }
+            else
+            {
+                $jml_other += $get->getPriceSum();
+            }
+        }
+        //jml_default
         $totalPrice = \Cart::session(auth()->id())->getTotal();
         if (\Cart::isEmpty()) {
             $cart_data = [];
@@ -384,11 +403,9 @@ class OrderRegulerController extends Controller
                 ]]),
                 'payment_status' => 'paid',
                 'total' => $totalPrice,
-                // 'jml_default' => $row->getPriceSum(),
-                // 'jml_additional' => $additional,
-                // 'jml_other' => $other,
-
-
+                'jml_default' => $jml_default,
+                'jml_additional' => $jml_additional,
+                'jml_other' => $jml_other,
             ]);
 
             LogAdmin::create([
