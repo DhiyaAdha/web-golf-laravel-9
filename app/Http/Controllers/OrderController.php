@@ -182,6 +182,7 @@ class OrderController extends Controller
                 'name' => $package->name,
                 'price' => $price,
                 'quantity' => 1,
+                'category' => $package->category,
                 'attributes' => array(
                     'created_at' => date('Y-m-d H:i:s')
                 ),
@@ -222,7 +223,8 @@ class OrderController extends Controller
                     'cart' => $cart_data,
                     'qty' => $cek_itemId[$id[3]]->quantity,
                     'name' => $cek_itemId[$id[3]]->name,
-                    'price' => $cek_itemId[$id[3]]->price
+                    'price' => $cek_itemId[$id[3]]->price,
+                    'category' => $cek_itemId[$id[3]]->category
                 ], 200);
             } else if(count($package_default) == 0) {
                 \Cart::session($request->get('page'))->clear();
@@ -258,6 +260,7 @@ class OrderController extends Controller
                     'qty' => $cek_itemId[$id[3]]->quantity,
                     'name' => $cek_itemId[$id[3]]->name,
                     'price' => $cek_itemId[$id[3]]->price,
+                    'category' => $cek_itemId[$id[3]]->category,
                     'status' => 'VALID'
                 ], 200);
             }
@@ -371,7 +374,7 @@ class OrderController extends Controller
                         'pricesingle' => $row->price,
                         'price' => $row->getPriceSum(),
                         'created_at' => $row->attributes['created_at'],
-                        'category' => $package->category
+                        'category' => $row->category,
                     ];
                     foreach($cek_itemId as $item){
                         $item_default += $item['quantity'];
@@ -416,7 +419,7 @@ class OrderController extends Controller
                 'pricesingle' => $row->price,
                 'price' => $row->getPriceSum(),
                 'created_at' => $row->attributes['created_at'],
-                'category' => $package->category
+                'category' => $row->category
             ];
         }
         $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
@@ -489,6 +492,7 @@ class OrderController extends Controller
                     'rowId' => $row->id,
                     'name' => $row->name,
                     'qty' => $row->quantity,
+                    'category' => $row->category,
                     'pricesingle' => $row->price,
                     'price' => $row->getPriceSum(),
                     'created_at' => $row->attributes['created_at'],

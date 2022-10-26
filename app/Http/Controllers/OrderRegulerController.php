@@ -384,7 +384,7 @@ class OrderRegulerController extends Controller
                 ]]),
                 'payment_status' => 'paid',
                 'total' => $totalPrice,
-                'jml_default' => $row->getPriceSum(),
+                // 'jml_default' => $row->getPriceSum(),
                 // 'jml_additional' => $additional,
                 // 'jml_other' => $other,
 
