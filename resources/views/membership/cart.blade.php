@@ -565,7 +565,13 @@
                 },
                 {
                     "data": function(data) {
-                        return `<span class="label ${data.category == 'default' ? 'label-primary' : 'label-danger'}">${data.category}</span>`;
+                        if (data.category == 'default') {
+                            return `<span class="label label-primary">${data.category == 'default' ? 'Permainan' : 'Fasilitas'}</span>`;
+                        } else if (data.category == 'additional') {
+                            return `<span class="label label-danger">${data.category == 'additional' ? 'Fasilitas' : 'Permainan'}</span>`;
+                        } else {
+                            return `<span class="label label-danger">${data.category == 'others' ? 'Lainnya' : 'Permainan'}</span>`;
+                        }
                     }
                 },
                 {

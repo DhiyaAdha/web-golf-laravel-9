@@ -321,17 +321,27 @@
                                                                         <strong>Cash/Transfer</strong>
                                                                         <small class="text-muted">Tunjukan bukti transfer</small>
                                                                         <div class="form-group mt-2 mb-2" id="cash-transfer">
+                                                                            <div class="input-group">
+                                                                                <div class="input-group-prepend">
+                                                                                    <div class="input-group-text">Rp.</div>
+                                                                                </div>
+                                                                                <input type="text" min="0"
+                                                                                    onkeypress="return event.charCode >= 48 && event.charCode <=57"
+                                                                                    class="form-control number-input input-notzero bayar-cash"
+                                                                                    name="bayar" placeholder="Masukkan nominal bayar"
+                                                                                    autocomplete="off">
+                                                                            </div>
                                                                         </div>
-                                                                        {{-- <div class="d-flex flex-wrap justify-content-around mb-2 ">
-                                                                            <input type="button" value="500" onclick="cal(500)" class="btn btn-sm btn-default">
-                                                                            <input type="button" value="1000" onclick="cal(1000)" class="btn btn-sm btn-default">
-                                                                            <input type="button" value="2000" onclick="cal(2000)" class="btn btn-sm btn-default">
-                                                                            <input type="button" value="5000" onclick="cal(5000)" class="btn btn-sm btn-default">
-                                                                            <input type="button" value="10000" onclick="cal(10000)" class="btn btn-sm btn-default">
-                                                                            <input type="button" value="20000" onclick="cal(20000)" class="btn btn-sm btn-default">
-                                                                            <input type="button" value="50000" onclick="cal(50000)" class="btn btn-sm btn-default">
-                                                                            <input type="button" value="100000" onclick="cal(100000)" class="btn btn-sm btn-default">
-                                                                        </div> --}}
+                                                                        <div class="d-flex flex-wrap mb-2 ">
+                                                                            <input type="button" value="500" onclick="cal(500)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                            <input type="button" value="1000" onclick="cal(1000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                            <input type="button" value="2000" onclick="cal(2000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                            <input type="button" value="5000" onclick="cal(5000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                            <input type="button" value="10000" onclick="cal(10000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                            <input type="button" value="20000" onclick="cal(20000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                            <input type="button" value="50000" onclick="cal(50000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                            <input type="button" value="100000" onclick="cal(100000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                        </div>
                                                                     </div>
                                                                 </label>
                                                             </div>
@@ -525,7 +535,7 @@
                                                                         <div class="d-flex flex-column flex-grow-1 justify-content-center">
                                                                             <strong>Cash/Transfer</strong>
                                                                             <small class="text-muted">Tunjukan bukti transfer</small>
-                                                                            <div class="form-group mt-2 mb-2" id="cashtransfer">
+                                                                            <div class="form-group mt-2 mb-2">
                                                                                 <div class="input-group">
                                                                                     <div class="input-group-prepend">
                                                                                         <div class="input-group-text">Rp.</div>
@@ -533,16 +543,16 @@
                                                                                     <input type="number" class="form-control number-input input-notzero bayar-input" name="bayar" placeholder="Masukkan nominal bayar" autocomplete="on">
                                                                                     </div>
                                                                             </div>
-                                                                            {{-- <div class="d-flex flex-wrap justify-content-around mb-2 ">
-                                                                                <input type="button" value="500" onclick="cal(500)" class="btn btn-sm btn-default">
-                                                                                <input type="button" value="1000" onclick="cal(1000)" class="btn btn-sm btn-default">
-                                                                                <input type="button" value="2000" onclick="cal(2000)" class="btn btn-sm btn-default">
-                                                                                <input type="button" value="5000" onclick="cal(5000)" class="btn btn-sm btn-default">
-                                                                                <input type="button" value="10000" onclick="cal(10000)" class="btn btn-sm btn-default">
-                                                                                <input type="button" value="20000" onclick="cal(20000)" class="btn btn-sm btn-default">
-                                                                                <input type="button" value="50000" onclick="cal(50000)" class="btn btn-sm btn-default">
-                                                                                <input type="button" value="100000" onclick="cal(100000)" class="btn btn-sm btn-default">
-                                                                            </div> --}}
+                                                                            <div class="d-flex flex-wrap mb-2 ">
+                                                                                <input type="button" value="500" onclick="call(500)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                                <input type="button" value="1000" onclick="call(1000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                                <input type="button" value="2000" onclick="call(2000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                                <input type="button" value="5000" onclick="call(5000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                                <input type="button" value="10000" onclick="call(10000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                                <input type="button" value="20000" onclick="call(20000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                                <input type="button" value="50000" onclick="call(50000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                                <input type="button" value="100000" onclick="call(100000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                            </div>
                                                                         </div>
                                                                     </label>
                                                                     {{-- @else
@@ -871,14 +881,24 @@
             audio.play();
         }
 
-        // function cal(price) {
-        //     if ($('.bayar-input').val() == '') {
-        //         $('.bayar-input').val(price);
-        //     } else {
-        //         let result = parseInt($('.bayar-input').val());
-        //         $('.bayar-input').val(result + price);
-        //     }
-        // }
+        function cal(price) {
+            $('#customRadioInline3').prop('checked', true);
+            if ($('.bayar-cash').val() == '') {
+                $('.bayar-cash').val(price);
+            } else {
+                let result = parseInt($('.bayar-cash').val());
+                $('.bayar-cash').val(result + price);
+            }
+        }
+
+        function call(price) {
+            if ($('.bayar-input').val() == '') {
+                $('.bayar-input').val(price);
+            } else {
+                let result = parseInt($('.bayar-input').val());
+                $('.bayar-input').val(result + price);
+            }
+        }
         
         $(document).ready(function() {
             $("[data-toggle=popover]").popover({
@@ -920,6 +940,7 @@
                         $('.discount').hide();
                         $('.refund').addClass('d-none');
                         $('.remaining').addClass('d-none');
+                        $('.bayar-input').val('');
                         break;
                     case 'multiple':
                         click();
@@ -930,7 +951,7 @@
                         $('.items-replace').addClass('d-none');
                         $('#single').hide();
                         $('#multiple').show().removeClass('d-none');
-                        $('.bayar-input').val(null);
+                        $('.bayar-cash').val('');
                         $('#cash-transfer').hide();
                         $('#balance').text(formatIDR($('#balance').data('balance') + ',00'));
                         $('.nilai-total1-td').text('Rp. ' + formatIDR($('.nilai-total1-td').data('total')) +
@@ -1023,6 +1044,31 @@
                 }
             });
 
+            $(document).on('input', '.bayar-cash', function(e) {
+                let total = $('.nilai-total1-td').data('total');
+                let return_pay = parseInt($(this).val()) - parseInt(total);
+                if ($(this).val() < total) {
+                    if ($(this).val() == '') {
+                        $(this).removeClass('is-invalid');
+                        $('#return').text('-').css({
+                            "background-color": "rgba(25, 216, 149, 0.2)",
+                            "color": "#19d895"
+                        }).data('refund', return_pay);
+                    } else {
+                        $(this).addClass('is-invalid');
+                        $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                            "background-color": "rgba(216, 25, 25, 0.2)",
+                            "color": "#d81c19d1"
+                        }).data('refund', return_pay);
+                    }
+                } else {
+                    $(this).removeClass('is-invalid');
+                    $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                        "background-color": "rgba(25, 216, 149, 0.2)",
+                        "color": "#19d895"
+                    }).data('refund', return_pay);
+                }
+            });
             $(document).on('input', '.bayar-input', function(e) {
                 e.preventDefault();
                 let total = $('.nilai-total1-td').data('total');
@@ -1037,237 +1083,213 @@
                         return $(this).val();
                     }).get();
 
-                if ($('input[type=radio][name=payment]:checked').val() == 'single') {
-                    if ($(this).val() < total) {
-                        if ($(this).val() == '') {
-                            $(this).removeClass('is-invalid');
-                            $('#return').text('-').css({
-                                "background-color": "rgba(25, 216, 149, 0.2)",
-                                "color": "#19d895"
-                            }).data('refund', return_pay);
-                        } else {
-                            $(this).addClass('is-invalid');
-                            $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
-                                "background-color": "rgba(216, 25, 25, 0.2)",
-                                "color": "#d81c19d1"
-                            }).data('refund', return_pay);
-                        }
-                    } else {
-                        $(this).removeClass('is-invalid');
-                        $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
-                            "background-color": "rgba(25, 216, 149, 0.2)",
-                            "color": "#19d895"
-                        }).data('refund', return_pay);
-                    }
-                } else {
-                    if(data_deposit < total) {
-                        let minus_deposit = total - data_deposit;
-                        if(type_multiple.length == 1) {
-                            if (type_multiple[0] == 'cash/transfer') {
-                                if ($(this).val() < total) {
-                                    if ($(this).val() == '') {
-                                        $(this).removeClass('is-invalid');
-                                        $('#return').text('-').css({
-                                            "background-color": "rgba(25, 216, 149, 0.2)",
-                                            "color": "#19d895"
-                                        }).data('refund', return_pay);
-                                        $('#remaining').text('Rp. ' + formatIDR(total));
-                                    } else {
-                                        $(this).addClass('is-invalid');
-                                        $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
-                                            "background-color": "rgba(216, 25, 25, 0.2)",
-                                            "color": "#d81c19d1"
-                                        }).data('refund', return_pay);
-                                        $('#remaining').text('Rp. ' + formatIDR(remaining));
-                                    }
-                                } else {
+                if(data_deposit < total) {
+                    let minus_deposit = total - data_deposit;
+                    if(type_multiple.length == 1) {
+                        if (type_multiple[0] == 'cash/transfer') {
+                            if ($(this).val() < total) {
+                                if ($(this).val() == '') {
                                     $(this).removeClass('is-invalid');
-                                    $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                                    $('#return').text('-').css({
                                         "background-color": "rgba(25, 216, 149, 0.2)",
                                         "color": "#19d895"
                                     }).data('refund', return_pay);
-                                    $('#remaining').text('Rp. ' +0);
-                                }
-                            }
-                        } else if (type_multiple.length == 2 ) {
-                            if (type_multiple[0] == 'cash/transfer') {
-                                if ($(this).val() < $('.nilai-total1-td').data('split')) {
-                                    if ($(this).val() == '') {
-                                        $(this).removeClass('is-invalid');
-                                        $('#return').text('-').css({
-                                            "background-color": "rgba(25, 216, 149, 0.2)",
-                                            "color": "#19d895"
-                                        }).data('refund', return_split);
-                                        $('#remaining').text('Rp. ' + formatIDR($('.nilai-total1-td').data('split')));
-                                    } else {
-                                        $(this).addClass('is-invalid');
-                                        $('#return').text(' Rp. ' + formatIDR(return_split) + ',00').css({
-                                            "background-color": "rgba(216, 25, 25, 0.2)",
-                                            "color": "#d81c19d1"
-                                        }).data('refund', return_split);
-                                        $('#remaining').text('Rp. ' + formatIDR(split));
-                                    }
+                                    $('#remaining').text('Rp. ' + formatIDR(total));
                                 } else {
+                                    $(this).addClass('is-invalid');
+                                    $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                                        "background-color": "rgba(216, 25, 25, 0.2)",
+                                        "color": "#d81c19d1"
+                                    }).data('refund', return_pay);
+                                    $('#remaining').text('Rp. ' + formatIDR(remaining));
+                                }
+                            } else {
+                                $(this).removeClass('is-invalid');
+                                $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                                    "background-color": "rgba(25, 216, 149, 0.2)",
+                                    "color": "#19d895"
+                                }).data('refund', return_pay);
+                                $('#remaining').text('Rp. ' +0);
+                            }
+                        }
+                    } else if (type_multiple.length == 2 ) {
+                        if (type_multiple[0] == 'cash/transfer') {
+                            if ($(this).val() < $('.nilai-total1-td').data('split')) {
+                                if ($(this).val() == '') {
                                     $(this).removeClass('is-invalid');
-                                    $('#return').text(' Rp. ' + formatIDR(return_split) + ',00').css({
+                                    $('#return').text('-').css({
                                         "background-color": "rgba(25, 216, 149, 0.2)",
                                         "color": "#19d895"
                                     }).data('refund', return_split);
-                                    $('#remaining').text('Rp. ' +0);
-                                }
-                            } else if (type_multiple[1] == 'cash/transfer') {
-                                if ($(this).val() < minus_deposit) {
-                                    if ($(this).val() == '') {
-                                        $(this).removeClass('is-invalid');
-                                        $('#return').text('-').css({
-                                            "background-color": "rgba(25, 216, 149, 0.2)",
-                                            "color": "#19d895"
-                                        }).data('refund', parseInt($(this).val()) - minus_deposit);
-                                        $('#remaining').text('Rp. ' + formatIDR(minus_deposit));
-                                    } else {
-                                        $(this).addClass('is-invalid');
-                                        $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - minus_deposit) + ',00').css({
-                                            "background-color": "rgba(216, 25, 25, 0.2)",
-                                            "color": "#d81c19d1"
-                                        }).data('refund', parseInt($(this).val()) - minus_deposit);
-                                        $('#remaining').text('Rp. ' + formatIDR(parseInt(minus_deposit) - parseInt($(this).val())));
-                                    }
+                                    $('#remaining').text('Rp. ' + formatIDR($('.nilai-total1-td').data('split')));
                                 } else {
+                                    $(this).addClass('is-invalid');
+                                    $('#return').text(' Rp. ' + formatIDR(return_split) + ',00').css({
+                                        "background-color": "rgba(216, 25, 25, 0.2)",
+                                        "color": "#d81c19d1"
+                                    }).data('refund', return_split);
+                                    $('#remaining').text('Rp. ' + formatIDR(split));
+                                }
+                            } else {
+                                $(this).removeClass('is-invalid');
+                                $('#return').text(' Rp. ' + formatIDR(return_split) + ',00').css({
+                                    "background-color": "rgba(25, 216, 149, 0.2)",
+                                    "color": "#19d895"
+                                }).data('refund', return_split);
+                                $('#remaining').text('Rp. ' +0);
+                            }
+                        } else if (type_multiple[1] == 'cash/transfer') {
+                            if ($(this).val() < minus_deposit) {
+                                if ($(this).val() == '') {
                                     $(this).removeClass('is-invalid');
-                                    $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - minus_deposit) + ',00').css({
+                                    $('#return').text('-').css({
                                         "background-color": "rgba(25, 216, 149, 0.2)",
                                         "color": "#19d895"
                                     }).data('refund', parseInt($(this).val()) - minus_deposit);
-                                    $('#remaining').text(0);
-                                }
-                            }
-                        } else if (type_multiple.length == 3) {
-                            if (type_multiple[1] == 'cash/transfer') {
-                                if ($(this).val() < (total - data_deposit)) {
-                                    if ($(this).val() == '') {
-                                        $(this).removeClass('is-invalid');
-                                        $('#return').text('-').css({
-                                            "background-color": "rgba(25, 216, 149, 0.2)",
-                                            "color": "#19d895"
-                                        }).data('refund', parseInt($(this).val()) - (total - data_deposit));
-                                        $('#remaining').text('Rp. ' + formatIDR(total - data_deposit));
-                                    } else {
-                                        $(this).addClass('is-invalid');
-                                        $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - (total - data_deposit)) + ',00').css({
-                                            "background-color": "rgba(216, 25, 25, 0.2)",
-                                            "color": "#d81c19d1"
-                                        }).data('refund', parseInt($(this).val()) - (total - data_deposit));
-                                        $('#remaining').text('Rp. ' + formatIDR(parseInt(total - data_deposit) - parseInt($(this).val())));
-                                    }
+                                    $('#remaining').text('Rp. ' + formatIDR(minus_deposit));
                                 } else {
+                                    $(this).addClass('is-invalid');
+                                    $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - minus_deposit) + ',00').css({
+                                        "background-color": "rgba(216, 25, 25, 0.2)",
+                                        "color": "#d81c19d1"
+                                    }).data('refund', parseInt($(this).val()) - minus_deposit);
+                                    $('#remaining').text('Rp. ' + formatIDR(parseInt(minus_deposit) - parseInt($(this).val())));
+                                }
+                            } else {
+                                $(this).removeClass('is-invalid');
+                                $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - minus_deposit) + ',00').css({
+                                    "background-color": "rgba(25, 216, 149, 0.2)",
+                                    "color": "#19d895"
+                                }).data('refund', parseInt($(this).val()) - minus_deposit);
+                                $('#remaining').text(0);
+                            }
+                        }
+                    } else if (type_multiple.length == 3) {
+                        if (type_multiple[1] == 'cash/transfer') {
+                            if ($(this).val() < (total - data_deposit)) {
+                                if ($(this).val() == '') {
                                     $(this).removeClass('is-invalid');
-                                    $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - (total - data_deposit)) + ',00').css({
+                                    $('#return').text('-').css({
                                         "background-color": "rgba(25, 216, 149, 0.2)",
                                         "color": "#19d895"
                                     }).data('refund', parseInt($(this).val()) - (total - data_deposit));
-                                    $('#remaining').text('Rp. ' +0);
+                                    $('#remaining').text('Rp. ' + formatIDR(total - data_deposit));
+                                } else {
+                                    $(this).addClass('is-invalid');
+                                    $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - (total - data_deposit)) + ',00').css({
+                                        "background-color": "rgba(216, 25, 25, 0.2)",
+                                        "color": "#d81c19d1"
+                                    }).data('refund', parseInt($(this).val()) - (total - data_deposit));
+                                    $('#remaining').text('Rp. ' + formatIDR(parseInt(total - data_deposit) - parseInt($(this).val())));
                                 }
+                            } else {
+                                $(this).removeClass('is-invalid');
+                                $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - (total - data_deposit)) + ',00').css({
+                                    "background-color": "rgba(25, 216, 149, 0.2)",
+                                    "color": "#19d895"
+                                }).data('refund', parseInt($(this).val()) - (total - data_deposit));
+                                $('#remaining').text('Rp. ' +0);
                             }
                         }
-                    } else {
-                        if(type_multiple.length == 1) {
-                            if (type_multiple[0] == 'cash/transfer') {
-                                if ($(this).val() < total) {
-                                    if ($(this).val() == '') {
-                                        $(this).removeClass('is-invalid');
-                                        $('#return').text('-').css({
-                                            "background-color": "rgba(25, 216, 149, 0.2)",
-                                            "color": "#19d895"
-                                        }).data('refund', return_pay);
-                                        $('#remaining').text('Rp. ' + formatIDR(total));
-                                    } else {
-                                        $(this).addClass('is-invalid');
-                                        $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
-                                            "background-color": "rgba(216, 25, 25, 0.2)",
-                                            "color": "#d81c19d1"
-                                        }).data('refund', return_pay);
-                                        $('#remaining').text('Rp. ' + formatIDR(remaining));
-                                    }
-                                } else {
+                    }
+                } else {
+                    if(type_multiple.length == 1) {
+                        if (type_multiple[0] == 'cash/transfer') {
+                            if ($(this).val() < total) {
+                                if ($(this).val() == '') {
                                     $(this).removeClass('is-invalid');
-                                    $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                                    $('#return').text('-').css({
                                         "background-color": "rgba(25, 216, 149, 0.2)",
                                         "color": "#19d895"
                                     }).data('refund', return_pay);
-                                    $('#remaining').text('Rp. ' +0);
+                                    $('#remaining').text('Rp. ' + formatIDR(total));
+                                } else {
+                                    $(this).addClass('is-invalid');
+                                    $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                                        "background-color": "rgba(216, 25, 25, 0.2)",
+                                        "color": "#d81c19d1"
+                                    }).data('refund', return_pay);
+                                    $('#remaining').text('Rp. ' + formatIDR(remaining));
                                 }
+                            } else {
+                                $(this).removeClass('is-invalid');
+                                $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                                    "background-color": "rgba(25, 216, 149, 0.2)",
+                                    "color": "#19d895"
+                                }).data('refund', return_pay);
+                                $('#remaining').text('Rp. ' +0);
                             }
-                        } else if (type_multiple.length == 2) {
-                            if (type_multiple[0] == 'cash/transfer') {
-                                let remain = total - price_single;;
-                                if($(this).val() > remain) {
+                        }
+                    } else if (type_multiple.length == 2) {
+                        if (type_multiple[0] == 'cash/transfer') {
+                            let remain = total - price_single;;
+                            if($(this).val() > remain) {
+                                $(this).removeClass('is-invalid');
+                                $('#return').text(' Rp. ' + formatIDR($(this).val() - remain) + ',00').css({
+                                    "background-color": "rgba(25, 216, 149, 0.2)",
+                                    "color": "#19d895"
+                                }).data('refund', $(this).val() - remain);
+                            } else {
+                                if($(this).val() == '') {
                                     $(this).removeClass('is-invalid');
-                                    $('#return').text(' Rp. ' + formatIDR($(this).val() - remain) + ',00').css({
+                                    $('#return').text('-').css({
                                         "background-color": "rgba(25, 216, 149, 0.2)",
                                         "color": "#19d895"
+                                    }).data('refund', 0);
+                                } else {
+                                    $(this).addClass('is-invalid');
+                                    $('#return').text(' Rp. ' + formatIDR($(this).val() - remain) + ',00').css({
+                                        "background-color": "rgba(216, 25, 25, 0.2)",
+                                        "color": "#d81c19d1"
                                     }).data('refund', $(this).val() - remain);
-                                } else {
-                                    if($(this).val() == '') {
-                                        $(this).removeClass('is-invalid');
-                                        $('#return').text('-').css({
-                                            "background-color": "rgba(25, 216, 149, 0.2)",
-                                            "color": "#19d895"
-                                        }).data('refund', 0);
-                                    } else {
-                                        $(this).addClass('is-invalid');
-                                        $('#return').text(' Rp. ' + formatIDR($(this).val() - remain) + ',00').css({
-                                            "background-color": "rgba(216, 25, 25, 0.2)",
-                                            "color": "#d81c19d1"
-                                        }).data('refund', $(this).val() - remain);
-                                    }
-                                }
-                            } else if (type_multiple[1] == 'cash/transfer') {
-                                let remain = total - $(this).val();
-                                if($(this).val() > total) {
-                                    $('#deposit').text('Rp. 0');
-                                    $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
-                                                "background-color": "rgba(25, 216, 149, 0.2)",
-                                                "color": "#19d895"
-                                            }).data('refund', return_pay);
-                                } else {
-                                    if($(this).val() == '') {
-                                        $('#return').text('-').css({
-                                                    "background-color": "rgba(25, 216, 149, 0.2)",
-                                                    "color": "#19d895"
-                                                }).data('refund', 0);
-                                        $('#deposit').text('Rp. 0');
-                                    } else {
-                                        $('#return').text('0').css({
-                                                    "background-color": "rgba(25, 216, 149, 0.2)",
-                                                    "color": "#19d895"
-                                                }).data('refund', 0);
-                                        $('#deposit').text('Rp. -' + formatIDR(remain));
-                                    }
                                 }
                             }
-                        } else if (type_multiple.length == 3) {
-                            if (type_multiple[1] == 'cash/transfer') {
-                                let remain = total - price_single;
-                                if($(this).val() > remain) {
-                                    $('#deposit').text('Rp. 0');
-                                    $('#return').text(' Rp. ' + formatIDR($(this).val() - remain) + ',00').css({
+                        } else if (type_multiple[1] == 'cash/transfer') {
+                            let remain = total - $(this).val();
+                            if($(this).val() > total) {
+                                $('#deposit').text('Rp. 0');
+                                $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                                            "background-color": "rgba(25, 216, 149, 0.2)",
+                                            "color": "#19d895"
+                                        }).data('refund', return_pay);
+                            } else {
+                                if($(this).val() == '') {
+                                    $('#return').text('-').css({
                                                 "background-color": "rgba(25, 216, 149, 0.2)",
                                                 "color": "#19d895"
-                                            }).data('refund', $(this).val() - remain);
+                                            }).data('refund', 0);
+                                    $('#deposit').text('Rp. 0');
                                 } else {
-                                    if($(this).val() == '') {
-                                        $('#return').text('-').css({
-                                                    "background-color": "rgba(25, 216, 149, 0.2)",
-                                                    "color": "#19d895"
-                                                }).data('refund', 0);
-                                        $('#deposit').text('Rp. 0');
-                                    } else {
-                                        $('#return').text('0').css({
-                                                    "background-color": "rgba(25, 216, 149, 0.2)",
-                                                    "color": "#19d895"
-                                                }).data('refund', 0);
-                                        $('#deposit').text('Rp. -' + formatIDR(remain - $(this).val()));
-                                    }
+                                    $('#return').text('0').css({
+                                                "background-color": "rgba(25, 216, 149, 0.2)",
+                                                "color": "#19d895"
+                                            }).data('refund', 0);
+                                    $('#deposit').text('Rp. -' + formatIDR(remain));
+                                }
+                            }
+                        }
+                    } else if (type_multiple.length == 3) {
+                        if (type_multiple[1] == 'cash/transfer') {
+                            let remain = total - price_single;
+                            if($(this).val() > remain) {
+                                $('#deposit').text('Rp. 0');
+                                $('#return').text(' Rp. ' + formatIDR($(this).val() - remain) + ',00').css({
+                                            "background-color": "rgba(25, 216, 149, 0.2)",
+                                            "color": "#19d895"
+                                        }).data('refund', $(this).val() - remain);
+                            } else {
+                                if($(this).val() == '') {
+                                    $('#return').text('-').css({
+                                                "background-color": "rgba(25, 216, 149, 0.2)",
+                                                "color": "#19d895"
+                                            }).data('refund', 0);
+                                    $('#deposit').text('Rp. 0');
+                                } else {
+                                    $('#return').text('0').css({
+                                                "background-color": "rgba(25, 216, 149, 0.2)",
+                                                "color": "#19d895"
+                                            }).data('refund', 0);
+                                    $('#deposit').text('Rp. -' + formatIDR(remain - $(this).val()));
                                 }
                             }
                         }
@@ -1830,7 +1852,7 @@
                                         </div>
                                         <input type="text" min="0"
                                             onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                            class="form-control number-input input-notzero bayar-input"
+                                            class="form-control number-input input-notzero bayar-cash"
                                             name="bayar" placeholder="Masukkan nominal bayar"
                                             autocomplete="off">
                                     </div>`
@@ -1873,7 +1895,7 @@
                                         </div>
                                         <input type="text" min="0"
                                             onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                            class="form-control number-input input-notzero bayar-input"
+                                            class="form-control number-input input-notzero bayar-cash"
                                             name="bayar" placeholder="Masukkan nominal bayar"
                                             autocomplete="off">
                                     </div>`
@@ -1902,7 +1924,7 @@
                                         </div>
                                         <input type="text" min="0"
                                             onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                            class="form-control number-input input-notzero bayar-input"
+                                            class="form-control number-input input-notzero bayar-cash"
                                             name="bayar" placeholder="Masukkan nominal bayar"
                                             autocomplete="off">
                                     </div>`
@@ -1915,7 +1937,7 @@
                                             </div>
                                             <input type="text" min="0"
                                                 onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                                class="form-control number-input input-notzero bayar-input"
+                                                class="form-control number-input input-notzero bayar-cash"
                                                 name="bayar" placeholder="Masukkan nominal bayar"
                                                 autocomplete="off">
                                         </div>`
@@ -1937,7 +1959,7 @@
                                 $('.discount').hide();
                                 $('.refund').removeClass('d-none');
                                 $('#return').text('Rp. ' + 0);
-                                $('.bayar-input').val(response.total_price);
+                                $('.bayar-cash').val(response.total_price);
                                 $('.nilai-total1-td').text('Rp. ' + formatIDR(response.total_price) + ',00');
                             }
 
@@ -1970,8 +1992,8 @@
                     .map(function() {
                         return $(this).val();
                     }).get();
-                    console.log(type_multiple.length)
                 let order_number = $('#order-number').text();
+                let bayar_cash = $('.bayar-cash').val();
                 let bayar_input = $('.bayar-input').val();
                 let refund = $('#return').data('refund');
                 let tg = window.location.href;
@@ -1987,6 +2009,19 @@
                 let pay_deposit = data_bill - data_deposit;
                 let pay_cash = pay_deposit - bayar_input;
 
+                if (type_single == 3) {
+                    if (!bayar_cash) {
+                        sword();
+                        swal({
+                            title: "",
+                            type: "error",
+                            text: "Nominal wajib diisi",
+                            confirmButtonColor: "#01c853",
+                        });
+                        return false;
+                    }
+                }
+                
                 if (type_multiple[0] == 'cash/transfer') {
                     if (!bayar_input) {
                         sword();
@@ -2033,6 +2068,7 @@
                                 page: parseFloat(page),
                                 order_number: order_number,
                                 bayar_input: bayar_input,
+                                bayar_cash: bayar_cash,
                                 pay_deposit: pay_deposit,
                                 refund: refund
                             },

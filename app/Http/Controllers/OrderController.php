@@ -587,11 +587,11 @@ class OrderController extends Controller
                         }
                     }
                 } else if ($req->get('type_single') == 3) {
-                    if (is_null($req->get('bayar_input'))) {
+                    if (is_null($req->get('bayar_cash'))) {
                         $this->setResponse('INVALID', "Nominal wajib diisi");
                         return response()->json($this->getResponse());
                     } else {
-                        if ($req->get('bayar_input') < $totalPrice) {
+                        if ($req->get('bayar_cash') < $totalPrice) {
                             $this->setResponse('INVALID', "Nominal tidak terpenuhi");
                             return response()->json($this->getResponse());
                         } else {
@@ -603,7 +603,7 @@ class OrderController extends Controller
                                     'cart' => serialize($cart_data),
                                     'payment_type' => serialize([[
                                         'payment_type' => 'cash/transfer', 
-                                        'transaction_amount' => $req->get('bayar_input'), 
+                                        'transaction_amount' => $req->get('bayar_cash'), 
                                         'balance' => 0,
                                         'discount' => 0,
                                         'refund' => $req->get('refund')
@@ -697,7 +697,7 @@ class OrderController extends Controller
                                             'cart' => serialize($cart_data),
                                             'payment_type' => serialize([[
                                                 'payment_type' => 'kupon', 
-                                                'transaction_amount' => 0, 
+                                                'transaction_amount' => $price_single, 
                                                 'balance' => $log_limit->quota_kupon,
                                                 'discount' => $price_single,
                                                 'refund' => 0
@@ -801,7 +801,7 @@ class OrderController extends Controller
                                             'cart' => serialize($cart_data),
                                             'payment_type' => serialize([[
                                                 'payment_type' => 'limit', 
-                                                'transaction_amount' => 0, 
+                                                'transaction_amount' => $price_single, 
                                                 'balance' => $log_limit->quota,
                                                 'discount' => $price_single,
                                                 'refund' => 0
