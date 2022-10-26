@@ -159,13 +159,13 @@
                                         <span>{{ $visitor->gender }}</span>
                                     </div>
                                     <div class="mb-15 d-flex flex-column">
-                                        <span class="txt-muted">Tipe Tamu</span>
+                                        <span class="txt-muted">Jenis Tamu</span>
                                         <span
                                             class="{{ $visitor->tipe_member == 'VIP' ? 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-success' : 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-warning' }}">{{ $visitor->tipe_member }}</span>
                                     </div>
                                     <div class="mb-15 d-flex flex-column">
                                         <span class="txt-muted">Kategori</span>
-                                        <span>{{ $visitor->category }}</span>
+                                        <span class="text-capitalize">{{ $visitor->category }}</span>
                                     </div>
                                 </div>
                             </div>
