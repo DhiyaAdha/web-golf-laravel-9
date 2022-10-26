@@ -327,7 +327,7 @@
                                         <td colspan="5">
                                             <table>
                                                     <td style="text-align: left">
-                                                        <strong>Katagori Tamu:</strong><br>
+                                                        <strong>Jenis Tamu:</strong><br>
                                                         <span class="label label-warning">VIP</span>
                                                     </td>
                                                     <td style="text-align: right">

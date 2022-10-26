@@ -239,26 +239,29 @@
                                                     <div class="d-flex align-items-center"
                                                         style="border-bottom: 1px solid rgba(0,0,0,.125);">
                                                         <div class="d-flex flex-column flex-grow-1">
-                                                            <strong>Cash/Transfer</strong>
-                                                            <small class="text-muted">Tunjukan bukti transfer</small>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="d-flex flex-column flex-grow-1">
+                                                                    <strong>Cash/Transfer</strong>
+                                                                    <small class="text-muted">Tunjukan bukti transfer</small>
+                                                                </div>
+                                                                <a href="javascript:void(0)" onclick="refreshInput();" data-toggle="tooltip" title="Refresh" style="color: #bababa;"><i class="fa fa-repeat" aria-hidden="true"></i></a>
+                                                            </div>
                                                             <div class="input-group mb-2">
                                                                 <div class="input-group-prepend">
                                                                     <div class="input-group-text">Rp.</div>
                                                                 </div>
-                                                                <input type="number" value="{{ $totalPrice }}"
-                                                                    class="form-control bayar-input" name="bayar"
-                                                                    placeholder="Masukkan nominal bayar">
+                                                                <input type="number" value="{{ $totalPrice }}" data-bill="{{ $totalPrice }}" class="form-control bayar-input" name="bayar" placeholder="Masukkan nominal bayar">
                                                             </div>
-                                                            {{-- <div class="d-flex flex-wrap justify-content-around mb-2 ">
-                                                                <input type="button" value="500" onclick="cal(500)" class="btn btn-sm btn-default">
-                                                                <input type="button" value="1000" onclick="cal(1000)" class="btn btn-sm btn-default">
-                                                                <input type="button" value="2000" onclick="cal(2000)" class="btn btn-sm btn-default">
-                                                                <input type="button" value="5000" onclick="cal(5000)" class="btn btn-sm btn-default">
-                                                                <input type="button" value="10000" onclick="cal(10000)" class="btn btn-sm btn-default">
-                                                                <input type="button" value="20000" onclick="cal(20000)" class="btn btn-sm btn-default">
-                                                                <input type="button" value="50000" onclick="cal(50000)" class="btn btn-sm btn-default">
-                                                                <input type="button" value="100000" onclick="cal(100000)" class="btn btn-sm btn-default">
-                                                            </div> --}}
+                                                            <div class="d-flex flex-wrap mb-2 ">
+                                                                <input type="button" value="500" onclick="cal(500)" class="btn mr-2 btn-sm btn-default">
+                                                                <input type="button" value="1000" onclick="cal(1000)" class="btn mr-2 btn-sm btn-default">
+                                                                <input type="button" value="2000" onclick="cal(2000)" class="btn mr-2 btn-sm btn-default">
+                                                                <input type="button" value="5000" onclick="cal(5000)" class="btn mr-2 btn-sm btn-default">
+                                                                <input type="button" value="10000" onclick="cal(10000)" class="btn mr-2 btn-sm btn-default">
+                                                                <input type="button" value="20000" onclick="cal(20000)" class="btn mr-2 btn-sm btn-default">
+                                                                <input type="button" value="50000" onclick="cal(50000)" class="btn mr-2 btn-sm btn-default">
+                                                                <input type="button" value="100000" onclick="cal(100000)" class="btn mr-2 btn-sm btn-default">
+                                                            </div>
                                                         </div>
                                                         <img src="{{ asset('cash-on-delivery.png') }}" alt="cash"
                                                             width="30" height="30">
@@ -369,6 +372,10 @@
     <script src="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.min.js') }}"></script>
 
     <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
         function deleteCharacter() {
             dlt();
             let currentValue = $('.inputDisplay').val();
@@ -449,14 +456,18 @@
             audio.play();
         }
 
-        // function cal(price) {
-        //     if ($('.bayar-input').val() == '') {
-        //         $('.bayar-input').val(price);
-        //     } else {
-        //         let result = parseInt($('.bayar-input').val());
-        //         $('.bayar-input').val(result + price);
-        //     }
-        // }
+        function cal(price) {
+            if ($('.bayar-input').val() == '') {
+                $('.bayar-input').val(price);
+            } else {
+                let result = parseInt($('.bayar-input').val());
+                $('.bayar-input').val(result + price);
+            }
+        }
+
+        function refreshInput() {
+            $('.bayar-input').val($('.bayar-input').data('bill'));
+        }
         
         $(document).ready(function() {
             $("[data-toggle=popover]").popover({

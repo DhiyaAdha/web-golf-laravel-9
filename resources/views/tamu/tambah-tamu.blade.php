@@ -103,7 +103,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="control-label mb-10" for="">Tipe member</label>
+                                <label class="control-label mb-10" for="">Jenis member</label>
                                 <label class="switch">
                                     <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" value="VIP"
                                         name="tipe_member">
@@ -114,10 +114,6 @@
                                     </div>
                                 </label>
                             </div>
-                            {{-- <div>
-                                <input type="radio" id="huey" name="drone" value="pertamina">
-                                <label for="pertamina">PERTAMINA</label>
-                            </div> --}}
                             <div class="form-group @error('category') has-error @enderror">
                                 <label class="control-label mb-10 text-left">Jenis Kategori</label>
                                 <div class="radio-list">

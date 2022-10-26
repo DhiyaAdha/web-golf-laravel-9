@@ -107,7 +107,7 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label mb-5" for="">Tipe Member Tamu Ini Adalah
+                                            <label class="control-label mb-5" for="">Jenis member
                                                 <label class="switch" style="margin-top:10px;">
                                                     <input class="cmn-toggle cmn-toggle-round-flat" type="hidden"
                                                         value="VIP" name="tipe_member">
@@ -120,29 +120,35 @@
                                                     </div>
                                                 </label>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label mb-10" for="category">Jenis Kategori</label>
-                                            <div class="form-check">
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="category" id="category" value="pertamina"
-                                                        <?php echo $visitor->category == 'pertamina' ? 'checked' : ''; ?>>PERTAMINA
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="category" id="category" value="pensiunan"
-                                                        <?php echo $visitor->category == 'pensiunan' ? 'checked' : ''; ?>>PENSIUNAN
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="category" id="category" value="forkopimda"
-                                                        <?php echo $visitor->category == 'forkopimda' ? 'checked' : ''; ?>>FORKOPIMDA
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="category" id="category" value="perpesi"
-                                                        <?php echo $visitor->category == 'perpesi' ? 'checked' : ''; ?>>PERPESI
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="category" id="category" value="umum"
-                                                        <?php echo $visitor->category == 'umum' ? 'checked' : ''; ?>>UMUM
-                                                </label>
+                                        <div class="form-group @error('category') has-error @enderror">
+                                            <label class="control-label mb-10 text-left">Jenis Kategori</label>
+                                            <div class="radio-list">
+                                                <div class="radio-inline pl-0">
+                                                    <span class="radio radio-info"> <input type="radio" name="category" id="category-a" value="pertamina" {{  $visitor->category == 'pertamina' ? 'checked' : '';  }}>
+                                                        <label for="category-a">PERTAMINA</label>
+                                                    </span>
+                                                </div>
+                                                <div class="radio-inline pl-0">
+                                                    <span class="radio radio-info"> <input type="radio" name="category" id="category-b" value="pensiunan" {{  $visitor->category == 'pensiunan' ? 'checked' : '';  }}>
+                                                        <label for="category-b">PENSIUNAN</label>
+                                                    </span>
+                                                </div>
+                                                <div class="radio-inline pl-0">
+                                                    <span class="radio radio-info"> <input type="radio" name="category" id="category-c" value="forkopimda" {{  $visitor->category == 'forkopimda' ? 'checked' : '';  }}>
+                                                        <label for="category-c">FORKOPIMDA</label>
+                                                    </span>
+                                                </div>
+                                                <div class="radio-inline pl-0">
+                                                    <span class="radio radio-info"> <input type="radio" name="category"
+                                                            id="category-d" value="perpesi" {{  $visitor->category == 'perpesi' ? 'checked' : '';  }}>
+                                                        <label for="category-d">PERPESI</label>
+                                                    </span>
+                                                </div>
+                                                <div class="radio-inline pl-0">
+                                                    <span class="radio radio-info"> <input type="radio" name="category" id="category-e" value="umum" {{  $visitor->category == 'umum' ? 'checked' : '';  }}>
+                                                        <label for="category-e">UMUM</label>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group text-left">

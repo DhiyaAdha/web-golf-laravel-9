@@ -354,7 +354,7 @@
                                                     <tr>
                                                         <th class="">NAMA TAMU</th>
                                                         <th class="">TANGGAL</th>
-                                                        <th class="">KATEGORI TAMU</th>
+                                                        <th class="">JENIS TAMU</th>
                                                         <th class="table-th">PUKUL</th>
                                                     </tr>
                                                 </thead>
