@@ -120,6 +120,31 @@
                                                     </div>
                                                 </label>
                                         </div>
+                                        <div class="form-group">
+                                            <label class="control-label mb-10" for="category">Jenis Kategori</label>
+                                            <div class="form-check">
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="category" id="category" value="pertamina"
+                                                        <?php echo $visitor->category == 'pertamina' ? 'checked' : ''; ?>>PERTAMINA
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="category" id="category" value="pensiunan"
+                                                        <?php echo $visitor->category == 'pensiunan' ? 'checked' : ''; ?>>PENSIUNAN
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="category" id="category" value="forkopimda"
+                                                        <?php echo $visitor->category == 'forkopimda' ? 'checked' : ''; ?>>FORKOPIMDA
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="category" id="category" value="perpesi"
+                                                        <?php echo $visitor->category == 'perpesi' ? 'checked' : ''; ?>>PERPESI
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="category" id="category" value="umum"
+                                                        <?php echo $visitor->category == 'umum' ? 'checked' : ''; ?>>UMUM
+                                                </label>
+                                            </div>
+                                        </div>
                                         <div class="form-group text-left">
                                             <button type="submit" class="btn btn-info">Simpan</button></a>
                                         </div>

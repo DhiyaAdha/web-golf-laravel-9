@@ -85,13 +85,21 @@
                                                 class="{{ $visitor->tipe_member == 'VIP' ? 'label label-success' : 'label label-warning' }}">{{ $visitor->tipe_member == 'VIP' ? 'Member' : 'VIP' }}</span>
                                         </div>
                                     </div>
+                                    <div class="mb-15 d-flex">
+                                        <div class="col-medium-3">
+                                            <span class="txt-muted">Kategori</span>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <span>{{ $visitor->category }}</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-5 col-md-5">
-                    <div class="panel panel-default panel-dropdown card-view">
+                    <div class="panel panel-default panel-dropdown card-view" style="height: 379px;">
                         <div class="panel-heading d-flex justify-content-start k">
                             <div class="pull-left">
                                 <h6 class="panel-title txt-dark">Sisa Limit dan Saldo

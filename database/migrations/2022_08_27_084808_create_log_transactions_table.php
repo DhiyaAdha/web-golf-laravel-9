@@ -22,6 +22,9 @@ class CreateLogTransactionsTable extends Migration
             $table->text('payment_type');
             $table->string('payment_status')->default(1);
             $table->integer('total');
+            $table->integer('jml_default');
+            $table->integer('jml_additional');
+            $table->integer('jml_other');
             $table->timestamps();
 
             $table->foreign('visitor_id')

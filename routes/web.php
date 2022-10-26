@@ -12,6 +12,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderRegulerController;
+use App\Http\Controllers\RevenueController;
 
 /*
 |--------------------------------------------------------------------------

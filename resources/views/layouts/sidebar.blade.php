@@ -25,13 +25,13 @@
                     <li>
                         <a class="{{ Request::is('analisis-tamu') ? 'active-page' : '' }}" href="{{ route('analisis-tamu.index') }}">
                             <div class="pull-left">
-                                <span class="right-nav-text">Analisis Tamu</span>
+                                <span class="right-nav-text">Tamu</span>
                             </div>
                             <div class="clearfix"></div>
                         </a>
                     </li>
                     <li>
-                        <a class="{{ Request::is('revenue') ? 'active-page' : '' }}" href="{{ route('revenue') }}">
+                        <a class="{{ Request::is('revenue') ? 'active-page' : '' }}" href="{{ route('revenue.index') }}">
                             <div class="pull-left">
                                 <span class="right-nav-text">Revenue</span>
                             </div>

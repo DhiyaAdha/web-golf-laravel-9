@@ -73,16 +73,17 @@ class OrderRegulerController extends Controller
                     'rowId' => $row->id,
                     'name' => $row->name,
                     'qty' => $row->quantity,
+                    'category' => $row->category,
                     'pricesingle' => $row->price,
                     'price' => $row->getPriceSum(),
                     'created_at' => $row->attributes['created_at'],
-                    'category' => $row->category,
                 ];
             }
-            
+
 
             $cart_data = collect($cart)->sortBy('created_at');
         }
+        // dd($cart);
 
         $sub_total = \Cart::session(auth()->id())->getSubTotal();
         $total = \Cart::session(auth()->id())->getTotal();
@@ -128,7 +129,7 @@ class OrderRegulerController extends Controller
                     'counted' => $counted,
                     'cart' => $cart,
                     'qty' => $cek_itemId[$request->get('id')]->quantity,
-                    'price' => $cek_itemId[$request->get('id')]->price
+                    'price' => $cek_itemId[$request->get('id')]->price,
                 ], 200);
             }
         } else {
@@ -137,9 +138,11 @@ class OrderRegulerController extends Controller
                 'name' => $package->name,
                 'price' => $price,
                 'quantity' => 1,
+                'category' => $package->category,
                 'attributes' => array(
                     'created_at' => date('Y-m-d H:i:s')
                 ),
+                
             ));
             $id_package = [];
             foreach (\Cart::session(auth()->id())->getContent() as $sd) {
@@ -147,7 +150,8 @@ class OrderRegulerController extends Controller
             }
             $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
             $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
-            
+            // $category = Package::whereIn('id', $id_package)->where('category')->get();
+
             if (count($package_additional) == 0) {
                 $cart = \Cart::session(auth()->id())->getContent();
                 $cek_itemId = $cart->whereIn('id', $request->get('id'));
@@ -162,7 +166,7 @@ class OrderRegulerController extends Controller
                             'pricesingle' => $row->price,
                             'price' => $row->getPriceSum(),
                             'created_at' => $row->attributes['created_at'],
-                            'category' => $package->category
+                            'category' => $row->category,
                         ];
                     }
                     $cart_data = collect($cart)->sortBy('created_at');
@@ -176,9 +180,10 @@ class OrderRegulerController extends Controller
                     'cart' => $cart_data,
                     'qty' => $cek_itemId[$request->get('id')]->quantity,
                     'name' => $cek_itemId[$request->get('id')]->name,
-                    'price' => $cek_itemId[$request->get('id')]->price
+                    'price' => $cek_itemId[$request->get('id')]->price,
+                    'category' => $cek_itemId[$request->get('id')]->category,
                 ], 200);
-            } else if(count($package_default) == 0) {
+            } else if (count($package_default) == 0) {
                 \Cart::session(auth()->id())->clear();
                 $this->setResponse('INVALID', "Setidaknya pilih satu jenis permainan");
                 return response()->json($this->getResponse());
@@ -196,7 +201,7 @@ class OrderRegulerController extends Controller
                             'pricesingle' => $row->price,
                             'price' => $row->getPriceSum(),
                             'created_at' => $row->attributes['created_at'],
-                            'category' => $package->category
+                            'category' => $row->category
                         ];
                     }
                     $cart_data = collect($cart)->sortBy('created_at');
@@ -211,11 +216,12 @@ class OrderRegulerController extends Controller
                     'qty' => $cek_itemId[$request->get('id')]->quantity,
                     'name' => $cek_itemId[$request->get('id')]->name,
                     'price' => $cek_itemId[$request->get('id')]->price,
+                    'category' => $cek_itemId[$request->get('id')]->category,
                     'status' => 'VALID'
                 ], 200);
             }
-            
         }
+        // dd($cart);
         return back();
     }
 
@@ -307,6 +313,7 @@ class OrderRegulerController extends Controller
             $items = \Cart::session(auth()->id())->getContent();
             $totalPrice = \Cart::session(auth()->id())->getTotal();
             $today = Carbon::now()->isoFormat('dddd');
+            // $categoryy = \Cart::session(auth()->id())->getContent();
             if (\Cart::isEmpty()) {
                 $cart_data = [];
             } else {
@@ -319,7 +326,7 @@ class OrderRegulerController extends Controller
                         'pricesingle' => $row->price,
                         'price' => $row->getPriceSum(),
                         'created_at' => $row->attributes['created_at'],
-                        'category' => $package->category
+                        'category' => $row->category,
                     ];
                 }
                 $orders = collect($cart)->sortBy('created_at');
@@ -328,14 +335,35 @@ class OrderRegulerController extends Controller
             if ($request->ajax()) {
                 return response()->json(['order_number' => $order_number]);
             }
+            // dd($items);
             return view("reguler.checkout_reguler", compact('totalPrice', 'order_number', 'orders'))->render();
         } catch (\Throwable $th) {
             return redirect()->route('proses_reguler');
         }
     }
 
-    public function pay_reguler(Request $request) {
+    public function pay_reguler(Request $request)
+    {
         $items = \Cart::session(auth()->id())->getContent();
+        //jml_default
+        $jml_default = 0;
+        $jml_additional = 0;
+        $jml_other = 0;
+        foreach ($items as $get) {
+            if($get->category == 'default')
+            {
+                $jml_default += $get->getPriceSum();
+            }
+            elseif($get->category == 'additional')
+            {
+                $jml_additional += $get->getPriceSum();
+            }
+            else
+            {
+                $jml_other += $get->getPriceSum();
+            }
+        }
+        //jml_default
         $totalPrice = \Cart::session(auth()->id())->getTotal();
         if (\Cart::isEmpty()) {
             $cart_data = [];
@@ -345,11 +373,13 @@ class OrderRegulerController extends Controller
                     'rowId' => $row->id,
                     'name' => $row->name,
                     'qty' => $row->quantity,
+                    'category' => $row->category,
                     'pricesingle' => $row->price,
                     'price' => $row->getPriceSum(),
                     'created_at' => $row->attributes['created_at'],
                 ];
             }
+            // dd($cart);
             $cart_data = collect($cart)->sortBy('created_at');
         }
         try {
@@ -365,14 +395,17 @@ class OrderRegulerController extends Controller
                 'user_id' => Auth()->id(),
                 'cart' => serialize($cart_data),
                 'payment_type' => serialize([[
-                    'payment_type' => 'cash/transfer', 
+                    'payment_type' => 'cash/transfer',
                     'transaction_amount' => $request->get('pay_amount'),
                     'balance' => 0,
                     'discount' => 0,
                     'refund' => $request->get('refund')
                 ]]),
                 'payment_status' => 'paid',
-                'total' => $totalPrice
+                'total' => $totalPrice,
+                'jml_default' => $jml_default,
+                'jml_additional' => $jml_additional,
+                'jml_other' => $jml_other,
             ]);
 
             LogAdmin::create([
@@ -395,7 +428,8 @@ class OrderRegulerController extends Controller
         }
     }
 
-    public function print_invoice(Request $request) {
+    public function print_invoice(Request $request)
+    {
         try {
             $visitor = Visitor::latest()->first();
             $log_transaction = LogTransaction::latest()->first();
@@ -432,13 +466,15 @@ class OrderRegulerController extends Controller
         }
     }
 
-    private function setResponse($status = "INVALID", $message = "Ada sesuatu yang salah!", $data = []) {
+    private function setResponse($status = "INVALID", $message = "Ada sesuatu yang salah!", $data = [])
+    {
         $this->status = $status;
         $this->message = $message;
         $this->data = $data;
     }
 
-    private function getResponse() {
+    private function getResponse()
+    {
         return [
             'status' => $this->status,
             'message' => $this->message,
