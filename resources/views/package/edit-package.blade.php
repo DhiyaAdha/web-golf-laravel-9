@@ -51,14 +51,14 @@
                                                     <span class="radio radio-info"> <input type="radio" name="category"
                                                             id="radio_9" value="default"
                                                             {{ $package->category == 'default' ? 'checked' : '' }}>
-                                                        <label for="radio_9">Default</label>
+                                                        <label for="radio_9">Permainan</label>
                                                     </span>
                                                 </div>
                                                 <div class="radio-inline pl-0">
                                                     <span class="radio radio-info"> <input type="radio" name="category"
                                                             id="radio_10" value="additional"
                                                             {{ $package->category == 'additional' ? 'checked' : '' }}>
-                                                        <label for="radio_10">Tambahan</label>
+                                                        <label for="radio_10">Fasilitas</label>
                                                     </span>
                                                 </div>
                                                 <div class="radio-inline pl-0">
