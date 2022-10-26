@@ -18,6 +18,8 @@ class RevenueController extends Controller
         $data['pendapatan_revenue_today'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->sum('total');
 
         $data['pendapatan_revenue_default'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->sum('jml_default');
+        $data['pendapatan_revenue_additional'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->sum('jml_additional');
+        $data['pendapatan_revenue_other'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->sum('jml_other');
         // $transaction = LogTransaction::all();
         // $cart = unserialize($transaction->cart);
         // foreach($cart as $kondisi){
