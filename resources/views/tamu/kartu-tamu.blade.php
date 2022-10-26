@@ -46,35 +46,37 @@
                                     <div class="modal-body">
                                         <div class="d-flex justify-content-center align-items-center flex-column">
                                             <div class="d-flex justify-content-center flex-wrap" id="cetak-kartu">
-                                                <div class="col-lg-card d-flex justify-content-center mb-10">
+                                                <div class="col-md-card d-flex justify-content-center mb-10">
                                                     <div class="panel panel-default card-view card-visitor">
-                                                        <div class="panel-heading">
+                                                        {{-- <div class="panel-heading">
                                                             <div class="pull-left">
                                                                 <div class="d-flex title-card">
-                                                                    <img style="width: 100%;" src="{{ asset('/dist/img/kartutamu/top.png') }}">
+                                                                    <img src="{{ asset('/dist/img/tgcc-icon-small.svg') }}">
+                                                                    <div class="d-flex flex-column">
+                                                                        <h6 class="panel-title txt-dark label-visitor">
+                                                                            tritih golf</h6>
+                                                                        <h6 class="panel-title txt-dark label-visitor">
+                                                                            country & club</h6>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <div class="clearfix"></div>
-                                                        </div>
+                                                        </div> --}}
                                                         <div class="panel-wrapper collapse in">
-                                                            <div class="front-qr">
-                                                                <div
+                                                            <div class="panel-body card">
+                                                                <img class="back-qr" src="{{ asset('dist/img/kartutamu/bg.svg') }}" alt="">
+                                                                {{-- <div
                                                                     class="d-flex justify-content-center align-items-center bg-front">
                                                                     <div class="pull-left">
-                                                                        <img class="main-logo"
-                                                                            src="{{ asset('/dist/img/tgcc_icon.svg') }}">
+                                                                        <img class="front-qr"
+                                                                            src="{{ asset('/dist/img/icon-golf1.svg') }}">
                                                                     </div>
-                                                                    <div class="d-flex">
-                                                                        <div class="tipe_member">
-                                                                            <h3 style="color: #01C853;">{{ $visitor->tipe_member }}</>
-                                                                        </div>
-                                                                    </div>
-                                                                    {{-- <div class="pull-right">
+                                                                    <div class="pull-right">
                                                                         <img class="front-qr"
                                                                             src="{{ asset('/dist/img/icon-golf2.svg') }}">
-                                                                    </div> --}}
+                                                                    </div>
                                                                 </div>
-                                                                {{-- <div class=" text-name-card">
+                                                                <div class=" text-name-card">
                                                                     <div class="d-flex-justify-content-center">
                                                                         <strong>
                                                                             <p class="text-center">{{ $visitor->name }}</p>
@@ -90,8 +92,8 @@
                                                                             {{ $visitor->email }}</p>
                                                                     </div>
                                                                 </div> --}}
-                                                                <img class="align-self-end img-footer"
-                                                                    src="{{ asset('/dist/img/golf-footer.svg') }}">
+                                                                {{-- <img class="align-self-end img-footer"
+                                                                    src="{{ asset('/dist/img/golf-footer.svg') }}"> --}}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -162,6 +164,10 @@
                                         <span
                                             class="{{ $visitor->tipe_member == 'VIP' ? 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-success' : 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-warning' }}">{{ $visitor->tipe_member }}</span>
                                     </div>
+                                    <div class="mb-15 d-flex flex-column">
+                                        <span class="txt-muted">Kategori</span>
+                                        <span>{{ $visitor->category }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -169,7 +175,7 @@
                 </div>
                 <div class="col-lg-3">
                     {{-- Limit Bulanan --}}
-                    <div class="panel panel-default card-view limit" style="height: 181px;">
+                    <div class="panel panel-default card-view limit" style="height: 209.4px;">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Limit</h6>
                             <div class="clearfix"></div>
@@ -182,7 +188,7 @@
                         </div>
                     </div>
                     {{-- Limit Kupon --}}
-                    <div class="panel panel-default card-view limit" style="height: 181px;">
+                    <div class="panel panel-default card-view limit" style="height: 209.4px;">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Kupon</h6>
                             <div class="clearfix"></div>
@@ -196,7 +202,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    <div class="panel panel-default card-view limit" style="height: 181px;">
+                    <div class="panel panel-default card-view limit" style="height: 209.4px;">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Saldo</h6>
                             <div class="clearfix"></div>
@@ -208,7 +214,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default card-view b" style="height: 181px;">
+                    <div class="panel panel-default card-view b" style="height: 209.4px;">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Barcode</h6>
                             <div class="clearfix"></div>
