@@ -695,7 +695,7 @@
                                 </div>
                             </div>
                             <div class="col-md-5">
-                                <div class="d-flex justify-content-center">
+                                <div class="d-flex justify-content-center" style="background: url(/img/pattern-1.svg) no-repeat center bottom; background-size: cover;">
                                     <lottie-player src="https://assets6.lottiefiles.com/packages/lf20_yzoqyyqf.json"  background="transparent"  speed="1"  style="width: 200px; height: 200px;"  loop  autoplay></lottie-player>
                                 </div>
                                 <div class="card " style="border:none;">
