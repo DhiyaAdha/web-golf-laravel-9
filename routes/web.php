@@ -12,6 +12,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderRegulerController;
+use App\Http\Controllers\RevenueController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,13 +66,15 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name('show');
     route::get('/invoice_cetakpdf/{id}', [InvoiceController::class, 'cetak_pdf'])->name('cetak_pdf');
     route::get('/export_excel', [InvoiceController::class, 'export_excel'])->name('export_excel');
+    //revenue
+    Route::resource('revenue', RevenueController::class);
+
 
 });
 
 //Level admin dan superadmin
 Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::resource('analisis-tamu', DashboardController::class);
-    Route::get('/revenue', [DashboardController::class, 'revenue'])->name('revenue');
     Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name('scan-tamu');
     Route::get('/visitor/qrcode', [ScanqrController::class, 'checkQRCode'])->name('visitor.qrcode');
     Route::get('/visitor/phone', [ScanqrController::class, 'checkNoHp'])->name('visitor.phone');

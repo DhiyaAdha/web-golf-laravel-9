@@ -14,7 +14,37 @@ class RevenueController extends Controller
      */
     public function index()
     {
-        $data['pendapatan_revenue'] = LogTransaction::  sum('total');
+        //Total revenue today
+        $data['pendapatan_revenue_today'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->sum('total');
+
+        $data['pendapatan_revenue_default'] = LogTransaction::sum('jml_default');
+        // $transaction = LogTransaction::all();
+        // $cart = unserialize($transaction->cart);
+        // foreach($cart as $kondisi){
+        //     if ($kondisi['category'] == 'default'){
+                
+        //     }
+        // }
+        // $total = 0;
+        // $qty = 0;
+        // foreach ($cart as $get) {
+        //     $qty += $get['category'];
+        //     $total += $get['price'];
+        // }
+
+
+        //Total revenue permainan
+        // $transaction = LogTransaction::find($id);
+        // $cart = unserialize($transaction->cart);
+        // $id_jenis_permainan = '';
+        // foreach ($cart as $get) {
+        //     $id_jenis_permainan += $get['rowId'];
+        // }
+
+
+
+        //Total revenue fasilitas
+        //Total revenue penjualan produk
 
 
         return view('dashboard.revenue', $data);

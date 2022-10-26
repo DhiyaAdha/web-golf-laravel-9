@@ -171,6 +171,7 @@
                                 <td style="text-align: center">Qty</td>
                                 <td style="text-align: right">Total</td>
                             </tr>
+                            {{ $cart }}
                             <tr class="item">
                                 @foreach ($cart as $item)
                                     <tr>

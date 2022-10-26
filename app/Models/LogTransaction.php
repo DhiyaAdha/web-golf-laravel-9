@@ -20,6 +20,9 @@ class LogTransaction extends Model
         'payment_type',
         'payment_status',
         'total',
+        'jml_default',
+        'jml_additional',
+        'jml_other',
         'cart',
         'created_at',
     ];
