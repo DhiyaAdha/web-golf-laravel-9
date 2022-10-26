@@ -318,18 +318,20 @@
                                                                 <input type="radio" id="customRadioInline3" name="payment-type" value="3" class="custom-control-input">
                                                                 <label class="custom-control-label" for="customRadioInline3" style="width: 100%;cursor:pointer;">
                                                                     <div class="d-flex flex-column flex-grow-1 justify-content-center">
-                                                                        <strong>Cash/Transfer</strong>
-                                                                        <small class="text-muted">Tunjukan bukti transfer</small>
-                                                                        <div class="form-group mt-2 mb-2" id="cash-transfer">
+                                                                        <div class="d-flex align-items-center">
+                                                                            <div class="d-flex flex-column flex-grow-1">
+                                                                                <strong>Cash/Transfer</strong>
+                                                                                <small class="text-muted">Tunjukan bukti transfer</small>
+                                                                            </div>
+                                                                            <a href="javascript:void(0)" onclick="refreshInput();" data-toggle="tooltip" title="Refresh" style="color: #bababa;"><i class="fa fa-repeat" aria-hidden="true"></i></a>
+                                                                        </div>
+                                                                        <div class="form-group mt-2 mb-2">
                                                                             <div class="input-group">
                                                                                 <div class="input-group-prepend">
                                                                                     <div class="input-group-text">Rp.</div>
                                                                                 </div>
-                                                                                <input type="text" min="0"
-                                                                                    onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                                                                    class="form-control number-input input-notzero bayar-cash"
-                                                                                    name="bayar" placeholder="Masukkan nominal bayar"
-                                                                                    autocomplete="off">
+                                                                                <input type="number" data-bill="{{ $totalPrice }}" class="form-control number-input input-notzero bayar-cash"
+                                                                                    name="bayar" placeholder="Masukkan nominal bayar" autocomplete="on">
                                                                             </div>
                                                                         </div>
                                                                         <div class="d-flex flex-wrap mb-2 ">
@@ -533,14 +535,19 @@
                                                                     <input type="checkbox" name="payment-type[]" value="cash/transfer" class="custom-control-input" id="customCheck7">
                                                                     <label class="custom-control-label" for="customCheck7" style="width: 100%; cursor:pointer;">
                                                                         <div class="d-flex flex-column flex-grow-1 justify-content-center">
-                                                                            <strong>Cash/Transfer</strong>
-                                                                            <small class="text-muted">Tunjukan bukti transfer</small>
+                                                                            <div class="d-flex align-items-center">
+                                                                                <div class="d-flex flex-column flex-grow-1">
+                                                                                    <strong>Cash/Transfer</strong>
+                                                                                    <small class="text-muted">Tunjukan bukti transfer</small>
+                                                                                </div>
+                                                                                <a href="javascript:void(0)" onclick="refreshInput();" data-toggle="tooltip" title="Refresh" style="color: #bababa;"><i class="fa fa-repeat" aria-hidden="true"></i></a>
+                                                                            </div>
                                                                             <div class="form-group mt-2 mb-2">
                                                                                 <div class="input-group">
                                                                                     <div class="input-group-prepend">
                                                                                         <div class="input-group-text">Rp.</div>
                                                                                     </div>
-                                                                                    <input type="number" class="form-control number-input input-notzero bayar-input" name="bayar" placeholder="Masukkan nominal bayar" autocomplete="on">
+                                                                                    <input type="number" data-bill="{{ $totalPrice }}" class="form-control number-input input-notzero bayar-input" name="bayar" placeholder="Masukkan nominal bayar" autocomplete="on">
                                                                                     </div>
                                                                             </div>
                                                                             <div class="d-flex flex-wrap mb-2 ">
@@ -688,6 +695,9 @@
                                 </div>
                             </div>
                             <div class="col-md-5">
+                                <div class="d-flex justify-content-center">
+                                    <lottie-player src="https://assets6.lottiefiles.com/packages/lf20_yzoqyyqf.json"  background="transparent"  speed="1"  style="width: 200px; height: 200px;"  loop  autoplay></lottie-player>
+                                </div>
                                 <div class="card " style="border:none;">
                                     <div class="card-body payment-1">
                                         <div class="d-flex-flex-column">
@@ -790,12 +800,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
     <script src="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.js') }}"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.min.js') }}"></script>
     <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
         function deleteCharacter() {
             dlt();
             let currentValue = $('.inputDisplay').val();
@@ -899,8 +914,19 @@
                 $('.bayar-input').val(result + price);
             }
         }
+
+        function refreshInput() {
+            if(!$('.bayar-input').val() || !$('.bayar-cash').val()) {
+                $('.bayar-cash').val('');
+                $('.bayar-input').val('');
+            } else {
+                $('.bayar-cash').val($('.bayar-cash').data('bill'));
+                $('.bayar-input').val($('.bayar-input').data('bill'));
+            }
+        }
         
         $(document).ready(function() {
+
             $("[data-toggle=popover]").popover({
                 html : true,
                 sanitize: false,
@@ -1826,7 +1852,7 @@
                                 $('.items-replace').html(html).removeClass('d-none');
                                 $('.items-default').addClass('d-none');
                                 $('.refund').addClass('d-none');
-
+                                $('.bayar-cash').val('');
                                 discount += `<div class="card mt-2">
                                     <div class="card-body">
                                         <div class="d-flex flex-column">
@@ -1869,7 +1895,7 @@
                                 $('.items-replace').html(html).removeClass('d-none');
                                 $('.items-default').addClass('d-none');
                                 $('.refund').addClass('d-none');
-
+                                $('.bayar-cash').val('');
                                 discount += `<div class="card mt-2">
                                     <div class="card-body">
                                         <div class="d-flex flex-column">
@@ -1912,7 +1938,7 @@
                                 $('.discount').hide();
                                 $('.refund').addClass('d-none');
                                 $('.nilai-total1-td').text('Rp. ' + formatIDR(response.total_price) + ',00');
-
+                                $('.bayar-cash').val('');
                                 $('#return').text('-').addClass('green').css({
                                     "background-color": "rgba(25, 216, 149, 0.2)",
                                     "color": "#19d895"
@@ -1953,7 +1979,6 @@
                                                     <small>${'Rp. ' + formatIDR(val.price) + ',00'}</small>
                                                 </div>`;
                                 });
-
                                 $('.items-replace').html(html).removeClass('d-none');
                                 $('.items-default').addClass('d-none');
                                 $('.discount').hide();
