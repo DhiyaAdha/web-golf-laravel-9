@@ -66,12 +66,11 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     route::get('/invoice_cetakpdf/{id}', [InvoiceController::class, 'cetak_pdf'])->name('cetak_pdf');
     route::get('/export_excel', [InvoiceController::class, 'export_excel'])->name('export_excel');
     Route::get('/package/destroy/{id}', [PackageController::class,'destroy'])->name('package.destroy');
-
+    Route::resource('revenue', RevenueController::class);
 });
 
 Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::resource('analisis-tamu', DashboardController::class);
-    Route::get('/revenue', [DashboardController::class, 'revenue'])->name('revenue');
     Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name('scan-tamu');
     Route::get('/visitor/qrcode', [ScanqrController::class, 'checkQRCode'])->name('visitor.qrcode');
     Route::get('/visitor/phone', [ScanqrController::class, 'checkNoHp'])->name('visitor.phone');
