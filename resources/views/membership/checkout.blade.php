@@ -318,20 +318,32 @@
                                                                 <input type="radio" id="customRadioInline3" name="payment-type" value="3" class="custom-control-input">
                                                                 <label class="custom-control-label" for="customRadioInline3" style="width: 100%;cursor:pointer;">
                                                                     <div class="d-flex flex-column flex-grow-1 justify-content-center">
-                                                                        <strong>Cash/Transfer</strong>
-                                                                        <small class="text-muted">Tunjukan bukti transfer</small>
-                                                                        <div class="form-group mt-2 mb-2" id="cash-transfer">
+                                                                        <div class="d-flex align-items-center">
+                                                                            <div class="d-flex flex-column flex-grow-1">
+                                                                                <strong>Cash/Transfer</strong>
+                                                                                <small class="text-muted">Tunjukan bukti transfer</small>
+                                                                            </div>
+                                                                            <a href="javascript:void(0)" onclick="refreshInput();" data-toggle="tooltip" title="Refresh" style="color: #bababa;"><i class="fa fa-repeat" aria-hidden="true"></i></a>
                                                                         </div>
-                                                                        {{-- <div class="d-flex flex-wrap justify-content-around mb-2 ">
-                                                                            <input type="button" value="500" onclick="cal(500)" class="btn btn-sm btn-default">
-                                                                            <input type="button" value="1000" onclick="cal(1000)" class="btn btn-sm btn-default">
-                                                                            <input type="button" value="2000" onclick="cal(2000)" class="btn btn-sm btn-default">
-                                                                            <input type="button" value="5000" onclick="cal(5000)" class="btn btn-sm btn-default">
-                                                                            <input type="button" value="10000" onclick="cal(10000)" class="btn btn-sm btn-default">
-                                                                            <input type="button" value="20000" onclick="cal(20000)" class="btn btn-sm btn-default">
-                                                                            <input type="button" value="50000" onclick="cal(50000)" class="btn btn-sm btn-default">
-                                                                            <input type="button" value="100000" onclick="cal(100000)" class="btn btn-sm btn-default">
-                                                                        </div> --}}
+                                                                        <div class="form-group mt-2 mb-2">
+                                                                            <div class="input-group">
+                                                                                <div class="input-group-prepend">
+                                                                                    <div class="input-group-text">Rp.</div>
+                                                                                </div>
+                                                                                <input type="number" data-bill="{{ $totalPrice }}" class="form-control number-input input-notzero bayar-cash"
+                                                                                    name="bayar" placeholder="Masukkan nominal bayar" autocomplete="on">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="d-flex flex-wrap mb-2 ">
+                                                                            <input type="button" value="500" onclick="cal(500)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                            <input type="button" value="1000" onclick="cal(1000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                            <input type="button" value="2000" onclick="cal(2000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                            <input type="button" value="5000" onclick="cal(5000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                            <input type="button" value="10000" onclick="cal(10000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                            <input type="button" value="20000" onclick="cal(20000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                            <input type="button" value="50000" onclick="cal(50000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                            <input type="button" value="100000" onclick="cal(100000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                        </div>
                                                                     </div>
                                                                 </label>
                                                             </div>
@@ -523,26 +535,31 @@
                                                                     <input type="checkbox" name="payment-type[]" value="cash/transfer" class="custom-control-input" id="customCheck7">
                                                                     <label class="custom-control-label" for="customCheck7" style="width: 100%; cursor:pointer;">
                                                                         <div class="d-flex flex-column flex-grow-1 justify-content-center">
-                                                                            <strong>Cash/Transfer</strong>
-                                                                            <small class="text-muted">Tunjukan bukti transfer</small>
-                                                                            <div class="form-group mt-2 mb-2" id="cashtransfer">
+                                                                            <div class="d-flex align-items-center">
+                                                                                <div class="d-flex flex-column flex-grow-1">
+                                                                                    <strong>Cash/Transfer</strong>
+                                                                                    <small class="text-muted">Tunjukan bukti transfer</small>
+                                                                                </div>
+                                                                                <a href="javascript:void(0)" onclick="refreshInput();" data-toggle="tooltip" title="Refresh" style="color: #bababa;"><i class="fa fa-repeat" aria-hidden="true"></i></a>
+                                                                            </div>
+                                                                            <div class="form-group mt-2 mb-2">
                                                                                 <div class="input-group">
                                                                                     <div class="input-group-prepend">
                                                                                         <div class="input-group-text">Rp.</div>
                                                                                     </div>
-                                                                                    <input type="number" class="form-control number-input input-notzero bayar-input" name="bayar" placeholder="Masukkan nominal bayar" autocomplete="on">
+                                                                                    <input type="number" data-bill="{{ $totalPrice }}" class="form-control number-input input-notzero bayar-input" name="bayar" placeholder="Masukkan nominal bayar" autocomplete="on">
                                                                                     </div>
                                                                             </div>
-                                                                            {{-- <div class="d-flex flex-wrap justify-content-around mb-2 ">
-                                                                                <input type="button" value="500" onclick="cal(500)" class="btn btn-sm btn-default">
-                                                                                <input type="button" value="1000" onclick="cal(1000)" class="btn btn-sm btn-default">
-                                                                                <input type="button" value="2000" onclick="cal(2000)" class="btn btn-sm btn-default">
-                                                                                <input type="button" value="5000" onclick="cal(5000)" class="btn btn-sm btn-default">
-                                                                                <input type="button" value="10000" onclick="cal(10000)" class="btn btn-sm btn-default">
-                                                                                <input type="button" value="20000" onclick="cal(20000)" class="btn btn-sm btn-default">
-                                                                                <input type="button" value="50000" onclick="cal(50000)" class="btn btn-sm btn-default">
-                                                                                <input type="button" value="100000" onclick="cal(100000)" class="btn btn-sm btn-default">
-                                                                            </div> --}}
+                                                                            <div class="d-flex flex-wrap mb-2 ">
+                                                                                <input type="button" value="500" onclick="call(500)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                                <input type="button" value="1000" onclick="call(1000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                                <input type="button" value="2000" onclick="call(2000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                                <input type="button" value="5000" onclick="call(5000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                                <input type="button" value="10000" onclick="call(10000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                                <input type="button" value="20000" onclick="call(20000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                                <input type="button" value="50000" onclick="call(50000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                                <input type="button" value="100000" onclick="call(100000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                            </div>
                                                                         </div>
                                                                     </label>
                                                                     {{-- @else
@@ -678,6 +695,9 @@
                                 </div>
                             </div>
                             <div class="col-md-5">
+                                <div class="d-flex justify-content-center" style="background: url(/img/pattern-1.svg) no-repeat center bottom; background-size: cover;">
+                                    <lottie-player src="https://assets6.lottiefiles.com/packages/lf20_yzoqyyqf.json"  background="transparent"  speed="1"  style="width: 200px; height: 200px;"  loop  autoplay></lottie-player>
+                                </div>
                                 <div class="card " style="border:none;">
                                     <div class="card-body payment-1">
                                         <div class="d-flex-flex-column">
@@ -723,7 +743,7 @@
                                                 <strong class="flex-grow-1">Item</strong>
                                                 <strong style="font-size: small;">Harga</strong>
                                             </div>
-                                            <div class="items-default">
+                                            <div class="items-default" style="height: 100px; overflow-y: scroll;">
                                                 @foreach ($orders as $cart)
                                                     <div class="d-flex">
                                                         <span class="flex-grow-1">{{ $cart['name'] }} {{ $cart['category'] == 'default' ? '| game' : '' }} x {{ $cart['qty'] }}</span>
@@ -742,6 +762,14 @@
                                     </div>
                                 </div> --}}
                                 <div class="discount"></div>
+                                <div class="card mt-2 deposit d-none">
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <span class="flex-grow-1">Deposit</span>
+                                            <span id="deposit"></span>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="card mt-2 remaining d-none">
                                     <div class="card-body">
                                         <div class="d-flex">
@@ -772,12 +800,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
     <script src="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.js') }}"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.min.js') }}"></script>
     <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
         function deleteCharacter() {
             dlt();
             let currentValue = $('.inputDisplay').val();
@@ -863,14 +896,54 @@
             audio.play();
         }
 
-        // function cal(price) {
-        //     if ($('.bayar-input').val() == '') {
-        //         $('.bayar-input').val(price);
-        //     } else {
-        //         let result = parseInt($('.bayar-input').val());
-        //         $('.bayar-input').val(result + price);
-        //     }
-        // }
+        function cal(price) {
+            $('#customRadioInline3').prop('checked', true);
+            if ($('.bayar-cash').val() == '') {
+                $('.bayar-cash').val(price);
+            } else {
+                let result = parseInt($('.bayar-cash').val());
+                $('.bayar-cash').val(result + price);
+            }
+        }
+
+        function call(price) {
+            if ($('.bayar-input').val() == '') {
+                $('.bayar-input').val(price);
+            } else {
+                let result = parseInt($('.bayar-input').val());
+                $('.bayar-input').val(result + price);
+            }
+        }
+
+        function refreshInput() {
+            if(!$('.bayar-input').val() || !$('.bayar-cash').val()) {
+                $('.bayar-cash').val('');
+                $('.bayar-input').val('');
+            } else {
+                $('.bayar-cash').val($('.bayar-cash').data('bill'));
+                $('.bayar-input').val($('.bayar-input').data('bill'));
+            }
+        }
+
+        var format = function(num){
+            var str = num.toString().replace("", ""), parts = false, output = [], i = 1, formatted = null;
+            if(str.indexOf(".") > 0) {
+                parts = str.split(".");
+                str = parts[0];
+            }
+            str = str.split("").reverse();
+            for(var j = 0, len = str.length; j < len; j++) {
+                if(str[j] != ",") {
+                output.push(str[j]);
+                if(i%3 == 0 && j < (len - 1)) {
+                    output.push(".");
+                }
+                i++;
+                }
+            }
+            formatted = output.reverse().join("");
+            return("" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ""));
+        };
         
         $(document).ready(function() {
             $("[data-toggle=popover]").popover({
@@ -886,19 +959,6 @@
                 }
             });
 
-            function formatIDR(price) {
-                var number_string = price.toString(),
-                    split = number_string.split(','),
-                    remainder = split[0].length % 3,
-                    idr = split[0].substr(0, remainder),
-                    thousand = split[0].substr(remainder).match(/\d{1,3}/gi);
-                if (thousand) {
-                    separator = remainder ? '.' : '';
-                    idr += separator + thousand.join('.');
-                }
-                return split[1] != undefined ? idr + ',' + split[1] : idr;
-            }
-
             $('input[type=radio][name=payment]').on('change', function() {
                 switch ($(this).val()) {
                     case 'single':
@@ -906,12 +966,13 @@
                         $("input[name='payment-type[]']").prop('checked', false);
                         $('#single').show();
                         $('#multiple').hide().addClass('d-none');
-                        $('#balance').text(formatIDR($('#balance').data('balance') + ',00'));
+                        $('#balance').text(format($('#balance').data('balance') + ',00'));
                         $('.items-default').removeClass('d-none');
                         $('.items-replace').addClass('d-none');
                         $('.discount').hide();
                         $('.refund').addClass('d-none');
                         $('.remaining').addClass('d-none');
+                        $('.bayar-input').val('');
                         break;
                     case 'multiple':
                         click();
@@ -922,10 +983,10 @@
                         $('.items-replace').addClass('d-none');
                         $('#single').hide();
                         $('#multiple').show().removeClass('d-none');
-                        $('.bayar-input').val(null);
+                        $('.bayar-cash').val('');
                         $('#cash-transfer').hide();
-                        $('#balance').text(formatIDR($('#balance').data('balance') + ',00'));
-                        $('.nilai-total1-td').text('Rp. ' + formatIDR($('.nilai-total1-td').data('total')) +
+                        $('#balance').text(format($('#balance').data('balance') + ',00'));
+                        $('.nilai-total1-td').text('Rp. ' + format($('.nilai-total1-td').data('total')) +
                             ',00');
                         break;
                 }
@@ -948,37 +1009,98 @@
                 } else {
                     $("#customRadioInline5").prop('checked', false);
                     $("#customRadioInline6").prop("checked", false);
-                    if(type_multiple.length == 1) {
-                        type_multiple.splice(0,1);
-                        $('.discount').hide();
-                        $('.remaining').addClass('d-none');
-                        $('#remaining').text('Rp. 0');
-                    } else if (type_multiple.length == 2) {
-                        type_multiple.splice(1,1);
-                        $('.discount').hide();
-                        if(type_multiple[0] == 'deposit') {
-                            $('.bayar-input').val('');
-                            $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
-                            $('.nilai-total1-td').data('total', data_bill);
-                            $('#remaining').text('Rp. ' + formatIDR(data_bill - data_deposit));
-                        } else if (type_multiple[0] == 'cash/transfer') {
+                    $('#hide-limit').addClass('d-none');
+                    if(data_deposit < data_bill) {
+                        if(type_multiple.length == 1) {
+                            type_multiple.splice(0,1);
+                            $('.discount').hide();
+                            $('.remaining').addClass('d-none');
                             $('#remaining').text('Rp. 0');
-                            $('.bayar-input').val(data_bill);
-                            $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
+                        } else if (type_multiple.length == 2) {
+                            type_multiple.splice(1,1);
+                            $('.discount').hide();
+                            if(type_multiple[0] == 'deposit') {
+                                $('.bayar-input').val('');
+                                $('.nilai-total1-td').text('Rp. ' + format(data_bill) + ',00');
+                                $('.nilai-total1-td').data('total', data_bill);
+                                $('#remaining').text('Rp. ' + format(data_bill - data_deposit));
+                            } else if (type_multiple[0] == 'cash/transfer') {
+                                $('#remaining').text('Rp. 0');
+                                $('.bayar-input').val(data_bill).removeClass('is-invalid');
+                                $('#return').text('0').css({
+                                    "background-color": "rgba(25, 216, 149, 0.2)",
+                                    "color": "#19d895"
+                                }).data('refund', 0);
+                                $('.nilai-total1-td').text('Rp. ' + format(data_bill) + ',00');
+                                $('.nilai-total1-td').data('total', data_bill);
+                            }
+                        } else if (type_multiple.length == 3) {
+                            type_multiple.splice(2,1);
+                            $('.discount').hide();
+                            $('.bayar-input').val(data_bill - data_deposit).removeClass('is-invalid');
+                            $('#return').text('0').css({
+                                "background-color": "rgba(25, 216, 149, 0.2)",
+                                "color": "#19d895"
+                            }).data('refund', 0);
+                            $('#remaining').text('Rp. 0');
+                            $('.nilai-total1-td').text('Rp. ' + format(data_bill) + ',00');
                             $('.nilai-total1-td').data('total', data_bill);
                         }
-                    } else if (type_multiple.length == 3) {
-                        type_multiple.splice(2,1);
-                        $('.discount').hide();
-                        $('.bayar-input').val(data_bill - data_deposit);
-                        $('#remaining').text('Rp. 0');
-                        $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
-                        $('.nilai-total1-td').data('total', data_bill);
+                    } else {
+                        if (type_multiple.length == 1) {
+                            type_multiple.splice(0,1);
+                            $('.discount').hide();
+                        } else if(type_multiple.length == 2) {
+                            if(type_multiple[0] == 'deposit') {
+                                type_multiple.splice(1,1);
+                                $('.deposit').addClass('d-none');
+                                $('#deposit').text('Rp. 0');
+                                $('.nilai-total1-td').text('Rp. ' + format(data_bill) + ',00');
+                                $('.discount').hide();
+                            } else if (type_multiple[0] == 'cash/transfer') {
+                                $('.discount').hide();
+                                $('.bayar-input').val(data_bill).removeClass('is-invalid');
+                                $('#return').text('-').css({
+                                    "background-color": "rgba(25, 216, 149, 0.2)",
+                                    "color": "#19d895"
+                                }).data('refund', 0);
+                            }
+                        } else if (type_multiple.length == 3) {
+                            type_multiple.splice(2,1);
+                            $('.discount').hide();
+                            $('#deposit').text('Rp. 0');
+                            $('.bayar-input').val('');
+                            $('.nilai-total1-td').text('Rp. ' + format(data_bill) + ',00').data('total', data_bill);
+                        }
                     }
-                    $('#hide-limit').addClass('d-none');
                 }
             });
 
+            $(document).on('input', '.bayar-cash', function(e) {
+                let total = $('.nilai-total1-td').data('total');
+                let return_pay = parseInt($(this).val()) - parseInt(total);
+                if ($(this).val() < total) {
+                    if ($(this).val() == '') {
+                        $(this).removeClass('is-invalid');
+                        $('#return').text('-').css({
+                            "background-color": "rgba(25, 216, 149, 0.2)",
+                            "color": "#19d895"
+                        }).data('refund', return_pay);
+                    } else {
+                        $(this).addClass('is-invalid');
+                        $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                            "background-color": "rgba(216, 25, 25, 0.2)",
+                            "color": "#d81c19d1"
+                        }).data('refund', return_pay);
+                    }
+                } else {
+                    $(this).removeClass('is-invalid');
+                    $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                        "background-color": "rgba(25, 216, 149, 0.2)",
+                        "color": "#19d895"
+                    }).data('refund', return_pay);
+                }
+            });
             $(document).on('input', '.bayar-input', function(e) {
                 e.preventDefault();
                 let total = $('.nilai-total1-td').data('total');
@@ -993,168 +1115,216 @@
                         return $(this).val();
                     }).get();
 
-                if ($('input[type=radio][name=payment]:checked').val() == 'single') {
-                    if ($(this).val() < total) {
-                        if ($(this).val() == '') {
-                            $(this).removeClass('is-invalid');
-                            $('#return').text('-').css({
-                                "background-color": "rgba(25, 216, 149, 0.2)",
-                                "color": "#19d895"
-                            }).data('refund', return_pay);
-                        } else {
-                            $(this).addClass('is-invalid');
-                            $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
-                                "background-color": "rgba(216, 25, 25, 0.2)",
-                                "color": "#d81c19d1"
-                            }).data('refund', return_pay);
-                        }
-                    } else {
-                        $(this).removeClass('is-invalid');
-                        $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
-                            "background-color": "rgba(25, 216, 149, 0.2)",
-                            "color": "#19d895"
-                        }).data('refund', return_pay);
-                    }
-                } else {
-                    if(data_deposit < total) {
-                        let minus_deposit = total - data_deposit;
-                        if(type_multiple.length == 1) {
-                            if (type_multiple[0] == 'cash/transfer') {
-                                if ($(this).val() < total) {
-                                    if ($(this).val() == '') {
-                                        $(this).removeClass('is-invalid');
-                                        $('#return').text('-').css({
-                                            "background-color": "rgba(25, 216, 149, 0.2)",
-                                            "color": "#19d895"
-                                        }).data('refund', return_pay);
-                                        $('#remaining').text('Rp. ' + formatIDR(total));
-                                        $('#return').text('-')
-                                    } else {
-                                        $(this).addClass('is-invalid');
-                                        $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
-                                            "background-color": "rgba(216, 25, 25, 0.2)",
-                                            "color": "#d81c19d1"
-                                        }).data('refund', return_pay);
-                                        $('#remaining').text('Rp. ' + formatIDR(remaining));
-                                    }
-                                } else {
+                if(data_deposit < total) {
+                    let minus_deposit = total - data_deposit;
+                    if(type_multiple.length == 1) {
+                        if (type_multiple[0] == 'cash/transfer') {
+                            if ($(this).val() < total) {
+                                if ($(this).val() == '') {
                                     $(this).removeClass('is-invalid');
-                                    $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                                    $('#return').text('-').css({
                                         "background-color": "rgba(25, 216, 149, 0.2)",
                                         "color": "#19d895"
                                     }).data('refund', return_pay);
-                                    $('#remaining').text('Rp. ' +0);
-                                }
-                            }
-                        } else if (type_multiple.length == 2 ) {
-                            if (type_multiple[0] == 'cash/transfer') {
-                                if ($(this).val() < $('.nilai-total1-td').data('split')) {
-                                    if ($(this).val() == '') {
-                                        $(this).removeClass('is-invalid');
-                                        $('#return').text('-').css({
-                                            "background-color": "rgba(25, 216, 149, 0.2)",
-                                            "color": "#19d895"
-                                        }).data('refund', return_split);
-                                        $('#remaining').text('Rp. ' + formatIDR($('.nilai-total1-td').data('split')));
-                                        $('#return').text('-')
-                                    } else {
-                                        $(this).addClass('is-invalid');
-                                        $('#return').text(' Rp. ' + formatIDR(return_split) + ',00').css({
-                                            "background-color": "rgba(216, 25, 25, 0.2)",
-                                            "color": "#d81c19d1"
-                                        }).data('refund', return_split);
-                                        $('#remaining').text('Rp. ' + formatIDR(split));
-                                    }
+                                    $('#remaining').text('Rp. ' + format(total));
                                 } else {
+                                    $(this).addClass('is-invalid');
+                                    $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                                        "background-color": "rgba(216, 25, 25, 0.2)",
+                                        "color": "#d81c19d1"
+                                    }).data('refund', return_pay);
+                                    $('#remaining').text('Rp. ' + format(remaining));
+                                }
+                            } else {
+                                $(this).removeClass('is-invalid');
+                                $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                                    "background-color": "rgba(25, 216, 149, 0.2)",
+                                    "color": "#19d895"
+                                }).data('refund', return_pay);
+                                $('#remaining').text('Rp. ' +0);
+                            }
+                        }
+                    } else if (type_multiple.length == 2 ) {
+                        if (type_multiple[0] == 'cash/transfer') {
+                            if ($(this).val() < $('.nilai-total1-td').data('split')) {
+                                if ($(this).val() == '') {
                                     $(this).removeClass('is-invalid');
-                                    $('#return').text(' Rp. ' + formatIDR(return_split) + ',00').css({
+                                    $('#return').text('-').css({
                                         "background-color": "rgba(25, 216, 149, 0.2)",
                                         "color": "#19d895"
                                     }).data('refund', return_split);
-                                    $('#remaining').text('Rp. ' +0);
-                                }
-                            } else if (type_multiple[1] == 'cash/transfer') {
-                                if ($(this).val() < minus_deposit) {
-                                    if ($(this).val() == '') {
-                                        $(this).removeClass('is-invalid');
-                                        $('#return').text('-').css({
-                                            "background-color": "rgba(25, 216, 149, 0.2)",
-                                            "color": "#19d895"
-                                        }).data('refund', parseInt($(this).val()) - minus_deposit);
-                                        $('#remaining').text('Rp. ' + formatIDR(minus_deposit));
-                                    } else {
-                                        $(this).addClass('is-invalid');
-                                        $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - minus_deposit) + ',00').css({
-                                            "background-color": "rgba(216, 25, 25, 0.2)",
-                                            "color": "#d81c19d1"
-                                        }).data('refund', parseInt($(this).val()) - minus_deposit);
-                                        $('#remaining').text('Rp. ' + formatIDR(parseInt(minus_deposit) - parseInt($(this).val())));
-                                    }
+                                    $('#remaining').text('Rp. ' + format($('.nilai-total1-td').data('split')));
                                 } else {
+                                    $(this).addClass('is-invalid');
+                                    $('#return').text(' Rp. ' + format(return_split) + ',00').css({
+                                        "background-color": "rgba(216, 25, 25, 0.2)",
+                                        "color": "#d81c19d1"
+                                    }).data('refund', return_split);
+                                    $('#remaining').text('Rp. ' + format(split));
+                                }
+                            } else {
+                                $(this).removeClass('is-invalid');
+                                $('#return').text(' Rp. ' + format(return_split) + ',00').css({
+                                    "background-color": "rgba(25, 216, 149, 0.2)",
+                                    "color": "#19d895"
+                                }).data('refund', return_split);
+                                $('#remaining').text('Rp. ' +0);
+                            }
+                        } else if (type_multiple[1] == 'cash/transfer') {
+                            if ($(this).val() < minus_deposit) {
+                                if ($(this).val() == '') {
                                     $(this).removeClass('is-invalid');
-                                    $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - minus_deposit) + ',00').css({
+                                    $('#return').text('-').css({
                                         "background-color": "rgba(25, 216, 149, 0.2)",
                                         "color": "#19d895"
                                     }).data('refund', parseInt($(this).val()) - minus_deposit);
-                                    $('#remaining').text(0);
-                                }
-                            }
-                        } else if (type_multiple.length == 3) {
-                            if (type_multiple[1] == 'cash/transfer') {
-                                if ($(this).val() < (total - data_deposit)) {
-                                    if ($(this).val() == '') {
-                                        $(this).removeClass('is-invalid');
-                                        $('#return').text('-').css({
-                                            "background-color": "rgba(25, 216, 149, 0.2)",
-                                            "color": "#19d895"
-                                        }).data('refund', parseInt($(this).val()) - (total - data_deposit));
-                                        $('#remaining').text('Rp. ' + formatIDR(total - data_deposit));
-                                    } else {
-                                        $(this).addClass('is-invalid');
-                                        $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - (total - data_deposit)) + ',00').css({
-                                            "background-color": "rgba(216, 25, 25, 0.2)",
-                                            "color": "#d81c19d1"
-                                        }).data('refund', parseInt($(this).val()) - (total - data_deposit));
-                                        $('#remaining').text('Rp. ' + formatIDR(parseInt(total - data_deposit) - parseInt($(this).val())));
-                                    }
+                                    $('#remaining').text('Rp. ' + format(minus_deposit));
                                 } else {
+                                    $(this).addClass('is-invalid');
+                                    $('#return').text(' Rp. ' + format(parseInt($(this).val()) - minus_deposit) + ',00').css({
+                                        "background-color": "rgba(216, 25, 25, 0.2)",
+                                        "color": "#d81c19d1"
+                                    }).data('refund', parseInt($(this).val()) - minus_deposit);
+                                    $('#remaining').text('Rp. ' + format(parseInt(minus_deposit) - parseInt($(this).val())));
+                                }
+                            } else {
+                                $(this).removeClass('is-invalid');
+                                $('#return').text(' Rp. ' + format(parseInt($(this).val()) - minus_deposit) + ',00').css({
+                                    "background-color": "rgba(25, 216, 149, 0.2)",
+                                    "color": "#19d895"
+                                }).data('refund', parseInt($(this).val()) - minus_deposit);
+                                $('#remaining').text(0);
+                            }
+                        }
+                    } else if (type_multiple.length == 3) {
+                        if (type_multiple[1] == 'cash/transfer') {
+                            if ($(this).val() < (total - data_deposit)) {
+                                if ($(this).val() == '') {
                                     $(this).removeClass('is-invalid');
-                                    $('#return').text(' Rp. ' + formatIDR(parseInt($(this).val()) - (total - data_deposit)) + ',00').css({
+                                    $('#return').text('-').css({
                                         "background-color": "rgba(25, 216, 149, 0.2)",
                                         "color": "#19d895"
                                     }).data('refund', parseInt($(this).val()) - (total - data_deposit));
-                                    $('#remaining').text('Rp. ' +0);
+                                    $('#remaining').text('Rp. ' + format(total - data_deposit));
+                                } else {
+                                    $(this).addClass('is-invalid');
+                                    $('#return').text(' Rp. ' + format(parseInt($(this).val()) - (total - data_deposit)) + ',00').css({
+                                        "background-color": "rgba(216, 25, 25, 0.2)",
+                                        "color": "#d81c19d1"
+                                    }).data('refund', parseInt($(this).val()) - (total - data_deposit));
+                                    $('#remaining').text('Rp. ' + format(parseInt(total - data_deposit) - parseInt($(this).val())));
                                 }
+                            } else {
+                                $(this).removeClass('is-invalid');
+                                $('#return').text(' Rp. ' + format(parseInt($(this).val()) - (total - data_deposit)) + ',00').css({
+                                    "background-color": "rgba(25, 216, 149, 0.2)",
+                                    "color": "#19d895"
+                                }).data('refund', parseInt($(this).val()) - (total - data_deposit));
+                                $('#remaining').text('Rp. ' +0);
                             }
                         }
-                    } else {
+                    }
+                } else {
+                    if(type_multiple.length == 1) {
                         if (type_multiple[0] == 'cash/transfer') {
-                                if ($(this).val() < total) {
-                                    if ($(this).val() == '') {
-                                        $(this).removeClass('is-invalid');
-                                        $('#return').text('-').css({
-                                            "background-color": "rgba(25, 216, 149, 0.2)",
-                                            "color": "#19d895"
-                                        }).data('refund', return_pay);
-                                        $('#remaining').text('Rp. ' + formatIDR(total));
-                                        $('#return').text('0')
-                                    } else {
-                                        $(this).addClass('is-invalid');
-                                        $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
-                                            "background-color": "rgba(216, 25, 25, 0.2)",
-                                            "color": "#d81c19d1"
-                                        }).data('refund', return_pay);
-                                        $('#remaining').text('Rp. ' + formatIDR(remaining));
-                                    }
-                                } else {
+                            if ($(this).val() < total) {
+                                if ($(this).val() == '') {
                                     $(this).removeClass('is-invalid');
-                                    $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                                    $('#return').text('-').css({
                                         "background-color": "rgba(25, 216, 149, 0.2)",
                                         "color": "#19d895"
                                     }).data('refund', return_pay);
-                                    $('#remaining').text('Rp. ' +0);
+                                    $('#remaining').text('Rp. ' + format(total));
+                                } else {
+                                    $(this).addClass('is-invalid');
+                                    $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                                        "background-color": "rgba(216, 25, 25, 0.2)",
+                                        "color": "#d81c19d1"
+                                    }).data('refund', return_pay);
+                                    $('#remaining').text('Rp. ' + format(remaining));
+                                }
+                            } else {
+                                $(this).removeClass('is-invalid');
+                                $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                                    "background-color": "rgba(25, 216, 149, 0.2)",
+                                    "color": "#19d895"
+                                }).data('refund', return_pay);
+                                $('#remaining').text('Rp. ' +0);
+                            }
+                        }
+                    } else if (type_multiple.length == 2) {
+                        if (type_multiple[0] == 'cash/transfer') {
+                            let remain = total - price_single;;
+                            if($(this).val() > remain) {
+                                $(this).removeClass('is-invalid');
+                                $('#return').text(' Rp. ' + format($(this).val() - remain) + ',00').css({
+                                    "background-color": "rgba(25, 216, 149, 0.2)",
+                                    "color": "#19d895"
+                                }).data('refund', $(this).val() - remain);
+                            } else {
+                                if($(this).val() == '') {
+                                    $(this).removeClass('is-invalid');
+                                    $('#return').text('-').css({
+                                        "background-color": "rgba(25, 216, 149, 0.2)",
+                                        "color": "#19d895"
+                                    }).data('refund', 0);
+                                } else {
+                                    $(this).addClass('is-invalid');
+                                    $('#return').text(' Rp. ' + format($(this).val() - remain) + ',00').css({
+                                        "background-color": "rgba(216, 25, 25, 0.2)",
+                                        "color": "#d81c19d1"
+                                    }).data('refund', $(this).val() - remain);
                                 }
                             }
+                        } else if (type_multiple[1] == 'cash/transfer') {
+                            let remain = total - $(this).val();
+                            if($(this).val() > total) {
+                                $('#deposit').text('Rp. 0');
+                                $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                                            "background-color": "rgba(25, 216, 149, 0.2)",
+                                            "color": "#19d895"
+                                        }).data('refund', return_pay);
+                            } else {
+                                if($(this).val() == '') {
+                                    $('#return').text('-').css({
+                                                "background-color": "rgba(25, 216, 149, 0.2)",
+                                                "color": "#19d895"
+                                            }).data('refund', 0);
+                                    $('#deposit').text('Rp. 0');
+                                } else {
+                                    $('#return').text('0').css({
+                                                "background-color": "rgba(25, 216, 149, 0.2)",
+                                                "color": "#19d895"
+                                            }).data('refund', 0);
+                                    $('#deposit').text('Rp. -' + format(remain));
+                                }
+                            }
+                        }
+                    } else if (type_multiple.length == 3) {
+                        if (type_multiple[1] == 'cash/transfer') {
+                            let remain = total - price_single;
+                            if($(this).val() > remain) {
+                                $('#deposit').text('Rp. 0');
+                                $('#return').text(' Rp. ' + format($(this).val() - remain) + ',00').css({
+                                            "background-color": "rgba(25, 216, 149, 0.2)",
+                                            "color": "#19d895"
+                                        }).data('refund', $(this).val() - remain);
+                            } else {
+                                if($(this).val() == '') {
+                                    $('#return').text('-').css({
+                                                "background-color": "rgba(25, 216, 149, 0.2)",
+                                                "color": "#19d895"
+                                            }).data('refund', 0);
+                                    $('#deposit').text('Rp. 0');
+                                } else {
+                                    $('#return').text('0').css({
+                                                "background-color": "rgba(25, 216, 149, 0.2)",
+                                                "color": "#19d895"
+                                            }).data('refund', 0);
+                                    $('#deposit').text('Rp. -' + format(remain - $(this).val()));
+                                }
+                            }
+                        }
                     }
                 }
             });
@@ -1174,9 +1344,9 @@
                 let cash_transfer = '';
                 
                 if ($(this).is(':checked')) {
-                    $('.remaining').removeClass('d-none');
                     // $('.summary').removeClass('d-none');
                     if(data_deposit < data_bill) {
+                        $('.remaining').removeClass('d-none');
                         if(type_multiple.length == 1) {
                             if (type_multiple[0] == 'deposit') {
                                 $.toast({
@@ -1186,7 +1356,7 @@
                                     icon: 'success',
                                     hideAfter: 700,
                                 });
-                                $('#remaining').text('Rp. ' + formatIDR(minus_deposit));
+                                $('#remaining').text('Rp. ' + format(minus_deposit));
                             } else if (type_multiple[0] == 'cash/transfer') {
                                 $.toast({
                                     text: 'Cash/transfer ditambahkan',
@@ -1198,7 +1368,7 @@
 
                                 $('.refund').removeClass('d-none');
                                 $('#return').addClass('green').text(0);
-                                $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
+                                $('.nilai-total1-td').text('Rp. ' + format(data_bill) + ',00');
                                 $('.bayar-input').val(data_bill);
                                 $('#remaining').text('Rp. ' + 0);
                             } else if (type_multiple[0] == 'kupon' || type_multiple[0] == 'limit') {
@@ -1215,15 +1385,15 @@
                                             <div class="d-flex flex-column">
                                                 <div class="d-flex">
                                                     <span class="flex-grow-1">Diskon</span>
-                                                    <span>Rp. ${formatIDR(price_single)},00</span>
+                                                    <span>Rp. ${format(price_single)},00</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>`;
                                     $('.discount').html(discount).show();
 
-                                $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill - price_single) + ',00');
-                                $('#remaining').text('Rp. ' + formatIDR(data_bill - price_single) + ',00');
+                                $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
+                                $('#remaining').text('Rp. ' + format(data_bill - price_single) + ',00');
                             }
                         } else if (type_multiple.length == 2) {
                             if (type_multiple[0] == 'deposit') {
@@ -1238,9 +1408,9 @@
 
                                     $('.refund').removeClass('d-none');
                                     $('#return').addClass('green').text(0);
-                                    $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
+                                    $('.nilai-total1-td').text('Rp. ' + format(data_bill) + ',00');
                                     $('.bayar-input').val(minus_deposit);
-                                    $('#remaining').text('Rp. ' + formatIDR(minus_deposit - minus_deposit));
+                                    $('#remaining').text('Rp. ' + format(minus_deposit - minus_deposit));
                                 } else if (type_multiple[1] == 'kupon' || type_multiple[1] == 'limit') {
                                     if (((data_bill - price_single) - data_deposit) < price_single) {
                                         type_multiple.splice(0,1)
@@ -1255,16 +1425,16 @@
                                         });
                                         return false;
                                     } else {
-                                        $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill - price_single) + ',00');
+                                        $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
                                         $('.nilai-total1-td').data('total', data_bill - price_single);
-                                        $('#remaining').text('Rp. ' + formatIDR((data_bill - price_single) - data_deposit));
+                                        $('#remaining').text('Rp. ' + format((data_bill - price_single) - data_deposit));
                                         $('.bayar-input').val((data_bill - price_single) - data_deposit);
                                         discount += `<div class="card mt-2">
                                             <div class="card-body">
                                                 <div class="d-flex flex-column">
                                                     <div class="d-flex">
                                                         <span class="flex-grow-1">Diskon</span>
-                                                        <span>Rp. ${formatIDR(price_single)},00</span>
+                                                        <span>Rp. ${format(price_single)},00</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1299,7 +1469,7 @@
                                             <div class="d-flex flex-column">
                                                 <div class="d-flex">
                                                     <span class="flex-grow-1">Diskon</span>
-                                                    <span>Rp. ${formatIDR(price_single)},00</span>
+                                                    <span>Rp. ${format(price_single)},00</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -1309,7 +1479,7 @@
                                     $('.bayar-input').val(data_bill - price_single);
                                     $('#return').addClass('green').text(0);
                                     $('#remaining').text('Rp. 0');
-                                    $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill - price_single) + ',00');
+                                    $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
                                     $('.nilai-total1-td').data('split', data_bill - price_single);
                                 } else if (type_multiple[1] == 'limit') {
                                     $('#limit').text($('#limit').data('limit') - 1);
@@ -1326,7 +1496,7 @@
                                             <div class="d-flex flex-column">
                                                 <div class="d-flex">
                                                     <span class="flex-grow-1">Diskon</span>
-                                                    <span>Rp. ${formatIDR(price_single)},00</span>
+                                                    <span>Rp. ${format(price_single)},00</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -1336,7 +1506,7 @@
                                     $('.bayar-input').val(data_bill - price_single);
                                     $('#return').addClass('green').text(0);
                                     $('#remaining').text('Rp. 0');
-                                    $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill - price_single) + ',00');
+                                    $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
                                     $('.nilai-total1-td').data('split', data_bill - price_single);
                                 }
                             }
@@ -1359,13 +1529,13 @@
                                     $('#return').addClass('green').text(0);
                                     $('.bayar-input').val((data_bill - price_single) - data_deposit);
                                     $('.nilai-total1-td').data('total', data_bill - price_single);
-                                    $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill - price_single) + ',00');
+                                    $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
                                     discount += `<div class="card mt-2">
                                             <div class="card-body">
                                                 <div class="d-flex flex-column">
                                                     <div class="d-flex">
                                                         <span class="flex-grow-1">Diskon</span>
-                                                        <span>Rp. ${formatIDR(price_single)},00</span>
+                                                        <span>Rp. ${format(price_single)},00</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1392,7 +1562,7 @@
                                     icon: 'success',
                                     hideAfter: 700,
                                 });
-                                $('#balance').text(formatIDR($('#balance').data('balance') - data_bill));
+                                // $('#balance').text(format($('#balance').data('balance') - data_bill));
                                 $('#remaining').text('Rp. 0');
                             } else if (type_multiple[0] == 'cash/transfer') {
                                 $.toast({
@@ -1404,7 +1574,7 @@
                                 });
                                 $('.refund').removeClass('d-none');
                                 $('#return').addClass('green').text(0);
-                                $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill) + ',00');
+                                $('.nilai-total1-td').text('Rp. ' + format(data_bill) + ',00');
                                 $('.bayar-input').val(data_bill);
                                 $('#remaining').text('Rp. ' + 0);
                             } else if (type_multiple[0] == 'kupon' || type_multiple[0] == 'limit') {
@@ -1421,69 +1591,207 @@
                                             <div class="d-flex flex-column">
                                                 <div class="d-flex">
                                                     <span class="flex-grow-1">Diskon</span>
-                                                    <span>Rp. ${formatIDR(price_single)},00</span>
+                                                    <span>Rp. ${format(price_single)},00</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>`;
                                     $('.discount').html(discount).show();
 
-                                $('.nilai-total1-td').text('Rp. ' + formatIDR(data_bill - price_single) + ',00');
-                                $('#remaining').text('Rp. ' + formatIDR(data_bill - price_single) + ',00');
+                                $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
+                                $('#remaining').text('Rp. ' + format(data_bill - price_single) + ',00');
+                            }
+                        } else if (type_multiple.length == 2) {
+                            if (type_multiple[0] == 'deposit') {
+                                if(type_multiple[1] == 'cash/transfer') {
+                                    $('.refund').removeClass('d-none');
+                                    $('#return').text('-').css({
+                                                "background-color": "rgba(25, 216, 149, 0.2)",
+                                                "color": "#19d895"
+                                            }).data('refund', 0).addClass('green');
+                                    $('.deposit').removeClass('d-none');
+                                    $('#deposit').text('Rp. 0');
+                                    $('.bayar-input').val('');
+                                } else if (type_multiple[1] == 'kupon' || type_multiple[1] == 'limit') {
+                                    $('.deposit').removeClass('d-none');
+                                    $('#deposit').text('Rp. -' + format(data_bill - price_single));
+                                    $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
+                                    discount += `<div class="card mt-2">
+                                            <div class="card-body">
+                                                <div class="d-flex flex-column">
+                                                    <div class="d-flex">
+                                                        <span class="flex-grow-1">Diskon</span>
+                                                        <span>Rp. ${format(price_single)},00</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>`;
+                                        $('.discount').html(discount).show();
+                                }
+                            } else if (type_multiple[0] == 'cash/transfer') {
+                                if(type_multiple[1] == 'kupon' || type_multiple[1] == 'limit') {
+                                    $('.bayar-input').val(data_bill - price_single).removeClass('is-invalid');
+                                    $('#return').text('0').css({
+                                        "background-color": "rgba(25, 216, 149, 0.2)",
+                                        "color": "#19d895"
+                                    }).data('refund', 0);
+                                    discount += `<div class="card mt-2">
+                                            <div class="card-body">
+                                                <div class="d-flex flex-column">
+                                                    <div class="d-flex">
+                                                        <span class="flex-grow-1">Diskon</span>
+                                                        <span>Rp. ${format(price_single)},00</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>`;
+                                        $('.discount').html(discount).show();
+                                    $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
+                                    $('.refund').removeClass('d-none');
+                                    $('#return').text('0').css({
+                                        "background-color": "rgba(25, 216, 149, 0.2)",
+                                        "color": "#19d895"
+                                    }).data('refund', 0).addClass('green');
+                                }
+                            }
+                        } else if (type_multiple.length == 3) {
+                            if(type_multiple[2] == 'kupon' || type_multiple[2] == 'limit') {
+                                $('.bayar-input').val('');
+                                $('.deposit').removeClass('d-none');
+                                $('#deposit').text('Rp. 0');
+                                $('.refund').removeClass('d-none');
+                                $('#return').addClass('green').text('-');
+                                discount += `<div class="card mt-2">
+                                            <div class="card-body">
+                                                <div class="d-flex flex-column">
+                                                    <div class="d-flex">
+                                                        <span class="flex-grow-1">Diskon</span>
+                                                        <span>Rp. ${format(price_single)},00</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>`;
+                                        $('.discount').html(discount).show();
+                                $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
                             }
                         }
                     }
                 } else {
-                    if(type_multiple.length == 0) {
-                        $('.remaining').addClass('d-none');
-                        // $('.summary').addClass('d-none');
-                        if ((type_multiple[0] == 'cash/transfer') == false) {
-                            $('.refund').addClass('d-none');
-                            $('.bayar-input').val('').removeClass('is-invalid');
-                            $('#return').text('-').css({
-                                            "background-color": "rgba(25, 216, 149, 0.2)",
-                                            "color": "#19d895"
-                                        }).data('refund', 0);
-                            $('#return').text('0')
-                        }
-                    } else if (type_multiple.length == 1) {
-                        if((type_multiple[0] == 'deposit') == false) {
-                            if(type_multiple[0] == 'cash/transfer') {
-                                $('.bayar-input').val(data_bill);
-                                $('#return').addClass('green').text('0');
-                                $('#remaining').text('Rp. 0');
-                            } else if (type_multiple[0] == 'kupon' || type_multiple[0] == 'limit') {
-                                $('#remaining').text('Rp. ' + formatIDR(data_bill - price_single));
+                    if(data_deposit < data_bill) {
+                        if(type_multiple.length == 0) {
+                            $('.remaining').addClass('d-none');
+                            // $('.summary').addClass('d-none');
+                            if ((type_multiple[0] == 'cash/transfer') == false) {
                                 $('.refund').addClass('d-none');
                                 $('.bayar-input').val('').removeClass('is-invalid');
                                 $('#return').text('-').css({
                                                 "background-color": "rgba(25, 216, 149, 0.2)",
                                                 "color": "#19d895"
                                             }).data('refund', 0);
-                                $('#return').text('0');
+                                $('#return').text('0')
                             }
-                        } else if (((type_multiple[0] || type_multiple[1]) == 'cash/transfer') == false) {
-                            $('.bayar-input').val('').removeClass('is-invalid');
-                            $('.refund').addClass('d-none');
-                            $('#remaining').text('Rp. ' + formatIDR(data_bill - data_deposit));
-                            $('#return').text('-').css({
+                        } else if (type_multiple.length == 1) {
+                            if((type_multiple[0] == 'deposit') == false) {
+                                if(type_multiple[0] == 'cash/transfer') {
+                                    $('.bayar-input').val(data_bill);
+                                    $('#return').addClass('green').text('0');
+                                    $('#remaining').text('Rp. 0');
+                                } else if (type_multiple[0] == 'kupon' || type_multiple[0] == 'limit') {
+                                    $('#remaining').text('Rp. ' + format(data_bill - price_single));
+                                    $('.refund').addClass('d-none');
+                                    $('.bayar-input').val('').removeClass('is-invalid');
+                                    $('#return').text('-').css({
+                                                    "background-color": "rgba(25, 216, 149, 0.2)",
+                                                    "color": "#19d895"
+                                                }).data('refund', 0);
+                                    $('#return').text('0');
+                                }
+                            } else if (((type_multiple[0] || type_multiple[1]) == 'cash/transfer') == false) {
+                                $('.bayar-input').val('').removeClass('is-invalid');
+                                $('.refund').addClass('d-none');
+                                $('#remaining').text('Rp. ' + format(data_bill - data_deposit));
+                                $('#return').text('-').css({
+                                                "background-color": "rgba(25, 216, 149, 0.2)",
+                                                "color": "#19d895"
+                                            }).data('refund', 0);
+                                $('#return').text('0')
+                            }
+                        } else if (type_multiple.length == 2) {
+                            if((type_multiple[0] == 'deposit') == false) {
+                                $('.bayar-input').val(data_bill - price_single);
+                                $('.nilai-total1-td').data('split', data_bill - price_single);
+                            } else if ((type_multiple[1] == 'cash/transfer') == false) {
+                                $('.bayar-input').val('').removeClass('is-invalid');
+                                $('.refund').addClass('d-none');
+                                $('#return').text('-').css({
+                                                "background-color": "rgba(25, 216, 149, 0.2)",
+                                                "color": "#19d895"
+                                            }).data('refund', 0);
+                                $('#remaining').text('Rp. ' + format((data_bill - price_single) - data_deposit));
+                            }
+                        }
+                    } else {
+                        if (type_multiple.length == 0) {
+                            if((type_multiple[0] == 'cash/transfer') == false) {
+                                $('.bayar-input').val('').removeClass('is-invalid');
+                                $('.refund').addClass('d-none');
+                                $('#return').text('-').css({
                                             "background-color": "rgba(25, 216, 149, 0.2)",
                                             "color": "#19d895"
-                                        }).data('refund', 0);
-                            $('#return').text('0')
-                        } 
-                    } else if (type_multiple.length == 2) {
-                        if((type_multiple[0] == 'deposit') == false) {
-                            $('.bayar-input').val(data_bill - price_single);
-                            $('.nilai-total1-td').data('split', data_bill - price_single);
-                        } else if ((type_multiple[1] == 'cash/transfer') == false) {
-                            $('.bayar-input').val('').removeClass('is-invalid');
-                            $('.refund').addClass('d-none');
-                            $('#return').text('-').css({
-                                            "background-color": "rgba(25, 216, 149, 0.2)",
-                                            "color": "#19d895"
-                                        }).data('refund', 0);
-                            $('#remaining').text('Rp. ' + formatIDR((data_bill - price_single) - data_deposit));
+                                        }).data('refund', 0).addClass('green');
+                            }
+                        } else if(type_multiple.length == 1) {
+                            if(type_multiple[0] == 'deposit') {
+                                if((type_multiple[1] == 'cash/transfer') == false) {
+                                    $('.refund').addClass('d-none');
+                                    $('#return').text('-').css({
+                                                "background-color": "rgba(25, 216, 149, 0.2)",
+                                                "color": "#19d895"
+                                            }).data('refund', 0).addClass('green');
+                                    $('.bayar-input').val('');
+                                    $('.deposit').addClass('d-none');
+                                    $('#deposit').text('Rp. 0');
+                                }
+                            } else if (type_multiple[0] == 'cash/transfer') {
+                                if((type_multiple[0] == 'deposit') == false) {
+                                    $('.deposit').addClass('d-none');
+                                    $('#deposit').text('Rp. 0');
+                                    $('.bayar-input').val(data_bill);
+                                    $('#return').text('0').css({
+                                        "background-color": "rgba(25, 216, 149, 0.2)",
+                                        "color": "#19d895"
+                                    }).data('refund', 0).addClass('green');
+                                } else if ((type_multiple[1] == 'kupon' || type_multiple == 'limit') == false) {
+                                    $('.discount').hide();
+                                }
+                            } else if (type_multiple[0] == 'kupon' || type_multiple[0] == 'limit') {
+                                if ((type_multiple[0] == 'cash/transfer') == false) {
+                                    $('.bayar-input').val('');
+                                    $('.refund').addClass('d-none');
+                                    $('#return').text('0').css({
+                                        "background-color": "rgba(25, 216, 149, 0.2)",
+                                        "color": "#19d895"
+                                    }).data('refund', 0).addClass('green');
+                                }
+                                if((type_multiple[0] == 'deposit') == false) {
+                                    $('.deposit').addClass('d-none');
+                                    $('#deposit').text('Rp. 0');
+                                    $('.nilai-total1-td').text('Rp. ' + format(data_bill) + ',00').data('total', data_bill);
+                                }
+                            }
+                        } else if (type_multiple.length == 2) {
+                            if((type_multiple[0] == 'deposit') == false) {
+                                $('.deposit').addClass('d-none');
+                                $('#deposit').text('Rp. 0');
+                            } else if ((type_multiple[1] == 'cash/transfer') == false) {
+                                $('.bayar-input').val('');
+                                $('.refund').addClass('d-none');
+                                $('#return').text('-').css({
+                                                "background-color": "rgba(25, 216, 149, 0.2)",
+                                                "color": "#19d895"
+                                            }).data('refund', 0);
+                                $('#deposit').text('Rp. ' + format((data_bill - price_single)));
+                            }
                         }
                     }
                 }
@@ -1530,9 +1838,9 @@
                     success: function(response) {
                         $.unblockUI();
                         if (response.status == "VALID") {
-                            $('#balance').text(formatIDR(response.price) + ',00');
-                            $('#kupon').text(formatIDR(parseInt(response.kupon)));
-                            $('#limit').text(formatIDR(parseInt(response.limit)));
+                            $('#balance').text(format(response.price) + ',00');
+                            $('#kupon').text(format(parseInt(response.kupon)));
+                            $('#limit').text(format(parseInt(response.limit)));
 
                             let html = '';
                             let discount = '';
@@ -1542,7 +1850,7 @@
                                 $.each(response.orders, function(b, val) {
                                     html += `<div class="d-flex">
                                                 <span class="flex-grow-1">${val.name} ${response.orders[b].category == 'default' ? '| game' : ''} x ${val.qty}</span>
-                                                <small>${response.orders[b].category == 'default' ? 'limit gratis' : 'Rp. ' + formatIDR(val.pricesingle) + ',00'}</small>
+                                                <small>${response.orders[b].category == 'default' ? 'limit gratis' : 'Rp. ' + format(val.pricesingle) + ',00'}</small>
                                             </div>`;
                                     price_discount += val.pricesingle;
                                     price += val.price;
@@ -1550,19 +1858,19 @@
                                 $('.items-replace').html(html).removeClass('d-none');
                                 $('.items-default').addClass('d-none');
                                 $('.refund').addClass('d-none');
-
+                                $('.bayar-cash').val('');
                                 discount += `<div class="card mt-2">
                                     <div class="card-body">
                                         <div class="d-flex flex-column">
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Diskon</span>
-                                                <span>Rp. ${formatIDR(price_discount)},00</span>
+                                                <span>Rp. ${format(price_discount)},00</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>`;
                                 $('.discount').html(discount).show();
-                                $('.nilai-total1-td').text('Rp. ' + formatIDR(response.total_price - response.price_default) + ',00');
+                                $('.nilai-total1-td').text('Rp. ' + format(response.total_price - response.price_default) + ',00');
 
                                 $('#return').text('-').addClass('green').css({
                                     "background-color": "rgba(25, 216, 149, 0.2)",
@@ -1576,7 +1884,7 @@
                                         </div>
                                         <input type="text" min="0"
                                             onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                            class="form-control number-input input-notzero bayar-input"
+                                            class="form-control number-input input-notzero bayar-cash"
                                             name="bayar" placeholder="Masukkan nominal bayar"
                                             autocomplete="off">
                                     </div>`
@@ -1585,7 +1893,7 @@
                                 $.each(response.orders, function(b, val) {
                                     html += `<div class="d-flex">
                                                 <span class="flex-grow-1">${val.name} ${response.orders[b].category == 'default' ? '| game' : ''} x ${val.qty}</span>
-                                                <small>${response.orders[b].category == 'default' ? 'kupon gratis' : 'Rp. ' + formatIDR(val.pricesingle) + ',00'}</small>
+                                                <small>${response.orders[b].category == 'default' ? 'kupon gratis' : 'Rp. ' + format(val.pricesingle) + ',00'}</small>
                                             </div>`;
                                     price_discount += val.pricesingle;
                                     price += val.price;
@@ -1593,20 +1901,20 @@
                                 $('.items-replace').html(html).removeClass('d-none');
                                 $('.items-default').addClass('d-none');
                                 $('.refund').addClass('d-none');
-
+                                $('.bayar-cash').val('');
                                 discount += `<div class="card mt-2">
                                     <div class="card-body">
                                         <div class="d-flex flex-column">
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Diskon</span>
-                                                <span>Rp. ${formatIDR(price_discount)},00</span>
+                                                <span>Rp. ${format(price_discount)},00</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>`;
                                 $('.discount').html(discount).show();
 
-                                $('.nilai-total1-td').text('Rp. ' + formatIDR(response.total_price - response.price_default) + ',00');
+                                $('.nilai-total1-td').text('Rp. ' + format(response.total_price - response.price_default) + ',00');
 
                                 $('#return').text('-').addClass('green').css({
                                     "background-color": "rgba(25, 216, 149, 0.2)",
@@ -1619,7 +1927,7 @@
                                         </div>
                                         <input type="text" min="0"
                                             onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                            class="form-control number-input input-notzero bayar-input"
+                                            class="form-control number-input input-notzero bayar-cash"
                                             name="bayar" placeholder="Masukkan nominal bayar"
                                             autocomplete="off">
                                     </div>`
@@ -1628,15 +1936,15 @@
                                 $.each(response.orders, function(b, val) {
                                     html += `<div class="d-flex">
                                                 <span class="flex-grow-1">${val.name} x ${val.qty}</span>
-                                                <small>${'Rp. ' + formatIDR(val.price) + ',00'}</small>
+                                                <small>${'Rp. ' + format(val.price) + ',00'}</small>
                                             </div>`;
                                 });
                                 $('.items-replace').html(html).removeClass('d-none');
                                 $('.items-default').addClass('d-none');
                                 $('.discount').hide();
                                 $('.refund').addClass('d-none');
-                                $('.nilai-total1-td').text('Rp. ' + formatIDR(response.total_price) + ',00');
-
+                                $('.nilai-total1-td').text('Rp. ' + format(response.total_price) + ',00');
+                                $('.bayar-cash').val('');
                                 $('#return').text('-').addClass('green').css({
                                     "background-color": "rgba(25, 216, 149, 0.2)",
                                     "color": "#19d895"
@@ -1648,7 +1956,7 @@
                                         </div>
                                         <input type="text" min="0"
                                             onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                            class="form-control number-input input-notzero bayar-input"
+                                            class="form-control number-input input-notzero bayar-cash"
                                             name="bayar" placeholder="Masukkan nominal bayar"
                                             autocomplete="off">
                                     </div>`
@@ -1661,7 +1969,7 @@
                                             </div>
                                             <input type="text" min="0"
                                                 onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                                class="form-control number-input input-notzero bayar-input"
+                                                class="form-control number-input input-notzero bayar-cash"
                                                 name="bayar" placeholder="Masukkan nominal bayar"
                                                 autocomplete="off">
                                         </div>`
@@ -1674,17 +1982,16 @@
                                 $.each(response.orders, function(b, val) {
                                     html += `<div class="d-flex">
                                                     <span class="flex-grow-1">${val.name} x ${val.qty}</span>
-                                                    <small>${'Rp. ' + formatIDR(val.price) + ',00'}</small>
+                                                    <small>${'Rp. ' + format(val.price) + ',00'}</small>
                                                 </div>`;
                                 });
-
                                 $('.items-replace').html(html).removeClass('d-none');
                                 $('.items-default').addClass('d-none');
                                 $('.discount').hide();
                                 $('.refund').removeClass('d-none');
                                 $('#return').text('Rp. ' + 0);
-                                $('.bayar-input').val(response.total_price);
-                                $('.nilai-total1-td').text('Rp. ' + formatIDR(response.total_price) + ',00');
+                                $('.bayar-cash').val(response.total_price);
+                                $('.nilai-total1-td').text('Rp. ' + format(response.total_price) + ',00');
                             }
 
                             $.toast({
@@ -1716,9 +2023,11 @@
                     .map(function() {
                         return $(this).val();
                     }).get();
-                    console.log(type_multiple.length)
                 let order_number = $('#order-number').text();
+                let bayar_cash = $('.bayar-cash').val();
                 let bayar_input = $('.bayar-input').val();
+                console.log(bayar_input);
+                console.log(type_multiple[0]);
                 let refund = $('#return').data('refund');
                 let tg = window.location.href;
                 tg = tg.split("?");
@@ -1733,6 +2042,19 @@
                 let pay_deposit = data_bill - data_deposit;
                 let pay_cash = pay_deposit - bayar_input;
 
+                if (type_single == 3) {
+                    if (!bayar_cash) {
+                        sword();
+                        swal({
+                            title: "",
+                            type: "error",
+                            text: "Nominal wajib diisi",
+                            confirmButtonColor: "#01c853",
+                        });
+                        return false;
+                    }
+                }
+                
                 if (type_multiple[0] == 'cash/transfer') {
                     if (!bayar_input) {
                         sword();
@@ -1779,6 +2101,7 @@
                                 page: parseFloat(page),
                                 order_number: order_number,
                                 bayar_input: bayar_input,
+                                bayar_cash: bayar_cash,
                                 pay_deposit: pay_deposit,
                                 refund: refund
                             },

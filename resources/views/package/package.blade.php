@@ -95,9 +95,11 @@
                 {
                     "data": function(data) {
                         if (data.category == 'default') {
-                            return `<span class="label label-primary">${data.category}</span>`;
+                            return `<span class="label label-primary">${data.category == 'default' ? 'Permainan' : 'Fasilitas'}</span>`;
+                        } else if (data.category == 'additional') {
+                            return `<span class="label label-danger">${data.category == 'additional' ? 'Fasilitas' : 'Permainan'}</span>`;
                         } else {
-                            return `<span class="label label-danger">${data.category}</span>`;
+                            return `<span class="label label-danger">${data.category == 'others' ? 'Lainnya' : 'Permainan'}</span>`;
                         }
                     }
                 },

@@ -41,8 +41,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="{{ Request::is('revenue') ? 'active-page' : '' }}"
-                            href="{{ route('revenue') }}">
+                        <a class="{{ Request::is('revenue') ? 'active-page' : '' }}" href="{{ route('revenue.index') }}">
                             <div class="pull-left">
                                 <span class="right-nav-text">Revenue</span>
                             </div>

@@ -12,6 +12,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderRegulerController;
+use App\Http\Controllers\RevenueController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,25 +25,24 @@ use App\Http\Controllers\OrderRegulerController;
 |
 */
 
-Route::get('/', function () {
-    if (Auth::user()) {
-        return redirect('/analisis-tamu');
-    }
-    return view('login');
-});
 
-Route::post('/forgot-password',[AuthController::class, 'email_test'])->name('email_test');
-//untuk route login
+Route::middleware(['htmlMinifier'])->group(static function() {
+    Route::get('/', function () {
+        if (Auth::user()) {
+            return redirect('/analisis-tamu');
+        }
+        return view('login');
+    });
+    Route::post('/forgot-password',[AuthController::class, 'email_test'])->name('email_test');
     Route::get('/login', [AuthController::class, 'index'])->Middleware('guest')->name('login');
     Route::post('/login', [AuthController::class, 'login']);
-    //Route untuk sebelum Login
     Route::get('/forgot-password', [AuthController::class, 'forgot_password'])->middleware('guest')->name('forgot-password');
     Route::get('/reset-password/{token}', [AuthController::class,'showResetForm'])->name('reset-password');
     Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('reset-password.update');
-    //untuk route logout
     Route::get('/logout', [AuthController::class, 'logout']);
 
-    //Level superadmin
+});
+
 Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     Route::get('/daftar-admin', [AdminController::class, 'index'])->name('daftar-admin');
     Route::post('/store', [AdminController::class, 'store'])->name('store');
@@ -65,13 +65,12 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name('show');
     route::get('/invoice_cetakpdf/{id}', [InvoiceController::class, 'cetak_pdf'])->name('cetak_pdf');
     route::get('/export_excel', [InvoiceController::class, 'export_excel'])->name('export_excel');
-
+    Route::get('/package/destroy/{id}', [PackageController::class,'destroy'])->name('package.destroy');
+    Route::resource('revenue', RevenueController::class);
 });
 
-//Level admin dan superadmin
 Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::resource('analisis-tamu', DashboardController::class);
-    Route::get('/revenue', [DashboardController::class, 'revenue'])->name('revenue');
     Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name('scan-tamu');
     Route::get('/visitor/qrcode', [ScanqrController::class, 'checkQRCode'])->name('visitor.qrcode');
     Route::get('/visitor/phone', [ScanqrController::class, 'checkNoHp'])->name('visitor.phone');
@@ -116,7 +115,6 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::post('/update/qty/{id}', [OrderController::class,'update_qty'])->name('update.qty');
     Route::post('/pay', [OrderController::class,'pay'])->name('pay');
     Route::get('/print_invoice/{id}', [OrderController::class,'print_invoice'])->name('invoice.print');
-    // reguler
     Route::get('/proses_reguler', [OrderRegulerController::class, 'index'])->name('proses_reguler');
     Route::post('/cart_add/reguler/{package}', [OrderRegulerController::class, 'add'])->name('cart_add.reguler');
     Route::post('/cart_remove/reguler/{package}',[OrderRegulerController::class, 'remove'])->name('cart_remove.reguler');
@@ -126,10 +124,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::post('/pay_reguler', [OrderRegulerController::class,'pay_reguler'])->name('pay_reguler');
     Route::get('/print_invoice_reguler', [OrderRegulerController::class,'print_invoice'])->name('invoice.print.reguler');
     
-    //route 4 notifikasi email pembayaran sukses
     Route::get('/test_payment', function(){
         return view('emails.paymentsuccess4_');
-        
     });
-
 });

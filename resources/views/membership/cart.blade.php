@@ -221,18 +221,25 @@
             });
         }
 
-        function formatIDR(price) {
-            var number_string = price.toString(),
-                split = number_string.split(','),
-                remainder = split[0].length % 3,
-                idr = split[0].substr(0, remainder),
-                thousand = split[0].substr(remainder).match(/\d{1,3}/gi);
-            if (thousand) {
-                separator = remainder ? '.' : '';
-                idr += separator + thousand.join('.');
+        var format = function(num){
+            var str = num.toString().replace("", ""), parts = false, output = [], i = 1, formatted = null;
+            if(str.indexOf(".") > 0) {
+                parts = str.split(".");
+                str = parts[0];
             }
-            return split[1] != undefined ? idr + ',' + split[1] : idr;
-        }
+            str = str.split("").reverse();
+            for(var j = 0, len = str.length; j < len; j++) {
+                if(str[j] != ",") {
+                output.push(str[j]);
+                if(i%3 == 0 && j < (len - 1)) {
+                    output.push(".");
+                }
+                i++;
+                }
+            }
+            formatted = output.reverse().join("");
+            return("" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ""));
+        };
 
         function addCart(id) {
             var url = window.location.href;
@@ -331,8 +338,8 @@
                 },
                 dataType: 'json',
                 success: function(response) {
-                    $('.price-' + response.id).text('Rp. ' + formatIDR(response.qty * response.price));
-                    $("#total-pay").text('Rp. ' + formatIDR(response.total));
+                    $('.price-' + response.id).text('Rp. ' + format(response.qty * response.price));
+                    $("#total-pay").text('Rp. ' + format(response.total));
                     $('.counted').text(response.counted);
                     if ($n.val() == 0) {
                         $('.disabled-cart-' + response.id).remove();
@@ -384,7 +391,7 @@
                 dataType: 'json',
                 success: function(response) {
                     $.unblockUI();
-                    $("#total-pay").text('Rp. ' + formatIDR(response.total));
+                    $("#total-pay").text('Rp. ' + format(response.total));
                     $('.counted').text(response.counted);
                     var qty = $('#qty').text();
                     $('#qty').text(qty - 1);
@@ -565,7 +572,13 @@
                 },
                 {
                     "data": function(data) {
-                        return `<span class="label ${data.category == 'default' ? 'label-primary' : 'label-danger'}">${data.category}</span>`;
+                        if (data.category == 'default') {
+                            return `<span class="label label-primary">${data.category == 'default' ? 'Permainan' : 'Fasilitas'}</span>`;
+                        } else if (data.category == 'additional') {
+                            return `<span class="label label-danger">${data.category == 'additional' ? 'Fasilitas' : 'Permainan'}</span>`;
+                        } else {
+                            return `<span class="label label-danger">${data.category == 'others' ? 'Lainnya' : 'Permainan'}</span>`;
+                        }
                     }
                 },
                 {

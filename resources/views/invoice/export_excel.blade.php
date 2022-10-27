@@ -11,7 +11,7 @@
         <thead>
             <tr>
                 <th class="" style="text-align:center"><strong>Nama</strong></th>
-                <th class="" style="text-align:center"><strong>Kategori Tamu</strong></th>
+                <th class="" style="text-align:center"><strong>Jenis Tamu</strong></th>
                 <th class="" style="text-align:center"><strong>Metode Pembayaran</strong></th>
                 <th class="" style="text-align:center"><strong>Total Bayar</strong></th>
                 <th class="" style="text-align:center"><strong>Tanggal Bayar</strong></th>
