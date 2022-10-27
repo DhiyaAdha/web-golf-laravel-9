@@ -316,8 +316,6 @@
     });
 </script>
 
-
-
 <script>
     var xValues = ['Jan', 'Feb', 'Mar', 'Apr', 'Mey', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -334,6 +332,36 @@
         options: {
             legend: {
                 display: false
+            }
+        }
+    });
+</script>
+
+{{-- pie chart analisis-tamu --}}
+<script>
+    var xValues = ["Pertamina", "Pensiunan", "Forkopimda", "Perpesi", "Umum"];
+    var yValues = [55, 49, 44, 24, 15];
+    var barColors = [
+        "#b91d47",
+        "#00aba9",
+        "#2b5797",
+        "#e8c3b9",
+        "#1e7145"
+    ];
+
+    new Chart("visitor-piechart", {
+        type: "pie",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: "Top 5 VIsitors Playing"
             }
         }
     });

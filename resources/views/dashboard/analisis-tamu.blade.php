@@ -279,85 +279,14 @@
 
                 {{-- chart pie --}}
                 <div class="row">
-
                     <div class="col-lg-6 col-sm-12">
                         <div class="panel panel-default card-view">
-                            
-                            {{-- <div class="panel-heading">
-
-                                <div class="pull-right">
-                                    <ul role="tablist" class="nav nav-pills nav-pills-rounded" id="myTabs_6">
-                                        <li class="active" role="presentation"><a aria-expanded="true" data-toggle="tab"
-                                                role="tab" id="home_tab_6" href="#home_6"
-                                                style="padding: 2px 20px;">pengunjung</a></li>
-                                        <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_6"
-                                                role="tab" href="#profile_6" aria-expanded="false"
-                                                style="padding: 2px 20px;">transaksi</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="pull-left">
-                                    <h6 class="panel-title txt-dark">Total VIP</h6>
-                                </div>
-                                <div class="clearfix"></div>
-                                <hr class="light-grey-hr row mt-10 mb-15" />
-                            </div> --}}
-                            
                             <div class="panel-wrapper collapse in">
                                 <div class="panel-body" style="margin-top: -80px; margin-bottom:-10px;">
                                     <div class="pills-struct mt-40">
-                                        <div class="tab-content" id="myTabContent_6">
-                                            <div id="home_6" class="tab-pane fade active in" role="tabpanel"
-                                                style="margin-top: 50px;">
-                                                <div class="label-chatrs col-lg-6 mb-15">
-                                                    <span class="clabels-text inline-block txt-dark capitalize-font">
-                                                        <span class="block font-22 weight-500 mb-5">
-                                                            <span class="counter-anim">{{ $visitor_vvip_male }}</span>
-                                                        </span>
-                                                        <span class="block txt-grey">Laki-laki</span>
-                                                    </span>
-                                                    <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-success"></i>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="label-chatrs col-lg-6 mb-15">
-                                                    <span class="clabels-text inline-block txt-dark capitalize-font">
-                                                        <span class="block font-22 weight-500 mb-5">
-                                                            <span class="counter-anim">{{ $visitor_vvip_female }}</span>
-                                                        </span>
-                                                        <span class="block txt-grey">Perempuan</span>
-                                                    </span>
-                                                    <i class="big-rpsn-icon zmdi zmdi-female pull-right txt-warning"></i>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <hr class="light-grey-hr row mt-10 mb-15" />
-
-                                            </div>
-                                            <div id="profile_6" class="tab-pane fade" role="tabpanel"
-                                                style="margin-top: 50px;">
-                                                <div class="label-chatrs col-lg-6 mb-15">
-                                                    <span class="clabels-text inline-block txt-dark capitalize-font">
-                                                        <span class="block font-22 weight-500 mb-5">
-                                                            <span
-                                                                class="counter-anim">{{ $visitor_transaction_vvip_male }}</span>
-                                                        </span>
-                                                        <span class="block txt-grey">Laki-laki</span>
-                                                    </span>
-                                                    <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-success"></i>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="label-chatrs col-lg-6 mb-15">
-                                                    <span class="clabels-text inline-block txt-dark capitalize-font">
-                                                        <span class="block font-22 weight-500 mb-5">
-                                                            <span
-                                                                class="counter-anim">{{ $visitor_transaction_vvip_female }}</span>
-                                                        </span>
-                                                        <span class="block txt-grey">Perempuan</span>
-                                                    </span>
-                                                    <i class="big-rpsn-icon zmdi zmdi-female pull-right txt-warning"></i>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <hr class="light-grey-hr row mt-10 mb-15" />
-                                            </div>
+                                        <div class="tab-content" >
+                                            
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -365,97 +294,25 @@
                         </div>
                     </div>
 
-                    {{-- pembatas vvip--}}
                     <div class="col-lg-6 col-sm-12">
-                        <div class="panel panel-default card-view">
-
-                            {{-- <div class="panel-heading">
-                                <div class="pull-right">
-                                    <ul role="tablist" class="nav nav-pills nav-pills-rounded" id="myTabs_7">
-                                        <li class="active" role="presentation"><a aria-expanded="true" data-toggle="tab"
-                                                role="tab" id="home_tab_7" href="#home_7"
-                                                style="padding: 2px 20px;">pengunjung</a></li>
-
-                                        <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_7"
-                                                role="tab" href="#profile_7" aria-expanded="false"
-                                                style="padding: 2px 20px;">transaksi</a></li>
-                                    </ul>
-                                </div>
-                                <div class="pull-left">
-                                    <h6 class="panel-title txt-dark">Total Member</h6>
-                                </div>
-                                <div class="clearfix"></div>
-                                <hr class="light-grey-hr row mt-10 mb-15" />
-                            </div> --}}
-
+                        <div class="panel panel-default card-view" style="height: 380px">
+                            <canvas id="visitor-piechart" style="width:100%;max-width:600px"></canvas>
                             <div class="panel-wrapper collapse in">
-                                <div class="panel-body" style="margin-top:-80px; margin-bottom:-10px;">
+                                <div class="panel-body" style="margin-top: -80px; margin-bottom:-10px;">
                                     <div class="pills-struct mt-40">
-                                        <div class="tab-content" id="myTabContent_7">
-                                            <div id="home_7" class="tab-pane fade active in" role="tabpanel"
-                                                style="margin-top: 50px;">
-                                                <div class="label-chatrs col-lg-6 mb-15">
-                                                    <span class="clabels-text inline-block txt-dark capitalize-font">
-                                                        <span class="block font-22 weight-500 mb-5">
-                                                            <span class="counter-anim">{{ $visitor_vip_male }}</span>
-                                                        </span>
-                                                        <span class="block txt-grey">Laki-laki</span>
-                                                    </span>
-                                                    <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-success"></i>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="label-chatrs col-lg-6 mb-15">
-                                                    <span class="clabels-text inline-block txt-dark capitalize-font">
-                                                        <span class="block font-22 weight-500 mb-5">
-                                                            <span class="counter-anim">{{ $visitor_vip_female }}</span>
-                                                        </span>
-                                                        <span class="block txt-grey">Perempuan</span>
-                                                    </span>
-                                                    <i class="big-rpsn-icon zmdi zmdi-female pull-right txt-warning"></i>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <hr class="light-grey-hr row mt-10 mb-15" />
-                                            </div>
-                                            <div id="profile_7" class="tab-pane fade" role="tabpanel"
-                                                style="margin-top: 50px;">
-
-                                                <div class="label-chatrs col-lg-6 mb-15">
-                                                    <span class="clabels-text inline-block txt-dark capitalize-font">
-                                                        <span class="block font-22 weight-500 mb-5">
-                                                            <span
-                                                                class="counter-anim">{{ $visitor_transaction_vip_male }}</span>
-                                                        </span>
-                                                        <span class="block txt-grey">Laki-laki</span>
-                                                    </span>
-                                                    <i class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-success"></i>
-                                                    <div class="clearfix"></div>
-                                                </div>
-
-                                                <div class="label-chatrs col-lg-6 mb-15">
-                                                    <span class="clabels-text inline-block txt-dark capitalize-font">
-                                                        <span class="block font-22 weight-500 mb-5">
-                                                            <span
-                                                                class="counter-anim">{{ $visitor_transaction_vip_female }}</span>
-                                                        </span>
-                                                        <span class="block txt-grey">Perempuan</span>
-                                                    </span>
-                                                    <i class="big-rpsn-icon zmdi zmdi-female pull-right txt-warning"></i>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                
-                                                <hr class="light-grey-hr row mt-10 mb-15" />
-                                            </div>
+                                        <div class="tab-content" >
+                                            
+                                            
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
                     </div>
-
-                    {{-- pembatas vip--}}
                 </div>
+{{-- end-chart pie --}}
 
+{{-- statistik --}}
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="panel panel-default card-view panel-refresh relative">
@@ -523,6 +380,8 @@
                         </div>
                     </div>
                 </div>
+                
+
                 <!-- Row Tabel Tamu-->
                 <div class="row">
                     <div class="col-lg-12">
@@ -636,8 +495,12 @@
                 }
             });
             /* data analisis */
+
+
+
         </script>
     @endpush
+
 @else
     <!DOCTYPE HTML>
     <html lang="en-US">
