@@ -136,6 +136,11 @@
             background-color: #f4f4f4;
         }
 
+        .over-products {
+            height: 100px; 
+            overflow-y: scroll;
+        }
+
         body {
             background: #efefef;
             display: flex;
@@ -743,7 +748,7 @@
                                                 <strong class="flex-grow-1">Item</strong>
                                                 <strong style="font-size: small;">Harga</strong>
                                             </div>
-                                            <div class="items-default" style="height: 100px; overflow-y: scroll;">
+                                            <div class="items-default {{ count($orders) >= 4 ? 'over-products' : '' }}">
                                                 @foreach ($orders as $cart)
                                                     <div class="d-flex">
                                                         <span class="flex-grow-1">{{ $cart['name'] }} {{ $cart['category'] == 'default' ? '| game' : '' }} x {{ $cart['qty'] }}</span>
@@ -897,12 +902,41 @@
         }
 
         function cal(price) {
+            let total = $('.nilai-total1-td').data('total');
             $('#customRadioInline3').prop('checked', true);
             if ($('.bayar-cash').val() == '') {
                 $('.bayar-cash').val(price);
+                let return_pay = parseInt($('.bayar-cash').val()) - parseInt(total);
+                if($('.bayar-cash').val() > total) {
+                    $('.bayar-cash').removeClass('is-invalid');
+                    $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                        "background-color": "rgba(25, 216, 149, 0.2)",
+                        "color": "#19d895"
+                    }).data('refund', return_pay);
+                } else {
+                    $('.bayar-cash').addClass('is-invalid');
+                    $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                        "background-color": "rgba(216, 25, 25, 0.2)",
+                        "color": "#d81c19d1"
+                    }).data('refund', return_pay);
+                }
             } else {
                 let result = parseInt($('.bayar-cash').val());
                 $('.bayar-cash').val(result + price);
+                let return_pay = parseInt($('.bayar-cash').val()) - parseInt(total);
+                if($('.bayar-cash').val() > total) {
+                    $('.bayar-cash').removeClass('is-invalid');
+                    $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                        "background-color": "rgba(25, 216, 149, 0.2)",
+                        "color": "#19d895"
+                    }).data('refund', return_pay);
+                } else {
+                    $('.bayar-cash').addClass('is-invalid');
+                    $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                        "background-color": "rgba(216, 25, 25, 0.2)",
+                        "color": "#d81c19d1"
+                    }).data('refund', return_pay);
+                }
             }
         }
 
@@ -915,14 +949,17 @@
             }
         }
 
-        function refreshInput() {
-            if(!$('.bayar-input').val() || !$('.bayar-cash').val()) {
-                $('.bayar-cash').val('');
-                $('.bayar-input').val('');
-            } else {
-                $('.bayar-cash').val($('.bayar-cash').data('bill'));
-                $('.bayar-input').val($('.bayar-input').data('bill'));
+        function formatIDR(price) {
+            var number_string = price.toString(),
+                split = number_string.split(','),
+                remainder = split[0].length % 3,
+                idr = split[0].substr(0, remainder),
+                thousand = split[0].substr(remainder).match(/\d{1,3}/gi);
+            if (thousand) {
+                separator = remainder ? '.' : '';
+                idr += separator + thousand.join('.');
             }
+            return split[1] != undefined ? idr + ',' + split[1] : idr;
         }
 
         var format = function(num){
@@ -945,7 +982,24 @@
             return("" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ""));
         };
         
+        function refreshInput() {
+            $('.bayar-input').removeClass('is-invalid').val()
+            $('.bayar-cash').removeClass('is-invalid').val();
+            $('#return').text('Rp. 0,00').css({
+                "background-color": "rgba(25, 216, 149, 0.2)",
+                "color": "#19d895"
+            }).data('refund', 0);
+            if(!$('.bayar-input').val() || !$('.bayar-cash').val()) {
+                $('.bayar-cash').val('');
+                $('.bayar-input').val('');
+            } else {
+                $('.bayar-cash').val($('.bayar-cash').data('bill'));
+                $('.bayar-input').val($('.bayar-input').data('bill'));
+            }
+        }
+
         $(document).ready(function() {
+
             $("[data-toggle=popover]").popover({
                 html : true,
                 sanitize: false,
@@ -966,7 +1020,7 @@
                         $("input[name='payment-type[]']").prop('checked', false);
                         $('#single').show();
                         $('#multiple').hide().addClass('d-none');
-                        $('#balance').text(format($('#balance').data('balance') + ',00'));
+                        $('#balance').text(formatIDR($('#balance').data('balance') + ',00'));
                         $('.items-default').removeClass('d-none');
                         $('.items-replace').addClass('d-none');
                         $('.discount').hide();
@@ -985,7 +1039,7 @@
                         $('#multiple').show().removeClass('d-none');
                         $('.bayar-cash').val('');
                         $('#cash-transfer').hide();
-                        $('#balance').text(format($('#balance').data('balance') + ',00'));
+                        $('#balance').text(formatIDR($('#balance').data('balance') + ',00'));
                         $('.nilai-total1-td').text('Rp. ' + format($('.nilai-total1-td').data('total')) +
                             ',00');
                         break;
@@ -1974,7 +2028,7 @@
                                                 autocomplete="off">
                                         </div>`
                                 ).show().prev().removeClass('mb-2');
-                                $('#return').text('-').addClass('green').css({
+                                $('#return').text('Rp. 0,00').addClass('green').css({
                                     "background-color": "rgba(25, 216, 149, 0.2)",
                                     "color": "#19d895"
                                 });
@@ -1989,7 +2043,6 @@
                                 $('.items-default').addClass('d-none');
                                 $('.discount').hide();
                                 $('.refund').removeClass('d-none');
-                                $('#return').text('Rp. ' + 0);
                                 $('.bayar-cash').val(response.total_price);
                                 $('.nilai-total1-td').text('Rp. ' + format(response.total_price) + ',00');
                             }
