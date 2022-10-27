@@ -12,20 +12,20 @@ $(document).ready(function () {
     });
     
 
-    if ($("#statistic_visitor_line").length > 0) {
+    if ($("#statistic_permainan_line").length > 0) {
         var lineChart = Morris.Line({
-            element: "statistic_visitor_line",
+            element: "statistic_permainan_line",
             xkey: "period", 
-            ykeys: ["VIP", "Member","Reguler"],
-            labels: ["VIP", "Member", "Reguler"],
+            ykeys: ["PERMAINAN"],
+            labels: ["PERMAINAN"],
             pointSize: 2,
             fillOpacity: 0,
             lineWidth: 2,
-            pointStrokeColors: ["#fec107", "#32FFC1", "#21E1E1"],
+            pointStrokeColors: ["#fec107"],
             behaveLikeLine: true,
             gridLineColor: "#878787",
             hideHover: "auto",
-            lineColors: ["#fec107", "#32FFC1", "#21E1E1"],
+            lineColors: ["#fec107"],
             resize: true,
             redraw: true,
             gridTextColor: "#878787",
@@ -45,7 +45,7 @@ $(document).ready(function () {
             lineChart.setData(data);
             lineChart.redraw();
         } else {
-            lineChart.setData(dataNewVisitor);
+            lineChart.setData(dataNewPermainan);
             lineChart.redraw();
         }
     };
