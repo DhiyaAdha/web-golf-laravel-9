@@ -99,10 +99,10 @@ class OrderController extends Controller
                     'rowId' => $row->id,
                     'name' => $row->name,
                     'qty' => $row->quantity,
-                    'category' => $row->category,
                     'pricesingle' => $row->price,
                     'price' => $row->getPriceSum(),
                     'created_at' => $row->attributes['created_at'],
+                    'category' => $row->category
                 ];
             }
             
@@ -122,7 +122,6 @@ class OrderController extends Controller
             'total' => $total,
             'tax' => $pajak
         ];
-
 
         return view('membership.cart', compact(
             'url_checkout',
@@ -2197,7 +2196,7 @@ class OrderController extends Controller
                                                         'user_id' => Auth()->id(),
                                                         'cart' => serialize($cart_data),
                                                         'payment_type' => serialize([
-                                                            ['payment_type' => 'cash/transfer', 'transaction_amount' => $coupon_free, 'balance' => 0,'discount' => 0, 'refund' => $req->get('refund')],
+                                                            ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => $req->get('refund')],
                                                             ['payment_type' => 'kupon', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota_kupon,'discount' => $price_single, 'refund' => 0]
                                                         ]),
                                                         'payment_status' => 'paid',
@@ -2306,7 +2305,7 @@ class OrderController extends Controller
                                                         'user_id' => Auth()->id(),
                                                         'cart' => serialize($cart_data),
                                                         'payment_type' => serialize([
-                                                            ['payment_type' => 'cash/transfer', 'transaction_amount' => $limit_free, 'balance' => 0,'discount' => 0, 'refund' => $req->get('refund')],
+                                                            ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => $req->get('refund')],
                                                             ['payment_type' => 'limit', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota,'discount' => $price_single, 'refund' => 0]
                                                         ]),
                                                         'payment_status' => 'paid',
