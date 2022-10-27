@@ -345,11 +345,12 @@ class OrderController extends Controller
     }
 
     public function checkout(Request $request, $id) {
+        $get_id = $id;
         $link_pos = URL::signedRoute('order.cart', ['id' => $id]);
         try {
-            $visitor = Visitor::find(request()->segment(2));
-            $items = \Cart::session(request()->segment(2))->getContent();
-            $totalPrice = \Cart::session(request()->segment(2))->getTotal();
+            $visitor = Visitor::find($get_id);
+            $items = \Cart::session($get_id)->getContent();
+            $totalPrice = \Cart::session($get_id)->getTotal();
             $today = Carbon::now()->isoFormat('dddd');
             if (\Cart::isEmpty()) {
                 $cart_data = [];
@@ -382,12 +383,12 @@ class OrderController extends Controller
                 }
             }
             $order_number = 'INV/' . Carbon::now()->format('Ymd') . '/' . $visitor->tipe_member . '/' . Carbon::now()->format('his');
-            $deposit = Deposit::where('visitor_id', request()->segment(2))->first();
-            $log_limit = LogLimit::where('visitor_id', request()->segment(2))->first();
+            $deposit = Deposit::where('visitor_id', $get_id)->first();
+            $log_limit = LogLimit::where('visitor_id', $get_id)->first();
             if ($request->ajax()) {
                 return response()->json(['order_number' => $order_number]);
             }
-            return view("membership.checkout", compact('log_limit', 'price_single', 'item_default', 'package_default', 'package_additional', 'package_others', 'visitor', 'deposit', 'totalPrice', 'order_number', 'orders'))->render();
+            return view("membership.checkout", compact('log_limit', 'get_id', 'price_single', 'item_default', 'package_default', 'package_additional', 'package_others', 'visitor', 'deposit', 'totalPrice', 'order_number', 'orders'))->render();
         } catch (\Throwable $th) {
             return redirect()->to($link_pos); 
         }
@@ -2900,7 +2901,7 @@ class OrderController extends Controller
                                 } else if ($req->get('type_multiple')[1] == 'kupon') {
                                     try {
                                         $deposit_before = $deposit->balance;
-                                        $deposit->balance = $totalPrice - $price_single;
+                                        $minus_price_single = $totalPrice - $price_single;
 
                                         LogTransaction::create([
                                             'order_number' => $req->get('order_number'),
@@ -2908,11 +2909,11 @@ class OrderController extends Controller
                                             'user_id' => Auth()->id(),
                                             'cart' => serialize($cart_data),
                                             'payment_type' => serialize([
-                                                ['payment_type' => 'deposit','transaction_amount' => $deposit->balance,'balance' => $deposit_before, 'discount' => 0, 'refund' => 0],
+                                                ['payment_type' => 'deposit','transaction_amount' => $minus_price_single,'balance' => $deposit->balance - $minus_price_single, 'discount' => 0, 'refund' => 0],
                                                 ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon, 'discount' => $price_single, 'refund' => 0]
                                             ]),
                                             'payment_status' => 'paid',
-                                            'total' => $deposit->balance,
+                                            'total' => $minus_price_single,
                                             'jml_default' => $jml_default,
                                             'jml_additional' => $jml_additional,
                                             'jml_other' => $jml_other,
@@ -2926,15 +2927,16 @@ class OrderController extends Controller
         
                                         ReportDeposit::create([
                                             'payment_type' => 'deposit',
-                                            'report_balance' => $deposit->balance,
+                                            'report_balance' => $minus_price_single,
                                             'visitor_id' => $req->get('page'),
                                             'user_id' => Auth()->id(),
-                                            'fund' => $deposit_before,
+                                            'fund' => $deposit->balance - $minus_price_single,
                                             'status' => 'Berkurang',
                                             'created_at' => Carbon::now(),
                                         ]);
 
                                         $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
+                                        $deposit->balance = $deposit->balance - $minus_price_single;
                                         $log_limit->save();
                                         $deposit->save();
         
@@ -2959,7 +2961,7 @@ class OrderController extends Controller
                                 } else if ($req->get('type_multiple')[1] == 'limit') {
                                     try {
                                         $deposit_before = $deposit->balance;
-                                        $deposit->balance = $totalPrice - $price_single;
+                                        $minus_price_single = $totalPrice - $price_single;
 
                                         LogTransaction::create([
                                             'order_number' => $req->get('order_number'),
@@ -2967,11 +2969,11 @@ class OrderController extends Controller
                                             'user_id' => Auth()->id(),
                                             'cart' => serialize($cart_data),
                                             'payment_type' => serialize([
-                                                ['payment_type' => 'deposit','transaction_amount' => $deposit->balance,'balance' => $deposit_before, 'discount' => 0, 'refund' => 0],
+                                                ['payment_type' => 'deposit','transaction_amount' => $minus_price_single,'balance' => $deposit->balance - $minus_price_single, 'discount' => 0, 'refund' => 0],
                                                 ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota, 'discount' => $price_single, 'refund' => 0]
                                             ]),
                                             'payment_status' => 'paid',
-                                            'total' => $deposit->balance,
+                                            'total' => $minus_price_single
                                             'jml_default' => $jml_default,
                                             'jml_additional' => $jml_additional,
                                             'jml_other' => $jml_other,
@@ -2985,15 +2987,16 @@ class OrderController extends Controller
         
                                         ReportDeposit::create([
                                             'payment_type' => 'deposit',
-                                            'report_balance' => $deposit->balance,
+                                            'report_balance' => $minus_price_single,
                                             'visitor_id' => $req->get('page'),
                                             'user_id' => Auth()->id(),
-                                            'fund' => $deposit_before,
+                                            'fund' => $deposit->balance - $minus_price_single,
                                             'status' => 'Berkurang',
                                             'created_at' => Carbon::now(),
                                         ]);
 
                                         $log_limit->quota = $log_limit->quota - 1;
+                                        $deposit->balance = $deposit->balance - $minus_price_single;
                                         $log_limit->save();
                                         $deposit->save();
         
