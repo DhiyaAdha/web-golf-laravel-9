@@ -391,11 +391,25 @@
                 data: [28, 48, 40, 19, 86, 27, 90]
             },
             {
+                label: "My First dataset",
+                backgroundColor: "rgba(233,30,99,.8)",
+                borderColor: "rgba(233,30,99,.8)",
+                data: [10, 30, 80, 61, 26, 75, 40]
+                // data: ["January", "February", "March", "April", "May", "June", "July"]
+            },
+            {
                 label: "My Third dataset",
                 backgroundColor: "rgba(1,200,83,.8)",
                 borderColor: "rgba(1,200,83,.8)",
                 data: [10, 28, 10, 10, 86, 23, 20]
-            }
+            },
+            {
+                label: "My First dataset",
+                backgroundColor: "rgba(233,30,99,.8)",
+                borderColor: "rgba(233,30,99,.8)",
+                data: [10, 30, 80, 61, 26, 75, 40]
+                // data: ["January", "February", "March", "April", "May", "June", "July"]
+            },
         ]
     };
     
