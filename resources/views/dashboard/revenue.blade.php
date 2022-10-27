@@ -127,7 +127,7 @@
                         <div class="panel panel-default card-view">
                             <div class="panel-heading">
                                 <div class="pull-left">
-                                    <h6 class="pannel-title text-dark">Revenue Trendline</h6>
+                                    <h6 class="pannel-title text-dark">Revenue Trendline 7 Hari Terakhir</h6>
                                 </div>
                                 <div class="pull-right">
                                     <div class="pull-right">

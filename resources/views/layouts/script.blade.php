@@ -316,8 +316,6 @@
     });
 </script>
 
-
-
 <script>
     var xValues = ['Jan', 'Feb', 'Mar', 'Apr', 'Mey', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -338,3 +336,133 @@
         }
     });
 </script>
+
+{{-- pie chart analisis-tamu --}}
+<script>
+    var xValues = ["Pertamina", "Pensiunan", "Forkopimda", "Perpesi", "Umum"];
+    var yValues = [55, 49, 44, 24, 15];
+    var barColors = [
+        "#b91d47",
+        "#00aba9",
+        "#2b5797",
+        "#e8c3b9",
+        "#1e7145"
+    ];
+
+    new Chart("visitor-piechart", {
+        type: "pie",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: "Top 5 VIsitors Playing"
+            },
+            layout: {
+                top: 550
+            }
+        }
+    });
+</script>
+
+{{-- bar-chart double analisi-tamu --}}
+<script>
+    var ctx2 = document.getElementById("chart_2").getContext("2d");
+    var data2 = {
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        // labels: [10, 30, 80, 61, 26, 75, 40],
+        datasets: [
+            {
+                label: "My First dataset",
+                backgroundColor: "rgba(233,30,99,.8)",
+                borderColor: "rgba(233,30,99,.8)",
+                data: [10, 30, 80, 61, 26, 75, 40]
+                // data: ["January", "February", "March", "April", "May", "June", "July"]
+            },
+            {
+                label: "My Second dataset",
+                backgroundColor: "rgba(1,200,83,.8)",
+                borderColor: "rgba(1,200,83,.8)",
+                data: [28, 48, 40, 19, 86, 27, 90]
+            },
+            {
+                label: "My First dataset",
+                backgroundColor: "rgba(233,30,99,.8)",
+                borderColor: "rgba(233,30,99,.8)",
+                data: [10, 30, 80, 61, 26, 75, 40]
+                // data: ["January", "February", "March", "April", "May", "June", "July"]
+            },
+            {
+                label: "My Third dataset",
+                backgroundColor: "rgba(1,200,83,.8)",
+                borderColor: "rgba(1,200,83,.8)",
+                data: [10, 28, 10, 10, 86, 23, 20]
+            },
+            {
+                label: "My First dataset",
+                backgroundColor: "rgba(233,30,99,.8)",
+                borderColor: "rgba(233,30,99,.8)",
+                data: [10, 30, 80, 61, 26, 75, 40]
+                // data: ["January", "February", "March", "April", "May", "June", "July"]
+            },
+        ]
+    };
+    
+    var hBar = new Chart(ctx2, {
+        type:"horizontalBar",
+        data:data2,
+        
+        options: {
+            tooltips: {
+                mode:"label"
+            },
+            scales: {
+                yAxes: [{
+                    stacked: true,
+                    gridLines: {
+                        color: "#878787",
+                    },
+                    ticks: {
+                        fontFamily: "Roboto",
+                        fontColor:"#878787"
+                    }
+                }],
+                xAxes: [{
+                    stacked: true,
+                    gridLines: {
+                        color: "#878787",
+                    },
+                    ticks: {
+                        fontFamily: "Roboto",
+                        fontColor:"#878787"
+                    }
+                }],
+                
+            },
+            elements:{
+                point: {
+                    hitRadius:40
+                }
+            },
+            animation: {
+                duration:	3000
+            },
+            responsive: true,
+            legend: {
+                display: false,
+            },
+            tooltip: {
+                backgroundColor:'rgba(33,33,33,1)',
+                cornerRadius:0,
+                footerFontFamily:"'Roboto'"
+            }
+            
+        }
+    });
+</script>
+    

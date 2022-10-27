@@ -2910,11 +2910,13 @@ class OrderController extends Controller
                                             'cart' => serialize($cart_data),
                                             'payment_type' => serialize([
                                                 ['payment_type' => 'deposit','transaction_amount' => $minus_price_single,'balance' => $deposit->balance - $minus_price_single, 'discount' => 0, 'refund' => 0],
-                                                ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon, 'discount' => $price_single, 'refund' => 0]
+                                                ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
                                             ]),
                                             'payment_status' => 'paid',
-
-                                            'total' => $minus_price_single
+                                            'total' => $minus_price_single,
+                                            'jml_default' => $jml_default,
+                                            'jml_additional' => $jml_additional,
+                                            'jml_other' => $jml_other,
                                         ]);
         
                                         LogAdmin::create([
@@ -2968,10 +2970,13 @@ class OrderController extends Controller
                                             'cart' => serialize($cart_data),
                                             'payment_type' => serialize([
                                                 ['payment_type' => 'deposit','transaction_amount' => $minus_price_single,'balance' => $deposit->balance - $minus_price_single, 'discount' => 0, 'refund' => 0],
-                                                ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota, 'discount' => $price_single, 'refund' => 0]
+                                                ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single, 'refund' => 0]
                                             ]),
                                             'payment_status' => 'paid',
-                                            'total' => $minus_price_single
+                                            'total' => $minus_price_single,
+                                            'jml_default' => $jml_default,
+                                            'jml_additional' => $jml_additional,
+                                            'jml_other' => $jml_other,
                                         ]);
         
                                         LogAdmin::create([

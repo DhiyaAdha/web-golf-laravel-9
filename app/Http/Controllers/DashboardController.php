@@ -381,24 +381,23 @@ class DashboardController extends Controller
             now()->format('Y')
         )->count();
 
+        // Total Transaksi Today
         $data['visitor_vip'] = LogTransaction::where('payment_status', 'paid')->whereHas('visitor', function (
             Builder $query
         ) {
             $query->where('tipe_member', 'VIP');
         })->count();
-
         $data['visitor_vvip'] = LogTransaction::where('payment_status', 'paid')->whereHas('visitor', function (
             Builder $query
         ) {
             $query->where('tipe_member', 'VVIP');
         })->count();
-
-
         $data['visitor_reguler'] = LogTransaction::where('payment_status', 'paid')->whereHas('visitor', function (
             Builder $query
         ) {
             $query->where('tipe_member', 'REGULER');
         })->count();
+        // End Total Transaksi Today
 
         // VVIP
         $data['visitor_vvip_female'] = Visitor::where([
