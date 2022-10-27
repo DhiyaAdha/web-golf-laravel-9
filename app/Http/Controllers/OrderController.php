@@ -99,7 +99,6 @@ class OrderController extends Controller
                     'rowId' => $row->id,
                     'name' => $row->name,
                     'qty' => $row->quantity,
-                    'category' => $row->category,
                     'pricesingle' => $row->price,
                     'price' => $row->getPriceSum(),
                     'created_at' => $row->attributes['created_at'],
@@ -123,14 +122,6 @@ class OrderController extends Controller
             'total' => $total,
             'tax' => $pajak
         ];
-
-        // $id_package = [];
-        // foreach (\Cart::session(request()->segment(2))->getContent() as $sd) {
-        //     $id_package[] = $sd['id'];
-        // }
-        // $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
-        // $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
-        // dd($package_default);
 
         return view('membership.cart', compact(
             'url_checkout',
@@ -183,7 +174,6 @@ class OrderController extends Controller
                 'name' => $package->name,
                 'price' => $price,
                 'quantity' => 1,
-                'category' => $package->category,
                 'category' => $package->category,
                 'attributes' => array(
                     'created_at' => date('Y-m-d H:i:s')
