@@ -48,7 +48,8 @@
                                             <div class="d-flex justify-content-center flex-wrap" id="cetak-kartu">
                                                 <div class="col-md-card d-flex justify-content-center mb-10">
                                                     <div class="panel panel-default card-view card-visitor">
-                                                        <div class="panel-heading">
+
+                                                        {{-- <div class="panel-heading">
                                                             <div class="pull-left">
                                                                 <div class="d-flex title-card">
                                                                     <img src="{{ asset('/dist/img/tgcc-icon-small.svg') }}">
@@ -61,16 +62,20 @@
                                                                 </div>
                                                             </div>
                                                             <div class="clearfix"></div>
-                                                        </div>
+                                                        </div> --}}
                                                         <div class="panel-wrapper collapse in">
                                                             <div class="panel-body card">
-                                                                <div
-                                                                    class="d-flex justify-content-center align-items-center">
-                                                                    <div class="qr-code-visitor">
-                                                                        {{ QrCode::size(120)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
+                                                                    <div class="card-visitor">
+                                                                        <img class="back-qr" src="{{ asset('dist/img/kartutamu/bg.svg') }}"
+                                                                        alt="">
+                                                                        <div
+                                                                            class="d-flex justify-content-center align-items-center">
+                                                                            <div class="qr-code-visitor">
+                                                                                {{ QrCode::size(120)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <h6
+                                                                {{-- <h6
                                                                     style="display: flex;
                                                                     justify-content: center;
                                                                     align-items: center;

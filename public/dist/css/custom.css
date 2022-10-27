@@ -277,16 +277,10 @@ i.fa.fa-trash-o {
 }
 
 h6.panel-title.txt-dark.label-visitor {
-    /* font-size: 8px;
+    font-size: 8px;
     padding: 0px 10px;
     line-height: 12px !important;
-    font-weight: 500; */
-    font-size: 5px;
-    padding: 0px 10px;
-    line-height: 0px !important;
     font-weight: 500;
-    margin-top: 7px;
-    margin-left: -6;
 }
 
 .card-visitor {
@@ -335,7 +329,6 @@ h6.panel-title.text-center {
 }
 
 .back-qr {
-    height: 200px;
     position: relative;
 }
 
@@ -446,10 +439,10 @@ h6.panel-title.text-center {
 }
 
 .visitor-name-card{
-    /* display: flex;
+    display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute; */
+    position: absolute;
 }
 
 .color-white {
