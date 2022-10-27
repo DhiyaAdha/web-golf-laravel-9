@@ -123,13 +123,6 @@ class OrderController extends Controller
             'tax' => $pajak
         ];
 
-        // $id_package = [];
-        // foreach (\Cart::session(request()->segment(2))->getContent() as $sd) {
-        //     $id_package[] = $sd['id'];
-        // }
-        // $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
-        // $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
-        // dd($package_default);
 
         return view('membership.cart', compact(
             'url_checkout',
