@@ -65,36 +65,41 @@
                                                         </div> --}}
                                                         <div class="panel-wrapper collapse in">
                                                             <div class="panel-body card">
-                                                                    <div class="card-visitor">
-                                                                        <img class="back-qr" src="{{ asset('dist/img/kartutamu/bg.svg') }}"
+                                                                <div class="card-visitor">
+                                                                    <img class=""
+                                                                        src="{{ asset('dist/img/kartutamu/bg.svg') }}"
                                                                         alt="">
-                                                                        <div
-                                                                            class="d-flex justify-content-center align-items-center">
-                                                                            <div class="qr-code-visitor">
-                                                                                {{ QrCode::size(120)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
-                                                                            </div>
+                                                                    <div
+                                                                        class="d-flex justify-content-center align-items-center">
+                                                                        <div style="margin-top: -224px;
+                                                                            display: flex;
+                                                                            width: 72px;"
+                                                                            class="">
+                                                                            {{ QrCode::size(120)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
                                                                         </div>
                                                                     </div>
-                                                                {{-- <h6
+                                                                    <h6
                                                                     style="display: flex;
                                                                     justify-content: center;
                                                                     align-items: center;
                                                                     position: relative;
                                                                     font-size: 6px;
                                                                     line-height:10px;
-                                                                    margin-top:82px;
+                                                                    margin-top:-62px;
                                                                     font-weight:500;">
                                                                     {{ $visitor->name }}</h6>
-                                                                <h6
-                                                                    style="display: flex;
-                                                                    justify-content: center;
-                                                                    align-items: center;
-                                                                    position: relative;
-                                                                    font-size: 12px;
-                                                                    line-height:10px;
-                                                                    font-weight:600;">
-                                                                    {{ $visitor->tipe_member }}</h6>
-                                                                <h6
+
+                                                                    <h6
+                                                                        style="display: flex;
+                                                                        justify-content: center;
+                                                                        align-items: center;
+                                                                        position: relative;
+                                                                        font-size: 12px;
+                                                                        line-height:10px;
+                                                                        font-weight:600;">
+                                                                        {{ $visitor->tipe_member }}</h6>
+                                                                </div>
+                                                                {{-- <h6
                                                                     style="display: flex;
                                                                     justify-content: center;
                                                                     align-items: center;
@@ -103,8 +108,8 @@
                                                                     line-height:10px;
                                                                     margin-top:22px;
                                                                     font-weight:500;">
-                                                                    Let's play, and still healthy</h6>
-                                                                
+                                                                    Let's play, and still healthy</h6> --}}
+
                                                                 {{-- <div
                                                                     class="d-flex justify-content-center align-items-center bg-front">
                                                                     <div class="pull-left">
@@ -173,7 +178,7 @@
                                                 </div> --}}
                                             </div>
                                             <button type="button" class="btn download-kartu-tamu"><i
-                                                    class="fa fa-download"></i> Download Kartu (WIZ)</button>
+                                                    class="fa fa-download"></i> Download Kartu (PDF)</button>
                                         </div>
                                     </div>
                                 </div>
@@ -201,7 +206,8 @@
                                     </div>
                                     <div class="mb-15 d-flex flex-column">
                                         <span class="txt-muted">Jenis Tamu</span>
-                                        <span class="{{ $visitor->tipe_member == 'VIP' ? 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-success' : 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-warning' }}">{{ $visitor->tipe_member == 'VVIP' ? 'VIP' : 'Member' }}</span>
+                                        <span
+                                            class="{{ $visitor->tipe_member == 'VIP' ? 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-success' : 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-warning' }}">{{ $visitor->tipe_member == 'VVIP' ? 'VIP' : 'Member' }}</span>
                                     </div>
                                     <div class="mb-15 d-flex flex-column">
                                         <span class="txt-muted">Kategori</span>
