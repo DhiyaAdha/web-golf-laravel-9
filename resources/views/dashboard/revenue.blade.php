@@ -107,7 +107,7 @@
                                                     </span>
                                                 </div>
                                                 <div class="col-xs-4 text-right data-wrap-right">
-                                                    <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i>
+                                                    <i class="zmdi zmdi-coffee txt-light data-right-rep-icon"></i>
                                                 </div>
                                                 <img src="{{ asset('/img/circle.svg') }}" class="card-img-absolute"
                                                     alt="circle-image">
