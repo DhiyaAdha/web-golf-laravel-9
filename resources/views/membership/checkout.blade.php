@@ -223,6 +223,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <form>
+                                            <input type="hidden" value="{{ $get_id }}">
                                             <div class="d-flex align-items-center">
                                                 <span class="flex-grow-1">Metode Pembayaran</span>
                                                 <div class="d-flex align-items-center">
@@ -953,7 +954,7 @@
             formatted = output.reverse().join("");
             return("" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ""));
         };
-        
+
         function refreshInput() {
             $('.bayar-input').removeClass('is-invalid').val()
             $('.bayar-cash').removeClass('is-invalid').val();
@@ -1466,7 +1467,7 @@
                                             </div>
                                         </div>`;
                                         $('.discount').html(discount).show();
-    
+
                                         if((data_bill - price_single) > data_deposit) {
                                             remaining();
                                             swal({
@@ -1843,7 +1844,7 @@
                     type: 'GET',
                     data: {
                         type: type_single,
-                        param: page
+                        param: $('input[type=hidden]').val()
                     },
                     url: "{{ route('select.type') }}",
                     beforeSend: function(request) {
@@ -2061,7 +2062,7 @@
                 page = tg[tg.length - 1];
 
                 let url = "{{ route('invoice.print', ':id') }}";
-                url = url.replace(':id', page);
+                url = url.replace(':id', $('input[type=hidden]').val());
                 let data_deposit = $('#customCheck8').data('deposit');
                 let data_bill = $('#customCheck8').data('bill');
                 let pay_deposit = data_bill - data_deposit;
@@ -2123,7 +2124,7 @@
                                 type: type,
                                 type_single: type_single,
                                 type_multiple: type_multiple,
-                                page: parseFloat(page),
+                                page: $('input[type=hidden]').val(),
                                 order_number: order_number,
                                 bayar_input: bayar_input,
                                 bayar_cash: bayar_cash,
