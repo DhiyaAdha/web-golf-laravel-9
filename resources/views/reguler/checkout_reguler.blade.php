@@ -339,7 +339,7 @@
                                                 <strong style="font-size: small;">Harga</strong>
                                             </div>
                                             <div class="items"></div>
-                                            <div class="items-default">
+                                            <div class="items-default" style="height: 100px; overflow-y: scroll;">
                                                 @foreach ($orders as $cart)
                                                     <div class="d-flex">
                                                         <span class="flex-grow-1">{{ $cart['name'] }} {{ $cart['category'] == 'default' ? '| game' : '' }} x {{ $cart['qty'] }}</span>
@@ -457,16 +457,70 @@
         }
 
         function cal(price) {
+            let total = $('.nilai-total1-td').data('total');
             if ($('.bayar-input').val() == '') {
                 $('.bayar-input').val(price);
+                let return_pay = parseInt($('.bayar-input').val()) - parseInt(total);
+                if($('.bayar-input').val() > total) {
+                    $('.bayar-input').removeClass('is-invalid');
+                    $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                        "background-color": "rgba(25, 216, 149, 0.2)",
+                        "color": "#19d895"
+                    }).data('refund', return_pay);
+                } else {
+                    $('.bayar-input').addClass('is-invalid');
+                    $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                        "background-color": "rgba(216, 25, 25, 0.2)",
+                        "color": "#d81c19d1"
+                    }).data('refund', return_pay);
+                }
             } else {
                 let result = parseInt($('.bayar-input').val());
+                console.log(result)
                 $('.bayar-input').val(result + price);
+                let return_pay = parseInt($('.bayar-input').val()) - parseInt(total);
+                if($('.bayar-input').val() > total) {
+                    $('.bayar-input').removeClass('is-invalid');
+                    $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                        "background-color": "rgba(25, 216, 149, 0.2)",
+                        "color": "#19d895"
+                    }).data('refund', return_pay);
+                } else {
+                    $('.bayar-input').addClass('is-invalid');
+                    $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                        "background-color": "rgba(216, 25, 25, 0.2)",
+                        "color": "#d81c19d1"
+                    }).data('refund', return_pay);
+                }
             }
         }
 
+        var format = function(num){
+            var str = num.toString().replace("", ""), parts = false, output = [], i = 1, formatted = null;
+            if(str.indexOf(".") > 0) {
+                parts = str.split(".");
+                str = parts[0];
+            }
+            str = str.split("").reverse();
+            for(var j = 0, len = str.length; j < len; j++) {
+                if(str[j] != ",") {
+                output.push(str[j]);
+                if(i%3 == 0 && j < (len - 1)) {
+                    output.push(".");
+                }
+                i++;
+                }
+            }
+            formatted = output.reverse().join("");
+            return("" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ""));
+        };
+
         function refreshInput() {
-            $('.bayar-input').val($('.bayar-input').data('bill'));
+            $('.bayar-input').val($('.bayar-input').data('bill')).removeClass('is-invalid');
+            $('#return').text('Rp. 0,00').css({
+                "background-color": "rgba(25, 216, 149, 0.2)",
+                "color": "#19d895"
+            }).data('refund', 0);
         }
         
         $(document).ready(function() {
@@ -482,24 +536,12 @@
                     return $(title).children(".popover-header").html();
                 }
             });
-            
-            function formatIDR(price) {
-                var number_string = price.toString(),
-                    split = number_string.split(','),
-                    remainder = split[0].length % 3,
-                    idr = split[0].substr(0, remainder),
-                    thousand = split[0].substr(remainder).match(/\d{1,3}/gi);
-                if (thousand) {
-                    separator = remainder ? '.' : '';
-                    idr += separator + thousand.join('.');
-                }
-                return split[1] != undefined ? idr + ',' + split[1] : idr;
-            }
     
             $(document).on('input', '.bayar-input', function(e) {
                 e.preventDefault();
                 let total = $('.nilai-total1-td').data('total');
-                let return_pay = parseInt($(this).val()) - parseInt(total);
+                let return_pay = $(this).val() - total;
+                console.log(format(return_pay))
     
                 if ($(this).val() < total) {
                     if ($(this).val() == '') {
@@ -510,14 +552,14 @@
                         }).data('refund', return_pay);
                     } else {
                         $(this).addClass('is-invalid');
-                        $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                        $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
                             "background-color": "rgba(216, 25, 25, 0.2)",
                             "color": "#d81c19d1"
                         }).data('refund', return_pay);
                     }
                 } else {
                     $(this).removeClass('is-invalid');
-                    $('#return').text(' Rp. ' + formatIDR(return_pay) + ',00').css({
+                    $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
                         "background-color": "rgba(25, 216, 149, 0.2)",
                         "color": "#19d895"
                     }).data('refund', return_pay);
