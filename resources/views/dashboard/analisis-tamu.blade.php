@@ -111,7 +111,6 @@
 
                 {{-- Total tamu VIP & VVIP --}}
                 <div class="row">
-
                     <div class="col-lg-6 col-sm-12">
                         <div class="panel panel-default card-view">
                             <div class="panel-heading">
@@ -193,7 +192,7 @@
                         </div>
                     </div>
 
-                    {{-- pembatas vvip--}}
+                    {{-- pembatas vvip --}}
                     <div class="col-lg-6 col-sm-12">
                         <div class="panel panel-default card-view">
                             <div class="panel-heading">
@@ -273,8 +272,7 @@
                             </div>
                         </div>
                     </div>
-                    {{-- pembatas vip--}}
-
+                    {{-- pembatas vip --}}
                 </div>
 
                 {{-- chart pie --}}
@@ -282,37 +280,63 @@
                     <div class="col-lg-6 col-sm-12">
                         <div class="panel panel-default card-view">
                             <div class="panel-wrapper collapse in">
+                                <div class="panel-body">
+                                    <canvas id="chart_2" height="200"></canvas>
+                                </div>	
+                            </div>
+                        </div>
+                        {{-- <div class="panel panel-default card-view" style="height: 380px">
+                            <canvas id="kantin-chart" style=" margin-top: 30px; height: 400px;"></canvas>
+                            <div class="panel-wrapper collapse in">
                                 <div class="panel-body" style="margin-top: -80px; margin-bottom:-10px;">
                                     <div class="pills-struct mt-40">
-                                        <div class="tab-content" >
-                                            
-                                            
+                                        <div class="panel-wrapper collapse in" style=" margin-top:50px;">
+                                            <ul class="flex-stat mt-1"
+                                                style="display: flex; margin-top:40px; margin-bottom:20px;">
+                                                <li>
+                                                    <span class="block"></span>
+                                                    <span class="block txt-dark weight-500 font-18">
+                                                        <span class="">
+                                                        </span>
+                                                </li>
+                                                <li>
+                                                    <span class="block txt-dark weight-500 font-18">Total : Rp.
+                                                        <span class="counter-anim">300000</span></span>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <div class="col-lg-6 col-sm-12">
-                        <div class="panel panel-default card-view" style="height: 380px">
+                        {{-- <div class="panel panel-default card-view" style="height: 380px">
                             <canvas id="visitor-piechart" style="width:100%;max-width:600px"></canvas>
                             <div class="panel-wrapper collapse in">
                                 <div class="panel-body" style="margin-top: -80px; margin-bottom:-10px;">
                                     <div class="pills-struct mt-40">
-                                        <div class="tab-content" >
-                                            
-                                            
+                                        <div class="tab-content">
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
+                        <div class="panel panel-default card-view" style="height: 416px">
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<canvas id="visitor-piechart" style="width:100%;max-width:600px"></canvas>
+								</div>	
+							</div>
+						</div>
+
                     </div>
                 </div>
-{{-- end-chart pie --}}
+                {{-- end-chart pie --}}
 
-{{-- statistik --}}
+                {{-- statistik --}}
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="panel panel-default card-view panel-refresh relative">
@@ -380,7 +404,7 @@
                         </div>
                     </div>
                 </div>
-                
+
 
                 <!-- Row Tabel Tamu-->
                 <div class="row">
@@ -495,12 +519,8 @@
                 }
             });
             /* data analisis */
-
-
-
         </script>
     @endpush
-
 @else
     <!DOCTYPE HTML>
     <html lang="en-US">
