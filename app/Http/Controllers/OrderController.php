@@ -102,7 +102,6 @@ class OrderController extends Controller
                     'pricesingle' => $row->price,
                     'price' => $row->getPriceSum(),
                     'created_at' => $row->attributes['created_at'],
-                    'category' => $row->category,
                 ];
             }
             

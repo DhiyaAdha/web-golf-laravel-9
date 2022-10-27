@@ -13,8 +13,8 @@
                                         <div class="container-fluid">
                                             <div class="row p-2">
                                                 <div class="col-xs-8 text-left data-wrap-left">
-                                                    <span class="txt-light block counter"><span
-                                                            class="counter-anim"></span></span>
+                                                    <span class="txt-light block counter">Rp. <span
+                                                            class="counter-anim">{{ number_format($pendapatan_revenue_today) }}</span></span>
                                                     <span class="weight-500 txt-light block">
                                                         Revenue Today
                                                     </span>
@@ -44,8 +44,8 @@
                                         <div class="container-fluid">
                                             <div class="row p-2">
                                                 <div class="col-xs-8 text-left data-wrap-left">
-                                                    <span class="txt-light block counter"><span
-                                                            class="counter-anim"></span></span>
+                                                    <span class="txt-light block counter">Rp. <span
+                                                            class="counter-anim">{{ number_format($pendapatan_revenue_default) }}</span></span>
                                                     <span class="weight-500 txt-light block">
                                                         Revenue Permainan
                                                     </span>
@@ -72,8 +72,8 @@
                                         <div class="container-fluid">
                                             <div class="row p-2">
                                                 <div class="col-xs-8 text-left data-wrap-left">
-                                                    <span class="txt-light block counter"><span
-                                                            class="counter-anim"></span></span>
+                                                    <span class="txt-light block counter">Rp. <span
+                                                            class="counter-anim">{{ number_format($pendapatan_revenue_additional) }}</span></span>
                                                     <span class="weight-500 txt-light block">
                                                         Revenue Proshop & Fasilitas
                                                     </span>
@@ -100,8 +100,8 @@
                                         <div class="container-fluid">
                                             <div class="row p-2">
                                                 <div class="col-xs-8 text-left data-wrap-left">
-                                                    <span class="txt-light block counter"><span
-                                                            class="counter-anim"></span></span>
+                                                    <span class="txt-light block counter">Rp. <span
+                                                            class="counter-anim">{{ number_format($pendapatan_revenue_other) }}</span></span>
                                                     <span class="weight-500 txt-light block">
                                                         Revenue Kantin
                                                     </span>
