@@ -97,10 +97,12 @@
                                                                         font-size: 12px;
                                                                         line-height:10px;
                                                                         font-weight:600;">
-                                                                        @if ($visitor->tipe_member == 'VIP'){
-
-                                                                        }
+                                                                        @if ($visitor->tipe_member == 'VVIP')
+                                                                            VIP
+                                                                        @else
+                                                                            MEMBER
                                                                         @endif
+                                                                        
 
                                                                     </h6>
                                                                 </div>
