@@ -905,6 +905,7 @@
             let total = $('.nilai-total1-td').data('total');
             $('#customRadioInline3').prop('checked', true);
             if ($('.bayar-cash').val() == '') {
+                $('.refund').removeClass('d-none');
                 $('.bayar-cash').val(price);
                 let return_pay = parseInt($('.bayar-cash').val()) - parseInt(total);
                 if($('.bayar-cash').val() > total) {
@@ -912,13 +913,13 @@
                     $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
                         "background-color": "rgba(25, 216, 149, 0.2)",
                         "color": "#19d895"
-                    }).data('refund', return_pay);
+                    }).data('refund', return_pay).addClass('green');
                 } else {
                     $('.bayar-cash').addClass('is-invalid');
                     $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
                         "background-color": "rgba(216, 25, 25, 0.2)",
                         "color": "#d81c19d1"
-                    }).data('refund', return_pay);
+                    }).data('refund', return_pay).addClass('green');
                 }
             } else {
                 let result = parseInt($('.bayar-cash').val());
