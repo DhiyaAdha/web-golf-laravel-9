@@ -381,7 +381,7 @@ class DashboardController extends Controller
             now()->format('Y')
         )->count();
 
-        // total transaksi today
+        // Total Transaksi Today
         $data['visitor_vip'] = LogTransaction::where('payment_status', 'paid')->whereHas('visitor', function (
             Builder $query
         ) {
@@ -397,7 +397,7 @@ class DashboardController extends Controller
         ) {
             $query->where('tipe_member', 'REGULER');
         })->count();
-        // end total transaksi today
+        // End Total Transaksi Today
 
         // VVIP
         $data['visitor_vvip_female'] = Visitor::where([

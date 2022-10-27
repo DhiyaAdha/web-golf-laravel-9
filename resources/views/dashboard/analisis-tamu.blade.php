@@ -12,8 +12,9 @@
                                         <div class="container-fluid">
                                             <div class="row p-2">
                                                 <div class="col-xs-8 text-left data-wrap-left">
-                                                    <span class="txt-light block counter"><span
-                                                            class="counter-anim">{{ $visitor_today }}</span></span>
+                                                    <span class="txt-light block counter">
+                                                        <span class="counter-anim">{{ $visitor_today }}</span>
+                                                    </span>
                                                     <span class="weight-500 txt-light block">
                                                         Transaksi hari ini
                                                     </span>
@@ -39,7 +40,8 @@
                                             <div class="row p-2">
                                                 <div class="col-xs-8 text-left data-wrap-left">
                                                     <span class="txt-light block counter"><span
-                                                            class="counter-anim">{{ $visitor_vvip }}</span></span>
+                                                            class="counter-anim">{{ $visitor_vvip }}</span>
+                                                        </span>
                                                     <span class="weight-500 txt-light block">Transaksi VIP
                                                     </span>
                                                 </div>
