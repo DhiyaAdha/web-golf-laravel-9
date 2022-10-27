@@ -15,7 +15,7 @@
                                                     <span class="txt-light block counter"><span
                                                             class="counter-anim">{{ $visitor_today }}</span></span>
                                                     <span class="weight-500 txt-light block">
-                                                        Transaksi hari ini
+                                                        Transaksi <br> Hari ini
                                                     </span>
                                                 </div>
                                                 <div class="col-xs-4 text-right data-wrap-right">
@@ -40,7 +40,7 @@
                                                 <div class="col-xs-8 text-left data-wrap-left">
                                                     <span class="txt-light block counter"><span
                                                             class="counter-anim">{{ $visitor_vvip }}</span></span>
-                                                    <span class="weight-500 txt-light block">Transaksi VVIP
+                                                    <span class="weight-500 txt-light block">Transaksi VIP <br> Hari Ini
                                                     </span>
                                                 </div>
                                                 <div class="col-xs-4 text-right data-wrap-right">
@@ -66,7 +66,7 @@
                                                     <span class="txt-light block counter"><span
                                                             class="counter-anim">{{ $visitor_vip }}</span></span>
                                                     <span class="weight-500 txt-light block">Transaksi
-                                                        VIP
+                                                        Member <br> Hari Ini
                                                     </span>
                                                 </div>
                                                 <div class="col-xs-4 text-right data-wrap-right">
@@ -93,7 +93,7 @@
                                                     <span class="txt-light block counter"><span
                                                             class="counter-anim">{{ $visitor_reguler }}</span></span>
                                                     <span class="weight-500 txt-light block">Transaksi
-                                                        REGULER
+                                                        Umum <br> Hari Ini
                                                     </span>
                                                 </div>
                                                 <div class="col-xs-4 text-right data-wrap-right">
@@ -112,7 +112,7 @@
 
                 {{-- Total tamu VIP & VVIP --}}
                 <div class="row">
-                    <div class="col-lg-6 col-sm-12">
+                    {{-- <div class="col-lg-6 col-sm-12">
                         <div class="panel panel-default card-view">
                             <div class="panel-heading">
                                 <div class="pull-right">
@@ -191,9 +191,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     {{-- pembatas --}}
-                    <div class="col-lg-6 col-sm-12">
+                    {{-- <div class="col-lg-6 col-sm-12">
                         <div class="panel panel-default card-view">
                             <div class="panel-heading">
                                 <div class="pull-right">
@@ -273,7 +273,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     {{-- pembatas --}}
                 </div>
                 <div class="row">
@@ -284,7 +284,7 @@
                             </div>
                             <div class="panel-heading">
                                 <div class="pull-left">
-                                    <h6 class="panel-title txt-dark">Statistika Transaksi Harian</h6>
+                                    <h6 class="panel-title txt-dark">Statistika Pengunjung 7 Hari Terakhir</h6>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -300,12 +300,12 @@
                                             </span>
                                         </li>
                                         {{-- statistik pertahun --}}
-                                        <li>
+                                        {{-- <li>
                                             <span class="block">Total</span>
                                             <span class="block txt-dark weight-500 font-18">
                                                 <span class="">{{ $visitor_week }}</span>
                                             </span>
-                                        </li>
+                                        </li> --}}
                                     </ul>
                                 </div>
                             </div>
@@ -315,7 +315,7 @@
                         <div class="panel panel-default card-view">
                             <div class="panel-heading">
                                 <div class="pull-left">
-                                    <h6 class="panel-title txt-dark">Statistika Transaksi</h6>
+                                    <h6 class="panel-title txt-dark">Statistika Pengunjung 12 Bulan Terakhir</h6>
                                 </div>
                                 <a href="javascript:void(0)" class="pull-right inline-block full-screen mr-15"
                                     data-toggle="tooltip" title="Fullscreen">
@@ -333,11 +333,11 @@
                                                 <span class="">
                                                 </span>
                                         </li>
-                                        <li>
+                                        {{-- <li>
                                             <span class="block">Total </span>
                                             <span class="block txt-dark weight-500 font-18"><span
                                                     class="counter-anim">{{ $visitor_year }}</span></span>
-                                        </li>
+                                        </li> --}}
                                     </ul>
                                 </div>
                             </div>

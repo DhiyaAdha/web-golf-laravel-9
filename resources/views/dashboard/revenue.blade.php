@@ -127,7 +127,7 @@
                         <div class="panel panel-default card-view">
                             <div class="panel-heading">
                                 <div class="pull-left">
-                                    <h6 class="pannel-title text-dark">Revenue Trendline</h6>
+                                    <h6 class="pannel-title text-dark">Revenue Trendline 7 Hari Terakhir</h6>
                                 </div>
                                 <div class="pull-right">
                                     <div class="pull-right">
@@ -262,7 +262,7 @@
                                 style="margin-top: 50px;">
                                 <div class="panel-heading">
                                     <div class="pull-left">
-                                        <h6 class="pannel-title text-dark">Revenue Trendline</h6>
+                                        <h6 class="pannel-title text-dark">Revenue Trendline 12 Bulan terakhir</h6>
                                     </div>
                                     <div class="pull-right">
                                         <div class="pull-right">
@@ -325,7 +325,8 @@
     @push('scripts')
         <script>
             // fungsi grafik-line & Grafik-bar
-            var dataNewPermainan = {!! json_encode($permainan) !!}
+            var _ydata = JSON.parse('{!! json_encode($months) !!}');
+            var _xdata = JSON.parse('{!! json_encode($monthCount) !!}');
         </script>
     @endpush
 @else
