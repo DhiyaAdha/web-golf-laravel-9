@@ -99,6 +99,7 @@ class OrderController extends Controller
                     'rowId' => $row->id,
                     'name' => $row->name,
                     'qty' => $row->quantity,
+                    'category' => $row->category,
                     'pricesingle' => $row->price,
                     'price' => $row->getPriceSum(),
                     'created_at' => $row->attributes['created_at'],
@@ -183,6 +184,7 @@ class OrderController extends Controller
                 'price' => $price,
                 'quantity' => 1,
                 'category' => $package->category,
+                'category' => $package->category,
                 'attributes' => array(
                     'created_at' => date('Y-m-d H:i:s')
                 ),
@@ -208,7 +210,7 @@ class OrderController extends Controller
                             'pricesingle' => $row->price,
                             'price' => $row->getPriceSum(),
                             'created_at' => $row->attributes['created_at'],
-                            'category' => $package->category
+                            'category' => $row->category,
                         ];
                     }
                     $cart_data = collect($cart)->sortBy('created_at');
@@ -244,7 +246,7 @@ class OrderController extends Controller
                             'pricesingle' => $row->price,
                             'price' => $row->getPriceSum(),
                             'created_at' => $row->attributes['created_at'],
-                            'category' => $package->category
+                            'category' => $row->category
                         ];
                     }
                     $cart_data = collect($cart)->sortBy('created_at');
