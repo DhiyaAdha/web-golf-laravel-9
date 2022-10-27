@@ -17,7 +17,7 @@ $(document).ready(function(){
 			element: 'statistic_visitor_bar',
 			data: dataMingguan,
 			xkey: 'y',
-			ykeys: ['a'	, 'b', 'c' ],
+			ykeys: ['a', 'b', 'c' ],
 			labels: ['VIP', 'Member', 'Reguler' ],
 			barColors:['#fec107', '#32FFC1', '#21E1E1'],
 			hideHover: 'auto',

@@ -97,7 +97,12 @@
                                                                         font-size: 12px;
                                                                         line-height:10px;
                                                                         font-weight:600;">
-                                                                        {{ $visitor->tipe_member }}</h6>
+                                                                        @if ($visitor->tipe_member == 'VIP'){
+
+                                                                        }
+                                                                        @endif
+
+                                                                    </h6>
                                                                 </div>
                                                                 {{-- <h6
                                                                     style="display: flex;
