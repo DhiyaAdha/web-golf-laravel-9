@@ -535,65 +535,36 @@
                                                         </div>
                                                         <div class="d-flex align-items-center mt-2 choose" style="border-bottom: 1px solid rgba(0,0,0,.125);">
                                                             <div class="flex-grow-1 custom-control custom-checkbox" style="width:100%;">
-                                                                @if ($log_limit->quota != 0 || $log_limit->quota_kupon != 0)
-                                                                    {{-- @if ($totalPrice != $price_single) --}}
-                                                                    <input type="checkbox" name="payment-type[]" value="cash/transfer" class="custom-control-input" id="customCheck7">
-                                                                    <label class="custom-control-label" for="customCheck7" style="width: 100%; cursor:pointer;">
-                                                                        <div class="d-flex flex-column flex-grow-1 justify-content-center">
-                                                                            <div class="d-flex align-items-center">
-                                                                                <div class="d-flex flex-column flex-grow-1">
-                                                                                    <strong>Cash/Transfer</strong>
-                                                                                    <small class="text-muted">Tunjukan bukti transfer</small>
-                                                                                </div>
-                                                                                <a href="javascript:void(0)" onclick="refreshInput();" data-toggle="tooltip" title="Refresh" style="color: #bababa;"><i class="fa fa-repeat" aria-hidden="true"></i></a>
-                                                                            </div>
-                                                                            <div class="form-group mt-2 mb-2">
-                                                                                <div class="input-group">
-                                                                                    <div class="input-group-prepend">
-                                                                                        <div class="input-group-text">Rp.</div>
-                                                                                    </div>
-                                                                                    <input type="number" data-bill="{{ $totalPrice }}" class="form-control number-input input-notzero bayar-input" name="bayar" placeholder="Masukkan nominal bayar" autocomplete="on">
-                                                                                    </div>
-                                                                            </div>
-                                                                            <div class="d-flex flex-wrap mb-2 ">
-                                                                                <input type="button" value="500" onclick="call(500)" class="btn mr-2 mb-2 btn-sm btn-default">
-                                                                                <input type="button" value="1000" onclick="call(1000)" class="btn mr-2 mb-2 btn-sm btn-default">
-                                                                                <input type="button" value="2000" onclick="call(2000)" class="btn mr-2 mb-2 btn-sm btn-default">
-                                                                                <input type="button" value="5000" onclick="call(5000)" class="btn mr-2 mb-2 btn-sm btn-default">
-                                                                                <input type="button" value="10000" onclick="call(10000)" class="btn mr-2 mb-2 btn-sm btn-default">
-                                                                                <input type="button" value="20000" onclick="call(20000)" class="btn mr-2 mb-2 btn-sm btn-default">
-                                                                                <input type="button" value="50000" onclick="call(50000)" class="btn mr-2 mb-2 btn-sm btn-default">
-                                                                                <input type="button" value="100000" onclick="call(100000)" class="btn mr-2 mb-2 btn-sm btn-default">
-                                                                            </div>
-                                                                        </div>
-                                                                    </label>
-                                                                    {{-- @else
-                                                                        <input type="checkbox"
-                                                                            class="custom-control-input"
-                                                                            id="customCheck7" disabled>
-                                                                        <label class="custom-control-label"
-                                                                            for="customCheck7"
-                                                                            style="width: 100%; cursor:no-drop;">
-                                                                            <div
-                                                                                class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                <input type="checkbox" name="payment-type[]" value="cash/transfer" class="custom-control-input" id="customCheck7">
+                                                                <label class="custom-control-label" for="customCheck7" style="width: 100%; cursor:pointer;">
+                                                                    <div class="d-flex flex-column flex-grow-1 justify-content-center">
+                                                                        <div class="d-flex align-items-center">
+                                                                            <div class="d-flex flex-column flex-grow-1">
                                                                                 <strong>Cash/Transfer</strong>
-                                                                                <small class="text-muted"><i>Cash/transfer
-                                                                                        tidak dapat
-                                                                                        digunakan</i></small>
+                                                                                <small class="text-muted">Tunjukan bukti transfer</small>
                                                                             </div>
-                                                                        </label>
-                                                                    @endif --}}
-                                                                @else
-                                                                    <input type="checkbox" name="payment-type[]" value="cash/transfer" class="custom-control-input" id="customCheck7">
-                                                                    <label class="custom-control-label" for="customCheck7" style="width: 100%; cursor:pointer;">
-                                                                        <div class="d-flex flex-column flex-grow-1 justify-content-center">
-                                                                            <strong>Cash/Transfer</strong>
-                                                                            <small class="text-muted">Tunjukan bukti transfer</small>
-                                                                            <div class="form-group mt-2 mb-2" id="cashtransfer">
-                                                                            </div>
+                                                                            <a href="javascript:void(0)" onclick="refreshInput();" data-toggle="tooltip" title="Refresh" style="color: #bababa;"><i class="fa fa-repeat" aria-hidden="true"></i></a>
                                                                         </div>
-                                                                    </label>
-                                                                @endif
+                                                                        <div class="form-group mt-2 mb-2">
+                                                                            <div class="input-group">
+                                                                                <div class="input-group-prepend">
+                                                                                    <div class="input-group-text">Rp.</div>
+                                                                                </div>
+                                                                                <input type="number" data-bill="{{ $totalPrice }}" class="form-control number-input input-notzero bayar-input" name="bayar" placeholder="Masukkan nominal bayar" autocomplete="on">
+                                                                                </div>
+                                                                        </div>
+                                                                        <div class="d-flex flex-wrap mb-2 ">
+                                                                            <input type="button" value="500" onclick="call(500)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                            <input type="button" value="1000" onclick="call(1000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                            <input type="button" value="2000" onclick="call(2000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                            <input type="button" value="5000" onclick="call(5000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                            <input type="button" value="10000" onclick="call(10000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                            <input type="button" value="20000" onclick="call(20000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                            <input type="button" value="50000" onclick="call(50000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                            <input type="button" value="100000" onclick="call(100000)" class="btn mr-2 mb-2 btn-sm btn-default">
+                                                                        </div>
+                                                                    </div>
+                                                                </label>
                                                             </div>
                                                             <img src="{{ asset('cash-on-delivery.png') }}" alt="cash" width="30" height="30">
                                                         </div>

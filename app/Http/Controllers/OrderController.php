@@ -2096,7 +2096,7 @@ class OrderController extends Controller
                                                         'user_id' => Auth()->id(),
                                                         'cart' => serialize($cart_data),
                                                         'payment_type' => serialize([
-                                                            ['payment_type' => 'cash/transfer', 'transaction_amount' => $coupon_free, 'balance' => 0,'discount' => 0, 'refund' => $req->get('refund')],
+                                                            ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => $req->get('refund')],
                                                             ['payment_type' => 'kupon', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota_kupon,'discount' => $price_single, 'refund' => 0]
                                                         ]),
                                                         'payment_status' => 'paid',
@@ -2199,7 +2199,7 @@ class OrderController extends Controller
                                                         'user_id' => Auth()->id(),
                                                         'cart' => serialize($cart_data),
                                                         'payment_type' => serialize([
-                                                            ['payment_type' => 'cash/transfer', 'transaction_amount' => $limit_free, 'balance' => 0,'discount' => 0, 'refund' => $req->get('refund')],
+                                                            ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => $req->get('refund')],
                                                             ['payment_type' => 'limit', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota,'discount' => $price_single, 'refund' => 0]
                                                         ]),
                                                         'payment_status' => 'paid',
