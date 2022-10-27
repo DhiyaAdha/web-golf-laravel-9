@@ -473,6 +473,25 @@ class OrderController extends Controller
         $totalPrice = \Cart::session($req->get('page'))->getTotal();
         $price_single = 0;
         $today = Carbon::now()->isoFormat('dddd');
+        //jml_default
+        $jml_default = 0;
+        $jml_additional = 0;
+        $jml_other = 0;
+        foreach ($items as $get) {
+            if($get->category == 'default')
+            {
+                $jml_default += $get->getPriceSum();
+            }
+            elseif($get->category == 'additional')
+            {
+                $jml_additional += $get->getPriceSum();
+            }
+            else
+            {
+                $jml_other += $get->getPriceSum();
+            }
+        }
+        //jml_default
         if (\Cart::isEmpty()) {
             $cart_data = [];
         } else {
@@ -527,7 +546,10 @@ class OrderController extends Controller
                                     'refund' => 0
                                 ]]),
                                 'payment_status' => 'paid',
-                                'total' => $totalPrice
+                                'total' => $totalPrice,
+                                'jml_default' => $jml_default,
+                                'jml_additional' => $jml_additional,
+                                'jml_other' => $jml_other,
                             ]);
 
                             LogAdmin::create([
@@ -605,7 +627,10 @@ class OrderController extends Controller
                                         'refund' => $req->get('refund')
                                     ]]),
                                     'payment_status' => 'paid',
-                                    'total' => $totalPrice
+                                    'total' => $totalPrice,
+                                    'jml_default' => $jml_default,
+                                    'jml_additional' => $jml_additional,
+                                    'jml_other' => $jml_other,
                                 ]);
 
                                 LogAdmin::create([
@@ -699,7 +724,10 @@ class OrderController extends Controller
                                                 'refund' => 0
                                             ]]),
                                             'payment_status' => 'paid',
-                                            'total' => $totalPrice - $price_single
+                                            'total' => $totalPrice - $price_single,
+                                            'jml_default' => $jml_default,
+                                            'jml_additional' => $jml_additional,
+                                            'jml_other' => $jml_other,
                                         ]);
     
                                         LogAdmin::create([
@@ -803,7 +831,10 @@ class OrderController extends Controller
                                                 'refund' => 0
                                             ]]),
                                             'payment_status' => 'paid',
-                                            'total' => $totalPrice - $price_single
+                                            'total' => $totalPrice - $price_single,
+                                            'jml_default' => $jml_default,
+                                            'jml_additional' => $jml_additional,
+                                            'jml_other' => $jml_other,
                                         ]);
     
                                         LogAdmin::create([
@@ -889,7 +920,10 @@ class OrderController extends Controller
                                         'refund' => 0
                                     ]]),
                                     'payment_status' => 'paid',
-                                    'total' => $totalPrice
+                                    'total' => $totalPrice,
+                                    'jml_default' => $jml_default,
+                                    'jml_additional' => $jml_additional,
+                                    'jml_other' => $jml_other,
                                 ]);
     
                                 LogAdmin::create([
@@ -937,7 +971,10 @@ class OrderController extends Controller
                                                     'refund' => $req->get('refund')
                                                 ]]),
                                                 'payment_status' => 'paid',
-                                                'total' => $totalPrice
+                                                'total' => $totalPrice,
+                                                'jml_default' => $jml_default,
+                                                'jml_additional' => $jml_additional,
+                                                'jml_other' => $jml_other,
                                             ]);
             
                                             LogAdmin::create([
@@ -977,7 +1014,10 @@ class OrderController extends Controller
                                                 'refund' => 0
                                             ]]),
                                             'payment_status' => 'paid',
-                                            'total' => $totalPrice
+                                            'total' => $totalPrice,
+                                            'jml_default' => $jml_default,
+                                            'jml_additional' => $jml_additional,
+                                            'jml_other' => $jml_other,
                                         ]);
         
                                         LogAdmin::create([
@@ -1022,7 +1062,10 @@ class OrderController extends Controller
                                             'refund' => 0
                                         ]]),
                                         'payment_status' => 'paid',
-                                        'total' => $totalPrice - $price_single
+                                        'total' => $totalPrice - $price_single,
+                                        'jml_default' => $jml_default,
+                                        'jml_additional' => $jml_additional,
+                                        'jml_other' => $jml_other,
                                     ]);
     
                                     LogAdmin::create([
@@ -1072,7 +1115,10 @@ class OrderController extends Controller
                                             'refund' => 0
                                         ]]),
                                         'payment_status' => 'paid',
-                                        'total' => $totalPrice - $price_single
+                                        'total' => $totalPrice - $price_single,
+                                        'jml_default' => $jml_default,
+                                        'jml_additional' => $jml_additional,
+                                        'jml_other' => $jml_other,
                                     ]);
     
                                     LogAdmin::create([
@@ -1120,7 +1166,10 @@ class OrderController extends Controller
                                                     ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => $req->get('refund')]
                                                 ]),
                                                 'payment_status' => 'paid',
-                                                'total' => $totalPrice
+                                                'total' => $totalPrice,
+                                                'jml_default' => $jml_default,
+                                                'jml_additional' => $jml_additional,
+                                                'jml_other' => $jml_other,
                                             ]);
 
                                             LogAdmin::create([
@@ -1167,7 +1216,10 @@ class OrderController extends Controller
                                                     ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0, 'discount' => 0, 'refund' => 0]
                                                 ]),
                                                 'payment_status' => 'paid',
-                                                'total' => $totalPrice
+                                                'total' => $totalPrice,
+                                                'jml_default' => $jml_default,
+                                                'jml_additional' => $jml_additional,
+                                                'jml_other' => $jml_other,
                                             ]);
 
                                             LogAdmin::create([
@@ -1216,7 +1268,10 @@ class OrderController extends Controller
                                             ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon, 'discount' => $price_single, 'refund' => 0]
                                         ]),
                                         'payment_status' => 'paid',
-                                        'total' => $deposit->balance
+                                        'total' => $deposit->balance,
+                                        'jml_default' => $jml_default,
+                                        'jml_additional' => $jml_additional,
+                                        'jml_other' => $jml_other,
                                     ]);
     
                                     LogAdmin::create([
@@ -1272,7 +1327,10 @@ class OrderController extends Controller
                                             ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota, 'discount' => $price_single, 'refund' => 0]
                                         ]),
                                         'payment_status' => 'paid',
-                                        'total' => $deposit->balance
+                                        'total' => $deposit->balance,
+                                        'jml_default' => $jml_default,
+                                        'jml_additional' => $jml_additional,
+                                        'jml_other' => $jml_other,
                                     ]);
     
                                     LogAdmin::create([
@@ -1333,7 +1391,10 @@ class OrderController extends Controller
                                                     ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
                                                 ]),
                                                 'payment_status' => 'paid',
-                                                'total' => $remaining_balance
+                                                'total' => $remaining_balance,
+                                                'jml_default' => $jml_default,
+                                                'jml_additional' => $jml_additional,
+                                                'jml_other' => $jml_other,
                                             ]);
             
                                             $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
@@ -1386,7 +1447,10 @@ class OrderController extends Controller
                                                     ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single, 'refund' => 0]
                                                 ]),
                                                 'payment_status' => 'paid',
-                                                'total' => $remaining_balance
+                                                'total' => $remaining_balance,
+                                                'jml_default' => $jml_default,
+                                                'jml_additional' => $jml_additional,
+                                                'jml_other' => $jml_other,
                                             ]);
             
                                             $log_limit->quota = $log_limit->quota - 1;
@@ -1439,7 +1503,10 @@ class OrderController extends Controller
                                             ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
                                         ]),
                                         'payment_status' => 'paid',
-                                        'total' => $remaining_balance
+                                        'total' => $remaining_balance,
+                                        'jml_default' => $jml_default,
+                                        'jml_additional' => $jml_additional,
+                                        'jml_other' => $jml_other,
                                     ]);
     
                                     $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
@@ -1494,7 +1561,10 @@ class OrderController extends Controller
                                             ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
                                         ]),
                                         'payment_status' => 'paid',
-                                        'total' => $remaining_balance
+                                        'total' => $remaining_balance,
+                                        'jml_default' => $jml_default,
+                                        'jml_additional' => $jml_additional,
+                                        'jml_other' => $jml_other,
                                     ]);
                                     
                                     $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
@@ -1550,7 +1620,10 @@ class OrderController extends Controller
                                             ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single, 'refund' => 0]
                                         ]),
                                         'payment_status' => 'paid',
-                                        'total' => $remaining_balance
+                                        'total' => $remaining_balance,
+                                        'jml_default' => $jml_default,
+                                        'jml_additional' => $jml_additional,
+                                        'jml_other' => $jml_other,
                                     ]);
     
                                     $log_limit->quota = $log_limit->quota - 1;
@@ -1605,7 +1678,10 @@ class OrderController extends Controller
                                             ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single, 'refund' => 0]
                                         ]),
                                         'payment_status' => 'paid',
-                                        'total' => $remaining_balance
+                                        'total' => $remaining_balance,
+                                        'jml_default' => $jml_default,
+                                        'jml_additional' => $jml_additional,
+                                        'jml_other' => $jml_other,
                                     ]);
                                     
                                     $log_limit->quota = $log_limit->quota - 1;
@@ -1678,7 +1754,10 @@ class OrderController extends Controller
                                                         'refund' => $req->get('refund')
                                                     ]]),
                                                     'payment_status' => 'paid',
-                                                    'total' => $totalPrice
+                                                    'total' => $totalPrice,
+                                                    'jml_default' => $jml_default,
+                                                    'jml_additional' => $jml_additional,
+                                                    'jml_other' => $jml_other,
                                                 ]);
                 
                                                 LogAdmin::create([
@@ -1718,7 +1797,10 @@ class OrderController extends Controller
                                                     'refund' => 0
                                                 ]]),
                                                 'payment_status' => 'paid',
-                                                'total' => $totalPrice
+                                                'total' => $totalPrice,
+                                                'jml_default' => $jml_default,
+                                                'jml_additional' => $jml_additional,
+                                                'jml_other' => $jml_other,
                                             ]);
             
                                             LogAdmin::create([
@@ -1763,7 +1845,10 @@ class OrderController extends Controller
                                                 'refund' => 0
                                             ]]),
                                             'payment_status' => 'paid',
-                                            'total' => $totalPrice - $price_single
+                                            'total' => $totalPrice - $price_single,
+                                            'jml_default' => $jml_default,
+                                            'jml_additional' => $jml_additional,
+                                            'jml_other' => $jml_other,
                                         ]);
     
                                         LogAdmin::create([
@@ -1813,7 +1898,10 @@ class OrderController extends Controller
                                                 'refund' => 0
                                             ]]),
                                             'payment_status' => 'paid',
-                                            'total' => $totalPrice - $price_single
+                                            'total' => $totalPrice - $price_single,
+                                            'jml_default' => $jml_default,
+                                            'jml_additional' => $jml_additional,
+                                            'jml_other' => $jml_other,
                                         ]);
     
                                         LogAdmin::create([
@@ -1867,7 +1955,10 @@ class OrderController extends Controller
                                                             ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => $req->get('refund')]
                                                         ]),
                                                         'payment_status' => 'paid',
-                                                        'total' => $totalPrice
+                                                        'total' => $totalPrice,
+                                                        'jml_default' => $jml_default,
+                                                        'jml_additional' => $jml_additional,
+                                                        'jml_other' => $jml_other,
                                                     ]);
                     
                                                     LogAdmin::create([
@@ -1915,7 +2006,10 @@ class OrderController extends Controller
                                                         ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => 0]
                                                     ]),
                                                     'payment_status' => 'paid',
-                                                    'total' => $totalPrice
+                                                    'total' => $totalPrice,
+                                                    'jml_default' => $jml_default,
+                                                    'jml_additional' => $jml_additional,
+                                                    'jml_other' => $jml_other,
                                                 ]);
                 
                                                 LogAdmin::create([
@@ -1973,7 +2067,10 @@ class OrderController extends Controller
                                                     ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon, 'discount' => $price_single, 'refund' => 0]
                                                 ]),
                                                 'payment_status' => 'paid',
-                                                'total' => $deposit_before
+                                                'total' => $deposit_before,
+                                                'jml_default' => $jml_default,
+                                                'jml_additional' => $jml_additional,
+                                                'jml_other' => $jml_other,
                                             ]);
             
                                             LogAdmin::create([
@@ -2039,7 +2136,10 @@ class OrderController extends Controller
                                                     ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota, 'discount' => $price_single, 'refund' => 0]
                                                 ]),
                                                 'payment_status' => 'paid',
-                                                'total' => $deposit_before
+                                                'total' => $deposit_before,
+                                                'jml_default' => $jml_default,
+                                                'jml_additional' => $jml_additional,
+                                                'jml_other' => $jml_other,
                                             ]);
             
                                             LogAdmin::create([
@@ -2101,7 +2201,10 @@ class OrderController extends Controller
                                                             ['payment_type' => 'kupon', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota_kupon,'discount' => $price_single, 'refund' => 0]
                                                         ]),
                                                         'payment_status' => 'paid',
-                                                        'total' => $totalPrice - $price_single
+                                                        'total' => $totalPrice - $price_single,
+                                                        'jml_default' => $jml_default,
+                                                        'jml_additional' => $jml_additional,
+                                                        'jml_other' => $jml_other,
                                                     ]);
                     
                                                     LogAdmin::create([
@@ -2150,7 +2253,10 @@ class OrderController extends Controller
                                                         ['payment_type' => 'kupon', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota_kupon,'discount' => $price_single, 'refund' => 0]
                                                     ]),
                                                     'payment_status' => 'paid',
-                                                    'total' => $totalPrice - $price_single
+                                                    'total' => $totalPrice - $price_single,
+                                                    'jml_default' => $jml_default,
+                                                    'jml_additional' => $jml_additional,
+                                                    'jml_other' => $jml_other,
                                                 ]);
                 
                                                 LogAdmin::create([
@@ -2204,7 +2310,10 @@ class OrderController extends Controller
                                                             ['payment_type' => 'limit', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota,'discount' => $price_single, 'refund' => 0]
                                                         ]),
                                                         'payment_status' => 'paid',
-                                                        'total' => $totalPrice - $price_single
+                                                        'total' => $totalPrice - $price_single,
+                                                        'jml_default' => $jml_default,
+                                                        'jml_additional' => $jml_additional,
+                                                        'jml_other' => $jml_other,
                                                     ]);
                     
                                                     LogAdmin::create([
@@ -2252,7 +2361,10 @@ class OrderController extends Controller
                                                         ['payment_type' => 'limit', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota,'discount' => $price_single, 'refund' => 0]
                                                     ]),
                                                     'payment_status' => 'paid',
-                                                    'total' => $totalPrice - $price_single
+                                                    'total' => $totalPrice - $price_single,
+                                                    'jml_default' => $jml_default,
+                                                    'jml_additional' => $jml_additional,
+                                                    'jml_other' => $jml_other,
                                                 ]);
                 
                                                 LogAdmin::create([
@@ -2312,7 +2424,10 @@ class OrderController extends Controller
                                                     ['payment_type' => 'kupon', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota_kupon - 1,'discount' => $price_single, 'refund' => 0]
                                                 ]),
                                                 'payment_status' => 'paid',
-                                                'total' => $disc
+                                                'total' => $disc,
+                                                'jml_default' => $jml_default,
+                                                'jml_additional' => $jml_additional,
+                                                'jml_other' => $jml_other,
                                             ]);
                                             
                                             $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
@@ -2379,7 +2494,10 @@ class OrderController extends Controller
                                                     ['payment_type' => 'limit', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota - 1,'discount' => $price_single, 'refund' => 0]
                                                 ]),
                                                 'payment_status' => 'paid',
-                                                'total' => $disc
+                                                'total' => $disc,
+                                                'jml_default' => $jml_default,
+                                                'jml_additional' => $jml_additional,
+                                                'jml_other' => $jml_other,
                                             ]);
                                             
                                             $log_limit->quota = $log_limit->quota - 1;
@@ -2447,7 +2565,10 @@ class OrderController extends Controller
                                             'refund' => 0
                                         ]]),
                                         'payment_status' => 'paid',
-                                        'total' => $totalPrice
+                                        'total' => $totalPrice,
+                                        'jml_default' => $jml_default,
+                                        'jml_additional' => $jml_additional,
+                                        'jml_other' => $jml_other,
                                     ]);
         
                                     LogAdmin::create([
@@ -2495,7 +2616,10 @@ class OrderController extends Controller
                                                         'refund' => $req->get('refund')
                                                     ]]),
                                                     'payment_status' => 'paid',
-                                                    'total' => $totalPrice
+                                                    'total' => $totalPrice,
+                                                    'jml_default' => $jml_default,
+                                                    'jml_additional' => $jml_additional,
+                                                    'jml_other' => $jml_other,
                                                 ]);
                 
                                                 LogAdmin::create([
@@ -2535,7 +2659,10 @@ class OrderController extends Controller
                                                     'refund' => 0
                                                 ]]),
                                                 'payment_status' => 'paid',
-                                                'total' => $totalPrice
+                                                'total' => $totalPrice,
+                                                'jml_default' => $jml_default,
+                                                'jml_additional' => $jml_additional,
+                                                'jml_other' => $jml_other,
                                             ]);
             
                                             LogAdmin::create([
@@ -2580,7 +2707,10 @@ class OrderController extends Controller
                                                 'refund' => 0
                                             ]]),
                                             'payment_status' => 'paid',
-                                            'total' => $totalPrice - $price_single
+                                            'total' => $totalPrice - $price_single,
+                                            'jml_default' => $jml_default,
+                                            'jml_additional' => $jml_additional,
+                                            'jml_other' => $jml_other,
                                         ]);
         
                                         LogAdmin::create([
@@ -2630,7 +2760,10 @@ class OrderController extends Controller
                                                 'refund' => 0
                                             ]]),
                                             'payment_status' => 'paid',
-                                            'total' => $totalPrice - $price_single
+                                            'total' => $totalPrice - $price_single,
+                                            'jml_default' => $jml_default,
+                                            'jml_additional' => $jml_additional,
+                                            'jml_other' => $jml_other,
                                         ]);
         
                                         LogAdmin::create([
@@ -2678,7 +2811,10 @@ class OrderController extends Controller
                                                         ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => $req->get('refund')]
                                                     ]),
                                                     'payment_status' => 'paid',
-                                                    'total' => $totalPrice
+                                                    'total' => $totalPrice,
+                                                    'jml_default' => $jml_default,
+                                                    'jml_additional' => $jml_additional,
+                                                    'jml_other' => $jml_other,
                                                 ]);
 
                                                 LogAdmin::create([
@@ -2725,7 +2861,10 @@ class OrderController extends Controller
                                                         ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0, 'discount' => 0, 'refund' => 0]
                                                     ]),
                                                     'payment_status' => 'paid',
-                                                    'total' => $totalPrice
+                                                    'total' => $totalPrice,
+                                                    'jml_default' => $jml_default,
+                                                    'jml_additional' => $jml_additional,
+                                                    'jml_other' => $jml_other,
                                                 ]);
 
                                                 LogAdmin::create([
@@ -2771,10 +2910,13 @@ class OrderController extends Controller
                                             'cart' => serialize($cart_data),
                                             'payment_type' => serialize([
                                                 ['payment_type' => 'deposit','transaction_amount' => $minus_price_single,'balance' => $deposit->balance - $minus_price_single, 'discount' => 0, 'refund' => 0],
-                                                ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon, 'discount' => $price_single, 'refund' => 0]
+                                                ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
                                             ]),
                                             'payment_status' => 'paid',
-                                            'total' => $minus_price_single
+                                            'total' => $minus_price_single,
+                                            'jml_default' => $jml_default,
+                                            'jml_additional' => $jml_additional,
+                                            'jml_other' => $jml_other,
                                         ]);
         
                                         LogAdmin::create([
@@ -2828,10 +2970,13 @@ class OrderController extends Controller
                                             'cart' => serialize($cart_data),
                                             'payment_type' => serialize([
                                                 ['payment_type' => 'deposit','transaction_amount' => $minus_price_single,'balance' => $deposit->balance - $minus_price_single, 'discount' => 0, 'refund' => 0],
-                                                ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota, 'discount' => $price_single, 'refund' => 0]
+                                                ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single, 'refund' => 0]
                                             ]),
                                             'payment_status' => 'paid',
-                                            'total' => $minus_price_single
+                                            'total' => $minus_price_single,
+                                            'jml_default' => $jml_default,
+                                            'jml_additional' => $jml_additional,
+                                            'jml_other' => $jml_other,
                                         ]);
         
                                         LogAdmin::create([
@@ -2893,7 +3038,10 @@ class OrderController extends Controller
                                                         ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
                                                     ]),
                                                     'payment_status' => 'paid',
-                                                    'total' => $remaining_balance
+                                                    'total' => $remaining_balance,
+                                                    'jml_default' => $jml_default,
+                                                    'jml_additional' => $jml_additional,
+                                                    'jml_other' => $jml_other,
                                                 ]);
                 
                                                 $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
@@ -2946,7 +3094,10 @@ class OrderController extends Controller
                                                         ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single, 'refund' => 0]
                                                     ]),
                                                     'payment_status' => 'paid',
-                                                    'total' => $remaining_balance
+                                                    'total' => $remaining_balance,
+                                                    'jml_default' => $jml_default,
+                                                    'jml_additional' => $jml_additional,
+                                                    'jml_other' => $jml_other,
                                                 ]);
                 
                                                 $log_limit->quota = $log_limit->quota - 1;
@@ -2999,7 +3150,10 @@ class OrderController extends Controller
                                                 ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
                                             ]),
                                             'payment_status' => 'paid',
-                                            'total' => $remaining_balance
+                                            'total' => $remaining_balance,
+                                            'jml_default' => $jml_default,
+                                            'jml_additional' => $jml_additional,
+                                            'jml_other' => $jml_other,
                                         ]);
         
                                         $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
@@ -3054,7 +3208,10 @@ class OrderController extends Controller
                                                 ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
                                             ]),
                                             'payment_status' => 'paid',
-                                            'total' => $remaining_balance
+                                            'total' => $remaining_balance,
+                                            'jml_default' => $jml_default,
+                                            'jml_additional' => $jml_additional,
+                                            'jml_other' => $jml_other,
                                         ]);
                                         
                                         $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
@@ -3110,7 +3267,10 @@ class OrderController extends Controller
                                                 ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single, 'refund' => 0]
                                             ]),
                                             'payment_status' => 'paid',
-                                            'total' => $remaining_balance
+                                            'total' => $remaining_balance,
+                                            'jml_default' => $jml_default,
+                                            'jml_additional' => $jml_additional,
+                                            'jml_other' => $jml_other,
                                         ]);
         
                                         $log_limit->quota = $log_limit->quota - 1;
@@ -3165,7 +3325,10 @@ class OrderController extends Controller
                                                 ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single, 'refund' => 0]
                                             ]),
                                             'payment_status' => 'paid',
-                                            'total' => $remaining_balance
+                                            'total' => $remaining_balance,
+                                            'jml_default' => $jml_default,
+                                            'jml_additional' => $jml_additional,
+                                            'jml_other' => $jml_other,
                                         ]);
                                         
                                         $log_limit->quota = $log_limit->quota - 1;

@@ -127,7 +127,7 @@
                         <div class="panel panel-default card-view">
                             <div class="panel-heading">
                                 <div class="pull-left">
-                                    <h6 class="pannel-title text-dark">Revenue Trendline</h6>
+                                    <h6 class="pannel-title text-dark">Revenue Trendline 7 Hari Terakhir</h6>
                                 </div>
                                 <div class="pull-right">
                                     <div class="pull-right">
@@ -158,7 +158,7 @@
                                             <div class="tab-pane fade active in" id="all" role="tabpanel"
                                                 style="margin-top: 50px;">
                                                 <div class="col-lg-12">
-                                                    <canvas id="all-chart" height="100"></canvas>
+                                                    <div id="statistic_revenue_line" class="morris-chart" style="d:293px;"></div>
                                                     <div class="panel-wrapper collapse in">
                                                         <ul class="flex-stat mt-1"
                                                             style="display: flex; margin-top:40px; margin-bottom:20px;">
@@ -170,7 +170,7 @@
                                                             </li>
                                                             <li>
                                                                 <span class="block txt-dark weight-500 font-18">Total : Rp.
-                                                                    <span class="counter-anim">10000000</span></span>
+                                                                    <span class="counter-anim">{{ number_format($pendapatan_revenue) }}</span></span>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -180,7 +180,7 @@
                                             <div class="tab-pane fade active in" id="permainan" role="tabpanel"
                                                 style="margin-top: 50px;">
                                                 <div class="col-lg-12">
-                                                    <canvas id="permainan-chart" height="100"></canvas>
+                                                    <div id="statistic_permainan_line" class="morris-chart" style="d:293px;"></div>
                                                     <div class="panel-wrapper collapse in">
                                                         <ul class="flex-stat mt-1"
                                                             style="display: flex; margin-top:40px; margin-bottom:20px;">
@@ -192,7 +192,7 @@
                                                             </li>
                                                             <li>
                                                                 <span class="block txt-dark weight-500 font-18">Total : Rp.
-                                                                    <span class="counter-anim">500000</span></span>
+                                                                    <span class="counter-anim">{{ number_format($pendapatan_revenue_permainan) }}</span></span>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -202,7 +202,7 @@
                                             <div class="tab-pane fade active in" id="proshop" role="tabpanel"
                                                 style="margin-top: 50px;">
                                                 <div class="col-lg-12">
-                                                    <canvas id="proshop-chart" height="100"></canvas>
+                                                    <div id="statistic_fasilitas_line" class="morris-chart" style="d:293px;"></div>
                                                     <div class="panel-wrapper collapse in">
                                                         <ul class="flex-stat mt-1"
                                                             style="display: flex; margin-top:40px; margin-bottom:20px;">
@@ -214,7 +214,7 @@
                                                             </li>
                                                             <li>
                                                                 <span class="block txt-dark weight-500 font-18">Total : Rp.
-                                                                    <span class="counter-anim">500000</span></span>
+                                                                    <span class="counter-anim">{{ number_format($pendapatan_revenue_fasilitas) }}</span></span>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -224,7 +224,7 @@
                                             <div class="tab-pane fade active in" id="kantin" role="tabpanel"
                                                 style="margin-top: 50px;">
                                                 <div class="col-lg-12">
-                                                    <canvas id="kantin-chart" height="100"></canvas>
+                                                    <div id="statistic_other_line" class="morris-chart" style="d:293px;"></div>
                                                     <div class="panel-wrapper collapse in">
                                                         <ul class="flex-stat mt-1"
                                                             style="display: flex; margin-top:40px; margin-bottom:20px;">
@@ -236,7 +236,7 @@
                                                             </li>
                                                             <li>
                                                                 <span class="block txt-dark weight-500 font-18">Total : Rp.
-                                                                    <span class="counter-anim">300000</span></span>
+                                                                    <span class="counter-anim">{{ number_format($pendapatan_revenue_other_all) }}</span></span>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -262,7 +262,7 @@
                                 style="margin-top: 50px;">
                                 <div class="panel-heading">
                                     <div class="pull-left">
-                                        <h6 class="pannel-title text-dark">Revenue Trendline</h6>
+                                        <h6 class="pannel-title text-dark">Revenue Trendline 12 Bulan terakhir</h6>
                                     </div>
                                     <div class="pull-right">
                                         <div class="pull-right">
@@ -292,7 +292,7 @@
 
                             <div class="panel-wrapper collapse in">
                                 <div class="panel-body">
-                                    <div id="statistic_visitor_bar" class="morris-chart" style="height:340px;"></div>
+                                    <div id="statistic_permainan_bar" class="morris-chart" style="height:340px;"></div>
                                     <ul class="flex-stat mt-1" style="display: flex">
                                         <li>
                                             <span class="block"></span>
@@ -323,84 +323,11 @@
         </div>
     @endsection
     @push('scripts')
-        {{-- <script>
+        <script>
             // fungsi grafik-line & Grafik-bar
-            // var dataMingguan = {!! json_encode($visitor_daily) !!}
-            // var dataNewVisitor = {!! json_encode($visitor) !!}
-
-            /* data analisis */
-            $('#dt-analisis').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "lengthChange": false,
-                "bDestroy": true,
-                "searching": true,
-                "paginate": {
-                    "first": "First",
-                    "last": "Last",
-                    "next": "Next",
-                    "previous": "Previous"
-                },
-                "ajax": {
-                    "url": "{{ route('analisis-tamu.index') }}",
-                    "type": "GET",
-                    "datatype": "json"
-                },
-
-                "render": $.fn.dataTable.render.text(),
-                "columns": [{
-                        data: 'name'
-                    },
-                    {
-                        data: 'updated_at'
-                    },
-                    {
-                        "data": function(data) {
-                            if (data.tipe_member == 'VIP') {
-                                return `<span class='label label-success'>${data.tipe_member == 'VIP' ? 'Member' : 'VIP'}</span>`;
-                            } else {
-                                return `<span class='label label-warning'>${data.tipe_member == 'VVIP' ? 'VIP' : 'Member'}</span>`;
-                            }
-
-                        }
-                    },
-                    {
-                        data: 'times',
-
-                    }
-                ],
-                // order: [
-                //     [1, 'asc']
-                // ],
-                responsive: true,
-                language: {
-                    search: "",
-                    searchPlaceholder: "Cari nama",
-                    emptyTable: "Tidak ada data pada tabel ini",
-                    info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
-                    infoFiltered: "(difilter dari _MAX_ total data)",
-                    infoEmpty: "Tidak ada data pada tabel ini",
-                    lengthMenu: "Menampilkan _MENU_ data",
-                    zeroRecords: "Tidak ada data pada tabel ini"
-                },
-                columnDefs: [{
-                        className: 'text-left',
-                        targets: [0, 1, 2, 3, ]
-                    },
-                    {
-                        className: 'text-right',
-                        targets: [2]
-                    }
-                ],
-                dom: "<'row mb-3'<'col-sm-12 col-md-8 pull-right'f><'toolbar col-sm-12 col-md-4 float-left'B>>" +
-                    "<'row'<'col-sm-12'tr>>" +
-                    "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-                initComplete: function() {
-                    $('div.toolbar').html('<b>Daftar member terakhir bermain</b>').appendTo('.float-left');
-                }
-            });
-            /* data analisis */
-        </script> --}}
+            var _ydata = JSON.parse('{!! json_encode($months) !!}');
+            var _xdata = JSON.parse('{!! json_encode($monthCount) !!}');
+        </script>
     @endpush
 @else
     <!DOCTYPE HTML>
