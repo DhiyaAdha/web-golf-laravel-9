@@ -11,15 +11,15 @@ $(document).ready(function(){
 		"bInfo": false,
 	});
 	
-	if($('#statistic_visitor_bar').length > 0) {
+	if($('#statistic_permainan_bar').length > 0) {
 		// Morris bar chart
 		Morris.Bar({
-			element: 'statistic_visitor_bar',
+			element: 'statistic_permainan_bar',
 			data: dataMingguan,
 			xkey: 'y',
-			ykeys: ['a'	, 'b', 'c' ],
-			labels: ['VIP', 'Member', 'Reguler' ],
-			barColors:['#fec107', '#32FFC1', '#21E1E1'],
+			ykeys: ['a'],
+			labels: ['PERMAINAN' ],
+			barColors:['#fec107'],
 			hideHover: 'auto',
 			gridLineColor: '#878787',
 			resize: true,

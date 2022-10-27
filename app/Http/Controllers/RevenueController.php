@@ -18,15 +18,6 @@ class RevenueController extends Controller
     public function index()
     {
         //Total revenue today START
-        $data['pendapatan_revenue_today'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->sum('total');
-
-        $data['pendapatan_revenue_default'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->sum('jml_default');
-        $data['pendapatan_revenue_additional'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->sum('jml_additional');
-        $data['pendapatan_revenue_other'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->sum('jml_other');
-        //Total revenue today END
-
-        //trendline permainan START
-
         // Statistika Pertahun Grafik-chart
         $months = [
             1 => 'Jan',
@@ -49,12 +40,8 @@ class RevenueController extends Controller
             $month_new[$value->format('m')] = [$value->format('n'), $value->format('Y')];
         }
         foreach (array_values($month_new) as $key => $value) {
-            $data['log_transaction'][$key]['period'] = $months[$value[0]];
-            $data['log_transaction'][$key]['total_permainan'] = LogTransaction::where('payment_status', 'paid',
-                function (Builder $query) {
-                    $query->where('jml_default');
-                }
-            )->whereMonth(
+            $data['permainan'][$key]['period'] = $months[$value[0]];
+            $data['permainan'][$key]['PERMAINAN'] = LogTransaction::where('payment_status', 'paid',)->whereMonth(
                 'created_at',
                 strlen($value[0]) == 1 ? '0' . $value[0] : $value[0]
             )->whereYear(
@@ -75,25 +62,39 @@ class RevenueController extends Controller
                 $day_period[$key]
             )->translatedFormat('d/m/y');
 
-            $data['permainan_daily'][$key]['a'] = LogTransaction::where('payment_status', 'paid',
-                function (Builder $query) {
-                    $query->where('jml_default');
-                }
-            )->whereDate('created_at', $day_period[$key])
+            $data['permainan_daily'][$key]['a'] = LogTransaction::where('payment_status', 'paid',)->whereDate('created_at', $day_period[$key])
                 ->count();
         }
 
 
 
 
-
+        // statistika pertahun
         $data['pendapatan_rev_permainan_year'] = LogTransaction::where('payment_status', 'paid')->whereYear(
             'created_at',
             now()->format('Y')
         )->sum('jml_default');
+        // statistika mingguan & tanggal
+        $data['now'] = Carbon::now()->translatedFormat('Y-m-d');
+        $data['pendapatan_rev_permainan_week'] = LogTransaction::where('payment_status', 'paid')->whereBetween(
+            'created_at',
+            [
+                Carbon::now()->subDays(6)->startOfDay(), Carbon::now()->endOfDay()
+            ]
+        )->sum('jml_default');
 
 
         //trendline permainan END
+        $data['pendapatan_revenue_today'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->sum('total');
+
+        $data['pendapatan_revenue_default'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->sum('jml_default');
+        $data['pendapatan_revenue_additional'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->sum('jml_additional');
+        $data['pendapatan_revenue_other'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->sum('jml_other');
+        //Total revenue today END
+
+        //trendline permainan START
+
+        
 
 
         return view('dashboard.revenue', $data);
