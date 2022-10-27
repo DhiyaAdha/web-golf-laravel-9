@@ -158,6 +158,28 @@
                                             <div class="tab-pane fade active in" id="all" role="tabpanel"
                                                 style="margin-top: 50px;">
                                                 <div class="col-lg-12">
+                                                    <div id="statistic_revenue_line" class="morris-chart" style="d:293px;"></div>
+                                                    <div class="panel-wrapper collapse in">
+                                                        <ul class="flex-stat mt-1"
+                                                            style="display: flex; margin-top:40px; margin-bottom:20px;">
+                                                            <li>
+                                                                <span class="block"></span>
+                                                                <span class="block txt-dark weight-500 font-18">
+                                                                    <span class="">
+                                                                    </span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="block txt-dark weight-500 font-18">Total : Rp.
+                                                                    <span class="counter-anim">{{ number_format($pendapatan_revenue) }}</span></span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="tab-pane fade active in" id="permainan" role="tabpanel"
+                                                style="margin-top: 50px;">
+                                                <div class="col-lg-12">
                                                     <div id="statistic_permainan_line" class="morris-chart" style="d:293px;"></div>
                                                     <div class="panel-wrapper collapse in">
                                                         <ul class="flex-stat mt-1"
@@ -170,29 +192,7 @@
                                                             </li>
                                                             <li>
                                                                 <span class="block txt-dark weight-500 font-18">Total : Rp.
-                                                                    <span class="counter-anim">10000000</span></span>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="tab-pane fade active in" id="permainan" role="tabpanel"
-                                                style="margin-top: 50px;">
-                                                <div class="col-lg-12">
-                                                    <canvas id="permainan-chart" height="100"></canvas>
-                                                    <div class="panel-wrapper collapse in">
-                                                        <ul class="flex-stat mt-1"
-                                                            style="display: flex; margin-top:40px; margin-bottom:20px;">
-                                                            <li>
-                                                                <span class="block"></span>
-                                                                <span class="block txt-dark weight-500 font-18">
-                                                                    <span class="">
-                                                                    </span>
-                                                            </li>
-                                                            <li>
-                                                                <span class="block txt-dark weight-500 font-18">Total : Rp.
-                                                                    <span class="counter-anim">500000</span></span>
+                                                                    <span class="counter-anim">{{ number_format($pendapatan_revenue_permainan) }}</span></span>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -202,7 +202,7 @@
                                             <div class="tab-pane fade active in" id="proshop" role="tabpanel"
                                                 style="margin-top: 50px;">
                                                 <div class="col-lg-12">
-                                                    <canvas id="proshop-chart" height="100"></canvas>
+                                                    <div id="statistic_fasilitas_line" class="morris-chart" style="d:293px;"></div>
                                                     <div class="panel-wrapper collapse in">
                                                         <ul class="flex-stat mt-1"
                                                             style="display: flex; margin-top:40px; margin-bottom:20px;">
@@ -214,7 +214,7 @@
                                                             </li>
                                                             <li>
                                                                 <span class="block txt-dark weight-500 font-18">Total : Rp.
-                                                                    <span class="counter-anim">500000</span></span>
+                                                                    <span class="counter-anim">{{ number_format($pendapatan_revenue_fasilitas) }}</span></span>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -224,7 +224,7 @@
                                             <div class="tab-pane fade active in" id="kantin" role="tabpanel"
                                                 style="margin-top: 50px;">
                                                 <div class="col-lg-12">
-                                                    <canvas id="kantin-chart" height="100"></canvas>
+                                                    <div id="statistic_other_line" class="morris-chart" style="d:293px;"></div>
                                                     <div class="panel-wrapper collapse in">
                                                         <ul class="flex-stat mt-1"
                                                             style="display: flex; margin-top:40px; margin-bottom:20px;">
@@ -236,7 +236,7 @@
                                                             </li>
                                                             <li>
                                                                 <span class="block txt-dark weight-500 font-18">Total : Rp.
-                                                                    <span class="counter-anim">300000</span></span>
+                                                                    <span class="counter-anim">{{ number_format($pendapatan_revenue_other_all) }}</span></span>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -325,8 +325,7 @@
     @push('scripts')
         <script>
             // fungsi grafik-line & Grafik-bar
-            var dataMingguan = {!! json_encode($permainan_daily) !!}
-            var dataNewVisitor = {!! json_encode($permainan) !!}
+            var dataNewPermainan = {!! json_encode($permainan) !!}
         </script>
     @endpush
 @else

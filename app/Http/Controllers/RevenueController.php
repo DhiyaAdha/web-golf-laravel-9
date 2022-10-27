@@ -41,14 +41,14 @@ class RevenueController extends Controller
         }
         foreach (array_values($month_new) as $key => $value) {
             $data['permainan'][$key]['period'] = $months[$value[0]];
-            $data['permainan'][$key]['PERMAINAN'] = LogTransaction::where('payment_status', 'paid',)->whereMonth(
+            $data['permainan'][$key]['PERMAINAN'] = LogTransaction::select('jml_default')->whereMonth(
                 'created_at',
                 strlen($value[0]) == 1 ? '0' . $value[0] : $value[0]
             )->whereYear(
                 'created_at',
                 $value[1]
             )
-                ->count();
+                ->get();
         }
 
         //statistika mingguan bar-chart 
@@ -62,8 +62,7 @@ class RevenueController extends Controller
                 $day_period[$key]
             )->translatedFormat('d/m/y');
 
-            $data['permainan_daily'][$key]['a'] = LogTransaction::where('payment_status', 'paid',)->whereDate('created_at', $day_period[$key])
-                ->count();
+            $data['permainan_daily'][$key]['a'] = LogTransaction::select('jml_default')->whereDate('created_at', $day_period[$key])->get();
         }
 
 
@@ -86,6 +85,11 @@ class RevenueController extends Controller
 
         //trendline permainan END
         $data['pendapatan_revenue_today'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->sum('total');
+       
+        $data['pendapatan_revenue'] = LogTransaction::sum('total');
+        $data['pendapatan_revenue_permainan'] = LogTransaction::sum('jml_default');
+        $data['pendapatan_revenue_fasilitas'] = LogTransaction::sum('jml_additional');
+        $data['pendapatan_revenue_other_all'] = LogTransaction::sum('jml_other');
 
         $data['pendapatan_revenue_default'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->sum('jml_default');
         $data['pendapatan_revenue_additional'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->sum('jml_additional');
