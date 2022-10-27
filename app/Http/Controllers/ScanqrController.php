@@ -116,49 +116,61 @@ class ScanqrController extends Controller
         return view('membership.detail_scan');
     }
 
-    public function show_detail($id = null){
-        $visitor = Visitor::find($id);
-        $deposit = Deposit::where('visitor_id', $id)->first();
-        $log_limit = LogLimit::where('visitor_id', $id)->first();
-        $data['visitor'] = $visitor;
-        $data['deposit'] = $deposit;
-        $data['log_limit'] = $log_limit;
-        return view('membership.detail_scan', $data);
+    public function show_detail($id = null) {
+        try {
+            $visitor = Visitor::find($id);
+            $deposit = Deposit::where('visitor_id', $id)->first();
+            $log_limit = LogLimit::where('visitor_id', $id)->first();
+            $data['visitor'] = $visitor;
+            $data['deposit'] = $deposit;
+            $data['log_limit'] = $log_limit;
+            return view('membership.detail_scan', $data);
+        } catch (\Throwable $th) {
+            return redirect()->back();
+        }
     }
 
     public function checkQRCode(Request $request, $id = null) {
         $url_qr = explode("/", parse_url($request->get('qrCode'), PHP_URL_PATH));
         $get_visitor = Visitor::where("id", $url_qr[2])->first();
-        if ($get_visitor == null) {
-            $this->setResponse('INVALID', "Qr Code tidak ditemukan!");
-            return response()->json($this->getResponse());
-        } else {
-            try {
-                $this->setResponse('VALID', "Valid QR code", [
-                    'name' => $get_visitor->name,
-                ]);
+        try {
+            if ($get_visitor == null) {
+                $this->setResponse('INVALID', "Qr Code tidak ditemukan!");
                 return response()->json($this->getResponse());
-            } catch (\Throwable $th) {
-                return response()->json($this->getResponse());
+            } else {
+                try {
+                    $this->setResponse('VALID', "Valid QR code", [
+                        'name' => $get_visitor->name,
+                    ]);
+                    return response()->json($this->getResponse());
+                } catch (\Throwable $th) {
+                    return response()->json($this->getResponse());
+                }
             }
+        } catch (\Throwable $th) {
+            return response()->json($this->getResponse());
         }
     }
 
     public function checkNoHp(Request $request) {
         $phone_visitor = Visitor::where("phone", $request->get('phone'))->first();
-        if (is_null($phone_visitor)) {
-            $this->setResponse('INVALID', "No hp tidak ditemukan!");
-            return response()->json($this->getResponse());
-        } else {
-            try {
-                $this->setResponse('VALID', "Valid No Hp", [
-                    'name' => $phone_visitor->name,
-                    'unique_qr' => $phone_visitor->unique_qr,
-                ]);
+        try {
+            if (is_null($phone_visitor)) {
+                $this->setResponse('INVALID', "No hp tidak ditemukan!");
                 return response()->json($this->getResponse());
-            } catch (\Throwable $th) {
-                return response()->json($this->getResponse());
+            } else {
+                try {
+                    $this->setResponse('VALID', "Valid No Hp", [
+                        'name' => $phone_visitor->name,
+                        'unique_qr' => $phone_visitor->unique_qr,
+                    ]);
+                    return response()->json($this->getResponse());
+                } catch (\Throwable $th) {
+                    return response()->json($this->getResponse());
+                }
             }
+        } catch (\Throwable $th) {
+            return redirect()->back();
         }
     }
 
