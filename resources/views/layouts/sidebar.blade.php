@@ -12,6 +12,15 @@
             </li>
         @endif
         @if (auth()->user()->role_id == '2')
+            {{-- <li>
+                <a class="{{ Request::is('analisis-tamu') ? 'active' : '' }}" href="{{ route('analisis-tamu.index') }}">
+                    <div class="pull-left">
+                        <i class="fa fa-bar-chart-o mr-20"></i>
+                        <span class="right-nav-text">Analisis Tamu</span>
+                    </div>
+                    <div class="clearfix"></div>
+                </a>
+            </li> --}}
             <li>
                 <a href="javascript:void(0);" data-toggle="collapse" data-target="#dashboard"
                     class="collapsed {{ Request::is('analisis-tamu') || Request::is('revenue') ? 'active' : '' }}"
@@ -23,9 +32,10 @@
                 <ul id="dashboard" class="collapse-level-1 two-col-list collapse" aria-expanded="false"
                     style="height: 0px;">
                     <li>
-                        <a class="{{ Request::is('analisis-tamu') ? 'active-page' : '' }}" href="{{ route('analisis-tamu.index') }}">
+                        <a class="{{ Request::is('analisis-tamu') ? 'active-page' : '' }}"
+                            href="{{ route('analisis-tamu.index') }}">
                             <div class="pull-left">
-                                <span class="right-nav-text">Tamu</span>
+                                <span class="right-nav-text">Analisis Tamu</span>
                             </div>
                             <div class="clearfix"></div>
                         </a>
@@ -87,8 +97,7 @@
                 <a href="javascript:void(0);" data-toggle="collapse" data-target="#pages_users"
                     class="collapsed {{ Request::is('daftar-admin') || Request::is('daftar-tamu') ? 'active' : '' }}"
                     aria-expanded="false">
-                    <div class="pull-left"><i class="fa fa-user mr-20"></i><span class="right-nav-text">Daftar
-                            Pengguna</span></div>
+                    <div class="pull-left"><i class="fa fa-user mr-20"></i><span class="right-nav-text">Daftar Pengguna</span></div>
                     <div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div>
                     <div class="clearfix"></div>
                 </a>

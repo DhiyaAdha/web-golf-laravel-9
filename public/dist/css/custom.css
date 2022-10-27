@@ -284,9 +284,11 @@ h6.panel-title.txt-dark.label-visitor {
 }
 
 .card-visitor {
-    width: 204.0188976378px;
-    height: 323.52755905512px;
+    width: 323.52755906px;
+    height: 204.01889764px;
     padding: 0px;
+    
+    
 }
 
 .flex-wrap {
@@ -327,7 +329,6 @@ h6.panel-title.text-center {
 }
 
 .back-qr {
-    height: 200px;
     position: relative;
 }
 
@@ -428,8 +429,16 @@ h6.panel-title.text-center {
 
 /* pasword tambah admin */
 .qr-code-visitor {
-    height: 150px;
-    width: 150px;
+    height: 72px;
+    width: 72px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    margin-top: 52px;
+}
+
+.visitor-name-card{
     display: flex;
     justify-content: center;
     align-items: center;

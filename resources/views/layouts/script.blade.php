@@ -58,6 +58,11 @@
 <script src="{{ asset('/dist/js/bar-chart-permainan.js') }}"></script>
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 <script type="text/javascript" src="{{ asset('/dist/js/printThis.js') }}"></script>
+
+{{-- ChartJs --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> --}}
+
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
 @stack('scripts')
@@ -232,4 +237,104 @@
         // console.log(id, min, max, step, val);
     }
 </script>
-{{-- Tooltip --}}
+
+<script>
+    var xValues = ['Jan', 'Feb', 'Mar', 'Apr', 'Mey', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    new Chart("all-chart", {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+                data: [1, 2, 1, 2, 1, 2, 1, 2, 2, 1, 2, 1],
+                borderColor: "#fb4141",
+                fill: false
+            }, {
+                data: [2, 1, 3, 2, 1, 1, 2, 3, 2, 1, 2, 1],
+                borderColor: "#2ecc71",
+                fill: false
+            }, {
+                data: [1, 2, 3, 1, 2, 2, 3, 1, 2, 1, 1, 2],
+                borderColor: "#4da9ff",
+                fill: false
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            }
+        }
+    });
+</script>
+
+<script>
+    var xValues = ['Jan', 'Feb', 'Mar', 'Apr', 'Mey', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    new Chart("permainan-chart", {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+                data: [1, 2, 1, 2, 1, 2, 1, 2, 2, 1, 2, 1],
+                borderColor: "#fb4141",
+                fill: false
+            }, {
+                data: [1, 2, 1, 2, 1, 2, 1, 2, 2, 1, 2, 1],
+                borderColor: "#2ecc71",
+                fill: false
+            }, {
+                data: [1, 2, 3, 1, 2, 2, 3, 1, 2, 1, 1, 2],
+                borderColor: "#4da9ff",
+                fill: false
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            }
+        }
+    });
+</script>
+<script>
+    var xValues = ['Jan', 'Feb', 'Mar', 'Apr', 'Mey', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    new Chart("proshop-chart", {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+                data: [1, 2, 1, 2, 1, 2, 1, 2, 2, 1, 2, 1],
+                borderColor: "#fb4141",
+                fill: false
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            }
+        }
+    });
+</script>
+
+
+
+<script>
+    var xValues = ['Jan', 'Feb', 'Mar', 'Apr', 'Mey', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    new Chart("kantin-chart", {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+                data: [1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2],
+                borderColor: "#2ecc71",
+                fill: false
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            }
+        }
+    });
+</script>
