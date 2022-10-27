@@ -472,8 +472,7 @@ class OrderController extends Controller
         }
     }
 
-    public function pay(Request $req)
-    {
+    public function pay(Request $req) {
         $visitor = Visitor::find($req->get('page'));
         $items = \Cart::session($req->get('page'))->getContent();
         $deposit = Deposit::where('visitor_id', $req->get('page'))->first();
@@ -654,7 +653,7 @@ class OrderController extends Controller
                                     return response()->json([
                                         'status' => 'VALID',
                                         'message' => 'Pembayaran berhasil',
-                                        'return' => $req->get('bayar_input')
+                                        'return' => $req->get('bayar_cash')
                                     ]);
                                 }
                             } catch (Throwable $e) {
@@ -1671,7 +1670,7 @@ class OrderController extends Controller
                                     return response()->json($this->getResponse());
                                 } else {
                                     if ($req->get('bayar_input') != $totalPrice) {
-                                        if ($req->get('bayar_input') >= $totalPrice) {
+                                        if ($req->get('bayar_input') > $totalPrice) {
                                             try {
                                                 LogTransaction::create([
                                                     'order_number' => $req->get('order_number'),
