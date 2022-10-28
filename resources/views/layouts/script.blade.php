@@ -217,6 +217,15 @@
         html5QrcodeScanner.render(onScanSuccess, onScanFailure);
     });
 </script>
+
+<script>
+    $('.fa-print').on("click", function() {
+        $('#cetak-invoice').printThis({
+            printContainer: true,
+        });
+    });
+</script>
+
 {{-- Input Stepper --}}
 <script>
     function stepper(btn, ids) {

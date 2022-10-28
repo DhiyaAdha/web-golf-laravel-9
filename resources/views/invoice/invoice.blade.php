@@ -20,8 +20,11 @@
             </div>
             <!-- /Title -->
 
-            <a href="javascript:void(0)"><i class="fa fa-print pull-right" target="_blank" data-toggle="tooltip"
-                    title="Klik untuk Cetak"></i></a>
+            <a href="javascript:void(0)" >
+                <i class="fa fa-print  pull-right" target="_blank" data-toggle="tooltip" title="Klik untuk Cetak"
+                style="font-size:24px">
+                </i>
+            </a>
             <div class="row" id="cetak-invoice">
                 <style>
                     .invoice {
@@ -241,7 +244,7 @@
         </div>
     </div>
 @endsection
-@push('scripts')
+{{-- @push('scripts')
     <script>
         $('.fa-print').on("click", function() {
             $('#cetak-invoice').printThis({
@@ -249,4 +252,4 @@
             });
         });
     </script>
-@endpush
+@endpush --}}
