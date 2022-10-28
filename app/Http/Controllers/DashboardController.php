@@ -47,6 +47,22 @@ class DashboardController extends Controller
         }
         foreach (array_values($month_new) as $key => $value) {
             $data['visitor'][$key]['period'] = $months[$value[0]];
+            $data['visitor'][$key]['pertamina'] = Visitor::where('category', 'pertamina')->whereHas('log_transaction', function(Builder $query) use ($value) {
+                $query->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1]);
+            })->count();
+            $data['visitor'][$key]['pensiunan'] = Visitor::where('category', 'pensiunan')->whereHas('log_transaction', function(Builder $query) use ($value) {
+                $query->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1]);
+            })->count();
+            $data['visitor'][$key]['forkopimda'] = Visitor::where('category', 'forkopimda')->whereHas('log_transaction', function(Builder $query) use ($value) {
+                $query->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1]);
+            })->count();
+            $data['visitor'][$key]['perpesi'] = Visitor::where('category', 'perpesi')->whereHas('log_transaction', function(Builder $query) use ($value) {
+                $query->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1]);
+            })->count();
+            $data['visitor'][$key]['umum'] = Visitor::where('category', 'umum')->whereHas('log_transaction', function(Builder $query) use ($value) {
+                $query->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1]);
+            })->count();
+            
             $data['visitor'][$key]['VIP'] = Visitor::where('tipe_member', 'VVIP')->whereHas('log_transaction', function(Builder $query) use ($value) {
                 $query->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1]);
             })->count();
