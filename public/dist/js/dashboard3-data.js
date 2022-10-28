@@ -10,24 +10,6 @@ $(document).ready(function(){
 		"bPaginate": false,
 		"bInfo": false,
 	});
-	
-	if($('#statistic_visitor_bar').length > 0) {
-		// Morris bar chart
-		Morris.Bar({
-			element: 'statistic_visitor_bar',
-			data: dataMingguan,
-			xkey: 'y',
-			ykeys: ['a', 'b', 'c' ],
-			labels: ['VIP', 'Member', 'Umum' ],
-			barColors:['#fec107', '#32FFC1', '#21E1E1'],
-			hideHover: 'auto',
-			gridLineColor: '#878787',
-			resize: true,
-			barGap: 4,
-			gridTextColor:'#878787',
-			gridTextFamily:"Roboto",
-		});
-    }
 
 	if($('#revenue_trendline').length > 0) {
 		// Morris bar chart

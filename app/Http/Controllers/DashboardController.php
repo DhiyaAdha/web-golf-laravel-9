@@ -47,34 +47,31 @@ class DashboardController extends Controller
         }
         foreach (array_values($month_new) as $key => $value) {
             $data['visitor'][$key]['period'] = $months[$value[0]];
-            $data['visitor'][$key]['VIP'] = LogTransaction::where('payment_status', 'paid')->whereHas(
-                'visitor',
-                function (Builder $query) {
-                    $query->where('tipe_member', 'VVIP');
-                }
-            )->whereMonth(
-                'created_at',
-                strlen($value[0]) == 1 ? '0' . $value[0] : $value[0]
-            )->whereYear(
-                'created_at',
-                $value[1]
-            )->count();
+            $data['visitor'][$key]['pertamina'] = Visitor::where('category', 'pertamina')->whereHas('log_transaction', function(Builder $query) use ($value) {
+                $query->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1]);
+            })->count();
+            $data['visitor'][$key]['pensiunan'] = Visitor::where('category', 'pensiunan')->whereHas('log_transaction', function(Builder $query) use ($value) {
+                $query->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1]);
+            })->count();
+            $data['visitor'][$key]['forkopimda'] = Visitor::where('category', 'forkopimda')->whereHas('log_transaction', function(Builder $query) use ($value) {
+                $query->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1]);
+            })->count();
+            $data['visitor'][$key]['perpesi'] = Visitor::where('category', 'perpesi')->whereHas('log_transaction', function(Builder $query) use ($value) {
+                $query->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1]);
+            })->count();
+            $data['visitor'][$key]['umum'] = Visitor::where('category', 'umum')->whereHas('log_transaction', function(Builder $query) use ($value) {
+                $query->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1]);
+            })->count();
+            
+            $data['visitor'][$key]['VIP'] = Visitor::where('tipe_member', 'VVIP')->whereHas('log_transaction', function(Builder $query) use ($value) {
+                $query->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1]);
+            })->count();
 
-            $data['visitor'][$key]['Member'] = LogTransaction::where('payment_status', 'paid')->whereHas(
-                'visitor',
-                function (Builder $query) {
-                    $query->where('tipe_member', 'VIP');
-                }
-            )->whereMonth(
-                'created_at',
-                strlen($value[0]) == 1 ? '0' . $value[0] : $value[0]
-            )->whereYear(
-                'created_at',
-                $value[1]
-            )->count();
+            $data['visitor'][$key]['Member'] = Visitor::where('tipe_member', 'VIP')->whereHas('log_transaction', function(Builder $query) use ($value) {
+                $query->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1]);
+            })->count();
 
-            // REGULER
-            $data['visitor'][$key]['Reguler'] = LogTransaction::where('payment_status', 'paid')->whereHas(
+            $data['visitor'][$key]['Umum'] = LogTransaction::where('payment_status', 'paid')->whereHas(
                 'visitor',
                 function (Builder $query) {
                     $query->where('tipe_member', 'REGULER');
@@ -85,8 +82,7 @@ class DashboardController extends Controller
             )->whereYear(
                 'created_at',
                 $value[1]
-            )
-                ->count();
+            )->count();
         }
 
         //statistika mingguan bar-chart 
@@ -99,20 +95,12 @@ class DashboardController extends Controller
                 $day_period[$key]
             )->translatedFormat('d/m/y');
 
-            $data['visitor_daily'][$key]['a'] = LogTransaction::where('payment_status', 'paid')->whereHas(
-                'visitor',
-                function (Builder $query) {
-                    $query->where('tipe_member', 'VVIP');
-                }
-            )->whereDate('created_at', $day_period[$key])
-                ->count();
-            $data['visitor_daily'][$key]['b'] = LogTransaction::where('payment_status', 'paid')->whereHas(
-                'visitor',
-                function (Builder $query) {
-                    $query->where('tipe_member', 'VIP');
-                }
-            )->whereDate('created_at', $day_period[$key])
-                ->count();
+            $data['visitor_daily'][$key]['a'] = Visitor::where('tipe_member', 'VVIP')->whereHas('log_transaction', function(Builder $query) use ($day_period, $key) {
+                $query->whereDate('created_at', $day_period[$key]);
+            })->count();
+            $data['visitor_daily'][$key]['b'] = Visitor::where('tipe_member', 'VIP')->whereHas('log_transaction', function(Builder $query) use ($day_period, $key) {
+                $query->whereDate('created_at', $day_period[$key]);
+            })->count();
             $data['visitor_daily'][$key]['c'] = LogTransaction::where('payment_status', 'paid')->whereHas(
                 'visitor',
                 function (Builder $query) {

@@ -21,7 +21,13 @@
         @foreach($transaction as $item)
             <tr>
                 <td>{{ $item->name }}</td>
-                <td style="text-align: center">{{ $item->tipe_member }}</td>
+                @if ($item->tipe_member == 'VVIP')
+                    <td style="text-align: center">VIP</td>
+                @elseif($item->tipe_member == 'VIP')
+                    <td style="text-align: center">Member</td>
+                @else 
+                    <td style="text-align: center">Umum</td>
+                @endif
                 <td>
                     @php
                         $un = unserialize($item->payment_type);
