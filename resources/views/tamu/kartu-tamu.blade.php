@@ -209,12 +209,11 @@
                                     </div>
                                     <div class="mb-15 d-flex flex-column">
                                         <span class="txt-muted">Jenis Kelamin</span>
-                                        <span>{{ $visitor->gender }}</span>
+                                        <span class="text-capitalize">{{ $visitor->gender }}</span>
                                     </div>
                                     <div class="mb-15 d-flex flex-column">
                                         <span class="txt-muted">Jenis Tamu</span>
-                                        <span
-                                            class="{{ $visitor->tipe_member == 'VIP' ? 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-success' : 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-warning' }}">{{ $visitor->tipe_member == 'VVIP' ? 'VIP' : 'Member' }}</span>
+                                        <span class="{{ $visitor->tipe_member == 'VIP' ? 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-success' : 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-warning' }}">{{ $visitor->tipe_member == 'VVIP' ? 'VIP' : 'Member' }}</span>
                                     </div>
                                     <div class="mb-15 d-flex flex-column">
                                         <span class="txt-muted">Kategori</span>
