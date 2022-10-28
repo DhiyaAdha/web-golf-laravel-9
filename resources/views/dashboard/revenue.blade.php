@@ -9,6 +9,37 @@
                         <div class="panel panel-default card-view pa-0">
                             <div class="panel-wrapper collapse in">
                                 <div class="panel-body pa-0">
+                                    <div class="sm-data-box today">
+                                        <div class="container-fluid">
+                                            <div class="row p-2">
+                                                <div class="col-xs-8 text-left data-wrap-left">
+                                                    <span class="txt-light block counter">Rp. <span
+                                                            class="counter-anim">{{ number_format($pendapatan_revenue_today) }}</span></span>
+                                                    <span class="weight-500 txt-light block">
+                                                        Revenue Today
+                                                    </span>
+                                                    <div class="dhiya mt-10" style="margin-left: -4px;">
+                                                        <span class="label label-info">{{ date('d-m-Y') }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-4 text-right data-wrap-right">
+                                                    {{-- <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i> --}}
+                                                    <i class="zmdi zmdi-money txt-light data-right-rep-icon"></i>
+                                                </div>
+                                                <img src="{{ asset('/img/circle.svg') }}" class="card-img-absolute"
+                                                    alt="circle-image">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="panel panel-default card-view pa-0">
+                            <div class="panel-wrapper collapse in">
+                                <div class="panel-body pa-0">
                                     <div class="sm-data-box vvip">
                                         <div class="container-fluid">
                                             <div class="row p-2">
