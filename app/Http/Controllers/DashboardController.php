@@ -93,7 +93,7 @@ class DashboardController extends Controller
         foreach ($day_period as $key => $value) {
             $data['visitor_daily'][$key]['y'] = Carbon::create(
                 $day_period[$key]
-            )->translatedFormat('d/m/y');
+            )->translatedFormat('l');
 
             $data['visitor_daily'][$key]['a'] = Visitor::where('tipe_member', 'VVIP')->whereHas('log_transaction', function(Builder $query) use ($day_period, $key) {
                 $query->whereDate('created_at', $day_period[$key]);
@@ -106,8 +106,7 @@ class DashboardController extends Controller
                 function (Builder $query) {
                     $query->where('tipe_member', 'REGULER');
                 }
-            )->whereDate('created_at', $day_period[$key])
-                ->count();
+            )->whereDate('created_at', $day_period[$key])->count();
         }
 
         // statistika mingguan & tanggal
