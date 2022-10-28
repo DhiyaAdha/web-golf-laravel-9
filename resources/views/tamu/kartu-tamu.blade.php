@@ -46,7 +46,7 @@
                                     <div class="modal-body">
                                         <div class="d-flex justify-content-center align-items-center flex-column">
                                             <div class="d-flex justify-content-center flex-wrap" id="cetak-kartu">
-                                                <div class="col-md-card d-flex justify-content-center mb-10">
+                                                <div class="d-flex justify-content-center mb-10">
                                                     <div class="panel panel-default card-view card-visitor">
                                                         <div class="panel-wrapper collapse in">
                                                             <div class="panel-body card">
