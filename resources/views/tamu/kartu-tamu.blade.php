@@ -88,6 +88,15 @@
                                                                         font-size: 12px;
                                                                         line-height:10px;
                                                                         font-weight:600;">
+                                                                        @if ($visitor->tipe_member == 'VVIP')
+                                                                            <div class="text-warning">
+                                                                                VIP
+                                                                            </div>
+                                                                        @else
+                                                                            <div class="text-success">
+                                                                                MEMBER
+                                                                            </div>
+                                                                        @endif
                                                                     </h6>
                                                                 </div>
                                                             </div>
