@@ -44,7 +44,9 @@
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content hidden-content">
                                     <div class="modal-body">
-                                        <div class="d-flex justify-content-center align-items-center flex-column">
+                                        <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/bg-vip.svg') : asset('dist/img/kartutamu/bg-reguler.svg') }}" alt="{{ $visitor->tipe_member }}">
+                                        <button type="button" class="btn download-kartu-tamu mt-5"><i class="fa fa-download"></i> Download Kartu (PDF)</button>
+                                        {{-- <div class="d-flex justify-content-center align-items-center flex-column">
                                             <div class="d-flex justify-content-center flex-wrap" id="cetak-kartu">
                                                 <div class="d-flex justify-content-center mb-10">
                                                     <div class="panel panel-default card-view card-visitor">
@@ -53,7 +55,7 @@
                                                                 <div class="card-visitor">
                                                                     @if ($visitor->tipe_member == 'VIP')
                                                                     <img class=""
-                                                                    src="{{ asset('dist/img/kartutamu/bg-member.svg') }}"
+                                                                    src="{{ asset('dist/img/kartutamu/bg-reguler.svg') }}"
                                                                     alt="">
                                                                     @else
                                                                     <img class=""
@@ -106,7 +108,7 @@
                                             </div>
                                             <button type="button" class="btn download-kartu-tamu"><i
                                                     class="fa fa-download"></i> Download Kartu (PDF)</button>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
@@ -134,7 +136,7 @@
                                     <div class="mb-15 d-flex flex-column">
                                         <span class="txt-muted">Jenis Tamu</span>
                                         <span
-                                            class="{{ $visitor->tipe_member == 'VIP' ? 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-success' : 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-warning' }}">{{ $visitor->tipe_member == 'VVIP' ? 'VIP' : 'Member' }}</span>
+                                            class="{{ $visitor->tipe_member == 'VIP' ? 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-success' : 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-warning' }}" style="width:70px;">{{ $visitor->tipe_member == 'VVIP' ? 'VIP' : 'Member' }}</span>
                                     </div>
                                     <div class="mb-15 d-flex flex-column">
                                         <span class="txt-muted">Kategori</span>
