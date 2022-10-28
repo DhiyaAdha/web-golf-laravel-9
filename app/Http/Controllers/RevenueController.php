@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use App\Models\LogTransaction;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 
 class RevenueController extends Controller
@@ -132,10 +133,18 @@ class RevenueController extends Controller
 
         //trendline permainan START
 
+        $total_permainan = LogTransaction::select(DB::raw("CAST(SUM(jml_default) as int) as total_permainan"))
+        ->GroupBy(DB::raw("Month(created_at)"))
+        ->pluck('total_permainan');
+
+        $bulan = LogTransaction::select(DB::raw("MONTHNAME(created_at) as bulan"))
+        ->GroupBy(DB::raw("MONTHNAME(created_at)"))
+        ->pluck('bulan');
+
         
 
 
-        return view('dashboard.revenue', $data, ['data'=>$data, 'months'=>$months, 'monthCount'=>$monthCount]);
+        return view('dashboard.revenue', $data, ['data'=>$data, 'months'=>$months, 'monthCount'=>$monthCount], compact('total_permainan', 'bulan'));
     }
 
     /**
