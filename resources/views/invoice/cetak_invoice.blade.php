@@ -165,7 +165,7 @@
                     @elseif($visitor->tipe_member == 'VVIP')
                         <span class="label label-warning">{{ $visitor->tipe_member == 'VVIP' ? 'VIP' : 'Member' }}</span>
                     @else
-                        <span class="label label-warning">{{ $visitor->tipe_member }}</span>
+                        <span class="label label-warning">Umum</span>
                     @endif
                 </td>
             </tr>
