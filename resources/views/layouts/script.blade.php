@@ -67,11 +67,6 @@
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
 @stack('scripts')
 <script>
-    $('.download-kartu-tamu').on("click", function() {
-        $('#cetak-kartu').printThis({
-            base: "https://jasonday.github.io/printThis/"
-        });
-    });
     @if (Session::has('success'))
         window.setTimeout(function() {
             $.toast({

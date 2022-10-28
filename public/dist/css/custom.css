@@ -645,6 +645,26 @@ video {
     font-size: revert;
 }
 
+.resolution {
+    width: 325.03937008px;
+    height: 204.09448819px;
+    border-radius: 12px;
+    position: relative;
+}
+
+.resolution .qr-code {
+    position: absolute;
+    top: 30%;
+    right: 10%;
+}
+.resolution .identity {
+    position: absolute;
+    font-family: 'Century Gothic';
+    bottom: 24%;
+    left: 4%;
+    opacity: 0.7;
+}
+
 b,
 strong {
     font-weight: 700 !important;
