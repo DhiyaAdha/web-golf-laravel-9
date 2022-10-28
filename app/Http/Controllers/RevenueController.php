@@ -18,16 +18,10 @@ class RevenueController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $data['revenue_today'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('jml_other');
-        $log_transaction = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->get(['cart', 'payment_type']);
-        $cart = [];
-        $default = array();
-        foreach($log_transaction as $log) {
-            $cart += [
-                'payment_type'=> unserialize($log['cart']),
-            ];
-        }
-        // $package_default = Package::whereIn('id', $default)->where('category', 'default')->get();
+        $data['revenue_today'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('total_gross');
+        $data['revenue_game'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('jml_default');
+        $data['revenue_proshop'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('jml_additional');
+        $data['revenue_store'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('jml_other');
         return view('dashboard.revenue', $data);
     }
 }

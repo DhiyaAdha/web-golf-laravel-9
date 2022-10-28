@@ -41,7 +41,7 @@
                         <!-- sample modal content -->
                         <div class="modal fade" id="kartu-tamu" tabindex="-1" role="dialog"
                             aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-                            <div class="modal-dialog modal-lg">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
                                 <div class="modal-content hidden-content">
                                     <div class="modal-body">
                                         <div class="row">

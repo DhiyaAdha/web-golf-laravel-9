@@ -13,8 +13,9 @@
                                         <div class="container-fluid">
                                             <div class="row p-2">
                                                 <div class="col-xs-8 text-left data-wrap-left">
-                                                    <span class="txt-light block counter">Rp. <span
-                                                            class="counter-anim">{{ number_format($revenue_today) }}</span></span>
+                                                    <span class="txt-light block counter">Rp. 
+                                                        <span class="counter-anim">{{ number_format($revenue_today) }}</span>
+                                                    </span>
                                                     <span class="weight-500 txt-light block">
                                                         Revenue hari ini
                                                     </span>
@@ -41,8 +42,9 @@
                                         <div class="container-fluid">
                                             <div class="row p-2">
                                                 <div class="col-xs-8 text-left data-wrap-left">
-                                                    <span class="txt-light block counter">Rp. <span
-                                                            class="counter-anim">23</span></span>
+                                                    <span class="txt-light block counter">Rp. 
+                                                        <span class="counter-anim">{{ number_format($revenue_game) }}</span>
+                                                    </span>
                                                     <span class="weight-500 txt-light block">
                                                         Revenue Permainan
                                                     </span>
@@ -70,7 +72,7 @@
                                             <div class="row p-2">
                                                 <div class="col-xs-8 text-left data-wrap-left">
                                                     <span class="txt-light block counter">Rp. <span
-                                                            class="counter-anim">5345</span></span>
+                                                            class="counter-anim">{{ number_format($revenue_proshop) }}</span></span>
                                                     <span class="weight-500 txt-light block">
                                                         Revenue Proshop & Fasilitas
                                                     </span>
@@ -98,7 +100,7 @@
                                             <div class="row p-2">
                                                 <div class="col-xs-8 text-left data-wrap-left">
                                                     <span class="txt-light block counter">Rp. <span
-                                                            class="counter-anim">435634</span></span>
+                                                            class="counter-anim">{{  number_format($revenue_store)  }}</span></span>
                                                     <span class="weight-500 txt-light block">
                                                         Revenue Kantin
                                                     </span>
