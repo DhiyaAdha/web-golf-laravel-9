@@ -16,8 +16,8 @@ $(document).ready(function () {
         var lineChart = Morris.Line({
             element: "statistic_visitor_line",
             xkey: "period", 
-            ykeys: ["VIP", "Member","Reguler"],
-            labels: ["VIP", "Member", "Reguler"],
+            ykeys: ["VIP", "Member","Umum"],
+            labels: ["VIP", "Member", "Umum"],
             pointSize: 2,
             fillOpacity: 0,
             lineWidth: 2,

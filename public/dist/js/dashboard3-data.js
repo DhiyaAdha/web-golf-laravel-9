@@ -18,7 +18,7 @@ $(document).ready(function(){
 			data: dataMingguan,
 			xkey: 'y',
 			ykeys: ['a', 'b', 'c' ],
-			labels: ['VIP', 'Member', 'Reguler' ],
+			labels: ['VIP', 'Member', 'Umum' ],
 			barColors:['#fec107', '#32FFC1', '#21E1E1'],
 			hideHover: 'auto',
 			gridLineColor: '#878787',

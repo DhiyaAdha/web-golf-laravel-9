@@ -338,7 +338,7 @@
 </script>
 
 {{-- pie chart analisis-tamu --}}
-<script>
+{{-- <script>
     var xValues = ["Pertamina", "Pensiunan", "Forkopimda", "Perpesi", "Umum"];
     var yValues = [55, 49, 44, 24, 15];
     var barColors = [
@@ -368,7 +368,7 @@
             }
         }
     });
-</script>
+</script> --}}
 
 {{-- bar-chart double analisi-tamu --}}
 <script>

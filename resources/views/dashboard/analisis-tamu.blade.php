@@ -277,7 +277,7 @@
 
                 {{-- chart pie --}}
                 <div class="row">
-                    <div class="col-lg-6 col-sm-12">
+                    <div class="col-lg-12 col-sm-12">
                         <div class="panel panel-default card-view">
                             <div class="panel-wrapper collapse in">
                                 <div class="panel-body">
@@ -311,8 +311,8 @@
                         </div> --}}
                     </div>
 
-                    <div class="col-lg-6 col-sm-12">
-                        {{-- <div class="panel panel-default card-view" style="height: 380px">
+                    {{-- <div class="col-lg-6 col-sm-12">
+                        <div class="panel panel-default card-view" style="height: 380px">
                             <canvas id="visitor-piechart" style="width:100%;max-width:600px"></canvas>
                             <div class="panel-wrapper collapse in">
                                 <div class="panel-body" style="margin-top: -80px; margin-bottom:-10px;">
@@ -323,7 +323,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> --}}
+                        </div>
                         <div class="panel panel-default card-view" style="height: 416px">
 							<div class="panel-wrapper collapse in">
 								<div class="panel-body">
@@ -331,8 +331,7 @@
 								</div>	
 							</div>
 						</div>
-
-                    </div>
+                    </div> --}}
                 </div>
                 {{-- end-chart pie --}}
 
@@ -405,7 +404,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <!-- Row Tabel Tamu-->
                 <div class="row">
