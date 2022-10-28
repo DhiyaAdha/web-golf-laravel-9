@@ -650,6 +650,19 @@ strong {
     font-weight: 700 !important;
 }
 
+.bar-chart-legend {
+    display: inline-block;
+    right: 25px;
+    font-size: 10px;
+}
+    
+.bar-chart-legend .legend-color {
+    width: 12px;
+    height: 12px;
+    margin: 3px 5px;
+    display: inline-block;
+}
+
 .table > tbody > tr > td,
 .jsgrid-table > tbody > tr > td,
 .table > tbody > tr > th,
