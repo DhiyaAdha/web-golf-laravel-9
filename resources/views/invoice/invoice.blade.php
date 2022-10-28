@@ -20,7 +20,8 @@
             </div>
             <!-- /Title -->
 
-            <a href="javascript:void(0)"><i class="fa fa-print pull-right" target="_blank" data-toggle="tooltip" title="Klik untuk Cetak"></i></a>
+            <a href="javascript:void(0)"><i class="fa fa-print pull-right" target="_blank" data-toggle="tooltip"
+                    title="Klik untuk Cetak"></i></a>
             <div class="row" id="cetak-invoice">
                 <style>
                     .invoice {
@@ -31,6 +32,7 @@
                         -webkit-text-fill-color: #00000021;
                         margin: 0;
                     }
+
                     .invoice-box {
                         max-width: 800px;
                         margin: auto;
@@ -42,29 +44,36 @@
                         font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
                         color: #555;
                     }
+
                     .invoice-box table {
                         width: 100%;
                         line-height: inherit;
                         text-align: left;
                     }
+
                     .invoice-box table td {
                         padding: 5px;
                         vertical-align: top;
                     }
+
                     .invoice-box table tr td:nth-child(2) {
                         text-align: right;
                     }
+
                     .invoice-box table tr.top table td {
                         padding-bottom: 20px;
                     }
+
                     .invoice-box table tr.top table td.title {
                         font-size: 45px;
                         line-height: 45px;
                         color: #333;
                     }
+
                     .invoice-box table tr.information table td {
                         padding-bottom: 40px;
                     }
+
                     .invoice-box table tr.heading td {
                         background: #eee;
                         border-bottom: 1px solid #ddd;
@@ -87,31 +96,37 @@
                         border-top: 2px solid #eee;
                         font-weight: bold;
                     }
+
                     @media only screen and (max-width: 600px) {
                         .invoice-box table tr.top table td {
                             width: 100%;
                             display: block;
                             text-align: center;
                         }
+
                         .invoice-box table tr.information table td {
                             width: 100%;
                             display: block;
                             text-align: center;
                         }
                     }
+
                     /** RTL **/
                     .invoice-box.rtl {
                         direction: rtl;
                         font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
                     }
+
                     .invoice-box.rtl table {
                         text-align: right;
                     }
+
                     .invoice-box.rtl table tr td:nth-child(2) {
                         text-align: left;
                     }
                 </style>
-                </head>
+            </head>
+
                 <body>
                     <div class="invoice-box">
                         <table cellpadding="0" cellspacing="0">
@@ -126,7 +141,7 @@
                                                 <strong>Order
                                                     {{ $transaction->order_number }}</strong><br />
                                                 <strong>Metode Pembayaran:</strong><br>
-                                                <p style="color: #616161;">{{ $method_payment }}</p><br/>
+                                                <p style="color: #616161;">{{ $method_payment }}</p><br />
                                             </td>
                                         </tr>
                                     </table>
@@ -157,11 +172,13 @@
                                 <td>
                                     <strong>Jenis Tamu:&nbsp;</strong>
                                     @if ($visitor->tipe_member == 'VIP')
-                                        <span class="label label-success">{{ $visitor->tipe_member == 'VIP' ? 'Member' : 'VIP' }}</span>
+                                        <span
+                                            class="label label-success">{{ $visitor->tipe_member == 'VIP' ? 'Member' : 'VIP' }}</span>
                                     @elseif ($visitor->tipe_member == 'VVIP')
-                                        <span class="label label-warning">{{ $visitor->tipe_member == 'VVIP' ? 'VIP' : 'Member' }}</span>
+                                        <span
+                                            class="label label-warning">{{ $visitor->tipe_member == 'VVIP' ? 'VIP' : 'Member' }}</span>
                                     @else
-                                    <span class="label label-primary">Umum</span>
+                                        <span class="label label-primary">Umum</span>
                                     @endif
                                 </td>
                             </tr>
@@ -173,14 +190,14 @@
                             </tr>
                             <tr class="item">
                                 @foreach ($cart as $item)
-                                    <tr>
-                                        <td>{{ $item['name'] }}</td>
-                                        <td class="text-right">Rp. {{ formatrupiah($item['pricesingle']) }}</td>
-                                        <td class="text-center">{{ $item['qty'] }}</td>
-                                        <td class="text-right">Rp. {{ formatrupiah($item['price']) }}</td>
-                                    </tr>
-                                @endforeach
-                                {{-- @php
+                            <tr>
+                                <td>{{ $item['name'] }}</td>
+                                <td class="text-right">Rp. {{ formatrupiah($item['pricesingle']) }}</td>
+                                <td class="text-center">{{ $item['qty'] }}</td>
+                                <td class="text-right">Rp. {{ formatrupiah($item['price']) }}</td>
+                            </tr>
+                            @endforeach
+                            {{-- @php
                                     dd($item);
                                 @endphp --}}
                             </tr>
