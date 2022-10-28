@@ -473,29 +473,20 @@ class OrderController extends Controller
         $totalPrice = \Cart::session($req->get('page'))->getTotal();
         $price_single = 0;
         $today = Carbon::now()->isoFormat('dddd');
-        //jml_default
         $jml_default = 0;
         $jml_additional = 0;
         $jml_other = 0;
-        foreach ($items as $get) {
-            if($get->category == 'default')
-            {
-                $jml_default += $get->getPriceSum();
-            }
-            elseif($get->category == 'additional')
-            {
-                $jml_additional += $get->getPriceSum();
-            }
-            else
-            {
-                $jml_other += $get->getPriceSum();
-            }
-        }
-        //jml_default
         if (\Cart::isEmpty()) {
             $cart_data = [];
         } else {
             foreach ($items as $row) {
+                if($row->category == 'default') {
+                    $jml_default += $row->getPriceSum();
+                } elseif($row->category == 'additional') {
+                    $jml_additional += $row->getPriceSum();
+                } else {
+                    $jml_other += $row->getPriceSum();
+                }
                 $id_package[] = $row->id;
                 $item_default = 0;
                 $cek_itemId = $items->whereIn('id', $id_package);
@@ -514,6 +505,7 @@ class OrderController extends Controller
             }
             $cart_data = collect($cart)->sortBy('created_at');
         }
+        dd($jml_default .' '. $jml_additional.' '. $jml_other);
         $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
         foreach($package_default as $default){
             $price_single += $today === 'Sabtu' || $today === 'Minggu' ? $default['price_weekend'] : $default['price_weekdays'];

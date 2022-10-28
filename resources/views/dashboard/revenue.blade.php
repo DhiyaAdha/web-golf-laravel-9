@@ -14,13 +14,10 @@
                                             <div class="row p-2">
                                                 <div class="col-xs-8 text-left data-wrap-left">
                                                     <span class="txt-light block counter">Rp. <span
-                                                            class="counter-anim">{{ number_format($pendapatan_revenue_today) }}</span></span>
+                                                            class="counter-anim">{{ number_format($revenue_today) }}</span></span>
                                                     <span class="weight-500 txt-light block">
-                                                        Revenue Today
+                                                        Revenue hari ini
                                                     </span>
-                                                    <div class="dhiya mt-10" style="margin-left: -4px;">
-                                                        <span class="label label-info">{{ date('d-m-Y') }}</span>
-                                                    </div>
                                                 </div>
                                                 <div class="col-xs-4 text-right data-wrap-right">
                                                     {{-- <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i> --}}
@@ -45,7 +42,7 @@
                                             <div class="row p-2">
                                                 <div class="col-xs-8 text-left data-wrap-left">
                                                     <span class="txt-light block counter">Rp. <span
-                                                            class="counter-anim">{{ number_format($pendapatan_revenue_default) }}</span></span>
+                                                            class="counter-anim">23</span></span>
                                                     <span class="weight-500 txt-light block">
                                                         Revenue Permainan
                                                     </span>
@@ -73,7 +70,7 @@
                                             <div class="row p-2">
                                                 <div class="col-xs-8 text-left data-wrap-left">
                                                     <span class="txt-light block counter">Rp. <span
-                                                            class="counter-anim">{{ number_format($pendapatan_revenue_additional) }}</span></span>
+                                                            class="counter-anim">5345</span></span>
                                                     <span class="weight-500 txt-light block">
                                                         Revenue Proshop & Fasilitas
                                                     </span>
@@ -101,7 +98,7 @@
                                             <div class="row p-2">
                                                 <div class="col-xs-8 text-left data-wrap-left">
                                                     <span class="txt-light block counter">Rp. <span
-                                                            class="counter-anim">{{ number_format($pendapatan_revenue_other) }}</span></span>
+                                                            class="counter-anim">435634</span></span>
                                                     <span class="weight-500 txt-light block">
                                                         Revenue Kantin
                                                     </span>
@@ -165,7 +162,7 @@
                                                             <li>
                                                                 <span class="block txt-dark weight-500 font-18">Total : Rp.
                                                                     <span
-                                                                        class="counter-anim">{{ number_format($pendapatan_revenue) }}</span></span>
+                                                                        class="counter-anim">436</span></span>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -189,7 +186,7 @@
                                                             <li>
                                                                 <span class="block txt-dark weight-500 font-18">Total : Rp.
                                                                     <span
-                                                                        class="counter-anim">{{ number_format($pendapatan_revenue_permainan) }}</span></span>
+                                                                        class="counter-anim">3456</span></span>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -213,7 +210,7 @@
                                                             <li>
                                                                 <span class="block txt-dark weight-500 font-18">Total : Rp.
                                                                     <span
-                                                                        class="counter-anim">{{ number_format($pendapatan_revenue_fasilitas) }}</span></span>
+                                                                        class="counter-anim">547</span></span>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -237,7 +234,7 @@
                                                             <li>
                                                                 <span class="block txt-dark weight-500 font-18">Total : Rp.
                                                                     <span
-                                                                        class="counter-anim">{{ number_format($pendapatan_revenue_other_all) }}</span></span>
+                                                                        class="counter-anim">57</span></span>
                                                             </li>
                                                         </ul>
                                                     </div>
