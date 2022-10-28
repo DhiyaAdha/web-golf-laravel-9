@@ -275,16 +275,17 @@
                     {{-- pembatas --}}
                 </div>
 
-                {{-- chart pie --}}
+                {{-- chart grafik --}}
                 <div class="row">
                     <div class="col-lg-6 col-sm-12">
                         <div class="panel panel-default card-view">
                             <div class="panel-wrapper collapse in">
                                 <div class="panel-body">
-                                    <canvas id="chart_2" height="200"></canvas>
+                                    {{-- <canvas id="chart_category_tamu" height="200"></canvas> --}}
                                 </div>	
                             </div>
                         </div>
+                    </div>
                         {{-- <div class="panel panel-default card-view" style="height: 380px">
                             <canvas id="kantin-chart" style=" margin-top: 30px; height: 400px;"></canvas>
                             <div class="panel-wrapper collapse in">
@@ -309,29 +310,50 @@
                                 </div>
                             </div>
                         </div> --}}
-                    </div>
+                        
+                    {{-- chart-pie --}}
+                    {{-- <div class="col-lg-6 col-sm-12">
+                        <div class="panel panel-default card-view" style="height: 416px">
+                            <div class="panel-wrapper collapse in">
+                                <div class="panel-body">
+                                    <canvas id="visitor-piechart" style="width:100%;max-width:600px"></canvas>
+                                    <canvas id="chart_tipe_member" height="200"></canvas>
 
-                    <div class="col-lg-6 col-sm-12">
-                        {{-- <div class="panel panel-default card-view" style="height: 380px">
+                                </div>	
+                            </div>
+                        </div>
+                        <div class="panel panel-default card-view" style="height: 380px">
                             <canvas id="visitor-piechart" style="width:100%;max-width:600px"></canvas>
                             <div class="panel-wrapper collapse in">
                                 <div class="panel-body" style="margin-top: -80px; margin-bottom:-10px;">
                                     <div class="pills-struct mt-40">
                                         <div class="tab-content">
-
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div> --}}
-                        <div class="panel panel-default card-view" style="height: 416px">
-							<div class="panel-wrapper collapse in">
-								<div class="panel-body">
-									<canvas id="visitor-piechart" style="width:100%;max-width:600px"></canvas>
-								</div>	
-							</div>
-						</div>
-
+                        </div>
+                    </div> --}}
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default card-view panel-refresh relative">
+                            <div class="refresh-container">
+                                <div class="la-anim-1"></div>
+                            </div>
+                            <div class="panel-heading">
+                                <div class="pull-left">
+                                    <h6 class="panel-title txt-dark">Statistika Pengunjung 7 Hari Terakhir</h6>
+                                </div>
+                                <div class="clearfix">
+                                </div>
+                            </div>
+                            <div class="panel-wrapper collapse in">
+                                <div class="panel-body">
+                                    <canvas id="chart_category_tamu" height="200"></canvas>
+                                </div>
+                            </div>
+                        </div> 
                     </div>
                 </div>
                 {{-- end-chart pie --}}
