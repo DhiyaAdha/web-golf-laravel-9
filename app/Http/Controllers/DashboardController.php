@@ -58,8 +58,7 @@ class DashboardController extends Controller
             )->whereYear(
                 'created_at',
                 $value[1]
-            )
-                ->count();
+            )->count();
 
             $data['visitor'][$key]['Member'] = LogTransaction::where('payment_status', 'paid')->whereHas(
                 'visitor',
@@ -72,8 +71,7 @@ class DashboardController extends Controller
             )->whereYear(
                 'created_at',
                 $value[1]
-            )
-                ->count();
+            )->count();
 
             // REGULER
             $data['visitor'][$key]['Reguler'] = LogTransaction::where('payment_status', 'paid')->whereHas(
@@ -93,8 +91,7 @@ class DashboardController extends Controller
 
         //statistika mingguan bar-chart 
         $now = Carbon::now()->translatedFormat('Y-m-d');
-        $last7Days = Carbon::now()->subDays(6)
-            ->translatedFormat('Y-m-d');
+        $last7Days = Carbon::now()->subDays(6)->translatedFormat('Y-m-d');
         $day_period = CarbonPeriod::create($last7Days, $now)->toArray();
 
         foreach ($day_period as $key => $value) {
@@ -152,14 +149,14 @@ class DashboardController extends Controller
         ->where('payment_status', 'paid')->whereHas('visitor', function (
             Builder $query
         ) {
-            $query->where('tipe_member', 'VIP');
+            $query->where('tipe_member', 'VIP')->whereDate('created_at', now()->format('Y-m-d'));
         })->count();
 
         $data['visitor_vvip'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))
         ->where('payment_status', 'paid')->whereHas('visitor', function (
             Builder $query
         ) {
-            $query->where('tipe_member', 'VVIP');
+            $query->where('tipe_member', 'VVIP')->whereDate('created_at', now()->format('Y-m-d'));
         })->count();
 
 
@@ -167,7 +164,7 @@ class DashboardController extends Controller
         ->where('payment_status', 'paid')->whereHas('visitor', function (
             Builder $query
         ) {
-            $query->where('tipe_member', 'REGULER');
+            $query->where('tipe_member', 'REGULER')->whereDate('created_at', now()->format('Y-m-d'));
         })->count();
 
         // VVIP
