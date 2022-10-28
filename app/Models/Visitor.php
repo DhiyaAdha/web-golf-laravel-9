@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Mail\Transport\LogTransport;
 
 class Visitor extends Model
 {
@@ -65,6 +66,11 @@ class Visitor extends Model
     public function orders()
     {
         return $this->hasMany(LogTransaction::class);
+    }
+
+    public function log_transaction()
+    {
+        return $this->hasOne(LogTransaction::class, 'visitor_id');
     }
     
 }
