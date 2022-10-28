@@ -18,7 +18,6 @@ class RevenueController extends Controller
      */
     public function index()
     {
-        //Total revenue today START
         // Statistika Pertahun Grafik-chart
         $months = [
             1 => 'Jan',
@@ -37,31 +36,15 @@ class RevenueController extends Controller
         $data['years'] = range(Carbon::now()->year - 3, Carbon::now()->year);
 
         $month_period = CarbonPeriod::create(Carbon::now()->subMonths(11), Carbon::now());
-        // foreach ($month_period as $key => $value) {
-        //     $month_new[$value->format('m')] = [$value->format('n'), $value->format('Y')];
-        // }
-        // foreach (array_values($month_new) as $key => $value) {
-        //     $data['permainan'][$key]['period'] = $months[$value[0]];
-        //     $data['permainan'][$key]['PERMAINAN'] = LogTransaction::select('jml_default')->whereMonth(
-        //         'created_at',
-        //         strlen($value[0]) == 1 ? '0' . $value[0] : $value[0]
-        //     )->whereYear(
-        //         'created_at',
-        //         $value[1]
-        //     )
-        //         ->get();
-        // }
-
-
-        $data = LogTransaction::select('jml_default')->get()->groupBy(function($data){
-            return Carbon::parse($data->created_at)->format('M');
-        });
-
-        $months=[];
-        $monthCount=[];
-        foreach($data as $month => $values){
-            $months[]=$month;
-            $monthCount[]=count($values);
+        foreach ($month_period as $key => $value) {
+            $month_new[$value->format('m')] = [$value->format('n'), $value->format('Y')];
+        }
+        foreach (array_values($month_new) as $key => $value) {
+            $data['permainan'][$key]['period'] = $months[$value[0]];
+            // $data['permainan'][$key]['jml_default'] = LogTransaction::all('jml_default', 
+            // function(Builder $query) use ($value) {
+            //     $query->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1]);
+            // })->sum('jml_default');
         }
 
 
@@ -82,23 +65,6 @@ class RevenueController extends Controller
 
 
 
-
-
-
-
-        // //statistika mingguan bar-chart 
-        // $now = Carbon::now()->translatedFormat('Y-m-d');
-        // $last7Days = Carbon::now()->subDays(6)
-        //     ->translatedFormat('Y-m-d');
-        // $day_period = CarbonPeriod::create($last7Days, $now)->toArray();
-
-        // foreach ($day_period as $key => $value) {
-        //     $data['permainan_daily'][$key]['y'] = Carbon::create(
-        //         $day_period[$key]
-        //     )->translatedFormat('d/m/y');
-
-        //     $data['permainan_daily'][$key]['a'] = LogTransaction::select('jml_default')->whereDate('created_at', $day_period[$key])->get();
-        // }
 
 
 
@@ -133,18 +99,10 @@ class RevenueController extends Controller
 
         //trendline permainan START
 
-        $total_permainan = LogTransaction::select(DB::raw("CAST(SUM(jml_default) as int) as total_permainan"))
-        ->GroupBy(DB::raw("Month(created_at)"))
-        ->pluck('total_permainan');
-
-        $bulan = LogTransaction::select(DB::raw("MONTHNAME(created_at) as bulan"))
-        ->GroupBy(DB::raw("MONTHNAME(created_at)"))
-        ->pluck('bulan');
-
         
 
 
-        return view('dashboard.revenue', $data, ['data'=>$data, 'months'=>$months, 'monthCount'=>$monthCount], compact('total_permainan', 'bulan'));
+        return view('dashboard.revenue', $data);
     }
 
     /**
