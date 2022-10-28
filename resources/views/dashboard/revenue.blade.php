@@ -264,7 +264,6 @@
     @push('scripts')
         <script>
             // fungsi grafik-line & Grafik-bar
-            // var dataNewPermainan = {!! json_encode($permainan) !!}
             const monthNames = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun",
                 "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
             ];
