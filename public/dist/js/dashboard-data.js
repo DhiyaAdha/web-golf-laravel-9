@@ -4,12 +4,6 @@
 
 /*****Ready function start*****/
 $(document).ready(function () {
-    $("#statement").DataTable({
-        bFilter: false,
-        bLengthChange: false,
-        bPaginate: false,
-        bInfo: false,
-    });
 
     var barChart = Morris.Bar({
         element: 'statistic_visitor_bar',

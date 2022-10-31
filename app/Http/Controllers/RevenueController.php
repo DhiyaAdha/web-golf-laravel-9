@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use App\Models\LogTransaction;
+use App\Models\Visitor;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -16,7 +17,7 @@ class RevenueController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // Statistika Pertahun Grafik-chart
         $months = [
@@ -40,34 +41,13 @@ class RevenueController extends Controller
             $month_new[$value->format('m')] = [$value->format('n'), $value->format('Y')];
         }
         foreach (array_values($month_new) as $key => $value) {
-            $data['permainan'][$key]['period'] = $months[$value[0]];
-            // $data['permainan'][$key]['jml_default'] = LogTransaction::all('jml_default', 
-            // function(Builder $query) use ($value) {
-            //     $query->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1]);
-            // })->sum('jml_default');
+           $data['revenue'][$key]['period'] = $months[$value[0]];
+           $data['revenue'][$key]['total'] =  LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('total');
+           $data['revenue'][$key]['permainan'] = LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('jml_default');
+           $data['revenue'][$key]['fasilitas'] =LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('jml_additional');
+           $data['revenue'][$key]['penjualan'] = LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('jml_other');
+           
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         // statistika pertahun
         $data['pendapatan_rev_permainan_year'] = LogTransaction::where('payment_status', 'paid')->whereYear(
@@ -99,7 +79,45 @@ class RevenueController extends Controller
 
         //trendline permainan START
 
-        
+        $data['jenis'] = LogTransaction::select(
+            'jml_default',
+            'jml_additional',
+            'jml_other',
+        )->get();
+
+        // $item = 0;
+        // $jml_default = 0;
+        // $jml_additional = 0;
+        // $jml_other = 0;
+        // foreach($data['jenis'] as $item){
+        //     $jml_default += $item[''];
+        //     $jml_additional +=
+        //     $jml_other +=
+        // }
+
+        //statistika mingguan bar-chart 
+        // $now = Carbon::now()->translatedFormat('Y-m-d');
+        // $last7Days = Carbon::now()->subDays(6)->translatedFormat('Y-m-d');
+        // $day_period = CarbonPeriod::create($last7Days, $now)->toArray();
+
+        // foreach ($day_period as $key => $value) {
+        //     $data[''][$key]['y'] = Carbon::create(
+        //         $day_period[$key]
+        //     )->translatedFormat('l');
+
+        //     $data[''][$key]['a'] = LogTransaction::where('', '')->whereHas('log_transaction', function(Builder $query) use ($day_period, $key) {
+        //         $query->whereDate('created_at', $day_period[$key]);
+        //     })->count();
+        //     $data[''][$key]['b'] = LogTransaction::where('', '')->whereHas('log_transaction', function(Builder $query) use ($day_period, $key) {
+        //         $query->whereDate('created_at', $day_period[$key]);
+        //     })->count();
+        //     $data[''][$key]['c'] = LogTransaction::where('payment_status', 'paid')->whereHas(
+        //         'permainan',
+        //         function (Builder $query) {
+        //             $query->where('', '');
+        //         }
+        //     )->whereDate('created_at', $day_period[$key])->count();
+        // }
 
 
         return view('dashboard.revenue', $data);

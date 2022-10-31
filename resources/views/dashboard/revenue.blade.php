@@ -127,7 +127,7 @@
                         <div class="panel panel-default card-view">
                             <div class="panel-heading">
                                 <div class="pull-left">
-                                    <h6 class="pannel-title text-dark">Revenue Trendline 7 Hari Terakhir</h6>
+                                    <h6 class="pannel-title text-dark">Revenue Trendline 12 Bulan Terakhir</h6>
                                 </div>
                                 <div class="pull-right">
                                     <div class="pull-right">
@@ -158,17 +158,7 @@
                                             <div class="tab-pane fade active in" id="all" role="tabpanel"
                                                 style="margin-top: 50px;">
                                                 <div class="col-lg-12">
-                                                    <div id="areaChart" style="height: 250px;"></div>
-                                                    <div class="panel-wrapper collapse in">
-                                                        <ul class="flex-stat mt-1"
-                                                            style="display: flex; margin-top:40px; margin-bottom:20px; justify-content:center;">
-                                                            <li>
-                                                                <span class="block txt-dark weight-500 font-18">Total : Rp.
-                                                                    <span
-                                                                        class="counter-anim">{{ number_format($pendapatan_revenue) }}</span></span>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                                    <div id="statistic_revenue_line" style="height: 250px;"></div>
                                                 </div>
                                             </div>
 
@@ -177,22 +167,6 @@
                                                 <div class="col-lg-12">
                                                     <div id="statistic_permainan_line" class="morris-chart"
                                                         style="d:293px;"></div>
-                                                    <div class="panel-wrapper collapse in">
-                                                        <ul class="flex-stat mt-1"
-                                                            style="display: flex; margin-top:40px; margin-bottom:20px;">
-                                                            <li>
-                                                                <span class="block"></span>
-                                                                <span class="block txt-dark weight-500 font-18">
-                                                                    <span class="">
-                                                                    </span>
-                                                            </li>
-                                                            <li>
-                                                                <span class="block txt-dark weight-500 font-18">Total : Rp.
-                                                                    <span
-                                                                        class="counter-anim">{{ number_format($pendapatan_revenue_permainan) }}</span></span>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
                                                 </div>
                                             </div>
 
@@ -201,22 +175,6 @@
                                                 <div class="col-lg-12">
                                                     <div id="statistic_fasilitas_line" class="morris-chart"
                                                         style="d:293px;"></div>
-                                                    <div class="panel-wrapper collapse in">
-                                                        <ul class="flex-stat mt-1"
-                                                            style="display: flex; margin-top:40px; margin-bottom:20px;">
-                                                            <li>
-                                                                <span class="block"></span>
-                                                                <span class="block txt-dark weight-500 font-18">
-                                                                    <span class="">
-                                                                    </span>
-                                                            </li>
-                                                            <li>
-                                                                <span class="block txt-dark weight-500 font-18">Total : Rp.
-                                                                    <span
-                                                                        class="counter-anim">{{ number_format($pendapatan_revenue_fasilitas) }}</span></span>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
                                                 </div>
                                             </div>
 
@@ -224,22 +182,6 @@
                                                 style="margin-top: 50px;">
                                                 <div class="col-lg-12">
                                                     <div id="statistic_other_line" class="morris-chart" style="d:293px;">
-                                                    </div>
-                                                    <div class="panel-wrapper collapse in">
-                                                        <ul class="flex-stat mt-1"
-                                                            style="display: flex; margin-top:40px; margin-bottom:20px;">
-                                                            <li>
-                                                                <span class="block"></span>
-                                                                <span class="block txt-dark weight-500 font-18">
-                                                                    <span class="">
-                                                                    </span>
-                                                            </li>
-                                                            <li>
-                                                                <span class="block txt-dark weight-500 font-18">Total : Rp.
-                                                                    <span
-                                                                        class="counter-anim">{{ number_format($pendapatan_revenue_other_all) }}</span></span>
-                                                            </li>
-                                                        </ul>
                                                     </div>
                                                 </div>
                                             </div>
@@ -263,105 +205,91 @@
     @endsection
     @push('scripts')
         <script>
-            // fungsi grafik-line & Grafik-bar
-            const monthNames = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+            var dataNewPermainan = {!! json_encode($revenue) !!}
+
+            // // fungsi grafik-line & Grafik-bar
+            //
+            const monthNames = [
             ];
-            Morris.Area({
-                element: 'areaChart',
-                data: [{
-                        y: 1,
-                        a: 20.000,
-                        b: 10.000,
-                        c: 30.000
-                    },
-                    {
-                        y: 2,
-                        a: 10,
-                        b: 50,
-                        c: 20
-
-                    },
-                    {
-                        y: 3,
-                        a: 30,
-                        b: 30,
-                        c: 10
-                    },
-                    {
-                        y: 4,
-                        a: 20,
-                        b: 20,
-                        c: 60
-                    },
-                    {
-                        y: 5,
-                        a: 40,
-                        b: 60,
-                        c: 50
-                    },
-                    {
-                        y: 6,
-                        a: 60,
-                        b: 70,
-                        c: 40
-                    },
-                    {
-                        y: 7,
-                        a: 20,
-                        b: 10,
-                        c: 30
-                    },
-                    {
-                        y: 8,
-                        a: 10,
-                        b: 50,
-                        c: 20
-
-                    },
-                    {
-                        y: 9,
-                        a: 30,
-                        b: 30,
-                        c: 10
-                    },
-                    {
-                        y: 10,
-                        a: 20,
-                        b: 20,
-                        c: 60
-                    },
-                    {
-                        y: 11,
-                        a: 40,
-                        b: 60,
-                        c: 50
-                    },
-                    {
-                        y: 12,
-                        a: 60,
-                        b: 70,
-                        c: 40
-                    }
-                ],
-                xkey: 'y',
+            Morris.Line({
+                element: 'statistic_revenue_line',
+                data: dataNewPermainan,
+                xkey: "period",
                 parseTime: false,
-                ykeys: ['a', 'b', 'c'],
-                xLabelFormat: function(x) {
-                    var index = parseInt(x.src.y);
-                    return monthNames[index];
-                },
-                xLabels: "month",
-                labels: ['Permainan', 'Proshop', 'Kantin'],
+                ykeys: ["total", "permainan", "fasilitas", "penjualan"],
+                labels: ["Total", "Permainan", "Fasilitas", "Penjualan"],
+                labelcolor : ["#fff", "#fff", "#fff", "#fff"],
                 pointSize: 2,
                 fillOpacity: 0,
                 lineWidth: 2,
-                pointStrokeColors: ["#fec107", "#32FFC1", "#21E1E1"],
+                resize: true,
+                redraw: true,
+                pointStrokeColors: ["#6F38C5", "#fff", "#fff", "#fff"],
                 gridLineColor: "#878787",
-                lineColors: ["#fec107", "#32FFC1", "#21E1E1"],
+                lineColors: ["#6F38C5", "#fff", "#fff", "#fff"],
                 gridTextColor: "#878787",
                 gridTextFamily: "Roboto",
-                hideHover: 'auto'
+                hideHover: 'auto',
+
+            });
+            Morris.Line({
+                element: 'statistic_permainan_line',
+                data: dataNewPermainan,
+                xkey: "period",
+                parseTime: false,
+                ykeys: ["permainan"],
+                labels: ["permainan"],
+                pointSize: 2,
+                fillOpacity: 0,
+                lineWidth: 2,
+                resize: true,
+                redraw: true,
+                pointStrokeColors: ["#fec107"],
+                gridLineColor: "#878787",
+                lineColors: ["#fec107"],
+                gridTextColor: "#878787",
+                gridTextFamily: "Roboto",
+                hideHover: 'auto',
+
+            });
+            Morris.Line({
+                element: 'statistic_fasilitas_line',
+                data: dataNewPermainan,
+                xkey: "period",
+                parseTime: false,
+                ykeys: ["fasilitas"],
+                labels: ["fasilitas"],
+                pointSize: 2,
+                fillOpacity: 0,
+                lineWidth: 2,
+                resize: true,
+                redraw: true,
+                pointStrokeColors: ["#32FFC1"],
+                gridLineColor: "#878787",
+                lineColors: ["#32FFC1"],
+                gridTextColor: "#878787",
+                gridTextFamily: "Roboto",
+                hideHover: 'auto',
+
+            });
+            Morris.Line({
+                element: 'statistic_other_line',
+                data: dataNewPermainan,
+                xkey: "period",
+                parseTime: false,
+                ykeys: ["penjualan"],
+                labels: ["penjualan"],
+                pointSize: 2,
+                fillOpacity: 0,
+                lineWidth: 2,
+                resize: true,
+                redraw: true,
+                pointStrokeColors: ["#21E1E1"],
+                gridLineColor: "#878787",
+                lineColors: ["#21E1E1"],
+                gridTextColor: "#878787",
+                gridTextFamily: "Roboto",
+                hideHover: 'auto',
 
             });
         </script>
