@@ -41,151 +41,24 @@
                         <!-- sample modal content -->
                         <div class="modal fade" id="kartu-tamu" tabindex="-1" role="dialog"
                             aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-                            <div class="modal-dialog modal-lg">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
                                 <div class="modal-content hidden-content">
                                     <div class="modal-body">
-                                        <div class="d-flex justify-content-center align-items-center flex-column">
-                                            <div class="d-flex justify-content-center flex-wrap" id="cetak-kartu">
-                                                <div class="col-md-card d-flex justify-content-center mb-10">
-                                                    <div class="panel panel-default card-view card-visitor">
-
-                                                        {{-- <div class="panel-heading">
-                                                            <div class="pull-left">
-                                                                <div class="d-flex title-card">
-                                                                    <img src="{{ asset('/dist/img/tgcc-icon-small.svg') }}">
-                                                                    <div class="d-flex flex-column">
-                                                                        <h6 class="panel-title txt-dark label-visitor">
-                                                                            tritih golf</h6>
-                                                                        <h6 class="panel-title txt-dark label-visitor">
-                                                                            country & club</h6>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="clearfix"></div>
-                                                        </div> --}}
-                                                        <div class="panel-wrapper collapse in">
-                                                            <div class="panel-body card">
-                                                                <div class="card-visitor">
-                                                                    <img class=""
-                                                                        src="{{ asset('dist/img/kartutamu/bg.svg') }}"
-                                                                        alt="">
-                                                                    <div
-                                                                        class="d-flex justify-content-center align-items-center">
-                                                                        <div style="margin-top: -224px;
-                                                                            display: flex;
-                                                                            width: 72px;"
-                                                                            class="">
-                                                                            {{ QrCode::size(120)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
-                                                                        </div>
-                                                                    </div>
-                                                                    <h6
-                                                                    style="display: flex;
-                                                                    justify-content: center;
-                                                                    align-items: center;
-                                                                    position: relative;
-                                                                    font-size: 6px;
-                                                                    line-height:10px;
-                                                                    margin-top:-62px;
-                                                                    font-weight:500;">
-                                                                    {{ $visitor->name }}</h6>
-
-                                                                    <h6
-                                                                        style="display: flex;
-                                                                        justify-content: center;
-                                                                        align-items: center;
-                                                                        position: relative;
-                                                                        font-size: 12px;
-                                                                        line-height:10px;
-                                                                        font-weight:600;">
-                                                                        @if ($visitor->tipe_member == 'VVIP')
-                                                                            VIP
-                                                                        @else
-                                                                            MEMBER
-                                                                        @endif
-                                                                        
-
-                                                                    </h6>
-                                                                </div>
-                                                                {{-- <h6
-                                                                    style="display: flex;
-                                                                    justify-content: center;
-                                                                    align-items: center;
-                                                                    position: relative;
-                                                                    font-size: 4px;
-                                                                    line-height:10px;
-                                                                    margin-top:22px;
-                                                                    font-weight:500;">
-                                                                    Let's play, and still healthy</h6> --}}
-
-                                                                {{-- <div
-                                                                    class="d-flex justify-content-center align-items-center bg-front">
-                                                                    <div class="pull-left">
-                                                                        <img class="front-qr"
-                                                                            src="{{ asset('/dist/img/icon-golf1.svg') }}">
-                                                                    </div>
-                                                                    <div class="pull-right">
-                                                                        <img class="front-qr"
-                                                                            src="{{ asset('/dist/img/icon-golf2.svg') }}">
-                                                                    </div>
-                                                                </div> --}}
-                                                                {{-- <div class=" text-name-card">
-                                                                    <div class="d-flex-justify-content-center">
-                                                                        <strong>
-                                                                            <p class="text-center">{{ $visitor->name }}</p>
-                                                                        </strong>
-                                                                        <p class="text-center text-primary">
-                                                                            {{ $visitor->tipe_member }}</p>
-                                                                    </div>
-                                                                    <br>
-                                                                    <div class="d-flex-justify-content-center">
-                                                                        <p class="text-center text-muted">
-                                                                            {{ $visitor->phone }}</p>
-                                                                        <p class="text-center text-muted text-lowercase" style="word-wrap: break-word;">
-                                                                            {{ $visitor->email }}</p>
-                                                                    </div>
-                                                                </div> --}}
-                                                                {{-- <img class="align-self-end img-footer"
-                                                                    src="{{ asset('/dist/img/golf-footer.svg') }}"> --}}
-                                                            </div>
-                                                        </div>
+                                        <div class="row">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <div class="resolution">
+                                                    <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/bg-vip.svg') : asset('dist/img/kartutamu/bg-reguler.svg') }}" alt="{{ $visitor->tipe_member }}">
+                                                    <div class="qr-code">
+                                                        {{ QrCode::size(80)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
+                                                    </div>
+                                                    <div class="identity">
+                                                        <h6>{{ $visitor->name }}</h6>
                                                     </div>
                                                 </div>
-                                                {{-- <div class="col-md-card d-flex justify-content-center mb-10">
-                                                    <div class="panel panel-default card-view card-visitor">
-                                                        <div class="panel-heading wave">
-                                                            <div class="pull-left">
-                                                                <div class="d-flex title-card">
-                                                                    <img
-                                                                        src="{{ asset('/dist/img/tgcc-icon-small.svg') }}">
-                                                                    <div class="d-flex flex-column">
-                                                                        <h6 class="panel-title txt-dark label-visitor">
-                                                                            tritih golf</h6>
-                                                                        <h6 class="panel-title txt-dark label-visitor">
-                                                                            country & club</h6>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="clearfix"></div>
-                                                        </div>
-                                                        <div class="panel-wrapper collapse in">
-                                                            <div class="panel-body card">
-                                                                <div
-                                                                    class="d-flex justify-content-center align-items-center flex-column">
-                                                                    <img class="back-qr"
-                                                                        src="{{ asset('/dist/img/icon-golf2.svg') }}">
-                                                                    <div class="qr-code-visitor">
-                                                                        {{ QrCode::size(120)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
-                                                                    </div>
-                                                                </div>
-                                                                <img class="align-self-end img-footer"
-                                                                    src="{{ asset('/dist/img/golf-footer.svg') }}">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div> --}}
                                             </div>
-                                            <button type="button" class="btn download-kartu-tamu"><i
-                                                    class="fa fa-download"></i> Download Kartu (PDF)</button>
+                                            <div class="text-center">
+                                                <button type="button" class="btn btn-sm download-kartu-tamu mt-5"><i class="fa fa-download"></i> Download Kartu (PDF)</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -209,12 +82,11 @@
                                     </div>
                                     <div class="mb-15 d-flex flex-column">
                                         <span class="txt-muted">Jenis Kelamin</span>
-                                        <span>{{ $visitor->gender }}</span>
+                                        <span class="text-capitalize">{{ $visitor->gender }}</span>
                                     </div>
                                     <div class="mb-15 d-flex flex-column">
                                         <span class="txt-muted">Jenis Tamu</span>
-                                        <span
-                                            class="{{ $visitor->tipe_member == 'VIP' ? 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-success' : 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-warning' }}">{{ $visitor->tipe_member == 'VVIP' ? 'VIP' : 'Member' }}</span>
+                                        <span class="{{ $visitor->tipe_member == 'VIP' ? 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-success' : 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-warning' }}" style="width:70px;">{{ $visitor->tipe_member == 'VVIP' ? 'VIP' : 'Member' }}</span>
                                     </div>
                                     <div class="mb-15 d-flex flex-column">
                                         <span class="txt-muted">Kategori</span>
@@ -437,6 +309,11 @@
 
 @push('scripts')
     <script>
+        $('.download-kartu-tamu').on("click", function() {
+            $('.resolution').printThis({
+                base: "https://jasonday.github.io/printThis/"
+            });
+        });
         // Transaction Activity
         $('#dt-tamu-transaksi').DataTable({
             "processing": true,

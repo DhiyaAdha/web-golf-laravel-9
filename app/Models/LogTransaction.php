@@ -20,6 +20,7 @@ class LogTransaction extends Model
         'payment_type',
         'payment_status',
         'total',
+        'total_gross',
         'jml_default',
         'jml_additional',
         'jml_other',

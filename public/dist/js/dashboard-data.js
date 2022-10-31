@@ -4,7 +4,8 @@
 
 /*****Ready function start*****/
 $(document).ready(function () {
-
+    
+    
     var barChart = Morris.Bar({
         element: 'statistic_visitor_bar',
         data: dataMingguan,
@@ -73,5 +74,4 @@ $(document).ready(function () {
         legendItem.find('span').css('backgroundColor', stackedBar.options.barColors[i]);
         $('#visitor_legend').append(legendItem)
     });
-
 });

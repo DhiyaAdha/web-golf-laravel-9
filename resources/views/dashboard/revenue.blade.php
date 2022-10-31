@@ -1,117 +1,28 @@
-@if (auth()->user()->role_id == '2')
-    @extends('layouts.main', ['title' => 'TGCC | Analisis Revenue'])
-    @section('content')
-        <div class="page-wrapper">
-            <div class="container-fluid pt-25">
-                {{-- Revenue --}}
-                <div class="row">
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                        <div class="panel panel-default card-view pa-0">
-                            <div class="panel-wrapper collapse in">
-                                <div class="panel-body pa-0">
-                                    <div class="sm-data-box today">
-                                        <div class="container-fluid">
-                                            <div class="row p-2">
-                                                <div class="col-xs-8 text-left data-wrap-left">
-                                                    <span class="txt-light block counter">Rp. <span
-                                                            class="counter-anim">{{ number_format($pendapatan_revenue_today) }}</span></span>
-                                                    <span class="weight-500 txt-light block">
-                                                        Revenue Today
-                                                    </span>
-                                                    <div class="dhiya mt-10" style="margin-left: -4px;">
-                                                        <span class="label label-info">{{ date('d-m-Y') }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-4 text-right data-wrap-right">
-                                                    {{-- <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i> --}}
-                                                    <i class="zmdi zmdi-money txt-light data-right-rep-icon"></i>
-                                                </div>
-                                                <img src="{{ asset('/img/circle.svg') }}" class="card-img-absolute"
-                                                    alt="circle-image">
+@extends('layouts.main', ['title' => 'TGCC | Analisis Revenue'])
+@section('content')
+    <div class="page-wrapper">
+        <div class="container-fluid pt-25">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="panel panel-default card-view pa-0">
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body pa-0">
+                                <div class="sm-data-box today">
+                                    <div class="container-fluid">
+                                        <div class="row p-2">
+                                            <div class="col-xs-8 text-left data-wrap-left">
+                                                <span class="txt-light block counter">Rp. 
+                                                    <span class="counter-anim">{{ number_format($revenue_today) }}</span>
+                                                </span>
+                                                <span class="weight-500 txt-light block">
+                                                    Revenue hari ini
+                                                </span>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                        <div class="panel panel-default card-view pa-0">
-                            <div class="panel-wrapper collapse in">
-                                <div class="panel-body pa-0">
-                                    <div class="sm-data-box vvip">
-                                        <div class="container-fluid">
-                                            <div class="row p-2">
-                                                <div class="col-xs-8 text-left data-wrap-left">
-                                                    <span class="txt-light block counter">Rp. <span
-                                                            class="counter-anim">{{ number_format($pendapatan_revenue_default) }}</span></span>
-                                                    <span class="weight-500 txt-light block">
-                                                        Revenue Permainan
-                                                    </span>
-                                                </div>
-                                                <div class="col-xs-4 text-right data-wrap-right">
-                                                    {{-- <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i> --}}
-                                                    <i class="zmdi zmdi-case-play txt-light data-right-rep-icon"></i>
-                                                </div>
-                                                <img src="{{ asset('/img/circle.svg') }}" class="card-img-absolute"
-                                                    alt="circle-image">
+                                            <div class="col-xs-4 text-right data-wrap-right">
+                                                <i class="zmdi zmdi-money txt-light data-right-rep-icon"></i>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                        <div class="panel panel-default card-view pa-0">
-                            <div class="panel-wrapper collapse in">
-                                <div class="panel-body pa-0">
-                                    <div class="sm-data-box vip">
-                                        <div class="container-fluid">
-                                            <div class="row p-2">
-                                                <div class="col-xs-8 text-left data-wrap-left">
-                                                    <span class="txt-light block counter">Rp. <span
-                                                            class="counter-anim">{{ number_format($pendapatan_revenue_additional) }}</span></span>
-                                                    <span class="weight-500 txt-light block">
-                                                        Revenue Proshop & Fasilitas
-                                                    </span>
-                                                </div>
-                                                <div class="col-xs-4 text-right data-wrap-right">
-                                                    <i class="zmdi zmdi-shopping-cart txt-light data-right-rep-icon"></i>
-                                                    {{-- <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i> --}}
-                                                </div>
-                                                <img src="{{ asset('/img/circle.svg') }}" class="card-img-absolute"
-                                                    alt="circle-image">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                        <div class="panel panel-default card-view pa-0">
-                            <div class="panel-wrapper collapse in">
-                                <div class="panel-body pa-0">
-                                    <div class="sm-data-box reguler">
-                                        <div class="container-fluid">
-                                            <div class="row p-2">
-                                                <div class="col-xs-8 text-left data-wrap-left">
-                                                    <span class="txt-light block counter">Rp. <span
-                                                            class="counter-anim">{{ number_format($pendapatan_revenue_other) }}</span></span>
-                                                    <span class="weight-500 txt-light block">
-                                                        Revenue Kantin
-                                                    </span>
-                                                </div>
-                                                <div class="col-xs-4 text-right data-wrap-right">
-                                                    <i class="zmdi zmdi-coffee txt-light data-right-rep-icon"></i>
-                                                </div>
-                                                <img src="{{ asset('/img/circle.svg') }}" class="card-img-absolute"
-                                                    alt="circle-image">
-                                            </div>
+                                            <img src="{{ asset('/img/circle.svg') }}" class="card-img-absolute"
+                                                alt="circle-image">
                                         </div>
                                     </div>
                                 </div>
@@ -119,196 +30,118 @@
                         </div>
                     </div>
                 </div>
-                {{-- End of Revenue --}}
 
-                {{-- Statistika Revenue --}}
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="panel panel-default card-view">
-                            <div class="panel-heading">
-                                <div class="pull-left">
-                                    <h6 class="pannel-title text-dark">Revenue Trendline 12 Bulan Terakhir</h6>
-                                </div>
-                                <div class="pull-right">
-                                    <div class="pull-right">
-                                        <ul role="tablist" class="nav nav-pills nav-pills-rounded" id="myTabs_6">
-                                            <li class="active" role="presentation"><a aria-expanded="true" data-toggle="tab"
-                                                    role="tab" id="home_tab_6" href="#all"
-                                                    style="padding: 2px 20px;">All</a></li>
-                                            <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_6"
-                                                    role="tab" href="#permainan" aria-expanded="false"
-                                                    style="padding: 2px 20px;">Permainan</a></li>
-                                            <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_6"
-                                                    role="tab" href="#proshop" aria-expanded="false"
-                                                    style="padding: 2px 20px;">Proshop & Fasilitas</a></li>
-                                            <li role="presentation" class=""><a data-toggle="tab"
-                                                    id="profile_tab_6" role="tab" href="#kantin"
-                                                    aria-expanded="false" style="padding: 2px 20px;">Kantin</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                                <hr class="light-grey-hr row mt-20 mb-15 mb-10" />
-                            </div>
-
-                            <div class="panel-wrapper collapse in">
-                                <div class="panel-body" style="margin-top: -80px; margin-bottom:-10px;">
-                                    <div class="pills-struct mt-40">
-                                        <div class="tab-content" id="myTabContent_6">
-                                            <div class="tab-pane fade active in" id="all" role="tabpanel"
-                                                style="margin-top: 50px;">
-                                                <div class="col-lg-12">
-                                                    <div id="statistic_revenue_line" style="height: 250px;"></div>
-                                                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="panel panel-default card-view pa-0">
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body pa-0">
+                                <div class="sm-data-box vvip">
+                                    <div class="container-fluid">
+                                        <div class="row p-2">
+                                            <div class="col-xs-8 text-left data-wrap-left">
+                                                <span class="txt-light block counter">Rp. 
+                                                    <span class="counter-anim">{{ number_format($revenue_game) }}</span>
+                                                </span>
+                                                <span class="weight-500 txt-light block">
+                                                    Revenue permainan hari ini
+                                                </span>
                                             </div>
-
-                                            <div class="tab-pane fade active in" id="permainan" role="tabpanel"
-                                                style="margin-top: 50px;">
-                                                <div class="col-lg-12">
-                                                    <div id="statistic_permainan_line" class="morris-chart"
-                                                        style="d:293px;"></div>
-                                                </div>
+                                            <div class="col-xs-4 text-right data-wrap-right">
+                                                <i class="zmdi zmdi-case-play txt-light data-right-rep-icon"></i>
                                             </div>
-
-                                            <div class="tab-pane fade active in" id="proshop" role="tabpanel"
-                                                style="margin-top: 50px;">
-                                                <div class="col-lg-12">
-                                                    <div id="statistic_fasilitas_line" class="morris-chart"
-                                                        style="d:293px;"></div>
-                                                </div>
-                                            </div>
-
-                                            <div class="tab-pane fade active in" id="kantin" role="tabpanel"
-                                                style="margin-top: 50px;">
-                                                <div class="col-lg-12">
-                                                    <div id="statistic_other_line" class="morris-chart" style="d:293px;">
-                                                    </div>
-                                                </div>
-                                            </div>
-
+                                            <img src="{{ asset('/img/circle.svg') }}" class="card-img-absolute"
+                                                alt="circle-image">
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
-                {{-- End of Statistika Revenue --}}
 
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="panel panel-default card-view pa-0">
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body pa-0">
+                                <div class="sm-data-box vip">
+                                    <div class="container-fluid">
+                                        <div class="row p-2">
+                                            <div class="col-xs-8 text-left data-wrap-left">
+                                                <span class="txt-light block counter">Rp. <span
+                                                        class="counter-anim">{{ number_format($revenue_proshop) }}</span></span>
+                                                <span class="weight-500 txt-light block">
+                                                    Revenue proshop & fasilitas hari ini
+                                                </span>
+                                            </div>
+                                            <div class="col-xs-4 text-right data-wrap-right">
+                                                <i class="zmdi zmdi-shopping-cart txt-light data-right-rep-icon"></i>
+                                            </div>
+                                            <img src="{{ asset('/img/circle.svg') }}" class="card-img-absolute"
+                                                alt="circle-image">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="panel panel-default card-view pa-0">
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body pa-0">
+                                <div class="sm-data-box reguler">
+                                    <div class="container-fluid">
+                                        <div class="row p-2">
+                                            <div class="col-xs-8 text-left data-wrap-left">
+                                                <span class="txt-light block counter">Rp. <span
+                                                        class="counter-anim">{{  number_format($revenue_store)  }}</span></span>
+                                                <span class="weight-500 txt-light block">
+                                                    Revenue kantin hari ini
+                                                </span>
+                                            </div>
+                                            <div class="col-xs-4 text-right data-wrap-right">
+                                                <i class="zmdi zmdi-coffee txt-light data-right-rep-icon"></i>
+                                            </div>
+                                            <img src="{{ asset('/img/circle.svg') }}" class="card-img-absolute"
+                                                alt="circle-image">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default card-view">
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <h6 class="pannel-title text-dark">Revenue Trendline 7 Hari Terakhir</h6>
+                            </div>
+                            <div class="pull-right">
+                                tes
+                            </div>
+                            <div class="clearfix"></div>
+                            <hr class="light-grey-hr row mt-20 mb-15 mb-10" />
+                        </div>
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+                                <div id="statistic_revenue_bar" class="morris-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    @endsection
-    @push('scripts')
-        <script>
-            var dataNewPermainan = {!! json_encode($revenue) !!}
+    </div>
+@endsection
+@push('scripts')
+    <script>
+        var revenueWeek = {!! json_encode($revenue_daily) !!}
+    </script>
+    <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
 
-            // // fungsi grafik-line & Grafik-bar
-            //
-            const monthNames = [
-            ];
-            Morris.Line({
-                element: 'statistic_revenue_line',
-                data: dataNewPermainan,
-                xkey: "period",
-                parseTime: false,
-                ykeys: ["total", "permainan", "fasilitas", "penjualan"],
-                labels: ["Total", "Permainan", "Fasilitas", "Penjualan"],
-                labelcolor : ["#fff", "#fff", "#fff", "#fff"],
-                pointSize: 2,
-                fillOpacity: 0,
-                lineWidth: 2,
-                resize: true,
-                redraw: true,
-                pointStrokeColors: ["#6F38C5", "#fff", "#fff", "#fff"],
-                gridLineColor: "#878787",
-                lineColors: ["#6F38C5", "#fff", "#fff", "#fff"],
-                gridTextColor: "#878787",
-                gridTextFamily: "Roboto",
-                hideHover: 'auto',
-
-            });
-            Morris.Line({
-                element: 'statistic_permainan_line',
-                data: dataNewPermainan,
-                xkey: "period",
-                parseTime: false,
-                ykeys: ["permainan"],
-                labels: ["permainan"],
-                pointSize: 2,
-                fillOpacity: 0,
-                lineWidth: 2,
-                resize: true,
-                redraw: true,
-                pointStrokeColors: ["#fec107"],
-                gridLineColor: "#878787",
-                lineColors: ["#fec107"],
-                gridTextColor: "#878787",
-                gridTextFamily: "Roboto",
-                hideHover: 'auto',
-
-            });
-            Morris.Line({
-                element: 'statistic_fasilitas_line',
-                data: dataNewPermainan,
-                xkey: "period",
-                parseTime: false,
-                ykeys: ["fasilitas"],
-                labels: ["fasilitas"],
-                pointSize: 2,
-                fillOpacity: 0,
-                lineWidth: 2,
-                resize: true,
-                redraw: true,
-                pointStrokeColors: ["#32FFC1"],
-                gridLineColor: "#878787",
-                lineColors: ["#32FFC1"],
-                gridTextColor: "#878787",
-                gridTextFamily: "Roboto",
-                hideHover: 'auto',
-
-            });
-            Morris.Line({
-                element: 'statistic_other_line',
-                data: dataNewPermainan,
-                xkey: "period",
-                parseTime: false,
-                ykeys: ["penjualan"],
-                labels: ["penjualan"],
-                pointSize: 2,
-                fillOpacity: 0,
-                lineWidth: 2,
-                resize: true,
-                redraw: true,
-                pointStrokeColors: ["#21E1E1"],
-                gridLineColor: "#878787",
-                lineColors: ["#21E1E1"],
-                gridTextColor: "#878787",
-                gridTextFamily: "Roboto",
-                hideHover: 'auto',
-
-            });
-        </script>
-    @endpush
-@else
-    <!DOCTYPE HTML>
-    <html lang="en-US">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="refresh" content="0; url=/scan-tamu">
-        <script type="text/javascript">
-            window.location.href = "/scan-tamu"
-        </script>
-    </head>
-
-    <body>
-        Halaman Tidak Ada <a href='/scan-tamu'>Kembali</a>.
-    </body>
-
-    </html>
-@endif
+@endpush
