@@ -132,7 +132,8 @@ class DashboardController extends Controller
             now()->format('Y')
         )->count();
 
-        $data['visitor_vip'] = LogTransaction::where('payment_status', 'paid')->whereHas('visitor', function (
+        $data['visitor_vip'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))
+        ->where('payment_status', 'paid')->whereHas('visitor', function (
             Builder $query
         ) {
             $query->where('tipe_member', 'VIP')->whereDate('created_at', now()->format('Y-m-d'));
@@ -146,7 +147,8 @@ class DashboardController extends Controller
         })->count();
 
 
-        $data['visitor_reguler'] = LogTransaction::where('payment_status', 'paid')->whereHas('visitor', function (
+        $data['visitor_reguler'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))
+        ->where('payment_status', 'paid')->whereHas('visitor', function (
             Builder $query
         ) {
             $query->where('tipe_member', 'REGULER')->whereDate('created_at', now()->format('Y-m-d'));

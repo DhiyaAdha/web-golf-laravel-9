@@ -47,6 +47,7 @@
 <script src="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.min.js') }}"></script>
 <script src="{{ asset('vendors/bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js') }}">
 </script>
+
 <!-- Init JavaScript -->
 <script src="{{ asset('/dist/js/init.js') }}"></script>
 @stack('scripts')

@@ -10,6 +10,7 @@ $(document).ready(function(){
         xkey: 'y',
         ykeys: ['a', 'b', 'c','d' ],
         labels: ['Permainan', 'Proshop & Fasilitas', 'Kantin', 'Profit' ],
+        stacked: true,
         barColors:['#fec107', '#32FFC1', '#21E1E1'],
         hideHover: 'auto',
         gridLineColor: '#878787',
