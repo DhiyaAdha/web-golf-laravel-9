@@ -13,6 +13,7 @@ $(document).ready(function(){
         barColors:['#fec107', '#32FFC1', '#21E1E1'],
         hideHover: 'auto',
         gridLineColor: '#878787',
+        stacked: true,
         resize: true,
         barGap: 4,
         gridTextColor:'#878787',
