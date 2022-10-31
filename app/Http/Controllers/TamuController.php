@@ -790,12 +790,15 @@ class TamuController extends Controller
     {
         try {
             $visitor = LogLimit::join('visitors', 'log_limits.visitor_id', '=', 'visitors.id')->where('log_limits.visitor_id', $id)->first();
-            $log_limit = LogLimit::where('visitor_id', $id)->first();
+            // $log_limit = LogLimit::where('visitor_id', $id)->first();
+            $log_limit = LogLimit::find($id)->first();
             $log_limit->quota_kupon = $request->quota_kupon + $log_limit->quota_kupon;
             $log_limit->save();
+            // dd($log_limit);
 
             //notifikasi email
-            $log_limit = LogLimit::where('visitor_id', $id)->first();
+            // $log_limit = LogLimit::where('visitor_id', $id)->first();
+            $log_limit = LogLimit::find($id)->first();
             $data = $request->all();
             $datav = Visitor::find($id);
             $data['name'] = $datav->name;
