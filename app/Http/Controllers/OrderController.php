@@ -96,6 +96,7 @@ class OrderController extends Controller
             $cart_data = [];
         } else {
             foreach ($items as $row) {
+                $package = Package::find($row->id);
                 $cart[] = [
                     'rowId' => $row->id,
                     'name' => $row->name,
@@ -103,7 +104,7 @@ class OrderController extends Controller
                     'pricesingle' => $row->price,
                     'price' => $row->getPriceSum(),
                     'created_at' => $row->attributes['created_at'],
-                    'category' => $row->category
+                    'category' => $package->category
                 ];
             }
             
@@ -194,6 +195,7 @@ class OrderController extends Controller
                     $cart_data = [];
                 } else {
                     foreach ($cart as $row) {
+                        $package = Package::find($row->id);
                         $cart[] = [
                             'rowId' => $row->id,
                             'name' => $row->name,
@@ -201,7 +203,7 @@ class OrderController extends Controller
                             'pricesingle' => $row->price,
                             'price' => $row->getPriceSum(),
                             'created_at' => $row->attributes['created_at'],
-                            'category' => $row->category,
+                            'category' => $package->category,
                         ];
                     }
                     $cart_data = collect($cart)->sortBy('created_at');
@@ -230,6 +232,7 @@ class OrderController extends Controller
                     $cart_data = [];
                 } else {
                     foreach ($cart as $row) {
+                        $package = Package::find($row->id);
                         $cart[] = [
                             'rowId' => $row->id,
                             'name' => $row->name,
@@ -237,7 +240,7 @@ class OrderController extends Controller
                             'pricesingle' => $row->price,
                             'price' => $row->getPriceSum(),
                             'created_at' => $row->attributes['created_at'],
-                            'category' => $row->category
+                            'category' => $package->category
                         ];
                     }
                     $cart_data = collect($cart)->sortBy('created_at');
@@ -413,7 +416,7 @@ class OrderController extends Controller
                 'pricesingle' => $row->price,
                 'price' => $row->getPriceSum(),
                 'created_at' => $row->attributes['created_at'],
-                'category' => $row->category
+                'category' => $package->category
             ];
         }
         $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
@@ -920,9 +923,10 @@ class OrderController extends Controller
                                     ]]),
                                     'payment_status' => 'paid',
                                     'total' => $totalPrice,
-                                    'jml_default' => $jml_default,
-                                    'jml_additional' => $jml_additional,
-                                    'jml_other' => $jml_other,
+                                    'total_gross' => $totalPrice,
+                                    'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                    'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                    'jml_other' => array_sum(array_column($priceOthers,'price')),
                                 ]);
     
                                 LogAdmin::create([
@@ -971,9 +975,10 @@ class OrderController extends Controller
                                                 ]]),
                                                 'payment_status' => 'paid',
                                                 'total' => $totalPrice,
-                                                'jml_default' => $jml_default,
-                                                'jml_additional' => $jml_additional,
-                                                'jml_other' => $jml_other,
+                                                'total_gross' => $totalPrice,
+                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
                                             ]);
             
                                             LogAdmin::create([
@@ -1062,9 +1067,10 @@ class OrderController extends Controller
                                         ]]),
                                         'payment_status' => 'paid',
                                         'total' => $totalPrice - $price_single,
-                                        'jml_default' => $jml_default,
-                                        'jml_additional' => $jml_additional,
-                                        'jml_other' => $jml_other,
+                                        'total_gross' => $totalPrice,
+                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
                                     ]);
     
                                     LogAdmin::create([
@@ -1115,9 +1121,10 @@ class OrderController extends Controller
                                         ]]),
                                         'payment_status' => 'paid',
                                         'total' => $totalPrice - $price_single,
-                                        'jml_default' => $jml_default,
-                                        'jml_additional' => $jml_additional,
-                                        'jml_other' => $jml_other,
+                                        'total_gross' => $totalPrice,
+                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
                                     ]);
     
                                     LogAdmin::create([
@@ -1166,9 +1173,10 @@ class OrderController extends Controller
                                                 ]),
                                                 'payment_status' => 'paid',
                                                 'total' => $totalPrice,
-                                                'jml_default' => $jml_default,
-                                                'jml_additional' => $jml_additional,
-                                                'jml_other' => $jml_other,
+                                                'total_gross' => $totalPrice,
+                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
                                             ]);
 
                                             LogAdmin::create([
@@ -1268,9 +1276,10 @@ class OrderController extends Controller
                                         ]),
                                         'payment_status' => 'paid',
                                         'total' => $deposit->balance,
-                                        'jml_default' => $jml_default,
-                                        'jml_additional' => $jml_additional,
-                                        'jml_other' => $jml_other,
+                                        'total_gross' => $totalPrice,
+                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
                                     ]);
     
                                     LogAdmin::create([
@@ -1327,9 +1336,10 @@ class OrderController extends Controller
                                         ]),
                                         'payment_status' => 'paid',
                                         'total' => $deposit->balance,
-                                        'jml_default' => $jml_default,
-                                        'jml_additional' => $jml_additional,
-                                        'jml_other' => $jml_other,
+                                        'total_gross' => $totalPrice,
+                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
                                     ]);
     
                                     LogAdmin::create([
@@ -1391,9 +1401,10 @@ class OrderController extends Controller
                                                 ]),
                                                 'payment_status' => 'paid',
                                                 'total' => $remaining_balance,
-                                                'jml_default' => $jml_default,
-                                                'jml_additional' => $jml_additional,
-                                                'jml_other' => $jml_other,
+                                                'total_gross' => $totalPrice,
+                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
                                             ]);
             
                                             $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
@@ -1447,9 +1458,10 @@ class OrderController extends Controller
                                                 ]),
                                                 'payment_status' => 'paid',
                                                 'total' => $remaining_balance,
-                                                'jml_default' => $jml_default,
-                                                'jml_additional' => $jml_additional,
-                                                'jml_other' => $jml_other,
+                                                'total_gross' => $totalPrice,
+                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
                                             ]);
             
                                             $log_limit->quota = $log_limit->quota - 1;
@@ -1503,9 +1515,10 @@ class OrderController extends Controller
                                         ]),
                                         'payment_status' => 'paid',
                                         'total' => $remaining_balance,
-                                        'jml_default' => $jml_default,
-                                        'jml_additional' => $jml_additional,
-                                        'jml_other' => $jml_other,
+                                        'total_gross' => $totalPrice,
+                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
                                     ]);
     
                                     $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
@@ -1620,9 +1633,10 @@ class OrderController extends Controller
                                         ]),
                                         'payment_status' => 'paid',
                                         'total' => $remaining_balance,
-                                        'jml_default' => $jml_default,
-                                        'jml_additional' => $jml_additional,
-                                        'jml_other' => $jml_other,
+                                        'total_gross' => $totalPrice,
+                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
                                     ]);
     
                                     $log_limit->quota = $log_limit->quota - 1;
@@ -1754,9 +1768,10 @@ class OrderController extends Controller
                                                     ]]),
                                                     'payment_status' => 'paid',
                                                     'total' => $totalPrice,
-                                                    'jml_default' => $jml_default,
-                                                    'jml_additional' => $jml_additional,
-                                                    'jml_other' => $jml_other,
+                                                    'total_gross' => $totalPrice,
+                                                    'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                    'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                    'jml_other' => array_sum(array_column($priceOthers,'price')),
                                                 ]);
                 
                                                 LogAdmin::create([
@@ -1845,9 +1860,10 @@ class OrderController extends Controller
                                             ]]),
                                             'payment_status' => 'paid',
                                             'total' => $totalPrice - $price_single,
-                                            'jml_default' => $jml_default,
-                                            'jml_additional' => $jml_additional,
-                                            'jml_other' => $jml_other,
+                                            'total_gross' => $totalPrice,
+                                            'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                            'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                            'jml_other' => array_sum(array_column($priceOthers,'price')),
                                         ]);
     
                                         LogAdmin::create([
@@ -1898,9 +1914,10 @@ class OrderController extends Controller
                                             ]]),
                                             'payment_status' => 'paid',
                                             'total' => $totalPrice - $price_single,
-                                            'jml_default' => $jml_default,
-                                            'jml_additional' => $jml_additional,
-                                            'jml_other' => $jml_other,
+                                            'total_gross' => $totalPrice,
+                                            'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                            'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                            'jml_other' => array_sum(array_column($priceOthers,'price')),
                                         ]);
     
                                         LogAdmin::create([
@@ -1955,9 +1972,10 @@ class OrderController extends Controller
                                                         ]),
                                                         'payment_status' => 'paid',
                                                         'total' => $totalPrice,
-                                                        'jml_default' => $jml_default,
-                                                        'jml_additional' => $jml_additional,
-                                                        'jml_other' => $jml_other,
+                                                        'total_gross' => $totalPrice,
+                                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
                                                     ]);
                     
                                                     LogAdmin::create([
@@ -2067,9 +2085,10 @@ class OrderController extends Controller
                                                 ]),
                                                 'payment_status' => 'paid',
                                                 'total' => $deposit_before,
-                                                'jml_default' => $jml_default,
-                                                'jml_additional' => $jml_additional,
-                                                'jml_other' => $jml_other,
+                                                'total_gross' => $totalPrice,
+                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
                                             ]);
             
                                             LogAdmin::create([
@@ -2136,9 +2155,10 @@ class OrderController extends Controller
                                                 ]),
                                                 'payment_status' => 'paid',
                                                 'total' => $deposit_before,
-                                                'jml_default' => $jml_default,
-                                                'jml_additional' => $jml_additional,
-                                                'jml_other' => $jml_other,
+                                                'total_gross' => $totalPrice,
+                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
                                             ]);
             
                                             LogAdmin::create([
@@ -2201,9 +2221,10 @@ class OrderController extends Controller
                                                         ]),
                                                         'payment_status' => 'paid',
                                                         'total' => $totalPrice - $price_single,
-                                                        'jml_default' => $jml_default,
-                                                        'jml_additional' => $jml_additional,
-                                                        'jml_other' => $jml_other,
+                                                        'total_gross' => $totalPrice,
+                                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
                                                     ]);
                     
                                                     LogAdmin::create([
@@ -2310,9 +2331,10 @@ class OrderController extends Controller
                                                         ]),
                                                         'payment_status' => 'paid',
                                                         'total' => $totalPrice - $price_single,
-                                                        'jml_default' => $jml_default,
-                                                        'jml_additional' => $jml_additional,
-                                                        'jml_other' => $jml_other,
+                                                        'total_gross' => $totalPrice,
+                                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
                                                     ]);
                     
                                                     LogAdmin::create([
@@ -2424,9 +2446,10 @@ class OrderController extends Controller
                                                 ]),
                                                 'payment_status' => 'paid',
                                                 'total' => $disc,
-                                                'jml_default' => $jml_default,
-                                                'jml_additional' => $jml_additional,
-                                                'jml_other' => $jml_other,
+                                                'total_gross' => $totalPrice,
+                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
                                             ]);
                                             
                                             $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
@@ -2494,9 +2517,10 @@ class OrderController extends Controller
                                                 ]),
                                                 'payment_status' => 'paid',
                                                 'total' => $disc,
-                                                'jml_default' => $jml_default,
-                                                'jml_additional' => $jml_additional,
-                                                'jml_other' => $jml_other,
+                                                'total_gross' => $totalPrice,
+                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
                                             ]);
                                             
                                             $log_limit->quota = $log_limit->quota - 1;
@@ -2565,9 +2589,10 @@ class OrderController extends Controller
                                         ]]),
                                         'payment_status' => 'paid',
                                         'total' => $totalPrice,
-                                        'jml_default' => $jml_default,
-                                        'jml_additional' => $jml_additional,
-                                        'jml_other' => $jml_other,
+                                        'total_gross' => $totalPrice,
+                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
                                     ]);
         
                                     LogAdmin::create([
@@ -2616,9 +2641,10 @@ class OrderController extends Controller
                                                     ]]),
                                                     'payment_status' => 'paid',
                                                     'total' => $totalPrice,
-                                                    'jml_default' => $jml_default,
-                                                    'jml_additional' => $jml_additional,
-                                                    'jml_other' => $jml_other,
+                                                    'total_gross' => $totalPrice,
+                                                    'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                    'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                    'jml_other' => array_sum(array_column($priceOthers,'price')),
                                                 ]);
                 
                                                 LogAdmin::create([
@@ -2707,9 +2733,10 @@ class OrderController extends Controller
                                             ]]),
                                             'payment_status' => 'paid',
                                             'total' => $totalPrice - $price_single,
-                                            'jml_default' => $jml_default,
-                                            'jml_additional' => $jml_additional,
-                                            'jml_other' => $jml_other,
+                                            'total_gross' => $totalPrice,
+                                            'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                            'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                            'jml_other' => array_sum(array_column($priceOthers,'price')),
                                         ]);
         
                                         LogAdmin::create([
@@ -2760,9 +2787,10 @@ class OrderController extends Controller
                                             ]]),
                                             'payment_status' => 'paid',
                                             'total' => $totalPrice - $price_single,
-                                            'jml_default' => $jml_default,
-                                            'jml_additional' => $jml_additional,
-                                            'jml_other' => $jml_other,
+                                            'total_gross' => $totalPrice,
+                                            'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                            'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                            'jml_other' => array_sum(array_column($priceOthers,'price')),
                                         ]);
         
                                         LogAdmin::create([
@@ -2811,9 +2839,10 @@ class OrderController extends Controller
                                                     ]),
                                                     'payment_status' => 'paid',
                                                     'total' => $totalPrice,
-                                                    'jml_default' => $jml_default,
-                                                    'jml_additional' => $jml_additional,
-                                                    'jml_other' => $jml_other,
+                                                    'total_gross' => $totalPrice,
+                                                    'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                    'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                    'jml_other' => array_sum(array_column($priceOthers,'price')),
                                                 ]);
 
                                                 LogAdmin::create([
@@ -2913,9 +2942,10 @@ class OrderController extends Controller
                                             ]),
                                             'payment_status' => 'paid',
                                             'total' => $minus_price_single,
-                                            'jml_default' => $jml_default,
-                                            'jml_additional' => $jml_additional,
-                                            'jml_other' => $jml_other,
+                                            'total_gross' => $totalPrice,
+                                            'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                            'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                            'jml_other' => array_sum(array_column($priceOthers,'price')),
                                         ]);
         
                                         LogAdmin::create([
@@ -2973,9 +3003,10 @@ class OrderController extends Controller
                                             ]),
                                             'payment_status' => 'paid',
                                             'total' => $minus_price_single,
-                                            'jml_default' => $jml_default,
-                                            'jml_additional' => $jml_additional,
-                                            'jml_other' => $jml_other,
+                                            'total_gross' => $totalPrice,
+                                            'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                            'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                            'jml_other' => array_sum(array_column($priceOthers,'price')),
                                         ]);
         
                                         LogAdmin::create([
@@ -3038,9 +3069,10 @@ class OrderController extends Controller
                                                     ]),
                                                     'payment_status' => 'paid',
                                                     'total' => $remaining_balance,
-                                                    'jml_default' => $jml_default,
-                                                    'jml_additional' => $jml_additional,
-                                                    'jml_other' => $jml_other,
+                                                    'total_gross' => $totalPrice,
+                                                    'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                    'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                    'jml_other' => array_sum(array_column($priceOthers,'price')),
                                                 ]);
                 
                                                 $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
@@ -3094,9 +3126,10 @@ class OrderController extends Controller
                                                     ]),
                                                     'payment_status' => 'paid',
                                                     'total' => $remaining_balance,
-                                                    'jml_default' => $jml_default,
-                                                    'jml_additional' => $jml_additional,
-                                                    'jml_other' => $jml_other,
+                                                    'total_gross' => $totalPrice,
+                                                    'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                    'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                    'jml_other' => array_sum(array_column($priceOthers,'price')),
                                                 ]);
                 
                                                 $log_limit->quota = $log_limit->quota - 1;
@@ -3150,9 +3183,10 @@ class OrderController extends Controller
                                             ]),
                                             'payment_status' => 'paid',
                                             'total' => $remaining_balance,
-                                            'jml_default' => $jml_default,
-                                            'jml_additional' => $jml_additional,
-                                            'jml_other' => $jml_other,
+                                            'total_gross' => $totalPrice,
+                                            'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                            'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                            'jml_other' => array_sum(array_column($priceOthers,'price')),
                                         ]);
         
                                         $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
@@ -3267,9 +3301,10 @@ class OrderController extends Controller
                                             ]),
                                             'payment_status' => 'paid',
                                             'total' => $remaining_balance,
-                                            'jml_default' => $jml_default,
-                                            'jml_additional' => $jml_additional,
-                                            'jml_other' => $jml_other,
+                                            'total_gross' => $totalPrice,
+                                            'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                            'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                            'jml_other' => array_sum(array_column($priceOthers,'price')),
                                         ]);
         
                                         $log_limit->quota = $log_limit->quota - 1;

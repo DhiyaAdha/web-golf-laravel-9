@@ -212,99 +212,22 @@ class DashboardController extends Controller
             'name',
             'created_at',
             'tipe_member',
-            'updated_at',
+            'category',
         ])
             ->where('tipe_member', '!=', 'REGULER')
             ->get();
         if ($request->ajax()) {
-            return datatables()
-                ->of($visitor)
-                ->editColumn('updated_at', function ($data) {
-                    return empty($data->transaction($data->id))
-                        ? '-'
-                        : $data
-                        ->transaction($data->id)
-                        ->created_at->translatedFormat('d F Y');
-                })
-                ->addColumn('times', function ($data) {
-                    return empty($data->transaction($data->id))
-                        ? '-'
-                        : $data
-                        ->transaction($data->id)
-                        ->created_at->translatedFormat('h:i a');
-                })
-                ->editColumn('tipe_member', function ($data) {
-                    return $data->tipe_member;
-                })
-                ->rawColumns(['name', 'action'])
-                ->make(true);
+            return datatables()->of($visitor)->editColumn('category', function ($data) {
+                    return $data->category;
+            })
+            ->addColumn('times', function ($data) {
+                return empty($data->transaction($data->id)) ? '-' : $data->transaction($data->id)->created_at->translatedFormat('d F Y') .', '.$data->transaction($data->id)->created_at->translatedFormat('h:i a');
+            })
+            ->editColumn('tipe_member', function ($data) {
+                return $data->tipe_member;
+            })
+            ->rawColumns(['name', 'action'])->make(true);
         }
         return view('dashboard.analisis-tamu', $data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

@@ -51,7 +51,6 @@ class InvoiceController extends Controller
             })
             ->editColumn('payment_type', function ($data) {
                 $type = unserialize($data->payment_type);
-                dd($type);
                 if (isset($type['payment_type'])) {
                     return sprintf('<div class="d-flex flex-wrap justify-content-center align-items-center"><span class="label mr-5 label-info">'.$type[0]['payment_type'].'</span></div>');
                 } else {

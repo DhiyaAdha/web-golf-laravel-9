@@ -4,31 +4,18 @@
 
 /*****Ready function start*****/
 $(document).ready(function(){
-	$('#support_table').DataTable({
-		"bFilter": false,
-		"bLengthChange": false,
-		"bPaginate": false,
-		"bInfo": false,
-	});
-
-	var barLine = Morris.Line({
-        element: "revenue_trendline_permainan",
-        data: dataNewPermainan,
-        xkey: "period", 
-        ykeys: ["jml_default"],
-        labels: ["jml_default"],
-        pointSize: 2,
-        fillOpacity: 0,
-        lineWidth: 2,
-        pointStrokeColors: ["#fec107"],
-        behaveLikeLine: true,
-        gridLineColor: "#878787",
-        hideHover: "auto",
-        lineColors: ["#fec107"],
+    var revenueBar = Morris.Bar({
+        element: 'statistic_revenue_bar',
+        data: revenueWeek,
+        xkey: 'y',
+        ykeys: ['a', 'b', 'c','d' ],
+        labels: ['Permainan', 'Proshop & Fasilitas', 'Kantin', 'Profit' ],
+        barColors:['#fec107', '#32FFC1', '#21E1E1'],
+        hideHover: 'auto',
+        gridLineColor: '#878787',
         resize: true,
-        redraw: true,
-        gridTextColor: "#878787",
-        gridTextFamily: "Roboto",
-        parseTime: false,
+        barGap: 4,
+        gridTextColor:'#878787',
+        gridTextFamily:"Roboto",
     });
 });
