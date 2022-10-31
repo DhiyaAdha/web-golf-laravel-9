@@ -325,7 +325,7 @@
                                             </div>
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Tamu</span>
-                                                <a href="javascript:void(0)" data-toggle="tooltip" title="Tambahkan nama tamu"><i class="fa fa-plus-square add-name"></i></a>
+                                                <div data-toggle="tooltip" title="Tambahkan nama tamu"><i class="fa fa-plus-square add-name"></i></div>
                                             </div>
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Jumlah Item</span>
