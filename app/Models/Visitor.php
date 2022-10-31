@@ -26,6 +26,7 @@ class Visitor extends Model
         'gender',
         'category',
         'tipe_member',
+        'status',
         'created_at',
         'updated_at',
     ];
