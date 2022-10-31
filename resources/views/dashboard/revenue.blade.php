@@ -11,7 +11,7 @@
                                     <div class="container-fluid">
                                         <div class="row p-2">
                                             <div class="col-xs-8 text-left data-wrap-left">
-                                                <span class="txt-light block counter">Rp. 
+                                                <span class="txt-light block counter">Rp.
                                                     <span class="counter-anim">{{ number_format($revenue_today) }}</span>
                                                 </span>
                                                 <span class="weight-500 txt-light block">
@@ -39,7 +39,7 @@
                                     <div class="container-fluid">
                                         <div class="row p-2">
                                             <div class="col-xs-8 text-left data-wrap-left">
-                                                <span class="txt-light block counter">Rp. 
+                                                <span class="txt-light block counter">Rp.
                                                     <span class="counter-anim">{{ number_format($revenue_game) }}</span>
                                                 </span>
                                                 <span class="weight-500 txt-light block">
@@ -95,7 +95,7 @@
                                         <div class="row p-2">
                                             <div class="col-xs-8 text-left data-wrap-left">
                                                 <span class="txt-light block counter">Rp. <span
-                                                        class="counter-anim">{{  number_format($revenue_store)  }}</span></span>
+                                                        class="counter-anim">{{ number_format($revenue_store) }}</span></span>
                                                 <span class="weight-500 txt-light block">
                                                     Revenue kantin hari ini
                                                 </span>
@@ -122,17 +122,21 @@
                                 <h6 class="pannel-title text-dark">Revenue Trendline 7 Hari Terakhir</h6>
                             </div>
                             <div class="pull-right">
-                                <div class="dropdown show">
-                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: black">
-                                      Dropdown Link
-                                    </a>
-                                  
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                      <a class="dropdown-item" href="#">Action</a>
-                                      <a class="dropdown-item" href="#">Another action</a>
-                                      <a class="dropdown-item" href="#">Something else here</a>
-                                    </div>
-                                  </div>
+                                <div class="dropdown">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                                        aria-expanded="true" onclick="changediv()">
+                                        All Revenue <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" data-dropdown-in="slideInRight" data-dropdown-out="flipOutX">
+                                        <li><a href="#">All</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Permainan</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Proshop & fasilitas</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Kantin</a></li>
+                                    </ul>
+                                </div>
                             </div>
                             <div class="clearfix"></div>
                             <hr class="light-grey-hr row mt-20 mb-15 mb-10" />
@@ -153,5 +157,15 @@
         var revenueWeek = {!! json_encode($revenue_daily) !!}
     </script>
     <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
-
+    <script>
+        function changediv() {
+            if (document.getElementById("statistic_revenue_bar")) {
+                document.getElementById("statistic_revenue_bar").innerHTML = Date();
+                document.getElementById("statistic_revenue_bar").setAttribute("id", "statistic_revenue_bar_permainan");
+            } else {
+                document.getElementById("statistic_revenue_bar_permainan").innerHTML = "teste";
+                document.getElementById("statistic_revenue_bar_permainan").setAttribute("id", "statistic_revenue_bar");
+            }
+        }
+    </script>
 @endpush

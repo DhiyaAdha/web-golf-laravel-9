@@ -899,6 +899,13 @@ strong {
     color: black;
     cursor: pointer;
 }
+.btn4 {
+    background-color: #fff;
+    border-color: grey;
+    color: black;
+    cursor: pointer;
+}
+
 
 .card-tamu {
     background: #fff;

@@ -39,6 +39,13 @@ class RevenueController extends Controller
             $data['revenue_daily'][$key]['c'] = LogTransaction::whereDate('created_at', $day_period[$key])->where('payment_status', 'paid')->sum('jml_other');
             $data['revenue_daily'][$key]['d'] = $data['revenue_daily'][$key]['a'] + $data['revenue_daily'][$key]['b'] + $data['revenue_daily'][$key]['c'];
         }
+        foreach ($day_period as $key => $value) {
+            $data['revenue_daily2'][$key]['q'] = Carbon::create(
+                $day_period[$key]
+            )->translatedFormat('l');
+
+            $data['revenue_daily2'][$key]['w'] = LogTransaction::whereDate('created_at', $day_period[$key])->where('payment_status', 'paid')->sum('jml_default');
+        }
 
         return view('dashboard.revenue', $data);
     }
