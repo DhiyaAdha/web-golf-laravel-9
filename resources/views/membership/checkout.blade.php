@@ -2053,7 +2053,7 @@
                 let bayar_cash = $('.bayar-cash').val();
                 let bayar_input = $('.bayar-input').val();
                 console.log(bayar_input);
-                console.log(type_multiple[0]);
+                console.log(type_multiple);
                 let refund = $('#return').data('refund');
                 let tg = window.location.href;
                 tg = tg.split("?");
