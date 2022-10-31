@@ -800,12 +800,13 @@ class TamuController extends Controller
             // $log_limit = LogLimit::where('visitor_id', $id)->first();
             $log_limit = LogLimit::find($id)->first();
             $data = $request->all();
-            $datav = Visitor::find($id);
+            $datav = Visitor::find($id);    
             $data['name'] = $datav->name;
             $data['tambahkupon'] = $request->quota_kupon;
             $data['sebelumkupon'] = $log_limit->quota_kupon - $request->quota_kupon;
             $data['setelahkupon'] = $log_limit->quota_kupon;
             $data['quota'] = $log_limit->quota;
+            // $data['quota'] = $request->quota;
             $data['quota_kupon'] = $log_limit->quota_kupon;
             $data['email'] = $visitor->email;
             dispatch(new SendMailJobKuponTambah($data));
@@ -819,6 +820,7 @@ class TamuController extends Controller
             ReportLimit::create([
                 'report_quota_kupon' => $log_limit->quota_kupon,
                 'report_quota' => $log_limit->quota,
+                // 'report_quota' => $request->quota,
                 'visitor_id' => $id,
                 'user_id' => Auth::id(),
                 'status' => 'Bertambah',
