@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Package;
+use App\Models\Visitor;
 use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use App\Models\LogTransaction;
-use App\Models\Visitor;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
+use Symfony\Component\Console\Input\Input;
 
 class RevenueController extends Controller
 {
@@ -19,7 +20,7 @@ class RevenueController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index() {
+    public function index(Request $req) {
         $data['revenue_today'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('total_gross');
         $data['revenue_game'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('jml_default');
         $data['revenue_proshop'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('jml_additional');

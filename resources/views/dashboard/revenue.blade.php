@@ -122,7 +122,7 @@
                                 <h6 class="pannel-title text-dark">Revenue Trendline 7 Hari Terakhir</h6>
                             </div>
                             <div class="pull-right">
-                                <div class="dropdown">
+                                {{-- <div class="dropdown">
                                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
                                         aria-expanded="true" onclick="changediv()">
                                         All Revenue <span class="caret"></span>
@@ -136,6 +136,14 @@
                                         <li class="divider"></li>
                                         <li><a href="#">Kantin</a></li>
                                     </ul>
+                                </div> --}}
+                                <div class="ui-widget">
+                                    <select id="filter-week">
+                                        <option value="revenue_bar">All Revenue</option>
+                                        <option value="revenue_bar_game">Permainan</option>
+                                        <option value="revenue_bar_facility">Fasilitas</option>
+                                        <option value="revenue_bar_other">Kantin</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
@@ -144,6 +152,7 @@
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
                                 <div id="statistic_revenue_bar" class="morris-chart"></div>
+                                <input type="text" name="" id="text">
                             </div>
                         </div>
                     </div>
@@ -155,17 +164,26 @@
 @push('scripts')
     <script>
         var revenueWeek = {!! json_encode($revenue_daily) !!}
-    </script>
-    <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
-    <script>
-        function changediv() {
-            if (document.getElementById("statistic_revenue_bar")) {
-                document.getElementById("statistic_revenue_bar").innerHTML = Date();
-                document.getElementById("statistic_revenue_bar").setAttribute("id", "statistic_revenue_bar_permainan");
-            } else {
-                document.getElementById("statistic_revenue_bar_permainan").innerHTML = "teste";
-                document.getElementById("statistic_revenue_bar_permainan").setAttribute("id", "statistic_revenue_bar");
-            }
+
+        $(document).on('change', '#filter-week', function(e) {
+            let week = $(this).val();
+            requestData(week);
+        });
+
+        function requestData(week){
+            $.ajax({
+                async: true,
+                type: 'GET',
+                url: "{{ route('revenue.index') }}", 
+                data: { week: week }
+            }).done(function( data ) {
+                console.log(week)
+                // revenueBar.setData(JSON.parse(data));
+            }).fail(function() {
+                alert( "error occured" );
+            });
         }
     </script>
+    <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
+   
 @endpush
