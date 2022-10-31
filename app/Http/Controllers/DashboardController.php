@@ -93,7 +93,7 @@ class DashboardController extends Controller
         foreach ($day_period as $key => $value) {
             $data['visitor_daily'][$key]['y'] = Carbon::create(
                 $day_period[$key]
-            )->translatedFormat('d/m/y');
+            )->translatedFormat('l');
 
             $data['visitor_daily'][$key]['a'] = Visitor::where('tipe_member', 'VVIP')->whereHas('log_transaction', function(Builder $query) use ($day_period, $key) {
                 $query->whereDate('created_at', $day_period[$key]);
@@ -106,8 +106,7 @@ class DashboardController extends Controller
                 function (Builder $query) {
                     $query->where('tipe_member', 'REGULER');
                 }
-            )->whereDate('created_at', $day_period[$key])
-                ->count();
+            )->whereDate('created_at', $day_period[$key])->count();
         }
 
         // statistika mingguan & tanggal
@@ -215,99 +214,22 @@ class DashboardController extends Controller
             'name',
             'created_at',
             'tipe_member',
-            'updated_at',
+            'category',
         ])
             ->where('tipe_member', '!=', 'REGULER')
             ->get();
         if ($request->ajax()) {
-            return datatables()
-                ->of($visitor)
-                ->editColumn('updated_at', function ($data) {
-                    return empty($data->transaction($data->id))
-                        ? '-'
-                        : $data
-                        ->transaction($data->id)
-                        ->created_at->translatedFormat('d F Y');
-                })
-                ->addColumn('times', function ($data) {
-                    return empty($data->transaction($data->id))
-                        ? '-'
-                        : $data
-                        ->transaction($data->id)
-                        ->created_at->translatedFormat('h:i a');
-                })
-                ->editColumn('tipe_member', function ($data) {
-                    return $data->tipe_member;
-                })
-                ->rawColumns(['name', 'action'])
-                ->make(true);
+            return datatables()->of($visitor)->editColumn('category', function ($data) {
+                    return $data->category;
+            })
+            ->addColumn('times', function ($data) {
+                return empty($data->transaction($data->id)) ? '-' : $data->transaction($data->id)->created_at->translatedFormat('d F Y') .', '.$data->transaction($data->id)->created_at->translatedFormat('h:i a');
+            })
+            ->editColumn('tipe_member', function ($data) {
+                return $data->tipe_member;
+            })
+            ->rawColumns(['name', 'action'])->make(true);
         }
         return view('dashboard.analisis-tamu', $data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

@@ -789,10 +789,8 @@ class TamuController extends Controller
     public function update_kupon(Request $request, $id)
     {
         try {
-            $get_uri = explode("/", parse_url($request->getRequestUri(), PHP_URL_PATH));
-            $visitor = LogLimit::join('visitors', 'log_limits.visitor_id', '=', 'visitors.id')
-            ->where('log_limits.visitor_id', $get_uri[3])->first();
-            $log_limit = LogLimit::where('visitor_id', $get_uri[3])->first();
+            $visitor = LogLimit::join('visitors', 'log_limits.visitor_id', '=', 'visitors.id')->where('log_limits.visitor_id', $id)->first();
+            $log_limit = LogLimit::where('visitor_id', $id)->first();
             $log_limit->quota_kupon = $request->quota_kupon + $log_limit->quota_kupon;
             $log_limit->save();
 
@@ -818,7 +816,7 @@ class TamuController extends Controller
             ReportLimit::create([
                 'report_quota_kupon' => $log_limit->quota_kupon,
                 'report_quota' => $log_limit->quota,
-                'visitor_id' => $get_uri[3],
+                'visitor_id' => $id,
                 'user_id' => Auth::id(),
                 'status' => 'Bertambah',
             ]);

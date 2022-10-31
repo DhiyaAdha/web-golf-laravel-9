@@ -4,13 +4,8 @@
 
 /*****Ready function start*****/
 $(document).ready(function () {
-    $("#statement").DataTable({
-        bFilter: false,
-        bLengthChange: false,
-        bPaginate: false,
-        bInfo: false,
-    });
-
+    
+    
     var barChart = Morris.Bar({
         element: 'statistic_visitor_bar',
         data: dataMingguan,
@@ -71,7 +66,7 @@ $(document).ready(function () {
         resize: true,
         pointFillColors:['#ffffff'],
         pointStrokeColors: ['black'],
-        barColors:['#b91d47','#00aba9','#2b5797','#e8c3b9','#1e7145'],
+        barColors:['#e60049','#9b19f5','#ffa300','#dc0ab4','#00b7c7'],
     });
 
     stackedBar.options.labels.forEach(function(label, i) {
@@ -79,5 +74,4 @@ $(document).ready(function () {
         legendItem.find('span').css('backgroundColor', stackedBar.options.barColors[i]);
         $('#visitor_legend').append(legendItem)
     });
-
 });

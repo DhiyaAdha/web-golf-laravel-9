@@ -33,6 +33,10 @@
             background: #8e9eab;
         }
 
+        .over-products {
+            height: 100px; 
+            overflow-y: scroll;
+        }
         #calculator input {
             border: none;
         }
@@ -321,8 +325,7 @@
                                             </div>
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Tamu</span>
-                                                <a href="javascript:void(0)"><i
-                                                        class="fa fa-plus-square add-name"></i></a>
+                                                <a href="javascript:void(0)" data-toggle="tooltip" title="Tambahkan nama tamu"><i class="fa fa-plus-square add-name"></i></a>
                                             </div>
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Jumlah Item</span>
@@ -339,7 +342,7 @@
                                                 <strong style="font-size: small;">Harga</strong>
                                             </div>
                                             <div class="items"></div>
-                                            <div class="items-default" style="height: 100px; overflow-y: scroll;">
+                                            <div class="items-default {{ count($orders) >= 4 ? 'over-products' : '' }}">
                                                 @foreach ($orders as $cart)
                                                     <div class="d-flex">
                                                         <span class="flex-grow-1">{{ $cart['name'] }} {{ $cart['category'] == 'default' ? '| game' : '' }} x {{ $cart['qty'] }}</span>
@@ -476,7 +479,6 @@
                 }
             } else {
                 let result = parseInt($('.bayar-input').val());
-                console.log(result)
                 $('.bayar-input').val(result + price);
                 let return_pay = parseInt($('.bayar-input').val()) - parseInt(total);
                 if($('.bayar-input').val() > total) {
@@ -541,7 +543,6 @@
                 e.preventDefault();
                 let total = $('.nilai-total1-td').data('total');
                 let return_pay = $(this).val() - total;
-                console.log(format(return_pay))
     
                 if ($(this).val() < total) {
                     if ($(this).val() == '') {

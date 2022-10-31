@@ -41,7 +41,7 @@
                                             <span class="txt-muted">Jenis Kelamin</span>
                                         </div>
                                         <div class="col-lg-12 col-md-12">
-                                            <span>{{ $visitor->gender }}</span>
+                                            <span class="text-capitalize">{{ $visitor->gender }}</span>
                                         </div>
                                     </div>
                                     <div class="mb-15 d-flex">
@@ -81,8 +81,7 @@
                                             <span class="txt-muted">Jenis Tamu</span>
                                         </div>
                                         <div class="col-lg-12 col-md-12">
-                                            <span
-                                                class="{{ $visitor->tipe_member == 'VIP' ? 'label label-success' : 'label label-warning' }}">{{ $visitor->tipe_member == 'VIP' ? 'Member' : 'VIP' }}</span>
+                                            <span class="{{ $visitor->tipe_member == 'VIP' ? 'label label-success' : 'label label-warning' }}">{{ $visitor->tipe_member == 'VIP' ? 'Member' : 'VIP' }}</span>
                                         </div>
                                     </div>
                                     <div class="mb-15 d-flex">

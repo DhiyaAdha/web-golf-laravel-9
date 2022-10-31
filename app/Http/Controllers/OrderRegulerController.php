@@ -12,12 +12,13 @@ use App\Models\LogAdmin;
 use App\Models\LogLimit;
 use App\Models\ReportLimit;
 use Darryldecode\Cart\Cart;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Models\ReportDeposit;
 use App\Models\LogTransaction;
 use Illuminate\Support\Carbon;
-use App\Jobs\SendEmailResetJob;
 
+use App\Jobs\SendEmailResetJob;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -69,11 +70,12 @@ class OrderRegulerController extends Controller
             $cart_data = [];
         } else {
             foreach ($items as $row) {
+                $package = Package::find($row->id);
                 $cart[] = [
                     'rowId' => $row->id,
                     'name' => $row->name,
                     'qty' => $row->quantity,
-                    'category' => $row->category,
+                    'category' => $package->category,
                     'pricesingle' => $row->price,
                     'price' => $row->getPriceSum(),
                     'created_at' => $row->attributes['created_at'],
@@ -83,7 +85,6 @@ class OrderRegulerController extends Controller
 
             $cart_data = collect($cart)->sortBy('created_at');
         }
-        // dd($cart);
 
         $sub_total = \Cart::session(auth()->id())->getSubTotal();
         $total = \Cart::session(auth()->id())->getTotal();
@@ -150,7 +151,6 @@ class OrderRegulerController extends Controller
             }
             $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
             $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
-            // $category = Package::whereIn('id', $id_package)->where('category')->get();
 
             if (count($package_additional) == 0) {
                 $cart = \Cart::session(auth()->id())->getContent();
@@ -159,6 +159,7 @@ class OrderRegulerController extends Controller
                     $cart_data = [];
                 } else {
                     foreach ($cart as $row) {
+                        $package = Package::find($row->id);
                         $cart[] = [
                             'rowId' => $row->id,
                             'name' => $row->name,
@@ -166,7 +167,7 @@ class OrderRegulerController extends Controller
                             'pricesingle' => $row->price,
                             'price' => $row->getPriceSum(),
                             'created_at' => $row->attributes['created_at'],
-                            'category' => $row->category,
+                            'category' => $package->category,
                         ];
                     }
                     $cart_data = collect($cart)->sortBy('created_at');
@@ -194,6 +195,7 @@ class OrderRegulerController extends Controller
                     $cart_data = [];
                 } else {
                     foreach ($cart as $row) {
+                        $package = Package::find($row->id);
                         $cart[] = [
                             'rowId' => $row->id,
                             'name' => $row->name,
@@ -201,7 +203,7 @@ class OrderRegulerController extends Controller
                             'pricesingle' => $row->price,
                             'price' => $row->getPriceSum(),
                             'created_at' => $row->attributes['created_at'],
-                            'category' => $row->category
+                            'category' => $package->category
                         ];
                     }
                     $cart_data = collect($cart)->sortBy('created_at');
@@ -221,7 +223,6 @@ class OrderRegulerController extends Controller
                 ], 200);
             }
         }
-        // dd($cart);
         return back();
     }
 
@@ -326,7 +327,7 @@ class OrderRegulerController extends Controller
                         'pricesingle' => $row->price,
                         'price' => $row->getPriceSum(),
                         'created_at' => $row->attributes['created_at'],
-                        'category' => $row->category,
+                        'category' => $package->category,
                     ];
                 }
                 $orders = collect($cart)->sortBy('created_at');
@@ -345,43 +346,37 @@ class OrderRegulerController extends Controller
     public function pay_reguler(Request $request)
     {
         $items = \Cart::session(auth()->id())->getContent();
-        //jml_default
         $jml_default = 0;
         $jml_additional = 0;
         $jml_other = 0;
-        foreach ($items as $get) {
-            if($get->category == 'default')
-            {
-                $jml_default += $get->getPriceSum();
-            }
-            elseif($get->category == 'additional')
-            {
-                $jml_additional += $get->getPriceSum();
-            }
-            else
-            {
-                $jml_other += $get->getPriceSum();
-            }
-        }
-        //jml_default
         $totalPrice = \Cart::session(auth()->id())->getTotal();
         if (\Cart::isEmpty()) {
             $cart_data = [];
         } else {
             foreach ($items as $row) {
+                $package = Package::find($row->id);
                 $cart[] = [
                     'rowId' => $row->id,
                     'name' => $row->name,
                     'qty' => $row->quantity,
-                    'category' => $row->category,
+                    'category' => $package->category,
                     'pricesingle' => $row->price,
                     'price' => $row->getPriceSum(),
                     'created_at' => $row->attributes['created_at'],
                 ];
             }
-            // dd($cart);
             $cart_data = collect($cart)->sortBy('created_at');
         }
+        $priceDefault = Arr::where($cart, function ($value, $key) {
+            return $value['category'] == 'default';
+        });
+        $priceAdditional = Arr::where($cart, function ($value, $key) {
+            return $value['category'] == 'additional';
+        });
+        $priceOthers = Arr::where($cart, function ($value, $key) {
+            return $value['category'] == 'others';
+        });
+        
         try {
             Visitor::create([
                 'name' => $request->get('name'),
@@ -403,9 +398,10 @@ class OrderRegulerController extends Controller
                 ]]),
                 'payment_status' => 'paid',
                 'total' => $totalPrice,
-                'jml_default' => $jml_default,
-                'jml_additional' => $jml_additional,
-                'jml_other' => $jml_other,
+                'total_gross' => $totalPrice,
+                'jml_default' => array_sum(array_column($priceDefault,'price')),
+                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                'jml_other' => array_sum(array_column($priceOthers,'price')),
             ]);
 
             LogAdmin::create([
