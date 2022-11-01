@@ -666,6 +666,15 @@
                                                 'Print Invoice');
                                             history.go(0);
                                         });
+                                    } else {
+                                        sword();
+                                        swal({
+                                            title: "",
+                                            type: "error",
+                                            text: response.message,
+                                            confirmButtonColor: "#01c853",
+                                        });
+                                        return false;
                                     }
                                 }
                             });

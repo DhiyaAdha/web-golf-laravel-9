@@ -26,6 +26,7 @@ class CreateVisitorsTable extends Migration
             $table->enum('gender',['laki-laki', 'perempuan'])->nullable();
             $table->enum('tipe_member',['VVIP', 'VIP', 'REGULER'])->nullable();
             $table->enum('status',['active', 'inactive'])->nullable();
+            $table->dateTime('expired_date')->nullable();
             $table->timestamps();
         });
     }

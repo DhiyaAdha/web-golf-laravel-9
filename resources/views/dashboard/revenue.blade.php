@@ -174,29 +174,9 @@
     </div>
 @endsection
 @push('scripts')
+    <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
     <script>
         var revenueWeek = {!! json_encode($revenue_daily) !!}
         var revenueMonth = {!! json_encode($revenue) !!}
-
-        $(document).on('change', '#filter-week', function(e) {
-            let week = $(this).val();
-            requestData(week);
-        });
-
-        function requestData(week){
-            $.ajax({
-                async: true,
-                type: 'GET',
-                url: "{{ route('revenue.index') }}", 
-                data: { week: week }
-            }).done(function( data ) {
-                console.log(week)
-                // revenueBar.setData(JSON.parse(data));
-            }).fail(function() {
-                alert( "error occured" );
-            });
-        }
     </script>
-    <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
-   
 @endpush

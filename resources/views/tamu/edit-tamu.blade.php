@@ -49,17 +49,21 @@
                                                 <div class="text-danger"> {{ $message }}</div>
                                             @enderror
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group @error('gender') has-error @enderror">
                                             <label class="control-label mb-10" for="gender">Jenis Kelamin</label>
-                                            <div class="form-check">
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="gender" id="gender" value="laki-laki"
-                                                        <?php echo $visitor->gender == 'laki-laki' ? 'checked' : ''; ?>>Pria
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="gender" id="gender" value="perempuan"
-                                                        <?php echo $visitor->gender == 'perempuan' ? 'checked' : ''; ?>>Wanita
-                                                </label>
+                                            <div class="radio-list">
+                                                <div class="radio-inline pl-0">
+                                                    <span class="radio radio-info"> 
+                                                        <input type="radio" name="gender" value="laki-laki" id="laki-laki" {{  $visitor->gender == 'laki-laki' ? 'checked' : '';  }}>
+                                                        <label for="laki-laki">Laki-laki</label>
+                                                    </span>
+                                                </div>
+                                                <div class="radio-inline pl-0">
+                                                    <span class="radio radio-info"> 
+                                                        <input type="radio" name="gender" value="perempuan" id="perempuan" {{  $visitor->gender == 'perempuan' ? 'checked' : '';  }}>
+                                                        <label for="perempuan">Perempuan</label>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group @error('email') has-error @enderror">
@@ -108,17 +112,17 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label mb-5" for="">Jenis member
-                                                <label class="switch" style="margin-top:10px;">
-                                                    <input class="cmn-toggle cmn-toggle-round-flat" type="hidden"
-                                                        value="VIP" name="tipe_member">
-                                                    <input type="checkbox" name="tipe_member" type="checkbox"
-                                                        id="tipe" value="VVIP"
-                                                        {{ $visitor->tipe_member == 'VVIP' ? ' checked' : '' }}>
-                                                    <div class="slider round switch">
-                                                        <span class="off" style="margin-left: 10px !important;">Member</span>
-                                                        <span class="on">VIP</span>
-                                                    </div>
-                                                </label>
+                                            <label class="switch" style="margin-top:10px;">
+                                                <input class="cmn-toggle cmn-toggle-round-flat" type="hidden"
+                                                    value="VIP" name="tipe_member">
+                                                <input type="checkbox" name="tipe_member" type="checkbox"
+                                                    id="tipe" value="VVIP"
+                                                    {{ $visitor->tipe_member == 'VVIP' ? ' checked' : '' }}>
+                                                <div class="slider round switch">
+                                                    <span class="off" style="margin-left: 10px !important;">Member</span>
+                                                    <span class="on">VIP</span>
+                                                </div>
+                                            </label>
                                         </div>
                                         <div class="form-group @error('category') has-error @enderror">
                                             <label class="control-label mb-10 text-left">Jenis Kategori</label>
@@ -151,6 +155,17 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <label class="control-label mb-5" for="">Status Member
+                                            <label class="switch" style="margin-top:10px;">
+                                                <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" name="status" value="active" {{ $visitor->status == 'active' ? ' checked' : '' }}>
+                                                <input type="checkbox" name="status" type="checkbox" id="tipe" value="inactive" {{ $visitor->status == 'inactive' ? ' checked' : '' }}>
+                                                <div class="status-member round switch">
+                                                    <span class="off" style="margin-left: 10px !important;">Ya</span>
+                                                    <span class="on">Tidak</span>
+                                                </div>
+                                            </label>
+                                        </div>
                                         <div class="form-group text-left">
                                             <button type="submit" class="btn btn-info">Simpan</button></a>
                                         </div>
@@ -165,3 +180,27 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script>
+        $(document).on('change', 'input[name="status"]', function(e) {
+            console.log($(this).val());
+            swal({
+                title: "",
+                text: "Ubah status member?",
+                type: "info",
+                showCancelButton: true,
+                confirmButtonColor: "#01c853",
+                confirmButtonText: "Ya",
+                cancelButtonText: "Batal",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function(isConfirm) {
+                if (isConfirm) {
+                    swal("Berhasil!", "Status member berubah", "success");
+                } else {
+                    swal("Dibatalkan", "", "info");
+                }
+            });
+        });
+    </script>
+@endpush
