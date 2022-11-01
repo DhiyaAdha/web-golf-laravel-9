@@ -56,6 +56,7 @@
                                                     <th class="">Email</th>
                                                     <th class="">Tipe</th>
                                                     <th class="">Status</th>
+                                                    <th class="">Masa habis</th>
                                                     <th class="" style="text-align: center">Opsi</th>
                                                 </tr>
                                             </thead>
@@ -123,6 +124,11 @@
                     }
                 },
                 {
+                    "data": function(data) {
+                        return data.expired_date;
+                    }
+                },
+                {
                     data: 'action',
                     searchable: false,
                     orderable: false
@@ -144,23 +150,17 @@
 
             columnDefs: [{
                     className: 'text-left',
-                    targets: [0, 1, 2, 3, 4]
+                    targets: [0, 1, 2, 3, 4,5]
                 },
                 {
                     className: 'text-center',
                     targets: [4]
                 }, {
-                    width: '20%',
-                    targets: [0]
+                    width: '25%',
+                    targets: [0,1, 5]
                 }, {
-                    width: '30%',
-                    targets: [1]
-                }, {
-                    width: '15%',
-                    targets: [2]
-                }, {
-                    width: '10%',
-                    targets: [3, 4]
+                    width: '12%',
+                    targets: [2, 3, 4]
                 }
             ]
         });
