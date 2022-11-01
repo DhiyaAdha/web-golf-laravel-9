@@ -74,7 +74,7 @@ $( document ).ready(function() {
     })
 
 // grafik line 
-if($('#revenue_line').length > 0) {
+if($('#revenue_line')) {
         Morris.Line({
             element: 'revenue_line',
             data: revenueMonth,
@@ -96,7 +96,7 @@ if($('#revenue_line').length > 0) {
             hideHover: 'auto',
         });
     }
-if($('#revenue_line_game').length > 0) {
+if($('#revenue_line_game')) {
         Morris.Line({
             element: 'revenue_line_game',
             data: revenueMonth,
@@ -118,7 +118,7 @@ if($('#revenue_line_game').length > 0) {
             hideHover: 'auto',
         });
     }
-if($('#revenue_line_facility').length > 0) {
+if($('#revenue_line_facility')) {
         Morris.Line({
             element: 'revenue_line_facility',
             data: revenueMonth,
@@ -140,7 +140,7 @@ if($('#revenue_line_facility').length > 0) {
             hideHover: 'auto',
         });
     }
-if($('#revenue_line_other').length > 0) {
+if($('#revenue_line_other')) {
         Morris.Line({
             element: 'revenue_line_other',
             data: revenueMonth,
