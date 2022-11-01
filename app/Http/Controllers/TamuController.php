@@ -786,27 +786,26 @@ class TamuController extends Controller
         return redirect()->route('daftar-tamu');
     }
 
-    public function update_kupon(Request $request, $id)
+    public function update_kupon(Request $request, $id, Loglimit $log_limit)
     {
         try {
+            $visitor = Visitor::find($id);
             $visitor = LogLimit::join('visitors', 'log_limits.visitor_id', '=', 'visitors.id')->where('log_limits.visitor_id', $id)->first();
-            // $log_limit = LogLimit::where('visitor_id', $id)->first();
-            $log_limit = LogLimit::find($id)->first();
+            $log_limit = LogLimit::where('visitor_id', $id)->first();
             $log_limit->quota_kupon = $request->quota_kupon + $log_limit->quota_kupon;
-            $log_limit->save();
+            // dd($log_limit);
+            // $log_limit->save();
             // dd($log_limit);
 
             //notifikasi email
-            // $log_limit = LogLimit::where('visitor_id', $id)->first();
-            $log_limit = LogLimit::find($id)->first();
+            $log_limit = LogLimit::where('visitor_id', $id)->first();
             $data = $request->all();
-            $datav = Visitor::find($id);    
+            $datav = Visitor::find($id);
             $data['name'] = $datav->name;
             $data['tambahkupon'] = $request->quota_kupon;
             $data['sebelumkupon'] = $log_limit->quota_kupon - $request->quota_kupon;
             $data['setelahkupon'] = $log_limit->quota_kupon;
             $data['quota'] = $log_limit->quota;
-            // $data['quota'] = $request->quota;
             $data['quota_kupon'] = $log_limit->quota_kupon;
             $data['email'] = $visitor->email;
             dispatch(new SendMailJobKuponTambah($data));
@@ -820,7 +819,6 @@ class TamuController extends Controller
             ReportLimit::create([
                 'report_quota_kupon' => $log_limit->quota_kupon,
                 'report_quota' => $log_limit->quota,
-                // 'report_quota' => $request->quota,
                 'visitor_id' => $id,
                 'user_id' => Auth::id(),
                 'status' => 'Bertambah',
