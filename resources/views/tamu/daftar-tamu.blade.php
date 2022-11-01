@@ -29,7 +29,7 @@
                             </div>
                             <div class="pull-left">
                                 {{-- <h6 class="panel-title txt-dark">Daftar Tamu</h6> --}}
-                                <a href="{{ route('tambah-tamu') }}" class="btn btn-xs btn-success">Tambah
+                                <a href="{{ route('tambah-tamu') }}" class="btn btn-xs btn-success" >Tambah
                                     Tamu</a>
                             </div>
                             @if (auth()->user()->role_id == '2')

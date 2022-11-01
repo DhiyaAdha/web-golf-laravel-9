@@ -122,6 +122,22 @@
                                 <h6 class="pannel-title text-dark">Revenue Trendline 7 Hari Terakhir</h6>
                             </div>
                             <div class="pull-right">
+                                <div class="pull-right">
+                                    <ul role="tablist" class="nav nav-pills nav-pills-rounded" id="myTabs_6">
+                                        <li class="active" role="presentation"><a aria-expanded="true" data-toggle="tab"
+                                                role="tab" id="home_tab_6" href="#statistic_revenue_bar"
+                                                style="padding: 2px 20px;">All</a></li>
+                                        <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_6"
+                                                role="tab" href="" aria-expanded="false"
+                                                style="padding: 2px 20px;">Permainan</a></li>
+                                        <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_6"
+                                                role="tab" href="" aria-expanded="false"
+                                                style="padding: 2px 20px;">Proshop & Fasilitas</a></li>
+                                        <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_6"
+                                                role="tab" href="" aria-expanded="false"
+                                                style="padding: 2px 20px;">Kantin</a></li>
+                                    </ul>
+                                </div>
                                 {{-- <div class="dropdown">
                                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
                                         aria-expanded="true" onclick="changediv()">
@@ -137,14 +153,14 @@
                                         <li><a href="#">Kantin</a></li>
                                     </ul>
                                 </div> --}}
-                                <div class="ui-widget">
+                                {{-- <div class="ui-widget">
                                     <select id="filter-week">
                                         <option value="revenue_bar">All Revenue</option>
                                         <option value="revenue_bar_game">Permainan</option>
                                         <option value="revenue_bar_facility">Fasilitas</option>
                                         <option value="revenue_bar_other">Kantin</option>
                                     </select>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="clearfix"></div>
                             <hr class="light-grey-hr row mt-20 mb-15 mb-10" />
@@ -170,20 +186,21 @@
             requestData(week);
         });
 
-        function requestData(week){
+        function requestData(week) {
             $.ajax({
                 async: true,
                 type: 'GET',
-                url: "{{ route('revenue.index') }}", 
-                data: { week: week }
-            }).done(function( data ) {
+                url: "{{ route('revenue.index') }}",
+                data: {
+                    week: week
+                }
+            }).done(function(data) {
                 console.log(week)
                 // revenueBar.setData(JSON.parse(data));
             }).fail(function() {
-                alert( "error occured" );
+                alert("error occured");
             });
         }
     </script>
     <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
-   
 @endpush
