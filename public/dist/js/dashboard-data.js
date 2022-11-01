@@ -19,6 +19,7 @@ $(document).ready(function () {
         barGap: 4,
         gridTextColor:'#878787',
         gridTextFamily:"Roboto",
+        barSize: 30,
     });
 
     barChart.options.labels.forEach(function(label, i) {
@@ -67,6 +68,7 @@ $(document).ready(function () {
         pointFillColors:['#ffffff'],
         pointStrokeColors: ['black'],
         barColors:['#e60049','#9b19f5','#ffa300','#dc0ab4','#00b7c7'],
+        barSize: 30,
     });
 
     stackedBar.options.labels.forEach(function(label, i) {
