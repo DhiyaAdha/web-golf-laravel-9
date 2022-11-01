@@ -124,16 +124,16 @@
                             <div class="pull-right">
                                 <div class="pull-right">
                                     <ul role="tablist" class="nav nav-pills nav-pills-rounded" id="myTabs_6">
-                                        <li class="active" role="presentation">
+                                        <li class="active" role="presentation" id="a">
                                             <a data-toggle="tab" role="tab" href="#all" aria-expanded="true">All</a>
                                         </li>
-                                        <li role="presentation" class="">
+                                        <li role="presentation" class="" id="b">
                                             <a data-toggle="tab" role="tab" href="#game" aria-expanded="true">Permainan</a>
                                         </li>
-                                        <li role="presentation" class="">
+                                        <li role="presentation" class="" id="c">
                                             <a data-toggle="tab" role="tab" href="#facility" aria-expanded="true">Proshop & Fasilitas</a>
                                         </li>
-                                        <li role="presentation" class="">
+                                        <li role="presentation" class="" id="d">
                                             <a data-toggle="tab" role="tab" href="#other" aria-expanded="true">Kantin</a>
                                         </li>
                                     </ul>
@@ -151,21 +151,21 @@
                                         </div>
                                     </div>
 
-                                    <div id="game" class="tab-pane fade" role="tabpanel">
+                                    <div id="game" class="tab-pane fade active in" role="tabpanel">
                                         <div class="panel-body">
-                                            <div id="revenue_bar_game" class="morris-chart"></div>
+                                            <div id="revenue_bar_game" class="morris-chart" style="display: none"></div>
                                         </div>
                                     </div>
 
-                                    <div id="facility" class="tab-pane fade" role="tabpanel">
+                                    <div id="facility" class="tab-pane fade active in" role="tabpanel">
                                         <div class="panel-body">
-                                            <div id="revenue_bar_facility" class="morris-chart"></div>
+                                            <div id="revenue_bar_facility" class="morris-chart" style="display: none"></div>
                                         </div>
                                     </div>
 
-                                    <div id="other" class="tab-pane fade" role="tabpanel">
+                                    <div id="other" class="tab-pane fade active in" role="tabpanel">
                                         <div class="panel-body">
-                                            <div id="revenue_bar_other" class="morris-chart"></div>
+                                            <div id="revenue_bar_other" class="morris-chart" style="display: none"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -185,16 +185,16 @@
                             <div class="pull-right">
                                 <div class="pull-right">
                                     <ul role="tablist" class="nav nav-pills nav-pills-rounded" id="myTabs_7">
-                                        <li class="active" role="presentation">
+                                        <li class="active" role="presentation" id="e">
                                             <a data-toggle="tab" role="tab" href="#all_line" aria-expanded="true">All</a>
                                         </li>
-                                        <li role="presentation" class="">
+                                        <li role="presentation" class="" id="f">
                                             <a data-toggle="tab" role="tab" href="#game_line" aria-expanded="true">Permainan</a>
                                         </li>
-                                        <li role="presentation" class="">
+                                        <li role="presentation" class="" id="g">
                                             <a data-toggle="tab" role="tab" href="#facility_line" aria-expanded="true">Proshop & Fasilitas</a>
                                         </li>
-                                        <li role="presentation" class="">
+                                        <li role="presentation" class="" id="h">
                                             <a data-toggle="tab" role="tab" href="#other_line" aria-expanded="true">Kantin</a>
                                         </li>
                                     </ul>
@@ -212,21 +212,21 @@
                                         </div>
                                     </div>
 
-                                    <div id="game_line" class="tab-pane fade" role="tabpanel">
+                                    <div id="game_line" class="tab-pane fade active in" role="tabpanel">
                                         <div class="panel-body">
-                                            <div id="revenue_line_game" class="morris-chart"></div>
+                                            <div id="revenue_line_game" class="morris-chart" style="display: none"></div>
                                         </div>
                                     </div>
 
-                                    <div id="facility_line" class="tab-pane fade" role="tabpanel">
+                                    <div id="facility_line" class="tab-pane fade active in" role="tabpanel">
                                         <div class="panel-body">
-                                            <div id="revenue_line_facility" class="morris-chart"></div>
+                                            <div id="revenue_line_facility" class="morris-chart" style="display: none"></div>
                                         </div>
                                     </div>
 
-                                    <div id="other_line" class="tab-pane fade" role="tabpanel">
+                                    <div id="other_line" class="tab-pane fade active in" role="tabpanel">
                                         <div class="panel-body">
-                                            <div id="revenue_line_other" class="morris-chart"></div>
+                                            <div id="revenue_line_other" class="morris-chart" style="display: none"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -244,5 +244,24 @@
     <script>
         var revenueWeek = {!! json_encode($revenue_daily) !!}
         var revenueMonth = {!! json_encode($revenue) !!}
+
+        $('#b').click(function() {
+            document.getElementById('revenue_bar_game').style = 'display:visible;';
+        });
+        $('#c').click(function() {
+            document.getElementById('revenue_bar_facility').style = 'display:visible;';
+        });
+        $('#d').click(function() {
+            document.getElementById('revenue_bar_other').style = 'display:visible;';
+        });
+        $('#f').click(function() {
+            document.getElementById('revenue_line_game').style = 'display:visible;';
+        });
+        $('#g').click(function() {
+            document.getElementById('revenue_line_facility').style = 'display:visible;';
+        });
+        $('#h').click(function() {
+            document.getElementById('revenue_line_other').style = 'display:visible;';
+        });
     </script>
 @endpush
