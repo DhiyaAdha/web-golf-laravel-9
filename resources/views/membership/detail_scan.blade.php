@@ -228,7 +228,7 @@
             swal({
                 title: "",
                 type: "error",
-                text: "Member sudah kadaluarsa",
+                text: "Member sudah habis",
                 confirmButtonColor: "#01c853",
             });
             sword();

@@ -109,6 +109,8 @@ class TamuController extends Controller
                 }
             })->editColumn('tipe_member', function ($data) {
                 return $data->tipe_member;
+            })->editColumn('expired_date', function ($data) {
+                return Carbon::parse($data->expired_date)->translatedFormat('d F Y');
             })->editColumn('qrcode', function ($data) {
                 return '<a href="' . url('kartu-tamu/' . $data->id) . '">' . $data->name . '</a>';
             })->rawColumns(['qrcode', 'action'])->make(true);

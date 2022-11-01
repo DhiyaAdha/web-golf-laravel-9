@@ -521,7 +521,7 @@ class OrderController extends Controller
             } else {
                 if ($req->get('type_single') == 4) {
                     if($visitor->expired_date <= Carbon::now()) {
-                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                        $this->setResponse('INVALID', "Masa berlaku member habis");
                         return response()->json($this->getResponse());
                     } else if($visitor->status == 'inactive') {
                         $this->setResponse('INVALID', "Member tidak aktif");
@@ -610,7 +610,7 @@ class OrderController extends Controller
                     }
                 } else if ($req->get('type_single') == 3) {
                     if($visitor->expired_date <= Carbon::now()) {
-                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                        $this->setResponse('INVALID', "Masa berlaku member habis");
                         return response()->json($this->getResponse());
                     } else if($visitor->status == 'inactive') {
                         $this->setResponse('INVALID', "Member tidak aktif");
@@ -694,7 +694,7 @@ class OrderController extends Controller
                     }
                 } else if ($req->get('type_single') == 2) {
                     if($visitor->expired_date <= Carbon::now()) {
-                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                        $this->setResponse('INVALID', "Masa berlaku member habis");
                         return response()->json($this->getResponse());
                     } else if($visitor->status == 'inactive') {
                         $this->setResponse('INVALID', "Member tidak aktif");
@@ -810,7 +810,7 @@ class OrderController extends Controller
                     }
                 } else {
                     if($visitor->expired_date <= Carbon::now()) {
-                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                        $this->setResponse('INVALID', "Masa berlaku member habis");
                         return response()->json($this->getResponse());
                     } else if($visitor->status == 'inactive') {
                         $this->setResponse('INVALID', "Member tidak aktif");
@@ -935,7 +935,7 @@ class OrderController extends Controller
                     if(count($req->get('type_multiple')) == 1) {
                         if ($req->get('type_multiple')[0] == 'deposit') {
                             if($visitor->expired_date <= Carbon::now()) {
-                                $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                $this->setResponse('INVALID', "Masa berlaku member habis");
                                 return response()->json($this->getResponse());
                             } else if($visitor->status == 'inactive') {
                                 $this->setResponse('INVALID', "Member tidak aktif");
@@ -992,7 +992,7 @@ class OrderController extends Controller
                             }
                         } else if ($req->get('type_multiple')[0] == 'cash/transfer') {
                             if($visitor->expired_date <= Carbon::now()) {
-                                $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                $this->setResponse('INVALID', "Masa berlaku member habis");
                                 return response()->json($this->getResponse());
                             } else if($visitor->status == 'inactive') {
                                 $this->setResponse('INVALID', "Member tidak aktif");
@@ -1092,7 +1092,7 @@ class OrderController extends Controller
                             }
                         } else if ($req->get('type_multiple')[0] == 'kupon') {
                             if($visitor->expired_date <= Carbon::now()) {
-                                $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                $this->setResponse('INVALID', "Masa berlaku member habis");
                                 return response()->json($this->getResponse());
                             } else if($visitor->status == 'inactive') {
                                 $this->setResponse('INVALID', "Member tidak aktif");
@@ -1154,7 +1154,7 @@ class OrderController extends Controller
                             }
                         } else if ($req->get('type_multiple')[0] == 'limit') {
                             if($visitor->expired_date <= Carbon::now()) {
-                                $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                $this->setResponse('INVALID', "Masa berlaku member habis");
                                 return response()->json($this->getResponse());
                             } else if($visitor->status == 'inactive') {
                                 $this->setResponse('INVALID', "Member tidak aktif");
@@ -1219,7 +1219,7 @@ class OrderController extends Controller
                         if($req->get('type_multiple')[0] == 'deposit') {
                             if($req->get('type_multiple')[1] == 'cash/transfer') {
                                 if($visitor->expired_date <= Carbon::now()) {
-                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    $this->setResponse('INVALID', "Masa berlaku member habis");
                                     return response()->json($this->getResponse());
                                 } else if($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', "Member tidak aktif");
@@ -1333,7 +1333,7 @@ class OrderController extends Controller
                                 }
                             } else if ($req->get('type_multiple')[1] == 'kupon') {
                                 if($visitor->expired_date <= Carbon::now()) {
-                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    $this->setResponse('INVALID', "Masa berlaku member habis");
                                     return response()->json($this->getResponse());
                                 } else if($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', "Member tidak aktif");
@@ -1401,7 +1401,7 @@ class OrderController extends Controller
                                 }
                             } else if ($req->get('type_multiple')[1] == 'limit') {
                                 if($visitor->expired_date <= Carbon::now()) {
-                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    $this->setResponse('INVALID', "Masa berlaku member habis");
                                     return response()->json($this->getResponse());
                                 } else if($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', "Member tidak aktif");
@@ -1471,7 +1471,7 @@ class OrderController extends Controller
                         } else if($req->get('type_multiple')[0] == 'cash/transfer') {
                             if($req->get('type_multiple')[1] == 'kupon') {
                                 if($visitor->expired_date <= Carbon::now()) {
-                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    $this->setResponse('INVALID', "Masa berlaku member habis");
                                     return response()->json($this->getResponse());
                                 } else if($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', "Member tidak aktif");
@@ -1536,7 +1536,7 @@ class OrderController extends Controller
                                 }
                             } else if($req->get('type_multiple')[1] == 'limit') {
                                 if($visitor->expired_date <= Carbon::now()) {
-                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    $this->setResponse('INVALID', "Masa berlaku member habis");
                                     return response()->json($this->getResponse());
                                 } else if($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', "Member tidak aktif");
@@ -1605,7 +1605,7 @@ class OrderController extends Controller
                         $remaining_balance = $totalPrice - $price_single;
                         if($req->get('type_multiple')[2] == 'kupon') {
                             if($visitor->expired_date <= Carbon::now()) {
-                                $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                $this->setResponse('INVALID', "Masa berlaku member habis");
                                 return response()->json($this->getResponse());
                             } else if($visitor->status == 'inactive') {
                                 $this->setResponse('INVALID', "Member tidak aktif");
@@ -1732,7 +1732,7 @@ class OrderController extends Controller
                             }
                         } else if ($req->get('type_multiple')[2] == 'limit') {
                             if($visitor->expired_date <= Carbon::now()) {
-                                $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                $this->setResponse('INVALID', "Masa berlaku member habis");
                                 return response()->json($this->getResponse());
                             } else if($visitor->status == 'inactive') {
                                 $this->setResponse('INVALID', "Member tidak aktif");
@@ -1864,7 +1864,7 @@ class OrderController extends Controller
                         if(count($req->get('type_multiple')) == 1) {
                             if ($req->get('type_multiple')[0] == 'deposit') {
                                 if($visitor->expired_date <= Carbon::now()) {
-                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    $this->setResponse('INVALID', "Masa berlaku member habis");
                                     return response()->json($this->getResponse());
                                 } else if($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', "Member tidak aktif");
@@ -1877,7 +1877,7 @@ class OrderController extends Controller
                                 }
                             } else if ($req->get('type_multiple')[0] == 'cash/transfer') {
                                 if($visitor->expired_date <= Carbon::now()) {
-                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    $this->setResponse('INVALID', "Masa berlaku member habis");
                                     return response()->json($this->getResponse());
                                 } else if($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', "Member tidak aktif");
@@ -1977,7 +1977,7 @@ class OrderController extends Controller
                                 }
                             } else if($req->get('type_multiple')[0] == 'kupon') {
                                 if($visitor->expired_date <= Carbon::now()) {
-                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    $this->setResponse('INVALID', "Masa berlaku member habis");
                                     return response()->json($this->getResponse());
                                 } else if($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', "Member tidak aktif");
@@ -2039,7 +2039,7 @@ class OrderController extends Controller
                                 }
                             } else if($req->get('type_multiple')[0] == 'limit') {
                                 if($visitor->expired_date <= Carbon::now()) {
-                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    $this->setResponse('INVALID', "Masa berlaku member habis");
                                     return response()->json($this->getResponse());
                                 } else if($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', "Member tidak aktif");
@@ -2104,7 +2104,7 @@ class OrderController extends Controller
                             if($req->get('type_multiple')[0] == 'deposit') {
                                 if($req->get('type_multiple')[1] == 'cash/transfer') {
                                     if($visitor->expired_date <= Carbon::now()) {
-                                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                        $this->setResponse('INVALID', "Masa berlaku member habis");
                                         return response()->json($this->getResponse());
                                     } else if($visitor->status == 'inactive') {
                                         $this->setResponse('INVALID', "Member tidak aktif");
@@ -2222,7 +2222,7 @@ class OrderController extends Controller
                                 } else if($req->get('type_multiple')[1] == 'kupon') {
                                     $remaining_balance = $totalPrice - $deposit->balance;
                                     if($visitor->expired_date <= Carbon::now()) {
-                                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                        $this->setResponse('INVALID', "Masa berlaku member habis");
                                         return response()->json($this->getResponse());
                                     } else if($visitor->status == 'inactive') {
                                         $this->setResponse('INVALID', "Member tidak aktif");
@@ -2300,7 +2300,7 @@ class OrderController extends Controller
                                 } else if($req->get('type_multiple')[1] == 'limit') {
                                     $remaining_balance = $totalPrice - $deposit->balance;
                                     if($visitor->expired_date <= Carbon::now()) {
-                                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                        $this->setResponse('INVALID', "Masa berlaku member habis");
                                         return response()->json($this->getResponse());
                                     } else if($visitor->status == 'inactive') {
                                         $this->setResponse('INVALID', "Member tidak aktif");
@@ -2379,7 +2379,7 @@ class OrderController extends Controller
                             } else if($req->get('type_multiple')[0] == 'cash/transfer') {
                                 if($req->get('type_multiple')[1] == 'kupon') {
                                     if($visitor->expired_date <= Carbon::now()) {
-                                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                        $this->setResponse('INVALID', "Masa berlaku member habis");
                                         return response()->json($this->getResponse());
                                     } else if($visitor->status == 'inactive') {
                                         $this->setResponse('INVALID', "Member tidak aktif");
@@ -2497,7 +2497,7 @@ class OrderController extends Controller
                                     }
                                 } else if($req->get('type_multiple')[1] == 'limit') {
                                     if($visitor->expired_date <= Carbon::now()) {
-                                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                        $this->setResponse('INVALID', "Masa berlaku member habis");
                                         return response()->json($this->getResponse());
                                     } else if($visitor->status == 'inactive') {
                                         $this->setResponse('INVALID', "Member tidak aktif");
@@ -2622,7 +2622,7 @@ class OrderController extends Controller
                             $deposit->balance = $deposit->balance - $deposit->balance;
                             if($req->get('type_multiple')[2] == 'kupon') {
                                 if($visitor->expired_date <= Carbon::now()) {
-                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    $this->setResponse('INVALID', "Masa berlaku member habis");
                                     return response()->json($this->getResponse());
                                 } else if($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', "Member tidak aktif");
@@ -2701,7 +2701,7 @@ class OrderController extends Controller
                                 }
                             } else if($req->get('type_multiple')[2] == 'limit') {
                                 if($visitor->expired_date <= Carbon::now()) {
-                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    $this->setResponse('INVALID', "Masa berlaku member habis");
                                     return response()->json($this->getResponse());
                                 } else if($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', "Member tidak aktif");
@@ -2784,7 +2784,7 @@ class OrderController extends Controller
                         if(count($req->get('type_multiple')) == 1) {
                             if ($req->get('type_multiple')[0] == 'deposit') {
                                 if($visitor->expired_date <= Carbon::now()) {
-                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    $this->setResponse('INVALID', "Masa berlaku member habis");
                                     return response()->json($this->getResponse());
                                 } else if($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', "Member tidak aktif");
@@ -2841,7 +2841,7 @@ class OrderController extends Controller
                                 }
                             } else if ($req->get('type_multiple')[0] == 'cash/transfer') {
                                 if($visitor->expired_date <= Carbon::now()) {
-                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    $this->setResponse('INVALID', "Masa berlaku member habis");
                                     return response()->json($this->getResponse());
                                 } else if($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', "Member tidak aktif");
@@ -2941,7 +2941,7 @@ class OrderController extends Controller
                                 }
                             } else if ($req->get('type_multiple')[0] == 'kupon') {
                                 if($visitor->expired_date <= Carbon::now()) {
-                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    $this->setResponse('INVALID', "Masa berlaku member habis");
                                     return response()->json($this->getResponse());
                                 } else if($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', "Member tidak aktif");
@@ -3003,7 +3003,7 @@ class OrderController extends Controller
                                 }
                             } else if ($req->get('type_multiple')[0] == 'limit') {
                                 if($visitor->expired_date <= Carbon::now()) {
-                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    $this->setResponse('INVALID', "Masa berlaku member habis");
                                     return response()->json($this->getResponse());
                                 } else if($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', "Member tidak aktif");
@@ -3068,7 +3068,7 @@ class OrderController extends Controller
                             if($req->get('type_multiple')[0] == 'deposit') {
                                 if($req->get('type_multiple')[1] == 'cash/transfer') {
                                     if($visitor->expired_date <= Carbon::now()) {
-                                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                        $this->setResponse('INVALID', "Masa berlaku member habis");
                                         return response()->json($this->getResponse());
                                     } else if($visitor->status == 'inactive') {
                                         $this->setResponse('INVALID', "Member tidak aktif");
@@ -3182,7 +3182,7 @@ class OrderController extends Controller
                                     }
                                 } else if ($req->get('type_multiple')[1] == 'kupon') {
                                     if($visitor->expired_date <= Carbon::now()) {
-                                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                        $this->setResponse('INVALID', "Masa berlaku member habis");
                                         return response()->json($this->getResponse());
                                     } else if($visitor->status == 'inactive') {
                                         $this->setResponse('INVALID', "Member tidak aktif");
@@ -3251,7 +3251,7 @@ class OrderController extends Controller
                                     }
                                 } else if ($req->get('type_multiple')[1] == 'limit') {
                                     if($visitor->expired_date <= Carbon::now()) {
-                                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                        $this->setResponse('INVALID', "Masa berlaku member habis");
                                         return response()->json($this->getResponse());
                                     } else if($visitor->status == 'inactive') {
                                         $this->setResponse('INVALID', "Member tidak aktif");
@@ -3322,7 +3322,7 @@ class OrderController extends Controller
                             } else if($req->get('type_multiple')[0] == 'cash/transfer') {
                                 if($req->get('type_multiple')[1] == 'kupon') {
                                     if($visitor->expired_date <= Carbon::now()) {
-                                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                        $this->setResponse('INVALID', "Masa berlaku member habis");
                                         return response()->json($this->getResponse());
                                     } else if($visitor->status == 'inactive') {
                                         $this->setResponse('INVALID', "Member tidak aktif");
@@ -3387,7 +3387,7 @@ class OrderController extends Controller
                                     }
                                 } else if($req->get('type_multiple')[1] == 'limit') {
                                     if($visitor->expired_date <= Carbon::now()) {
-                                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                        $this->setResponse('INVALID', "Masa berlaku member habis");
                                         return response()->json($this->getResponse());
                                     } else if($visitor->status == 'inactive') {
                                         $this->setResponse('INVALID', "Member tidak aktif");
@@ -3456,7 +3456,7 @@ class OrderController extends Controller
                             $remaining_balance = $totalPrice - $price_single;
                             if($req->get('type_multiple')[2] == 'kupon') {
                                 if($visitor->expired_date <= Carbon::now()) {
-                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    $this->setResponse('INVALID', "Masa berlaku member habis");
                                     return response()->json($this->getResponse());
                                 } else if($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', "Member tidak aktif");
@@ -3583,7 +3583,7 @@ class OrderController extends Controller
                                 }
                             } else if ($req->get('type_multiple')[2] == 'limit') {
                                 if($visitor->expired_date <= Carbon::now()) {
-                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    $this->setResponse('INVALID', "Masa berlaku member habis");
                                     return response()->json($this->getResponse());
                                 } else if($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', "Member tidak aktif");

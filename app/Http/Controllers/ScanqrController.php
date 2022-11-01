@@ -139,7 +139,7 @@ class ScanqrController extends Controller
                 return response()->json($this->getResponse());
             } else {
                 if($get_visitor->expired_date <= Carbon::now()) {
-                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                    $this->setResponse('INVALID', "Masa berlaku member habis");
                     return response()->json($this->getResponse());
                 } else if($get_visitor->status == 'inactive') {
                     $this->setResponse('INVALID', "Member tidak aktif");
@@ -168,7 +168,7 @@ class ScanqrController extends Controller
                 return response()->json($this->getResponse());
             } else {
                 if($phone_visitor->expired_date <= Carbon::now()) {
-                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                    $this->setResponse('INVALID', "Masa berlaku member habis");
                     return response()->json($this->getResponse());
                 } else if($phone_visitor->status == 'inactive') {
                     $this->setResponse('INVALID', "Member tidak aktif");
