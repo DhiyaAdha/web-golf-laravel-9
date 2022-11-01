@@ -125,16 +125,16 @@
                                 <div class="pull-right">
                                     <ul role="tablist" class="nav nav-pills nav-pills-rounded" id="myTabs_6">
                                         <li class="active" role="presentation"><a aria-expanded="true" data-toggle="tab"
-                                                role="tab" id="home_tab_6" href="#revenue_bar"
+                                                role="tab" id="home_tab_6" href="#1"
                                                 style="padding: 2px 20px;">All</a></li>
                                         <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_6"
-                                                role="tab" href="#revenue_bar_game" aria-expanded="false"
+                                                role="tab" href="#2" aria-expanded="false"
                                                 style="padding: 2px 20px;">Permainan</a></li>
                                         <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_6"
-                                                role="tab" href="#revenue_bar_facility" aria-expanded="false"
+                                                role="tab" href="#3" aria-expanded="false"
                                                 style="padding: 2px 20px;">Proshop & Fasilitas</a></li>
                                         <li role="presentation" class=""><a data-toggle="tab"
-                                                id="profile_tab_6" role="tab" href="#revenue_bar_other"
+                                                id="profile_tab_6" role="tab" href="#4"
                                                 aria-expanded="false" style="padding: 2px 20px;">Kantin</a></li>
                                     </ul>
                                 </div>
@@ -142,7 +142,43 @@
                             <div class="clearfix"></div>
                             <hr class="light-grey-hr row mt-20 mb-15 mb-10" />
                         </div>
+
                         <div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+                                <div class="pills-struct">
+                                    <div class="tab-content" id="myTabContent_6">
+                                        <div class="tab-pane fade active in" id="1" role="tabpanel">
+                                            <div class="panel-body">
+                                                <div id="revenue_bar" class="morris-chart"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane fade active in" id="2" role="tabpanel">
+                                            <div class="panel-body">
+                                                <div id="revenue_bar_game" class="morris-chart"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane fade active in" id="3" role="tabpanel">
+                                            <div class="panel-body">
+                                                <div id="revenue_bar_facility" class="morris-chart"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane fade active in" id="4" role="tabpanel">
+                                            <div class="panel-body">
+                                                <div id="revenue_bar_other" class="morris-chart"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        
+                        {{-- <div class="panel-wrapper collapse in">
                             <div class="panel-body">
                                 <div id="revenue_bar" class="morris-chart"></div>
                             </div>
@@ -161,7 +197,7 @@
                             <div class="panel-body">
                                 <div id="revenue_bar_other" class="morris-chart"></div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -180,7 +216,7 @@
                                         <option value="revenue_line_facility">Fasilitas</option>
                                         <option value="revenue_line_other">Kantin</option>
                                     </select>
-                                </div> --}}
+                                </div>
                             </div>
                             <div class="clearfix"></div>
                             <hr class="light-grey-hr row mt-20 mb-15 mb-10" />
