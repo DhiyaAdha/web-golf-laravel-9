@@ -113,7 +113,7 @@
                     </div>
                 </div>
             </div>
-
+            {{-- Start Trendline --}}
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default card-view">
@@ -124,18 +124,18 @@
                             <div class="pull-right">
                                 <div class="pull-right">
                                     <ul role="tablist" class="nav nav-pills nav-pills-rounded" id="myTabs_6">
-                                        <li class="active" role="presentation"><a aria-expanded="true" data-toggle="tab"
-                                                role="tab" id="home_tab_6" href="#1"
-                                                style="padding: 2px 20px;">All</a></li>
-                                        <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_6"
-                                                role="tab" href="#2" aria-expanded="false"
-                                                style="padding: 2px 20px;">Permainan</a></li>
-                                        <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_6"
-                                                role="tab" href="#3" aria-expanded="false"
-                                                style="padding: 2px 20px;">Proshop & Fasilitas</a></li>
-                                        <li role="presentation" class=""><a data-toggle="tab"
-                                                id="profile_tab_6" role="tab" href="#4"
-                                                aria-expanded="false" style="padding: 2px 20px;">Kantin</a></li>
+                                        <li class="active" role="presentation" id="a">
+                                            <a data-toggle="tab" role="tab" href="#all" aria-expanded="true">All</a>
+                                        </li>
+                                        <li role="presentation" class="" id="b">
+                                            <a data-toggle="tab" role="tab" href="#game" aria-expanded="true">Permainan</a>
+                                        </li>
+                                        <li role="presentation" class="" id="c">
+                                            <a data-toggle="tab" role="tab" href="#facility" aria-expanded="true">Proshop & Fasilitas</a>
+                                        </li>
+                                        <li role="presentation" class="" id="d">
+                                            <a data-toggle="tab" role="tab" href="#other" aria-expanded="true">Kantin</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -145,62 +145,37 @@
 
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
-                                <div class="pills-struct">
-                                    <div class="tab-content" id="myTabContent_6">
-                                        <div class="tab-pane fade active in" id="1" role="tabpanel">
-                                            <div class="panel-body">
-                                                <div id="revenue_bar" class="morris-chart"></div>
-                                            </div>
+                                <div class="tab-content">
+                                    <div id="all" class="tab-pane fade active in" role="tabpanel">
+                                        <div class="panel-body">
+                                            <div id="revenue_bar" class="morris-chart"></div>
                                         </div>
+                                    </div>
 
-                                        <div class="tab-pane fade active in" id="2" role="tabpanel">
-                                            <div class="panel-body">
-                                                <div id="revenue_bar_game" class="morris-chart"></div>
-                                            </div>
+                                    <div id="game" class="tab-pane fade active in" role="tabpanel">
+                                        <div class="panel-body">
+                                            <div id="revenue_bar_game" class="morris-chart" style="display: none"></div>
                                         </div>
+                                    </div>
 
-                                        <div class="tab-pane fade active in" id="3" role="tabpanel">
-                                            <div class="panel-body">
-                                                <div id="revenue_bar_facility" class="morris-chart"></div>
-                                            </div>
+                                    <div id="facility" class="tab-pane fade active in" role="tabpanel">
+                                        <div class="panel-body">
+                                            <div id="revenue_bar_facility" class="morris-chart" style="display: none"></div>
                                         </div>
+                                    </div>
 
-                                        <div class="tab-pane fade active in" id="4" role="tabpanel">
-                                            <div class="panel-body">
-                                                <div id="revenue_bar_other" class="morris-chart"></div>
-                                            </div>
+                                    <div id="other" class="tab-pane fade active in" role="tabpanel">
+                                        <div class="panel-body">
+                                            <div id="revenue_bar_other" class="morris-chart" style="display: none"></div>
                                         </div>
-
                                     </div>
                                 </div>
-
                             </div>
-                        </div>
-
-                        
-                        {{-- <div class="panel-wrapper collapse in">
-                            <div class="panel-body">
-                                <div id="revenue_bar" class="morris-chart"></div>
-                            </div>
-                        </div>
-                        <div class="panel-wrapper collapse in">
-                            <div class="panel-body">
-                                <div id="revenue_bar_game" class="morris-chart"></div>
-                            </div>
-                        </div>
-                        <div class="panel-wrapper collapse in">
-                            <div class="panel-body">
-                                <div id="revenue_bar_facility" class="morris-chart"></div>
-                            </div>
-                        </div>
-                        <div class="panel-wrapper collapse in">
-                            <div class="panel-body">
-                                <div id="revenue_bar_other" class="morris-chart"></div>
-                            </div>
-                        </div> --}}
+                        </div> 
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default card-view">
@@ -209,13 +184,21 @@
                                 <h6 class="pannel-title text-dark">Revenue Trendline 12 Bulan Terakhir</h6>
                             </div>
                             <div class="pull-right">
-                                <div class="ui-widget">
-                                    <select id="filter-week">
-                                        <option value="revenue_line">All Revenue</option>
-                                        <option value="revenue_line_game">Permainan</option>
-                                        <option value="revenue_line_facility">Fasilitas</option>
-                                        <option value="revenue_line_other">Kantin</option>
-                                    </select>
+                                <div class="pull-right">
+                                    <ul role="tablist" class="nav nav-pills nav-pills-rounded" id="myTabs_7">
+                                        <li class="active" role="presentation" id="e">
+                                            <a data-toggle="tab" role="tab" href="#all_line" aria-expanded="true">All</a>
+                                        </li>
+                                        <li role="presentation" class="" id="f">
+                                            <a data-toggle="tab" role="tab" href="#game_line" aria-expanded="true">Permainan</a>
+                                        </li>
+                                        <li role="presentation" class="" id="g">
+                                            <a data-toggle="tab" role="tab" href="#facility_line" aria-expanded="true">Proshop & Fasilitas</a>
+                                        </li>
+                                        <li role="presentation" class="" id="h">
+                                            <a data-toggle="tab" role="tab" href="#other_line" aria-expanded="true">Kantin</a>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
@@ -223,7 +206,31 @@
                         </div>
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
-                                <div id="statistic_revenue_line" class="morris-chart"></div>
+                                <div class="tab-content">
+                                    <div id="all_line" class="tab-pane fade active in" role="tabpanel">
+                                        <div class="panel-body">
+                                            <div id="revenue_line" class="morris-chart"></div>
+                                        </div>
+                                    </div>
+
+                                    <div id="game_line" class="tab-pane fade active in" role="tabpanel">
+                                        <div class="panel-body">
+                                            <div id="revenue_line_game" class="morris-chart" style="display: none"></div>
+                                        </div>
+                                    </div>
+
+                                    <div id="facility_line" class="tab-pane fade active in" role="tabpanel">
+                                        <div class="panel-body">
+                                            <div id="revenue_line_facility" class="morris-chart" style="display: none"></div>
+                                        </div>
+                                    </div>
+
+                                    <div id="other_line" class="tab-pane fade active in" role="tabpanel">
+                                        <div class="panel-body">
+                                            <div id="revenue_line_other" class="morris-chart" style="display: none"></div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -231,11 +238,31 @@
             </div>
         </div>
     </div>
+    {{-- Finish Trendline --}}
 @endsection
 @push('scripts')
     <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
     <script>
         var revenueWeek = {!! json_encode($revenue_daily) !!}
         var revenueMonth = {!! json_encode($revenue) !!}
+
+        $('#b').click(function() {
+            document.getElementById('revenue_bar_game').style = 'display:visible;';
+        });
+        $('#c').click(function() {
+            document.getElementById('revenue_bar_facility').style = 'display:visible;';
+        });
+        $('#d').click(function() {
+            document.getElementById('revenue_bar_other').style = 'display:visible;';
+        });
+        $('#f').click(function() {
+            document.getElementById('revenue_line_game').style = 'display:visible;';
+        });
+        $('#g').click(function() {
+            document.getElementById('revenue_line_facility').style = 'display:visible;';
+        });
+        $('#h').click(function() {
+            document.getElementById('revenue_line_other').style = 'display:visible;';
+        });
     </script>
 @endpush
