@@ -124,21 +124,17 @@
                             <div class="pull-right">
                                 <div class="pull-right">
                                     <ul role="tablist" class="nav nav-pills nav-pills-rounded" id="myTabs_6">
-                                        <li class="active" role="presentation"><a aria-expanded="true" data-toggle="tab"
-                                                role="tab" id="profile_tab_1" href="#1"
-                                                style="padding: 2px 20px;">All</a>
+                                        <li class="active" role="presentation">
+                                            <a data-toggle="tab" role="tab" href="#all" aria-expanded="true">All</a>
                                         </li>
-                                        <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_2"
-                                                role="tab" href="#2" aria-expanded="false"
-                                                style="padding: 2px 20px;">Permainan</a>
+                                        <li role="presentation" class="">
+                                            <a data-toggle="tab" role="tab" href="#game" aria-expanded="true">Permainan</a>
                                         </li>
-                                        <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_3"
-                                                role="tab" href="#3" aria-expanded="false"
-                                                style="padding: 2px 20px;">Proshop & Fasilitas</a>
+                                        <li role="presentation" class="">
+                                            <a data-toggle="tab" role="tab" href="#facility" aria-expanded="true">Proshop & Fasilitas</a>
                                         </li>
-                                        <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_4"
-                                                role="tab" href="#4" aria-expanded="false"
-                                                style="padding: 2px 20px;">Kantin</a>
+                                        <li role="presentation" class="">
+                                            <a data-toggle="tab" role="tab" href="#other" aria-expanded="true">Kantin</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -148,96 +144,89 @@
                         </div>
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
-                                <div class="pills-struct">
-                                    <div class="tab-content" id="myTabContent_1">
-                                        <div class="tab-pane fade active in" id="1" role="tabpanel">
-                                            <div class="panel-body">
-                                                <div id="revenue_bar" class="morris-chart"></div>
-                                            </div>
+                                <div class="tab-content">
+                                    <div id="all" class="tab-pane fade active in" role="tabpanel">
+                                        <div class="panel-body">
+                                            <div id="revenue_bar" class="morris-chart"></div>
                                         </div>
+                                    </div>
 
-                                        <div class="tab-pane fade active in" id="2" role="tabpanel">
-                                            <div class="panel-body">
-                                                <div id="revenue_bar_game" class="morris-chart"></div>
-                                            </div>
+                                    <div id="game" class="tab-pane fade" role="tabpanel">
+                                        <div class="panel-body">
+                                            <div id="revenue_bar_game" class="morris-chart"></div>
                                         </div>
+                                    </div>
 
-                                        <div class="tab-pane fade active in" id="3" role="tabpanel">
-                                            <div class="panel-body">
-                                                <div id="revenue_bar_facility" class="morris-chart"></div>
-                                            </div>
+                                    <div id="facility" class="tab-pane fade" role="tabpanel">
+                                        <div class="panel-body">
+                                            <div id="revenue_bar_facility" class="morris-chart"></div>
                                         </div>
+                                    </div>
 
-                                        <div class="tab-pane fade active in" id="4" role="tabpanel">
-                                            <div class="panel-body">
-                                                <div id="revenue_bar_other" class="morris-chart"></div>
-                                            </div>
+                                    <div id="other" class="tab-pane fade" role="tabpanel">
+                                        <div class="panel-body">
+                                            <div id="revenue_bar_other" class="morris-chart"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="panel panel-default card-view">
-                                    <div class="panel-heading">
-                                        <div class="pull-left">
-                                            <h6 class="pannel-title text-dark">Revenue Trendline 12 Bulan Terakhir</h6>
-                                        </div>
-                                        <div class="pull-right">
-                                            <div class="pull-right">
-                                                <ul role="tablist" class="nav nav-pills nav-pills-rounded"
-                                                    id="myTabs_6">
-                                                    <li class="active" role="presentation"><a aria-expanded="true"
-                                                            data-toggle="tab" role="tab" id="home_tab_6"
-                                                            href="#5" style="padding: 2px 20px;">All</a></li>
-                                                    <li role="presentation" class=""><a data-toggle="tab"
-                                                            id="profile_tab_6" role="tab" href="#6"
-                                                            aria-expanded="false" style="padding: 2px 20px;">Permainan</a>
-                                                    </li>
-                                                    <li role="presentation" class=""><a data-toggle="tab"
-                                                            id="profile_tab_6" role="tab" href="#7"
-                                                            aria-expanded="false" style="padding: 2px 20px;">Proshop &
-                                                            Fasilitas</a></li>
-                                                    <li role="presentation" class=""><a data-toggle="tab"
-                                                            id="profile_tab_6" role="tab" href="#8"
-                                                            aria-expanded="false" style="padding: 2px 20px;">Kantin</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        <hr class="light-grey-hr row mt-20 mb-15 mb-10" />
-                                    </div>
-                                    <div class="panel-wrapper collapse in">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default card-view">
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <h6 class="pannel-title text-dark">Revenue Trendline 12 Bulan Terakhir</h6>
+                            </div>
+                            <div class="pull-right">
+                                <div class="pull-right">
+                                    <ul role="tablist" class="nav nav-pills nav-pills-rounded" id="myTabs_7">
+                                        <li class="active" role="presentation">
+                                            <a data-toggle="tab" role="tab" href="#all_line" aria-expanded="true">All</a>
+                                        </li>
+                                        <li role="presentation" class="">
+                                            <a data-toggle="tab" role="tab" href="#game_line" aria-expanded="true">Permainan</a>
+                                        </li>
+                                        <li role="presentation" class="">
+                                            <a data-toggle="tab" role="tab" href="#facility_line" aria-expanded="true">Proshop & Fasilitas</a>
+                                        </li>
+                                        <li role="presentation" class="">
+                                            <a data-toggle="tab" role="tab" href="#other_line" aria-expanded="true">Kantin</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <hr class="light-grey-hr row mt-20 mb-15 mb-10" />
+                        </div>
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+                                <div class="tab-content">
+                                    <div id="all_line" class="tab-pane fade active in" role="tabpanel">
                                         <div class="panel-body">
-                                            <div class="pills-struct">
-                                                <div class="tab-content" id="myTabContent_2">
-                                                    <div class="tab-pane fade active in" id="5" role="tabpanel">
-                                                        <div class="panel-body">
-                                                            <div id="revenue_line" class="morris-chart"></div>
-                                                        </div>
-                                                    </div>
+                                            <div id="revenue_line" class="morris-chart"></div>
+                                        </div>
+                                    </div>
 
-                                                    <div class="tab-pane fade active in" id="6" role="tabpanel">
-                                                        <div class="panel-body">
-                                                            <div id="revenue_line_game" class="morris-chart"></div>
-                                                        </div>
-                                                    </div>
+                                    <div id="game_line" class="tab-pane fade" role="tabpanel">
+                                        <div class="panel-body">
+                                            <div id="revenue_line_game" class="morris-chart"></div>
+                                        </div>
+                                    </div>
 
-                                                    <div class="tab-pane fade active in" id="7" role="tabpanel">
-                                                        <div class="panel-body">
-                                                            <div id="revenue_line_facility" class="morris-chart"></div>
-                                                        </div>
-                                                    </div>
+                                    <div id="facility_line" class="tab-pane fade" role="tabpanel">
+                                        <div class="panel-body">
+                                            <div id="revenue_line_facility" class="morris-chart"></div>
+                                        </div>
+                                    </div>
 
-                                                    <div class="tab-pane fade active in" id="8" role="tabpanel">
-                                                        <div class="panel-body">
-                                                            <div id="revenue_line_other" class="morris-chart"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                    <div id="other_line" class="tab-pane fade" role="tabpanel">
+                                        <div class="panel-body">
+                                            <div id="revenue_line_other" class="morris-chart"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -255,9 +244,5 @@
     <script>
         var revenueWeek = {!! json_encode($revenue_daily) !!}
         var revenueMonth = {!! json_encode($revenue) !!}
-
-        $(".").click(function() {
-            $("#").show();
-        });
     </script>
 @endpush
