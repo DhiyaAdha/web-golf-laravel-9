@@ -189,7 +189,7 @@
                                             <thead>
                                                 <tr>
                                                     <th class="">NAMA TAMU</th>
-                                                    <th class="">TANGGAL</th>
+                                                    <th class="">Kategori</th>
                                                     <th class="">JENIS TAMU</th>
                                                     <th class="table-th">PUKUL</th>
                                                 </tr>
@@ -236,11 +236,16 @@
             },
 
             "render": $.fn.dataTable.render.text(),
-            "columns": [{
-                    data: 'name'
+            "columns": [
+                {
+                    "data": function(data) {
+                        return `<span class='text-capitalize'>${data.name}</span>`;
+                    }
                 },
                 {
-                    data: 'category'
+                    "data": function(data) {
+                        return `<span class='text-capitalize'>${data.category}</span>`;
+                    }
                 },
                 {
                     "data": function(data) {
@@ -249,7 +254,6 @@
                         } else {
                             return `<span class='label label-warning'>${data.tipe_member == 'VVIP' ? 'VIP' : 'Member'}</span>`;
                         }
-
                     }
                 },
                 {

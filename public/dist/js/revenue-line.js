@@ -45,7 +45,7 @@ $(document).ready(function () {
             lineChart.setData(data);
             lineChart.redraw();
         } else {
-            lineChart.setData(dataNewVisitor);
+            lineChart.setData(dataNewRevenue);
             lineChart.redraw();
         }
     };

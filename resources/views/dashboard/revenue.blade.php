@@ -11,7 +11,7 @@
                                     <div class="container-fluid">
                                         <div class="row p-2">
                                             <div class="col-xs-8 text-left data-wrap-left">
-                                                <span class="txt-light block counter">Rp. 
+                                                <span class="txt-light block counter">Rp.
                                                     <span class="counter-anim">{{ number_format($revenue_today) }}</span>
                                                 </span>
                                                 <span class="weight-500 txt-light block">
@@ -39,7 +39,7 @@
                                     <div class="container-fluid">
                                         <div class="row p-2">
                                             <div class="col-xs-8 text-left data-wrap-left">
-                                                <span class="txt-light block counter">Rp. 
+                                                <span class="txt-light block counter">Rp.
                                                     <span class="counter-anim">{{ number_format($revenue_game) }}</span>
                                                 </span>
                                                 <span class="weight-500 txt-light block">
@@ -95,7 +95,7 @@
                                         <div class="row p-2">
                                             <div class="col-xs-8 text-left data-wrap-left">
                                                 <span class="txt-light block counter">Rp. <span
-                                                        class="counter-anim">{{  number_format($revenue_store)  }}</span></span>
+                                                        class="counter-anim">{{ number_format($revenue_store) }}</span></span>
                                                 <span class="weight-500 txt-light block">
                                                     Revenue kantin hari ini
                                                 </span>
@@ -122,14 +122,108 @@
                                 <h6 class="pannel-title text-dark">Revenue Trendline 7 Hari Terakhir</h6>
                             </div>
                             <div class="pull-right">
-                                tes
+                                <div class="pull-right">
+                                    <ul role="tablist" class="nav nav-pills nav-pills-rounded" id="myTabs_6">
+                                        <li class="active" role="presentation"><a aria-expanded="true" data-toggle="tab"
+                                                role="tab" id="home_tab_6" href="#1"
+                                                style="padding: 2px 20px;">All</a></li>
+                                        <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_6"
+                                                role="tab" href="#2" aria-expanded="false"
+                                                style="padding: 2px 20px;">Permainan</a></li>
+                                        <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_6"
+                                                role="tab" href="#3" aria-expanded="false"
+                                                style="padding: 2px 20px;">Proshop & Fasilitas</a></li>
+                                        <li role="presentation" class=""><a data-toggle="tab"
+                                                id="profile_tab_6" role="tab" href="#4"
+                                                aria-expanded="false" style="padding: 2px 20px;">Kantin</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <hr class="light-grey-hr row mt-20 mb-15 mb-10" />
+                        </div>
+
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+                                <div class="pills-struct">
+                                    <div class="tab-content" id="myTabContent_6">
+                                        <div class="tab-pane fade active in" id="1" role="tabpanel">
+                                            <div class="panel-body">
+                                                <div id="revenue_bar" class="morris-chart"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane fade active in" id="2" role="tabpanel">
+                                            <div class="panel-body">
+                                                <div id="revenue_bar_game" class="morris-chart"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane fade active in" id="3" role="tabpanel">
+                                            <div class="panel-body">
+                                                <div id="revenue_bar_facility" class="morris-chart"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane fade active in" id="4" role="tabpanel">
+                                            <div class="panel-body">
+                                                <div id="revenue_bar_other" class="morris-chart"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        
+                        {{-- <div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+                                <div id="revenue_bar" class="morris-chart"></div>
+                            </div>
+                        </div>
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+                                <div id="revenue_bar_game" class="morris-chart"></div>
+                            </div>
+                        </div>
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+                                <div id="revenue_bar_facility" class="morris-chart"></div>
+                            </div>
+                        </div>
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+                                <div id="revenue_bar_other" class="morris-chart"></div>
+                            </div>
+                        </div> --}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default card-view">
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <h6 class="pannel-title text-dark">Revenue Trendline 12 Bulan Terakhir</h6>
+                            </div>
+                            <div class="pull-right">
+                                <div class="ui-widget">
+                                    <select id="filter-week">
+                                        <option value="revenue_line">All Revenue</option>
+                                        <option value="revenue_line_game">Permainan</option>
+                                        <option value="revenue_line_facility">Fasilitas</option>
+                                        <option value="revenue_line_other">Kantin</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="clearfix"></div>
                             <hr class="light-grey-hr row mt-20 mb-15 mb-10" />
                         </div>
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
-                                <div id="statistic_revenue_bar" class="morris-chart"></div>
+                                <div id="statistic_revenue_line" class="morris-chart"></div>
                             </div>
                         </div>
                     </div>
@@ -139,9 +233,9 @@
     </div>
 @endsection
 @push('scripts')
+    <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
     <script>
         var revenueWeek = {!! json_encode($revenue_daily) !!}
+        var revenueMonth = {!! json_encode($revenue) !!}
     </script>
-    <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
-
 @endpush
