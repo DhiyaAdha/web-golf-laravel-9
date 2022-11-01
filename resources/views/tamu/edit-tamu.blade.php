@@ -183,7 +183,6 @@
 @push('scripts')
     <script>
         $(document).on('change', 'input[name="status"]', function(e) {
-            console.log($(this).val());
             swal({
                 title: "",
                 text: "Ubah status member?",
