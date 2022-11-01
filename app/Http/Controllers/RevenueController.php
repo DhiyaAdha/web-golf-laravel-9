@@ -20,7 +20,7 @@ class RevenueController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index(Request $req) {
+    public function index() {
         $data['revenue_today'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('total_gross');
         $data['revenue_game'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('jml_default');
         $data['revenue_proshop'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('jml_additional');
@@ -74,36 +74,4 @@ class RevenueController extends Controller
 
         return view('dashboard.revenue', $data);
     }
-
-    public function dynamic_week(Request $request)
-    {
-        //statistic dynamic of weeks
-        $now = Carbon::now()->translatedFormat('Y-m-d');
-        $last7Days = Carbon::now()->subDays(6)->translatedFormat('Y-m-d');
-        $day_period = CarbonPeriod::create($last7Days, $now)->toArray();
-        foreach ($day_period as $key => $value) {
-            $data['revenue_daily'][$key]['y'] = Carbon::create(
-                $day_period[$key]
-            )->translatedFormat('l');
-            
-            if (empty($request->weeks) || $request->weeks == 'revenue_bar') {
-                $data['revenue_daily'][$key]['a'] = LogTransaction::whereDate('created_at', $day_period[$key])->where('payment_status', 'paid')->sum('jml_default');
-                $data['revenue_daily'][$key]['b'] = LogTransaction::whereDate('created_at', $day_period[$key])->where('payment_status', 'paid')->sum('jml_additional');
-                $data['revenue_daily'][$key]['c'] = LogTransaction::whereDate('created_at', $day_period[$key])->where('payment_status', 'paid')->sum('jml_other');
-                $data['revenue_daily'][$key]['d'] = $data['revenue_daily'][$key]['a'] + $data['revenue_daily'][$key]['b'] + $data['revenue_daily'][$key]['c'];
-            } else if ($request->weeks == 'revenue_bar_game') {
-                $data['revenue_daily'][$key]['a'] = LogTransaction::whereDate('created_at', $day_period[$key])->where('payment_status', 'paid')->sum('jml_default');
-                $data['revenue_daily'][$key]['d'] = $data['revenue_daily'][$key]['a'];
-            } else if ($request->weeks == 'revenue_bar_facility') {
-                $data['revenue_daily'][$key]['b'] = LogTransaction::whereDate('created_at', $day_period[$key])->where('payment_status', 'paid')->sum('jml_additional');
-                $data['revenue_daily'][$key]['d'] = $data['revenue_daily'][$key]['b'];                
-            } else if ($request->weeks == 'revenue_bar_other') {
-                $data['revenue_daily'][$key]['c'] = LogTransaction::whereDate('created_at', $day_period[$key])->where('payment_status', 'paid')->sum('jml_other');
-                $data['revenue_daily'][$key]['d'] = $data['revenue_daily'][$key]['c'];                
-            }
-
-        }
-        return response()->json($data);
-    }
-
 }

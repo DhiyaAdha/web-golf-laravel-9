@@ -122,13 +122,21 @@
                                 <h6 class="pannel-title text-dark">Revenue Trendline 7 Hari Terakhir</h6>
                             </div>
                             <div class="pull-right">
-                                <div class="ui-widget">
-                                    <select id="filter-week">
-                                        <option value="revenue_bar">All Revenue</option>
-                                        <option value="revenue_bar_game">Permainan</option>
-                                        <option value="revenue_bar_facility">Fasilitas</option>
-                                        <option value="revenue_bar_other">Kantin</option>
-                                    </select>
+                                <div class="pull-right">
+                                    <ul role="tablist" class="nav nav-pills nav-pills-rounded" id="myTabs_6">
+                                        <li class="active" role="presentation"><a aria-expanded="true" data-toggle="tab"
+                                                role="tab" id="home_tab_6" href="#revenue_bar"
+                                                style="padding: 2px 20px;">All</a></li>
+                                        <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_6"
+                                                role="tab" href="#revenue_bar_game" aria-expanded="false"
+                                                style="padding: 2px 20px;">Permainan</a></li>
+                                        <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_6"
+                                                role="tab" href="#revenue_bar_facility" aria-expanded="false"
+                                                style="padding: 2px 20px;">Proshop & Fasilitas</a></li>
+                                        <li role="presentation" class=""><a data-toggle="tab"
+                                                id="profile_tab_6" role="tab" href="#revenue_bar_other"
+                                                aria-expanded="false" style="padding: 2px 20px;">Kantin</a></li>
+                                    </ul>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
@@ -136,7 +144,22 @@
                         </div>
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
-                                <div id="statistic_revenue_bar" class="morris-chart"></div>
+                                <div id="revenue_bar" class="morris-chart"></div>
+                            </div>
+                        </div>
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+                                <div id="revenue_bar_game" class="morris-chart"></div>
+                            </div>
+                        </div>
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+                                <div id="revenue_bar_facility" class="morris-chart"></div>
+                            </div>
+                        </div>
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+                                <div id="revenue_bar_other" class="morris-chart"></div>
                             </div>
                         </div>
                     </div>
