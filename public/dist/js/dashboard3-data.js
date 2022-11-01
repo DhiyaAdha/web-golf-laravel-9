@@ -21,7 +21,28 @@ $(document).ready(function(){
         gridTextColor:'#878787',
         gridTextFamily:"Roboto",
         barSize: 30,
-    })
+    });
+
+    var revenueLine = Morris.Line({
+        element: 'statistic_revenue_line',
+        data: revenueMonth,
+        xkey: "e",
+        parseTime: false,
+        ykeys: ["f", "g", "h", "i"],
+        labels: ["Total", "Permainan", "Fasilitas", "Penjualan"],
+        labelcolor : ["#fff", "#fff", "#fff", "#fff"],
+        pointSize: 2,
+        fillOpacity: 0,
+        lineWidth: 2,
+        resize: true,
+        redraw: true,
+        pointStrokeColors: ["#BF00FF", "#fec107", "#32FFC1", "#21E1E1"],
+        gridLineColor: "#878787",
+        lineColors: ["#BF00FF", "#fec107", "#32FFC1", "#21E1E1"],
+        gridTextColor: "#878787",
+        gridTextFamily: "Roboto",
+        hideHover: 'auto',
+    });
 
     // if($('#statistic_revenue_bar_permainan').length > 0) {
     //     var revenueBar = Morris.Bar({
