@@ -58,7 +58,6 @@
 
 {{-- Font Awesome --}}
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
-{{-- @stack('scripts') --}}
 <script>
     @if (Session::has('success'))
         window.setTimeout(function() {

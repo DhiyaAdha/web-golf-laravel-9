@@ -152,7 +152,6 @@
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
                                 <div id="statistic_revenue_bar" class="morris-chart"></div>
-                                <input type="text" name="" id="text">
                             </div>
                         </div>
                     </div>
@@ -162,28 +161,29 @@
     </div>
 @endsection
 @push('scripts')
+    <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
     <script>
-        var revenueWeek = {!! json_encode($revenue_daily) !!}
-
         $(document).on('change', '#filter-week', function(e) {
-            let week = $(this).val();
-            requestData(week);
-        });
-
-        function requestData(week){
+        let week = $(this).val();
             $.ajax({
                 async: true,
                 type: 'GET',
-                url: "{{ route('revenue.index') }}", 
-                data: { week: week }
-            }).done(function( data ) {
-                console.log(week)
-                // revenueBar.setData(JSON.parse(data));
+                url: "{{ url('revenue/dynamic_week') }}", 
+                data: { weeks: week },
+                success: function(response) {
+                    createChart(response.revenue_daily, week);
+                }
             }).fail(function() {
-                alert( "error occured" );
+                swal({
+                    title: "",
+                    type: "error",
+                    text: 'Terdapat kesalahan program',
+                    confirmButtonColor: "#01c853",
+                });
+                return false;
             });
-        }
+        });
+
+    var revenueWeek = {!! json_encode($revenue_daily) !!}
     </script>
-    <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
-   
 @endpush
