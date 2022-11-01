@@ -138,13 +138,21 @@ class ScanqrController extends Controller
                 $this->setResponse('INVALID', "Qr Code tidak ditemukan!");
                 return response()->json($this->getResponse());
             } else {
-                try {
-                    $this->setResponse('VALID', "Valid QR code", [
-                        'name' => $get_visitor->name,
-                    ]);
+                if($get_visitor->expired_date <= Carbon::now()) {
+                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
                     return response()->json($this->getResponse());
-                } catch (\Throwable $th) {
+                } else if($get_visitor->status == 'inactive') {
+                    $this->setResponse('INVALID', "Member tidak aktif");
                     return response()->json($this->getResponse());
+                } else {
+                    try {
+                        $this->setResponse('VALID', "Valid QR code", [
+                            'name' => $get_visitor->name,
+                        ]);
+                        return response()->json($this->getResponse());
+                    } catch (\Throwable $th) {
+                        return response()->json($this->getResponse());
+                    }
                 }
             }
         } catch (\Throwable $th) {
@@ -159,14 +167,22 @@ class ScanqrController extends Controller
                 $this->setResponse('INVALID', "No hp tidak ditemukan!");
                 return response()->json($this->getResponse());
             } else {
-                try {
-                    $this->setResponse('VALID', "Valid No Hp", [
-                        'name' => $phone_visitor->name,
-                        'unique_qr' => $phone_visitor->unique_qr,
-                    ]);
+                if($phone_visitor->expired_date <= Carbon::now()) {
+                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
                     return response()->json($this->getResponse());
-                } catch (\Throwable $th) {
+                } else if($phone_visitor->status == 'inactive') {
+                    $this->setResponse('INVALID', "Member tidak aktif");
                     return response()->json($this->getResponse());
+                } else {
+                    try {
+                        $this->setResponse('VALID', "Valid No Hp", [
+                            'name' => $phone_visitor->name,
+                            'unique_qr' => $phone_visitor->unique_qr,
+                        ]);
+                        return response()->json($this->getResponse());
+                    } catch (\Throwable $th) {
+                        return response()->json($this->getResponse());
+                    }
                 }
             }
         } catch (\Throwable $th) {

@@ -80,6 +80,77 @@
 @endsection
 @push('scripts')
     <script>
+        function sword() {
+            var audio = new Audio('../sound/sword.mp3');
+            audio.play();
+        }
+
+        $('#show-qr-scan').on('click', function() {
+            $('.disabled-scan').addClass('d-none');
+
+            function onScanSuccess(decodedText, decodedResult) {
+                $("#resultTEXT").val(decodedText)
+                $('#resultDECODE').val(JSON.stringify(decodedResult));
+                html5QrcodeScanner.clear();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ route('visitor.qrcode') }}",
+                    data: {
+                        qrCode: decodedText
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.status === "VALID") {
+                            swal({
+                                title: "Verifikasi berhasil",
+                                type: "success",
+                                text: "Atas nama " + response.data.name,
+                                confirmButtonColor: "#01c853",
+                                closeOnConfirm: false,
+                                closeOnCancel: false,
+                                showCancelButton: false,
+                                showConfirmButton: false,
+                                timer: 2000,
+                            }, function() {
+                                window.location.href = decodedText;
+                            });
+                        } else {
+                            sword();
+                            swal({
+                                title: "",
+                                type: "error",
+                                text: response.message,
+                                confirmButtonColor: "#01c853",
+                            }, function() {
+                                window.location.reload(true)
+                            });
+                        }
+                    }
+                });
+            }
+
+            function onScanFailure(error) {
+                console.warn(`Code scan error = ${error}`);
+            }
+
+            let html5QrcodeScanner = new Html5QrcodeScanner(
+                "reader", {
+                    fps: 144,
+                    qrbox: {
+                        width: 200,
+                        height: 200
+                    }
+                },
+                true);
+            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+        });
+
         $('#verification-no-hp').keypress(function(e) {
             if (e.which == 13) {
                 swal({
@@ -124,6 +195,7 @@
                             success: function(response) {
                                 $.unblockUI();
                                 if (response.status == "INVALID") {
+                                    sword();
                                     swal({
                                         title: "",
                                         type: "error",

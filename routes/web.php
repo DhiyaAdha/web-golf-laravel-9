@@ -25,7 +25,6 @@ use App\Http\Controllers\RevenueController;
 |
 */
 
-
 Route::middleware(['htmlMinifier'])->group(static function() {
     Route::get('/', function () {
         if (Auth::user()) {

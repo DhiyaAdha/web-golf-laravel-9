@@ -477,9 +477,6 @@ class OrderController extends Controller
         $totalPrice = \Cart::session($req->get('page'))->getTotal();
         $price_single = 0;
         $today = Carbon::now()->isoFormat('dddd');
-        $jml_default = 0;
-        $jml_additional = 0;
-        $jml_other = 0;
         if (\Cart::isEmpty()) {
             $cart_data = [];
         } else {
@@ -523,400 +520,29 @@ class OrderController extends Controller
                 return response()->json($this->getResponse());
             } else {
                 if ($req->get('type_single') == 4) {
-                    if ($deposit->balance < $totalPrice) {
-                        $this->setResponse('INVALID', "Saldo tidak terpenuhi");
+                    if($visitor->expired_date <= Carbon::now()) {
+                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                        return response()->json($this->getResponse());
+                    } else if($visitor->status == 'inactive') {
+                        $this->setResponse('INVALID', "Member tidak aktif");
                         return response()->json($this->getResponse());
                     } else {
-                        try {
-                            $deposit->balance = $deposit->balance - $totalPrice;
-                            $deposit->save();
-
-                            LogTransaction::create([
-                                'order_number' => $req->get('order_number'),
-                                'visitor_id' => $req->get('page'),
-                                'user_id' => Auth()->id(),
-                                'cart' => serialize($cart_data),
-                                'payment_type' => serialize([
-                                    ['payment_type' => 'deposit', 
-                                    'transaction_amount' => $totalPrice, 
-                                    'balance' => $deposit->balance,
-                                    'discount' => 0,
-                                    'refund' => 0
-                                ]]),
-                                'payment_status' => 'paid',
-                                'total' => $totalPrice,
-                                'total_gross' => $totalPrice,
-                                'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                'jml_other' => array_sum(array_column($priceOthers,'price')),
-                            ]);
-
-                            LogAdmin::create([
-                                'user_id' => Auth::id(),
-                                'type' => 'CREATE',
-                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                            ]);
-
-                            ReportDeposit::create([
-                                'payment_type' => 'deposit',
-                                'report_balance' => $totalPrice,
-                                'visitor_id' => $req->get('page'),
-                                'user_id' => Auth()->id(),
-                                'fund' => $deposit->balance,
-                                'status' => 'Berkurang',
-                                'created_at' => Carbon::now(),
-                            ]);
-                            \Cart::session($req->get('page'))->clear();
-
-                            $data['qty'] = $row->quantity;
-                            $total_qty = 0;
-                            foreach ($cart_data as $get) {
-                                $total_qty += $get['qty'];
-                            }
-                            $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
-                            $payment_type = unserialize($log_transaction->payment_type);
-
-                            $data = [
-                                'name' => $visitor->name,
-                                'email' => $visitor->email,
-                                'address' => $visitor->address,
-                                'phone' => $visitor->phone,
-                                'type_member' => $visitor->tipe_member,
-                                'sisasaldo' => $deposit->balance,
-                                'order_number' => $req->get('order_number'),
-                                'payment_type' => $payment_type,
-                                'date' => $row->attributes['created_at'],
-                                'pricesingle' => $row->price,
-                                'price' => $row->getPriceSum(),
-                                'total' => $totalPrice,
-                                'qty' => $row->quantity,
-                                'total_qty' => $total_qty,
-                                'cart' => $cart_data,
-                            ];
-                            dispatch(new SendMailPaymentsuccess4Job($data));
-
-                            if ($req->ajax()) {
-                                $this->setResponse('VALID', "Pembayaran berhasil");
-                                return response()->json($this->getResponse());
-                            }
-                        } catch (Throwable $e) {
-                            return response()->json($this->getResponse());
-                        }
-                    }
-                } else if ($req->get('type_single') == 3) {
-                    if (is_null($req->get('bayar_cash'))) {
-                        $this->setResponse('INVALID', "Nominal wajib diisi");
-                        return response()->json($this->getResponse());
-                    } else {
-                        if ($req->get('bayar_cash') < $totalPrice) {
-                            $this->setResponse('INVALID', "Nominal tidak terpenuhi");
+                        if ($deposit->balance < $totalPrice) {
+                            $this->setResponse('INVALID', "Saldo tidak terpenuhi");
                             return response()->json($this->getResponse());
                         } else {
                             try {
-                                LogTransaction::create([
-                                    'order_number' => $req->get('order_number'),
-                                    'visitor_id' => $req->get('page'),
-                                    'user_id' => Auth()->id(),
-                                    'cart' => serialize($cart_data),
-                                    'payment_type' => serialize([[
-                                        'payment_type' => 'cash/transfer', 
-                                        'transaction_amount' => $req->get('bayar_cash'), 
-                                        'balance' => 0,
-                                        'discount' => 0,
-                                        'refund' => $req->get('refund')
-                                    ]]),
-                                    'payment_status' => 'paid',
-                                    'total' => $totalPrice,
-                                    'total_gross' => $totalPrice,
-                                    'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                    'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                    'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                ]);
-
-                                LogAdmin::create([
-                                    'user_id' => Auth::id(),
-                                    'type' => 'CREATE',
-                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                ]);
-
-                                \Cart::session($req->get('page'))->clear();
-
-                                $data['qty'] = $row->quantity;
-                                $total_qty = 0;
-                                foreach ($cart_data as $get) {
-                                    $total_qty += $get['qty'];
-                                }
-                                $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
-                                $payment_type = unserialize($log_transaction->payment_type);
-
-                                $data = [
-                                    'name' => $visitor->name,
-                                    'email' => $visitor->email,
-                                    'address' => $visitor->address,
-                                    'phone' => $visitor->phone,
-                                    'type_member' => $visitor->tipe_member,
-                                    'order_number' => $req->get('order_number'),
-                                    'payment_type' => $payment_type,
-                                    'date' => $row->attributes['created_at'],
-                                    'pricesingle' => $row->price,
-                                    'price' => $row->getPriceSum(),
-                                    'total' => $totalPrice,
-                                    'qty' => $row->quantity,
-                                    'total_qty' => $total_qty,
-                                    'cart' => $cart_data,
-                                ];
-                                dispatch(new SendMailPaymentsuccess4Job($data));
-
-                                if ($req->ajax()) {
-                                    return response()->json([
-                                        'status' => 'VALID',
-                                        'message' => 'Pembayaran berhasil',
-                                        'return' => $req->get('bayar_cash')
-                                    ]);
-                                }
-                            } catch (Throwable $e) {
-                                return response()->json($this->getResponse());
-                            }
-                        }
-                    }
-                } else if ($req->get('type_single') == 2) {
-                    if ($log_limit->quota_kupon == 0) {
-                        $this->setResponse('INVALID', "Kupon tidak terpenuhi");
-                        return response()->json($this->getResponse());
-                    } else {
-                        $id_package = [];
-                        foreach ($items as $sd) {
-                            $id_package[] = $sd['id'];
-                        }
-                        $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
-                        $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
-                        if (count($package_additional) >= 1) {
-                            $this->setResponse('INVALID', "Kupon hanya berlaku satu jenis permainan");
-                            return response()->json($this->getResponse());
-                        } else if ($package_default) {
-                            if (count($package_default) != 1) {
-                                $this->setResponse('INVALID', "Single kupon hanya berlaku satu jenis permainan");
-                                return response()->json($this->getResponse());
-                            } else {
-                                $cek_itemId = $items->whereIn('id', $id_package);
-                                $item_default = 0;
-                                foreach($cek_itemId as $item){
-                                    $item_default += $item['quantity'];
-                                }
-                                if ($item_default != 1) {
-                                    $this->setResponse('INVALID', "Kupon hanya berlaku untuk satu permainan");
-                                    return response()->json($this->getResponse());
-                                } else {
-                                    try {
-                                        $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
-                                        $log_limit->save();
-    
-                                        LogTransaction::create([
-                                            'order_number' => $req->get('order_number'),
-                                            'visitor_id' => $req->get('page'),
-                                            'user_id' => Auth()->id(),
-                                            'cart' => serialize($cart_data),
-                                            'payment_type' => serialize([[
-                                                'payment_type' => 'kupon', 
-                                                'transaction_amount' => $price_single, 
-                                                'balance' => $log_limit->quota_kupon,
-                                                'discount' => $price_single,
-                                                'refund' => 0
-                                            ]]),
-                                            'payment_status' => 'paid',
-                                            'total' => $totalPrice - $price_single,
-                                            'total_gross' => $totalPrice,
-                                            'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                            'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                            'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                        ]);
-    
-                                        LogAdmin::create([
-                                            'user_id' => Auth::id(),
-                                            'type' => 'CREATE',
-                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                        ]);
-    
-                                        // informasi limit kupon
-                                        ReportLimit::create([
-                                            'status' => 'Berkurang',
-                                            'report_quota' => $log_limit->quota,
-                                            'report_quota_kupon' => $log_limit->quota_kupon,
-                                            'visitor_id' => $req->get('page'),
-                                            'user_id' => Auth()->id(),
-                                            'created_at' => Carbon::now(),
-                                        ]);
-                                        \Cart::session($req->get('page'))->clear();
-    
-                                        $log_limit = LogLimit::where('visitor_id', $req->get('page'))->first();
-                                        $data['qty'] = $row->quantity;
-                                        $total_qty = 0;
-                                        foreach ($cart_data as $get) {
-                                            $total_qty += $get['qty'];
-                                        }
-                                        $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
-                                        $payment_type = unserialize($log_transaction->payment_type);
-    
-                                        $data = [
-                                            'name' => $visitor->name,
-                                            'email' => $visitor->email,
-                                            'address' => $visitor->address,
-                                            'phone' => $visitor->phone,
-                                            'type_member' => $visitor->tipe_member,
-                                            'order_number' => $req->get('order_number'),
-                                            'payment_type' => $payment_type,
-                                            'date' => $row->attributes['created_at'],
-                                            'pricesingle' => $row->price,
-                                            'price' => $row->getPriceSum(),
-                                            'total' => $totalPrice,
-                                            'qty' => $row->quantity,
-                                            'total_qty' => $total_qty,
-                                            'cart' => $cart_data,
-                                            'sisakupon' => $log_limit->quota_kupon,
-                                        ];
-                                        dispatch(new SendMailPaymentsuccess4Job($data));
-    
-                                        if ($req->ajax()) {
-                                            $this->setResponse('VALID', "Pembayaran berhasil");
-                                            return response()->json($this->getResponse());
-                                        }
-                                    } catch (\Throwable $th) {
-                                        return response()->json($this->getResponse());
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    if ($log_limit->quota == 0) {
-                        $this->setResponse('INVALID', "Limit tidak terpenuhi");
-                        return response()->json($this->getResponse());
-                    } else {
-                        $id_package = [];
-                        foreach ($items as $sd) {
-                            $id_package[] = $sd['id'];
-                        }
-                        $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
-                        $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
-                        if (count($package_additional) >= 1) {
-                            $this->setResponse('INVALID', "Limit hanya berlaku satu jenis permainan");
-                            return response()->json($this->getResponse());
-                        } else if ($package_default) {
-                            if (count($package_default) != 1) {
-                                $this->setResponse('INVALID', "Single limit hanya berlaku satu jenis permainan");
-                                return response()->json($this->getResponse());
-                            } else {
-                                $cek_itemId = $items->whereIn('id', $id_package);
-                                $item_default = 0;
-                                foreach($cek_itemId as $item){
-                                    $item_default += $item['quantity'];
-                                }
-                                if ($item_default != 1) {
-                                    $this->setResponse('INVALID', "Limit hanya berlaku untuk satu permainan");
-                                    return response()->json($this->getResponse());
-                                } else {
-                                    try {
-                                        $log_limit->quota = $log_limit->quota - 1;
-                                        $log_limit->save();
-    
-                                        LogTransaction::create([
-                                            'order_number' => $req->get('order_number'),
-                                            'visitor_id' => $req->get('page'),
-                                            'user_id' => Auth()->id(),
-                                            'cart' => serialize($cart_data),
-                                            'payment_type' => serialize([[
-                                                'payment_type' => 'limit', 
-                                                'transaction_amount' => $price_single, 
-                                                'balance' => $log_limit->quota,
-                                                'discount' => $price_single,
-                                                'refund' => 0
-                                            ]]),
-                                            'payment_status' => 'paid',
-                                            'total' => $totalPrice - $price_single,
-                                            'total_gross' => $totalPrice,
-                                            'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                            'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                            'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                        ]);
-    
-                                        LogAdmin::create([
-                                            'user_id' => Auth::id(),
-                                            'type' => 'CREATE',
-                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                        ]);
-    
-                                        // informasi limit bulanan
-                                        ReportLimit::create([
-                                            'status' => 'Berkurang',
-                                            'report_quota' => $log_limit->quota,
-                                            'report_quota_kupon' => $log_limit->quota_kupon,
-                                            'visitor_id' => $req->get('page'),
-                                            'user_id' => Auth()->id(),
-                                            'created_at' => Carbon::now(),
-                                        ]);
-                                        \Cart::session($req->get('page'))->clear();
-    
-                                        $log_limit = LogLimit::where('visitor_id', $req->get('page'))->first();
-                                        $data['qty'] = $row->quantity;
-                                        $total_qty = 0;
-                                        foreach ($cart_data as $get) {
-                                            $total_qty += $get['qty'];
-                                        }
-                                        $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
-                                        $payment_type = unserialize($log_transaction->payment_type);
-    
-                                        $data = [
-                                            'name' => $visitor->name,
-                                            'email' => $visitor->email,
-                                            'address' => $visitor->address,
-                                            'phone' => $visitor->phone,
-                                            'type_member' => $visitor->tipe_member,
-                                            'order_number' => $req->get('order_number'),
-                                            'payment_type' => $payment_type,
-                                            'date' => $row->attributes['created_at'],
-                                            'pricesingle' => $row->price,
-                                            'price' => $row->getPriceSum(),
-                                            'total' => $totalPrice,
-                                            'qty' => $row->quantity,
-                                            'total_qty' => $total_qty,
-                                            'cart' => $cart_data,
-                                            'sisabulanan' => $log_limit->quota,
-                                        ];
-                                        dispatch(new SendMailPaymentsuccess4Job($data));
-    
-                                        if ($req->ajax()) {
-                                            $this->setResponse('VALID', "Pembayaran berhasil");
-                                            return response()->json($this->getResponse());
-                                        }
-                                    } catch (\Throwable $th) {
-                                        return response()->json($this->getResponse());
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        } else {
-            if (empty($req->get('type_multiple'))) {
-                $this->setResponse('INVALID', "Silahkan pilih jenis split pembayaran");
-                return response()->json($this->getResponse());
-            } else {
-                if($deposit->balance == $totalPrice) {
-                    if(count($req->get('type_multiple')) == 1) {
-                        if ($req->get('type_multiple')[0] == 'deposit') {
-                            try{
                                 $deposit->balance = $deposit->balance - $totalPrice;
                                 $deposit->save();
-                                
+    
                                 LogTransaction::create([
                                     'order_number' => $req->get('order_number'),
                                     'visitor_id' => $req->get('page'),
                                     'user_id' => Auth()->id(),
                                     'cart' => serialize($cart_data),
-                                    'payment_type' => serialize([[
-                                        'payment_type' => 'deposit',
-                                        'transaction_amount' => $totalPrice,
+                                    'payment_type' => serialize([
+                                        ['payment_type' => 'deposit', 
+                                        'transaction_amount' => $totalPrice, 
                                         'balance' => $deposit->balance,
                                         'discount' => 0,
                                         'refund' => 0
@@ -946,6 +572,33 @@ class OrderController extends Controller
                                 ]);
                                 \Cart::session($req->get('page'))->clear();
     
+                                $data['qty'] = $row->quantity;
+                                $total_qty = 0;
+                                foreach ($cart_data as $get) {
+                                    $total_qty += $get['qty'];
+                                }
+                                $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
+                                $payment_type = unserialize($log_transaction->payment_type);
+    
+                                $data = [
+                                    'name' => $visitor->name,
+                                    'email' => $visitor->email,
+                                    'address' => $visitor->address,
+                                    'phone' => $visitor->phone,
+                                    'type_member' => $visitor->tipe_member,
+                                    'sisasaldo' => $deposit->balance,
+                                    'order_number' => $req->get('order_number'),
+                                    'payment_type' => $payment_type,
+                                    'date' => $row->attributes['created_at'],
+                                    'pricesingle' => $row->price,
+                                    'price' => $row->getPriceSum(),
+                                    'total' => $totalPrice,
+                                    'qty' => $row->quantity,
+                                    'total_qty' => $total_qty,
+                                    'cart' => $cart_data,
+                                ];
+                                dispatch(new SendMailPaymentsuccess4Job($data));
+    
                                 if ($req->ajax()) {
                                     $this->setResponse('VALID', "Pembayaran berhasil");
                                     return response()->json($this->getResponse());
@@ -953,121 +606,39 @@ class OrderController extends Controller
                             } catch (Throwable $e) {
                                 return response()->json($this->getResponse());
                             }
-                        } else if ($req->get('type_multiple')[0] == 'cash/transfer') {
-                            if (is_null($req->get('bayar_input'))) {
-                                $this->setResponse('INVALID', "Nominal wajib diisi");
-                                return response()->json($this->getResponse());
-                            } else {
-                                if ($req->get('bayar_input') != $totalPrice) {
-                                    if ($req->get('bayar_input') >= $totalPrice){
-                                        try {
-                                            LogTransaction::create([
-                                                'order_number' => $req->get('order_number'),
-                                                'visitor_id' => $req->get('page'),
-                                                'user_id' => Auth()->id(),
-                                                'cart' => serialize($cart_data),
-                                                'payment_type' => serialize([[
-                                                    'payment_type' => 'cash/transfer', 
-                                                    'transaction_amount' => $req->get('bayar_input'), 
-                                                    'balance' => 0,
-                                                    'discount' => 0,
-                                                    'refund' => $req->get('refund')
-                                                ]]),
-                                                'payment_status' => 'paid',
-                                                'total' => $totalPrice,
-                                                'total_gross' => $totalPrice,
-                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                            ]);
-            
-                                            LogAdmin::create([
-                                                'user_id' => Auth::id(),
-                                                'type' => 'CREATE',
-                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                            ]);
-            
-                                            \Cart::session($req->get('page'))->clear();
-            
-                                            if ($req->ajax()) {
-                                                return response()->json([
-                                                    'status' => 'VALID',
-                                                    'message' => 'Pembayaran berhasil',
-                                                    'return' => $req->get('bayar_input')
-                                                ]);
-                                            }
-                                        } catch (Throwable $e) {
-                                            return response()->json($this->getResponse());
-                                        }
-                                    } else {
-                                        $this->setResponse('INVALID', "Nominal yang harus dibayarkan $totalPrice");
-                                        return response()->json($this->getResponse());
-                                    }
-                                } else {
-                                    try {
-                                        LogTransaction::create([
-                                            'order_number' => $req->get('order_number'),
-                                            'visitor_id' => $req->get('page'),
-                                            'user_id' => Auth()->id(),
-                                            'cart' => serialize($cart_data),
-                                            'payment_type' => serialize([[
-                                                'payment_type' => 'cash/transfer', 
-                                                'transaction_amount' => $req->get('bayar_input'), 
-                                                'balance' => 0,
-                                                'discount' => 0,
-                                                'refund' => 0
-                                            ]]),
-                                            'payment_status' => 'paid',
-                                            'total' => $totalPrice,
-                                            'total_gross' => $totalPrice,
-                                            'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                            'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                            'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                        ]);
-        
-                                        LogAdmin::create([
-                                            'user_id' => Auth::id(),
-                                            'type' => 'CREATE',
-                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                        ]);
-        
-                                        \Cart::session($req->get('page'))->clear();
-        
-                                        if ($req->ajax()) {
-                                            return response()->json([
-                                                'status' => 'VALID',
-                                                'message' => 'Pembayaran berhasil',
-                                                'return' => $req->get('bayar_input')
-                                            ]);
-                                        }
-                                    } catch (\Throwable $th) {
-                                        return response()->json($this->getResponse());
-                                    }
-                                }
-                            }
-                        } else if ($req->get('type_multiple')[0] == 'kupon') {
-                            if($item_default != 1){
-                                $this->setResponse('INVALID', "Gunakan split deposit atau cash/transfer");
+                        }
+                    }
+                } else if ($req->get('type_single') == 3) {
+                    if($visitor->expired_date <= Carbon::now()) {
+                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                        return response()->json($this->getResponse());
+                    } else if($visitor->status == 'inactive') {
+                        $this->setResponse('INVALID', "Member tidak aktif");
+                        return response()->json($this->getResponse());
+                    } else {
+                        if (is_null($req->get('bayar_cash'))) {
+                            $this->setResponse('INVALID', "Nominal wajib diisi");
+                            return response()->json($this->getResponse());
+                        } else {
+                            if ($req->get('bayar_cash') < $totalPrice) {
+                                $this->setResponse('INVALID', "Nominal tidak terpenuhi");
                                 return response()->json($this->getResponse());
                             } else {
                                 try {
-                                    $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
-                                    $log_limit->save();
-    
                                     LogTransaction::create([
                                         'order_number' => $req->get('order_number'),
                                         'visitor_id' => $req->get('page'),
                                         'user_id' => Auth()->id(),
                                         'cart' => serialize($cart_data),
                                         'payment_type' => serialize([[
-                                            'payment_type' => 'kupon',
-                                            'transaction_amount' => $price_single,
-                                            'balance' => $log_limit->quota_kupon,
-                                            'discount' => $price_single,
-                                            'refund' => 0
+                                            'payment_type' => 'cash/transfer', 
+                                            'transaction_amount' => $req->get('bayar_cash'), 
+                                            'balance' => 0,
+                                            'discount' => 0,
+                                            'refund' => $req->get('refund')
                                         ]]),
                                         'payment_status' => 'paid',
-                                        'total' => $totalPrice - $price_single,
+                                        'total' => $totalPrice,
                                         'total_gross' => $totalPrice,
                                         'jml_default' => array_sum(array_column($priceDefault,'price')),
                                         'jml_additional' => array_sum(array_column($priceAdditional,'price')),
@@ -1080,1493 +651,154 @@ class OrderController extends Controller
                                         'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
                                     ]);
     
-                                    ReportLimit::create([
-                                        'visitor_id' => $req->get('page'),
-                                        'user_id' => Auth()->id(),
-                                        'report_quota' => $log_limit->quota,
-                                        'report_quota_kupon' => $log_limit->quota_kupon,
-                                        'status' => 'Berkurang',
-                                        'created_at' => Carbon::now(),
-                                    ]);
-                                    
                                     \Cart::session($req->get('page'))->clear();
-        
+    
+                                    $data['qty'] = $row->quantity;
+                                    $total_qty = 0;
+                                    foreach ($cart_data as $get) {
+                                        $total_qty += $get['qty'];
+                                    }
+                                    $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
+                                    $payment_type = unserialize($log_transaction->payment_type);
+    
+                                    $data = [
+                                        'name' => $visitor->name,
+                                        'email' => $visitor->email,
+                                        'address' => $visitor->address,
+                                        'phone' => $visitor->phone,
+                                        'type_member' => $visitor->tipe_member,
+                                        'order_number' => $req->get('order_number'),
+                                        'payment_type' => $payment_type,
+                                        'date' => $row->attributes['created_at'],
+                                        'pricesingle' => $row->price,
+                                        'price' => $row->getPriceSum(),
+                                        'total' => $totalPrice,
+                                        'qty' => $row->quantity,
+                                        'total_qty' => $total_qty,
+                                        'cart' => $cart_data,
+                                    ];
+                                    dispatch(new SendMailPaymentsuccess4Job($data));
+    
                                     if ($req->ajax()) {
-                                        $this->setResponse('VALID', "Pembayaran berhasil");
-                                        return response()->json($this->getResponse());
+                                        return response()->json([
+                                            'status' => 'VALID',
+                                            'message' => 'Pembayaran berhasil',
+                                            'return' => $req->get('bayar_cash')
+                                        ]);
                                     }
                                 } catch (Throwable $e) {
-                                    return response()->json($this->getResponse());
-                                }
-                            }
-                        } else if ($req->get('type_multiple')[0] == 'limit') {
-                            if($item_default != 1){
-                                $this->setResponse('INVALID', "Gunakan split deposit atau cash/transfer");
-                                return response()->json($this->getResponse());
-                            } else {
-                                try {
-                                    $log_limit->quota = $log_limit->quota - 1;
-                                    $log_limit->save();
-    
-                                    LogTransaction::create([
-                                        'order_number' => $req->get('order_number'),
-                                        'visitor_id' => $req->get('page'),
-                                        'user_id' => Auth()->id(),
-                                        'cart' => serialize($cart_data),
-                                        'payment_type' => serialize([[
-                                            'payment_type' => 'limit',
-                                            'transaction_amount' => $price_single,
-                                            'balance' => $log_limit->quota,
-                                            'discount' => $price_single,
-                                            'refund' => 0
-                                        ]]),
-                                        'payment_status' => 'paid',
-                                        'total' => $totalPrice - $price_single,
-                                        'total_gross' => $totalPrice,
-                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                    ]);
-    
-                                    LogAdmin::create([
-                                        'user_id' => Auth::id(),
-                                        'type' => 'CREATE',
-                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                    ]);
-    
-                                    ReportLimit::create([
-                                        'visitor_id' => $req->get('page'),
-                                        'user_id' => Auth()->id(),
-                                        'report_quota' => $log_limit->quota,
-                                        'report_quota_kupon' => $log_limit->quota_kupon,
-                                        'status' => 'Berkurang',
-                                        'created_at' => Carbon::now(),
-                                    ]);
-                                    
-                                    \Cart::session($req->get('page'))->clear();
-        
-                                    if ($req->ajax()) {
-                                        $this->setResponse('VALID', "Pembayaran berhasil");
-                                        return response()->json($this->getResponse());
-                                    }
-                                } catch (Throwable $e) {
-                                    return response()->json($this->getResponse());
-                                }
-                            }
-                        }
-                    } else if (count($req->get('type_multiple')) == 2) {
-                        if($req->get('type_multiple')[0] == 'deposit') {
-                            if($req->get('type_multiple')[1] == 'cash/transfer') {
-                                if (is_null($req->get('bayar_input'))) {
-                                    $this->setResponse('INVALID', "Nominal wajib diisi");
-                                    return response()->json($this->getResponse());
-                                } else {
-                                    if ($req->get('bayar_input') > ceil($totalPrice)) {
-                                        try {
-                                            LogTransaction::create([
-                                                'order_number' => $req->get('order_number'),
-                                                'visitor_id' => $req->get('page'),
-                                                'user_id' => Auth()->id(),
-                                                'cart' => serialize($cart_data),
-                                                'payment_type' => serialize([
-                                                    ['payment_type' => 'deposit', 'transaction_amount' => 0, 'balance' => $deposit->balance,'discount' => 0, 'refund' => 0],
-                                                    ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => $req->get('refund')]
-                                                ]),
-                                                'payment_status' => 'paid',
-                                                'total' => $totalPrice,
-                                                'total_gross' => $totalPrice,
-                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                            ]);
-
-                                            LogAdmin::create([
-                                                'user_id' => Auth::id(),
-                                                'type' => 'CREATE',
-                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                            ]);
-
-                                            ReportDeposit::create([
-                                                'payment_type' => 'deposit',
-                                                'report_balance' => 0,
-                                                'visitor_id' => $req->get('page'),
-                                                'user_id' => Auth()->id(),
-                                                'fund' => $deposit->balance,
-                                                'status' => 'Berkurang',
-                                                'created_at' => Carbon::now(),
-                                            ]);
-
-                                            \Cart::session($req->get('page'))->clear();
-            
-                                            if ($req->ajax()) {
-                                                return response()->json([
-                                                    'status' => 'VALID',
-                                                    'message' => 'Pembayaran berhasil',
-                                                    'return' => $req->get('bayar_input')
-                                                ]);
-                                            }
-
-                                        } catch (\Throwable $th) {
-                                            return response()->json($this->getResponse());
-                                        }
-                                    } else {
-                                        $minus_deposit = $totalPrice - $req->get('bayar_input');
-                                        $deposit->balance = $deposit->balance - $minus_deposit;
-                                        $deposit->save();
-                                        try {
-                                            LogTransaction::create([
-                                                'order_number' => $req->get('order_number'),
-                                                'visitor_id' => $req->get('page'),
-                                                'user_id' => Auth()->id(),
-                                                'cart' => serialize($cart_data),
-                                                'payment_type' => serialize([
-                                                    ['payment_type' => 'deposit', 'transaction_amount' => $minus_deposit, 'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
-                                                    ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0, 'discount' => 0, 'refund' => 0]
-                                                ]),
-                                                'payment_status' => 'paid',
-                                                'total' => $totalPrice,
-                                                'total_gross' => $totalPrice,
-                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                            ]);
-
-                                            LogAdmin::create([
-                                                'user_id' => Auth::id(),
-                                                'type' => 'CREATE',
-                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                            ]);
-
-                                            ReportDeposit::create([
-                                                'payment_type' => 'deposit',
-                                                'report_balance' => $minus_deposit,
-                                                'visitor_id' => $req->get('page'),
-                                                'user_id' => Auth()->id(),
-                                                'fund' => $deposit->balance,
-                                                'status' => 'Berkurang',
-                                                'created_at' => Carbon::now(),
-                                            ]);
-
-                                            \Cart::session($req->get('page'))->clear();
-            
-                                            if ($req->ajax()) {
-                                                return response()->json([
-                                                    'status' => 'VALID',
-                                                    'message' => 'Pembayaran berhasil',
-                                                    'return' => $req->get('bayar_input')
-                                                ]);
-                                            }
-
-                                        } catch (\Throwable $th) {
-                                            return response()->json($this->getResponse());
-                                        }
-                                    }
-                                }
-                            } else if ($req->get('type_multiple')[1] == 'kupon') {
-                                try {
-                                    $deposit_before = $deposit->balance;
-                                    $deposit->balance = $totalPrice - $price_single;
-
-                                    LogTransaction::create([
-                                        'order_number' => $req->get('order_number'),
-                                        'visitor_id' => $req->get('page'),
-                                        'user_id' => Auth()->id(),
-                                        'cart' => serialize($cart_data),
-                                        'payment_type' => serialize([
-                                            ['payment_type' => 'deposit','transaction_amount' => $deposit->balance,'balance' => $deposit_before, 'discount' => 0, 'refund' => 0],
-                                            ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon, 'discount' => $price_single, 'refund' => 0]
-                                        ]),
-                                        'payment_status' => 'paid',
-                                        'total' => $deposit->balance,
-                                        'total_gross' => $totalPrice,
-                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                    ]);
-    
-                                    LogAdmin::create([
-                                        'user_id' => Auth::id(),
-                                        'type' => 'CREATE',
-                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                    ]);
-    
-                                    ReportDeposit::create([
-                                        'payment_type' => 'deposit',
-                                        'report_balance' => $deposit->balance,
-                                        'visitor_id' => $req->get('page'),
-                                        'user_id' => Auth()->id(),
-                                        'fund' => $deposit_before,
-                                        'status' => 'Berkurang',
-                                        'created_at' => Carbon::now(),
-                                    ]);
-
-                                    $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
-                                    $log_limit->save();
-                                    $deposit->save();
-    
-                                    ReportLimit::create([
-                                        'visitor_id' => $req->get('page'),
-                                        'user_id' => Auth()->id(),
-                                        'report_quota' => $log_limit->quota,
-                                        'report_quota_kupon' => $log_limit->quota_kupon,
-                                        'status' => 'Berkurang',
-                                        'created_at' => Carbon::now(),
-                                    ]);
-    
-                                    \Cart::session($req->get('page'))->clear();
-        
-                                    if ($req->ajax()) {
-                                        $this->setResponse('VALID', "Pembayaran berhasil");
-                                        return response()->json($this->getResponse());
-                                    }
-                                } catch (\Throwable $th) {
-                                    return response()->json($this->getResponse());
-                                }
-                            } else if ($req->get('type_multiple')[1] == 'limit') {
-                                try {
-                                    $deposit_before = $deposit->balance;
-                                    $deposit->balance = $totalPrice - $price_single;
-
-                                    LogTransaction::create([
-                                        'order_number' => $req->get('order_number'),
-                                        'visitor_id' => $req->get('page'),
-                                        'user_id' => Auth()->id(),
-                                        'cart' => serialize($cart_data),
-                                        'payment_type' => serialize([
-                                            ['payment_type' => 'deposit','transaction_amount' => $deposit->balance,'balance' => $deposit_before, 'discount' => 0, 'refund' => 0],
-                                            ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota, 'discount' => $price_single, 'refund' => 0]
-                                        ]),
-                                        'payment_status' => 'paid',
-                                        'total' => $deposit->balance,
-                                        'total_gross' => $totalPrice,
-                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                    ]);
-    
-                                    LogAdmin::create([
-                                        'user_id' => Auth::id(),
-                                        'type' => 'CREATE',
-                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                    ]);
-    
-                                    ReportDeposit::create([
-                                        'payment_type' => 'deposit',
-                                        'report_balance' => $deposit->balance,
-                                        'visitor_id' => $req->get('page'),
-                                        'user_id' => Auth()->id(),
-                                        'fund' => $deposit_before,
-                                        'status' => 'Berkurang',
-                                        'created_at' => Carbon::now(),
-                                    ]);
-
-                                    $log_limit->quota = $log_limit->quota - 1;
-                                    $log_limit->save();
-                                    $deposit->save();
-    
-                                    ReportLimit::create([
-                                        'visitor_id' => $req->get('page'),
-                                        'user_id' => Auth()->id(),
-                                        'report_quota' => $log_limit->quota,
-                                        'report_quota_kupon' => $log_limit->quota_kupon,
-                                        'status' => 'Berkurang',
-                                        'created_at' => Carbon::now(),
-                                    ]);
-    
-                                    \Cart::session($req->get('page'))->clear();
-        
-                                    if ($req->ajax()) {
-                                        $this->setResponse('VALID', "Pembayaran berhasil");
-                                        return response()->json($this->getResponse());
-                                    }
-                                } catch (\Throwable $th) {
-                                    return response()->json($this->getResponse());
-                                }
-                            }
-                        } else if($req->get('type_multiple')[0] == 'cash/transfer') {
-                            if($req->get('type_multiple')[1] == 'kupon') {
-                                if (is_null($req->get('bayar_input'))) {
-                                    $this->setResponse('INVALID', "Nominal wajib diisi");
-                                    return response()->json($this->getResponse());
-                                } else {
-                                    $remaining_balance = $totalPrice - $price_single;
-                                    if ($req->get('bayar_input') > ceil($remaining_balance)) {
-                                        try {
-                                            LogTransaction::create([
-                                                'order_number' => $req->get('order_number'),
-                                                'visitor_id' => $req->get('page'),
-                                                'user_id' => Auth()->id(),
-                                                'cart' => serialize($cart_data),
-                                                'payment_type' => serialize([
-                                                    ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => $req->get('refund')],
-                                                    ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
-                                                ]),
-                                                'payment_status' => 'paid',
-                                                'total' => $remaining_balance,
-                                                'total_gross' => $totalPrice,
-                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                            ]);
-            
-                                            $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
-                                            $log_limit->save();
-            
-                                            LogAdmin::create([
-                                                'user_id' => Auth::id(),
-                                                'type' => 'CREATE',
-                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                            ]);
-            
-                                            ReportLimit::create([
-                                                'visitor_id' => $req->get('page'),
-                                                'user_id' => Auth()->id(),
-                                                'report_quota' => $log_limit->quota,
-                                                'report_quota_kupon' => $log_limit->quota_kupon,
-                                                'status' => 'Berkurang',
-                                                'created_at' => Carbon::now(),
-                                            ]);
-            
-                                            \Cart::session($req->get('page'))->clear();
-                
-                                            if ($req->ajax()) {
-                                                $this->setResponse('VALID', "Pembayaran berhasil");
-                                                return response()->json($this->getResponse());
-                                            }
-                                        } catch (\Throwable $th) {
-                                            return response()->json($this->getResponse());
-                                        }
-                                    } else {
-                                        $this->setResponse('INVALID', "Nominal yang harus dibayarkan $remaining_balance");
-                                        return response()->json($this->getResponse());
-                                    }
-                                }
-                            } else if($req->get('type_multiple')[1] == 'limit') {
-                                if (is_null($req->get('bayar_input'))) {
-                                    $this->setResponse('INVALID', "Nominal wajib diisi");
-                                    return response()->json($this->getResponse());
-                                } else {
-                                    $remaining_balance = $totalPrice - $price_single;
-                                    if ($req->get('bayar_input') > ceil($remaining_balance)) {
-                                        try {
-                                            LogTransaction::create([
-                                                'order_number' => $req->get('order_number'),
-                                                'visitor_id' => $req->get('page'),
-                                                'user_id' => Auth()->id(),
-                                                'cart' => serialize($cart_data),
-                                                'payment_type' => serialize([
-                                                    ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => $req->get('refund')],
-                                                    ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single, 'refund' => 0]
-                                                ]),
-                                                'payment_status' => 'paid',
-                                                'total' => $remaining_balance,
-                                                'total_gross' => $totalPrice,
-                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                            ]);
-            
-                                            $log_limit->quota = $log_limit->quota - 1;
-                                            $log_limit->save();
-            
-                                            LogAdmin::create([
-                                                'user_id' => Auth::id(),
-                                                'type' => 'CREATE',
-                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                            ]);
-            
-                                            ReportLimit::create([
-                                                'visitor_id' => $req->get('page'),
-                                                'user_id' => Auth()->id(),
-                                                'report_quota' => $log_limit->quota,
-                                                'report_quota_kupon' => $log_limit->quota_kupon,
-                                                'status' => 'Berkurang',
-                                                'created_at' => Carbon::now(),
-                                            ]);
-            
-                                            \Cart::session($req->get('page'))->clear();
-                
-                                            if ($req->ajax()) {
-                                                $this->setResponse('VALID', "Pembayaran berhasil");
-                                                return response()->json($this->getResponse());
-                                            }
-                                        } catch (\Throwable $th) {
-                                            return response()->json($this->getResponse());
-                                        }
-                                    } else {
-                                        $this->setResponse('INVALID', "Nominal yang harus dibayarkan $remaining_balance");
-                                        return response()->json($this->getResponse());
-                                    }
-                                }
-                            }
-                        }
-                    } else if (count($req->get('type_multiple')) == 3) {
-                        $remaining_balance = $totalPrice - $price_single;
-                        if($req->get('type_multiple')[2] == 'kupon') {
-                            if ($req->get('bayar_input') > ceil($remaining_balance)) {
-                                try {
-                                    LogTransaction::create([
-                                        'order_number' => $req->get('order_number'),
-                                        'visitor_id' => $req->get('page'),
-                                        'user_id' => Auth()->id(),
-                                        'cart' => serialize($cart_data),
-                                        'payment_type' => serialize([
-                                            ['payment_type' => 'deposit','transaction_amount' => 0,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
-                                            ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => $req->get('refund')],
-                                            ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
-                                        ]),
-                                        'payment_status' => 'paid',
-                                        'total' => $remaining_balance,
-                                        'total_gross' => $totalPrice,
-                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                    ]);
-    
-                                    $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
-                                    $log_limit->save();
-    
-                                    LogAdmin::create([
-                                        'user_id' => Auth::id(),
-                                        'type' => 'CREATE',
-                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                    ]);
-
-                                    ReportDeposit::create([
-                                        'payment_type' => 'deposit',
-                                        'report_balance' => 0,
-                                        'visitor_id' => $req->get('page'),
-                                        'user_id' => Auth()->id(),
-                                        'fund' => $deposit->balance,
-                                        'status' => 'Berkurang',
-                                        'created_at' => Carbon::now(),
-                                    ]);
-    
-                                    ReportLimit::create([
-                                        'visitor_id' => $req->get('page'),
-                                        'user_id' => Auth()->id(),
-                                        'report_quota' => $log_limit->quota,
-                                        'report_quota_kupon' => $log_limit->quota_kupon,
-                                        'status' => 'Berkurang',
-                                        'created_at' => Carbon::now(),
-                                    ]);
-    
-                                    \Cart::session($req->get('page'))->clear();
-        
-                                    if ($req->ajax()) {
-                                        $this->setResponse('VALID', "Pembayaran berhasil");
-                                        return response()->json($this->getResponse());
-                                    }
-                                } catch (\Throwable $th) {
-                                    return response()->json($this->getResponse());
-                                }
-                            } else {
-                                $minus_deposit = $remaining_balance - $req->get('bayar_input');
-                                $deposit->balance = $deposit->balance - $minus_deposit;
-                                try {
-                                    LogTransaction::create([
-                                        'order_number' => $req->get('order_number'),
-                                        'visitor_id' => $req->get('page'),
-                                        'user_id' => Auth()->id(),
-                                        'cart' => serialize($cart_data),
-                                        'payment_type' => serialize([
-                                            ['payment_type' => 'deposit','transaction_amount' => $minus_deposit,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
-                                            ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => 0],
-                                            ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
-                                        ]),
-                                        'payment_status' => 'paid',
-                                        'total' => $remaining_balance,
-                                        'total_gross' => $totalPrice,
-                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                    ]);
-                                    
-                                    $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
-                                    $log_limit->save();
-                                    $deposit->save();
-    
-                                    LogAdmin::create([
-                                        'user_id' => Auth::id(),
-                                        'type' => 'CREATE',
-                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                    ]);
-
-                                    ReportDeposit::create([
-                                        'payment_type' => 'deposit',
-                                        'report_balance' => $minus_deposit,
-                                        'visitor_id' => $req->get('page'),
-                                        'user_id' => Auth()->id(),
-                                        'fund' => $deposit->balance,
-                                        'status' => 'Berkurang',
-                                        'created_at' => Carbon::now(),
-                                    ]);
-    
-                                    ReportLimit::create([
-                                        'visitor_id' => $req->get('page'),
-                                        'user_id' => Auth()->id(),
-                                        'report_quota' => $log_limit->quota,
-                                        'report_quota_kupon' => $log_limit->quota_kupon,
-                                        'status' => 'Berkurang',
-                                        'created_at' => Carbon::now(),
-                                    ]);
-    
-                                    \Cart::session($req->get('page'))->clear();
-        
-                                    if ($req->ajax()) {
-                                        $this->setResponse('VALID', "Pembayaran berhasil");
-                                        return response()->json($this->getResponse());
-                                    }
-                                } catch (\Throwable $th) {
-                                    return response()->json($this->getResponse());
-                                }
-                            }
-                        } else if ($req->get('type_multiple')[2] == 'limit') {
-                            if ($req->get('bayar_input') > ceil($remaining_balance)) {
-                                try {
-                                    LogTransaction::create([
-                                        'order_number' => $req->get('order_number'),
-                                        'visitor_id' => $req->get('page'),
-                                        'user_id' => Auth()->id(),
-                                        'cart' => serialize($cart_data),
-                                        'payment_type' => serialize([
-                                            ['payment_type' => 'deposit','transaction_amount' => 0,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
-                                            ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => $req->get('refund')],
-                                            ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single, 'refund' => 0]
-                                        ]),
-                                        'payment_status' => 'paid',
-                                        'total' => $remaining_balance,
-                                        'total_gross' => $totalPrice,
-                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                    ]);
-    
-                                    $log_limit->quota = $log_limit->quota - 1;
-                                    $log_limit->save();
-    
-                                    LogAdmin::create([
-                                        'user_id' => Auth::id(),
-                                        'type' => 'CREATE',
-                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                    ]);
-
-                                    ReportDeposit::create([
-                                        'payment_type' => 'deposit',
-                                        'report_balance' => 0,
-                                        'visitor_id' => $req->get('page'),
-                                        'user_id' => Auth()->id(),
-                                        'fund' => $deposit->balance,
-                                        'status' => 'Berkurang',
-                                        'created_at' => Carbon::now(),
-                                    ]);
-    
-                                    ReportLimit::create([
-                                        'visitor_id' => $req->get('page'),
-                                        'user_id' => Auth()->id(),
-                                        'report_quota' => $log_limit->quota,
-                                        'report_quota_kupon' => $log_limit->quota_kupon,
-                                        'status' => 'Berkurang',
-                                        'created_at' => Carbon::now(),
-                                    ]);
-    
-                                    \Cart::session($req->get('page'))->clear();
-        
-                                    if ($req->ajax()) {
-                                        $this->setResponse('VALID', "Pembayaran berhasil");
-                                        return response()->json($this->getResponse());
-                                    }
-                                } catch (\Throwable $th) {
-                                    return response()->json($this->getResponse());
-                                }
-                            } else {
-                                $minus_deposit = $remaining_balance - $req->get('bayar_input');
-                                $deposit->balance = $deposit->balance - $minus_deposit;
-                                try {
-                                    LogTransaction::create([
-                                        'order_number' => $req->get('order_number'),
-                                        'visitor_id' => $req->get('page'),
-                                        'user_id' => Auth()->id(),
-                                        'cart' => serialize($cart_data),
-                                        'payment_type' => serialize([
-                                            ['payment_type' => 'deposit','transaction_amount' => $minus_deposit,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
-                                            ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => 0],
-                                            ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single, 'refund' => 0]
-                                        ]),
-                                        'payment_status' => 'paid',
-                                        'total' => $remaining_balance,
-                                        'total_gross' => $totalPrice,
-                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                    ]);
-                                    
-                                    $log_limit->quota = $log_limit->quota - 1;
-                                    $log_limit->save();
-                                    $deposit->save();
-    
-                                    LogAdmin::create([
-                                        'user_id' => Auth::id(),
-                                        'type' => 'CREATE',
-                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                    ]);
-
-                                    ReportDeposit::create([
-                                        'payment_type' => 'deposit',
-                                        'report_balance' => $minus_deposit,
-                                        'visitor_id' => $req->get('page'),
-                                        'user_id' => Auth()->id(),
-                                        'fund' => $deposit->balance,
-                                        'status' => 'Berkurang',
-                                        'created_at' => Carbon::now(),
-                                    ]);
-    
-                                    ReportLimit::create([
-                                        'visitor_id' => $req->get('page'),
-                                        'user_id' => Auth()->id(),
-                                        'report_quota' => $log_limit->quota,
-                                        'report_quota_kupon' => $log_limit->quota_kupon,
-                                        'status' => 'Berkurang',
-                                        'created_at' => Carbon::now(),
-                                    ]);
-    
-                                    \Cart::session($req->get('page'))->clear();
-        
-                                    if ($req->ajax()) {
-                                        $this->setResponse('VALID', "Pembayaran berhasil");
-                                        return response()->json($this->getResponse());
-                                    }
-                                } catch (\Throwable $th) {
                                     return response()->json($this->getResponse());
                                 }
                             }
                         }
                     }
-                } else {
-                    if($deposit->balance < $totalPrice) {
-                        if(count($req->get('type_multiple')) == 1) {
-                            if ($req->get('type_multiple')[0] == 'deposit') {
-                                if ($deposit->balance < $totalPrice) {
-                                    $this->setResponse("INVALID", "Tambahkan metode lain untuk sisa pembayaran");
-                                    return response()->json($this->getResponse());
-                                }
-                            } else if ($req->get('type_multiple')[0] == 'cash/transfer') {
-                                if (is_null($req->get('bayar_input'))) {
-                                    $this->setResponse('INVALID', "Nominal wajib diisi");
+                } else if ($req->get('type_single') == 2) {
+                    if($visitor->expired_date <= Carbon::now()) {
+                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                        return response()->json($this->getResponse());
+                    } else if($visitor->status == 'inactive') {
+                        $this->setResponse('INVALID', "Member tidak aktif");
+                        return response()->json($this->getResponse());
+                    } else {
+                        if ($log_limit->quota_kupon == 0) {
+                            $this->setResponse('INVALID', "Kupon tidak terpenuhi");
+                            return response()->json($this->getResponse());
+                        } else {
+                            $id_package = [];
+                            foreach ($items as $sd) {
+                                $id_package[] = $sd['id'];
+                            }
+                            $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
+                            $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
+                            if (count($package_additional) >= 1) {
+                                $this->setResponse('INVALID', "Kupon hanya berlaku satu jenis permainan");
+                                return response()->json($this->getResponse());
+                            } else if ($package_default) {
+                                if (count($package_default) != 1) {
+                                    $this->setResponse('INVALID', "Single kupon hanya berlaku satu jenis permainan");
                                     return response()->json($this->getResponse());
                                 } else {
-                                    if ($req->get('bayar_input') != $totalPrice) {
-                                        if ($req->get('bayar_input') > $totalPrice) {
-                                            try {
-                                                LogTransaction::create([
-                                                    'order_number' => $req->get('order_number'),
-                                                    'visitor_id' => $req->get('page'),
-                                                    'user_id' => Auth()->id(),
-                                                    'cart' => serialize($cart_data),
-                                                    'payment_type' => serialize([[
-                                                        'payment_type' => 'cash/transfer', 
-                                                        'transaction_amount' => $req->get('bayar_input'), 
-                                                        'balance' => 0,
-                                                        'discount' => 0,
-                                                        'refund' => $req->get('refund')
-                                                    ]]),
-                                                    'payment_status' => 'paid',
-                                                    'total' => $totalPrice,
-                                                    'total_gross' => $totalPrice,
-                                                    'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                                    'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                                    'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                                ]);
-                
-                                                LogAdmin::create([
-                                                    'user_id' => Auth::id(),
-                                                    'type' => 'CREATE',
-                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                                ]);
-                
-                                                \Cart::session($req->get('page'))->clear();
-                
-                                                if ($req->ajax()) {
-                                                    return response()->json([
-                                                        'status' => 'VALID',
-                                                        'message' => 'Pembayaran berhasil',
-                                                        'return' => $req->get('bayar_input')
-                                                    ]);
-                                                }
-                                            } catch (Throwable $e) {
-                                                return response()->json($this->getResponse());
-                                            }
-                                        } else {
-                                            $this->setResponse('INVALID', "Nominal yang harus dibayarkan $totalPrice");
-                                            return response()->json($this->getResponse());
-                                        }
+                                    $cek_itemId = $items->whereIn('id', $id_package);
+                                    $item_default = 0;
+                                    foreach($cek_itemId as $item){
+                                        $item_default += $item['quantity'];
+                                    }
+                                    if ($item_default != 1) {
+                                        $this->setResponse('INVALID', "Kupon hanya berlaku untuk satu permainan");
+                                        return response()->json($this->getResponse());
                                     } else {
                                         try {
+                                            $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
+                                            $log_limit->save();
+        
                                             LogTransaction::create([
                                                 'order_number' => $req->get('order_number'),
                                                 'visitor_id' => $req->get('page'),
                                                 'user_id' => Auth()->id(),
                                                 'cart' => serialize($cart_data),
                                                 'payment_type' => serialize([[
-                                                    'payment_type' => 'cash/transfer', 
-                                                    'transaction_amount' => $req->get('bayar_input'), 
-                                                    'balance' => 0,
-                                                    'discount' => 0,
+                                                    'payment_type' => 'kupon', 
+                                                    'transaction_amount' => $price_single, 
+                                                    'balance' => $log_limit->quota_kupon,
+                                                    'discount' => $price_single,
                                                     'refund' => 0
                                                 ]]),
                                                 'payment_status' => 'paid',
+                                                'total' => $totalPrice - $price_single,
+                                                'total_gross' => $totalPrice,
+                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                            ]);
+        
+                                            LogAdmin::create([
+                                                'user_id' => Auth::id(),
+                                                'type' => 'CREATE',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                            ]);
+        
+                                            // informasi limit kupon
+                                            ReportLimit::create([
+                                                'status' => 'Berkurang',
+                                                'report_quota' => $log_limit->quota,
+                                                'report_quota_kupon' => $log_limit->quota_kupon,
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'created_at' => Carbon::now(),
+                                            ]);
+                                            \Cart::session($req->get('page'))->clear();
+        
+                                            $log_limit = LogLimit::where('visitor_id', $req->get('page'))->first();
+                                            $data['qty'] = $row->quantity;
+                                            $total_qty = 0;
+                                            foreach ($cart_data as $get) {
+                                                $total_qty += $get['qty'];
+                                            }
+                                            $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
+                                            $payment_type = unserialize($log_transaction->payment_type);
+        
+                                            $data = [
+                                                'name' => $visitor->name,
+                                                'email' => $visitor->email,
+                                                'address' => $visitor->address,
+                                                'phone' => $visitor->phone,
+                                                'type_member' => $visitor->tipe_member,
+                                                'order_number' => $req->get('order_number'),
+                                                'payment_type' => $payment_type,
+                                                'date' => $row->attributes['created_at'],
+                                                'pricesingle' => $row->price,
+                                                'price' => $row->getPriceSum(),
                                                 'total' => $totalPrice,
-                                                'total_gross' => $totalPrice,
-                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                            ]);
-            
-                                            LogAdmin::create([
-                                                'user_id' => Auth::id(),
-                                                'type' => 'CREATE',
-                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                            ]);
-            
-                                            \Cart::session($req->get('page'))->clear();
-            
-                                            if ($req->ajax()) {
-                                                return response()->json([
-                                                    'status' => 'VALID',
-                                                    'message' => 'Pembayaran berhasil',
-                                                    'return' => $req->get('bayar_input')
-                                                ]);
-                                            }
-                                        } catch (\Throwable $th) {
-                                            return response()->json($this->getResponse());
-                                        }
-                                    }
-                                }
-                            } else if($req->get('type_multiple')[0] == 'kupon') {
-                                if($item_default != 1){
-                                    $this->setResponse('INVALID', "Gunakan split deposit atau cash/transfer");
-                                    return response()->json($this->getResponse());
-                                } else {
-                                    try{
-                                        $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
-                                        $log_limit->save();
-    
-                                        LogTransaction::create([
-                                            'order_number' => $req->get('order_number'),
-                                            'visitor_id' => $req->get('page'),
-                                            'user_id' => Auth()->id(),
-                                            'cart' => serialize($cart_data),
-                                            'payment_type' => serialize([[
-                                                'payment_type' => 'kupon',
-                                                'transaction_amount' => $price_single,
-                                                'balance' => $log_limit->quota_kupon,
-                                                'discount' => $price_single,
-                                                'refund' => 0
-                                            ]]),
-                                            'payment_status' => 'paid',
-                                            'total' => $totalPrice - $price_single,
-                                            'total_gross' => $totalPrice,
-                                            'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                            'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                            'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                        ]);
-    
-                                        LogAdmin::create([
-                                            'user_id' => Auth::id(),
-                                            'type' => 'CREATE',
-                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                        ]);
-    
-                                        ReportLimit::create([
-                                            'visitor_id' => $req->get('page'),
-                                            'user_id' => Auth()->id(),
-                                            'report_quota' => $log_limit->quota,
-                                            'report_quota_kupon' => $log_limit->quota_kupon,
-                                            'status' => 'Berkurang',
-                                            'created_at' => Carbon::now(),
-                                        ]);
-                                        
-                                        \Cart::session($req->get('page'))->clear();
-            
-                                        if ($req->ajax()) {
-                                            $this->setResponse('VALID', "Pembayaran berhasil");
-                                            return response()->json($this->getResponse());
-                                        }
-                                    } catch (Throwable $e) {
-                                        return response()->json($this->getResponse());
-                                    }
-                                }
-                            } else if($req->get('type_multiple')[0] == 'limit') {
-                                if($item_default != 1){
-                                    $this->setResponse('INVALID', "Gunakan split deposit atau cash/transfer");
-                                    return response()->json($this->getResponse());
-                                } else {
-                                    try{
-                                        $log_limit->quota = $log_limit->quota - 1;
-                                        $log_limit->save();
-    
-                                        LogTransaction::create([
-                                            'order_number' => $req->get('order_number'),
-                                            'visitor_id' => $req->get('page'),
-                                            'user_id' => Auth()->id(),
-                                            'cart' => serialize($cart_data),
-                                            'payment_type' => serialize([[
-                                                'payment_type' => 'limit',
-                                                'transaction_amount' => $price_single,
-                                                'balance' => $log_limit->quota,
-                                                'discount' => $price_single,
-                                                'refund' => 0
-                                            ]]),
-                                            'payment_status' => 'paid',
-                                            'total' => $totalPrice - $price_single,
-                                            'total_gross' => $totalPrice,
-                                            'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                            'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                            'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                        ]);
-    
-                                        LogAdmin::create([
-                                            'user_id' => Auth::id(),
-                                            'type' => 'CREATE',
-                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                        ]);
-    
-                                        ReportLimit::create([
-                                            'visitor_id' => $req->get('page'),
-                                            'user_id' => Auth()->id(),
-                                            'report_quota' => $log_limit->quota,
-                                            'report_quota_kupon' => $log_limit->quota_kupon,
-                                            'status' => 'Berkurang',
-                                            'created_at' => Carbon::now(),
-                                        ]);
-                                        
-                                        \Cart::session($req->get('page'))->clear();
-            
-                                        if ($req->ajax()) {
-                                            $this->setResponse('VALID', "Pembayaran berhasil");
-                                            return response()->json($this->getResponse());
-                                        }
-                                    } catch (Throwable $e) {
-                                        return response()->json($this->getResponse());
-                                    }
-                                }
-                            }
-                        } else if (count($req->get('type_multiple')) == 2) {
-                            if($req->get('type_multiple')[0] == 'deposit') {
-                                if($req->get('type_multiple')[1] == 'cash/transfer') {
-                                    if (is_null($req->get('bayar_input'))) {
-                                        $this->setResponse('INVALID', "Nominal wajib diisi");
-                                        return response()->json($this->getResponse());
-                                    } else {
-                                        $remaining_balance = $totalPrice - $deposit->balance;
-                                        if ($req->get('bayar_input') != ceil($remaining_balance)) {
-                                            if ($req->get('bayar_input') >= ceil($remaining_balance)){
-                                                try{
-                                                    $deposit_before = $deposit->balance;
-                                                    $deposit->balance = $deposit->balance - $deposit->balance;
-                                                    $deposit->save();
-                            
-                                                    LogTransaction::create([
-                                                        'order_number' => $req->get('order_number'),
-                                                        'visitor_id' => $req->get('page'),
-                                                        'user_id' => Auth()->id(),
-                                                        'cart' => serialize($cart_data),
-                                                        'payment_type' => serialize([
-                                                            ['payment_type' => 'deposit','transaction_amount' => $deposit_before,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
-                                                            ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => $req->get('refund')]
-                                                        ]),
-                                                        'payment_status' => 'paid',
-                                                        'total' => $totalPrice,
-                                                        'total_gross' => $totalPrice,
-                                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                                    ]);
-                    
-                                                    LogAdmin::create([
-                                                        'user_id' => Auth::id(),
-                                                        'type' => 'CREATE',
-                                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                                    ]);
-                    
-                                                    ReportDeposit::create([
-                                                        'payment_type' => 'deposit',
-                                                        'report_balance' => $deposit_before,
-                                                        'visitor_id' => $req->get('page'),
-                                                        'user_id' => Auth()->id(),
-                                                        'fund' => $deposit->balance,
-                                                        'status' => 'Berkurang',
-                                                        'created_at' => Carbon::now(),
-                                                    ]);
-                                                    \Cart::session($req->get('page'))->clear();
-                        
-                                                    if ($req->ajax()) {
-                                                        $this->setResponse('VALID', "Pembayaran berhasil");
-                                                        return response()->json($this->getResponse());
-                                                    }
-                        
-                                                } catch (Throwable $e) {
-                                                    return response()->json($this->getResponse());
-                                                }
-                                            } else {
-                                                $this->setResponse('INVALID', "Nominal yang harus dibayarkan $remaining_balance");
-                                                return response()->json($this->getResponse());
-                                            }
-                                        } else {
-                                            try{
-                                                $deposit_before = $deposit->balance;
-                                                $deposit->balance = $deposit->balance - $deposit->balance;
-                                                $deposit->save();
-                        
-                                                LogTransaction::create([
-                                                    'order_number' => $req->get('order_number'),
-                                                    'visitor_id' => $req->get('page'),
-                                                    'user_id' => Auth()->id(),
-                                                    'cart' => serialize($cart_data),
-                                                    'payment_type' => serialize([
-                                                        ['payment_type' => 'deposit','transaction_amount' => $deposit_before,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
-                                                        ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => 0]
-                                                    ]),
-                                                    'payment_status' => 'paid',
-                                                    'total' => $totalPrice,
-                                                    'total_gross' => $totalPrice,
-                                                    'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                                    'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                                    'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                                ]);
-                
-                                                LogAdmin::create([
-                                                    'user_id' => Auth::id(),
-                                                    'type' => 'CREATE',
-                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                                ]);
-                
-                                                ReportDeposit::create([
-                                                    'payment_type' => 'deposit',
-                                                    'report_balance' => $deposit_before,
-                                                    'visitor_id' => $req->get('page'),
-                                                    'user_id' => Auth()->id(),
-                                                    'fund' => $deposit->balance,
-                                                    'status' => 'Berkurang',
-                                                    'created_at' => Carbon::now(),
-                                                ]);
-                                                \Cart::session($req->get('page'))->clear();
-                    
-                                                if ($req->ajax()) {
-                                                    $this->setResponse('VALID', "Pembayaran berhasil");
-                                                    return response()->json($this->getResponse());
-                                                }
-                    
-                                            } catch (Throwable $e) {
-                                                return response()->json($this->getResponse());
-                                            }
-                                        }
-                                    }
-                                } else if($req->get('type_multiple')[1] == 'kupon') {
-                                    $remaining_balance = $totalPrice - $deposit->balance;
-                                    if($remaining_balance != $price_single) {
-                                        if ($remaining_balance >= $price_single){
-                                            $this->setResponse('INVALID', "Tambahkan cash/transfer untuk sisa bayar");
-                                            return response()->json($this->getResponse());
-                                        } else {
-                                            $this->setResponse('INVALID', "Harga satuan kupon tidak terpenuhi");
-                                            return response()->json($this->getResponse());
-                                        }
-                                    } else {
-                                        try {
-                                            $deposit_before = $deposit->balance;
-                                            $deposit->balance = $deposit->balance - $deposit->balance;
-                                            $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
-                                            $log_limit->save();
-                                            $deposit->save();
-    
-                                            LogTransaction::create([
-                                                'order_number' => $req->get('order_number'),
-                                                'visitor_id' => $req->get('page'),
-                                                'user_id' => Auth()->id(),
-                                                'cart' => serialize($cart_data),
-                                                'payment_type' => serialize([
-                                                    ['payment_type' => 'deposit','transaction_amount' => $deposit_before,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
-                                                    ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon, 'discount' => $price_single, 'refund' => 0]
-                                                ]),
-                                                'payment_status' => 'paid',
-                                                'total' => $deposit_before,
-                                                'total_gross' => $totalPrice,
-                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                            ]);
-            
-                                            LogAdmin::create([
-                                                'user_id' => Auth::id(),
-                                                'type' => 'CREATE',
-                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                            ]);
-            
-                                            ReportDeposit::create([
-                                                'payment_type' => 'deposit',
-                                                'report_balance' => $deposit_before,
-                                                'visitor_id' => $req->get('page'),
-                                                'user_id' => Auth()->id(),
-                                                'fund' => $deposit->balance,
-                                                'status' => 'Berkurang',
-                                                'created_at' => Carbon::now(),
-                                            ]);
-            
-                                            ReportLimit::create([
-                                                'visitor_id' => $req->get('page'),
-                                                'user_id' => Auth()->id(),
-                                                'report_quota' => $log_limit->quota,
-                                                'report_quota_kupon' => $log_limit->quota_kupon,
-                                                'status' => 'Berkurang',
-                                                'created_at' => Carbon::now(),
-                                            ]);
-            
-                                            \Cart::session($req->get('page'))->clear();
-                
+                                                'qty' => $row->quantity,
+                                                'total_qty' => $total_qty,
+                                                'cart' => $cart_data,
+                                                'sisakupon' => $log_limit->quota_kupon,
+                                            ];
+                                            dispatch(new SendMailPaymentsuccess4Job($data));
+        
                                             if ($req->ajax()) {
                                                 $this->setResponse('VALID', "Pembayaran berhasil");
                                                 return response()->json($this->getResponse());
-                                            }
-                                        } catch (\Throwable $th) {
-                                            return response()->json($this->getResponse());
-                                        }
-                                    }
-                                } else if($req->get('type_multiple')[1] == 'limit') {
-                                    $remaining_balance = $totalPrice - $deposit->balance;
-                                    if($remaining_balance != $price_single) {
-                                        if ($remaining_balance >= $price_single){
-                                            $this->setResponse('INVALID', "Tambahkan cash/transfer untuk sisa bayar");
-                                            return response()->json($this->getResponse());
-                                        } else {
-                                            $this->setResponse('INVALID', "Harga satuan limit tidak terpenuhi");
-                                            return response()->json($this->getResponse());
-                                        }
-                                    } else {
-                                        try {
-                                            $deposit_before = $deposit->balance;
-                                            $deposit->balance = $deposit->balance - $deposit->balance;
-                                            $log_limit->quota = $log_limit->quota - 1;
-                                            $log_limit->save();
-                                            $deposit->save();
-    
-                                            LogTransaction::create([
-                                                'order_number' => $req->get('order_number'),
-                                                'visitor_id' => $req->get('page'),
-                                                'user_id' => Auth()->id(),
-                                                'cart' => serialize($cart_data),
-                                                'payment_type' => serialize([
-                                                    ['payment_type' => 'deposit','transaction_amount' => $deposit_before,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
-                                                    ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota, 'discount' => $price_single, 'refund' => 0]
-                                                ]),
-                                                'payment_status' => 'paid',
-                                                'total' => $deposit_before,
-                                                'total_gross' => $totalPrice,
-                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                            ]);
-            
-                                            LogAdmin::create([
-                                                'user_id' => Auth::id(),
-                                                'type' => 'CREATE',
-                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                            ]);
-            
-                                            ReportDeposit::create([
-                                                'payment_type' => 'deposit',
-                                                'report_balance' => $deposit_before,
-                                                'visitor_id' => $req->get('page'),
-                                                'user_id' => Auth()->id(),
-                                                'fund' => $deposit->balance,
-                                                'status' => 'Berkurang',
-                                                'created_at' => Carbon::now(),
-                                            ]);
-            
-                                            ReportLimit::create([
-                                                'visitor_id' => $req->get('page'),
-                                                'user_id' => Auth()->id(),
-                                                'report_quota' => $log_limit->quota,
-                                                'report_quota_kupon' => $log_limit->quota_kupon,
-                                                'status' => 'Berkurang',
-                                                'created_at' => Carbon::now(),
-                                            ]);
-            
-                                            \Cart::session($req->get('page'))->clear();
-                
-                                            if ($req->ajax()) {
-                                                $this->setResponse('VALID', "Pembayaran berhasil");
-                                                return response()->json($this->getResponse());
-                                            }
-                                        } catch (\Throwable $th) {
-                                            return response()->json($this->getResponse());
-                                        }
-                                    }
-                                }
-                            } else if($req->get('type_multiple')[0] == 'cash/transfer') {
-                                if($req->get('type_multiple')[1] == 'kupon') {
-                                    if (is_null($req->get('bayar_input'))) {
-                                        $this->setResponse('INVALID', "Nominal wajib diisi");
-                                        return response()->json($this->getResponse());
-                                    } else {
-                                        $coupon_free = $totalPrice - $price_single;
-                                        if($req->get('bayar_input') != $coupon_free) {
-                                            if($req->get('bayar_input') >= $coupon_free) {
-                                                $log_limit->quota_kupon = $log_limit->quota_kupon -1;
-                                                $log_limit->save();
-
-                                                try {
-                                                    LogTransaction::create([
-                                                        'order_number' => $req->get('order_number'),
-                                                        'visitor_id' => $req->get('page'),
-                                                        'user_id' => Auth()->id(),
-                                                        'cart' => serialize($cart_data),
-                                                        'payment_type' => serialize([
-                                                            ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => $req->get('refund')],
-                                                            ['payment_type' => 'kupon', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota_kupon,'discount' => $price_single, 'refund' => 0]
-                                                        ]),
-                                                        'payment_status' => 'paid',
-                                                        'total' => $totalPrice - $price_single,
-                                                        'total_gross' => $totalPrice,
-                                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                                    ]);
-                    
-                                                    LogAdmin::create([
-                                                        'user_id' => Auth::id(),
-                                                        'type' => 'CREATE',
-                                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                                    ]);
-
-                                                    ReportLimit::create([
-                                                        'visitor_id' => $req->get('page'),
-                                                        'user_id' => Auth()->id(),
-                                                        'report_quota' => $log_limit->quota,
-                                                        'report_quota_kupon' => $log_limit->quota_kupon,
-                                                        'status' => 'Berkurang',
-                                                        'created_at' => Carbon::now(),
-                                                    ]);
-                    
-                                                    \Cart::session($req->get('page'))->clear();
-                    
-                                                    if ($req->ajax()) {
-                                                        return response()->json([
-                                                            'status' => 'VALID',
-                                                            'message' => 'Pembayaran berhasil',
-                                                            'return' => $req->get('bayar_input')
-                                                        ]);
-                                                    }
-                                                } catch (\Throwable $th) {
-                                                    return response()->json($this->getResponse());
-                                                }
-                                            } else {
-                                                $this->setResponse('INVALID', "Nominal yang harus dibayarkan $coupon_free");
-                                                return response()->json($this->getResponse());
-                                            }
-                                        } else {
-                                            $log_limit->quota_kupon = $log_limit->quota_kupon -1;
-                                            $log_limit->save();
-                                            try {
-                                                LogTransaction::create([
-                                                    'order_number' => $req->get('order_number'),
-                                                    'visitor_id' => $req->get('page'),
-                                                    'user_id' => Auth()->id(),
-                                                    'cart' => serialize($cart_data),
-                                                    'payment_type' => serialize([
-                                                        ['payment_type' => 'cash/transfer', 'transaction_amount' => $coupon_free, 'balance' => 0,'discount' => 0, 'refund' => 0],
-                                                        ['payment_type' => 'kupon', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota_kupon,'discount' => $price_single, 'refund' => 0]
-                                                    ]),
-                                                    'payment_status' => 'paid',
-                                                    'total' => $totalPrice - $price_single,
-                                                    'total_gross' => $totalPrice,
-                                                    'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                                    'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                                    'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                                ]);
-                
-                                                LogAdmin::create([
-                                                    'user_id' => Auth::id(),
-                                                    'type' => 'CREATE',
-                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                                ]);
-
-                                                ReportLimit::create([
-                                                    'visitor_id' => $req->get('page'),
-                                                    'user_id' => Auth()->id(),
-                                                    'report_quota' => $log_limit->quota,
-                                                    'report_quota_kupon' => $log_limit->quota_kupon,
-                                                    'status' => 'Berkurang',
-                                                    'created_at' => Carbon::now(),
-                                                ]);
-                
-                                                \Cart::session($req->get('page'))->clear();
-                
-                                                if ($req->ajax()) {
-                                                    return response()->json([
-                                                        'status' => 'VALID',
-                                                        'message' => 'Pembayaran berhasil',
-                                                        'return' => $req->get('bayar_input')
-                                                    ]);
-                                                }
-                                            } catch (\Throwable $th) {
-                                                return response()->json($this->getResponse());
-                                            }
-                                        }
-                                    }
-                                } else if($req->get('type_multiple')[1] == 'limit') {
-                                    if (is_null($req->get('bayar_input'))) {
-                                        $this->setResponse('INVALID', "Nominal wajib diisi");
-                                        return response()->json($this->getResponse());
-                                    } else {
-                                        $limit_free = $totalPrice - $price_single;
-                                        if($req->get('bayar_input') != $limit_free) {
-                                            if($req->get('bayar_input') >= $limit_free) {
-                                                $log_limit->quota = $log_limit->quota -1;
-                                                $log_limit->save();
-
-                                                try {
-                                                    LogTransaction::create([
-                                                        'order_number' => $req->get('order_number'),
-                                                        'visitor_id' => $req->get('page'),
-                                                        'user_id' => Auth()->id(),
-                                                        'cart' => serialize($cart_data),
-                                                        'payment_type' => serialize([
-                                                            ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => $req->get('refund')],
-                                                            ['payment_type' => 'limit', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota,'discount' => $price_single, 'refund' => 0]
-                                                        ]),
-                                                        'payment_status' => 'paid',
-                                                        'total' => $totalPrice - $price_single,
-                                                        'total_gross' => $totalPrice,
-                                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                                    ]);
-                    
-                                                    LogAdmin::create([
-                                                        'user_id' => Auth::id(),
-                                                        'type' => 'CREATE',
-                                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                                    ]);
-
-                                                    ReportLimit::create([
-                                                        'visitor_id' => $req->get('page'),
-                                                        'user_id' => Auth()->id(),
-                                                        'report_quota' => $log_limit->quota,
-                                                        'report_quota_kupon' => $log_limit->quota_kupon,
-                                                        'status' => 'Berkurang',
-                                                        'created_at' => Carbon::now(),
-                                                    ]);
-                    
-                                                    \Cart::session($req->get('page'))->clear();
-                    
-                                                    if ($req->ajax()) {
-                                                        return response()->json([
-                                                            'status' => 'VALID',
-                                                            'message' => 'Pembayaran berhasil',
-                                                            'return' => $req->get('bayar_input')
-                                                        ]);
-                                                    }
-                                                } catch (\Throwable $th) {
-                                                    return response()->json($this->getResponse());
-                                                }
-                                            } else {
-                                                $this->setResponse('INVALID', "Nominal yang harus dibayarkan $limit_free");
-                                                return response()->json($this->getResponse());
-                                            }
-                                        } else {
-                                            $log_limit->quota = $log_limit->quota -1;
-                                            $log_limit->save();
-                                            try {
-                                                LogTransaction::create([
-                                                    'order_number' => $req->get('order_number'),
-                                                    'visitor_id' => $req->get('page'),
-                                                    'user_id' => Auth()->id(),
-                                                    'cart' => serialize($cart_data),
-                                                    'payment_type' => serialize([
-                                                        ['payment_type' => 'cash/transfer', 'transaction_amount' => $limit_free, 'balance' => 0,'discount' => 0, 'refund' => 0],
-                                                        ['payment_type' => 'limit', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota,'discount' => $price_single, 'refund' => 0]
-                                                    ]),
-                                                    'payment_status' => 'paid',
-                                                    'total' => $totalPrice - $price_single,
-                                                    'total_gross' => $totalPrice,
-                                                    'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                                    'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                                    'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                                ]);
-                
-                                                LogAdmin::create([
-                                                    'user_id' => Auth::id(),
-                                                    'type' => 'CREATE',
-                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                                ]);
-
-                                                ReportLimit::create([
-                                                    'visitor_id' => $req->get('page'),
-                                                    'user_id' => Auth()->id(),
-                                                    'report_quota' => $log_limit->quota,
-                                                    'report_quota_kupon' => $log_limit->quota_kupon,
-                                                    'status' => 'Berkurang',
-                                                    'created_at' => Carbon::now(),
-                                                ]);
-                
-                                                \Cart::session($req->get('page'))->clear();
-                
-                                                if ($req->ajax()) {
-                                                    return response()->json([
-                                                        'status' => 'VALID',
-                                                        'message' => 'Pembayaran berhasil',
-                                                        'return' => $req->get('bayar_input')
-                                                    ]);
-                                                }
-                                            } catch (\Throwable $th) {
-                                                return response()->json($this->getResponse());
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        } else if (count($req->get('type_multiple')) == 3) {
-                            $disc = $totalPrice - $price_single;
-                            $deposit_before = $deposit->balance;
-                            $minus_deposit = $disc - $deposit->balance;
-                            $deposit->balance = $deposit->balance - $deposit->balance;
-                            if($req->get('type_multiple')[2] == 'kupon') {
-                                if (is_null($req->get('bayar_input'))) {
-                                    $this->setResponse('INVALID', "Nominal wajib diisi");
-                                    return response()->json($this->getResponse());
-                                } else {
-                                    if ($req->get('bayar_input') < $minus_deposit) {
-                                        $this->setResponse('INVALID', "Nominal sisa bayar $minus_deposit");
-                                        return response()->json($this->getResponse());
-                                    } else {
-                                        try {
-                                            LogTransaction::create([
-                                                'order_number' => $req->get('order_number'),
-                                                'visitor_id' => $req->get('page'),
-                                                'user_id' => Auth()->id(),
-                                                'cart' => serialize($cart_data),
-                                                'payment_type' => serialize([
-                                                    ['payment_type' => 'deposit', 'transaction_amount' => $deposit_before, 'balance' => $deposit->balance,'discount' => 0, 'refund' => 0],
-                                                    ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => $req->get('refund')],
-                                                    ['payment_type' => 'kupon', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota_kupon - 1,'discount' => $price_single, 'refund' => 0]
-                                                ]),
-                                                'payment_status' => 'paid',
-                                                'total' => $disc,
-                                                'total_gross' => $totalPrice,
-                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                            ]);
-                                            
-                                            $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
-                                            $log_limit->save();
-                                            $deposit->save();
-            
-                                            LogAdmin::create([
-                                                'user_id' => Auth::id(),
-                                                'type' => 'CREATE',
-                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                            ]);
-        
-                                            ReportDeposit::create([
-                                                'payment_type' => 'deposit',
-                                                'report_balance' => $disc,
-                                                'visitor_id' => $req->get('page'),
-                                                'user_id' => Auth()->id(),
-                                                'fund' => $deposit_before,
-                                                'status' => 'Berkurang',
-                                                'created_at' => Carbon::now(),
-                                            ]);
-    
-                                            ReportLimit::create([
-                                                'visitor_id' => $req->get('page'),
-                                                'user_id' => Auth()->id(),
-                                                'report_quota' => $log_limit->quota,
-                                                'report_quota_kupon' => $log_limit->quota_kupon,
-                                                'status' => 'Berkurang',
-                                                'created_at' => Carbon::now(),
-                                            ]);
-            
-                                            \Cart::session($req->get('page'))->clear();
-            
-                                            if ($req->ajax()) {
-                                                return response()->json([
-                                                    'status' => 'VALID',
-                                                    'message' => 'Pembayaran berhasil',
-                                                    'return' => $req->get('bayar_input')
-                                                ]);
-                                            }
-                                        } catch (\Throwable $th) {
-                                            return response()->json($this->getResponse());
-                                        }
-                                    }
-                                }
-                            } else if($req->get('type_multiple')[2] == 'limit') {
-                                if (is_null($req->get('bayar_input'))) {
-                                    $this->setResponse('INVALID', "Nominal wajib diisi");
-                                    return response()->json($this->getResponse());
-                                } else {
-                                    if ($req->get('bayar_input') < $minus_deposit) {
-                                        $this->setResponse('INVALID', "Nominal sisa bayar $minus_deposit");
-                                        return response()->json($this->getResponse());
-                                    } else {
-                                        try {
-                                            LogTransaction::create([
-                                                'order_number' => $req->get('order_number'),
-                                                'visitor_id' => $req->get('page'),
-                                                'user_id' => Auth()->id(),
-                                                'cart' => serialize($cart_data),
-                                                'payment_type' => serialize([
-                                                    ['payment_type' => 'deposit', 'transaction_amount' => $deposit_before, 'balance' => $deposit->balance,'discount' => 0, 'refund' => 0],
-                                                    ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => $req->get('refund')],
-                                                    ['payment_type' => 'limit', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota - 1,'discount' => $price_single, 'refund' => 0]
-                                                ]),
-                                                'payment_status' => 'paid',
-                                                'total' => $disc,
-                                                'total_gross' => $totalPrice,
-                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                            ]);
-                                            
-                                            $log_limit->quota = $log_limit->quota - 1;
-                                            $log_limit->save();
-                                            $deposit->save();
-            
-                                            LogAdmin::create([
-                                                'user_id' => Auth::id(),
-                                                'type' => 'CREATE',
-                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                            ]);
-        
-                                            ReportDeposit::create([
-                                                'payment_type' => 'deposit',
-                                                'report_balance' => $disc,
-                                                'visitor_id' => $req->get('page'),
-                                                'user_id' => Auth()->id(),
-                                                'fund' => $deposit_before,
-                                                'status' => 'Berkurang',
-                                                'created_at' => Carbon::now(),
-                                            ]);
-    
-                                            ReportLimit::create([
-                                                'visitor_id' => $req->get('page'),
-                                                'user_id' => Auth()->id(),
-                                                'report_quota' => $log_limit->quota,
-                                                'report_quota_kupon' => $log_limit->quota_kupon,
-                                                'status' => 'Berkurang',
-                                                'created_at' => Carbon::now(),
-                                            ]);
-            
-                                            \Cart::session($req->get('page'))->clear();
-            
-                                            if ($req->ajax()) {
-                                                return response()->json([
-                                                    'status' => 'VALID',
-                                                    'message' => 'Pembayaran berhasil',
-                                                    'return' => $req->get('bayar_input')
-                                                ]);
                                             }
                                         } catch (\Throwable $th) {
                                             return response()->json($this->getResponse());
@@ -2575,9 +807,140 @@ class OrderController extends Controller
                                 }
                             }
                         }
+                    }
+                } else {
+                    if($visitor->expired_date <= Carbon::now()) {
+                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                        return response()->json($this->getResponse());
+                    } else if($visitor->status == 'inactive') {
+                        $this->setResponse('INVALID', "Member tidak aktif");
+                        return response()->json($this->getResponse());
                     } else {
-                        if(count($req->get('type_multiple')) == 1) {
-                            if ($req->get('type_multiple')[0] == 'deposit') {
+                        if ($log_limit->quota == 0) {
+                            $this->setResponse('INVALID', "Limit tidak terpenuhi");
+                            return response()->json($this->getResponse());
+                        } else {
+                            $id_package = [];
+                            foreach ($items as $sd) {
+                                $id_package[] = $sd['id'];
+                            }
+                            $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
+                            $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
+                            if (count($package_additional) >= 1) {
+                                $this->setResponse('INVALID', "Limit hanya berlaku satu jenis permainan");
+                                return response()->json($this->getResponse());
+                            } else if ($package_default) {
+                                if (count($package_default) != 1) {
+                                    $this->setResponse('INVALID', "Single limit hanya berlaku satu jenis permainan");
+                                    return response()->json($this->getResponse());
+                                } else {
+                                    $cek_itemId = $items->whereIn('id', $id_package);
+                                    $item_default = 0;
+                                    foreach($cek_itemId as $item){
+                                        $item_default += $item['quantity'];
+                                    }
+                                    if ($item_default != 1) {
+                                        $this->setResponse('INVALID', "Limit hanya berlaku untuk satu permainan");
+                                        return response()->json($this->getResponse());
+                                    } else {
+                                        try {
+                                            $log_limit->quota = $log_limit->quota - 1;
+                                            $log_limit->save();
+        
+                                            LogTransaction::create([
+                                                'order_number' => $req->get('order_number'),
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'cart' => serialize($cart_data),
+                                                'payment_type' => serialize([[
+                                                    'payment_type' => 'limit', 
+                                                    'transaction_amount' => $price_single, 
+                                                    'balance' => $log_limit->quota,
+                                                    'discount' => $price_single,
+                                                    'refund' => 0
+                                                ]]),
+                                                'payment_status' => 'paid',
+                                                'total' => $totalPrice - $price_single,
+                                                'total_gross' => $totalPrice,
+                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                            ]);
+        
+                                            LogAdmin::create([
+                                                'user_id' => Auth::id(),
+                                                'type' => 'CREATE',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                            ]);
+        
+                                            // informasi limit bulanan
+                                            ReportLimit::create([
+                                                'status' => 'Berkurang',
+                                                'report_quota' => $log_limit->quota,
+                                                'report_quota_kupon' => $log_limit->quota_kupon,
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'created_at' => Carbon::now(),
+                                            ]);
+                                            \Cart::session($req->get('page'))->clear();
+        
+                                            $log_limit = LogLimit::where('visitor_id', $req->get('page'))->first();
+                                            $data['qty'] = $row->quantity;
+                                            $total_qty = 0;
+                                            foreach ($cart_data as $get) {
+                                                $total_qty += $get['qty'];
+                                            }
+                                            $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
+                                            $payment_type = unserialize($log_transaction->payment_type);
+        
+                                            $data = [
+                                                'name' => $visitor->name,
+                                                'email' => $visitor->email,
+                                                'address' => $visitor->address,
+                                                'phone' => $visitor->phone,
+                                                'type_member' => $visitor->tipe_member,
+                                                'order_number' => $req->get('order_number'),
+                                                'payment_type' => $payment_type,
+                                                'date' => $row->attributes['created_at'],
+                                                'pricesingle' => $row->price,
+                                                'price' => $row->getPriceSum(),
+                                                'total' => $totalPrice,
+                                                'qty' => $row->quantity,
+                                                'total_qty' => $total_qty,
+                                                'cart' => $cart_data,
+                                                'sisabulanan' => $log_limit->quota,
+                                            ];
+                                            dispatch(new SendMailPaymentsuccess4Job($data));
+        
+                                            if ($req->ajax()) {
+                                                $this->setResponse('VALID', "Pembayaran berhasil");
+                                                return response()->json($this->getResponse());
+                                            }
+                                        } catch (\Throwable $th) {
+                                            return response()->json($this->getResponse());
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            if (empty($req->get('type_multiple'))) {
+                $this->setResponse('INVALID', "Silahkan pilih jenis split pembayaran");
+                return response()->json($this->getResponse());
+            } else {
+                if($deposit->balance == $totalPrice) {
+                    if(count($req->get('type_multiple')) == 1) {
+                        if ($req->get('type_multiple')[0] == 'deposit') {
+                            if($visitor->expired_date <= Carbon::now()) {
+                                $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                return response()->json($this->getResponse());
+                            } else if($visitor->status == 'inactive') {
+                                $this->setResponse('INVALID', "Member tidak aktif");
+                                return response()->json($this->getResponse());
+                            } else {
                                 try{
                                     $deposit->balance = $deposit->balance - $totalPrice;
                                     $deposit->save();
@@ -2626,7 +989,15 @@ class OrderController extends Controller
                                 } catch (Throwable $e) {
                                     return response()->json($this->getResponse());
                                 }
-                            } else if ($req->get('type_multiple')[0] == 'cash/transfer') {
+                            }
+                        } else if ($req->get('type_multiple')[0] == 'cash/transfer') {
+                            if($visitor->expired_date <= Carbon::now()) {
+                                $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                return response()->json($this->getResponse());
+                            } else if($visitor->status == 'inactive') {
+                                $this->setResponse('INVALID', "Member tidak aktif");
+                                return response()->json($this->getResponse());
+                            } else {
                                 if (is_null($req->get('bayar_input'))) {
                                     $this->setResponse('INVALID', "Nominal wajib diisi");
                                     return response()->json($this->getResponse());
@@ -2718,7 +1089,15 @@ class OrderController extends Controller
                                         }
                                     }
                                 }
-                            } else if ($req->get('type_multiple')[0] == 'kupon') {
+                            }
+                        } else if ($req->get('type_multiple')[0] == 'kupon') {
+                            if($visitor->expired_date <= Carbon::now()) {
+                                $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                return response()->json($this->getResponse());
+                            } else if($visitor->status == 'inactive') {
+                                $this->setResponse('INVALID', "Member tidak aktif");
+                                return response()->json($this->getResponse());
+                            } else {
                                 if($item_default != 1){
                                     $this->setResponse('INVALID', "Gunakan split deposit atau cash/transfer");
                                     return response()->json($this->getResponse());
@@ -2772,7 +1151,15 @@ class OrderController extends Controller
                                         return response()->json($this->getResponse());
                                     }
                                 }
-                            } else if ($req->get('type_multiple')[0] == 'limit') {
+                            }
+                        } else if ($req->get('type_multiple')[0] == 'limit') {
+                            if($visitor->expired_date <= Carbon::now()) {
+                                $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                return response()->json($this->getResponse());
+                            } else if($visitor->status == 'inactive') {
+                                $this->setResponse('INVALID', "Member tidak aktif");
+                                return response()->json($this->getResponse());
+                            } else {
                                 if($item_default != 1){
                                     $this->setResponse('INVALID', "Gunakan split deposit atau cash/transfer");
                                     return response()->json($this->getResponse());
@@ -2827,9 +1214,17 @@ class OrderController extends Controller
                                     }
                                 }
                             }
-                        } else if (count($req->get('type_multiple')) == 2) {
-                            if($req->get('type_multiple')[0] == 'deposit') {
-                                if($req->get('type_multiple')[1] == 'cash/transfer') {
+                        }
+                    } else if (count($req->get('type_multiple')) == 2) {
+                        if($req->get('type_multiple')[0] == 'deposit') {
+                            if($req->get('type_multiple')[1] == 'cash/transfer') {
+                                if($visitor->expired_date <= Carbon::now()) {
+                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    return response()->json($this->getResponse());
+                                } else if($visitor->status == 'inactive') {
+                                    $this->setResponse('INVALID', "Member tidak aktif");
+                                    return response()->json($this->getResponse());
+                                } else {
                                     if (is_null($req->get('bayar_input'))) {
                                         $this->setResponse('INVALID', "Nominal wajib diisi");
                                         return response()->json($this->getResponse());
@@ -2852,13 +1247,13 @@ class OrderController extends Controller
                                                     'jml_additional' => array_sum(array_column($priceAdditional,'price')),
                                                     'jml_other' => array_sum(array_column($priceOthers,'price')),
                                                 ]);
-
+    
                                                 LogAdmin::create([
                                                     'user_id' => Auth::id(),
                                                     'type' => 'CREATE',
                                                     'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
                                                 ]);
-
+    
                                                 ReportDeposit::create([
                                                     'payment_type' => 'deposit',
                                                     'report_balance' => 0,
@@ -2868,7 +1263,7 @@ class OrderController extends Controller
                                                     'status' => 'Berkurang',
                                                     'created_at' => Carbon::now(),
                                                 ]);
-
+    
                                                 \Cart::session($req->get('page'))->clear();
                 
                                                 if ($req->ajax()) {
@@ -2878,7 +1273,7 @@ class OrderController extends Controller
                                                         'return' => $req->get('bayar_input')
                                                     ]);
                                                 }
-
+    
                                             } catch (\Throwable $th) {
                                                 return response()->json($this->getResponse());
                                             }
@@ -2903,13 +1298,13 @@ class OrderController extends Controller
                                                     'jml_additional' => array_sum(array_column($priceAdditional,'price')),
                                                     'jml_other' => array_sum(array_column($priceOthers,'price')),
                                                 ]);
-
+    
                                                 LogAdmin::create([
                                                     'user_id' => Auth::id(),
                                                     'type' => 'CREATE',
                                                     'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
                                                 ]);
-
+    
                                                 ReportDeposit::create([
                                                     'payment_type' => 'deposit',
                                                     'report_balance' => $minus_deposit,
@@ -2919,7 +1314,7 @@ class OrderController extends Controller
                                                     'status' => 'Berkurang',
                                                     'created_at' => Carbon::now(),
                                                 ]);
-
+    
                                                 \Cart::session($req->get('page'))->clear();
                 
                                                 if ($req->ajax()) {
@@ -2929,28 +1324,36 @@ class OrderController extends Controller
                                                         'return' => $req->get('bayar_input')
                                                     ]);
                                                 }
-
+    
                                             } catch (\Throwable $th) {
                                                 return response()->json($this->getResponse());
                                             }
                                         }
                                     }
-                                } else if ($req->get('type_multiple')[1] == 'kupon') {
+                                }
+                            } else if ($req->get('type_multiple')[1] == 'kupon') {
+                                if($visitor->expired_date <= Carbon::now()) {
+                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    return response()->json($this->getResponse());
+                                } else if($visitor->status == 'inactive') {
+                                    $this->setResponse('INVALID', "Member tidak aktif");
+                                    return response()->json($this->getResponse());
+                                } else {
                                     try {
                                         $deposit_before = $deposit->balance;
-                                        $minus_price_single = $totalPrice - $price_single;
-
+                                        $deposit->balance = $totalPrice - $price_single;
+    
                                         LogTransaction::create([
                                             'order_number' => $req->get('order_number'),
                                             'visitor_id' => $req->get('page'),
                                             'user_id' => Auth()->id(),
                                             'cart' => serialize($cart_data),
                                             'payment_type' => serialize([
-                                                ['payment_type' => 'deposit','transaction_amount' => $minus_price_single,'balance' => $deposit->balance - $minus_price_single, 'discount' => 0, 'refund' => 0],
-                                                ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
+                                                ['payment_type' => 'deposit','transaction_amount' => $deposit->balance,'balance' => $deposit_before, 'discount' => 0, 'refund' => 0],
+                                                ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon, 'discount' => $price_single, 'refund' => 0]
                                             ]),
                                             'payment_status' => 'paid',
-                                            'total' => $minus_price_single,
+                                            'total' => $deposit->balance,
                                             'total_gross' => $totalPrice,
                                             'jml_default' => array_sum(array_column($priceDefault,'price')),
                                             'jml_additional' => array_sum(array_column($priceAdditional,'price')),
@@ -2965,77 +1368,15 @@ class OrderController extends Controller
         
                                         ReportDeposit::create([
                                             'payment_type' => 'deposit',
-                                            'report_balance' => $minus_price_single,
+                                            'report_balance' => $deposit->balance,
                                             'visitor_id' => $req->get('page'),
                                             'user_id' => Auth()->id(),
-                                            'fund' => $deposit->balance - $minus_price_single,
+                                            'fund' => $deposit_before,
                                             'status' => 'Berkurang',
                                             'created_at' => Carbon::now(),
                                         ]);
-
+    
                                         $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
-                                        $deposit->balance = $deposit->balance - $minus_price_single;
-                                        $log_limit->save();
-                                        $deposit->save();
-        
-                                        ReportLimit::create([
-                                            'visitor_id' => $req->get('page'),
-                                            'user_id' => Auth()->id(),
-                                            'report_quota' => $log_limit->quota,
-                                            'report_quota_kupon' => $log_limit->quota_kupon,
-                                            'status' => 'Berkurang',
-                                            'created_at' => Carbon::now(),
-                                        ]);
-        
-                                        \Cart::session($req->get('page'))->clear();
-            
-                                        if ($req->ajax()) {
-                                            $this->setResponse('VALID', "Pembayaran berhasil");
-                                            return response()->json($this->getResponse());
-                                        }
-                                    } catch (\Throwable $th) {
-                                        return response()->json($this->getResponse());
-                                    }
-                                } else if ($req->get('type_multiple')[1] == 'limit') {
-                                    try {
-                                        $deposit_before = $deposit->balance;
-                                        $minus_price_single = $totalPrice - $price_single;
-
-                                        LogTransaction::create([
-                                            'order_number' => $req->get('order_number'),
-                                            'visitor_id' => $req->get('page'),
-                                            'user_id' => Auth()->id(),
-                                            'cart' => serialize($cart_data),
-                                            'payment_type' => serialize([
-                                                ['payment_type' => 'deposit','transaction_amount' => $minus_price_single,'balance' => $deposit->balance - $minus_price_single, 'discount' => 0, 'refund' => 0],
-                                                ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single, 'refund' => 0]
-                                            ]),
-                                            'payment_status' => 'paid',
-                                            'total' => $minus_price_single,
-                                            'total_gross' => $totalPrice,
-                                            'jml_default' => array_sum(array_column($priceDefault,'price')),
-                                            'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                                            'jml_other' => array_sum(array_column($priceOthers,'price')),
-                                        ]);
-        
-                                        LogAdmin::create([
-                                            'user_id' => Auth::id(),
-                                            'type' => 'CREATE',
-                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
-                                        ]);
-        
-                                        ReportDeposit::create([
-                                            'payment_type' => 'deposit',
-                                            'report_balance' => $minus_price_single,
-                                            'visitor_id' => $req->get('page'),
-                                            'user_id' => Auth()->id(),
-                                            'fund' => $deposit->balance - $minus_price_single,
-                                            'status' => 'Berkurang',
-                                            'created_at' => Carbon::now(),
-                                        ]);
-
-                                        $log_limit->quota = $log_limit->quota - 1;
-                                        $deposit->balance = $deposit->balance - $minus_price_single;
                                         $log_limit->save();
                                         $deposit->save();
         
@@ -3058,8 +1399,84 @@ class OrderController extends Controller
                                         return response()->json($this->getResponse());
                                     }
                                 }
-                            } else if($req->get('type_multiple')[0] == 'cash/transfer') {
-                                if($req->get('type_multiple')[1] == 'kupon') {
+                            } else if ($req->get('type_multiple')[1] == 'limit') {
+                                if($visitor->expired_date <= Carbon::now()) {
+                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    return response()->json($this->getResponse());
+                                } else if($visitor->status == 'inactive') {
+                                    $this->setResponse('INVALID', "Member tidak aktif");
+                                    return response()->json($this->getResponse());
+                                } else {
+                                    try {
+                                        $deposit_before = $deposit->balance;
+                                        $deposit->balance = $totalPrice - $price_single;
+    
+                                        LogTransaction::create([
+                                            'order_number' => $req->get('order_number'),
+                                            'visitor_id' => $req->get('page'),
+                                            'user_id' => Auth()->id(),
+                                            'cart' => serialize($cart_data),
+                                            'payment_type' => serialize([
+                                                ['payment_type' => 'deposit','transaction_amount' => $deposit->balance,'balance' => $deposit_before, 'discount' => 0, 'refund' => 0],
+                                                ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota, 'discount' => $price_single, 'refund' => 0]
+                                            ]),
+                                            'payment_status' => 'paid',
+                                            'total' => $deposit->balance,
+                                            'total_gross' => $totalPrice,
+                                            'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                            'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                            'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                        ]);
+        
+                                        LogAdmin::create([
+                                            'user_id' => Auth::id(),
+                                            'type' => 'CREATE',
+                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                        ]);
+        
+                                        ReportDeposit::create([
+                                            'payment_type' => 'deposit',
+                                            'report_balance' => $deposit->balance,
+                                            'visitor_id' => $req->get('page'),
+                                            'user_id' => Auth()->id(),
+                                            'fund' => $deposit_before,
+                                            'status' => 'Berkurang',
+                                            'created_at' => Carbon::now(),
+                                        ]);
+    
+                                        $log_limit->quota = $log_limit->quota - 1;
+                                        $log_limit->save();
+                                        $deposit->save();
+        
+                                        ReportLimit::create([
+                                            'visitor_id' => $req->get('page'),
+                                            'user_id' => Auth()->id(),
+                                            'report_quota' => $log_limit->quota,
+                                            'report_quota_kupon' => $log_limit->quota_kupon,
+                                            'status' => 'Berkurang',
+                                            'created_at' => Carbon::now(),
+                                        ]);
+        
+                                        \Cart::session($req->get('page'))->clear();
+            
+                                        if ($req->ajax()) {
+                                            $this->setResponse('VALID', "Pembayaran berhasil");
+                                            return response()->json($this->getResponse());
+                                        }
+                                    } catch (\Throwable $th) {
+                                        return response()->json($this->getResponse());
+                                    }
+                                }
+                            }
+                        } else if($req->get('type_multiple')[0] == 'cash/transfer') {
+                            if($req->get('type_multiple')[1] == 'kupon') {
+                                if($visitor->expired_date <= Carbon::now()) {
+                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    return response()->json($this->getResponse());
+                                } else if($visitor->status == 'inactive') {
+                                    $this->setResponse('INVALID', "Member tidak aktif");
+                                    return response()->json($this->getResponse());
+                                } else {
                                     if (is_null($req->get('bayar_input'))) {
                                         $this->setResponse('INVALID', "Nominal wajib diisi");
                                         return response()->json($this->getResponse());
@@ -3116,7 +1533,15 @@ class OrderController extends Controller
                                             return response()->json($this->getResponse());
                                         }
                                     }
-                                } else if($req->get('type_multiple')[1] == 'limit') {
+                                }
+                            } else if($req->get('type_multiple')[1] == 'limit') {
+                                if($visitor->expired_date <= Carbon::now()) {
+                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    return response()->json($this->getResponse());
+                                } else if($visitor->status == 'inactive') {
+                                    $this->setResponse('INVALID', "Member tidak aktif");
+                                    return response()->json($this->getResponse());
+                                } else {
                                     if (is_null($req->get('bayar_input'))) {
                                         $this->setResponse('INVALID', "Nominal wajib diisi");
                                         return response()->json($this->getResponse());
@@ -3175,9 +1600,17 @@ class OrderController extends Controller
                                     }
                                 }
                             }
-                        } else if (count($req->get('type_multiple')) == 3) {
-                            $remaining_balance = $totalPrice - $price_single;
-                            if($req->get('type_multiple')[2] == 'kupon') {
+                        }
+                    } else if (count($req->get('type_multiple')) == 3) {
+                        $remaining_balance = $totalPrice - $price_single;
+                        if($req->get('type_multiple')[2] == 'kupon') {
+                            if($visitor->expired_date <= Carbon::now()) {
+                                $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                return response()->json($this->getResponse());
+                            } else if($visitor->status == 'inactive') {
+                                $this->setResponse('INVALID', "Member tidak aktif");
+                                return response()->json($this->getResponse());
+                            } else {
                                 if ($req->get('bayar_input') > ceil($remaining_balance)) {
                                     try {
                                         LogTransaction::create([
@@ -3206,7 +1639,7 @@ class OrderController extends Controller
                                             'type' => 'CREATE',
                                             'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
                                         ]);
-
+    
                                         ReportDeposit::create([
                                             'payment_type' => 'deposit',
                                             'report_balance' => 0,
@@ -3266,7 +1699,7 @@ class OrderController extends Controller
                                             'type' => 'CREATE',
                                             'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
                                         ]);
-
+    
                                         ReportDeposit::create([
                                             'payment_type' => 'deposit',
                                             'report_balance' => $minus_deposit,
@@ -3296,7 +1729,15 @@ class OrderController extends Controller
                                         return response()->json($this->getResponse());
                                     }
                                 }
-                            } else if ($req->get('type_multiple')[2] == 'limit') {
+                            }
+                        } else if ($req->get('type_multiple')[2] == 'limit') {
+                            if($visitor->expired_date <= Carbon::now()) {
+                                $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                return response()->json($this->getResponse());
+                            } else if($visitor->status == 'inactive') {
+                                $this->setResponse('INVALID', "Member tidak aktif");
+                                return response()->json($this->getResponse());
+                            } else {
                                 if ($req->get('bayar_input') > ceil($remaining_balance)) {
                                     try {
                                         LogTransaction::create([
@@ -3325,7 +1766,7 @@ class OrderController extends Controller
                                             'type' => 'CREATE',
                                             'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
                                         ]);
-
+    
                                         ReportDeposit::create([
                                             'payment_type' => 'deposit',
                                             'report_balance' => 0,
@@ -3385,7 +1826,7 @@ class OrderController extends Controller
                                             'type' => 'CREATE',
                                             'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
                                         ]);
-
+    
                                         ReportDeposit::create([
                                             'payment_type' => 'deposit',
                                             'report_balance' => $minus_deposit,
@@ -3413,6 +1854,1858 @@ class OrderController extends Controller
                                         }
                                     } catch (\Throwable $th) {
                                         return response()->json($this->getResponse());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    if($deposit->balance < $totalPrice) {
+                        if(count($req->get('type_multiple')) == 1) {
+                            if ($req->get('type_multiple')[0] == 'deposit') {
+                                if($visitor->expired_date <= Carbon::now()) {
+                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    return response()->json($this->getResponse());
+                                } else if($visitor->status == 'inactive') {
+                                    $this->setResponse('INVALID', "Member tidak aktif");
+                                    return response()->json($this->getResponse());
+                                } else {
+                                    if ($deposit->balance < $totalPrice) {
+                                        $this->setResponse("INVALID", "Tambahkan metode lain untuk sisa pembayaran");
+                                        return response()->json($this->getResponse());
+                                    }
+                                }
+                            } else if ($req->get('type_multiple')[0] == 'cash/transfer') {
+                                if($visitor->expired_date <= Carbon::now()) {
+                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    return response()->json($this->getResponse());
+                                } else if($visitor->status == 'inactive') {
+                                    $this->setResponse('INVALID', "Member tidak aktif");
+                                    return response()->json($this->getResponse());
+                                } else {
+                                    if (is_null($req->get('bayar_input'))) {
+                                        $this->setResponse('INVALID', "Nominal wajib diisi");
+                                        return response()->json($this->getResponse());
+                                    } else {
+                                        if ($req->get('bayar_input') != $totalPrice) {
+                                            if ($req->get('bayar_input') > $totalPrice) {
+                                                try {
+                                                    LogTransaction::create([
+                                                        'order_number' => $req->get('order_number'),
+                                                        'visitor_id' => $req->get('page'),
+                                                        'user_id' => Auth()->id(),
+                                                        'cart' => serialize($cart_data),
+                                                        'payment_type' => serialize([[
+                                                            'payment_type' => 'cash/transfer', 
+                                                            'transaction_amount' => $req->get('bayar_input'), 
+                                                            'balance' => 0,
+                                                            'discount' => 0,
+                                                            'refund' => $req->get('refund')
+                                                        ]]),
+                                                        'payment_status' => 'paid',
+                                                        'total' => $totalPrice,
+                                                        'total_gross' => $totalPrice,
+                                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                                    ]);
+                    
+                                                    LogAdmin::create([
+                                                        'user_id' => Auth::id(),
+                                                        'type' => 'CREATE',
+                                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                                    ]);
+                    
+                                                    \Cart::session($req->get('page'))->clear();
+                    
+                                                    if ($req->ajax()) {
+                                                        return response()->json([
+                                                            'status' => 'VALID',
+                                                            'message' => 'Pembayaran berhasil',
+                                                            'return' => $req->get('bayar_input')
+                                                        ]);
+                                                    }
+                                                } catch (Throwable $e) {
+                                                    return response()->json($this->getResponse());
+                                                }
+                                            } else {
+                                                $this->setResponse('INVALID', "Nominal yang harus dibayarkan $totalPrice");
+                                                return response()->json($this->getResponse());
+                                            }
+                                        } else {
+                                            try {
+                                                LogTransaction::create([
+                                                    'order_number' => $req->get('order_number'),
+                                                    'visitor_id' => $req->get('page'),
+                                                    'user_id' => Auth()->id(),
+                                                    'cart' => serialize($cart_data),
+                                                    'payment_type' => serialize([[
+                                                        'payment_type' => 'cash/transfer', 
+                                                        'transaction_amount' => $req->get('bayar_input'), 
+                                                        'balance' => 0,
+                                                        'discount' => 0,
+                                                        'refund' => 0
+                                                    ]]),
+                                                    'payment_status' => 'paid',
+                                                    'total' => $totalPrice,
+                                                    'total_gross' => $totalPrice,
+                                                    'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                    'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                    'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                                ]);
+                
+                                                LogAdmin::create([
+                                                    'user_id' => Auth::id(),
+                                                    'type' => 'CREATE',
+                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                                ]);
+                
+                                                \Cart::session($req->get('page'))->clear();
+                
+                                                if ($req->ajax()) {
+                                                    return response()->json([
+                                                        'status' => 'VALID',
+                                                        'message' => 'Pembayaran berhasil',
+                                                        'return' => $req->get('bayar_input')
+                                                    ]);
+                                                }
+                                            } catch (\Throwable $th) {
+                                                return response()->json($this->getResponse());
+                                            }
+                                        }
+                                    }
+                                }
+                            } else if($req->get('type_multiple')[0] == 'kupon') {
+                                if($visitor->expired_date <= Carbon::now()) {
+                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    return response()->json($this->getResponse());
+                                } else if($visitor->status == 'inactive') {
+                                    $this->setResponse('INVALID', "Member tidak aktif");
+                                    return response()->json($this->getResponse());
+                                } else {
+                                    if($item_default != 1){
+                                        $this->setResponse('INVALID', "Gunakan split deposit atau cash/transfer");
+                                        return response()->json($this->getResponse());
+                                    } else {
+                                        try{
+                                            $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
+                                            $log_limit->save();
+        
+                                            LogTransaction::create([
+                                                'order_number' => $req->get('order_number'),
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'cart' => serialize($cart_data),
+                                                'payment_type' => serialize([[
+                                                    'payment_type' => 'kupon',
+                                                    'transaction_amount' => $price_single,
+                                                    'balance' => $log_limit->quota_kupon,
+                                                    'discount' => $price_single,
+                                                    'refund' => 0
+                                                ]]),
+                                                'payment_status' => 'paid',
+                                                'total' => $totalPrice - $price_single,
+                                                'total_gross' => $totalPrice,
+                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                            ]);
+        
+                                            LogAdmin::create([
+                                                'user_id' => Auth::id(),
+                                                'type' => 'CREATE',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                            ]);
+        
+                                            ReportLimit::create([
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'report_quota' => $log_limit->quota,
+                                                'report_quota_kupon' => $log_limit->quota_kupon,
+                                                'status' => 'Berkurang',
+                                                'created_at' => Carbon::now(),
+                                            ]);
+                                            
+                                            \Cart::session($req->get('page'))->clear();
+                
+                                            if ($req->ajax()) {
+                                                $this->setResponse('VALID', "Pembayaran berhasil");
+                                                return response()->json($this->getResponse());
+                                            }
+                                        } catch (Throwable $e) {
+                                            return response()->json($this->getResponse());
+                                        }
+                                    }
+                                }
+                            } else if($req->get('type_multiple')[0] == 'limit') {
+                                if($visitor->expired_date <= Carbon::now()) {
+                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    return response()->json($this->getResponse());
+                                } else if($visitor->status == 'inactive') {
+                                    $this->setResponse('INVALID', "Member tidak aktif");
+                                    return response()->json($this->getResponse());
+                                } else {
+                                    if($item_default != 1){
+                                        $this->setResponse('INVALID', "Gunakan split deposit atau cash/transfer");
+                                        return response()->json($this->getResponse());
+                                    } else {
+                                        try{
+                                            $log_limit->quota = $log_limit->quota - 1;
+                                            $log_limit->save();
+        
+                                            LogTransaction::create([
+                                                'order_number' => $req->get('order_number'),
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'cart' => serialize($cart_data),
+                                                'payment_type' => serialize([[
+                                                    'payment_type' => 'limit',
+                                                    'transaction_amount' => $price_single,
+                                                    'balance' => $log_limit->quota,
+                                                    'discount' => $price_single,
+                                                    'refund' => 0
+                                                ]]),
+                                                'payment_status' => 'paid',
+                                                'total' => $totalPrice - $price_single,
+                                                'total_gross' => $totalPrice,
+                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                            ]);
+        
+                                            LogAdmin::create([
+                                                'user_id' => Auth::id(),
+                                                'type' => 'CREATE',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                            ]);
+        
+                                            ReportLimit::create([
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'report_quota' => $log_limit->quota,
+                                                'report_quota_kupon' => $log_limit->quota_kupon,
+                                                'status' => 'Berkurang',
+                                                'created_at' => Carbon::now(),
+                                            ]);
+                                            
+                                            \Cart::session($req->get('page'))->clear();
+                
+                                            if ($req->ajax()) {
+                                                $this->setResponse('VALID', "Pembayaran berhasil");
+                                                return response()->json($this->getResponse());
+                                            }
+                                        } catch (Throwable $e) {
+                                            return response()->json($this->getResponse());
+                                        }
+                                    }
+                                }
+                            }
+                        } else if (count($req->get('type_multiple')) == 2) {
+                            if($req->get('type_multiple')[0] == 'deposit') {
+                                if($req->get('type_multiple')[1] == 'cash/transfer') {
+                                    if($visitor->expired_date <= Carbon::now()) {
+                                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                        return response()->json($this->getResponse());
+                                    } else if($visitor->status == 'inactive') {
+                                        $this->setResponse('INVALID', "Member tidak aktif");
+                                        return response()->json($this->getResponse());
+                                    } else {
+                                        if (is_null($req->get('bayar_input'))) {
+                                            $this->setResponse('INVALID', "Nominal wajib diisi");
+                                            return response()->json($this->getResponse());
+                                        } else {
+                                            $remaining_balance = $totalPrice - $deposit->balance;
+                                            if ($req->get('bayar_input') != ceil($remaining_balance)) {
+                                                if ($req->get('bayar_input') >= ceil($remaining_balance)){
+                                                    try{
+                                                        $deposit_before = $deposit->balance;
+                                                        $deposit->balance = $deposit->balance - $deposit->balance;
+                                                        $deposit->save();
+                                
+                                                        LogTransaction::create([
+                                                            'order_number' => $req->get('order_number'),
+                                                            'visitor_id' => $req->get('page'),
+                                                            'user_id' => Auth()->id(),
+                                                            'cart' => serialize($cart_data),
+                                                            'payment_type' => serialize([
+                                                                ['payment_type' => 'deposit','transaction_amount' => $deposit_before,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
+                                                                ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => $req->get('refund')]
+                                                            ]),
+                                                            'payment_status' => 'paid',
+                                                            'total' => $totalPrice,
+                                                            'total_gross' => $totalPrice,
+                                                            'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                            'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                            'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                                        ]);
+                        
+                                                        LogAdmin::create([
+                                                            'user_id' => Auth::id(),
+                                                            'type' => 'CREATE',
+                                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                                        ]);
+                        
+                                                        ReportDeposit::create([
+                                                            'payment_type' => 'deposit',
+                                                            'report_balance' => $deposit_before,
+                                                            'visitor_id' => $req->get('page'),
+                                                            'user_id' => Auth()->id(),
+                                                            'fund' => $deposit->balance,
+                                                            'status' => 'Berkurang',
+                                                            'created_at' => Carbon::now(),
+                                                        ]);
+                                                        \Cart::session($req->get('page'))->clear();
+                            
+                                                        if ($req->ajax()) {
+                                                            $this->setResponse('VALID', "Pembayaran berhasil");
+                                                            return response()->json($this->getResponse());
+                                                        }
+                            
+                                                    } catch (Throwable $e) {
+                                                        return response()->json($this->getResponse());
+                                                    }
+                                                } else {
+                                                    $this->setResponse('INVALID', "Nominal yang harus dibayarkan $remaining_balance");
+                                                    return response()->json($this->getResponse());
+                                                }
+                                            } else {
+                                                try{
+                                                    $deposit_before = $deposit->balance;
+                                                    $deposit->balance = $deposit->balance - $deposit->balance;
+                                                    $deposit->save();
+                            
+                                                    LogTransaction::create([
+                                                        'order_number' => $req->get('order_number'),
+                                                        'visitor_id' => $req->get('page'),
+                                                        'user_id' => Auth()->id(),
+                                                        'cart' => serialize($cart_data),
+                                                        'payment_type' => serialize([
+                                                            ['payment_type' => 'deposit','transaction_amount' => $deposit_before,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
+                                                            ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => 0]
+                                                        ]),
+                                                        'payment_status' => 'paid',
+                                                        'total' => $totalPrice,
+                                                        'total_gross' => $totalPrice,
+                                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                                    ]);
+                    
+                                                    LogAdmin::create([
+                                                        'user_id' => Auth::id(),
+                                                        'type' => 'CREATE',
+                                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                                    ]);
+                    
+                                                    ReportDeposit::create([
+                                                        'payment_type' => 'deposit',
+                                                        'report_balance' => $deposit_before,
+                                                        'visitor_id' => $req->get('page'),
+                                                        'user_id' => Auth()->id(),
+                                                        'fund' => $deposit->balance,
+                                                        'status' => 'Berkurang',
+                                                        'created_at' => Carbon::now(),
+                                                    ]);
+                                                    \Cart::session($req->get('page'))->clear();
+                        
+                                                    if ($req->ajax()) {
+                                                        $this->setResponse('VALID', "Pembayaran berhasil");
+                                                        return response()->json($this->getResponse());
+                                                    }
+                        
+                                                } catch (Throwable $e) {
+                                                    return response()->json($this->getResponse());
+                                                }
+                                            }
+                                        }
+                                    }
+                                } else if($req->get('type_multiple')[1] == 'kupon') {
+                                    $remaining_balance = $totalPrice - $deposit->balance;
+                                    if($visitor->expired_date <= Carbon::now()) {
+                                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                        return response()->json($this->getResponse());
+                                    } else if($visitor->status == 'inactive') {
+                                        $this->setResponse('INVALID', "Member tidak aktif");
+                                        return response()->json($this->getResponse());
+                                    } else {
+                                        if($remaining_balance != $price_single) {
+                                            if ($remaining_balance >= $price_single){
+                                                $this->setResponse('INVALID', "Tambahkan cash/transfer untuk sisa bayar");
+                                                return response()->json($this->getResponse());
+                                            } else {
+                                                $this->setResponse('INVALID', "Harga satuan kupon tidak terpenuhi");
+                                                return response()->json($this->getResponse());
+                                            }
+                                        } else {
+                                            try {
+                                                $deposit_before = $deposit->balance;
+                                                $deposit->balance = $deposit->balance - $deposit->balance;
+                                                $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
+                                                $log_limit->save();
+                                                $deposit->save();
+        
+                                                LogTransaction::create([
+                                                    'order_number' => $req->get('order_number'),
+                                                    'visitor_id' => $req->get('page'),
+                                                    'user_id' => Auth()->id(),
+                                                    'cart' => serialize($cart_data),
+                                                    'payment_type' => serialize([
+                                                        ['payment_type' => 'deposit','transaction_amount' => $deposit_before,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
+                                                        ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon, 'discount' => $price_single, 'refund' => 0]
+                                                    ]),
+                                                    'payment_status' => 'paid',
+                                                    'total' => $deposit_before,
+                                                    'total_gross' => $totalPrice,
+                                                    'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                    'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                    'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                                ]);
+                
+                                                LogAdmin::create([
+                                                    'user_id' => Auth::id(),
+                                                    'type' => 'CREATE',
+                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                                ]);
+                
+                                                ReportDeposit::create([
+                                                    'payment_type' => 'deposit',
+                                                    'report_balance' => $deposit_before,
+                                                    'visitor_id' => $req->get('page'),
+                                                    'user_id' => Auth()->id(),
+                                                    'fund' => $deposit->balance,
+                                                    'status' => 'Berkurang',
+                                                    'created_at' => Carbon::now(),
+                                                ]);
+                
+                                                ReportLimit::create([
+                                                    'visitor_id' => $req->get('page'),
+                                                    'user_id' => Auth()->id(),
+                                                    'report_quota' => $log_limit->quota,
+                                                    'report_quota_kupon' => $log_limit->quota_kupon,
+                                                    'status' => 'Berkurang',
+                                                    'created_at' => Carbon::now(),
+                                                ]);
+                
+                                                \Cart::session($req->get('page'))->clear();
+                    
+                                                if ($req->ajax()) {
+                                                    $this->setResponse('VALID', "Pembayaran berhasil");
+                                                    return response()->json($this->getResponse());
+                                                }
+                                            } catch (\Throwable $th) {
+                                                return response()->json($this->getResponse());
+                                            }
+                                        }
+                                    }
+                                } else if($req->get('type_multiple')[1] == 'limit') {
+                                    $remaining_balance = $totalPrice - $deposit->balance;
+                                    if($visitor->expired_date <= Carbon::now()) {
+                                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                        return response()->json($this->getResponse());
+                                    } else if($visitor->status == 'inactive') {
+                                        $this->setResponse('INVALID', "Member tidak aktif");
+                                        return response()->json($this->getResponse());
+                                    } else {
+                                        if($remaining_balance != $price_single) {
+                                            if ($remaining_balance >= $price_single){
+                                                $this->setResponse('INVALID', "Tambahkan cash/transfer untuk sisa bayar");
+                                                return response()->json($this->getResponse());
+                                            } else {
+                                                $this->setResponse('INVALID', "Harga satuan limit tidak terpenuhi");
+                                                return response()->json($this->getResponse());
+                                            }
+                                        } else {
+                                            try {
+                                                $deposit_before = $deposit->balance;
+                                                $deposit->balance = $deposit->balance - $deposit->balance;
+                                                $log_limit->quota = $log_limit->quota - 1;
+                                                $log_limit->save();
+                                                $deposit->save();
+        
+                                                LogTransaction::create([
+                                                    'order_number' => $req->get('order_number'),
+                                                    'visitor_id' => $req->get('page'),
+                                                    'user_id' => Auth()->id(),
+                                                    'cart' => serialize($cart_data),
+                                                    'payment_type' => serialize([
+                                                        ['payment_type' => 'deposit','transaction_amount' => $deposit_before,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
+                                                        ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota, 'discount' => $price_single, 'refund' => 0]
+                                                    ]),
+                                                    'payment_status' => 'paid',
+                                                    'total' => $deposit_before,
+                                                    'total_gross' => $totalPrice,
+                                                    'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                    'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                    'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                                ]);
+                
+                                                LogAdmin::create([
+                                                    'user_id' => Auth::id(),
+                                                    'type' => 'CREATE',
+                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                                ]);
+                
+                                                ReportDeposit::create([
+                                                    'payment_type' => 'deposit',
+                                                    'report_balance' => $deposit_before,
+                                                    'visitor_id' => $req->get('page'),
+                                                    'user_id' => Auth()->id(),
+                                                    'fund' => $deposit->balance,
+                                                    'status' => 'Berkurang',
+                                                    'created_at' => Carbon::now(),
+                                                ]);
+                
+                                                ReportLimit::create([
+                                                    'visitor_id' => $req->get('page'),
+                                                    'user_id' => Auth()->id(),
+                                                    'report_quota' => $log_limit->quota,
+                                                    'report_quota_kupon' => $log_limit->quota_kupon,
+                                                    'status' => 'Berkurang',
+                                                    'created_at' => Carbon::now(),
+                                                ]);
+                
+                                                \Cart::session($req->get('page'))->clear();
+                    
+                                                if ($req->ajax()) {
+                                                    $this->setResponse('VALID', "Pembayaran berhasil");
+                                                    return response()->json($this->getResponse());
+                                                }
+                                            } catch (\Throwable $th) {
+                                                return response()->json($this->getResponse());
+                                            }
+                                        }
+                                    }
+                                }
+                            } else if($req->get('type_multiple')[0] == 'cash/transfer') {
+                                if($req->get('type_multiple')[1] == 'kupon') {
+                                    if($visitor->expired_date <= Carbon::now()) {
+                                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                        return response()->json($this->getResponse());
+                                    } else if($visitor->status == 'inactive') {
+                                        $this->setResponse('INVALID', "Member tidak aktif");
+                                        return response()->json($this->getResponse());
+                                    } else {
+                                        if (is_null($req->get('bayar_input'))) {
+                                            $this->setResponse('INVALID', "Nominal wajib diisi");
+                                            return response()->json($this->getResponse());
+                                        } else {
+                                            $coupon_free = $totalPrice - $price_single;
+                                            if($req->get('bayar_input') != $coupon_free) {
+                                                if($req->get('bayar_input') >= $coupon_free) {
+                                                    $log_limit->quota_kupon = $log_limit->quota_kupon -1;
+                                                    $log_limit->save();
+    
+                                                    try {
+                                                        LogTransaction::create([
+                                                            'order_number' => $req->get('order_number'),
+                                                            'visitor_id' => $req->get('page'),
+                                                            'user_id' => Auth()->id(),
+                                                            'cart' => serialize($cart_data),
+                                                            'payment_type' => serialize([
+                                                                ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => $req->get('refund')],
+                                                                ['payment_type' => 'kupon', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota_kupon,'discount' => $price_single, 'refund' => 0]
+                                                            ]),
+                                                            'payment_status' => 'paid',
+                                                            'total' => $totalPrice - $price_single,
+                                                            'total_gross' => $totalPrice,
+                                                            'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                            'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                            'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                                        ]);
+                        
+                                                        LogAdmin::create([
+                                                            'user_id' => Auth::id(),
+                                                            'type' => 'CREATE',
+                                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                                        ]);
+    
+                                                        ReportLimit::create([
+                                                            'visitor_id' => $req->get('page'),
+                                                            'user_id' => Auth()->id(),
+                                                            'report_quota' => $log_limit->quota,
+                                                            'report_quota_kupon' => $log_limit->quota_kupon,
+                                                            'status' => 'Berkurang',
+                                                            'created_at' => Carbon::now(),
+                                                        ]);
+                        
+                                                        \Cart::session($req->get('page'))->clear();
+                        
+                                                        if ($req->ajax()) {
+                                                            return response()->json([
+                                                                'status' => 'VALID',
+                                                                'message' => 'Pembayaran berhasil',
+                                                                'return' => $req->get('bayar_input')
+                                                            ]);
+                                                        }
+                                                    } catch (\Throwable $th) {
+                                                        return response()->json($this->getResponse());
+                                                    }
+                                                } else {
+                                                    $this->setResponse('INVALID', "Nominal yang harus dibayarkan $coupon_free");
+                                                    return response()->json($this->getResponse());
+                                                }
+                                            } else {
+                                                $log_limit->quota_kupon = $log_limit->quota_kupon -1;
+                                                $log_limit->save();
+                                                try {
+                                                    LogTransaction::create([
+                                                        'order_number' => $req->get('order_number'),
+                                                        'visitor_id' => $req->get('page'),
+                                                        'user_id' => Auth()->id(),
+                                                        'cart' => serialize($cart_data),
+                                                        'payment_type' => serialize([
+                                                            ['payment_type' => 'cash/transfer', 'transaction_amount' => $coupon_free, 'balance' => 0,'discount' => 0, 'refund' => 0],
+                                                            ['payment_type' => 'kupon', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota_kupon,'discount' => $price_single, 'refund' => 0]
+                                                        ]),
+                                                        'payment_status' => 'paid',
+                                                        'total' => $totalPrice - $price_single,
+                                                        'total_gross' => $totalPrice,
+                                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                                    ]);
+                    
+                                                    LogAdmin::create([
+                                                        'user_id' => Auth::id(),
+                                                        'type' => 'CREATE',
+                                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                                    ]);
+    
+                                                    ReportLimit::create([
+                                                        'visitor_id' => $req->get('page'),
+                                                        'user_id' => Auth()->id(),
+                                                        'report_quota' => $log_limit->quota,
+                                                        'report_quota_kupon' => $log_limit->quota_kupon,
+                                                        'status' => 'Berkurang',
+                                                        'created_at' => Carbon::now(),
+                                                    ]);
+                    
+                                                    \Cart::session($req->get('page'))->clear();
+                    
+                                                    if ($req->ajax()) {
+                                                        return response()->json([
+                                                            'status' => 'VALID',
+                                                            'message' => 'Pembayaran berhasil',
+                                                            'return' => $req->get('bayar_input')
+                                                        ]);
+                                                    }
+                                                } catch (\Throwable $th) {
+                                                    return response()->json($this->getResponse());
+                                                }
+                                            }
+                                        }
+                                    }
+                                } else if($req->get('type_multiple')[1] == 'limit') {
+                                    if($visitor->expired_date <= Carbon::now()) {
+                                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                        return response()->json($this->getResponse());
+                                    } else if($visitor->status == 'inactive') {
+                                        $this->setResponse('INVALID', "Member tidak aktif");
+                                        return response()->json($this->getResponse());
+                                    } else {
+                                        if (is_null($req->get('bayar_input'))) {
+                                            $this->setResponse('INVALID', "Nominal wajib diisi");
+                                            return response()->json($this->getResponse());
+                                        } else {
+                                            $limit_free = $totalPrice - $price_single;
+                                            if($req->get('bayar_input') != $limit_free) {
+                                                if($req->get('bayar_input') >= $limit_free) {
+                                                    $log_limit->quota = $log_limit->quota -1;
+                                                    $log_limit->save();
+    
+                                                    try {
+                                                        LogTransaction::create([
+                                                            'order_number' => $req->get('order_number'),
+                                                            'visitor_id' => $req->get('page'),
+                                                            'user_id' => Auth()->id(),
+                                                            'cart' => serialize($cart_data),
+                                                            'payment_type' => serialize([
+                                                                ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => $req->get('refund')],
+                                                                ['payment_type' => 'limit', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota,'discount' => $price_single, 'refund' => 0]
+                                                            ]),
+                                                            'payment_status' => 'paid',
+                                                            'total' => $totalPrice - $price_single,
+                                                            'total_gross' => $totalPrice,
+                                                            'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                            'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                            'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                                        ]);
+                        
+                                                        LogAdmin::create([
+                                                            'user_id' => Auth::id(),
+                                                            'type' => 'CREATE',
+                                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                                        ]);
+    
+                                                        ReportLimit::create([
+                                                            'visitor_id' => $req->get('page'),
+                                                            'user_id' => Auth()->id(),
+                                                            'report_quota' => $log_limit->quota,
+                                                            'report_quota_kupon' => $log_limit->quota_kupon,
+                                                            'status' => 'Berkurang',
+                                                            'created_at' => Carbon::now(),
+                                                        ]);
+                        
+                                                        \Cart::session($req->get('page'))->clear();
+                        
+                                                        if ($req->ajax()) {
+                                                            return response()->json([
+                                                                'status' => 'VALID',
+                                                                'message' => 'Pembayaran berhasil',
+                                                                'return' => $req->get('bayar_input')
+                                                            ]);
+                                                        }
+                                                    } catch (\Throwable $th) {
+                                                        return response()->json($this->getResponse());
+                                                    }
+                                                } else {
+                                                    $this->setResponse('INVALID', "Nominal yang harus dibayarkan $limit_free");
+                                                    return response()->json($this->getResponse());
+                                                }
+                                            } else {
+                                                $log_limit->quota = $log_limit->quota -1;
+                                                $log_limit->save();
+                                                try {
+                                                    LogTransaction::create([
+                                                        'order_number' => $req->get('order_number'),
+                                                        'visitor_id' => $req->get('page'),
+                                                        'user_id' => Auth()->id(),
+                                                        'cart' => serialize($cart_data),
+                                                        'payment_type' => serialize([
+                                                            ['payment_type' => 'cash/transfer', 'transaction_amount' => $limit_free, 'balance' => 0,'discount' => 0, 'refund' => 0],
+                                                            ['payment_type' => 'limit', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota,'discount' => $price_single, 'refund' => 0]
+                                                        ]),
+                                                        'payment_status' => 'paid',
+                                                        'total' => $totalPrice - $price_single,
+                                                        'total_gross' => $totalPrice,
+                                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                                    ]);
+                    
+                                                    LogAdmin::create([
+                                                        'user_id' => Auth::id(),
+                                                        'type' => 'CREATE',
+                                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                                    ]);
+    
+                                                    ReportLimit::create([
+                                                        'visitor_id' => $req->get('page'),
+                                                        'user_id' => Auth()->id(),
+                                                        'report_quota' => $log_limit->quota,
+                                                        'report_quota_kupon' => $log_limit->quota_kupon,
+                                                        'status' => 'Berkurang',
+                                                        'created_at' => Carbon::now(),
+                                                    ]);
+                    
+                                                    \Cart::session($req->get('page'))->clear();
+                    
+                                                    if ($req->ajax()) {
+                                                        return response()->json([
+                                                            'status' => 'VALID',
+                                                            'message' => 'Pembayaran berhasil',
+                                                            'return' => $req->get('bayar_input')
+                                                        ]);
+                                                    }
+                                                } catch (\Throwable $th) {
+                                                    return response()->json($this->getResponse());
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } else if (count($req->get('type_multiple')) == 3) {
+                            $disc = $totalPrice - $price_single;
+                            $deposit_before = $deposit->balance;
+                            $minus_deposit = $disc - $deposit->balance;
+                            $deposit->balance = $deposit->balance - $deposit->balance;
+                            if($req->get('type_multiple')[2] == 'kupon') {
+                                if($visitor->expired_date <= Carbon::now()) {
+                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    return response()->json($this->getResponse());
+                                } else if($visitor->status == 'inactive') {
+                                    $this->setResponse('INVALID', "Member tidak aktif");
+                                    return response()->json($this->getResponse());
+                                } else {
+                                    if (is_null($req->get('bayar_input'))) {
+                                        $this->setResponse('INVALID', "Nominal wajib diisi");
+                                        return response()->json($this->getResponse());
+                                    } else {
+                                        if ($req->get('bayar_input') < $minus_deposit) {
+                                            $this->setResponse('INVALID', "Nominal sisa bayar $minus_deposit");
+                                            return response()->json($this->getResponse());
+                                        } else {
+                                            try {
+                                                LogTransaction::create([
+                                                    'order_number' => $req->get('order_number'),
+                                                    'visitor_id' => $req->get('page'),
+                                                    'user_id' => Auth()->id(),
+                                                    'cart' => serialize($cart_data),
+                                                    'payment_type' => serialize([
+                                                        ['payment_type' => 'deposit', 'transaction_amount' => $deposit_before, 'balance' => $deposit->balance,'discount' => 0, 'refund' => 0],
+                                                        ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => $req->get('refund')],
+                                                        ['payment_type' => 'kupon', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota_kupon - 1,'discount' => $price_single, 'refund' => 0]
+                                                    ]),
+                                                    'payment_status' => 'paid',
+                                                    'total' => $disc,
+                                                    'total_gross' => $totalPrice,
+                                                    'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                    'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                    'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                                ]);
+                                                
+                                                $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
+                                                $log_limit->save();
+                                                $deposit->save();
+                
+                                                LogAdmin::create([
+                                                    'user_id' => Auth::id(),
+                                                    'type' => 'CREATE',
+                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                                ]);
+            
+                                                ReportDeposit::create([
+                                                    'payment_type' => 'deposit',
+                                                    'report_balance' => $disc,
+                                                    'visitor_id' => $req->get('page'),
+                                                    'user_id' => Auth()->id(),
+                                                    'fund' => $deposit_before,
+                                                    'status' => 'Berkurang',
+                                                    'created_at' => Carbon::now(),
+                                                ]);
+        
+                                                ReportLimit::create([
+                                                    'visitor_id' => $req->get('page'),
+                                                    'user_id' => Auth()->id(),
+                                                    'report_quota' => $log_limit->quota,
+                                                    'report_quota_kupon' => $log_limit->quota_kupon,
+                                                    'status' => 'Berkurang',
+                                                    'created_at' => Carbon::now(),
+                                                ]);
+                
+                                                \Cart::session($req->get('page'))->clear();
+                
+                                                if ($req->ajax()) {
+                                                    return response()->json([
+                                                        'status' => 'VALID',
+                                                        'message' => 'Pembayaran berhasil',
+                                                        'return' => $req->get('bayar_input')
+                                                    ]);
+                                                }
+                                            } catch (\Throwable $th) {
+                                                return response()->json($this->getResponse());
+                                            }
+                                        }
+                                    }
+                                }
+                            } else if($req->get('type_multiple')[2] == 'limit') {
+                                if($visitor->expired_date <= Carbon::now()) {
+                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    return response()->json($this->getResponse());
+                                } else if($visitor->status == 'inactive') {
+                                    $this->setResponse('INVALID', "Member tidak aktif");
+                                    return response()->json($this->getResponse());
+                                } else {
+                                    if (is_null($req->get('bayar_input'))) {
+                                        $this->setResponse('INVALID', "Nominal wajib diisi");
+                                        return response()->json($this->getResponse());
+                                    } else {
+                                        if ($req->get('bayar_input') < $minus_deposit) {
+                                            $this->setResponse('INVALID', "Nominal sisa bayar $minus_deposit");
+                                            return response()->json($this->getResponse());
+                                        } else {
+                                            try {
+                                                LogTransaction::create([
+                                                    'order_number' => $req->get('order_number'),
+                                                    'visitor_id' => $req->get('page'),
+                                                    'user_id' => Auth()->id(),
+                                                    'cart' => serialize($cart_data),
+                                                    'payment_type' => serialize([
+                                                        ['payment_type' => 'deposit', 'transaction_amount' => $deposit_before, 'balance' => $deposit->balance,'discount' => 0, 'refund' => 0],
+                                                        ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => $req->get('refund')],
+                                                        ['payment_type' => 'limit', 'transaction_amount' => $price_single, 'balance' => $log_limit->quota - 1,'discount' => $price_single, 'refund' => 0]
+                                                    ]),
+                                                    'payment_status' => 'paid',
+                                                    'total' => $disc,
+                                                    'total_gross' => $totalPrice,
+                                                    'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                    'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                    'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                                ]);
+                                                
+                                                $log_limit->quota = $log_limit->quota - 1;
+                                                $log_limit->save();
+                                                $deposit->save();
+                
+                                                LogAdmin::create([
+                                                    'user_id' => Auth::id(),
+                                                    'type' => 'CREATE',
+                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                                ]);
+            
+                                                ReportDeposit::create([
+                                                    'payment_type' => 'deposit',
+                                                    'report_balance' => $disc,
+                                                    'visitor_id' => $req->get('page'),
+                                                    'user_id' => Auth()->id(),
+                                                    'fund' => $deposit_before,
+                                                    'status' => 'Berkurang',
+                                                    'created_at' => Carbon::now(),
+                                                ]);
+        
+                                                ReportLimit::create([
+                                                    'visitor_id' => $req->get('page'),
+                                                    'user_id' => Auth()->id(),
+                                                    'report_quota' => $log_limit->quota,
+                                                    'report_quota_kupon' => $log_limit->quota_kupon,
+                                                    'status' => 'Berkurang',
+                                                    'created_at' => Carbon::now(),
+                                                ]);
+                
+                                                \Cart::session($req->get('page'))->clear();
+                
+                                                if ($req->ajax()) {
+                                                    return response()->json([
+                                                        'status' => 'VALID',
+                                                        'message' => 'Pembayaran berhasil',
+                                                        'return' => $req->get('bayar_input')
+                                                    ]);
+                                                }
+                                            } catch (\Throwable $th) {
+                                                return response()->json($this->getResponse());
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        if(count($req->get('type_multiple')) == 1) {
+                            if ($req->get('type_multiple')[0] == 'deposit') {
+                                if($visitor->expired_date <= Carbon::now()) {
+                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    return response()->json($this->getResponse());
+                                } else if($visitor->status == 'inactive') {
+                                    $this->setResponse('INVALID', "Member tidak aktif");
+                                    return response()->json($this->getResponse());
+                                } else {
+                                    try{
+                                        $deposit->balance = $deposit->balance - $totalPrice;
+                                        $deposit->save();
+                                        
+                                        LogTransaction::create([
+                                            'order_number' => $req->get('order_number'),
+                                            'visitor_id' => $req->get('page'),
+                                            'user_id' => Auth()->id(),
+                                            'cart' => serialize($cart_data),
+                                            'payment_type' => serialize([[
+                                                'payment_type' => 'deposit',
+                                                'transaction_amount' => $totalPrice,
+                                                'balance' => $deposit->balance,
+                                                'discount' => 0,
+                                                'refund' => 0
+                                            ]]),
+                                            'payment_status' => 'paid',
+                                            'total' => $totalPrice,
+                                            'total_gross' => $totalPrice,
+                                            'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                            'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                            'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                        ]);
+            
+                                        LogAdmin::create([
+                                            'user_id' => Auth::id(),
+                                            'type' => 'CREATE',
+                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                        ]);
+            
+                                        ReportDeposit::create([
+                                            'payment_type' => 'deposit',
+                                            'report_balance' => $totalPrice,
+                                            'visitor_id' => $req->get('page'),
+                                            'user_id' => Auth()->id(),
+                                            'fund' => $deposit->balance,
+                                            'status' => 'Berkurang',
+                                            'created_at' => Carbon::now(),
+                                        ]);
+                                        \Cart::session($req->get('page'))->clear();
+            
+                                        if ($req->ajax()) {
+                                            $this->setResponse('VALID', "Pembayaran berhasil");
+                                            return response()->json($this->getResponse());
+                                        }
+                                    } catch (Throwable $e) {
+                                        return response()->json($this->getResponse());
+                                    }
+                                }
+                            } else if ($req->get('type_multiple')[0] == 'cash/transfer') {
+                                if($visitor->expired_date <= Carbon::now()) {
+                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    return response()->json($this->getResponse());
+                                } else if($visitor->status == 'inactive') {
+                                    $this->setResponse('INVALID', "Member tidak aktif");
+                                    return response()->json($this->getResponse());
+                                } else {
+                                    if (is_null($req->get('bayar_input'))) {
+                                        $this->setResponse('INVALID', "Nominal wajib diisi");
+                                        return response()->json($this->getResponse());
+                                    } else {
+                                        if ($req->get('bayar_input') != $totalPrice) {
+                                            if ($req->get('bayar_input') >= $totalPrice){
+                                                try {
+                                                    LogTransaction::create([
+                                                        'order_number' => $req->get('order_number'),
+                                                        'visitor_id' => $req->get('page'),
+                                                        'user_id' => Auth()->id(),
+                                                        'cart' => serialize($cart_data),
+                                                        'payment_type' => serialize([[
+                                                            'payment_type' => 'cash/transfer', 
+                                                            'transaction_amount' => $req->get('bayar_input'), 
+                                                            'balance' => 0,
+                                                            'discount' => 0,
+                                                            'refund' => $req->get('refund')
+                                                        ]]),
+                                                        'payment_status' => 'paid',
+                                                        'total' => $totalPrice,
+                                                        'total_gross' => $totalPrice,
+                                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                                    ]);
+                    
+                                                    LogAdmin::create([
+                                                        'user_id' => Auth::id(),
+                                                        'type' => 'CREATE',
+                                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                                    ]);
+                    
+                                                    \Cart::session($req->get('page'))->clear();
+                    
+                                                    if ($req->ajax()) {
+                                                        return response()->json([
+                                                            'status' => 'VALID',
+                                                            'message' => 'Pembayaran berhasil',
+                                                            'return' => $req->get('bayar_input')
+                                                        ]);
+                                                    }
+                                                } catch (Throwable $e) {
+                                                    return response()->json($this->getResponse());
+                                                }
+                                            } else {
+                                                $this->setResponse('INVALID', "Nominal yang harus dibayarkan $totalPrice");
+                                                return response()->json($this->getResponse());
+                                            }
+                                        } else {
+                                            try {
+                                                LogTransaction::create([
+                                                    'order_number' => $req->get('order_number'),
+                                                    'visitor_id' => $req->get('page'),
+                                                    'user_id' => Auth()->id(),
+                                                    'cart' => serialize($cart_data),
+                                                    'payment_type' => serialize([[
+                                                        'payment_type' => 'cash/transfer', 
+                                                        'transaction_amount' => $req->get('bayar_input'), 
+                                                        'balance' => 0,
+                                                        'discount' => 0,
+                                                        'refund' => 0
+                                                    ]]),
+                                                    'payment_status' => 'paid',
+                                                    'total' => $totalPrice,
+                                                    'total_gross' => $totalPrice,
+                                                    'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                    'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                    'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                                ]);
+                
+                                                LogAdmin::create([
+                                                    'user_id' => Auth::id(),
+                                                    'type' => 'CREATE',
+                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                                ]);
+                
+                                                \Cart::session($req->get('page'))->clear();
+                
+                                                if ($req->ajax()) {
+                                                    return response()->json([
+                                                        'status' => 'VALID',
+                                                        'message' => 'Pembayaran berhasil',
+                                                        'return' => $req->get('bayar_input')
+                                                    ]);
+                                                }
+                                            } catch (\Throwable $th) {
+                                                return response()->json($this->getResponse());
+                                            }
+                                        }
+                                    }
+                                }
+                            } else if ($req->get('type_multiple')[0] == 'kupon') {
+                                if($visitor->expired_date <= Carbon::now()) {
+                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    return response()->json($this->getResponse());
+                                } else if($visitor->status == 'inactive') {
+                                    $this->setResponse('INVALID', "Member tidak aktif");
+                                    return response()->json($this->getResponse());
+                                } else {
+                                    if($item_default != 1){
+                                        $this->setResponse('INVALID', "Gunakan split deposit atau cash/transfer");
+                                        return response()->json($this->getResponse());
+                                    } else {
+                                        try {
+                                            $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
+                                            $log_limit->save();
+            
+                                            LogTransaction::create([
+                                                'order_number' => $req->get('order_number'),
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'cart' => serialize($cart_data),
+                                                'payment_type' => serialize([[
+                                                    'payment_type' => 'kupon',
+                                                    'transaction_amount' => $price_single,
+                                                    'balance' => $log_limit->quota_kupon,
+                                                    'discount' => $price_single,
+                                                    'refund' => 0
+                                                ]]),
+                                                'payment_status' => 'paid',
+                                                'total' => $totalPrice - $price_single,
+                                                'total_gross' => $totalPrice,
+                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                            ]);
+            
+                                            LogAdmin::create([
+                                                'user_id' => Auth::id(),
+                                                'type' => 'CREATE',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                            ]);
+            
+                                            ReportLimit::create([
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'report_quota' => $log_limit->quota,
+                                                'report_quota_kupon' => $log_limit->quota_kupon,
+                                                'status' => 'Berkurang',
+                                                'created_at' => Carbon::now(),
+                                            ]);
+                                            
+                                            \Cart::session($req->get('page'))->clear();
+                
+                                            if ($req->ajax()) {
+                                                $this->setResponse('VALID', "Pembayaran berhasil");
+                                                return response()->json($this->getResponse());
+                                            }
+                                        } catch (Throwable $e) {
+                                            return response()->json($this->getResponse());
+                                        }
+                                    }
+                                }
+                            } else if ($req->get('type_multiple')[0] == 'limit') {
+                                if($visitor->expired_date <= Carbon::now()) {
+                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    return response()->json($this->getResponse());
+                                } else if($visitor->status == 'inactive') {
+                                    $this->setResponse('INVALID', "Member tidak aktif");
+                                    return response()->json($this->getResponse());
+                                } else {
+                                    if($item_default != 1){
+                                        $this->setResponse('INVALID', "Gunakan split deposit atau cash/transfer");
+                                        return response()->json($this->getResponse());
+                                    } else {
+                                        try {
+                                            $log_limit->quota = $log_limit->quota - 1;
+                                            $log_limit->save();
+            
+                                            LogTransaction::create([
+                                                'order_number' => $req->get('order_number'),
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'cart' => serialize($cart_data),
+                                                'payment_type' => serialize([[
+                                                    'payment_type' => 'limit',
+                                                    'transaction_amount' => $price_single,
+                                                    'balance' => $log_limit->quota,
+                                                    'discount' => $price_single,
+                                                    'refund' => 0
+                                                ]]),
+                                                'payment_status' => 'paid',
+                                                'total' => $totalPrice - $price_single,
+                                                'total_gross' => $totalPrice,
+                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                            ]);
+            
+                                            LogAdmin::create([
+                                                'user_id' => Auth::id(),
+                                                'type' => 'CREATE',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                            ]);
+            
+                                            ReportLimit::create([
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'report_quota' => $log_limit->quota,
+                                                'report_quota_kupon' => $log_limit->quota_kupon,
+                                                'status' => 'Berkurang',
+                                                'created_at' => Carbon::now(),
+                                            ]);
+                                            
+                                            \Cart::session($req->get('page'))->clear();
+                
+                                            if ($req->ajax()) {
+                                                $this->setResponse('VALID', "Pembayaran berhasil");
+                                                return response()->json($this->getResponse());
+                                            }
+                                        } catch (Throwable $e) {
+                                            return response()->json($this->getResponse());
+                                        }
+                                    }
+                                }
+                            }
+                        } else if (count($req->get('type_multiple')) == 2) {
+                            if($req->get('type_multiple')[0] == 'deposit') {
+                                if($req->get('type_multiple')[1] == 'cash/transfer') {
+                                    if($visitor->expired_date <= Carbon::now()) {
+                                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                        return response()->json($this->getResponse());
+                                    } else if($visitor->status == 'inactive') {
+                                        $this->setResponse('INVALID', "Member tidak aktif");
+                                        return response()->json($this->getResponse());
+                                    } else {
+                                        if (is_null($req->get('bayar_input'))) {
+                                            $this->setResponse('INVALID', "Nominal wajib diisi");
+                                            return response()->json($this->getResponse());
+                                        } else {
+                                            if ($req->get('bayar_input') > ceil($totalPrice)) {
+                                                try {
+                                                    LogTransaction::create([
+                                                        'order_number' => $req->get('order_number'),
+                                                        'visitor_id' => $req->get('page'),
+                                                        'user_id' => Auth()->id(),
+                                                        'cart' => serialize($cart_data),
+                                                        'payment_type' => serialize([
+                                                            ['payment_type' => 'deposit', 'transaction_amount' => 0, 'balance' => $deposit->balance,'discount' => 0, 'refund' => 0],
+                                                            ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0,'discount' => 0, 'refund' => $req->get('refund')]
+                                                        ]),
+                                                        'payment_status' => 'paid',
+                                                        'total' => $totalPrice,
+                                                        'total_gross' => $totalPrice,
+                                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                                    ]);
+    
+                                                    LogAdmin::create([
+                                                        'user_id' => Auth::id(),
+                                                        'type' => 'CREATE',
+                                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                                    ]);
+    
+                                                    ReportDeposit::create([
+                                                        'payment_type' => 'deposit',
+                                                        'report_balance' => 0,
+                                                        'visitor_id' => $req->get('page'),
+                                                        'user_id' => Auth()->id(),
+                                                        'fund' => $deposit->balance,
+                                                        'status' => 'Berkurang',
+                                                        'created_at' => Carbon::now(),
+                                                    ]);
+    
+                                                    \Cart::session($req->get('page'))->clear();
+                    
+                                                    if ($req->ajax()) {
+                                                        return response()->json([
+                                                            'status' => 'VALID',
+                                                            'message' => 'Pembayaran berhasil',
+                                                            'return' => $req->get('bayar_input')
+                                                        ]);
+                                                    }
+    
+                                                } catch (\Throwable $th) {
+                                                    return response()->json($this->getResponse());
+                                                }
+                                            } else {
+                                                $minus_deposit = $totalPrice - $req->get('bayar_input');
+                                                $deposit->balance = $deposit->balance - $minus_deposit;
+                                                $deposit->save();
+                                                try {
+                                                    LogTransaction::create([
+                                                        'order_number' => $req->get('order_number'),
+                                                        'visitor_id' => $req->get('page'),
+                                                        'user_id' => Auth()->id(),
+                                                        'cart' => serialize($cart_data),
+                                                        'payment_type' => serialize([
+                                                            ['payment_type' => 'deposit', 'transaction_amount' => $minus_deposit, 'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
+                                                            ['payment_type' => 'cash/transfer', 'transaction_amount' => $req->get('bayar_input'), 'balance' => 0, 'discount' => 0, 'refund' => 0]
+                                                        ]),
+                                                        'payment_status' => 'paid',
+                                                        'total' => $totalPrice,
+                                                        'total_gross' => $totalPrice,
+                                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                                    ]);
+    
+                                                    LogAdmin::create([
+                                                        'user_id' => Auth::id(),
+                                                        'type' => 'CREATE',
+                                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                                    ]);
+    
+                                                    ReportDeposit::create([
+                                                        'payment_type' => 'deposit',
+                                                        'report_balance' => $minus_deposit,
+                                                        'visitor_id' => $req->get('page'),
+                                                        'user_id' => Auth()->id(),
+                                                        'fund' => $deposit->balance,
+                                                        'status' => 'Berkurang',
+                                                        'created_at' => Carbon::now(),
+                                                    ]);
+    
+                                                    \Cart::session($req->get('page'))->clear();
+                    
+                                                    if ($req->ajax()) {
+                                                        return response()->json([
+                                                            'status' => 'VALID',
+                                                            'message' => 'Pembayaran berhasil',
+                                                            'return' => $req->get('bayar_input')
+                                                        ]);
+                                                    }
+    
+                                                } catch (\Throwable $th) {
+                                                    return response()->json($this->getResponse());
+                                                }
+                                            }
+                                        }
+                                    }
+                                } else if ($req->get('type_multiple')[1] == 'kupon') {
+                                    if($visitor->expired_date <= Carbon::now()) {
+                                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                        return response()->json($this->getResponse());
+                                    } else if($visitor->status == 'inactive') {
+                                        $this->setResponse('INVALID', "Member tidak aktif");
+                                        return response()->json($this->getResponse());
+                                    } else {
+                                        try {
+                                            $deposit_before = $deposit->balance;
+                                            $minus_price_single = $totalPrice - $price_single;
+    
+                                            LogTransaction::create([
+                                                'order_number' => $req->get('order_number'),
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'cart' => serialize($cart_data),
+                                                'payment_type' => serialize([
+                                                    ['payment_type' => 'deposit','transaction_amount' => $minus_price_single,'balance' => $deposit->balance - $minus_price_single, 'discount' => 0, 'refund' => 0],
+                                                    ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
+                                                ]),
+                                                'payment_status' => 'paid',
+                                                'total' => $minus_price_single,
+                                                'total_gross' => $totalPrice,
+                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                            ]);
+            
+                                            LogAdmin::create([
+                                                'user_id' => Auth::id(),
+                                                'type' => 'CREATE',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                            ]);
+            
+                                            ReportDeposit::create([
+                                                'payment_type' => 'deposit',
+                                                'report_balance' => $minus_price_single,
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'fund' => $deposit->balance - $minus_price_single,
+                                                'status' => 'Berkurang',
+                                                'created_at' => Carbon::now(),
+                                            ]);
+    
+                                            $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
+                                            $deposit->balance = $deposit->balance - $minus_price_single;
+                                            $log_limit->save();
+                                            $deposit->save();
+            
+                                            ReportLimit::create([
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'report_quota' => $log_limit->quota,
+                                                'report_quota_kupon' => $log_limit->quota_kupon,
+                                                'status' => 'Berkurang',
+                                                'created_at' => Carbon::now(),
+                                            ]);
+            
+                                            \Cart::session($req->get('page'))->clear();
+                
+                                            if ($req->ajax()) {
+                                                $this->setResponse('VALID', "Pembayaran berhasil");
+                                                return response()->json($this->getResponse());
+                                            }
+                                        } catch (\Throwable $th) {
+                                            return response()->json($this->getResponse());
+                                        }
+                                    }
+                                } else if ($req->get('type_multiple')[1] == 'limit') {
+                                    if($visitor->expired_date <= Carbon::now()) {
+                                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                        return response()->json($this->getResponse());
+                                    } else if($visitor->status == 'inactive') {
+                                        $this->setResponse('INVALID', "Member tidak aktif");
+                                        return response()->json($this->getResponse());
+                                    } else {
+                                        try {
+                                            $deposit_before = $deposit->balance;
+                                            $minus_price_single = $totalPrice - $price_single;
+    
+                                            LogTransaction::create([
+                                                'order_number' => $req->get('order_number'),
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'cart' => serialize($cart_data),
+                                                'payment_type' => serialize([
+                                                    ['payment_type' => 'deposit','transaction_amount' => $minus_price_single,'balance' => $deposit->balance - $minus_price_single, 'discount' => 0, 'refund' => 0],
+                                                    ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single, 'refund' => 0]
+                                                ]),
+                                                'payment_status' => 'paid',
+                                                'total' => $minus_price_single,
+                                                'total_gross' => $totalPrice,
+                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                            ]);
+            
+                                            LogAdmin::create([
+                                                'user_id' => Auth::id(),
+                                                'type' => 'CREATE',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                            ]);
+            
+                                            ReportDeposit::create([
+                                                'payment_type' => 'deposit',
+                                                'report_balance' => $minus_price_single,
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'fund' => $deposit->balance - $minus_price_single,
+                                                'status' => 'Berkurang',
+                                                'created_at' => Carbon::now(),
+                                            ]);
+    
+                                            $log_limit->quota = $log_limit->quota - 1;
+                                            $deposit->balance = $deposit->balance - $minus_price_single;
+                                            $log_limit->save();
+                                            $deposit->save();
+            
+                                            ReportLimit::create([
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'report_quota' => $log_limit->quota,
+                                                'report_quota_kupon' => $log_limit->quota_kupon,
+                                                'status' => 'Berkurang',
+                                                'created_at' => Carbon::now(),
+                                            ]);
+            
+                                            \Cart::session($req->get('page'))->clear();
+                
+                                            if ($req->ajax()) {
+                                                $this->setResponse('VALID', "Pembayaran berhasil");
+                                                return response()->json($this->getResponse());
+                                            }
+                                        } catch (\Throwable $th) {
+                                            return response()->json($this->getResponse());
+                                        }
+                                    }
+                                }
+                            } else if($req->get('type_multiple')[0] == 'cash/transfer') {
+                                if($req->get('type_multiple')[1] == 'kupon') {
+                                    if($visitor->expired_date <= Carbon::now()) {
+                                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                        return response()->json($this->getResponse());
+                                    } else if($visitor->status == 'inactive') {
+                                        $this->setResponse('INVALID', "Member tidak aktif");
+                                        return response()->json($this->getResponse());
+                                    } else {
+                                        if (is_null($req->get('bayar_input'))) {
+                                            $this->setResponse('INVALID', "Nominal wajib diisi");
+                                            return response()->json($this->getResponse());
+                                        } else {
+                                            $remaining_balance = $totalPrice - $price_single;
+                                            if ($req->get('bayar_input') > ceil($remaining_balance)) {
+                                                try {
+                                                    LogTransaction::create([
+                                                        'order_number' => $req->get('order_number'),
+                                                        'visitor_id' => $req->get('page'),
+                                                        'user_id' => Auth()->id(),
+                                                        'cart' => serialize($cart_data),
+                                                        'payment_type' => serialize([
+                                                            ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => $req->get('refund')],
+                                                            ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
+                                                        ]),
+                                                        'payment_status' => 'paid',
+                                                        'total' => $remaining_balance,
+                                                        'total_gross' => $totalPrice,
+                                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                                    ]);
+                    
+                                                    $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
+                                                    $log_limit->save();
+                    
+                                                    LogAdmin::create([
+                                                        'user_id' => Auth::id(),
+                                                        'type' => 'CREATE',
+                                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                                    ]);
+                    
+                                                    ReportLimit::create([
+                                                        'visitor_id' => $req->get('page'),
+                                                        'user_id' => Auth()->id(),
+                                                        'report_quota' => $log_limit->quota,
+                                                        'report_quota_kupon' => $log_limit->quota_kupon,
+                                                        'status' => 'Berkurang',
+                                                        'created_at' => Carbon::now(),
+                                                    ]);
+                    
+                                                    \Cart::session($req->get('page'))->clear();
+                        
+                                                    if ($req->ajax()) {
+                                                        $this->setResponse('VALID', "Pembayaran berhasil");
+                                                        return response()->json($this->getResponse());
+                                                    }
+                                                } catch (\Throwable $th) {
+                                                    return response()->json($this->getResponse());
+                                                }
+                                            } else {
+                                                $this->setResponse('INVALID', "Nominal yang harus dibayarkan $remaining_balance");
+                                                return response()->json($this->getResponse());
+                                            }
+                                        }
+                                    }
+                                } else if($req->get('type_multiple')[1] == 'limit') {
+                                    if($visitor->expired_date <= Carbon::now()) {
+                                        $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                        return response()->json($this->getResponse());
+                                    } else if($visitor->status == 'inactive') {
+                                        $this->setResponse('INVALID', "Member tidak aktif");
+                                        return response()->json($this->getResponse());
+                                    } else {
+                                        if (is_null($req->get('bayar_input'))) {
+                                            $this->setResponse('INVALID', "Nominal wajib diisi");
+                                            return response()->json($this->getResponse());
+                                        } else {
+                                            $remaining_balance = $totalPrice - $price_single;
+                                            if ($req->get('bayar_input') > ceil($remaining_balance)) {
+                                                try {
+                                                    LogTransaction::create([
+                                                        'order_number' => $req->get('order_number'),
+                                                        'visitor_id' => $req->get('page'),
+                                                        'user_id' => Auth()->id(),
+                                                        'cart' => serialize($cart_data),
+                                                        'payment_type' => serialize([
+                                                            ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => $req->get('refund')],
+                                                            ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single, 'refund' => 0]
+                                                        ]),
+                                                        'payment_status' => 'paid',
+                                                        'total' => $remaining_balance,
+                                                        'total_gross' => $totalPrice,
+                                                        'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                        'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                        'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                                    ]);
+                    
+                                                    $log_limit->quota = $log_limit->quota - 1;
+                                                    $log_limit->save();
+                    
+                                                    LogAdmin::create([
+                                                        'user_id' => Auth::id(),
+                                                        'type' => 'CREATE',
+                                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                                    ]);
+                    
+                                                    ReportLimit::create([
+                                                        'visitor_id' => $req->get('page'),
+                                                        'user_id' => Auth()->id(),
+                                                        'report_quota' => $log_limit->quota,
+                                                        'report_quota_kupon' => $log_limit->quota_kupon,
+                                                        'status' => 'Berkurang',
+                                                        'created_at' => Carbon::now(),
+                                                    ]);
+                    
+                                                    \Cart::session($req->get('page'))->clear();
+                        
+                                                    if ($req->ajax()) {
+                                                        $this->setResponse('VALID', "Pembayaran berhasil");
+                                                        return response()->json($this->getResponse());
+                                                    }
+                                                } catch (\Throwable $th) {
+                                                    return response()->json($this->getResponse());
+                                                }
+                                            } else {
+                                                $this->setResponse('INVALID', "Nominal yang harus dibayarkan $remaining_balance");
+                                                return response()->json($this->getResponse());
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } else if (count($req->get('type_multiple')) == 3) {
+                            $remaining_balance = $totalPrice - $price_single;
+                            if($req->get('type_multiple')[2] == 'kupon') {
+                                if($visitor->expired_date <= Carbon::now()) {
+                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    return response()->json($this->getResponse());
+                                } else if($visitor->status == 'inactive') {
+                                    $this->setResponse('INVALID', "Member tidak aktif");
+                                    return response()->json($this->getResponse());
+                                } else {
+                                    if ($req->get('bayar_input') > ceil($remaining_balance)) {
+                                        try {
+                                            LogTransaction::create([
+                                                'order_number' => $req->get('order_number'),
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'cart' => serialize($cart_data),
+                                                'payment_type' => serialize([
+                                                    ['payment_type' => 'deposit','transaction_amount' => 0,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
+                                                    ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => $req->get('refund')],
+                                                    ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
+                                                ]),
+                                                'payment_status' => 'paid',
+                                                'total' => $remaining_balance,
+                                                'total_gross' => $totalPrice,
+                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                            ]);
+            
+                                            $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
+                                            $log_limit->save();
+            
+                                            LogAdmin::create([
+                                                'user_id' => Auth::id(),
+                                                'type' => 'CREATE',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                            ]);
+    
+                                            ReportDeposit::create([
+                                                'payment_type' => 'deposit',
+                                                'report_balance' => 0,
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'fund' => $deposit->balance,
+                                                'status' => 'Berkurang',
+                                                'created_at' => Carbon::now(),
+                                            ]);
+            
+                                            ReportLimit::create([
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'report_quota' => $log_limit->quota,
+                                                'report_quota_kupon' => $log_limit->quota_kupon,
+                                                'status' => 'Berkurang',
+                                                'created_at' => Carbon::now(),
+                                            ]);
+            
+                                            \Cart::session($req->get('page'))->clear();
+                
+                                            if ($req->ajax()) {
+                                                $this->setResponse('VALID', "Pembayaran berhasil");
+                                                return response()->json($this->getResponse());
+                                            }
+                                        } catch (\Throwable $th) {
+                                            return response()->json($this->getResponse());
+                                        }
+                                    } else {
+                                        $minus_deposit = $remaining_balance - $req->get('bayar_input');
+                                        $deposit->balance = $deposit->balance - $minus_deposit;
+                                        try {
+                                            LogTransaction::create([
+                                                'order_number' => $req->get('order_number'),
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'cart' => serialize($cart_data),
+                                                'payment_type' => serialize([
+                                                    ['payment_type' => 'deposit','transaction_amount' => $minus_deposit,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
+                                                    ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => 0],
+                                                    ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
+                                                ]),
+                                                'payment_status' => 'paid',
+                                                'total' => $remaining_balance,
+                                                'total_gross' => $totalPrice,
+                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                            ]);
+                                            
+                                            $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
+                                            $log_limit->save();
+                                            $deposit->save();
+            
+                                            LogAdmin::create([
+                                                'user_id' => Auth::id(),
+                                                'type' => 'CREATE',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                            ]);
+    
+                                            ReportDeposit::create([
+                                                'payment_type' => 'deposit',
+                                                'report_balance' => $minus_deposit,
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'fund' => $deposit->balance,
+                                                'status' => 'Berkurang',
+                                                'created_at' => Carbon::now(),
+                                            ]);
+            
+                                            ReportLimit::create([
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'report_quota' => $log_limit->quota,
+                                                'report_quota_kupon' => $log_limit->quota_kupon,
+                                                'status' => 'Berkurang',
+                                                'created_at' => Carbon::now(),
+                                            ]);
+            
+                                            \Cart::session($req->get('page'))->clear();
+                
+                                            if ($req->ajax()) {
+                                                $this->setResponse('VALID', "Pembayaran berhasil");
+                                                return response()->json($this->getResponse());
+                                            }
+                                        } catch (\Throwable $th) {
+                                            return response()->json($this->getResponse());
+                                        }
+                                    }
+                                }
+                            } else if ($req->get('type_multiple')[2] == 'limit') {
+                                if($visitor->expired_date <= Carbon::now()) {
+                                    $this->setResponse('INVALID', "Masa berlaku member kadaluarsa");
+                                    return response()->json($this->getResponse());
+                                } else if($visitor->status == 'inactive') {
+                                    $this->setResponse('INVALID', "Member tidak aktif");
+                                    return response()->json($this->getResponse());
+                                } else {
+                                    if ($req->get('bayar_input') > ceil($remaining_balance)) {
+                                        try {
+                                            LogTransaction::create([
+                                                'order_number' => $req->get('order_number'),
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'cart' => serialize($cart_data),
+                                                'payment_type' => serialize([
+                                                    ['payment_type' => 'deposit','transaction_amount' => 0,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
+                                                    ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => $req->get('refund')],
+                                                    ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single, 'refund' => 0]
+                                                ]),
+                                                'payment_status' => 'paid',
+                                                'total' => $remaining_balance,
+                                                'total_gross' => $totalPrice,
+                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                            ]);
+            
+                                            $log_limit->quota = $log_limit->quota - 1;
+                                            $log_limit->save();
+            
+                                            LogAdmin::create([
+                                                'user_id' => Auth::id(),
+                                                'type' => 'CREATE',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                            ]);
+    
+                                            ReportDeposit::create([
+                                                'payment_type' => 'deposit',
+                                                'report_balance' => 0,
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'fund' => $deposit->balance,
+                                                'status' => 'Berkurang',
+                                                'created_at' => Carbon::now(),
+                                            ]);
+            
+                                            ReportLimit::create([
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'report_quota' => $log_limit->quota,
+                                                'report_quota_kupon' => $log_limit->quota_kupon,
+                                                'status' => 'Berkurang',
+                                                'created_at' => Carbon::now(),
+                                            ]);
+            
+                                            \Cart::session($req->get('page'))->clear();
+                
+                                            if ($req->ajax()) {
+                                                $this->setResponse('VALID', "Pembayaran berhasil");
+                                                return response()->json($this->getResponse());
+                                            }
+                                        } catch (\Throwable $th) {
+                                            return response()->json($this->getResponse());
+                                        }
+                                    } else {
+                                        $minus_deposit = $remaining_balance - $req->get('bayar_input');
+                                        $deposit->balance = $deposit->balance - $minus_deposit;
+                                        try {
+                                            LogTransaction::create([
+                                                'order_number' => $req->get('order_number'),
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'cart' => serialize($cart_data),
+                                                'payment_type' => serialize([
+                                                    ['payment_type' => 'deposit','transaction_amount' => $minus_deposit,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
+                                                    ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => 0],
+                                                    ['payment_type' => 'limit','transaction_amount' => $price_single,'balance' => $log_limit->quota - 1, 'discount' => $price_single, 'refund' => 0]
+                                                ]),
+                                                'payment_status' => 'paid',
+                                                'total' => $remaining_balance,
+                                                'total_gross' => $totalPrice,
+                                                'jml_default' => array_sum(array_column($priceDefault,'price')),
+                                                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
+                                                'jml_other' => array_sum(array_column($priceOthers,'price')),
+                                            ]);
+                                            
+                                            $log_limit->quota = $log_limit->quota - 1;
+                                            $log_limit->save();
+                                            $deposit->save();
+            
+                                            LogAdmin::create([
+                                                'user_id' => Auth::id(),
+                                                'type' => 'CREATE',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
+                                            ]);
+    
+                                            ReportDeposit::create([
+                                                'payment_type' => 'deposit',
+                                                'report_balance' => $minus_deposit,
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'fund' => $deposit->balance,
+                                                'status' => 'Berkurang',
+                                                'created_at' => Carbon::now(),
+                                            ]);
+            
+                                            ReportLimit::create([
+                                                'visitor_id' => $req->get('page'),
+                                                'user_id' => Auth()->id(),
+                                                'report_quota' => $log_limit->quota,
+                                                'report_quota_kupon' => $log_limit->quota_kupon,
+                                                'status' => 'Berkurang',
+                                                'created_at' => Carbon::now(),
+                                            ]);
+            
+                                            \Cart::session($req->get('page'))->clear();
+                
+                                            if ($req->ajax()) {
+                                                $this->setResponse('VALID', "Pembayaran berhasil");
+                                                return response()->json($this->getResponse());
+                                            }
+                                        } catch (\Throwable $th) {
+                                            return response()->json($this->getResponse());
+                                        }
                                     }
                                 }
                             }

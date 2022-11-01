@@ -150,13 +150,17 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a href="javascript:void(0)" class="btn btn-block btn-outline-success btn-sm"
-                                    data-toggle="modal" data-target="#myModal">Deposit</a>
-                                {{-- <a href="javascript:void(0)" class="btn btn-block btn-outline-success btn-sm"
-                                    data-toggle="modal" data-target="#myModal2">Tambah Kupon</a> --}}
                                 {{-- {{ URL::signedRoute('order.cart', now()->addMinutes(10), ['id' => $visitor->id]) }} --}}
-                                <a href="{{ URL::signedRoute('order.cart', ['id' => $visitor->id]) }}"
-                                    class="btn btn-block btn-success btn-sm">Pilih paket bermain</a>
+                                @if($visitor->expired_date <= \Carbon\Carbon::now())
+                                    <a href="javascript:void(0)" class="btn btn-block btn-outline-success btn-sm" id="expired_date">Deposit</a>
+                                    <a href="javascript:void(0)" class="btn btn-block btn-success btn-sm" id="expired_date">Pilih paket bermain</a>
+                                @elseif ($visitor->status == 'inactive')
+                                    <a href="javascript:void(0)" class="btn btn-block btn-outline-success btn-sm" id="nonactive">Deposit</a>
+                                    <a href="javascript:void(0)" class="btn btn-block btn-success btn-sm" id="nonactive">Pilih paket bermain</a>
+                                @else
+                                    <a href="javascript:void(0)" class="btn btn-block btn-outline-success btn-sm" data-toggle="modal" data-target="#myModal">Deposit</a>
+                                    <a href="{{ URL::signedRoute('order.cart', ['id' => $visitor->id]) }}" class="btn btn-block btn-success btn-sm">Pilih paket bermain</a>
+                                @endif
                             </div>
                             <div id="myModal" class="modal fade" tabindex="-1" role="dialog"
                                 aria-labelledby="myModalLabel" aria-hidden="true">
@@ -213,3 +217,33 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script>
+        function sword() {
+            var audio = new Audio('../sound/sword.mp3');
+            audio.play();
+        }
+
+        $(document).on('click', '#expired_date', function() {
+            swal({
+                title: "",
+                type: "error",
+                text: "Member sudah kadaluarsa",
+                confirmButtonColor: "#01c853",
+            });
+            sword();
+            return false;
+        });
+
+        $(document).on('click', '#nonactive', function() {
+            swal({
+                title: "",
+                type: "error",
+                text: "Member tidak aktif",
+                confirmButtonColor: "#01c853",
+            });
+            sword();
+            return false;
+        });
+    </script>
+@endpush

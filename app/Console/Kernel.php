@@ -23,20 +23,20 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
+    protected $commands = [
+        Commands\expiredMember::class,
+    ];
+
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
         $schedule->call(function () {
-        
             LogLimit::whereHas('visitor', function($query) {
                 $query->where('tipe_member', 'VVIP');
             })->update(['quota'=>10]);
             LogLimit::whereHas('visitor', function($query) {
                 $query->where('tipe_member', 'VIP');
             })->update(['quota'=>4]);
-            
             $visitor = Visitor::all();
-
             foreach($visitor as $value){
                 if($value->tipe_member == 'VVIP'){
                     ReportLimit::create([
@@ -56,10 +56,10 @@ class Kernel extends ConsoleKernel
                     ]);
                 }
             }
-        
-        // })->everyMinute();
-    
         })->monthly();
+        $schedule->call(function () {
+            Visitor::where('expired_date', '<=', Carbon::now())->update(['status' => 'inactive']);
+        })->everyMinute();
     }
 
     /**
