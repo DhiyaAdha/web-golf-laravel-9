@@ -107,7 +107,7 @@
                                 <label class="switch">
                                     <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" value="VIP"
                                         name="tipe_member">
-                                    <input type="checkbox" name="tipe_member" type="checkbox" value="VVIP">
+                                    <input type="checkbox" name="tipe_member" value="VVIP">
                                     <div class="slider round switch">
                                         <span class="off" style="margin-left: 10px !important;">Member</span>
                                         <span class="on">VIP</span>
@@ -163,8 +163,17 @@
                                     <div class="text-danger"> {{ $message }}</div>
                                 @enderror
                             </div>
-                            <br>
-                            <br>
+                            <div class="form-group">
+                                <label class="control-label mb-10" for="">Status Aktif</label>
+                                <label class="switch">
+                                    <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" name="status" value="active">
+                                    <input type="checkbox" name="status" value="inactive">
+                                    <div class="status-member round switch">
+                                        <span class="off" style="margin-left: 10px !important;">Ya</span>
+                                        <span class="on">Tidak</span>
+                                    </div>
+                                </label>
+                            </div>
                             <div class="form-group text-left">
                                 <button type="submit" class="btn btn-info">Selanjutnya</button>
                             </div>

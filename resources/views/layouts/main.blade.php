@@ -28,7 +28,7 @@
     </div>
     {{-- Script --}}
     @include('layouts.script')
-    @stack('scripts')
+    {{-- @stack('scripts') --}}
 
     {{-- /Script --}}
 

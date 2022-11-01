@@ -28,9 +28,7 @@
 
                             </div>
                             <div class="pull-left">
-                                {{-- <h6 class="panel-title txt-dark">Daftar Tamu</h6> --}}
-                                <a href="{{ route('tambah-tamu') }}" class="btn btn-xs btn-success" >Tambah
-                                    Tamu</a>
+                                <a href="{{ route('tambah-tamu') }}" class="btn btn-xs btn-success">Tambah Tamu</a>
                             </div>
                             @if (auth()->user()->role_id == '2')
                                 <div class="pull-right">
@@ -56,8 +54,8 @@
                                                 <tr>
                                                     <th class="" style="margin-left: 20px;">Nama</th>
                                                     <th class="">Email</th>
-                                                    <th class="">Phone</th>
                                                     <th class="">Tipe</th>
+                                                    <th class="">Status</th>
                                                     <th class="" style="text-align: center">Opsi</th>
                                                 </tr>
                                             </thead>
@@ -111,17 +109,17 @@
                     orderable: false
                 },
                 {
-                    data: 'phone',
-                    searchable: true,
-                    orderable: false
-                },
-                {
                     "data": function(data) {
                         if (data.tipe_member == 'VIP') {
                             return `<span class='label label-success'>${data.tipe_member == 'VIP' ? 'Member' : 'VIP'}</span>`;
                         } else {
                             return `<span class='label label-warning'>${data.tipe_member == 'VVIP' ? 'VIP' : 'Member'}</span>`;
                         }
+                    }
+                },
+                {
+                    "data": function(data) {
+                        return data.status == 'active' ? 'Aktif' : 'Non Aktif'
                     }
                 },
                 {

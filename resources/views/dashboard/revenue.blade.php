@@ -125,40 +125,60 @@
                                 <div class="pull-right">
                                     <ul role="tablist" class="nav nav-pills nav-pills-rounded" id="myTabs_6">
                                         <li class="active" role="presentation"><a aria-expanded="true" data-toggle="tab"
-                                                role="tab" id="home_tab_6" href="#statistic_revenue_bar"
+                                                role="tab" id="home_tab_6" href="#revenue_bar"
                                                 style="padding: 2px 20px;">All</a></li>
                                         <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_6"
-                                                role="tab" href="" aria-expanded="false"
+                                                role="tab" href="#revenue_bar_game" aria-expanded="false"
                                                 style="padding: 2px 20px;">Permainan</a></li>
                                         <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_6"
-                                                role="tab" href="" aria-expanded="false"
+                                                role="tab" href="#revenue_bar_facility" aria-expanded="false"
                                                 style="padding: 2px 20px;">Proshop & Fasilitas</a></li>
-                                        <li role="presentation" class=""><a data-toggle="tab" id="profile_tab_6"
-                                                role="tab" href="" aria-expanded="false"
-                                                style="padding: 2px 20px;">Kantin</a></li>
+                                        <li role="presentation" class=""><a data-toggle="tab"
+                                                id="profile_tab_6" role="tab" href="#revenue_bar_other"
+                                                aria-expanded="false" style="padding: 2px 20px;">Kantin</a></li>
                                     </ul>
                                 </div>
-                                {{-- <div class="dropdown">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                                        aria-expanded="true" onclick="changediv()">
-                                        All Revenue <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" data-dropdown-in="slideInRight" data-dropdown-out="flipOutX">
-                                        <li><a href="#">All</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Permainan</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Proshop & fasilitas</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Kantin</a></li>
-                                    </ul>
-                                </div> --}}
-                                {{-- <div class="ui-widget">
+                            </div>
+                            <div class="clearfix"></div>
+                            <hr class="light-grey-hr row mt-20 mb-15 mb-10" />
+                        </div>
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+                                <div id="revenue_bar" class="morris-chart"></div>
+                            </div>
+                        </div>
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+                                <div id="revenue_bar_game" class="morris-chart"></div>
+                            </div>
+                        </div>
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+                                <div id="revenue_bar_facility" class="morris-chart"></div>
+                            </div>
+                        </div>
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+                                <div id="revenue_bar_other" class="morris-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default card-view">
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <h6 class="pannel-title text-dark">Revenue Trendline 12 Bulan Terakhir</h6>
+                            </div>
+                            <div class="pull-right">
+                                <div class="ui-widget">
                                     <select id="filter-week">
-                                        <option value="revenue_bar">All Revenue</option>
-                                        <option value="revenue_bar_game">Permainan</option>
-                                        <option value="revenue_bar_facility">Fasilitas</option>
-                                        <option value="revenue_bar_other">Kantin</option>
+                                        <option value="revenue_line">All Revenue</option>
+                                        <option value="revenue_line_game">Permainan</option>
+                                        <option value="revenue_line_facility">Fasilitas</option>
+                                        <option value="revenue_line_other">Kantin</option>
                                     </select>
                                 </div> --}}
                             </div>
@@ -167,8 +187,7 @@
                         </div>
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
-                                <div id="statistic_revenue_bar" class="morris-chart"></div>
-                                <input type="text" name="" id="text">
+                                <div id="statistic_revenue_line" class="morris-chart"></div>
                             </div>
                         </div>
                     </div>
@@ -178,29 +197,9 @@
     </div>
 @endsection
 @push('scripts')
+    <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
     <script>
         var revenueWeek = {!! json_encode($revenue_daily) !!}
-
-        $(document).on('change', '#filter-week', function(e) {
-            let week = $(this).val();
-            requestData(week);
-        });
-
-        function requestData(week) {
-            $.ajax({
-                async: true,
-                type: 'GET',
-                url: "{{ route('revenue.index') }}",
-                data: {
-                    week: week
-                }
-            }).done(function(data) {
-                console.log(week)
-                // revenueBar.setData(JSON.parse(data));
-            }).fail(function() {
-                alert("error occured");
-            });
-        }
+        var revenueMonth = {!! json_encode($revenue) !!}
     </script>
-    <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
 @endpush
