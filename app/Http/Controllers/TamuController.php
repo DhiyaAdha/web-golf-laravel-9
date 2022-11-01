@@ -44,7 +44,7 @@ class TamuController extends Controller
             'id',
             'name',
             'email',
-            'phone',
+            'status',
             'tipe_member',
         ])->where('tipe_member','!=','REGULER')->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
@@ -151,6 +151,7 @@ class TamuController extends Controller
                 'position' => 'required',
                 'tipe_member' => 'required',
                 'category' => 'required',
+                'status' => 'required',
             ],
             [
                 'name.required' => 'Nama Lengkap masih kosong.',
@@ -168,6 +169,7 @@ class TamuController extends Controller
                 'position.required' => 'Jabatan masih kosong.',
                 'position.unique' => 'Jabatan sudah ada',
                 'category.required' => 'Kategori masih kosong',
+                'status.required' => 'Status member masih kosong',
             ]
         );
         $random = Str::random(15);
@@ -183,6 +185,8 @@ class TamuController extends Controller
             'position' => $request->position,
             'tipe_member' => $request->tipe_member,
             'category' => $request->category,
+            'status' => $request->status,
+            'expired_date' => Carbon::now()->addYear(),
             'created_at' => Carbon::now(),
         ]);
         $get_visitor = Visitor::where('id', $visitors->id)->latest()->first();
@@ -238,7 +242,6 @@ class TamuController extends Controller
 
         $data = $request->all();
         dispatch(new SendMailJob($data));
-        // dispatch(new SendMailJobDeposit($data));
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'CREATE',
@@ -704,6 +707,7 @@ class TamuController extends Controller
                 'position' => 'required',
                 'tipe_member' => 'required',
                 'category' => 'required',
+                'status' => 'required',
             ],
             [
                 'name.required' => 'Nama Tamu masih kosong.',
@@ -713,10 +717,17 @@ class TamuController extends Controller
                 'company.required' => 'Nama perusahaan masih kosong.',
                 'position.required' => 'Posisi masih kosong.',
                 'category.required' => 'Kategori masih kosong.',
+                'status.required' => 'Status member masih kosong.',
             ]
         );
         $visitor = Visitor::find($id);
-        $visitor->fill($request->post())->save();
+        // dd($request->status);
+        if($request->status == 'active') {
+            $visitor->expired_date = Carbon::now()->addYear();
+            $visitor->fill($request->post())->save();
+        } else {
+            $visitor->fill($request->post())->save();
+        }
         $limit = LogLimit::find($id);
         $limit->fill($request->post())->save();
         LogAdmin::create([

@@ -1587,8 +1587,31 @@ input.cmn-toggle-round-flat:checked+label:after {
     -webkit-transition: .4s;
     transition: .4s;
   }
+
+  .status-member {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #01c853;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
   
   .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  .status-member:before {
     position: absolute;
     content: "";
     height: 26px;
@@ -1603,12 +1626,23 @@ input.cmn-toggle-round-flat:checked+label:after {
   input:checked + .slider {
     background-color: #ffd336;
   }
+  input:checked + .status-member {
+    background-color: #ff0000;
+  }
   
   input:focus + .slider {
     box-shadow: 0 0 1px #2196F3;
   }
+  input:focus + .status-member {
+    box-shadow: 0 0 1px #2196F3;
+  }
   
   input:checked + .slider:before {
+    -webkit-transform: translateX(55px);
+    -ms-transform: translateX(55px);
+    transform: translateX(55px);
+  }
+  input:checked + .status-member:before {
     -webkit-transform: translateX(55px);
     -ms-transform: translateX(55px);
     transform: translateX(55px);
@@ -1633,8 +1667,12 @@ input.cmn-toggle-round-flat:checked+label:after {
   
   input:checked+ .slider .on
   {display: block;}
+  input:checked+ .status-member .on
+  {display: block;}
   
   input:checked + .slider .off
+  {display: none;}
+  input:checked + .status-member .off
   {display: none;}
   
   /*--------- END --------*/
@@ -1642,16 +1680,21 @@ input.cmn-toggle-round-flat:checked+label:after {
   /* Rounded sliders */
   .slider.round {
     border-radius: 34px;
-  }
-  
-  .slider.round:before {
-    border-radius: 50%;}
+}
+  .status-member.round {
+    border-radius: 34px;
+}
+
+    .slider.round:before {
+        border-radius: 50%;
+}
+    .status-member.round:before {
+        border-radius: 50%;
+}
 
 /*--------- END --------*/
 
 /*------ ADDED CSS ---------*/
-
-
 .btn-scan-qr {
     display: flex;
     flex-direction: row;
