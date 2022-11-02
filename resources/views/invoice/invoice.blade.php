@@ -244,7 +244,7 @@
         </div>
     </div>
 @endsection
-{{-- @push('scripts')
+@push('scripts')
     <script>
         $('.fa-print').on("click", function() {
             $('#cetak-invoice').printThis({
@@ -252,4 +252,4 @@
             });
         });
     </script>
-@endpush --}}
+@endpush
