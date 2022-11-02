@@ -36,20 +36,20 @@ class Kernel extends ConsoleKernel
             LogLimit::whereHas('visitor', function($query) {
                 $query->where('tipe_member', 'VIP');
             })->update(['quota'=>4]);
-            $visitor = Visitor::all();
+            $visitor = Visitor::where('status', 'active')->get();
             foreach($visitor as $value){
-                if($value->tipe_member == 'VVIP'){
+                if($value->tipe_member == 'VVIP') {
                     ReportLimit::create([
                         'visitor_id' => $value['id'],
-                        'user_id' => '1',
+                        'user_id' => 0,
                         'report_quota' => $value['tipe_member'] == 'VIP' ? '4' : '10',
                         'status' => 'Reset',
                         'created_at' => Carbon::now(),
                     ]);
-                }else{
+                } else if ($value->tipe_member == 'VIP') {
                     ReportLimit::create([
                         'visitor_id' => $value['id'],
-                        'user_id' => '1',
+                        'user_id' => 0,
                         'report_quota' => $value['tipe_member'] == 'VIP' ? '4' : '10',
                         'status' => 'Reset',
                         'created_at' => Carbon::now(),
@@ -57,9 +57,10 @@ class Kernel extends ConsoleKernel
                 }
             }
         })->monthly();
-        $schedule->call(function () {
-            Visitor::where('expired_date', '<=', Carbon::now())->update(['status' => 'inactive']);
-        })->everyMinute();
+        $schedule->command('command:member')->cron('59 23 * * *');
+        // $schedule->call(function () {
+        //     Visitor::where('expired_date', '<=', Carbon::now())->update(['status' => 'inactive']);
+        // })->everyMinute();
     }
 
     /**
