@@ -2039,3 +2039,58 @@ button {
 .table-hover > tbody > tr:hover {
     background-color: rgba(215, 250, 187) !important;
 }
+  
+
+/* option style */
+
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+    --ui-widget-border: #777;
+    --ui-widget-focus: blue;
+    --ui-widget-arrow: var(--ui-widget-border);
+  }
+
+  ui-widget {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    background-color: transparent;
+    border: none;
+    padding: 0 1em 0 0;
+    margin: 0;
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+    z-index: 1;
+    outline: none;
+  }
+  ui-widget::-ms-expand {
+    display: none;
+  }
+
+  .ui-widget {
+    display: grid;
+    grid-template-areas: "ui-widget";
+    align-items: center;
+    position: relative;
+    min-width: 15ch;
+    max-width: 30ch;
+    border: 1px solid var(--ui-widget-border);
+    border-radius: 0.25em;
+    padding: 0.25em 0.5em;
+    cursor: pointer;
+    line-height: 1.1;
+    background-color: #fff;
+    background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+  }
+
+
+/* option style */
