@@ -29,7 +29,7 @@
                             </div>
                             <div class="pull-right">
                                 <div class="d-flex">
-                                        <span class="mr-5" style="right: 410px; top: 27px; position: absolute;">Filter satuan</span>
+                                        <span class="mr-5" style="right: 420px; top: 27px; position: absolute;">Filter satuan</span>
                                         <div class="form-group mr-5">
                                             <select class="form-control" style="height: 32px" id="filter-data" name="category">
                                                 <option selected disabled>Kategori</option>
@@ -50,7 +50,7 @@
                                             <select class="form-control" style="height: 32px" id="filter-data" name="status">
                                                 <option selected disabled>Status</option>
                                                 @foreach($status as $st)
-                                                    <option class="text-capitalize" value="{{ $st }}">{{ $st }}</option>
+                                                    <option class="text-capitalize" value="{{ $st }}">{{ $st == 'active' ? 'aktif' : 'non aktif' }}</option>
                                                 @endforeach
                                             </select>
                                         </div>	
