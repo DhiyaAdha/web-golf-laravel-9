@@ -40,14 +40,25 @@ class TamuController extends Controller
      */
     public function index(Request $request)
     {
+        $filter = $request->filter;
         $visitor = Visitor::select([
             'id',
             'name',
             'email',
             'status',
             'tipe_member',
-            'expired_date'
-        ])->where('tipe_member','!=','REGULER')->orderBy('created_at', 'desc')->get();
+            'expired_date',
+            'category'
+        ])
+        ->where('tipe_member','!=','REGULER')
+        ->when($request->filter, function ($query, $filter) {
+            $query->where('category', $filter)
+            ->orWhere('tipe_member', $filter)
+            ->orWhere('status', $filter);
+        })->orderBy('created_at', 'desc')->get();
+        $category = $visitor->sortBy('category')->pluck('category')->unique();
+        $types = $visitor->sortBy('tipe_member')->pluck('tipe_member')->unique();
+        $status = $visitor->sortBy('status')->pluck('status')->unique();
         if ($request->ajax()) {
             return datatables()->of($visitor)->addColumn('action', function ($visitor) {
                 if (auth()->user()->role_id == '2') {
@@ -107,15 +118,13 @@ class TamuController extends Controller
                     $button = '<div class="d-flex align-items-center"><a data-toggle="tooltip" data-placement="top" title="Detail Tamu" href="' . url('kartu-tamu/' . Crypt::encryptString($visitor->id)) . '"><img src="' . url('dist/img/Card-Tamu.svg') . '"></a>';
                     return $button;
                 }
-            })->editColumn('tipe_member', function ($data) {
-                return $data->tipe_member;
             })->editColumn('expired_date', function ($data) {
                 return Carbon::parse($data->expired_date)->translatedFormat('d F Y');
             })->editColumn('qrcode', function ($data) {
                 return '<a href="' . url('kartu-tamu/' . $data->id) . '">' . $data->name . '</a>';
-            })->rawColumns(['qrcode', 'action'])->make(true);
+            })->rawColumns(['qrcode', 'action', 'tipe_member'])->make(true);
         }
-        return view('tamu.daftar-tamu', compact('visitor'));
+        return view('tamu.daftar-tamu', compact('visitor', 'category', 'types', 'status'));
     }
 
     /**
