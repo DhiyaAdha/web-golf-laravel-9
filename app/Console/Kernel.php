@@ -57,7 +57,7 @@ class Kernel extends ConsoleKernel
                 }
             }
         })->monthly();
-        $schedule->command('command:member')->everyMinute();
+        $schedule->command('command:member')->cron('59 23 * * *');
         // $schedule->call(function () {
         //     Visitor::where('expired_date', '<=', Carbon::now())->update(['status' => 'inactive']);
         // })->everyMinute();
