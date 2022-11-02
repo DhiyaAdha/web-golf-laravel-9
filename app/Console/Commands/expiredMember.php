@@ -31,7 +31,7 @@ class expiredMember extends Command
     {
         parent::__construct();
     }
-
+    
     /**
      * Execute the console command.
      *
