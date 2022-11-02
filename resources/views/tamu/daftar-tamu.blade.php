@@ -24,21 +24,44 @@
                 <div class="col-sm-12">
                     <div class="panel panel-default card-view">
                         <div class="panel-heading">
-                            <div class="pull-right">
-
-                            </div>
                             <div class="pull-left">
                                 <a href="{{ route('tambah-tamu') }}" class="btn btn-xs btn-success">Tambah Tamu</a>
                             </div>
-                            @if (auth()->user()->role_id == '2')
-                                <div class="pull-right">
-
-                                    <a href="{{ url('export_excel_tamu') }}" target="_blank" name="excel"
-                                        data-toggle="tooltip" data-placement="top" title="Download Excel">
-                                        <img src="dist/img/excel.svg" width="25px" height="25px">
-                                    </a>
+                            <div class="pull-right">
+                                <div class="d-flex">
+                                        <span class="mr-5" style="right: 410px; top: 27px; position: absolute;">Filter satuan</span>
+                                        <div class="form-group mr-5">
+                                            <select class="form-control" style="height: 32px" id="filter-data" name="category">
+                                                <option selected disabled>Kategori</option>
+                                                @foreach($category as $ct)
+                                                    <option class="text-capitalize" value="{{ $ct }}">{{ $ct }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>	
+                                        <div class="form-group mr-5">
+                                            <select class="form-control" style="height: 32px" id="filter-data" name="type">
+                                                <option selected disabled>Jenis member</option>
+                                                @foreach($types as $type)
+                                                    <option class="text-capitalize" value="{{ $type }}">{{ $type == 'VIP' ? 'member' : 'VIP' }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>	
+                                        <div class="form-group mr-5">
+                                            <select class="form-control" style="height: 32px" id="filter-data" name="status">
+                                                <option selected disabled>Status</option>
+                                                @foreach($status as $st)
+                                                    <option class="text-capitalize" value="{{ $st }}">{{ $st }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>	
+                                        @if (auth()->user()->role_id == '2')
+                                        <a href="{{ url('export_excel_tamu') }}" target="_blank" name="excel"
+                                            data-toggle="tooltip" data-placement="top" title="Download Excel">
+                                            <img src="dist/img/excel.svg" width="25px" height="25px">
+                                        </a>
+                                        @endif
                                 </div>
-                            @endif
+                            </div>
                             <div class="clearfix"></div>
                         </div>
                         <div class="clearfix"></div>
@@ -54,7 +77,7 @@
                                                 <tr>
                                                     <th class="" style="margin-left: 20px;">Nama</th>
                                                     <th class="">Email</th>
-                                                    <th class="">Tipe</th>
+                                                    <th class="">Jenis member</th>
                                                     <th class="">Status</th>
                                                     <th class="">Masa habis</th>
                                                     <th class="" style="text-align: center">Opsi</th>
@@ -80,8 +103,34 @@
 @endsection
 @push('scripts')
     <script>
+        $(document).on("change", "#filter-data", function(e) {
+            // member.column($(this).data('column')).search($(this).val()).draw();
+            var filter_data = [];
+            var option = $(this).find(':selected');
+            var url = window.location.href;
+
+            $.each(option, function(index, value) {
+                filter_data.push(option.val());
+            });
+
+            var param = filter_data.join(","); 
+            if(param != "") {
+                if (url.indexOf('?') > -1) {
+                    url += '&filter='+param
+                } else {
+                    url += '?filter='+param
+                }
+            }
+
+            var EndUrl = url.split("?")[1];
+            if(EndUrl != "") {
+                $('#dt-tamu').DataTable().ajax.url("/daftar-tamu?"+EndUrl).load();
+            } else {
+                $('#dt-tamu').DataTable().ajax.url("/daftar-tamu").load();
+            }
+        });
         /* data tamu */
-        $('#dt-tamu').DataTable({
+        var member = $('#dt-tamu').DataTable({
             "processing": true,
             "serverSide": true,
             "lengthChange": false,
@@ -101,13 +150,9 @@
             "render": $.fn.dataTable.render.text(),
             "columns": [{
                     data: 'name',
-                    searchable: true,
-                    orderable: false
                 },
                 {
                     data: 'email',
-                    searchable: true,
-                    orderable: false
                 },
                 {
                     "data": function(data) {
