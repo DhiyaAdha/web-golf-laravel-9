@@ -81,7 +81,7 @@ if($('#revenue_line')) {
             xkey: "e",
             parseTime: false,
             ykeys: ["f", "g", "h", "i"],
-            labels: ["Total", "Permainan", "Fasilitas", "Kantin"],
+            labels: ["Total", "Permainan", "Proshop & Fasilitas", "Kantin"],
             labelcolor : ["#fff", "#fff", "#fff", "#fff"],
             pointSize: 2,
             fillOpacity: 0,
