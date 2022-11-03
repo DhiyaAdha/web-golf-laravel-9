@@ -3380,8 +3380,13 @@ class OrderController extends Controller
                                                     return response()->json($this->getResponse());
                                                 }
                                             } else {
-                                                $this->setResponse('INVALID', "Nominal yang harus dibayarkan $remaining_balance");
-                                                return response()->json($this->getResponse());
+                                                if (empty($req->get('bayar_input'))) {
+                                                    $this->setResponse('INVALID', "Gunakan limit atau kupon");
+                                                    return response()->json($this->getResponse());
+                                                } else {
+                                                    $this->setResponse('INVALID', "Nominal yang harus dibayarkan $remaining_balance");
+                                                    return response()->json($this->getResponse());
+                                                }
                                             }
                                         }
                                     }
