@@ -31,9 +31,6 @@
 <script src="{{ asset('vendors/chart.js/Chart.min.js') }}"></script>
 
 <!-- Bootstrap Switches CSS -->
-<script src="{{ asset('vendors/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') }}">
-</script>
-<!-- <link href="{{ asset('vendors/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') }}" rel="stylesheet" type="text/css" /> -->
 <script src="{{ asset('vendors/bower_components/bootstrap-switch/dist/js/bootstrap-switch.js') }}"></script>
 
 
