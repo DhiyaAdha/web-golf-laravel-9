@@ -75,12 +75,11 @@ class TamuController extends Controller
                     </a>';
                     
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<div data-toggle="tooltip" data-placement="top" title="Kupon" ><a data-toggle="modal" data-target="#myModal" href="javascript:void(0)" id="attrId" data-id="' . $visitor->id . '">
-                    <svg calss="data_attr" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#787878" d="M9,10a1,1,0,0,0-1,1v2a1,1,0,0,0,2,0V11A1,1,0,0,0,9,10Zm12,1a1,1,0,0,0,1-1V6a1,1,0,0,0-1-1H3A1,1,0,0,0,2,6v4a1,1,0,0,0,1,1,1,1,0,0,1,0,2,1,1,0,0,0-1,1v4a1,1,0,0,0,1,1H21a1,1,0,0,0,1-1V14a1,1,0,0,0-1-1,1,1,0,0,1,0-2ZM20,9.18a3,3,0,0,0,0,5.64V17H10a1,1,0,0,0-2,0H4V14.82A3,3,0,0,0,4,9.18V7H8a1,1,0,0,0,2,0H20Z"/></svg></a></div></div>
-                    <div id="myModal" class="modal fade" tabindex="-1" role="dialog"
+                    $button .= '<div data-toggle="tooltip" data-placement="top" title="Kupon"><a data-toggle="modal" data-target="#myModal' . $visitor->id . '" href="javascript:void(0)" id="' . $visitor->id . '">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#787878" d="M9,10a1,1,0,0,0-1,1v2a1,1,0,0,0,2,0V11A1,1,0,0,0,9,10Zm12,1a1,1,0,0,0,1-1V6a1,1,0,0,0-1-1H3A1,1,0,0,0,2,6v4a1,1,0,0,0,1,1,1,1,0,0,1,0,2,1,1,0,0,0-1,1v4a1,1,0,0,0,1,1H21a1,1,0,0,0,1-1V14a1,1,0,0,0-1-1,1,1,0,0,1,0-2ZM20,9.18a3,3,0,0,0,0,5.64V17H10a1,1,0,0,0-2,0H4V14.82A3,3,0,0,0,4,9.18V7H8a1,1,0,0,0,2,0H20Z"/></svg></a></div></div>
+                    <div id="myModal' . $visitor->id . '" class="modal fade" tabindex="-1" role="dialog"
                     aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
-                    
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal"
@@ -88,7 +87,6 @@ class TamuController extends Controller
                                 <h5 class="modal-title" id="myModalLabel">
                                 Tambah Kupon</h5>
                             </div>
-
                             <div class="modal-body">
                                 <form action="'. url('update/kupon/' . $visitor->id) . '" method="POST">
                                     <input type="hidden" name="_token" value=" '.csrf_token().' ">
@@ -101,7 +99,7 @@ class TamuController extends Controller
                                             <input type="text" min="0"
                                                 onkeypress="return event.charCode >= 48 && event.charCode <=57"
                                                 class="form-control" name="quota_kupon" data-id=""
-                                                placeholder="Masukan jumlah Kupon" value="'. $visitor->id .'" required>
+                                                placeholder="Masukan jumlah Kupon" required>
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-success btn-anim">
@@ -811,10 +809,9 @@ class TamuController extends Controller
         return redirect()->route('daftar-tamu');
     }
 
-    public function update_kupon(Request $request, $id, Loglimit $log_limit)
+    public function update_kupon(Request $request, $id)
     {
         try {
-            $visitor = Visitor::find($id);
             $visitor = LogLimit::join('visitors', 'log_limits.visitor_id', '=', 'visitors.id')->where('log_limits.visitor_id', $id)->first();
             $log_limit = LogLimit::where('visitor_id', $id)->first();
             $log_limit->quota_kupon = $request->quota_kupon + $log_limit->quota_kupon;

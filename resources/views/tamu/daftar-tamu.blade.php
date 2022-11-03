@@ -81,7 +81,6 @@
                                             </tbody>
 
                                         </table>
-                                        
                                     </div>
                                 </div>
                             </div>
@@ -96,14 +95,6 @@
     <!-- /Main Content -->
 @endsection
 @push('scripts')
-<script type="text/javascript">
-    $(document).ready(function() {
-        $(".data_attr").click(function(){            
-            var id = $('#attrId').attr("data-id");
-            cosole.log('Your id is =' + id);
-        });
-    });
-</script>
     <script>
         $(document).on("change", "#filter-data", function(e) {
             // member.column($(this).data('column')).search($(this).val()).draw();
