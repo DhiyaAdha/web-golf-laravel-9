@@ -117,12 +117,12 @@
                     "data": function(data) {
                         if (data.status == 0) {
                             return `<div class="checkbox checkbox-success checkbox-circle">
-                                    <input id="checkbox-10" type="checkbox" checked="">
+                                    <input id="checkbox-10" type="checkbox" checked="" disabled>
                                     <label for="checkbox-10" data-toggle="tooltip" data-placement="top" title="ON"></label>
                                 </div>`;
                         } else {
                             return `<div class="checkbox checkbox-danger checkbox-circle">
-                                    <input id="checkbox-12" type="checkbox" checked="">
+                                    <input id="checkbox-12" type="checkbox" checked="" disabled>
                                     <label for="checkbox-12" data-toggle="tooltip" data-placement="top" title="OFF"></label>
                                 </div>`;
                         }

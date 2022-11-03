@@ -86,11 +86,6 @@
     $(function() {
         $('[data-toogle="tooltip"]').tooltip()
     })
-    $(".vertical-spin").TouchSpin({
-        verticalbuttons: true,
-        verticalupclass: 'ti-plus',
-        verticaldownclass: 'ti-minus'
-    });
     // kartu-tamu(transaksi)
     $('#transaksi').DataTable({
         "processing": true,
