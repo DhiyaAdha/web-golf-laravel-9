@@ -1,6 +1,5 @@
 @if (auth()->user()->role_id == '2')
 <head>
-    <!-- Morris Charts CSS -->
     <link href="{{ asset('vendors/bower_components/morris.js/morris.css') }}" rel="stylesheet" type="text/css" />
 </head>
     @extends('layouts.main', ['title' => 'TGCC | Analisis Tamu'])
@@ -212,9 +211,9 @@
         </div>
     @endsection
     @push('scripts')
-        <script src="{{ asset('vendors/bower_components/raphael/raphael.min.js') }}"></script>
-        <script src="{{ asset('vendors/bower_components/morris.js/morris.min.js') }}"></script>
-        <script src="{{ asset('/dist/js/dashboard-data.js') }}"></script>
+        <script defer src="{{ asset('vendors/bower_components/raphael/raphael.min.js') }}"></script>
+        <script defer src="{{ asset('vendors/bower_components/morris.js/morris.min.js') }}"></script>
+        <script defer src="{{ asset('/dist/js/dashboard-data.js') }}"></script>
         <script>
             // fungsi grafik-line & Grafik-bar
             var dataMingguan = {!! json_encode($visitor_daily) !!}
