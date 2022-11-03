@@ -59,7 +59,7 @@ class Kernel extends ConsoleKernel
                     ]);
                 }
             }
-        })->everyMinute();
+        })->monthly();
         $schedule->command('command:member')->cron('59 23 * * *');
     }
 
