@@ -75,9 +75,9 @@ class TamuController extends Controller
                     </a>';
                     
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<div data-toggle="tooltip" data-placement="top" title="Kupon"><a data-toggle="modal" data-target="#myModal" href="javascript:void(0)" id="' . $visitor->id . '">
+                    $button .= '<div data-toggle="tooltip" data-placement="top" title="Kupon"><a data-toggle="modal" data-target="#myModal' . $visitor->id . '" href="javascript:void(0)" id="' . $visitor->id . '">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#787878" d="M9,10a1,1,0,0,0-1,1v2a1,1,0,0,0,2,0V11A1,1,0,0,0,9,10Zm12,1a1,1,0,0,0,1-1V6a1,1,0,0,0-1-1H3A1,1,0,0,0,2,6v4a1,1,0,0,0,1,1,1,1,0,0,1,0,2,1,1,0,0,0-1,1v4a1,1,0,0,0,1,1H21a1,1,0,0,0,1-1V14a1,1,0,0,0-1-1,1,1,0,0,1,0-2ZM20,9.18a3,3,0,0,0,0,5.64V17H10a1,1,0,0,0-2,0H4V14.82A3,3,0,0,0,4,9.18V7H8a1,1,0,0,0,2,0H20Z"/></svg></a></div></div>
-                    <div id="myModal" class="modal fade" tabindex="-1" role="dialog"
+                    <div id="myModal' . $visitor->id . '" class="modal fade" tabindex="-1" role="dialog"
                     aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -787,7 +787,7 @@ class TamuController extends Controller
             $visitor = LogLimit::join('visitors', 'log_limits.visitor_id', '=', 'visitors.id')->where('log_limits.visitor_id', $id)->first();
             $log_limit = LogLimit::where('visitor_id', $id)->first();
             $log_limit->quota_kupon = $request->quota_kupon + $log_limit->quota_kupon;
-            dd($log_limit);
+            // dd($log_limit);
             $log_limit->save();
 
             //notifikasi email
@@ -811,7 +811,7 @@ class TamuController extends Controller
 
             ReportLimit::create([
                 'report_quota_kupon' => $log_limit->quota_kupon,
-                'report_quota' => $log_limit->quota,
+                'report_quota' => 0,
                 'visitor_id' => $id,
                 'user_id' => Auth::id(),
                 'status' => 'Bertambah',

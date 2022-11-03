@@ -31,9 +31,6 @@
 <script src="{{ asset('vendors/chart.js/Chart.min.js') }}"></script>
 
 <!-- Bootstrap Switches CSS -->
-<script src="{{ asset('vendors/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') }}">
-</script>
-<!-- <link href="{{ asset('vendors/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') }}" rel="stylesheet" type="text/css" /> -->
 <script src="{{ asset('vendors/bower_components/bootstrap-switch/dist/js/bootstrap-switch.js') }}"></script>
 
 
@@ -51,8 +48,6 @@
 <!-- Init JavaScript -->
 <script src="{{ asset('/dist/js/init.js') }}"></script>
 @stack('scripts')
-<script src="{{ asset('/dist/js/line-chart-permainan.js') }}"></script>
-<script src="{{ asset('/dist/js/bar-chart-permainan.js') }}"></script>
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 <script type="text/javascript" src="{{ asset('/dist/js/printThis.js') }}"></script>
 
@@ -91,11 +86,6 @@
     $(function() {
         $('[data-toogle="tooltip"]').tooltip()
     })
-    $(".vertical-spin").TouchSpin({
-        verticalbuttons: true,
-        verticalupclass: 'ti-plus',
-        verticaldownclass: 'ti-minus'
-    });
     // kartu-tamu(transaksi)
     $('#transaksi').DataTable({
         "processing": true,

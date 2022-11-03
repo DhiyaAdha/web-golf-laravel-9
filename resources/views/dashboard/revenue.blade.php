@@ -142,6 +142,7 @@
                             <div class="clearfix"></div>
                             <hr class="light-grey-hr row mt-20 mb-15 mb-10" />
                         </div>
+
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
                                 <div class="tab-content">
@@ -170,7 +171,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                     </div>
                 </div>
             </div>
