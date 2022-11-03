@@ -51,8 +51,6 @@
 <!-- Init JavaScript -->
 <script src="{{ asset('/dist/js/init.js') }}"></script>
 @stack('scripts')
-<script src="{{ asset('/dist/js/line-chart-permainan.js') }}"></script>
-<script src="{{ asset('/dist/js/bar-chart-permainan.js') }}"></script>
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 <script type="text/javascript" src="{{ asset('/dist/js/printThis.js') }}"></script>
 
