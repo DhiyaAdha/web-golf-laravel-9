@@ -390,25 +390,31 @@ class TamuController extends Controller {
         $decrypt_id = Crypt::decryptString($id);
         $aktifitas_limit = ReportLimit::select('id', 'report_quota_kupon', 'status', 'visitor_id',  'user_id', 'created_at')->where('visitor_id', $decrypt_id)->where('report_quota_kupon','!=',0)->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
-            return datatables()->of($aktifitas_limit)->addColumn('kupon', function ($data) {
-                if ($data->report_quota_kupon > 0){
-                    return $data->report_quota_kupon;
-                } else {
-                    return ;
-                }
-            })->addColumn('Informasi', function ($data) {
-                if($data->status == 'Bertambah'){
-                    return ' Limit anda bertambah!';
+            return datatables()->of($aktifitas_limit)
+                ->addColumn('kupon', function ($data) {
+                    if ($data->report_quota_kupon > 0){
+                        return $data->report_quota_kupon;
+                    } else {
+                        return ;
+                    }
+                })->addColumn('Informasi', function ($data) {
+                    if($data->status == 'Bertambah'){
+                        return ' Kupon anda bertambah!';
                 } elseif($data->status == 'Berkurang'){
-                    return ' Limit anda berkurang! ';
-            }})->addColumn('status', function ($data) {
-                if ($data->status == 'Bertambah') {
-                    return '<p class="label label-success">' . $data->status . '<div>';
-                } elseif ($data->status == 'Berkurang') {
-                    return '<p class="label label-danger">' . $data->status . '<div>';
-                }
-            })->editColumn('created_at', function ($data) {
-                if ($data->report_quota_kupon > 0){
+                    return ' Kupon anda berkurang! ';
+                } else {
+                    
+                }})
+                ->addColumn('status', function ($data) {
+                    if ($data->status == 'Bertambah') {
+                        return '<p class="label label-success">' . $data->status . '<div>';
+                    } elseif ($data->status == 'Berkurang') {
+                        return '<p class="label label-danger">' . $data->status . '<div>';
+                    } else {
+                        
+                    }
+                })->editColumn('created_at', function ($data) {
+                    if ($data->report_quota_kupon > 0){
                     return date_format($data->created_at, 'd-m-Y H:i');
                 } else {
                     return '<input type="hidden">';
@@ -724,6 +730,7 @@ class TamuController extends Controller {
     public function update_kupon(Request $request, $id) {
         try {
             $visitor = LogLimit::join('visitors', 'log_limits.visitor_id', '=', 'visitors.id')->where('log_limits.visitor_id', $id)->first();
+            // $log_limit = LogLimit::where('visitor_id', $id)->first();
             $log_limit = LogLimit::where('visitor_id', $id)->first();
             $log_limit->quota_kupon = $request->quota_kupon + $log_limit->quota_kupon;
             $log_limit->save();
