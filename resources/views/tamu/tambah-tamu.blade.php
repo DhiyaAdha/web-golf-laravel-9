@@ -57,8 +57,8 @@
                                             </div>
                                             <div class="radio-inline pl-0">
                                                 <span class="radio radio-info"> <input type="radio" name="gender"
-                                                        id="gender-w" value="Perempuan">
-                                                    {{ old('gender') == 'Perempuan' ? 'checked=' . '"' . 'checked' . '"' : '' }}
+                                                        id="gender-w" value="Perempuan"
+                                                    {{ old('gender') == 'Perempuan' ? 'checked=' . '"' . 'checked' . '"' : '' }}>
                                                     <label for="gender-w">Perempuan</label>
                                                 </span>
                                             </div>
