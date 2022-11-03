@@ -408,7 +408,7 @@ class TamuController extends Controller
                 } elseif($data->status == 'Berkurang'){
                     return ' Limit anda berkurang! ';
                 } else {
-                    return 'Limit Bulanan melakukan Reset ';
+                    return 'Limit berhasil direset';
                 }})
                 ->addColumn('status', function ($data) {
                     if ($data->status == 'Bertambah') {
@@ -442,9 +442,9 @@ class TamuController extends Controller
                     }
                 })->addColumn('Informasi', function ($data) {
                     if($data->status == 'Bertambah'){
-                        return ' Limit Anda Bertambah!';
+                        return ' Limit anda bertambah!';
                 } elseif($data->status == 'Berkurang'){
-                    return ' Limit Anda Berkurang! ';
+                    return ' Limit anda berkurang! ';
                 } else {
                     
                 }})
@@ -483,21 +483,9 @@ class TamuController extends Controller
         $visitor->position = $request->position;
         $visitor->tipe_member = $request->tipe_member;
         $visitor->updated_at = Carbon::now();
-        $visitors = Visitor::create([
-            'name' => $request->name,
-            'address' => $request->address,
-            'gender' => $request->gender,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'company' => $request->company,
-            'position' => $request->position,
-            'tipe_member' => $request->tipe_member,
-            'created_at' => Carbon::now(),
-        ]);
         Deposit::create([
             'visitor_id' => $request->visitor_id,
             'balance' => $request->balance,
-            // 'activities' => 'Deposit <b>' . $visitor->name . ' berkurang sebesar <b>' . $request->balance . '</b>',
         ]);
         $visitor->save();
         return redirect()->route('/aktifitas-kartu-tamu/' . $visitor->id)->with('status', 'Data Tamu Berhasil Diupdate');
@@ -538,7 +526,6 @@ class TamuController extends Controller
             'visitor_id' => $request->visitor_id,
             'status' => 'CREATE',
             'quota' => $request->quota,
-            // 'activities' => 'Limit <b>' . $visitor->name . ' sebesar <b>' . $request->quota . '</b>',
         ]);
 
         $visitor->save();
@@ -602,38 +589,25 @@ class TamuController extends Controller
         if ($request->ajax()) {
             return datatables()->of($reporttransaksi)->editColumn('order_number', function ($data) {
                 return $data->order_number;
-            })
-                ->addColumn('information', function ($data) {
-                    // if($data->payment_type == 'limit'){
-                    //     return '<p>Transaksi berhasil ! <b>'. $data->name.'</b> telah melakukan pembayaran menggunakan <b>limit</b></p>';
-                    // } else if ($data->payment_type == 'kupon') {
-                    //     return '<p>Transaksi berhasil ! <b>'. $data->name.'</b> telah melakukan pembayaran menggunakan <b>kupon</b></p>';
-                    // } else if ($data->payment_type == 'cash/transfer') {
-                    //     return '<p>Transaksi berhasil ! <b>'. $data->name.'</b> telah melakukan pembayaran <b>cash/transfer</b> sebesar <b>Rp. '.\formatrupiah($data->total).'</b></p>';
-                    // } else{
-                    // return '<p>Transaksi berhasil ! <b>'. $data->name.'</b> telah melakukan pembayaran menggunakan <b>saldo deposit</b> sebesar <b>Rp. '.\formatrupiah($data->total).'</b></p>';
-                    return '<p>Transaksi berhasil ! <b>' . $data->name . '</b> telah melakukan pembayaran </p>';
-                    // }
-                })
-                ->addColumn('status', function ($data) {
-                    if ($data->payment_status == 'paid') {
-                        return '<p class="label label-success">Berhasil<div>';
-                    } else {
-                        return '<p class="label label-warning">Gagal<div>';
-                    }
-                })
-                ->editColumn('created_at', function ($data) {
-                    return date_format($data->created_at, 'd-m-Y H:i');
-                })->editColumn('total', function($data) {
-                    return 'Rp. ' . number_format($data->total, 0, ',', '.');
-                })->rawColumns(['order_number', 'total', 'information', 'status', 'created_at'])->make(true);
+            })->addColumn('information', function ($data) {
+                return '<p>Transaksi berhasil ! <b>' . $data->name . '</b> telah melakukan pembayaran </p>';
+            })->addColumn('status', function ($data) {
+                if ($data->payment_status == 'paid') {
+                    return '<p class="label label-success">Berhasil<div>';
+                } else {
+                    return '<p class="label label-warning">Gagal<div>';
+                }
+            })->editColumn('created_at', function ($data) {
+                return date_format($data->created_at, 'd-m-Y H:i');
+            })->editColumn('total', function($data) {
+                return 'Rp. ' . number_format($data->total, 0, ',', '.');
+            })->rawColumns(['order_number', 'total', 'information', 'status', 'created_at'])->make(true);
         }
     }
     /* END data aktifitas tamu transaksi*/
 
     /* SUCCEED TRANSAKSI deposit */
-    public function transaksideposit(Request $request)
-    {
+    public function transaksideposit(Request $request) {
         $visitors = Visitor::create([
             'name' => $request->name,
             'address' => $request->address,
@@ -676,7 +650,6 @@ class TamuController extends Controller
             'user_id' => Auth::id(),
             'type' => 'SUCCEED',
             'activities' => 'Transaksi berhasil! <b>' . $visitors->name . ' telah melakkan pembayaran menggunakan <b>' . $request->quota . '</b>',
-            // cTransaksi berhasil ! Arya GP telah melakukan pembayaran menggunakan Limit Gratis.
         ]);
 
         return redirect('/aktifitas-kartu-tamu/' . $visitors->id)
@@ -733,7 +706,6 @@ class TamuController extends Controller
             ]
         );
         $visitor = Visitor::find($id);
-        // dd($request->status);
         if($request->status == 'active') {
             $visitor->expired_date = Carbon::now()->addYear();
             $visitor->fill($request->post())->save();
