@@ -1,5 +1,5 @@
-<script src="{{ asset('vendors/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('vendors/bower_components/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('vendors/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('dist/js/jquery.slimscroll.js') }}"></script>
 <script src="{{ asset('vendors/bower_components/moment/min/moment.min.js') }}"></script>
 <script src="{{ asset('vendors/bower_components/waypoints/lib/jquery.waypoints.min.js') }}"></script>
@@ -9,8 +9,8 @@
 <script src="{{ asset('/dist/js/init.js') }}"></script>
 <script src="https://kit.fontawesome.com/cc01c97c5b.js" crossorigin="anonymous"></script>
 @stack('scripts')
-<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-<script type="text/javascript" src="{{ asset('/dist/js/printThis.js') }}"></script>
+<script defer src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<script defer src="{{ asset('/dist/js/printThis.js') }}"></script>
 <script>
     $( document ).ajaxComplete(function() {
         $('[data-toggle="tooltip"]').tooltip({
