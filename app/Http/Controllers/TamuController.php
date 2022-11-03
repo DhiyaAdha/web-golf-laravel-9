@@ -839,7 +839,7 @@ class TamuController extends Controller
 
             ReportLimit::create([
                 'report_quota_kupon' => $log_limit->quota_kupon,
-                'report_quota' => $log_limit->quota,
+                'report_quota' => 0,
                 'visitor_id' => $id,
                 'user_id' => Auth::id(),
                 'status' => 'Bertambah',
