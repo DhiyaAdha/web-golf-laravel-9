@@ -111,29 +111,6 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-12 col-sm-12">
-                        <div class="panel panel-default card-view">
-                            <div class="panel-heading">
-                                <div class="pull-left">
-                                    <h6 class="panel-title txt-dark">Kategori Pengunjung 12 Bulan Terakhir</h6>
-                                </div>
-                                <div class="pull-right">
-                                    <div class="d-flex align-items-center">
-                                        <div id="visitor_legend" class="bar-chart-legend"></div>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="panel-wrapper collapse in">
-                                <div class="panel-body">
-                                    <div id="bar-chart" height="200"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
                     <div class="col-lg-12">
                         <div class="panel panel-default card-view panel-refresh relative">
                             <div class="panel-heading">
@@ -170,6 +147,27 @@
                             <div class="panel-wrapper collapse in">
                                 <div class="panel-body">
                                     <div id="statistic_visitor_line" class="morris-chart"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="panel panel-default card-view">
+                            <div class="panel-heading">
+                                <div class="pull-left">
+                                    <h6 class="panel-title txt-dark">Kategori Pengunjung 12 Bulan Terakhir</h6>
+                                </div>
+                                <div class="pull-right">
+                                    <div class="d-flex align-items-center">
+                                        <div id="visitor_legend" class="bar-chart-legend"></div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="panel-wrapper collapse in">
+                                <div class="panel-body">
+                                    <div id="bar-chart" height="200"></div>
                                 </div>
                             </div>
                         </div>
