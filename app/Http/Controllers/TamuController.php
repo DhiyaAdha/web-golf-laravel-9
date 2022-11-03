@@ -785,6 +785,7 @@ class TamuController extends Controller
     {
         try {
             $visitor = LogLimit::join('visitors', 'log_limits.visitor_id', '=', 'visitors.id')->where('log_limits.visitor_id', $id)->first();
+            // $log_limit = LogLimit::where('visitor_id', $id)->first();
             $log_limit = LogLimit::where('visitor_id', $id)->first();
             $log_limit->quota_kupon = $request->quota_kupon + $log_limit->quota_kupon;
             // dd($log_limit);
