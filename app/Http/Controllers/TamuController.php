@@ -442,9 +442,9 @@ class TamuController extends Controller
                     }
                 })->addColumn('Informasi', function ($data) {
                     if($data->status == 'Bertambah'){
-                        return ' Limit anda bertambah!';
+                        return ' Kupon anda bertambah!';
                 } elseif($data->status == 'Berkurang'){
-                    return ' Limit anda berkurang! ';
+                    return ' Kupon anda berkurang! ';
                 } else {
                     
                 }})
