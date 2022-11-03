@@ -1,11 +1,9 @@
 <?php
 
 namespace Database\Seeders;
-
 use App\Models\User;
 use App\Models\Visitor;
 use App\Models\ReportDeposit;
-
 use Carbon\Carbon;
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
