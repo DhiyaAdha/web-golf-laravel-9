@@ -653,13 +653,34 @@ class TamuController extends Controller {
                 'status.required' => 'Status member masih kosong.',
             ]
         );
-        $visitor = Visitor::find($id);
+        $visitor = Visitor::findOrFail($id);
         if($request->status == 'active') {
             $visitor->expired_date = Carbon::now()->addYear();
-            $visitor->fill($request->post())->save();
+                $visitor->name = $request->name;
+                $visitor->address = $request->address;
+                $visitor->email = $request->email;
+                $visitor->phone = $request->phone;
+                $visitor->company = $request->company;
+                $visitor->position = $request->position;
+                $visitor->category = $request->category;
+                $visitor->gender = $request->gender;
+                $visitor->tipe_member = $request->tipe_member;
+                $visitor->status = $request->status;
+                $visitor->updated_at = Carbon::now();
         } else {
-            $visitor->fill($request->post())->save();
+            $visitor->name = $request->name;
+            $visitor->address = $request->address;
+            $visitor->email = $request->email;
+            $visitor->phone = $request->phone;
+            $visitor->company = $request->company;
+            $visitor->position = $request->position;
+            $visitor->category = $request->category;
+            $visitor->gender = $request->gender;
+            $visitor->tipe_member = $request->tipe_member;
+            $visitor->status = $request->status;
+            $visitor->updated_at = Carbon::now();
         }
+        $visitor->save();
         $limit = LogLimit::find($id);
         $limit->fill($request->post())->save();
         LogAdmin::create([
