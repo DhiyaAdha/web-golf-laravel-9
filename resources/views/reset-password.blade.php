@@ -13,7 +13,7 @@
     <meta name="theme-color" content="#6777ef" />
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
-    <link href="/dist/css/style.css" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/dist/css/style.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
     <style>
@@ -186,31 +186,23 @@
                 </div>
                 <!-- /Row -->
             </div>
-
         </div>
         <!-- /Main Content -->
-
     </div>
-    <!-- /#wrapper -->
-
-    <!-- JavaScript -->
-
-    <!-- jQuery -->
-    <script src="../../vendors/bower_components/jquery/dist/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../../vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="../../vendors/bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js"></script>
-
-    <!-- Slimscroll JavaScript -->
-    <script src="/dist/js/jquery.slimscroll.js"></script>
-
-    <!-- Init JavaScript -->
-    <script src="/dist/js/init.js"></script>
-
-    {{-- toast --}}
+    <script src="{{ asset('/vendors/bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('/vendors/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/vendors/bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/dist/js/jquery.slimscroll.js') }}"></script>
+    <script src="{{ asset('/dist/js/init.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
-
+    <script src="{{ asset('/sw.js') }}"></script>
+    <script>
+        if (!navigator.serviceWorker.controller) {
+            navigator.serviceWorker.register("/sw.js").then(function (reg) {
+                console.log("Service worker has been registered for scope: " + reg.scope);
+            });
+        }
+    </script>
     <script>
         const passwordField = document.querySelector("#password");
         const passwordCon = document.querySelector("#password_confirmation");

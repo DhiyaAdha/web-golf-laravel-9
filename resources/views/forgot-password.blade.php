@@ -13,8 +13,8 @@
     <meta name="theme-color" content="#6777ef" />
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
-    <link href="dist/css/style.css" rel="stylesheet" type="text/css">
-    <link href="dist/css/custom.css" rel="stylesheet" type="text/css">
+    <link href="{{ asset('dist/css/style.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('dist/css/custom.css') }}" rel="stylesheet" type="text/css">
 </head>
 <body>
     <!--Preloader-->
@@ -56,7 +56,6 @@
                                     </div>
                                     <div class="form-wrap">
                                         <form action="{{ route('email_test') }}" method="post">
-
                                             @csrf
                                             <div class="form-group">
                                                 <label class="control-label mb-10" for="email">Email / Nomor
@@ -71,7 +70,6 @@
                                                     </div>
                                                 @enderror
                                             </div>
-
                                             <div class="form-group text-center">
                                                 <button type="submit" class="btn btn-info btn-rounded">Reset</button>
                                             </div>
@@ -84,26 +82,21 @@
                 </div>
                 <!-- /Row -->
             </div>
-
         </div>
         <!-- /Main Content -->
     </div>
-    <!-- /#wrapper -->
-
-    <!-- JavaScript -->
-
-    <!-- jQuery -->
-    <script src="../../vendors/bower_components/jquery/dist/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../../vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="../../vendors/bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js"></script>
-
-    <!-- Slimscroll JavaScript -->
-    <script src="dist/js/jquery.slimscroll.js"></script>
-
-    <!-- Init JavaScript -->
-    <script src="dist/js/init.js"></script>
+    <script src="{{ asset('/vendors/bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('/vendors/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/vendors/bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') }}"></script>
+    <script src="{{ asset('dist/js/jquery.slimscroll.js') }}"></script>
+    <script src="{{ asset('dist/js/init.js') }}"></script>
+    <script src="{{ asset('/sw.js') }}"></script>
+    <script>
+        if (!navigator.serviceWorker.controller) {
+            navigator.serviceWorker.register("/sw.js").then(function (reg) {
+                console.log("Service worker has been registered for scope: " + reg.scope);
+            });
+        }
+    </script>
 </body>
-
 </html>
