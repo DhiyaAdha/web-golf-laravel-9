@@ -8,20 +8,14 @@
     <meta name="description" content="Tritih Golf & Country Club" />
     <meta name="keywords" content="tgcc" />
     <meta name="author" content="inovis" />
-
-    <!-- Favicon -->
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
-
-    <!-- vector map CSS -->
-    <link href="../../vendors/bower_components/jasny-bootstrap/dist/css/jasny-bootstrap.min.css" rel="stylesheet"
-        type="text/css" />
-    <!-- Custom CSS -->
+    <meta name="theme-color" content="#6777ef" />
+    <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
+    <link rel="manifest" href="{{ asset('/manifest.json') }}">
     <link href="/dist/css/style.css" rel="stylesheet" type="text/css">
-    {{-- <link href="/dist/css/custom.css" rel="stylesheet" type="text/css"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
-
     <style>
         .password-container {
             width: 400px;
