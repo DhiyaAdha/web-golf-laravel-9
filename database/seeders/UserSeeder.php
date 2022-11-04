@@ -15,27 +15,20 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::create([
-            'email' => 'imasnurdianto2002@gmail.com',
-            'name' => 'imas',
-            'phone' => '087736202888',
-            'password' => Hash::make('tes'),
+            'email' => 'kasir01@tritihgolf.com',
+            'name' => 'Kasir',
+            'phone' => '082214515605',
+            'password' => Hash::make('Tritihgolf123!'),
             'role_id' => '1',
         ]);
 
         User::create([
-            'email' => 'dhiya@gmail.com',
-            'name' => 'dhiya',
+            'email' => 'admin@tritihgolf.com',
+            'name' => 'Admin TGCC',
             'phone' => '08733302888',
-            'password' => Hash::make('tes'),
+            'password' => Hash::make('Tritihgolf123!'),
             'role_id' => '2',
         ]);
 
-        User::create([
-            'email' => 'zaenury5868@gmail.com',
-            'name' => 'dhany',
-            'phone' => '082214515603',
-            'password' => Hash::make('tes'),
-            'role_id' => '2',
-        ]);
     }
 }
