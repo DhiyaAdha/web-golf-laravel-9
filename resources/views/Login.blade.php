@@ -13,10 +13,7 @@
     <meta name="theme-color" content="#6777ef" />
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
-    <link href="../../vendors/bower_components/jasny-bootstrap/dist/css/jasny-bootstrap.min.css" rel="stylesheet"
-        type="text/css" />
     <link href="dist/css/style.css" rel="stylesheet" type="text/css">
-    {{-- <link href="dist/css/custom.css" rel="stylesheet" type="text/css"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -90,11 +87,7 @@
         }
     </style>
 </head>
-
 <body>
-    <div id="bg">
-        <img src="{{ asset('bg.png') }}">
-    </div>
     <div class="preloader-it">
         <div class="la-anim-1"></div>
     </div>
@@ -178,6 +171,14 @@
     <script src="{{ asset('dist/js/init.js') }}"></script>
     <script src="{{ asset('dist/js/jquery.slimscroll.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <script src="{{ asset('/sw.js') }}"></script>
+    <script>
+        if (!navigator.serviceWorker.controller) {
+            navigator.serviceWorker.register("/sw.js").then(function (reg) {
+                console.log("Service worker has been registered for scope: " + reg.scope);
+            });
+        }
+    </script>
     <script>
         const passwordField = document.querySelector("#password");
         const eyeIcon = document.querySelector("#eye");
