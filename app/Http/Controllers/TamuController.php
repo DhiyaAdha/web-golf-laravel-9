@@ -705,6 +705,7 @@ class TamuController extends Controller
                 'status.required' => 'Status member masih kosong.',
             ]
         );
+
         $visitor = Visitor::find($id);
         if($request->status == 'active') {
             $visitor->expired_date = Carbon::now()->addYear();
@@ -712,8 +713,9 @@ class TamuController extends Controller
         } else {
             $visitor->fill($request->post())->save();
         }
-        $limit = LogLimit::find($id);
-        $limit->fill($request->post())->save();
+        // $limit = LogLimit::find($id);
+        // $limit->fill($request->post())->save();
+
         LogAdmin::create([
             'user_id' => Auth::id(),
             'quota' => $request->quota,
@@ -734,14 +736,14 @@ class TamuController extends Controller
                     'report_quota' => $request->tipe_member == 'VIP' ? '4' : '10',
                     'created_at' => Carbon::now(),
                     'status' => 'Reset',
-                    'activities' => 'Limit <b>' . $visitor->name . '</b> telah diubah menjadi <b>' . $request->tipe_member . '</b> dengan limit <b>10x Perbulan </b>',
+                    // 'activities' => 'Limit <b>' . $visitor->name . '</b> telah diubah menjadi <b>' . $request->tipe_member . '</b> dengan limit <b>10x Perbulan </b>',
                 ]);
             } else {
                 $visitor_report_limit->update([
                     'report_quota' => $request->tipe_member == 'VIP' ? '4' : '10',
                     'created_at' => Carbon::now(),
                     'status' => 'Reset',
-                    'activities' => 'Limit <b>' . $visitor->name . '</b> telah diubah menjadi <b>' . $request->tipe_member . '</b> dengan limit <b>4x</b> Perbulan ',
+                    // 'activities' => 'Limit <b>' . $visitor->name . '</b> telah diubah menjadi <b>' . $request->tipe_member . '</b> dengan limit <b>4x</b> Perbulan ',
                 ]);
             }
         }
