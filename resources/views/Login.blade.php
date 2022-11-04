@@ -21,6 +21,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,400;1,500&display=swap"
         rel="stylesheet">
     <style>
+        @keyframes spinner {
+            to {transform: rotate(360deg);}
+        }
+        
+        .spinner:before {
+            content: '';
+            box-sizing: border-box;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            margin-top: -15px;
+            margin-left: -15px;
+            border-radius: 50%;
+            border: 3px solid #ccc;
+            border-top-color: rgb(0, 221, 11);
+            animation: spinner .6s linear infinite;
+        }
         #bg {
             position: fixed;
             top: -50%;
@@ -152,8 +171,7 @@
                                                 <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye fa-eye-slash" id="eye"></i>
                                             </div>
                                             <div class="form-group text-center">
-                                                <button type="submit" class="btn btn-info btn-rounded">sign
-                                                    in</button>
+                                                <button type="submit" class="btn btn-info btn-rounded">sign in</button>
                                             </div>
                                         </form>
                                     </div>
@@ -170,6 +188,7 @@
     <script src="{{ asset('vendors/bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') }}"></script>
     <script src="{{ asset('dist/js/init.js') }}"></script>
     <script src="{{ asset('dist/js/jquery.slimscroll.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
     <script src="{{ asset('/sw.js') }}"></script>
     <script>
@@ -189,6 +208,35 @@
         });
 
         $(document).ready(function() {
+            $(document).on('click', '.btn-rounded', function(e) {
+                if($("input[name='email']").val() == '' || $("input[name='password']").val() == '') {
+                    toastr.error('Email dan password wajib diisi');
+                } else {
+                    $.ajax({
+                        async: true,
+                        beforeSend: function(request) {
+                            $.blockUI({
+                                css: {
+                                    backgroundColor: 'transparent',
+                                    border: 'none'
+                                },
+                                message: '<img src="../img/rolling.svg">',
+                                baseZ: 1500,
+                                overlayCSS: {
+                                    backgroundColor: '#7C7C7C',
+                                    opacity: 0.4,
+                                    cursor: 'wait'
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+
+            @if (Session::has('error'))
+                toastr.error('{{ Session::get('error') }}');
+            @endif
+
             toastr.options = {
                 "closeButton": true,
                 "debug": false,
@@ -206,10 +254,6 @@
                 "showMethod": "fadeIn",
                 "hideMethod": "fadeOut"
             };
-
-            @if (Session::has('error'))
-                toastr.error('{{ Session::get('error') }}');
-            @endif
 
             toastr.options = {
                 "closeButton": true,
