@@ -173,7 +173,7 @@
                                                 <div class="clearfix"></div>
                                                 <input type="password" name="password_confirmation"
                                                     class="form-control @error('password') is-invalid @enderror"
-                                                    id="password_confirmation" placeholder="Masukan Password Baru"
+                                                    id="password_confirmation" placeholder="Ulangi Password Baru"
                                                     value="{{ old('password_confirmation') }}"
                                                     autocomplete="current-password">
                                                     <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
@@ -227,12 +227,12 @@
             this.classList.toggle("fa-eye-slash");
             const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
             passwordField.setAttribute("type", type);
-        })
+        });
         eyee.addEventListener("click", function() {
             this.classList.toggle("fa-eye-slash");
             const typee = passwordCon.getAttribute("type") === "password" ? "text" : "password";
             passwordCon.setAttribute("type", typee);
-        })
+        });
     </script>
     <script>
         $("#password_confirmation").on('keyup', function() {

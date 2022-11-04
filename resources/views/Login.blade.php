@@ -61,7 +61,7 @@
             right: 30px;
         }
 
-        @media screen and (min-width: 250px) {
+        /* @media screen and (min-width: 250px) {
             #eye {
                 top: 315px;
             }
@@ -71,10 +71,15 @@
             #eye {
                 top: 276px;
             }
-        }
+        } */
 
         @media screen and (min-width: 480px) {
             #eye {
+                top: 237px;
+            }
+        }
+        @media screen and (min-width: 480px) {
+            #eyee {
                 top: 237px;
             }
         }
@@ -151,7 +156,7 @@
                                                     for="password">Password</label>
                                                 <input type="password" name="password" class="form-control"
                                                     id="password" placeholder="Masukan password" required>
-                                                <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye fa-eye-slash " id="eye"></i>
+                                                <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye fa-eye-slash" id="eye"></i>
                                             </div>
                                             <div class="form-group text-center">
                                                 <button type="submit" class="btn btn-info btn-rounded">sign
