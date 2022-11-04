@@ -681,8 +681,6 @@ class TamuController extends Controller {
             $visitor->updated_at = Carbon::now();
         }
         $visitor->save();
-        $limit = LogLimit::find($id);
-        $limit->fill($request->post())->save();
         LogAdmin::create([
             'user_id' => Auth::id(),
             'quota' => $request->quota,
