@@ -276,7 +276,7 @@ class TamuController extends Controller {
         $deposit = Deposit::where('visitor_id', $request->visitor_id)->first();
         $deposit->balance = $request->balance + $deposit->balance;
         $deposit->save();
-        $data_deposit = array(
+        $data = array(
             "visitor_id" => $request->visitor_id,
             "balance" => $request->balance,
             "name" => $visitor->name,
@@ -288,7 +288,7 @@ class TamuController extends Controller {
             "position" => $visitor->position,
             "tipe_member" => $visitor->tipe_member
         );
-        dispatch(new SendMailJobDeposit($data_deposit));
+        dispatch(new SendMailJobDeposit($data));
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'CREATE',
