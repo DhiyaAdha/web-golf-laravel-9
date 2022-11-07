@@ -17,5 +17,5 @@
     <link href="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('dist/css/style.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('dist/css/custom.css') }}" rel="stylesheet" type="text/css">
-    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <script src="{{ asset('dist/asset_offline/html5-qrcode.js') }}"></script>
 </head>

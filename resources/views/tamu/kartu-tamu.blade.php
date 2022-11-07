@@ -159,7 +159,9 @@
                         {{-- tab --}}
                         <ul role="tablist" class="nav nav-pills" id="myTabs_6">
                             <li class="active" role="presentation"><a class="tabs-log" aria-expanded="true"
-                                    data-toggle="tab" role="tab" href="#transaction_tabs">Transaksi</a></li>
+                                    data-toggle="tab" role="tab" href="#chart_tabs">Chart</a></li>
+                            <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
+                                    href="#transaction_tabs" aria-expanded="false">Transaksi</a></li>
                             <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
                                     href="#deposit_tabs" aria-expanded="false">Deposit</a></li>
                             <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
@@ -173,8 +175,31 @@
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="tab-content">
+                        {{-- chart --}}
+                        <div id="chart_tabs" class="tab-pane fade active in" role="tabpanel">
+                            <div class="panel panel-default card-view">
+                                <div class="panel-heading">
+                                    <div class="pull-left">
+                                        <h6 class="panel-title text-dark">Invoice Trendline 12 Bulan Terakhir</h6>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <hr class="light-grey-hr row mt-20 mb-15 mb-10" />
+                                </div>
+                                <div class="panel-wrapper collapse in">
+                                    <div class="panel-body">
+                                        <div class="tab-content">
+                                            <div id="all_line" class="tab-pane fade active in" role="tabpanel">
+                                                <div class="panel-body">
+                                                    <div id="revenue_line" class="morris-chart"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         {{-- transactions --}}
-                        <div id="transaction_tabs" class="tab-pane fade active in" role="tabpanel">
+                        <div id="transaction_tabs" class="tab-pane fade" role="tabpanel">
                             <div class="panel panel-default card-view">
                                 <div class="panel-heading">
                                     <div class="pull-left">
@@ -186,7 +211,7 @@
                                     <div class="panel-body">
                                         <div class="table-wrap">
                                             <div class="table-responsive">
-                                                <table class="table table-hover mb-0" id="dt-tamu-transaksi">
+                                                <table width="100%" class="table table-hover mb-0" id="dt-tamu-transaksi">
                                                     <thead>
                                                         <tr>
                                                             <th>Order ID</th>
@@ -308,6 +333,14 @@
 @endsection
 
 @push('scripts')
+        {{-- chart --}}
+        <script src="{{ asset('vendors/bower_components/raphael/raphael.min.js') }}"></script>
+        <script src="{{ asset('vendors/bower_components/morris.js/morris.min.js') }}"></script>
+        <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
+        <script>
+            var revenueMonth = {!! json_encode($revenue) !!}
+        </script>
+        {{-- endchart --}}
     <script>
         $('.download-kartu-tamu').on("click", function() {
             $('.resolution').printThis({
@@ -564,5 +597,7 @@
             }]
         });
         // End Of Kupon Activity
+
+        
     </script>
 @endpush

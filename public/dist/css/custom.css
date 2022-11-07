@@ -271,6 +271,16 @@ i.fa.fa-trash-o {
     padding: 5px 8px;
 }
 
+.label-permainan {
+    background: #fec107;
+}
+.label-fasilitas {
+    background: #01c853;
+}
+.label-kantin {
+    background: #1746A2;
+}
+
 .align-self-end {
     -ms-flex-item-align: end !important;
     align-self: flex-end !important;

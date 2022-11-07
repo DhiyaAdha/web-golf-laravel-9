@@ -29,6 +29,8 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Cache\RateLimiting\Limit;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Carbon\CarbonPeriod;
+
 class TamuController extends Controller {
     /**
      * Display a listing of the resource.
@@ -317,6 +319,34 @@ class TamuController extends Controller {
             $data['balance'] = $deposit->balance;
             $data['deposit'] = Deposit::where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
             $data['limit'] = LogLimit::where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
+
+            // Statistika Pertahun Grafik-chart
+        $months = [
+            1 => 'Jan',
+            2 => 'Feb',
+            3 => 'Mar',
+            4 => 'Apr',
+            5 => 'May',
+            6 => 'Jun',
+            7 => 'Jul',
+            8 => 'Aug',
+            9 => 'Sep',
+            10 => 'Oct',
+            11 => 'Nov',
+            12 => 'Dec',
+        ];
+        $data['years'] = range(Carbon::now()->year - 3, Carbon::now()->year);
+        $month_period = CarbonPeriod::create(Carbon::now()->subMonths(11), Carbon::now());
+        foreach ($month_period as $key => $value) {
+            $month_new[$value->format('m')] = [$value->format('n'), $value->format('Y')];
+        }
+        foreach (array_values($month_new) as $key => $value) {
+            $data['revenue'][$key]['e'] = $months[$value[0]];
+            $data['revenue'][$key]['f'] =  LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('total');
+            $data['revenue'][$key]['g'] = LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('jml_default');
+            $data['revenue'][$key]['h'] =LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('jml_additional');
+            $data['revenue'][$key]['i'] = LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('jml_other');
+        }
             return view('tamu.kartu-tamu', $data);
         } catch (\Throwable $th) {
             return redirect()->route('daftar-tamu');
@@ -552,6 +582,8 @@ class TamuController extends Controller {
                 return date_format($data->created_at, 'd-m-Y H:i');
             })->editColumn('total', function($data) {
                 return 'Rp. ' . number_format($data->total, 0, ',', '.');
+            })->editColumn('order_number', function ($data) {
+                return '<a data-toggle="tooltip" data-placement="right" title="Klik detail invoice" href="'.url('invoice/'.$data->id).'">'.$data->order_number."</a>";
             })->rawColumns(['order_number', 'total', 'information', 'status', 'created_at'])->make(true);
         }
     }
