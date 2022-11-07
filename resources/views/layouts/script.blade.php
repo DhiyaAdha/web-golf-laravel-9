@@ -11,20 +11,17 @@
 @stack('scripts')
 <script defer src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 <script defer src="{{ asset('/dist/js/printThis.js') }}"></script>
-<script src="{{ asset('/sw.js') }}"></script>
 <script>
-    if (!navigator.serviceWorker.controller) {
-        navigator.serviceWorker.register("/sw.js").then(function (reg) {
-            console.log("Service worker has been registered for scope: " + reg.scope);
-        });
-    }
-</script>
-<script>
+    $(window).load(function() {
+        console.log('dfdf')
+		$(".se-pre-con").fadeOut("slow");;
+	});
     $( document ).ajaxComplete(function() {
         $('[data-toggle="tooltip"]').tooltip({
             "html": true,
         });
     });
+
     @if (Session::has('success'))
         window.setTimeout(function() {
             $.toast({
