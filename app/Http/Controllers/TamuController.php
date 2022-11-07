@@ -341,11 +341,9 @@ class TamuController extends Controller {
             $month_new[$value->format('m')] = [$value->format('n'), $value->format('Y')];
         }
         foreach (array_values($month_new) as $key => $value) {
-            $data['revenue'][$key]['e'] = $months[$value[0]];
-            $data['revenue'][$key]['f'] =  LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('total');
-            $data['revenue'][$key]['g'] = LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('jml_default');
-            $data['revenue'][$key]['h'] =LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('jml_additional');
-            $data['revenue'][$key]['i'] = LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('jml_other');
+            $data['invoice_chart'][$key]['e'] = $months[$value[0]];
+            $data['invoice_chart'][$key]['f'] =  LogTransaction::where('visitor_id', $decrypt_id)
+            ->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->count();
         }
             return view('tamu.kartu-tamu', $data);
         } catch (\Throwable $th) {

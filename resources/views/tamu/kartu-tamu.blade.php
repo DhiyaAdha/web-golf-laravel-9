@@ -1,3 +1,7 @@
+<head>
+    <!-- Morris Charts CSS -->
+    <link href="{{ asset('vendors/bower_components/morris.js/morris.css') }}" rel="stylesheet" type="text/css" />
+</head>
 @extends('layouts.main', ['title' => 'TGCC | Daftar Tamu'])
 @section('content')
     <div class="page-wrapper">
@@ -159,7 +163,7 @@
                         {{-- tab --}}
                         <ul role="tablist" class="nav nav-pills" id="myTabs_6">
                             <li class="active" role="presentation"><a class="tabs-log" aria-expanded="true"
-                                    data-toggle="tab" role="tab" href="#chart_tabs">Chart</a></li>
+                                    data-toggle="tab" role="tab" href="#chart_tabs">Grafik</a></li>
                             <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
                                     href="#transaction_tabs" aria-expanded="false">Transaksi</a></li>
                             <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
@@ -190,7 +194,7 @@
                                         <div class="tab-content">
                                             <div id="all_line" class="tab-pane fade active in" role="tabpanel">
                                                 <div class="panel-body">
-                                                    <div id="revenue_line" class="morris-chart"></div>
+                                                    <div id="invoice_line" class="morris-chart"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -336,9 +340,9 @@
         {{-- chart --}}
         <script src="{{ asset('vendors/bower_components/raphael/raphael.min.js') }}"></script>
         <script src="{{ asset('vendors/bower_components/morris.js/morris.min.js') }}"></script>
-        <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
+        <script src="{{ asset('/dist/js/line-chart-invoice-data.js') }}"></script>
         <script>
-            var revenueMonth = {!! json_encode($revenue) !!}
+            var invoiceMonth = {!! json_encode($invoice_chart) !!}
         </script>
         {{-- endchart --}}
     <script>
