@@ -13,13 +13,9 @@
     <meta name="theme-color" content="#6777ef" />
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
-    <link href="dist/css/style.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,400;1,500&display=swap"
-        rel="stylesheet">
+    <link href="{{ asset('dist/css/style.css') }}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/all.min.css') }}">
+    <link href="{{ asset('dist/asset_offline/toastr.css') }}" rel="stylesheet" />
     <style>
         @keyframes spinner {
             to {transform: rotate(360deg);}
@@ -188,8 +184,8 @@
     <script src="{{ asset('vendors/bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') }}"></script>
     <script src="{{ asset('dist/js/init.js') }}"></script>
     <script src="{{ asset('dist/js/jquery.slimscroll.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <script src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
+    <script src="{{ asset('dist/asset_offline/toastr.js') }}"></script>
     <script src="{{ asset('/sw.js') }}"></script>
     <script>
         if (!navigator.serviceWorker.controller) {
