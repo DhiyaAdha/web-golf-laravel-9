@@ -26,6 +26,7 @@
                 </i>
             </a>
             <div class="row" id="cetak-invoice">
+            <head>
                 <style>
                     .invoice {
                         font-size: 2.5rem;
@@ -240,6 +241,7 @@
                         </table>
                     </div>
                     @include('layouts.footer')
+                </body>
             </div>
         </div>
     </div>

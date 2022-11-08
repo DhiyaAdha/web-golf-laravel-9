@@ -381,7 +381,7 @@
                     orderable: false
                 },
                 {
-                    data: 'total',
+                    data: 'total_gross',
                     searchable: true,
                     orderable: false
                 },
