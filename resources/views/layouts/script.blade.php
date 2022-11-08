@@ -13,7 +13,6 @@
 <script defer src="{{ asset('/dist/js/printThis.js') }}"></script>
 <script>
     $(window).load(function() {
-        console.log('dfdf')
 		$(".se-pre-con").fadeOut("slow");;
 	});
     $( document ).ajaxComplete(function() {
