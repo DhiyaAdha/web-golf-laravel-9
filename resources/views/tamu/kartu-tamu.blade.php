@@ -331,6 +331,26 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade modal-detail-invoice" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h5 class="modal-title" id="myLargeModalLabel">Large modal</h5>
+                        </div>
+                        <div class="modal-body">
+                            <h5 class="mb-15">Overflowing text to show scroll behavior</h5>
+                            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                            <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger text-left" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
             @include('layouts.footer')
         </div>
     </div>
@@ -346,6 +366,11 @@
         </script>
         {{-- endchart --}}
     <script>
+        $(document).on('click', '#open-detail-invoice', function(e) {
+            $('.modal-detail-invoice').modal('show');
+            console.log('sjsj')
+        });
+
         $('.download-kartu-tamu').on("click", function() {
             $('.resolution').printThis({
                 base: "https://jasonday.github.io/printThis/"
@@ -371,9 +396,9 @@
             },
             "render": $.fn.dataTable.render.text(),
             "columns": [{
-                    data: 'order_number',
-                    searchable: true,
-                    orderable: false
+                    'data' : function(data) {
+                        return `<a href="javascript:void(0)" id="open-detail-invoice" data-toggle="tooltip" title="Lihat inovice">${data.order_number}</a>`;
+                    }
                 },
                 {
                     data: 'information',
