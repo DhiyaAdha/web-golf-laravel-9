@@ -319,9 +319,6 @@ class TamuController extends Controller {
             $data['balance'] = $deposit->balance;
             $data['deposit'] = Deposit::where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
             $data['limit'] = LogLimit::where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
-
-            
-
             // Statistika Pertahun Grafik-chart
         $months = [
             1 => 'Jan',
@@ -582,6 +579,8 @@ class TamuController extends Controller {
                 return date_format($data->created_at, 'd-m-Y H:i');
             })->editColumn('total_gross', function($data) {
                 return 'Rp. ' . number_format($data->total_gross, 0, ',', '.');
+            })->editColumn('transaction_id', function($data) {
+                return $data->id;
             })->rawColumns(['order_number', 'total_gross', 'information', 'status', 'created_at'])->make(true);
         }
     }
@@ -815,5 +814,42 @@ class TamuController extends Controller {
         } catch (\Throwable $th) {
             return response()->json($this->getResponse());
         }
+    }
+
+    public function data_modal_invoice($id){
+        $transaction = LogTransaction::find($id);
+        $payment_type = unserialize($transaction->payment_type);
+        $datax = array();
+        foreach ($payment_type as $i => $t) {
+            $datax[$i] = $t['payment_type'];
+        }
+        $method_payment = implode(", ", $datax);
+        $cart = unserialize($transaction->cart);
+        $visitor = Visitor::find($transaction->visitor_id);
+        $total = 0;
+        $qty = 0;
+        $discount = 0;
+        foreach ($cart as $get) {
+            $qty += $get['qty'];
+            $total += $get['price'];
+        }
+        foreach ($payment_type as $get) {
+            $discount += $get['discount'];
+        }
+        return response()->json([
+            'name' => $visitor->name,
+            'type_member' => $visitor->tipe_member,
+            'visitor_email' => $visitor->email,
+            'visitor_phone' => $visitor->phone,
+            'order_number' => $transaction->order_number,
+            'pay' => $method_payment,
+            'date' => $transaction->created_at->format('d F Y | H:i:s'),
+            'products' => $cart,
+            'amount_order' => $qty,
+            'discount' => formatrupiah($discount),
+            'total_payment' => formatrupiah($transaction->total),
+            'total_bill' => formatrupiah($total),
+            'amount_item' => count($cart)
+        ]);
     }
 }

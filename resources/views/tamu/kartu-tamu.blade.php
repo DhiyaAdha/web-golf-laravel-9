@@ -19,110 +19,6 @@
                     </ol>
                 </div>
                 <!-- /Breadcrumb -->
-                {{-- css --}}
-                <style>
-                    .invoice {
-                        font-size: 2.5rem;
-                        font-weight: 500;
-                        background: -webkit-linear-gradient(45deg, #82eee5, #01C853 80%);
-                        -webkit-background-clip: text;
-                        -webkit-text-fill-color: #00000021;
-                        margin: 0;
-                    }
-
-                    .invoice-box {
-                        max-width: 800px;
-                        margin: auto;
-                        padding: 30px;
-                        border: 1px solid #eee;
-                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-                        font-size: 16px;
-                        line-height: 24px;
-                        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-                        color: #555;
-                    }
-
-                    .invoice-box table {
-                        width: 100%;
-                        line-height: inherit;
-                        text-align: left;
-                    }
-
-                    .invoice-box table td {
-                        padding: 5px;
-                        vertical-align: top;
-                    }
-
-                    .invoice-box table tr td:nth-child(2) {
-                        text-align: right;
-                    }
-
-                    .invoice-box table tr.top table td {
-                        padding-bottom: 20px;
-                    }
-
-                    .invoice-box table tr.top table td.title {
-                        font-size: 45px;
-                        line-height: 45px;
-                        color: #333;
-                    }
-
-                    .invoice-box table tr.information table td {
-                        padding-bottom: 40px;
-                    }
-
-                    .invoice-box table tr.heading td {
-                        background: #eee;
-                        border-bottom: 1px solid #ddd;
-                        font-weight: bold;
-                    }
-
-                    .invoice-box table tr.details td {
-                        padding-bottom: 20px;
-                    }
-
-                    .invoice-box table tr.item td {
-                        border-bottom: 1px solid #eee;
-                    }
-
-                    .invoice-box table tr.item.last td {
-                        border-bottom: none;
-                    }
-
-                    .invoice-box table tr.total td:nth-child(2) {
-                        border-top: 2px solid #eee;
-                        font-weight: bold;
-                    }
-
-                    @media only screen and (max-width: 600px) {
-                        .invoice-box table tr.top table td {
-                            width: 100%;
-                            display: block;
-                            text-align: center;
-                        }
-
-                        .invoice-box table tr.information table td {
-                            width: 100%;
-                            display: block;
-                            text-align: center;
-                        }
-                    }
-
-                    /** RTL **/
-                    .invoice-box.rtl {
-                        direction: rtl;
-                        font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-                    }
-
-                    .invoice-box.rtl table {
-                        text-align: right;
-                    }
-
-                    .invoice-box.rtl table tr td:nth-child(2) {
-                        text-align: left;
-                    }
-                </style>
-                {{-- /css --}}
             </div>
             <div class="row">
                 <div class="col-lg-12">
@@ -440,7 +336,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h5 class="modal-title" id="myLargeModalLabel">Invoice</h5>
+                            <strong><span class="modal-title text-capitalize" id="myLargeModalLabel"></span></strong>
                         </div>
                         <div class="modal-body">
                             <div class="invoice-box">
@@ -453,10 +349,8 @@
                                                         <h2 class="invoice">INVOICE</h2>
                                                     </td>
                                                     <td>
-                                                        <strong>Order
-                                                            </strong><br />
                                                         <strong>Metode Pembayaran:</strong><br>
-                                                        <p style="color: #616161;"></p><br />
+                                                        <p id="method_payment" style="color: #616161;"></p><br />
                                                     </td>
                                                 </tr>
                                             </table>
@@ -468,13 +362,13 @@
                                                 <tr>
                                                     <td>
                                                         <strong>Nama Tamu:</strong><br />
-                                                        <span class="weight-500"></span>
-                                                        <br /><br>
+                                                        <span id="name_visitor" class="weight-500" style="color: #616161;"></span>
+                                                        <br /><p id="visitor_email"></p><p  id="visitor_phone"></p>
                                                         <br>
                                                     </td>
                                                     <td>
                                                         <strong>Order Date:</strong><br>
-                                                        <p style="color: #616161">
+                                                        <p id="date" style="color: #616161">
                                                             
                                                         </p>
                                                         <br><br>
@@ -486,30 +380,22 @@
                                     <tr class="details">
                                         <td>
                                             <strong>Jenis Tamu:&nbsp;</strong>
-                                            
-                                                <span
-                                                    class="label label-success"></span>
-                                            
-                                                <span
-                                                    class="label label-warning"></span>
-                                            
-                                                <span class="label label-primary">Umum</span>
-                                            
+                                                <span id="type_tamu"></span>
                                         </td>
                                     </tr>
                                     <tr class="heading">
                                         <td>Nama Paket</td>
-                                        <td style="text-align: center">Harga</td>
+                                        <td style="">Harga</td>
                                         <td style="text-align: center">Qty</td>
                                         <td style="text-align: right">Total</td>
                                     </tr>
                                     <tr class="item">
                                         
                                     <tr>
-                                        <td></td>
-                                        <td class="text-right">Rp. </td>
-                                        <td class="text-center"></td>
-                                        <td class="text-right">Rp. </td>
+                                        <td id="product1"></td>
+                                        <td id="product2" class="text-right"></td>
+                                        <td id="product3" class="text-center"></td>
+                                        <td id="product4" class="text-right"></td>
                                     </tr>
                                     
                                     </tr>
@@ -517,32 +403,32 @@
                                         <td class="thick-line"></td>
                                         <td class="thick-line"></td>
                                         <td class="thick-line text-right">Jumlah Item</td>
-                                        <td class="thick-line text-right"></td>
+                                        <td  id="amount_item" class="thick-line text-right"></td>
                                     </tr>
                                     <tr>
                                         <td class="thick-line"></td>
                                         <td class="thick-line"></td>
                                         <td class="thick-line text-right">Jumlah Order</td>
-                                        <td class="thick-line text-right">
+                                        <td id="amount_order" class="thick-line text-right">
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
                                         <td class="no-line text-right">Diskon</td>
-                                        <td class="no-line text-right">Rp. </td>
+                                        <td id="discount" class="no-line text-right">Rp. </td>
                                     </tr>
                                     <tr>
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
                                         <td class="no-line text-right">Total Bayar</td>
-                                        <td class="no-line text-right">Rp. </td>
+                                        <td id="total_payment" class="no-line text-right">Rp. </td>
                                     </tr>
                                     <tr>
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
                                         <td class="no-line text-right"><strong>Total Tagihan</strong></td>
-                                        <td class="no-line text-right">
+                                        <td id="total_bill" class="no-line text-right">
                                             <span>Rp. </span>
                                         </td>
                                     </tr>
@@ -564,22 +450,54 @@
         <script src="{{ asset('vendors/bower_components/raphael/raphael.min.js') }}"></script>
         <script src="{{ asset('vendors/bower_components/morris.js/morris.min.js') }}"></script>
         <script src="{{ asset('/dist/js/line-chart-invoice-data.js') }}"></script>
+        <script src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
         <script>
             var invoiceMonth = {!! json_encode($invoice_chart) !!}
         </script>
         {{-- endchart --}}
     <script>
-        $(document).on('click', '#open-detail-invoice', function(e) {
-            $('.modal-detail-invoice').modal('show');
-            console.log('sjsj')
-        });
+        $('.modal-detail-invoice').on('show.bs.modal', function(e){
+            var id = $(e.relatedTarget).data('id');
+            var url = "{{ route('modal.invoice', ':id') }}";
+            url = url.replace(':id', id);
+
+            $.ajax({
+                async: true,
+                type: 'GET',
+                url: url,
+                data: {
+                    id: id,
+                },
+                dataType: 'json',
+                success: function(data) {
+                    $('#myLargeModalLabel').text('ORDER ID : '+ data.order_number);
+                    $('#name_visitor').text(data.name);
+                    $('#method_payment').text(data.pay);
+                    $('#date').text(data.date);
+                    $('#type_tamu').text(data.type_member);
+                    $('#visitor_email').text(data.visitor_email);
+                    $('#visitor_phone').text(data.visitor_phone);
+                    $('#amount_item').text(data.amount_item);
+                    $('#amount_order').text(data.amount_order);
+                    $('#discount').text(data.discount);
+                    $('#total_payment').text(data.total_payment);
+                    $('#total_bill').text(data.total_bill);
+                    $.each(data.products, function(b, val) {
+                        $('#product1').text(val.name);
+                        $('#product2').text(val.pricesingle);
+                        $('#product3').text(val.qty);
+                        $('#product4').text(val.price);
+                    });
+                }
+            });
+        })
 
         $('.download-kartu-tamu').on("click", function() {
             $('.resolution').printThis({
                 base: "https://jasonday.github.io/printThis/"
             });
         });
-        // Transaction Activity
+
         $('#dt-tamu-transaksi').DataTable({
             "processing": true,
             "serverSide": true,
@@ -600,7 +518,7 @@
             "render": $.fn.dataTable.render.text(),
             "columns": [{
                     'data' : function(data) {
-                        return `<a href="javascript:void(0)" id="open-detail-invoice" data-toggle="tooltip" title="Lihat inovice">${data.order_number}</a>`;
+                        return `<a href="javascript:void(0)" data-id="${data.id}" data-toggle="modal" data-target=".modal-detail-invoice">${data.order_number}</a>`;
                     }
                 },
                 {
