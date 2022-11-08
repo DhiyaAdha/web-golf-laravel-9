@@ -578,11 +578,11 @@ class TamuController extends Controller {
                 }
             })->editColumn('created_at', function ($data) {
                 return date_format($data->created_at, 'd-m-Y H:i');
-            })->editColumn('total', function($data) {
-                return 'Rp. ' . number_format($data->total, 0, ',', '.');
+            })->editColumn('total_gross', function($data) {
+                return 'Rp. ' . number_format($data->total_gross, 0, ',', '.');
             })->editColumn('order_number', function ($data) {
                 return '<a data-toggle="tooltip" data-placement="right" title="Klik detail invoice" href="'.url('invoice/'.$data->id).'">'.$data->order_number."</a>";
-            })->rawColumns(['order_number', 'total', 'information', 'status', 'created_at'])->make(true);
+            })->rawColumns(['order_number', 'total_gross', 'information', 'status', 'created_at'])->make(true);
         }
     }
     /* END data aktifitas tamu transaksi*/
