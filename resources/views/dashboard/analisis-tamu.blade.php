@@ -240,9 +240,9 @@
 
                 "render": $.fn.dataTable.render.text(),
                 "columns": [{
-                        "data": function(data) {
-                            return `<span class='text-capitalize'>${data.name}</span>`;
-                        }
+                    data: 'name',
+                    searchable: true,
+                    orderable:false
                     },
                     {
                         "data": function(data) {

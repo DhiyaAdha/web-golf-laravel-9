@@ -17,5 +17,6 @@
     <link href="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('dist/css/style.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('dist/css/custom.css') }}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/all.min.css') }}">
     <script src="{{ asset('dist/asset_offline/html5-qrcode.js') }}"></script>
 </head>
