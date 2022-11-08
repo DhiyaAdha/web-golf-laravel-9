@@ -320,6 +320,8 @@ class TamuController extends Controller {
             $data['deposit'] = Deposit::where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
             $data['limit'] = LogLimit::where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
 
+            
+
             // Statistika Pertahun Grafik-chart
         $months = [
             1 => 'Jan',
