@@ -187,8 +187,8 @@
     </div>
 @endsection
 @push('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
+    <script src="{{ asset('dist/asset_offline/popper.min.js') }}"></script>
 
     <script>
         $('[data-toggle="tooltip"]').tooltip();
