@@ -19,12 +19,10 @@ use Illuminate\Support\Facades\Crypt;
 use App\Jobs\SendMailJobDepositTambah;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
-class ScanqrController extends Controller
-{
+class ScanqrController extends Controller {
     private $status;
     private $message;
     private $data;
-    private $user;
 
     public function __construct() {
         $this->status = "INVALID";
@@ -40,72 +38,11 @@ class ScanqrController extends Controller
         return view('membership.scan-tamu');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create() {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request) {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id) {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id) {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id) {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id) {
-        //
-    }
-
     public function proses() {
         return view('proses');
     }
 
     public function kartutamu($id) {
-
         $visitor = Visitor::findOrFail($id);
         $qrcode = QrCode::size(180)->generate($visitor->unique_qr);
         $data['visitor'] =  Visitor::find($id);
@@ -130,7 +67,7 @@ class ScanqrController extends Controller
         }
     }
 
-    public function checkQRCode(Request $request, $id = null) {
+    public function checkQRCode(Request $request) {
         $url_qr = explode("/", parse_url($request->get('qrCode'), PHP_URL_PATH));
         $get_visitor = Visitor::where("id", $url_qr[2])->first();
         try {
@@ -272,7 +209,6 @@ class ScanqrController extends Controller
                 'type' => 'CREATE',
                 'activities' => 'Berhasil menambah kupon <b>' . $request->quota_kupon . '</b> atas nama <b>' . $visitor->name . '</b>',
             ]);
-            
 
             ReportLimit::create([
                 'report_quota_kupon' => $log_limit->quota_kupon,

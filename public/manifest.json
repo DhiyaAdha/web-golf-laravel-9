@@ -1,11 +1,9 @@
 {
-    "name": "TGCC Membership",
-    "short_name": "TGCC Apps",
-    "start_url": "/index.php",
-    "background_color": "#6777ef",
-    "description": "Tritih Golf & Country Club",
-    "display": "fullscreen",
-    "theme_color": "#6777ef",
+    "short_name": "Tritih Golf & Country Club",
+    "name": "TGCC POS",
+    "background_color": "#2196F3",
+    "orientation": "portrait",
+    "description": "Management Point Of Sales Tritih Golf & Country Club",
     "icons": [
         {
             "src": "tgcc144.png",
@@ -22,5 +20,7 @@
             "sizes": "512x512",
             "type": "image/png"
         }
-    ]
+    ],
+    "start_url": "/",
+    "display": "standalone"
 }

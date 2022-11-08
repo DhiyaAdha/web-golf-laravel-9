@@ -1,4 +1,7 @@
 @if (auth()->user()->role_id == '2')
+<head>
+    <link href="{{ asset('vendors/bower_components/morris.js/morris.css') }}" rel="stylesheet" type="text/css" />
+</head>
     @extends('layouts.main', ['title' => 'TGCC | Analisis Tamu'])
     @section('content')
         <div class="page-wrapper">
@@ -111,29 +114,6 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-12 col-sm-12">
-                        <div class="panel panel-default card-view">
-                            <div class="panel-heading">
-                                <div class="pull-left">
-                                    <h6 class="panel-title txt-dark">Kategori Pengunjung 12 Bulan Terakhir</h6>
-                                </div>
-                                <div class="pull-right">
-                                    <div class="d-flex align-items-center">
-                                        <div id="visitor_legend" class="bar-chart-legend"></div>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="panel-wrapper collapse in">
-                                <div class="panel-body">
-                                    <div id="bar-chart" height="200"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
                     <div class="col-lg-12">
                         <div class="panel panel-default card-view panel-refresh relative">
                             <div class="panel-heading">
@@ -174,6 +154,27 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-lg-12">
+                        <div class="panel panel-default card-view">
+                            <div class="panel-heading">
+                                <div class="pull-left">
+                                    <h6 class="panel-title txt-dark">Kategori Pengunjung 12 Bulan Terakhir</h6>
+                                </div>
+                                <div class="pull-right">
+                                    <div class="d-flex align-items-center">
+                                        <div id="visitor_legend" class="bar-chart-legend"></div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="panel-wrapper collapse in">
+                                <div class="panel-body">
+                                    <div id="bar-chart" height="200"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Row Tabel Tamu-->
@@ -210,7 +211,9 @@
         </div>
     @endsection
     @push('scripts')
-        <script src="{{ asset('/dist/js/dashboard-data.js') }}"></script>
+        <script defer src="{{ asset('vendors/bower_components/raphael/raphael.min.js') }}"></script>
+        <script defer src="{{ asset('vendors/bower_components/morris.js/morris.min.js') }}"></script>
+        <script defer src="{{ asset('/dist/js/dashboard-data.js') }}"></script>
         <script>
             // fungsi grafik-line & Grafik-bar
             var dataMingguan = {!! json_encode($visitor_daily) !!}

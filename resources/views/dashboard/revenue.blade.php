@@ -1,3 +1,7 @@
+<head>
+    <!-- Morris Charts CSS -->
+    <link href="{{ asset('vendors/bower_components/morris.js/morris.css') }}" rel="stylesheet" type="text/css" />
+</head>
 @extends('layouts.main', ['title' => 'TGCC | Analisis Revenue'])
 @section('content')
     <div class="page-wrapper">
@@ -241,6 +245,8 @@
     {{-- Finish Trendline --}}
 @endsection
 @push('scripts')
+    <script src="{{ asset('vendors/bower_components/raphael/raphael.min.js') }}"></script>
+    <script src="{{ asset('vendors/bower_components/morris.js/morris.min.js') }}"></script>
     <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
     <script>
         var revenueWeek = {!! json_encode($revenue_daily) !!}

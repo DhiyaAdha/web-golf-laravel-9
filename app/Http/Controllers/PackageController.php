@@ -79,7 +79,7 @@ class PackageController extends Controller
                 'price_weekend.required' => 'Harga Weekend masih kosong.',
             ]
         );
-        $tes = Package::create([
+        Package::create([
             'name' => $request->name,
             'category' => $request->category,
             'price_weekdays' => $request->price_weekdays,
@@ -92,9 +92,7 @@ class PackageController extends Controller
             'activities' => 'Menambahkan package baru bernama <b>' . $request->name . '</b>',
         ]);
 
-        return redirect()
-            ->route('package.index')
-            ->with('success', 'Berhasil Tambah Paket');
+        return redirect()->route('package.index')->with('success', 'Berhasil Tambah Paket');
     }
 
     /**

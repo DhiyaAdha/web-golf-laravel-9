@@ -8,20 +8,14 @@
     <meta name="description" content="Tritih Golf & Country Club" />
     <meta name="keywords" content="tgcc" />
     <meta name="author" content="inovis" />
-
-    <!-- Favicon -->
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
-
-    <!-- vector map CSS -->
-    <link href="../../vendors/bower_components/jasny-bootstrap/dist/css/jasny-bootstrap.min.css" rel="stylesheet"
-        type="text/css" />
-    <!-- Custom CSS -->
-    <link href="/dist/css/style.css" rel="stylesheet" type="text/css">
-    {{-- <link href="/dist/css/custom.css" rel="stylesheet" type="text/css"> --}}
+    <meta name="theme-color" content="#6777ef" />
+    <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
+    <link rel="manifest" href="{{ asset('/manifest.json') }}">
+    <link href="{{ asset('/dist/css/style.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
-
     <style>
         .password-container {
             width: 400px;
@@ -173,7 +167,7 @@
                                                 <div class="clearfix"></div>
                                                 <input type="password" name="password_confirmation"
                                                     class="form-control @error('password') is-invalid @enderror"
-                                                    id="password_confirmation" placeholder="Masukan Password Baru"
+                                                    id="password_confirmation" placeholder="Ulangi Password Baru"
                                                     value="{{ old('password_confirmation') }}"
                                                     autocomplete="current-password">
                                                     <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
@@ -192,31 +186,23 @@
                 </div>
                 <!-- /Row -->
             </div>
-
         </div>
         <!-- /Main Content -->
-
     </div>
-    <!-- /#wrapper -->
-
-    <!-- JavaScript -->
-
-    <!-- jQuery -->
-    <script src="../../vendors/bower_components/jquery/dist/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../../vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="../../vendors/bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js"></script>
-
-    <!-- Slimscroll JavaScript -->
-    <script src="/dist/js/jquery.slimscroll.js"></script>
-
-    <!-- Init JavaScript -->
-    <script src="/dist/js/init.js"></script>
-
-    {{-- toast --}}
+    <script src="{{ asset('/vendors/bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('/vendors/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/vendors/bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/dist/js/jquery.slimscroll.js') }}"></script>
+    <script src="{{ asset('/dist/js/init.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
-
+    <script src="{{ asset('/sw.js') }}"></script>
+    <script>
+        if (!navigator.serviceWorker.controller) {
+            navigator.serviceWorker.register("/sw.js").then(function (reg) {
+                console.log("Service worker has been registered for scope: " + reg.scope);
+            });
+        }
+    </script>
     <script>
         const passwordField = document.querySelector("#password");
         const passwordCon = document.querySelector("#password_confirmation");
@@ -227,12 +213,12 @@
             this.classList.toggle("fa-eye-slash");
             const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
             passwordField.setAttribute("type", type);
-        })
+        });
         eyee.addEventListener("click", function() {
             this.classList.toggle("fa-eye-slash");
             const typee = passwordCon.getAttribute("type") === "password" ? "text" : "password";
             passwordCon.setAttribute("type", typee);
-        })
+        });
     </script>
     <script>
         $("#password_confirmation").on('keyup', function() {

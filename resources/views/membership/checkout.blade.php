@@ -224,6 +224,7 @@
                                     <div class="card-body">
                                         <form>
                                             <input type="hidden" value="{{ $get_id }}">
+                                            <input type="hidden" class="package-default" value="{{ $package_default }}">
                                             <div class="d-flex align-items-center">
                                                 <span class="flex-grow-1">Metode Pembayaran</span>
                                                 <div class="d-flex align-items-center">
@@ -1369,7 +1370,6 @@
                 let discount = '';
                 let deposit = '';
                 let cash_transfer = '';
-                
                 if ($(this).is(':checked')) {
                     // $('.summary').removeClass('d-none');
                     if(data_deposit < data_bill) {
@@ -1640,45 +1640,87 @@
                                     $('#deposit').text('Rp. 0');
                                     $('.bayar-input').val('');
                                 } else if (type_multiple[1] == 'kupon' || type_multiple[1] == 'limit') {
-                                    $('.deposit').removeClass('d-none');
-                                    $('#deposit').text('Rp. -' + format(data_bill - price_single));
-                                    $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
-                                    discount += `<div class="card mt-2">
-                                            <div class="card-body">
-                                                <div class="d-flex flex-column">
-                                                    <div class="d-flex">
-                                                        <span class="flex-grow-1">Diskon</span>
-                                                        <span>Rp. ${format(price_single)},00</span>
+                                    if(JSON.parse($('.package-default').val()).length == 1) {
+                                        $('.deposit').removeClass('d-none');
+                                        $('#deposit').text('Rp. 0');
+                                        $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
+                                        discount += `<div class="card mt-2">
+                                                <div class="card-body">
+                                                    <div class="d-flex flex-column">
+                                                        <div class="d-flex">
+                                                            <span class="flex-grow-1">Diskon</span>
+                                                            <span>Rp. ${format(price_single)},00</span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>`;
-                                        $('.discount').html(discount).show();
+                                            </div>`;
+                                            $('.discount').html(discount).show();
+                                    } else {
+                                        $('.deposit').removeClass('d-none');
+                                        $('#deposit').text('Rp. -' + format(data_bill - price_single));
+                                        $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
+                                        discount += `<div class="card mt-2">
+                                                <div class="card-body">
+                                                    <div class="d-flex flex-column">
+                                                        <div class="d-flex">
+                                                            <span class="flex-grow-1">Diskon</span>
+                                                            <span>Rp. ${format(price_single)},00</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>`;
+                                            $('.discount').html(discount).show();
+                                    }
                                 }
                             } else if (type_multiple[0] == 'cash/transfer') {
                                 if(type_multiple[1] == 'kupon' || type_multiple[1] == 'limit') {
-                                    $('.bayar-input').val(data_bill - price_single).removeClass('is-invalid');
-                                    $('#return').text('0').css({
-                                        "background-color": "rgba(25, 216, 149, 0.2)",
-                                        "color": "#19d895"
-                                    }).data('refund', 0);
-                                    discount += `<div class="card mt-2">
-                                            <div class="card-body">
-                                                <div class="d-flex flex-column">
-                                                    <div class="d-flex">
-                                                        <span class="flex-grow-1">Diskon</span>
-                                                        <span>Rp. ${format(price_single)},00</span>
+                                    if(JSON.parse($('.package-default').val()).length == 1) {
+                                        $("#customCheck7").prop("checked", false);
+                                        $('.bayar-input').val('');
+                                        $('#return').text('0').css({
+                                            "background-color": "rgba(25, 216, 149, 0.2)",
+                                            "color": "#19d895"
+                                        }).data('refund', 0);
+                                        $('.refund').addClass('d-none');
+                                        discount += `<div class="card mt-2">
+                                                <div class="card-body">
+                                                    <div class="d-flex flex-column">
+                                                        <div class="d-flex">
+                                                            <span class="flex-grow-1">Diskon</span>
+                                                            <span>Rp. ${format(price_single)},00</span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>`;
-                                        $('.discount').html(discount).show();
-                                    $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
-                                    $('.refund').removeClass('d-none');
-                                    $('#return').text('0').css({
-                                        "background-color": "rgba(25, 216, 149, 0.2)",
-                                        "color": "#19d895"
-                                    }).data('refund', 0).addClass('green');
+                                            </div>`;
+                                            $('.discount').html(discount).show();
+                                        $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
+                                        swal({
+                                            title: "",
+                                            type: "error",
+                                            text: "Gunakan limit atau kupon",
+                                            confirmButtonColor: "#01c853",
+                                        });
+                                        return false;
+                                    } else {
+                                        $('.bayar-input').val(data_bill - price_single).removeClass('is-invalid');
+                                        $('#return').text('0').css({
+                                            "background-color": "rgba(25, 216, 149, 0.2)",
+                                            "color": "#19d895"
+                                        }).data('refund', 0).addClass('green');
+                                        discount += `<div class="card mt-2">
+                                                <div class="card-body">
+                                                    <div class="d-flex flex-column">
+                                                        <div class="d-flex">
+                                                            <span class="flex-grow-1">Diskon</span>
+                                                            <span>Rp. ${format(price_single)},00</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>`;
+                                            $('.discount').html(discount).show();
+                                        $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
+                                        $('.refund').removeClass('d-none');
+                                    }
                                 }
                             }
                         } else if (type_multiple.length == 3) {
@@ -2053,7 +2095,6 @@
                 let bayar_cash = $('.bayar-cash').val();
                 let bayar_input = $('.bayar-input').val();
                 console.log(bayar_input);
-                console.log(type_multiple);
                 let refund = $('#return').data('refund');
                 let tg = window.location.href;
                 tg = tg.split("?");

@@ -95,11 +95,11 @@
                 {
                     "data": function(data) {
                         if (data.category == 'default') {
-                            return `<span class="label label-primary">${data.category == 'default' ? 'Permainan' : 'Fasilitas'}</span>`;
+                            return `<span class="label label-permainan">${data.category == 'default' ? 'Permainan' : 'Proshop & Fasilitas'}</span>`;
                         } else if (data.category == 'additional') {
-                            return `<span class="label label-danger">${data.category == 'additional' ? 'Fasilitas' : 'Permainan'}</span>`;
+                            return `<span class="label label-fasilitas">${data.category == 'additional' ? 'Proshop & Fasilitas' : 'Permainan'}</span>`;
                         } else {
-                            return `<span class="label label-danger">${data.category == 'others' ? 'Lainnya' : 'Permainan'}</span>`;
+                            return `<span class="label label-kantin">${data.category == 'others' ? 'Kantin' : 'Permainan'}</span>`;
                         }
                     }
                 },
@@ -117,12 +117,12 @@
                     "data": function(data) {
                         if (data.status == 0) {
                             return `<div class="checkbox checkbox-success checkbox-circle">
-                                    <input id="checkbox-10" type="checkbox" checked="">
+                                    <input id="checkbox-10" type="checkbox" checked="" disabled>
                                     <label for="checkbox-10" data-toggle="tooltip" data-placement="top" title="ON"></label>
                                 </div>`;
                         } else {
                             return `<div class="checkbox checkbox-danger checkbox-circle">
-                                    <input id="checkbox-12" type="checkbox" checked="">
+                                    <input id="checkbox-12" type="checkbox" checked="" disabled>
                                     <label for="checkbox-12" data-toggle="tooltip" data-placement="top" title="OFF"></label>
                                 </div>`;
                         }

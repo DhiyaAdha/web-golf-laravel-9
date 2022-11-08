@@ -24,7 +24,7 @@
                     <div class="panel panel-default card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
-                                <strong class="panel-title txt-dark">Jenis Permainan</strong>
+                                <strong class="panel-title txt-dark">Permainan</strong>
                             </div>
                             <div class="pull-right">
                                 <div class='d-flex '>
@@ -45,7 +45,7 @@
                         </div>
                         <div class="panel-heading">
                             <div class="pull-left">
-                                <strong class="panel-title txt-dark">Fasilitas</strong>
+                                <strong class="panel-title txt-dark">Proshop & Fasilitas</strong>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -59,7 +59,7 @@
                         </div>
                         <div class="panel-heading">
                             <div class="pull-left">
-                                <strong class="panel-title txt-dark">Lainnya</strong>
+                                <strong class="panel-title txt-dark">Kantin</strong>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -560,7 +560,13 @@
                 },
                 {
                     "data": function(data) {
-                        return `<span class="label ${data.category == 'default' ? 'label-primary' : 'label-danger'}">${data.category}</span>`;
+                        if (data.category == 'default') {
+                            return `<span class="label label-permainan">${data.category == 'default' ? 'Permainan' : 'Proshop & Fasilitas'}</span>`;
+                        } else if (data.category == 'additional') {
+                            return `<span class="label label-fasilitas">${data.category == 'additional' ? 'Proshop & Fasilitas' : 'Permainan'}</span>`;
+                        } else {
+                            return `<span class="label label-kantin">${data.category == 'others' ? 'Kantin' : 'Permainan'}</span>`;
+                        }
                     }
                 },
                 {
@@ -577,12 +583,12 @@
                     "data": function(data) {
                         if (data.status == 0) {
                             return `<div class="checkbox checkbox-success checkbox-circle">
-                                <input id="checkbox-10" type="checkbox" checked="">
+                                <input id="checkbox-10" type="checkbox" checked="" disabled>
                                 <label for="checkbox-10" data-toggle="tooltip" data-placement="top" title="ON"></label>
                             </div>`;
                         } else {
                             return `<div class="checkbox checkbox-danger checkbox-circle">
-                                <input id="checkbox-12" type="checkbox" checked="">
+                                <input id="checkbox-12" type="checkbox" checked="" disabled>
                                 <label for="checkbox-12" data-toggle="tooltip" data-placement="top" title="OFF"></label>
                             </div>`;
                         }
