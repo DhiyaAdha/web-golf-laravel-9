@@ -8,103 +8,20 @@
     <meta name="description" content="Tritih Golf & Country Club" />
     <meta name="keywords" content="tgcc" />
     <meta name="author" content="inovis" />
+    <meta name="theme-color" content="#6777ef" />
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
-    <meta name="theme-color" content="#6777ef" />
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
-    <link href="{{ asset('dist/css/style.css') }}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/all.min.css') }}">
-    <link href="{{ asset('dist/asset_offline/toastr.css') }}" rel="stylesheet" />
-    <style>
-        @keyframes spinner {
-            to {transform: rotate(360deg);}
-        }
-        
-        .spinner:before {
-            content: '';
-            box-sizing: border-box;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 50px;
-            height: 50px;
-            margin-top: -15px;
-            margin-left: -15px;
-            border-radius: 50%;
-            border: 3px solid #ccc;
-            border-top-color: rgb(0, 221, 11);
-            animation: spinner .6s linear infinite;
-        }
-        #bg {
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-        }
-
-        #bg img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            margin: auto;
-            min-width: 50%;
-            min-height: 50%;
-        }
-
-        .password-container {
-            width: 400px;
-            position: relative;
-        }
-
-        .password-container input[type="password"],
-        .password-container input[type="text"] {
-            width: 100%;
-            padding: 12px 36px 12px 12px;
-            box-sizing: border-box;
-        }
-
-        #eye {
-            position: absolute;
-            top: 236px;
-            right: 30px;
-        }
-
-        /* @media screen and (min-width: 250px) {
-            #eye {
-                top: 315px;
-            }
-        }
-
-        @media screen and (min-width: 320px) {
-            #eye {
-                top: 276px;
-            }
-        } */
-
-        @media screen and (min-width: 480px) {
-            #eye {
-                top: 237px;
-            }
-        }
-        @media screen and (min-width: 480px) {
-            #eyee {
-                top: 237px;
-            }
-        }
-
-        #toast-container>.toast-success {
-            background-color: #01C853;
-            font-family: Arial;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{{ asset('dist/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dist/css/custom.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dist/asset_offline/css/all.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dist/asset_offline/toastr.css') }}">
 </head>
 <body>
-    <div class="preloader-it">
-        <div class="la-anim-1"></div>
+    <div id="overlay">
+        <div id="progstat"></div>
+        <div id="progress"></div>
     </div>
     <div class="wrapper pa-0">
         <header class="sp-header">
@@ -272,6 +189,39 @@
                 toastr.success('{{ Session::get('success') }}');
             @endif
         });
+
+        ;(function() {
+            function id(v){return document.getElementById(v); }
+            function loadbar() {
+                var ovrl = id("overlay"),
+                    prog = id("progress"),
+                    stat = id("progstat"),
+                    img = document.images,
+                    c = 0;
+                    tot = img.length;
+
+                function imgLoaded() {
+                    c += 1;
+                    var perc = ((100/tot*c) << 0) +"%";
+                    prog.style.width = perc;
+                    stat.innerHTML = "Loading "+ perc;
+                    if(c===tot) return doneLoading();
+                }
+                function doneLoading() {
+                    ovrl.style.opacity = 0;
+                    setTimeout(function() { 
+                        ovrl.style.display = "none";
+                    }, 1200);
+                }
+                for(var i=0; i<tot; i++) {
+                    var tImg     = new Image();
+                    tImg.onload  = imgLoaded;
+                    tImg.onerror = imgLoaded;
+                    tImg.src     = img[i].src;
+                }    
+            }
+            document.addEventListener('DOMContentLoaded', loadbar, false);
+        }());
     </script>
 </body>
 
