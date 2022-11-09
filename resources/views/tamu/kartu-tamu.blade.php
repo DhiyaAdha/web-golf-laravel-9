@@ -1,5 +1,4 @@
 <head>
-    <!-- Morris Charts CSS -->
     <link href="{{ asset('vendors/bower_components/morris.js/morris.css') }}" rel="stylesheet" type="text/css" />
 </head>
 @extends('layouts.main', ['title' => 'TGCC | Daftar Tamu'])
@@ -10,7 +9,6 @@
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h5 class="txt-dark">Detail tamu</h5>
                 </div>
-                <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
                         <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
@@ -18,7 +16,6 @@
                         <li class="active"><span>Detail tamu</span></li>
                     </ol>
                 </div>
-                <!-- /Breadcrumb -->
             </div>
             <div class="row">
                 <div class="col-lg-12">
@@ -179,7 +176,6 @@
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="tab-content">
-                        {{-- chart --}}
                         <div id="chart_tabs" class="tab-pane fade active in" role="tabpanel">
                             <div class="panel panel-default card-view">
                                 <div class="panel-heading">
@@ -194,7 +190,14 @@
                                         <div class="tab-content">
                                             <div id="all_line" class="tab-pane fade active in" role="tabpanel">
                                                 <div class="panel-body">
-                                                    <div id="invoice_line" class="morris-chart"></div>
+                                                    @if ($visitor->tipe_member == 'VIP')
+                                                    <div id="invoice_line_member" class="morris-chart"></div>
+                                                    <div id="invoice_line_vip" class="morris-chart" hidden></div>
+                                                    @else
+                                                    <div id="invoice_line_member" class="morris-chart" hidden></div>
+                                                    <div id="invoice_line_vip" class="morris-chart"></div>
+                                                    @endif
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -202,7 +205,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- transactions --}}
                         <div id="transaction_tabs" class="tab-pane fade" role="tabpanel">
                             <div class="panel panel-default card-view">
                                 <div class="panel-heading">
@@ -380,24 +382,14 @@
                                     <tr class="details">
                                         <td>
                                             <strong>Jenis Tamu:&nbsp;</strong>
-                                                <span id="type_tamu"></span>
+                                                <span class="text-capitalize" id="type_tamu"></span>
                                         </td>
                                     </tr>
                                     <tr class="heading">
                                         <td>Nama Paket</td>
-                                        <td style="">Harga</td>
-                                        <td style="text-align: center">Qty</td>
-                                        <td style="text-align: right">Total</td>
-                                    </tr>
-                                    <tr class="item">
-                                        
-                                    <tr>
-                                        <td id="name_package"></td>
-                                        <td id="price" class="text-right"></td>
-                                        <td id="qty" class="text-center"></td>
-                                        <td id="total" class="text-right"></td>
-                                    </tr>
-                                    
+                                        <td class="text-right">Harga</td>
+                                        <td class="text-right">Qty</td>
+                                        <td class="text-right">Total</td>
                                     </tr>
                                     <tr>
                                         <td class="thick-line"></td>
@@ -436,26 +428,19 @@
                             </div>
                         </div>
                     </div>
-                    <!-- /.modal-content -->
                 </div>
-                <!-- /.modal-dialog -->
             </div>
             @include('layouts.footer')
         </div>
     </div>
 @endsection
-
 @push('scripts')
-        {{-- chart --}}
-        <script src="{{ asset('vendors/bower_components/raphael/raphael.min.js') }}"></script>
-        <script src="{{ asset('vendors/bower_components/morris.js/morris.min.js') }}"></script>
-        <script src="{{ asset('/dist/js/line-chart-invoice-data.js') }}"></script>
-        <script src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
-        <script>
-            var invoiceMonth = {!! json_encode($invoice_chart) !!}
-        </script>
-        {{-- endchart --}}
+    <script src="{{ asset('vendors/bower_components/raphael/raphael.min.js') }}"></script>
+    <script src="{{ asset('vendors/bower_components/morris.js/morris.min.js') }}"></script>
+    <script src="{{ asset('/dist/js/line-chart-invoice-data.js') }}"></script>
+    <script src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
     <script>
+        var invoiceMonth = {!! json_encode($invoice_chart) !!}
         $('.modal-detail-invoice').on('show.bs.modal', function(e){
             var id = $(e.relatedTarget).data('id');
             var url = "{{ route('modal.invoice', ':id') }}";
@@ -474,6 +459,7 @@
                     $('#name_visitor').text(data.name);
                     $('#method_payment').text(data.pay);
                     $('#date').text(data.date);
+                    $('#type_tamu').addClass(data.type_member == 'VIP' ? 'label label-success' : 'label label-warning').text(data.type_member == 'VIP' ? 'member' : 'VIP');
                     $('#visitor_email').text(data.visitor_email);
                     $('#visitor_phone').text(data.visitor_phone);
                     $('#amount_item').text(data.amount_item);
@@ -481,18 +467,14 @@
                     $('#discount').text(data.discount);
                     $('#total_payment').text(data.total_payment);
                     $('#total_bill').text(data.total_bill);
-                    console.table(data.products)
                     $.each(data.products, function(b, val) {
-                        $('#name_package').text(val.name);
-                        $('#price').text(val.pricesingle);
-                        $('#qty').text(val.qty);
-                        $('#total').text(val.price);
+                        $(`<tr>
+                                <td>${val.name}</td>    
+                                <td class="text-right">${val.pricesingle}</td>    
+                                <td class="text-right">${val.qty}</td>    
+                                <td class="text-right">${val.price}</td>    
+                            </tr>`).insertAfter('.heading');
                     });
-                    if (data.type_member == 'VIP') {
-                        return $('#type_tamu').text(data.type_member == 'VIP' ? 'Member' : 'VIP');
-                    } else {
-                        return $('#type_tamu').text(data.type_member == 'VVIP' ? 'VIP' : 'Member');
-                    }
                 }
             });
         })
@@ -572,11 +554,12 @@
             }, {
                 width: '7%',
                 targets: [3]
+            },{
+                orderable: false,
+                targets: [0]
             }]
         });
-        // End Of Transaction Activity
 
-        //  Deposit Activity
         $('#dt-tamu-deposit').DataTable({
             "processing": true,
             "serverSide": true,
@@ -639,7 +622,6 @@
             }]
         });
 
-        // Limit Activity
         $('#dt-tamu-limit').DataTable({
             "processing": true,
             "serverSide": true,
@@ -694,9 +676,7 @@
                 targets: [0, 1, 2, 3]
             }]
         });
-        // End Of Limit Activity
 
-        // Kupon Activity
         $('#dt-tamu-kupon').DataTable({
             "processing": true,
             "serverSide": true,
@@ -751,8 +731,5 @@
                 targets: [0, 1, 2, 3]
             }]
         });
-        // End Of Kupon Activity
-
-        
     </script>
 @endpush

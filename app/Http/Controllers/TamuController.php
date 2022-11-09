@@ -8,6 +8,7 @@ use App\Models\Deposit;
 use App\Models\Visitor;
 use App\Models\LogAdmin;
 use App\Models\LogLimit;
+use Carbon\CarbonPeriod;
 use App\Jobs\SendMailJob;
 use App\Models\ReportLimit;
 use Illuminate\Support\Str;
@@ -28,8 +29,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Database\Eloquent\Builder;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use Carbon\CarbonPeriod;
 
 class TamuController extends Controller {
     /**
@@ -341,8 +342,18 @@ class TamuController extends Controller {
         }
         foreach (array_values($month_new) as $key => $value) {
             $data['invoice_chart'][$key]['e'] = $months[$value[0]];
-            $data['invoice_chart'][$key]['f'] =  LogTransaction::where('visitor_id', $decrypt_id)
-            ->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->count();
+            $data['invoice_chart'][$key]['f'] =  LogTransaction::where('visitor_id', $decrypt_id)->whereHas(
+                'visitor',
+                function (Builder $query) {
+                    $query->where('tipe_member', 'VIP');
+                }
+            )->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->count();
+            $data['invoice_chart'][$key]['g'] =  LogTransaction::where('visitor_id', $decrypt_id)->whereHas(
+                'visitor',
+                function (Builder $query) {
+                    $query->where('tipe_member', 'VVIP');
+                }
+            )->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->count();
         }
             return view('tamu.kartu-tamu', $data);
         } catch (\Throwable $th) {
