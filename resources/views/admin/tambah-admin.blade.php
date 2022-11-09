@@ -21,7 +21,6 @@
         <div class="row">
             <div class="col-lg-12" style="position: relative;">
                 <div class="panel panel-default card-view">
-                    <h6 class="control-label mb-10">Tambah Admin</h6>
                     <div class="panel-body">
                         <div class="form-wrap">
                             <form action="{{ route('insertadmin') }}" method="POST">
