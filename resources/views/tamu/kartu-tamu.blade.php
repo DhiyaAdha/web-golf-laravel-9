@@ -408,7 +408,7 @@
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
                                         <td class="no-line text-right">Diskon</td>
-                                        <td id="discount" class="no-line text-right">Rp. </td>
+                                        <td id="discount" class="no-line text-right"></td>
                                     </tr>
                                     <tr>
                                         <td class="no-line"></td>
@@ -464,9 +464,9 @@
                     $('#visitor_phone').text(data.visitor_phone);
                     $('#amount_item').text(data.amount_item);
                     $('#amount_order').text(data.amount_order);
-                    $('#discount').text(data.discount);
-                    $('#total_payment').text(data.total_payment);
-                    $('#total_bill').text(data.total_bill);
+                    $('#discount').text('Rp. '+ data.discount);
+                    $('#total_payment').text('Rp. '+ data.total_payment);
+                    $('#total_bill').text('Rp. '+ data.total_bill);
                     $.each(data.products, function(b, val) {
                         $(`<tr>
                                 <td>${val.name}</td>    

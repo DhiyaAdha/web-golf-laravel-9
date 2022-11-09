@@ -91,9 +91,9 @@
                                 @foreach ($cart as $item)
                             <tr>
                                 <td>{{ $item['name'] }}</td>
-                                <td class="text-right">Rp. {{ formatrupiah($item['pricesingle']) }}</td>
-                                <td class="text-center">{{ $item['qty'] }}</td>
-                                <td class="text-right">Rp. {{ formatrupiah($item['price']) }}</td>
+                                <td style="text-align: center">Rp. {{ formatrupiah($item['pricesingle']) }}</td>
+                                <td style="text-align: center">{{ $item['qty'] }}</td>
+                                <td style="text-align: right">Rp. {{ formatrupiah($item['price']) }}</td>
                             </tr>
                             @endforeach
                             {{-- @php
