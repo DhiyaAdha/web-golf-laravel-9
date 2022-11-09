@@ -8,6 +8,7 @@ use App\Models\Deposit;
 use App\Models\Visitor;
 use App\Models\LogAdmin;
 use App\Models\LogLimit;
+use Carbon\CarbonPeriod;
 use App\Jobs\SendMailJob;
 use App\Models\ReportLimit;
 use Illuminate\Support\Str;
@@ -28,8 +29,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Database\Eloquent\Builder;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use Carbon\CarbonPeriod;
 
 class TamuController extends Controller {
     /**
@@ -319,7 +320,6 @@ class TamuController extends Controller {
             $data['balance'] = $deposit->balance;
             $data['deposit'] = Deposit::where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
             $data['limit'] = LogLimit::where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
-
             // Statistika Pertahun Grafik-chart
         $months = [
             1 => 'Jan',
@@ -342,8 +342,18 @@ class TamuController extends Controller {
         }
         foreach (array_values($month_new) as $key => $value) {
             $data['invoice_chart'][$key]['e'] = $months[$value[0]];
-            $data['invoice_chart'][$key]['f'] =  LogTransaction::where('visitor_id', $decrypt_id)
-            ->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->count();
+            $data['invoice_chart'][$key]['f'] =  LogTransaction::where('visitor_id', $decrypt_id)->whereHas(
+                'visitor',
+                function (Builder $query) {
+                    $query->where('tipe_member', 'VIP');
+                }
+            )->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->count();
+            $data['invoice_chart'][$key]['g'] =  LogTransaction::where('visitor_id', $decrypt_id)->whereHas(
+                'visitor',
+                function (Builder $query) {
+                    $query->where('tipe_member', 'VVIP');
+                }
+            )->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->count();
         }
             return view('tamu.kartu-tamu', $data);
         } catch (\Throwable $th) {
@@ -580,237 +590,8 @@ class TamuController extends Controller {
                 return date_format($data->created_at, 'd-m-Y H:i');
             })->editColumn('total_gross', function($data) {
                 return 'Rp. ' . number_format($data->total_gross, 0, ',', '.');
-            })->editColumn('order_number', function ($data) {
-                return '<div data-toggle="tooltip" data-placement="top" title="Detail invoice"><a data-toggle="modal" data-target="#myModal' . $data->id . '" href="javascript:void(0)" id="' . $data->id . '">'.$data->order_number.'</a></div>
-                <!-- .modal-dialog -->
-                <div id="myModal' . $data->id . '" class="modal fade" tabindex="-1" role="dialog"
-                aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"
-                                aria-hidden="true">×</button>
-                            <h5 class="modal-title" id="myModalLabel">
-                            Detail Invoice</h5>
-                        </div>
-                        <div class="modal-body">
-                        <style>
-                        .invoice {
-                            font-size: 2.5rem;
-                            font-weight: 500;
-                            background: -webkit-linear-gradient(45deg, #82eee5, #01C853 80%);
-                            -webkit-background-clip: text;
-                            -webkit-text-fill-color: #00000021;
-                            margin: 0;
-                        }
-    
-                        .invoice-box {
-                            max-width: 800px;
-                            margin: auto;
-                            padding: 30px;
-                            border: 1px solid #eee;
-                            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-                            font-size: 16px;
-                            line-height: 24px;
-                            font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-                            color: #555;
-                        }
-    
-                        .invoice-box table {
-                            width: 100%;
-                            line-height: inherit;
-                            text-align: left;
-                        }
-    
-                        .invoice-box table td {
-                            padding: 5px;
-                            vertical-align: top;
-                        }
-    
-                        .invoice-box table tr td:nth-child(2) {
-                            text-align: right;
-                        }
-    
-                        .invoice-box table tr.top table td {
-                            padding-bottom: 20px;
-                        }
-    
-                        .invoice-box table tr.top table td.title {
-                            font-size: 45px;
-                            line-height: 45px;
-                            color: #333;
-                        }
-    
-                        .invoice-box table tr.information table td {
-                            padding-bottom: 40px;
-                        }
-    
-                        .invoice-box table tr.heading td {
-                            background: #eee;
-                            border-bottom: 1px solid #ddd;
-                            font-weight: bold;
-                        }
-    
-                        .invoice-box table tr.details td {
-                            padding-bottom: 20px;
-                        }
-    
-                        .invoice-box table tr.item td {
-                            border-bottom: 1px solid #eee;
-                        }
-    
-                        .invoice-box table tr.item.last td {
-                            border-bottom: none;
-                        }
-    
-                        .invoice-box table tr.total td:nth-child(2) {
-                            border-top: 2px solid #eee;
-                            font-weight: bold;
-                        }
-    
-                        @media only screen and (max-width: 600px) {
-                            .invoice-box table tr.top table td {
-                                width: 100%;
-                                display: block;
-                                text-align: center;
-                            }
-    
-                            .invoice-box table tr.information table td {
-                                width: 100%;
-                                display: block;
-                                text-align: center;
-                            }
-                        }
-    
-                        /** RTL **/
-                        .invoice-box.rtl {
-                            direction: rtl;
-                            font-family: Tahoma, "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-                        }
-    
-                        .invoice-box.rtl table {
-                            text-align: right;
-                        }
-    
-                        .invoice-box.rtl table tr td:nth-child(2) {
-                            text-align: left;
-                        }
-                    </style>
-                            <body>
-                                <div class="invoice-box">
-                                    <table cellpadding="0" cellspacing="0">
-                                        <tr class="top">
-                                            <td colspan="4">
-                                                <table>
-                                                    <tr>
-                                                        <td class="title">
-                                                            <h2 class="invoice">INVOICE</h2>
-                                                        </td>
-                                                        <td>
-                                                            <strong>Order
-                                                                {{ $transaction->order_number }}</strong><br />
-                                                            <strong>Metode Pembayaran:</strong><br>
-                                                            <p style="color: #616161;">{{ $method_payment }}</p><br />
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr class="information">
-                                            <td colspan="4">
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            <strong>Nama Tamu:</strong><br />
-                                                            <span class="weight-500">{{ $visitor->name }}</span>
-                                                            <br />{{ $visitor->email }}<br>
-                                                            {{ $visitor->phone }}<br>
-                                                        </td>
-                                                        <td>
-                                                            <strong>Order Date:</strong><br>
-                                                            <p style="color: #616161">
-                                                                {{ $transaction->created_at->format(`d F Y | H:i:s`) }}
-                                                            </p>
-                                                            <br><br>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr class="details">
-                                            <td>
-                                                <strong>Jenis Tamu:&nbsp;</strong>
-                                                @if ($visitor->tipe_member == `VIP`)
-                                                    <span
-                                                        class="label label-success">{{ $visitor->tipe_member == `VIP` ? `Member` : `VIP` }}</span>
-                                                @elseif ($visitor->tipe_member == `VVIP`)
-                                                    <span
-                                                        class="label label-warning">{{ $visitor->tipe_member == `VVIP` ? `VIP` : `Member` }}</span>
-                                                @else
-                                                    <span class="label label-primary">Umum</span>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        <tr class="heading">
-                                            <td>Nama Paket</td>
-                                            <td style="text-align: center">Harga</td>
-                                            <td style="text-align: center">Qty</td>
-                                            <td style="text-align: right">Total</td>
-                                        </tr>
-                                        <tr class="item">
-                                            @foreach ($cart as $item)
-                                        <tr>
-                                            <td>{{ $item[`name`] }}</td>
-                                            <td class="text-right">Rp. {{ formatrupiah($item[`pricesingle`]) }}</td>
-                                            <td class="text-center">{{ $item[`qty`] }}</td>
-                                            <td class="text-right">Rp. {{ formatrupiah($item[`price`]) }}</td>
-                                        </tr>
-                                        @endforeach
-                                        {{-- @php
-                                                dd($item);
-                                            @endphp --}}
-                                        </tr>
-                                        <tr>
-                                            <td class="thick-line"></td>
-                                            <td class="thick-line"></td>
-                                            <td class="thick-line text-right">Jumlah Item</td>
-                                            <td class="thick-line text-right">{{ count($cart) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="thick-line"></td>
-                                            <td class="thick-line"></td>
-                                            <td class="thick-line text-right">Jumlah Order</td>
-                                            <td class="thick-line text-right">{{ $qty }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="no-line"></td>
-                                            <td class="no-line"></td>
-                                            <td class="no-line text-right">Diskon</td>
-                                            <td class="no-line text-right">Rp. {{ formatrupiah($discount) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="no-line"></td>
-                                            <td class="no-line"></td>
-                                            <td class="no-line text-right">Total Bayar</td>
-                                            <td class="no-line text-right">Rp. {{ formatrupiah($transaction->total) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="no-line"></td>
-                                            <td class="no-line"></td>
-                                            <td class="no-line text-right"><strong>Total Tagihan</strong></td>
-                                            <td class="no-line text-right">
-                                                <span>Rp. {{ formatrupiah($total) }}</span>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </body>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->';
+            })->editColumn('transaction_id', function($data) {
+                return $data->id;
             })->rawColumns(['order_number', 'total_gross', 'information', 'status', 'created_at'])->make(true);
         }
     }
@@ -1044,5 +825,42 @@ class TamuController extends Controller {
         } catch (\Throwable $th) {
             return response()->json($this->getResponse());
         }
+    }
+
+    public function data_modal_invoice($id){
+        $transaction = LogTransaction::find($id);
+        $payment_type = unserialize($transaction->payment_type);
+        $datax = array();
+        foreach ($payment_type as $i => $t) {
+            $datax[$i] = $t['payment_type'];
+        }
+        $method_payment = implode(", ", $datax);
+        $cart = unserialize($transaction->cart);
+        $visitor = Visitor::find($transaction->visitor_id);
+        $total = 0;
+        $qty = 0;
+        $discount = 0;
+        foreach ($cart as $get) {
+            $qty += $get['qty'];
+            $total += $get['price'];
+        }
+        foreach ($payment_type as $get) {
+            $discount += $get['discount'];
+        }
+        return response()->json([
+            'name' => $visitor->name,
+            'type_member' => $visitor->tipe_member,
+            'visitor_email' => $visitor->email,
+            'visitor_phone' => $visitor->phone,
+            'order_number' => $transaction->order_number,
+            'pay' => $method_payment,
+            'date' => $transaction->created_at->format('d F Y | H:i:s'),
+            'products' => $cart,
+            'amount_order' => $qty,
+            'discount' => formatrupiah($discount),
+            'total_payment' => formatrupiah($transaction->total),
+            'total_bill' => formatrupiah($total),
+            'amount_item' => count($cart)
+        ]);
     }
 }

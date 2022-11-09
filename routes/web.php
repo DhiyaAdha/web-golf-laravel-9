@@ -123,8 +123,5 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/checkout_reguler', [OrderRegulerController::class,'checkout'])->name('checkout_reguler');
     Route::post('/pay_reguler', [OrderRegulerController::class,'pay_reguler'])->name('pay_reguler');
     Route::get('/print_invoice_reguler', [OrderRegulerController::class,'print_invoice'])->name('invoice.print.reguler');
-    
-    Route::get('/test_payment', function(){
-        return view('emails.paymentsuccess4_');
-    });
+    Route::get('/detail-invoice-member/{id}', [TamuController::class, 'data_modal_invoice'])->name('modal.invoice');
 });

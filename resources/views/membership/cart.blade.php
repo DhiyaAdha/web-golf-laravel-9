@@ -262,9 +262,6 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                beforeSend: function(request) {
-                    loading();
-                },
                 dataType: 'json',
                 success: function(response) {
                     $.unblockUI();
@@ -384,9 +381,6 @@
                 },
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                beforeSend: function(request) {
-                    loading();
                 },
                 dataType: 'json',
                 success: function(response) {

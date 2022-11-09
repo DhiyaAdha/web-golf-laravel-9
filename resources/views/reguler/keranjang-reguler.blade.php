@@ -1,14 +1,11 @@
 @extends('layouts.main', ['title' => 'TGCC | Pilih Permainan'])
 @section('content')
-    <!-- Main Content -->
     <div class="page-wrapper">
         <div class="container-fluid">
-            <!-- Title -->
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h5 class="txt-dark">Pilih Permainan</h5>
                 </div>
-                <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
                         <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
@@ -16,9 +13,8 @@
                         <li class="active"><span>Pilih Permainan</span></li>
                     </ol>
                 </div>
-                <!-- /Breadcrumb -->
             </div>
-            <!-- /Title -->
+
             <div class="row">
                 <div class="col-lg-8">
                     <div class="panel panel-default card-view">
@@ -266,9 +262,6 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                beforeSend: function(request) {
-                    loading();
-                },
                 dataType: 'json',
                 success: function(response) {
                     $.unblockUI();
@@ -376,9 +369,6 @@
                 },
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                beforeSend: function(request) {
-                    loading();
                 },
                 dataType: 'json',
                 success: function(response) {
