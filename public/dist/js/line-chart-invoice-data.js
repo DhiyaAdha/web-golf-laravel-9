@@ -20,9 +20,9 @@ if($('#invoice_line')) {
             lineWidth: 2,
             resize: true,
             redraw: true,
-            pointStrokeColors: ["#FF1E1E"],
+            pointStrokeColors: ["#01c853"],
             gridLineColor: "#878787",
-            lineColors: ["#FF1E1E"],
+            lineColors: ["#01c853"],
             gridTextColor: "#878787",
             gridTextFamily: "Roboto",
         });

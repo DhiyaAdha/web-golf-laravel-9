@@ -474,7 +474,6 @@
                     $('#name_visitor').text(data.name);
                     $('#method_payment').text(data.pay);
                     $('#date').text(data.date);
-                    $('#type_tamu').text(data.type_member);
                     $('#visitor_email').text(data.visitor_email);
                     $('#visitor_phone').text(data.visitor_phone);
                     $('#amount_item').text(data.amount_item);
@@ -489,6 +488,11 @@
                         $('#qty').text(val.qty);
                         $('#total').text(val.price);
                     });
+                    if (data.type_member == 'VIP') {
+                        return $('#type_tamu').text(data.type_member == 'VIP' ? 'Member' : 'VIP');
+                    } else {
+                        return $('#type_tamu').text(data.type_member == 'VVIP' ? 'VIP' : 'Member');
+                    }
                 }
             });
         })
