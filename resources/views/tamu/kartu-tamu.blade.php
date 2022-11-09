@@ -99,7 +99,6 @@
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    {{-- Limit Bulanan --}}
                     <div class="panel panel-default card-view limit" style="height: 209.4px;">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Limit</h6>
@@ -112,7 +111,6 @@
                             </div>
                         </div>
                     </div>
-                    {{-- Limit Kupon --}}
                     <div class="panel panel-default card-view limit" style="height: 209.4px;">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Kupon</h6>
@@ -157,7 +155,6 @@
                         <div class="flex-grow-1 d-flex align-items-center">
                             <h6 class="panel-title txt-dark">Riwayat tamu</h6>
                         </div>
-                        {{-- tab --}}
                         <ul role="tablist" class="nav nav-pills" id="myTabs_6">
                             <li class="active" role="presentation"><a class="tabs-log" aria-expanded="true"
                                     data-toggle="tab" role="tab" href="#chart_tabs">Grafik</a></li>
@@ -180,7 +177,7 @@
                             <div class="panel panel-default card-view">
                                 <div class="panel-heading">
                                     <div class="pull-left">
-                                        <h6 class="panel-title text-dark">Invoice Trendline 12 Bulan Terakhir</h6>
+                                        <h6 class="panel-title text-dark">Invoice 12 Bulan Terakhir</h6>
                                     </div>
                                     <div class="clearfix"></div>
                                     <hr class="light-grey-hr row mt-20 mb-15 mb-10" />
@@ -385,12 +382,19 @@
                                                 <span class="text-capitalize" id="type_tamu"></span>
                                         </td>
                                     </tr>
-                                    <tr class="heading">
-                                        <td>Nama Paket</td>
-                                        <td class="text-right">Harga</td>
-                                        <td class="text-right">Qty</td>
-                                        <td class="text-right">Total</td>
-                                    </tr>
+                                </table>
+                                <table>
+                                    <thead style="background: #EEEEEE;">
+                                        <tr>
+                                            <th>Nama Paket</th>
+                                            <th class="text-right">Harga</th>
+                                            <th class="text-right">Qty</th>
+                                            <th class="text-right">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="products"></tbody>
+                                </table>
+                                <table>
                                     <tr>
                                         <td class="thick-line"></td>
                                         <td class="thick-line"></td>
@@ -455,6 +459,7 @@
                 },
                 dataType: 'json',
                 success: function(data) {
+                    $('.products').html('');
                     $('#myLargeModalLabel').text('ORDER ID : '+ data.order_number);
                     $('#name_visitor').text(data.name);
                     $('#method_payment').text(data.pay);
@@ -468,12 +473,12 @@
                     $('#total_payment').text(data.total_payment);
                     $('#total_bill').text(data.total_bill);
                     $.each(data.products, function(b, val) {
-                        $(`<tr>
+                        $('.products').append(`<tr>
                                 <td>${val.name}</td>    
                                 <td class="text-right">${val.pricesingle}</td>    
                                 <td class="text-right">${val.qty}</td>    
                                 <td class="text-right">${val.price}</td>    
-                            </tr>`).insertAfter('.heading');
+                            </tr>`).one();
                     });
                 }
             });
@@ -505,7 +510,7 @@
             "render": $.fn.dataTable.render.text(),
             "columns": [{
                     'data' : function(data) {
-                        return `<a href="javascript:void(0)" data-id="${data.id}" data-toggle="modal" data-target=".modal-detail-invoice">${data.order_number}</a>`;
+                        return `<div data-toggle="tooltip" title="Lihat invoice"><a href="javascript:void(0)" data-id="${data.id}" data-toggle="modal" data-target=".modal-detail-invoice">${data.order_number}</a></div>`;
                     }
                 },
                 {
