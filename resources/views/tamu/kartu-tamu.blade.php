@@ -392,10 +392,10 @@
                                     <tr class="item">
                                         
                                     <tr>
-                                        <td id="product1"></td>
-                                        <td id="product2" class="text-right"></td>
-                                        <td id="product3" class="text-center"></td>
-                                        <td id="product4" class="text-right"></td>
+                                        <td id="name_package"></td>
+                                        <td id="price" class="text-right"></td>
+                                        <td id="qty" class="text-center"></td>
+                                        <td id="total" class="text-right"></td>
                                     </tr>
                                     
                                     </tr>
@@ -482,11 +482,12 @@
                     $('#discount').text(data.discount);
                     $('#total_payment').text(data.total_payment);
                     $('#total_bill').text(data.total_bill);
+                    console.table(data.products)
                     $.each(data.products, function(b, val) {
-                        $('#product1').text(val.name);
-                        $('#product2').text(val.pricesingle);
-                        $('#product3').text(val.qty);
-                        $('#product4').text(val.price);
+                        $('#name_package').text(val.name);
+                        $('#price').text(val.pricesingle);
+                        $('#qty').text(val.qty);
+                        $('#total').text(val.price);
                     });
                 }
             });
