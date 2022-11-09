@@ -466,7 +466,7 @@
                                 <td class="text-right">${val.pricesingle}</td>    
                                 <td class="text-right">${val.qty}</td>    
                                 <td class="text-right">${val.price}</td>    
-                            </tr>`).insertAfter('.heading');
+                            </tr>`).insertAfter('.heading').one();
                     });
                 }
             });
