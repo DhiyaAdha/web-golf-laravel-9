@@ -190,7 +190,14 @@
                                         <div class="tab-content">
                                             <div id="all_line" class="tab-pane fade active in" role="tabpanel">
                                                 <div class="panel-body">
-                                                    <div id="invoice_line" class="morris-chart"></div>
+                                                    @if ($visitor->tipe_member == 'VIP')
+                                                    <div id="invoice_line_member" class="morris-chart"></div>
+                                                    <div id="invoice_line_vip" class="morris-chart" hidden></div>
+                                                    @else
+                                                    <div id="invoice_line_member" class="morris-chart" hidden></div>
+                                                    <div id="invoice_line_vip" class="morris-chart"></div>
+                                                    @endif
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -198,7 +205,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="transaction_tabs" class="tab-pane fade" role="tabpanel">
+                        <div id="transaction_tabs" class="tab-pane fade active" role="tabpanel">
                             <div class="panel panel-default card-view">
                                 <div class="panel-heading">
                                     <div class="pull-left">
@@ -534,7 +541,10 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [0, 1, 2, 3, 4]
+                targets: [0]
+            },{
+                className: 'text-center',
+                targets: [1, 2, 3, 4]
             }, {
                 width: '20%',
                 targets: [0]
@@ -547,6 +557,9 @@
             }, {
                 width: '7%',
                 targets: [3]
+            },{
+                orderable: false,
+                targets: [0]
             }]
         });
 
@@ -608,7 +621,10 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [0, 1, 2, 3, 4]
+                targets: [0, 1]
+            },{
+                className: 'text-center',
+                targets: [2, 3, 4]
             }]
         });
 
@@ -663,7 +679,10 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [0, 1, 2, 3]
+                targets: [0]
+            },{
+                className: 'text-center',
+                targets: [2, 3]
             }]
         });
 
@@ -718,7 +737,10 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [0, 1, 2, 3]
+                targets: [0]
+            },{
+                className: 'text-center',
+                targets: [2, 3]
             }]
         });
     </script>
