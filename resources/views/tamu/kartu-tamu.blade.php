@@ -205,7 +205,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="transaction_tabs" class="tab-pane fade" role="tabpanel">
+                        <div id="transaction_tabs" class="tab-pane fade active" role="tabpanel">
                             <div class="panel panel-default card-view">
                                 <div class="panel-heading">
                                     <div class="pull-left">
@@ -541,7 +541,10 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [0, 1, 2, 3, 4]
+                targets: [0]
+            },{
+                className: 'text-center',
+                targets: [1, 2, 3, 4]
             }, {
                 width: '20%',
                 targets: [0]
@@ -618,7 +621,10 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [0, 1, 2, 3, 4]
+                targets: [0, 1]
+            },{
+                className: 'text-center',
+                targets: [2, 3, 4]
             }]
         });
 
@@ -673,7 +679,10 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [0, 1, 2, 3]
+                targets: [0]
+            },{
+                className: 'text-center',
+                targets: [2, 3]
             }]
         });
 
@@ -728,7 +737,10 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [0, 1, 2, 3]
+                targets: [0]
+            },{
+                className: 'text-center',
+                targets: [2, 3]
             }]
         });
     </script>
