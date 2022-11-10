@@ -48,17 +48,30 @@
                                         <div class="row">
                                             <div class="d-flex align-items-center justify-content-center">
                                                 <div class="resolution">
-                                                    <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/bg-vip.svg') : asset('dist/img/kartutamu/bg-reguler.svg') }}" alt="{{ $visitor->tipe_member }}">
-                                                    <div class="qr-code">
-                                                        {{ QrCode::size(80)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
-                                                    </div>
-                                                    <div class="identity">
-                                                        <h6>{{ $visitor->name }}</h6>
+                                                    <div class="d-flex flex-column">
+                                                        <div class="mb-5">
+                                                            <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/bg-vip.svg') : asset('dist/img/kartutamu/bg-reguler.svg') }}" alt="{{ $visitor->tipe_member }}">
+                                                            <div class="qr-code">
+                                                                {{ QrCode::size(80)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
+                                                            </div>
+                                                            <div class="identity">
+                                                                <h6>{{ $visitor->name }}</h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mt-5">
+                                                            <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/bg-vip.svg') : asset('dist/img/kartutamu/bg-reguler.svg') }}" alt="{{ $visitor->tipe_member }}">
+                                                            <div class="qr-code">
+                                                                {{ QrCode::size(80)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
+                                                            </div>
+                                                            <div class="identity">
+                                                                <h6>{{ $visitor->name }}</h6>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="text-center">
-                                                <button type="button" class="btn btn-sm download-kartu-tamu mt-5"><i class="fa fa-download"></i> Download Kartu (PDF)</button>
+                                                <button type="button" class="btn btn-sm download-kartu-tamu" style="margin-top: 200px;"><i class="fa fa-download"></i> Download Kartu (PDF)</button>
                                             </div>
                                         </div>
                                     </div>
@@ -78,7 +91,7 @@
                                         <span>{{ $visitor->email }}</span>
                                     </div>
                                     <div class="mb-15 d-flex flex-column">
-                                        <span class="txt-muted">No Hp</span>
+                                        <span class="txt-muted">Kode Member</span>
                                         <span>{{ $visitor->phone }}</span>
                                     </div>
                                     <div class="mb-15 d-flex flex-column">

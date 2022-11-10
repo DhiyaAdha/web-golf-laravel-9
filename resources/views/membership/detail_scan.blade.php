@@ -54,7 +54,7 @@
                                     </div>
                                     <div class="mb-15 d-flex">
                                         <div class="col-medium-3">
-                                            <span class="txt-muted">No Hp</span>
+                                            <span class="txt-muted">Kode Member</span>
                                         </div>
                                         <div class="col-lg-12 col-md-12">
                                             <span>{{ $visitor->phone }}</span>

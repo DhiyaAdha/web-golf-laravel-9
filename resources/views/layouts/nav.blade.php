@@ -22,6 +22,7 @@
                 <ul class="dropdown-menu user-auth-dropdown" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
                     <li>
                         <a href="/logout"><i class="zmdi zmdi-power"></i><span>Log Out</span></a>
+                        @csrf
                     </li>
                 </ul>
             </li>
