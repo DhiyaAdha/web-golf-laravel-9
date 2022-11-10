@@ -13,7 +13,7 @@
 <script defer src="{{ asset('/dist/js/printThis.js') }}"></script>
 <script>
     $(window).load(function() {
-		$(".se-pre-con").fadeOut("slow");;
+		$(".se-pre-con").fadeOut("slow");
 	});
     $( document ).ajaxComplete(function() {
         $('[data-toggle="tooltip"]').tooltip({

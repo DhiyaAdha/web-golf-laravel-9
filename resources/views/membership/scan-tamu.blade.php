@@ -39,7 +39,7 @@
                                         <input type="radio" name="status" id="radio_12" value="hp"
                                             style="visibility:hidden;">
                                         <label for="radio_12"></label>
-                                        Verifikasi No Hp
+                                        Verifikasi Kode Member
                                     </a>
                                 </li>
                             </ul>
@@ -62,10 +62,10 @@
                             <div id="nohp" class="tab-pane fade" role="tabpanel">
                                 <div class="panel-scan-qr d-flex justify-content-center align-items-center">
                                     <div class="input-group">
-                                        <div class="input-group-addon">No</div>
+                                        <div class="input-group-addon">Kode</div>
                                         <input type="text" min="0"
                                             onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                            class="form-control" placeholder="Nomor handphone" id="verification-no-hp">
+                                            class="form-control" placeholder="Masukan Kode Member" id="verification-no-hp">
                                     </div>
                                 </div>
                             </div>
@@ -155,7 +155,7 @@
             if (e.which == 13) {
                 swal({
                     title: "",
-                    text: "Verifikasi No Hp?",
+                    text: "Verifikasi Kode Member?",
                     type: "info",
                     showCancelButton: true,
                     confirmButtonColor: "#01c853",

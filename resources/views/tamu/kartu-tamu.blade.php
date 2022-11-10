@@ -91,7 +91,7 @@
                                         <span>{{ $visitor->email }}</span>
                                     </div>
                                     <div class="mb-15 d-flex flex-column">
-                                        <span class="txt-muted">No Hp</span>
+                                        <span class="txt-muted">Kode Member</span>
                                         <span>{{ $visitor->phone }}</span>
                                     </div>
                                     <div class="mb-15 d-flex flex-column">
