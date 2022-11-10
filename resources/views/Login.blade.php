@@ -14,9 +14,163 @@
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('dist/css/custom.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('dist/asset_offline/css/all.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('dist/asset_offline/toastr.css') }}">
+    <style>
+        #overlay{
+            position:fixed;
+            z-index:99999;
+            top:0;
+            left:0;
+            bottom:0;
+            right:0;
+            background:rgba(73, 73, 73, 0.9);
+            transition: 1s 0.4s;
+        }
+        #progress{
+            height:1px;
+            background:#fff;
+            position:absolute;
+            width:0;
+            top:50%;
+        }
+        #progstat{
+            font-size:0.7em;
+            letter-spacing: 3px;
+            position:absolute;
+            top:50%;
+            margin-top:-40px;
+            width:100%;
+            text-align:center;
+            color:#fff;
+        }
+        #bg {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+        }
+
+        #bg img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            min-width: 50%;
+            min-height: 50%;
+        }
+
+        .password-container {
+            width: 400px;
+            position: relative;
+        }
+
+        .password-container input[type="password"],
+        .password-container input[type="text"] {
+            width: 100%;
+            padding: 12px 36px 12px 12px;
+            box-sizing: border-box;
+        }
+
+        #eye {
+            position: absolute;
+            top: 236px;
+            right: 30px;
+        }
+
+        @media screen and (min-width: 480px) {
+            #eye {
+                top: 237px;
+            }
+        }
+        @media screen and (min-width: 480px) {
+            #eyee {
+                top: 237px;
+            }
+        }
+
+        #toast-container>.toast-success {
+            background-color: #01C853;
+            font-family: Arial;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            background: #e3e3e3;
+        }
+
+        h1 {
+            position: absolute;
+            top: 42%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #101010;
+        }
+
+        body{
+        margin:0px;
+        padding:0px;
+        }
+
+        .pace {
+        pointer-events: none;
+        user-select: none;
+        z-index: 2000;
+        position: fixed;
+        margin: auto;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 400px;
+        border: 0px;
+        height: 1px;
+        overflow: hidden;
+        background:rgb(40, 229, 103);
+        }
+
+        .pace .pace-progress {
+        box-sizing: border-box;
+        transform: translate3d(0, 0, 0);
+        max-width: 400px;
+        position: fixed;
+        z-index: 2000;
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 100%;
+        height: 100%;
+        width: 100%;
+        background: grey;
+        }
+
+        .pace.pace-inactive {
+        display: none;
+        }
+
+        #preloader{
+        width:100%;
+        height:100vh;
+        background:#101010;
+        overflow:hidden;
+        position:fixed;
+        transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .pw {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
     <div id="overlay">
@@ -38,7 +192,7 @@
                     <div class="table-cell vertical-align-middle auth-form-wrap">
                         <div class="auth-form  ml-auto mr-auto no-float">
                             <div class="row">
-                                <div class="col-sm-12 col-xs-12">
+                                <div class="col-sm-12 col-xs-12 title">
                                     @if (session()->has('loginError'))
                                         <div class="alert alert-danger">{!! session('loginError') !!}
                                             <button type="button" class="close" data-dismiss="alert"
