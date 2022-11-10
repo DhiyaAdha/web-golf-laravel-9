@@ -44,6 +44,9 @@
             text-align:center;
             color:#fff;
         }
+        .sp-logo-wrap {
+            padding-top: 0px !important;
+        }
         #bg {
             position: fixed;
             top: -50%;
