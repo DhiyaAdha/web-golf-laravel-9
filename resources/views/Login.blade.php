@@ -8,90 +8,20 @@
     <meta name="description" content="Tritih Golf & Country Club" />
     <meta name="keywords" content="tgcc" />
     <meta name="author" content="inovis" />
+    <meta name="theme-color" content="#6777ef" />
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
-    <meta name="theme-color" content="#6777ef" />
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
-    <link href="../../vendors/bower_components/jasny-bootstrap/dist/css/jasny-bootstrap.min.css" rel="stylesheet"
-        type="text/css" />
-    <link href="dist/css/style.css" rel="stylesheet" type="text/css">
-    {{-- <link href="dist/css/custom.css" rel="stylesheet" type="text/css"> --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,400;1,500&display=swap"
-        rel="stylesheet">
-    <style>
-        #bg {
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-        }
-
-        #bg img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            margin: auto;
-            min-width: 50%;
-            min-height: 50%;
-        }
-
-        .password-container {
-            width: 400px;
-            position: relative;
-        }
-
-        .password-container input[type="password"],
-        .password-container input[type="text"] {
-            width: 100%;
-            padding: 12px 36px 12px 12px;
-            box-sizing: border-box;
-        }
-
-        #eye {
-            position: absolute;
-            top: 236px;
-            right: 30px;
-        }
-
-        @media screen and (min-width: 250px) {
-            #eye {
-                top: 315px;
-            }
-        }
-
-        @media screen and (min-width: 320px) {
-            #eye {
-                top: 276px;
-            }
-        }
-
-        @media screen and (min-width: 480px) {
-            #eye {
-                top: 237px;
-            }
-        }
-
-        #toast-container>.toast-success {
-            background-color: #01C853;
-            font-family: Arial;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{{ asset('dist/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dist/css/custom.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dist/asset_offline/css/all.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dist/asset_offline/toastr.css') }}">
 </head>
-
 <body>
-    <div id="bg">
-        <img src="{{ asset('bg.png') }}">
-    </div>
-    <div class="preloader-it">
-        <div class="la-anim-1"></div>
+    <div id="overlay">
+        <div id="progstat"></div>
+        <div id="progress"></div>
     </div>
     <div class="wrapper pa-0">
         <header class="sp-header">
@@ -151,11 +81,10 @@
                                                     for="password">Password</label>
                                                 <input type="password" name="password" class="form-control"
                                                     id="password" placeholder="Masukan password" required>
-                                                <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye fa-eye-slash " id="eye"></i>
+                                                <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye fa-eye-slash" id="eye"></i>
                                             </div>
                                             <div class="form-group text-center">
-                                                <button type="submit" class="btn btn-info btn-rounded">sign
-                                                    in</button>
+                                                <button type="submit" class="btn btn-info btn-rounded">sign in</button>
                                             </div>
                                         </form>
                                     </div>
@@ -172,7 +101,16 @@
     <script src="{{ asset('vendors/bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') }}"></script>
     <script src="{{ asset('dist/js/init.js') }}"></script>
     <script src="{{ asset('dist/js/jquery.slimscroll.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <script src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
+    <script src="{{ asset('dist/asset_offline/toastr.js') }}"></script>
+    <script src="{{ asset('/sw.js') }}"></script>
+    <script>
+        if (!navigator.serviceWorker.controller) {
+            navigator.serviceWorker.register("/sw.js").then(function (reg) {
+                console.log("Service worker has been registered for scope: " + reg.scope);
+            });
+        }
+    </script>
     <script>
         const passwordField = document.querySelector("#password");
         const eyeIcon = document.querySelector("#eye");
@@ -183,6 +121,35 @@
         });
 
         $(document).ready(function() {
+            $(document).on('click', '.btn-rounded', function(e) {
+                if($("input[name='email']").val() == '' || $("input[name='password']").val() == '') {
+                    toastr.error('Email dan password wajib diisi');
+                } else {
+                    $.ajax({
+                        async: true,
+                        beforeSend: function(request) {
+                            $.blockUI({
+                                css: {
+                                    backgroundColor: 'transparent',
+                                    border: 'none'
+                                },
+                                message: '<img src="../img/rolling.svg">',
+                                baseZ: 1500,
+                                overlayCSS: {
+                                    backgroundColor: '#7C7C7C',
+                                    opacity: 0.4,
+                                    cursor: 'wait'
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+
+            @if (Session::has('error'))
+                toastr.error('{{ Session::get('error') }}');
+            @endif
+
             toastr.options = {
                 "closeButton": true,
                 "debug": false,
@@ -200,10 +167,6 @@
                 "showMethod": "fadeIn",
                 "hideMethod": "fadeOut"
             };
-
-            @if (Session::has('error'))
-                toastr.error('{{ Session::get('error') }}');
-            @endif
 
             toastr.options = {
                 "closeButton": true,
@@ -226,6 +189,39 @@
                 toastr.success('{{ Session::get('success') }}');
             @endif
         });
+
+        ;(function() {
+            function id(v){return document.getElementById(v); }
+            function loadbar() {
+                var ovrl = id("overlay"),
+                    prog = id("progress"),
+                    stat = id("progstat"),
+                    img = document.images,
+                    c = 0;
+                    tot = img.length;
+
+                function imgLoaded() {
+                    c += 1;
+                    var perc = ((100/tot*c) << 0) +"%";
+                    prog.style.width = perc;
+                    stat.innerHTML = "Loading "+ perc;
+                    if(c===tot) return doneLoading();
+                }
+                function doneLoading() {
+                    ovrl.style.opacity = 0;
+                    setTimeout(function() { 
+                        ovrl.style.display = "none";
+                    }, 1200);
+                }
+                for(var i=0; i<tot; i++) {
+                    var tImg     = new Image();
+                    tImg.onload  = imgLoaded;
+                    tImg.onerror = imgLoaded;
+                    tImg.src     = img[i].src;
+                }    
+            }
+            document.addEventListener('DOMContentLoaded', loadbar, false);
+        }());
     </script>
 </body>
 

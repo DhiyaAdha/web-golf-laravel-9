@@ -49,7 +49,7 @@ class AuthController extends Controller {
         //berfungsi jika format email salah
         if($validate->fails()){
             // return response(['message'=> $validate->errors()], 200);
-            return back()->with('error', 'The email must be a valid email address!');
+            return back()->with('error', 'Email yang anda masukkan tidak valid!');
         } else {
             //berfungsi jika password salah/tidak sama
             $credentials = request(['email', 'password']);
@@ -127,11 +127,11 @@ class AuthController extends Controller {
                         'email'=> $request->email,
                     ])->delete();
                 }else{
-                    return redirect()->route('login')->with('error', 'Link reset password telah expired');
+                    return redirect()->route('login')->with('error', 'Masa habis token sudah tidak berlaku');
                 }
             
             //ini untuk function jika semua proses selesai dan akan di redirect ke menu login 
-            return redirect()->intended('login')->with('success', 'Your password has been changed! You can login with new password')->with('verifiedEmail', $request->email);
+            return redirect()->intended('login')->with('success', 'Password berhasil diubah')->with('verifiedEmail', $request->email);
         }
     }
     //ini untuk route get di web.php memasukkan password baru
@@ -148,13 +148,13 @@ class AuthController extends Controller {
 
         if(!$check_token){
             //jika token yang dicek tidak ada
-            return redirect()->route('login')->with('error', 'Link reset password telah digunakan');
+            return redirect()->route('login')->with('error', 'Token sudah tidak berlaku');
         }else{
             //jika token yang dicek ada
             if (Carbon::now()->lte($check_expired->created_at)) {
                 return view('reset-password')->with(['token' => $token, 'email' => $request->email]);
             }else {
-                return redirect()->route('login')->with('error', 'Link reset password telah expired');
+                return redirect()->route('login')->with('error', 'Masa habis token sudah tidak berlaku');
             }
         }
     }

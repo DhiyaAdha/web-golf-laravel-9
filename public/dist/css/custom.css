@@ -9,6 +9,185 @@
     text-align: end;
 }
 
+.invoice {
+    font-size: 2.5rem;
+    font-weight: 500;
+    background: -webkit-linear-gradient(45deg, #82eee5, #01C853 80%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #00000021;
+    margin: 0;
+}
+
+#overlay{
+    position:fixed;
+    z-index:99999;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    background:rgba(73, 73, 73, 0.9);
+    transition: 1s 0.4s;
+    }
+#progress{
+    height:1px;
+    background:#fff;
+    position:absolute;
+    width:0;
+    top:50%;
+}
+#progstat{
+    font-size:0.7em;
+    letter-spacing: 3px;
+    position:absolute;
+    top:50%;
+    margin-top:-40px;
+    width:100%;
+    text-align:center;
+    color:#fff;
+}
+#bg {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+}
+
+#bg img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    min-width: 50%;
+    min-height: 50%;
+}
+
+.password-container {
+    width: 400px;
+    position: relative;
+}
+
+.password-container input[type="password"],
+.password-container input[type="text"] {
+    width: 100%;
+    padding: 12px 36px 12px 12px;
+    box-sizing: border-box;
+}
+
+#eye {
+    position: absolute;
+    top: 236px;
+    right: 30px;
+}
+
+@media screen and (min-width: 480px) {
+    #eye {
+        top: 237px;
+    }
+}
+@media screen and (min-width: 480px) {
+    #eyee {
+        top: 237px;
+    }
+}
+
+#toast-container>.toast-success {
+    background-color: #01C853;
+    font-family: Arial;
+}
+
+.invoice-box table {
+    width: 100%;
+    line-height: inherit;
+    text-align: left;
+}
+
+.invoice-box table td {
+    padding: 5px;
+    vertical-align: top;
+}
+
+.invoice-box table tr td:nth-child(2) {
+    text-align: right;
+}
+
+.invoice-box table tr.top table td {
+    padding-bottom: 20px;
+}
+
+.invoice-box table tr.top table td.title {
+    font-size: 45px;
+    line-height: 45px;
+    color: #333;
+}
+
+.invoice-box table tr.information table td {
+    padding-bottom: 40px;
+}
+
+.invoice-box table tr.heading td {
+    background: #eee;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+}
+
+.invoice-box table tr.details td {
+    padding-bottom: 20px;
+}
+
+.invoice-box table tr.item td {
+    border-bottom: 1px solid #eee;
+}
+
+.invoice-box table tr.item.last td {
+    border-bottom: none;
+}
+
+.invoice-box table tr.total td:nth-child(2) {
+    border-top: 2px solid #eee;
+    font-weight: bold;
+}
+
+@media only screen and (max-width: 600px) {
+    .invoice-box table tr.top table td {
+        width: 100%;
+        display: block;
+        text-align: center;
+    }
+
+    .invoice-box table tr.information table td {
+        width: 100%;
+        display: block;
+        text-align: center;
+    }
+}
+
+/** RTL **/
+.invoice-box.rtl {
+    direction: rtl;
+    font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+}
+
+.invoice-box.rtl table {
+    text-align: right;
+}
+
+.invoice-box.rtl table tr td:nth-child(2) {
+    text-align: left;
+}
+
+.se-pre-con {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url('/img/rolling.svg') center no-repeat #fff;
+}
+
 table#dt-analisis {
     width: auto !important;
 }
@@ -269,6 +448,16 @@ i.fa.fa-trash-o {
 .label.label-sa {
     background: #5901c8;
     padding: 5px 8px;
+}
+
+.label-permainan {
+    background: #fec107;
+}
+.label-fasilitas {
+    background: #01c853;
+}
+.label-kantin {
+    background: #1746A2;
 }
 
 .align-self-end {

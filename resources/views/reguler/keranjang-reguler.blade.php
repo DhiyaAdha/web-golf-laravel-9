@@ -1,14 +1,11 @@
 @extends('layouts.main', ['title' => 'TGCC | Pilih Permainan'])
 @section('content')
-    <!-- Main Content -->
     <div class="page-wrapper">
         <div class="container-fluid">
-            <!-- Title -->
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h5 class="txt-dark">Pilih Permainan</h5>
                 </div>
-                <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
                         <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
@@ -16,15 +13,14 @@
                         <li class="active"><span>Pilih Permainan</span></li>
                     </ol>
                 </div>
-                <!-- /Breadcrumb -->
             </div>
-            <!-- /Title -->
+
             <div class="row">
                 <div class="col-lg-8">
                     <div class="panel panel-default card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
-                                <strong class="panel-title txt-dark">Jenis Permainan</strong>
+                                <strong class="panel-title txt-dark">Permainan</strong>
                             </div>
                             <div class="pull-right">
                                 <div class='d-flex '>
@@ -45,7 +41,7 @@
                         </div>
                         <div class="panel-heading">
                             <div class="pull-left">
-                                <strong class="panel-title txt-dark">Fasilitas</strong>
+                                <strong class="panel-title txt-dark">Proshop & Fasilitas</strong>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -59,7 +55,7 @@
                         </div>
                         <div class="panel-heading">
                             <div class="pull-left">
-                                <strong class="panel-title txt-dark">Lainnya</strong>
+                                <strong class="panel-title txt-dark">Kantin</strong>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -187,8 +183,8 @@
     </div>
 @endsection
 @push('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
+    <script src="{{ asset('dist/asset_offline/popper.min.js') }}"></script>
 
     <script>
         $('[data-toggle="tooltip"]').tooltip();
@@ -265,9 +261,6 @@
                 },
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                beforeSend: function(request) {
-                    loading();
                 },
                 dataType: 'json',
                 success: function(response) {
@@ -376,9 +369,6 @@
                 },
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                beforeSend: function(request) {
-                    loading();
                 },
                 dataType: 'json',
                 success: function(response) {
@@ -560,7 +550,13 @@
                 },
                 {
                     "data": function(data) {
-                        return `<span class="label ${data.category == 'default' ? 'label-primary' : 'label-danger'}">${data.category}</span>`;
+                        if (data.category == 'default') {
+                            return `<span class="label label-permainan">${data.category == 'default' ? 'Permainan' : 'Proshop & Fasilitas'}</span>`;
+                        } else if (data.category == 'additional') {
+                            return `<span class="label label-fasilitas">${data.category == 'additional' ? 'Proshop & Fasilitas' : 'Permainan'}</span>`;
+                        } else {
+                            return `<span class="label label-kantin">${data.category == 'others' ? 'Kantin' : 'Permainan'}</span>`;
+                        }
                     }
                 },
                 {

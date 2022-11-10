@@ -8,11 +8,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
     <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/jquery.dataTables.min.css') }}">
     <link href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.css') }}" rel="stylesheet"type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/font-awesome.min.css') }}">
     <style>
         #calculator .screen {
             width: 161px;
@@ -224,6 +224,7 @@
                                     <div class="card-body">
                                         <form>
                                             <input type="hidden" value="{{ $get_id }}">
+                                            <input type="hidden" class="package-default" value="{{ $package_default }}">
                                             <div class="d-flex align-items-center">
                                                 <span class="flex-grow-1">Metode Pembayaran</span>
                                                 <div class="d-flex align-items-center">
@@ -673,7 +674,7 @@
                             </div>
                             <div class="col-md-5">
                                 <div class="d-flex justify-content-center" style="background: url(/img/pattern-1.svg) no-repeat center bottom; background-size: cover;">
-                                    <lottie-player src="https://assets6.lottiefiles.com/packages/lf20_yzoqyyqf.json"  background="transparent"  speed="1"  style="width: 200px; height: 200px;"  loop  autoplay></lottie-player>
+                                    <lottie-player src="{{ asset('dist/asset_offline/lf20_yzoqyyqf.json') }}"  background="transparent"  speed="1"  style="width: 200px; height: 200px;"  loop  autoplay></lottie-player>
                                 </div>
                                 <div class="card " style="border:none;">
                                     <div class="card-body payment-1">
@@ -774,14 +775,14 @@
             </div>
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
+    <script src="{{ asset('dist/asset_offline/jquery.min.js') }}"></script>
+    <script src="{{ asset('dist/asset_offline/popper2.min.js') }}"></script>
+    <script src="{{ asset('dist/asset_offline/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('dist/asset_offline/lottie-player.js') }}"></script>
+    <script src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
+    <script src="{{ asset('dist/asset_offline/bootstrap.min.js') }}"></script>
     <script src="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.js') }}"></script>
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="{{ asset('dist/asset_offline/popper.min.js') }}"></script>
     <script src="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.min.js') }}"></script>
     <script>
         $(function () {
@@ -1369,7 +1370,6 @@
                 let discount = '';
                 let deposit = '';
                 let cash_transfer = '';
-                
                 if ($(this).is(':checked')) {
                     // $('.summary').removeClass('d-none');
                     if(data_deposit < data_bill) {
@@ -1640,45 +1640,87 @@
                                     $('#deposit').text('Rp. 0');
                                     $('.bayar-input').val('');
                                 } else if (type_multiple[1] == 'kupon' || type_multiple[1] == 'limit') {
-                                    $('.deposit').removeClass('d-none');
-                                    $('#deposit').text('Rp. -' + format(data_bill - price_single));
-                                    $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
-                                    discount += `<div class="card mt-2">
-                                            <div class="card-body">
-                                                <div class="d-flex flex-column">
-                                                    <div class="d-flex">
-                                                        <span class="flex-grow-1">Diskon</span>
-                                                        <span>Rp. ${format(price_single)},00</span>
+                                    if(JSON.parse($('.package-default').val()).length == 1) {
+                                        $('.deposit').removeClass('d-none');
+                                        $('#deposit').text('Rp. 0');
+                                        $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
+                                        discount += `<div class="card mt-2">
+                                                <div class="card-body">
+                                                    <div class="d-flex flex-column">
+                                                        <div class="d-flex">
+                                                            <span class="flex-grow-1">Diskon</span>
+                                                            <span>Rp. ${format(price_single)},00</span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>`;
-                                        $('.discount').html(discount).show();
+                                            </div>`;
+                                            $('.discount').html(discount).show();
+                                    } else {
+                                        $('.deposit').removeClass('d-none');
+                                        $('#deposit').text('Rp. -' + format(data_bill - price_single));
+                                        $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
+                                        discount += `<div class="card mt-2">
+                                                <div class="card-body">
+                                                    <div class="d-flex flex-column">
+                                                        <div class="d-flex">
+                                                            <span class="flex-grow-1">Diskon</span>
+                                                            <span>Rp. ${format(price_single)},00</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>`;
+                                            $('.discount').html(discount).show();
+                                    }
                                 }
                             } else if (type_multiple[0] == 'cash/transfer') {
                                 if(type_multiple[1] == 'kupon' || type_multiple[1] == 'limit') {
-                                    $('.bayar-input').val(data_bill - price_single).removeClass('is-invalid');
-                                    $('#return').text('0').css({
-                                        "background-color": "rgba(25, 216, 149, 0.2)",
-                                        "color": "#19d895"
-                                    }).data('refund', 0);
-                                    discount += `<div class="card mt-2">
-                                            <div class="card-body">
-                                                <div class="d-flex flex-column">
-                                                    <div class="d-flex">
-                                                        <span class="flex-grow-1">Diskon</span>
-                                                        <span>Rp. ${format(price_single)},00</span>
+                                    if(JSON.parse($('.package-default').val()).length == 1) {
+                                        $("#customCheck7").prop("checked", false);
+                                        $('.bayar-input').val('');
+                                        $('#return').text('0').css({
+                                            "background-color": "rgba(25, 216, 149, 0.2)",
+                                            "color": "#19d895"
+                                        }).data('refund', 0);
+                                        $('.refund').addClass('d-none');
+                                        discount += `<div class="card mt-2">
+                                                <div class="card-body">
+                                                    <div class="d-flex flex-column">
+                                                        <div class="d-flex">
+                                                            <span class="flex-grow-1">Diskon</span>
+                                                            <span>Rp. ${format(price_single)},00</span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>`;
-                                        $('.discount').html(discount).show();
-                                    $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
-                                    $('.refund').removeClass('d-none');
-                                    $('#return').text('0').css({
-                                        "background-color": "rgba(25, 216, 149, 0.2)",
-                                        "color": "#19d895"
-                                    }).data('refund', 0).addClass('green');
+                                            </div>`;
+                                            $('.discount').html(discount).show();
+                                        $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
+                                        swal({
+                                            title: "",
+                                            type: "error",
+                                            text: "Gunakan limit atau kupon",
+                                            confirmButtonColor: "#01c853",
+                                        });
+                                        return false;
+                                    } else {
+                                        $('.bayar-input').val(data_bill - price_single).removeClass('is-invalid');
+                                        $('#return').text('0').css({
+                                            "background-color": "rgba(25, 216, 149, 0.2)",
+                                            "color": "#19d895"
+                                        }).data('refund', 0).addClass('green');
+                                        discount += `<div class="card mt-2">
+                                                <div class="card-body">
+                                                    <div class="d-flex flex-column">
+                                                        <div class="d-flex">
+                                                            <span class="flex-grow-1">Diskon</span>
+                                                            <span>Rp. ${format(price_single)},00</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>`;
+                                            $('.discount').html(discount).show();
+                                        $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
+                                        $('.refund').removeClass('d-none');
+                                    }
                                 }
                             }
                         } else if (type_multiple.length == 3) {
@@ -2053,7 +2095,6 @@
                 let bayar_cash = $('.bayar-cash').val();
                 let bayar_input = $('.bayar-input').val();
                 console.log(bayar_input);
-                console.log(type_multiple);
                 let refund = $('#return').data('refund');
                 let tg = window.location.href;
                 tg = tg.split("?");

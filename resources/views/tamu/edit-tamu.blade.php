@@ -181,7 +181,7 @@
     </div>
 @endsection
 @push('scripts')
-    <script>
+    {{-- <script>
         $(document).on('change', 'input[name="status"]', function(e) {
             swal({
                 title: "",
@@ -201,5 +201,5 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 @endpush

@@ -98,6 +98,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('reportdeposit/{id}', [TamuController::class, 'reportdeposit'])->name('deposit.report.data');
     Route::get('reportlimit/{id}', [TamuController::class, 'reportlimit'])->name('limit.report.data');
     Route::get('reportkupon/{id}', [TamuController::class, 'reportkupon'])->name('kupon.report.data');
+    Route::get('reportchart/{id}', [TamuController::class, 'reportchart']);
     Route::get('reporttransaksi/{id}', [TamuController::class, 'reporttransaksi'])->name('transaksi.report.data');
     Route::post('/tambah-deposit', [TamuController::class, 'insertdeposit'])->name('insertdeposit');
     route::get('/export_excel_tamu', [TamuController::class, 'export_excel_tamu'])->name('export_excel_tamu');
@@ -122,8 +123,5 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/checkout_reguler', [OrderRegulerController::class,'checkout'])->name('checkout_reguler');
     Route::post('/pay_reguler', [OrderRegulerController::class,'pay_reguler'])->name('pay_reguler');
     Route::get('/print_invoice_reguler', [OrderRegulerController::class,'print_invoice'])->name('invoice.print.reguler');
-    
-    Route::get('/test_payment', function(){
-        return view('emails.paymentsuccess4_');
-    });
+    Route::get('/detail-invoice-member/{id}', [TamuController::class, 'data_modal_invoice'])->name('modal.invoice');
 });

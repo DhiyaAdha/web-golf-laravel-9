@@ -49,8 +49,8 @@
                                 <div class="panel-scan-qr d-flex justify-content-center align-items-center disabled-scan">
                                     <div class="d-flex flex-column ">
                                         <a href="javascript:void()" id="show-qr-scan" data-scan-status="STOP">
-                                            <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-                                            <lottie-player src="https://assets5.lottiefiles.com/packages/lf20_6SsPj1.json"
+                                            <script src="{{ asset('dist/asset_offline/lottie-player.js') }}"></script>
+                                            <lottie-player src="{{ asset('dist/asset_offline/lf20_6SsPj1.json') }}"
                                                 background="transparent" speed="1" style="width: 200px; height: 200px;"
                                                 hover loop autoplay></lottie-player>
                                         </a>
@@ -76,7 +76,7 @@
             @include('layouts.footer')
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
+    <script src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
 @endsection
 @push('scripts')
     <script>

@@ -15,25 +15,7 @@ class PackageSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-        //
-        // $faker = Faker::create('id_ID');
-        
-
-        // for ($i = 1; $i <= 30; $i++) {
-        //     DB::table('packages')->insert([
-        //         'name' => $faker->word,
-        //         'category' => $faker->randomElement(['default', 'additional', 'others']),
-        //         'price_weekdays' => $faker->randomFloat(2, 30000, 300000),
-        //         'price_weekend' => $faker->randomFloat(2, 35000, 1000000),
-        //         'status' => $faker->randomElement([0, 1]),
-        //         'created_at' => $faker->dateTimeThisYear(),
-        //         'updated_at' => \Carbon\Carbon::now()
-        //             ->addMinutes(rand(0, 60 * 23))
-        //             ->addSeconds(rand(0, 60)),
-        //     ]);
-        // }
-        
+    {   
         // Paket Bermain
         Package::create([
             'name' => '18 Holes',
@@ -56,7 +38,6 @@ class PackageSeeder extends Seeder
             'category' => 'default',
             'status' => '0',
         ]);
-
 
         // Paket Fasilitas
         Package::create([
@@ -87,7 +68,6 @@ class PackageSeeder extends Seeder
             'category' => 'additional',
             'status' => '0',
         ]);
-
 
         // Paket Kantin
         Package::create([

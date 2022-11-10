@@ -12,8 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 use Symfony\Component\Console\Input\Input;
 
-class RevenueController extends Controller
-{
+class RevenueController extends Controller {
     /**
      * Display a listing of the resource.
      *
@@ -57,21 +56,17 @@ class RevenueController extends Controller
             12 => 'Dec',
         ];
         $data['years'] = range(Carbon::now()->year - 3, Carbon::now()->year);
-
         $month_period = CarbonPeriod::create(Carbon::now()->subMonths(11), Carbon::now());
         foreach ($month_period as $key => $value) {
             $month_new[$value->format('m')] = [$value->format('n'), $value->format('Y')];
         }
         foreach (array_values($month_new) as $key => $value) {
-           $data['revenue'][$key]['e'] = $months[$value[0]];
-           $data['revenue'][$key]['f'] =  LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('total');
-           $data['revenue'][$key]['g'] = LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('jml_default');
-           $data['revenue'][$key]['h'] =LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('jml_additional');
-           $data['revenue'][$key]['i'] = LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('jml_other');
-           
+            $data['revenue'][$key]['e'] = $months[$value[0]];
+            $data['revenue'][$key]['f'] =  LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('total');
+            $data['revenue'][$key]['g'] = LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('jml_default');
+            $data['revenue'][$key]['h'] =LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('jml_additional');
+            $data['revenue'][$key]['i'] = LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('jml_other');
         }
-
-
         return view('dashboard.revenue', $data);
     }
 }

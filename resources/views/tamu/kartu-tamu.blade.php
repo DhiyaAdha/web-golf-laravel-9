@@ -1,3 +1,6 @@
+<head>
+    <link href="{{ asset('vendors/bower_components/morris.js/morris.css') }}" rel="stylesheet" type="text/css" />
+</head>
 @extends('layouts.main', ['title' => 'TGCC | Daftar Tamu'])
 @section('content')
     <div class="page-wrapper">
@@ -6,7 +9,6 @@
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h5 class="txt-dark">Detail tamu</h5>
                 </div>
-                <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
                         <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
@@ -14,7 +16,6 @@
                         <li class="active"><span>Detail tamu</span></li>
                     </ol>
                 </div>
-                <!-- /Breadcrumb -->
             </div>
             <div class="row">
                 <div class="col-lg-12">
@@ -98,7 +99,6 @@
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    {{-- Limit Bulanan --}}
                     <div class="panel panel-default card-view limit" style="height: 209.4px;">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Limit</h6>
@@ -111,7 +111,6 @@
                             </div>
                         </div>
                     </div>
-                    {{-- Limit Kupon --}}
                     <div class="panel panel-default card-view limit" style="height: 209.4px;">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Kupon</h6>
@@ -156,10 +155,11 @@
                         <div class="flex-grow-1 d-flex align-items-center">
                             <h6 class="panel-title txt-dark">Riwayat tamu</h6>
                         </div>
-                        {{-- tab --}}
                         <ul role="tablist" class="nav nav-pills" id="myTabs_6">
                             <li class="active" role="presentation"><a class="tabs-log" aria-expanded="true"
-                                    data-toggle="tab" role="tab" href="#transaction_tabs">Transaksi</a></li>
+                                    data-toggle="tab" role="tab" href="#chart_tabs">Grafik</a></li>
+                            <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
+                                    href="#transaction_tabs" aria-expanded="false">Transaksi</a></li>
                             <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
                                     href="#deposit_tabs" aria-expanded="false">Deposit</a></li>
                             <li role="presentation" class=""><a class="tabs-log" data-toggle="tab" role="tab"
@@ -173,8 +173,36 @@
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="tab-content">
-                        {{-- transactions --}}
-                        <div id="transaction_tabs" class="tab-pane fade active in" role="tabpanel">
+                        <div id="chart_tabs" class="tab-pane fade active in" role="tabpanel">
+                            <div class="panel panel-default card-view">
+                                <div class="panel-heading">
+                                    <div class="pull-left">
+                                        <h6 class="panel-title text-dark">Invoice 12 Bulan Terakhir</h6>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <hr class="light-grey-hr row mt-20 mb-15 mb-10" />
+                                </div>
+                                <div class="panel-wrapper collapse in">
+                                    <div class="panel-body">
+                                        <div class="tab-content">
+                                            <div id="all_line" class="tab-pane fade active in" role="tabpanel">
+                                                <div class="panel-body">
+                                                    @if ($visitor->tipe_member == 'VIP')
+                                                    <div id="invoice_line_member" class="morris-chart"></div>
+                                                    <div id="invoice_line_vip" class="morris-chart" hidden></div>
+                                                    @else
+                                                    <div id="invoice_line_member" class="morris-chart" hidden></div>
+                                                    <div id="invoice_line_vip" class="morris-chart"></div>
+                                                    @endif
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="transaction_tabs" class="tab-pane fade active" role="tabpanel">
                             <div class="panel panel-default card-view">
                                 <div class="panel-heading">
                                     <div class="pull-left">
@@ -186,7 +214,7 @@
                                     <div class="panel-body">
                                         <div class="table-wrap">
                                             <div class="table-responsive">
-                                                <table class="table table-hover mb-0" id="dt-tamu-transaksi">
+                                                <table width="100%" class="table table-hover mb-0" id="dt-tamu-transaksi">
                                                     <thead>
                                                         <tr>
                                                             <th>Order ID</th>
@@ -302,19 +330,166 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade modal-detail-invoice" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <strong><span class="modal-title text-capitalize" id="myLargeModalLabel"></span></strong>
+                        </div>
+                        <div class="modal-body">
+                            <div class="invoice-box">
+                                <table cellpadding="0" cellspacing="0">
+                                    <tr class="top">
+                                        <td colspan="4">
+                                            <table>
+                                                <tr>
+                                                    <td class="title">
+                                                        <h2 class="invoice">INVOICE</h2>
+                                                    </td>
+                                                    <td>
+                                                        <strong>Metode Pembayaran:</strong><br>
+                                                        <p id="method_payment" style="color: #616161;"></p><br />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr class="information">
+                                        <td colspan="4">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <strong>Nama Tamu:</strong><br />
+                                                        <span id="name_visitor" class="weight-500" style="color: #616161;"></span>
+                                                        <br /><p id="visitor_email"></p><p  id="visitor_phone"></p>
+                                                        <br>
+                                                    </td>
+                                                    <td>
+                                                        <strong>Order Date:</strong><br>
+                                                        <p id="date" style="color: #616161">
+                                                            
+                                                        </p>
+                                                        <br><br>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr class="details">
+                                        <td>
+                                            <strong>Jenis Tamu:&nbsp;</strong>
+                                                <span class="text-capitalize" id="type_tamu"></span>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table>
+                                    <thead style="background: #EEEEEE;">
+                                        <tr>
+                                            <th>Nama Paket</th>
+                                            <th class="text-right">Harga</th>
+                                            <th class="text-right">Qty</th>
+                                            <th class="text-right">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="products"></tbody>
+                                </table>
+                                <table>
+                                    <tr>
+                                        <td class="thick-line"></td>
+                                        <td class="thick-line"></td>
+                                        <td class="thick-line text-right">Jumlah Item</td>
+                                        <td  id="amount_item" class="thick-line text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="thick-line"></td>
+                                        <td class="thick-line"></td>
+                                        <td class="thick-line text-right">Jumlah Order</td>
+                                        <td id="amount_order" class="thick-line text-right">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="no-line"></td>
+                                        <td class="no-line"></td>
+                                        <td class="no-line text-right">Diskon</td>
+                                        <td id="discount" class="no-line text-right">Rp. </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="no-line"></td>
+                                        <td class="no-line"></td>
+                                        <td class="no-line text-right">Total Bayar</td>
+                                        <td id="total_payment" class="no-line text-right">Rp. </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="no-line"></td>
+                                        <td class="no-line"></td>
+                                        <td class="no-line text-right"><strong>Total Tagihan</strong></td>
+                                        <td id="total_bill" class="no-line text-right">
+                                            <span>Rp. </span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             @include('layouts.footer')
         </div>
     </div>
 @endsection
-
 @push('scripts')
+    <script src="{{ asset('vendors/bower_components/raphael/raphael.min.js') }}"></script>
+    <script src="{{ asset('vendors/bower_components/morris.js/morris.min.js') }}"></script>
+    <script src="{{ asset('/dist/js/line-chart-invoice-data.js') }}"></script>
+    <script src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
     <script>
+        var invoiceMonth = {!! json_encode($invoice_chart) !!}
+        $('.modal-detail-invoice').on('show.bs.modal', function(e){
+            var id = $(e.relatedTarget).data('id');
+            var url = "{{ route('modal.invoice', ':id') }}";
+            url = url.replace(':id', id);
+
+            $.ajax({
+                async: true,
+                type: 'GET',
+                url: url,
+                data: {
+                    id: id,
+                },
+                dataType: 'json',
+                success: function(data) {
+                    $('.products').html('');
+                    $('#myLargeModalLabel').text('ORDER ID : '+ data.order_number);
+                    $('#name_visitor').text(data.name);
+                    $('#method_payment').text(data.pay);
+                    $('#date').text(data.date);
+                    $('#type_tamu').addClass(data.type_member == 'VIP' ? 'label label-success' : 'label label-warning').text(data.type_member == 'VIP' ? 'member' : 'VIP');
+                    $('#visitor_email').text(data.visitor_email);
+                    $('#visitor_phone').text(data.visitor_phone);
+                    $('#amount_item').text(data.amount_item);
+                    $('#amount_order').text(data.amount_order);
+                    $('#discount').text(data.discount);
+                    $('#total_payment').text(data.total_payment);
+                    $('#total_bill').text(data.total_bill);
+                    $.each(data.products, function(b, val) {
+                        $('.products').append(`<tr>
+                                <td>${val.name}</td>    
+                                <td class="text-right">${val.pricesingle}</td>    
+                                <td class="text-right">${val.qty}</td>    
+                                <td class="text-right">${val.price}</td>    
+                            </tr>`).one();
+                    });
+                }
+            });
+        })
+
         $('.download-kartu-tamu').on("click", function() {
             $('.resolution').printThis({
                 base: "https://jasonday.github.io/printThis/"
             });
         });
-        // Transaction Activity
+
         $('#dt-tamu-transaksi').DataTable({
             "processing": true,
             "serverSide": true,
@@ -334,9 +509,9 @@
             },
             "render": $.fn.dataTable.render.text(),
             "columns": [{
-                    data: 'order_number',
-                    searchable: true,
-                    orderable: false
+                    'data' : function(data) {
+                        return `<div data-toggle="tooltip" title="Lihat invoice"><a href="javascript:void(0)" data-id="${data.id}" data-toggle="modal" data-target=".modal-detail-invoice">${data.order_number}</a></div>`;
+                    }
                 },
                 {
                     data: 'information',
@@ -344,7 +519,7 @@
                     orderable: false
                 },
                 {
-                    data: 'total',
+                    data: 'total_gross',
                     searchable: true,
                     orderable: false
                 },
@@ -371,7 +546,10 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [0, 1, 2, 3, 4]
+                targets: [0]
+            },{
+                className: 'text-center',
+                targets: [1, 2, 3, 4]
             }, {
                 width: '20%',
                 targets: [0]
@@ -384,11 +562,12 @@
             }, {
                 width: '7%',
                 targets: [3]
+            },{
+                orderable: false,
+                targets: [0]
             }]
         });
-        // End Of Transaction Activity
 
-        //  Deposit Activity
         $('#dt-tamu-deposit').DataTable({
             "processing": true,
             "serverSide": true,
@@ -447,11 +626,13 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [0, 1, 2, 3, 4]
+                targets: [0, 1]
+            },{
+                className: 'text-center',
+                targets: [2, 3, 4]
             }]
         });
 
-        // Limit Activity
         $('#dt-tamu-limit').DataTable({
             "processing": true,
             "serverSide": true,
@@ -503,12 +684,13 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [0, 1, 2, 3]
+                targets: [0]
+            },{
+                className: 'text-center',
+                targets: [2, 3]
             }]
         });
-        // End Of Limit Activity
 
-        // Kupon Activity
         $('#dt-tamu-kupon').DataTable({
             "processing": true,
             "serverSide": true,
@@ -560,9 +742,11 @@
             },
             columnDefs: [{
                 className: 'text-left',
-                targets: [0, 1, 2, 3]
+                targets: [0]
+            },{
+                className: 'text-center',
+                targets: [2, 3]
             }]
         });
-        // End Of Kupon Activity
     </script>
 @endpush
