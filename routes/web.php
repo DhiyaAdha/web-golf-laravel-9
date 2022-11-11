@@ -70,7 +70,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     });
 });
     
-    Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
+Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name('scan-tamu');
     Route::get('/visitor/qrcode', [ScanqrController::class, 'checkQRCode'])->name('visitor.qrcode');
     Route::get('/visitor/phone', [ScanqrController::class, 'checkNoHp'])->name('visitor.phone');
