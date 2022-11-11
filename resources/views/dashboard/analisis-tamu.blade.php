@@ -1,7 +1,7 @@
-<head>
-    <link href="{{ asset('vendors/bower_components/morris.js/morris.css') }}" rel="stylesheet" type="text/css" />
-</head>
 @extends('layouts.main', ['title' => 'TGCC | Analisis Tamu'])
+@push('css')
+    <link href="{{ asset('vendors/bower_components/morris.js/morris.css') }}" rel="stylesheet" type="text/css" />
+@endpush
 @section('content')
     <div class="page-wrapper">
         <div class="container-fluid pt-25">
@@ -201,93 +201,4 @@
     <script defer src="{{ asset('vendors/bower_components/raphael/raphael.min.js') }}"></script>
     <script defer src="{{ asset('vendors/bower_components/morris.js/morris.min.js') }}"></script>
     <script defer src="{{ asset('/dist/js/dashboard-data.js') }}"></script>
-    <script>
-        // fungsi grafik-line & Grafik-bar
-        var dataMingguan = {!! json_encode($visitor_daily) !!}
-        var dataNewVisitor = {!! json_encode($visitor) !!}
-
-        /* data analisis */
-        $('#dt-analisis').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "lengthChange": false,
-            "bDestroy": true,
-            "searching": true,
-            "paginate": {
-                "first": "First",
-                "last": "Last",
-                "next": "Next",
-                "previous": "Previous"
-            },
-            "ajax": {
-                "url": "{{ route('analisis-tamu.index') }}",
-                "type": "GET",
-                "datatype": "json"
-            },
-
-            "render": $.fn.dataTable.render.text(),
-            "columns": [{
-                data: 'name',
-                searchable: true,
-                orderable:false
-                },
-                {
-                    "data": function(data) {
-                        return `<span class='text-capitalize'>${data.category}</span>`;
-                    }
-                },
-                {
-                    "data": function(data) {
-                        if (data.tipe_member == 'VIP') {
-                            return `<span class='label label-success'>${data.tipe_member == 'VIP' ? 'Member' : 'VIP'}</span>`;
-                        } else {
-                            return `<span class='label label-warning'>${data.tipe_member == 'VVIP' ? 'VIP' : 'Member'}</span>`;
-                        }
-                    }
-                },
-                {
-                    data: 'times',
-
-                }
-            ],
-            order: [
-                [3, 'desc']
-            ],
-            responsive: true,
-            language: {
-                search: "",
-                searchPlaceholder: "Cari nama",
-                emptyTable: "Tidak ada data pada tabel ini",
-                info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
-                infoFiltered: "(difilter dari _MAX_ total data)",
-                infoEmpty: "Tidak ada data pada tabel ini",
-                lengthMenu: "Menampilkan _MENU_ data",
-                zeroRecords: "Tidak ada data pada tabel ini"
-            },
-            columnDefs: [{
-                    className: 'text-left',
-                    targets: [0, 1, 2, 3, ]
-                },
-                {
-                    className: 'text-right',
-                    targets: [2]
-                },
-                {
-                    width: '40%',
-                    targets: [0]
-                },
-                {
-                    width: '20%',
-                    targets: [1, 2, 3]
-                }
-            ],
-            dom: "<'row mb-3'<'col-sm-12 col-md-8 pull-right'f><'toolbar col-sm-12 col-md-4 float-left'B>>" +
-                "<'row'<'col-sm-12'tr>>" +
-                "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-            initComplete: function() {
-                $('div.toolbar').html('<h6>Daftar member terakhir bermain</h6>').appendTo('.float-left');
-            }
-        });
-        /* data analisis */
-    </script>
 @endpush
