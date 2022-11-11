@@ -58,7 +58,7 @@
                                             <div class="radio-inline pl-0">
                                                 <span class="radio radio-info"> <input type="radio" name="gender"
                                                         id="gender-w" value="Perempuan"
-                                                    {{ old('gender') == 'Perempuan' ? 'checked=' . '"' . 'checked' . '"' : '' }}>
+                                                        {{ old('gender') == 'Perempuan' ? 'checked=' . '"' . 'checked' . '"' : '' }}>
                                                     <label for="gender-w">Perempuan</label>
                                                 </span>
                                             </div>
@@ -86,6 +86,14 @@
                                     <div class="text-danger"> {{ $message }}</div>
                                 @enderror
                             </div>
+
+                            {{-- <div class="form-group ">
+                                <label class="control-label mb-10" for="">Nomer Hp</label>
+                                <input type="text" name="phone" class="form-control" id="phone" size="50px"
+                                    value="{{ $visitors->phone }}" placeholder="Masukan Nomer Hp">
+
+                            </div> --}}
+
                             <div class="form-group @error('company') has-error @enderror">
                                 <label class="control-label mb-10" for="">Perusahaan</label>
                                 <input type="text" name="company" class="form-control" id="company" size="50px"
@@ -121,7 +129,7 @@
                                         <span class="radio radio-info"> <input type="radio" name="category"
                                                 id="category-a" value="pertamina"
                                                 {{ old('category') == 'pertamina' ? 'checked=' . '"' . 'checked' . '"' : '' }}>
-                                                
+
                                             <label for="category-a">PERTAMINA</label>
                                         </span>
                                     </div>
@@ -129,30 +137,30 @@
                                         <span class="radio radio-info"> <input type="radio" name="category"
                                                 id="category-b" value="pensiunan"
                                                 {{ old('category') == 'pensiunan' ? 'checked=' . '"' . 'checked' . '"' : '' }}>
-                                            
+
                                             <label for="category-b">PENSIUNAN</label>
                                         </span>
                                     </div>
                                     <div class="radio-inline pl-0">
                                         <span class="radio radio-info"> <input type="radio" name="category"
                                                 id="category-c" value="forkopimda"
-                                            {{ old('category') == 'forkopimda' ? 'checked=' . '"' . 'checked' . '"' : '' }}>
+                                                {{ old('category') == 'forkopimda' ? 'checked=' . '"' . 'checked' . '"' : '' }}>
                                             <label for="category-c">FORKOPIMDA</label>
                                         </span>
                                     </div>
                                     <div class="radio-inline pl-0">
                                         <span class="radio radio-info"> <input type="radio" name="category"
-                                                id="category-d" value="perpesi" 
+                                                id="category-d" value="perpesi"
                                                 {{ old('category') == 'perpesi' ? 'checked=' . '"' . 'checked' . '"' : '' }}>
-                                            
+
                                             <label for="category-d">PERPESI</label>
                                         </span>
                                     </div>
                                     <div class="radio-inline pl-0">
                                         <span class="radio radio-info"> <input type="radio" name="category"
-                                                id="category-e" value="umum" 
+                                                id="category-e" value="umum"
                                                 {{ old('category') == 'umum' ? 'checked=' . '"' . 'checked' . '"' : '' }}>
-                                            
+
                                             <label for="category-e">UMUM</label>
                                         </span>
                                     </div>
@@ -164,7 +172,8 @@
                             <div class="form-group">
                                 <label class="control-label mb-10" for="">Status Aktif</label>
                                 <label class="switch">
-                                    <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" name="status" value="active">
+                                    <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" name="status"
+                                        value="active">
                                     <input type="checkbox" name="status" value="inactive">
                                     <div class="status-member round switch">
                                         <span class="off" style="margin-left: 10px !important;">Ya</span>

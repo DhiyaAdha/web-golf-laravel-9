@@ -228,6 +228,8 @@ class TamuController extends Controller {
         $deposit->save();
 
         $data = $request->all();
+        // dd($data);  
+
         dispatch(new SendMailJob($data));
         LogAdmin::create([
             'user_id' => Auth::id(),
