@@ -59,7 +59,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="mt-5">
-                                                            <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/bg-vip.svg') : asset('dist/img/kartutamu/bg-reguler.svg') }}" alt="{{ $visitor->tipe_member }}">
+                                                            <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/bg-vip.svg') : asset('dist/img/kartutamu/back-member-card.svg') }}" alt="{{ $visitor->tipe_member }}">
                                                             <div class="qr-code">
                                                                 {{ QrCode::size(80)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
                                                             </div>
