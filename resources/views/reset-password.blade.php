@@ -2,20 +2,20 @@
 <html lang="en">
 
 <head>
+    <title>Reset Password</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Reset Password</title>
     <meta name="description" content="Tritih Golf & Country Club" />
     <meta name="keywords" content="tgcc" />
     <meta name="author" content="inovis" />
+    <meta name="theme-color" content="#6777ef" />
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
-    <meta name="theme-color" content="#6777ef" />
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
-    <link href="{{ asset('/dist/css/style.css') }}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/all.min.css') }}">
-    <link href="{{ asset('dist/asset_offline/toastr.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('/dist/css/style.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/all.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('dist/asset_offline/toastr.css') }}" type="text/css">
     <style>
         .password-container {
             width: 400px;
@@ -42,18 +42,6 @@
             right: 30px;
         }
 
-        /* @media screen and (min-width: 250px) {
-            #eye {
-                top: 315px;
-            }
-        } */
-
-        /* @media screen and (min-width: 320px) {
-            #eye {
-                top: 276px;
-            }
-        } */
-
         @media screen and (min-width: 480px) {
             #eye {
                 top: 237px;
@@ -64,33 +52,13 @@
             background-color: #01C853;
             font-family: Arial;
         }
-
-        /* .fa-eye1 {
-            position: absolute;
-            margin-top: -27px;
-            margin-left: 90%;
-            top: 72px;
-            right: 10px;
-            cursor: pointer;
-        }
-        .fa-eye2 {
-            position: absolute;
-            margin-top: -27px;
-            margin-left: 90%;
-            top: 72px;
-            right: 10px;
-            cursor: pointer;
-        } */
     </style>
 </head>
 
 <body>
-    <!--Preloader-->
     <div class="preloader-it">
         <div class="la-anim-1"></div>
     </div>
-    <!--/Preloader-->
-
     <div class="wrapper pa-0">
         <header class="sp-header">
             <div class="sp-logo-wrap pull-left">
@@ -100,11 +68,8 @@
             </div>
             <div class="clearfix"></div>
         </header>
-
-        <!-- Main Content -->
         <div class="page-wrapper pa-0 ma-0 auth-page">
             <div class="container-fluid">
-                <!-- Row -->
                 <div class="table-struct full-width full-height">
                     <div class="table-cell vertical-align-middle auth-form-wrap">
                         <div class="auth-form  ml-auto mr-auto no-float">
@@ -113,8 +78,7 @@
                                     <div>
                                         @if (Session::get('resetSuccess'))
                                             <div class="alert alert-danger">{!! Session::get('resetSuccess') !!}
-                                                <button type="button" class="close" data-dismiss="alert"
-                                                    aria-label="Close">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
@@ -122,60 +86,41 @@
 
                                         @if (session()->has('resetError'))
                                             <div class="alert alert-danger">{!! session('loginError') !!}
-                                                <button type="button" class="close" data-dismiss="alert"
-                                                    aria-label="Close">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                         @endif
                                     </div>
                                     <div class="mb-30">
-                                        <h5 class="text-center txt-dark mb-10">Lupa Password Tritih Golf & Country Club
-                                        </h5>
+                                        <h5 class="text-center txt-dark mb-10">Lupa Password Tritih Golf & Country Club</h5>
                                         <h6 class="text-center nonecase-font txt-grey">Masukan Password Baru Anda</h6>
                                     </div>
                                     <div class="form-wrap">
-
-                                        <form action="{{ route('reset-password.update') }}" method="post"
-                                            autocomplete="off">
-
+                                        <form action="{{ route('reset-password.update') }}" method="post" autocomplete="off">
                                             @csrf
                                             <input type="hidden" name="token" value="{{ $token }}">
                                             <div class="form-group">
-                                                {{-- <label class="" for="email">Email</label> --}}
-                                                <input type="hidden" class="form-control" name="email"
-                                                    placeholder="Enter email address"
-                                                    value="{{ $email ?? old('email') }}">
+                                                <input type="hidden" class="form-control" name="email" placeholder="Enter email address" value="{{ $email ?? old('email') }}">
                                                 <span class="text-danger">
                                             </div>
                                             <div class="form-group">
-                                                <label class="pull-left control-label mb-10" for="password">Password
-                                                    Baru</label>
-                                                <input type="password" name="password"
-                                                    class="form-control @error('password') has-error @enderror"
-                                                    id="password" placeholder="Masukan Password Baru"
-                                                    value="{{ old('password') }}" autocomplete="current-password">
+                                                <label class="pull-left control-label mb-10" for="password">Password Baru</label>
+                                                <input type="password" name="password" class="form-control @error('password') has-error @enderror" id="password" placeholder="Masukan Password Baru" value="{{ old('password') }}" autocomplete="current-password">
                                                 <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye1 fa-eye fa-eye-slash" id="eye"></i>
-
                                                 @error('password')
                                                     <div class="text-danger"> {{ $message }}</div>
                                                 @enderror
                                             </div>
                                             <div class="form-group">
-                                                <label class="pull-left control-label mb-10"
-                                                    for="password_confirmation">Ulangi Password</label>
+                                                <label class="pull-left control-label mb-10" for="password_confirmation">Ulangi Password</label>
                                                 <div class="clearfix"></div>
-                                                <input type="password" name="password_confirmation"
-                                                    class="form-control @error('password') is-invalid @enderror"
-                                                    id="password_confirmation" placeholder="Ulangi Password Baru"
-                                                    value="{{ old('password_confirmation') }}"
-                                                    autocomplete="current-password">
+                                                <input type="password" name="password_confirmation" class="form-control @error('password') is-invalid @enderror" id="password_confirmation" placeholder="Ulangi Password Baru" value="{{ old('password_confirmation') }}" autocomplete="current-password">
                                                     <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
                                                 <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye2 fa-eye fa-eye-slash" id="eyee"></i>
                                             </div>
                                             <div class="form-group text-center">
-                                                <button type="submit" class="btn btn-info btn-rounded">Update
-                                                    Password</button>
+                                                <button type="submit" class="btn btn-info btn-rounded">Update Password</button>
                                             </div>
                                         </form>
                                     </div>
@@ -184,10 +129,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- /Row -->
             </div>
         </div>
-        <!-- /Main Content -->
     </div>
     <script src="{{ asset('/vendors/bower_components/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('/vendors/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
@@ -204,35 +147,32 @@
         }
     </script>
     <script>
-        const passwordField = document.querySelector("#password");
-        const passwordCon = document.querySelector("#password_confirmation");
-        const eyeIcon = document.querySelector("#eye");
-        const eyeeIcon = document.querySelector("#eyee");
-
-        eye.addEventListener("click", function() {
-            this.classList.toggle("fa-eye-slash");
-            const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
-            passwordField.setAttribute("type", type);
-        });
-        eyee.addEventListener("click", function() {
-            this.classList.toggle("fa-eye-slash");
-            const typee = passwordCon.getAttribute("type") === "password" ? "text" : "password";
-            passwordCon.setAttribute("type", typee);
-        });
-    </script>
-    <script>
-        $("#password_confirmation").on('keyup', function() {
-            var password = $("#password").val();
-            var confirmPassword = $("#password_confirmation").val();
-            if (password != confirmPassword)
-                $("#CheckPasswordMatch").html("Password does not match !").css("color", "red");
-            else
-                $("#CheckPasswordMatch").html("Password match !").css("color", "green");
-        });
-    </script>
-    <script>
-
         $(document).ready(function() {
+            const passwordField = document.querySelector("#password");
+            const passwordCon = document.querySelector("#password_confirmation");
+            const eyeIcon = document.querySelector("#eye");
+            const eyeeIcon = document.querySelector("#eyee");
+
+            eye.addEventListener("click", function() {
+                this.classList.toggle("fa-eye-slash");
+                const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+                passwordField.setAttribute("type", type);
+            });
+            eyee.addEventListener("click", function() {
+                this.classList.toggle("fa-eye-slash");
+                const typee = passwordCon.getAttribute("type") === "password" ? "text" : "password";
+                passwordCon.setAttribute("type", typee);
+            });
+
+            $("#password_confirmation").on('keyup', function() {
+                var password = $("#password").val();
+                var confirmPassword = $("#password_confirmation").val();
+                if (password != confirmPassword)
+                    $("#CheckPasswordMatch").html("Password does not match !").css("color", "red");
+                else
+                    $("#CheckPasswordMatch").html("Password match !").css("color", "green");
+            });
+
             toastr.options = {
                 "closeButton": true,
                 "debug": false,
@@ -278,5 +218,4 @@
         });
     </script>
 </body>
-
 </html>

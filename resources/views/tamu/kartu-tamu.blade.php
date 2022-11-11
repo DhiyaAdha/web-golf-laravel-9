@@ -39,9 +39,7 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <!-- sample modal content -->
-                        <div class="modal fade" id="kartu-tamu" tabindex="-1" role="dialog"
-                            aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                        <div class="modal fade" id="kartu-tamu" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
                             <div class="modal-dialog modal-dialog-centered modal-lg">
                                 <div class="modal-content hidden-content">
                                     <div class="modal-body">
@@ -78,7 +76,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- /.modal -->
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
                                 <div class="user-others-details">
@@ -245,7 +242,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- deposit --}}
                         <div id="deposit_tabs" class="tab-pane fade" role="tabpanel">
                             <div class="panel panel-default card-view">
                                 <div class="panel-heading">
@@ -277,7 +273,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- limit --}}
                         <div id="limit_tabs" class="tab-pane fade" role="tabpanel">
                             <div class="panel panel-default card-view">
                                 <div class="panel-heading">
@@ -307,7 +302,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- limit-kupon --}}
                         @if ($quota_kupon != 0)
                             <div id="limit_kupon_tabs" class="tab-pane fade" role="tabpanel">
                                 <div class="panel panel-default card-view">
@@ -628,8 +622,6 @@
             order: [],
             responsive: true,
             language: {
-                // search: "",
-                // searchPlaceholder: "Cari",
                 emptyTable: "Tidak ada data pada tabel ini",
                 info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
                 infoFiltered: "(difilter dari _MAX_ total data)",

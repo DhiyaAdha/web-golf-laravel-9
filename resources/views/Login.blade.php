@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
+    <title>Login</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Login</title>
     <meta name="description" content="Tritih Golf & Country Club" />
     <meta name="keywords" content="tgcc" />
     <meta name="author" content="inovis" />
@@ -13,9 +13,9 @@
     <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('dist/asset_offline/css/all.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('dist/asset_offline/toastr.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dist/css/style.css') }}" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dist/asset_offline/css/all.min.css') }}" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dist/asset_offline/toastr.css') }}" type="text/css">
     <style>
         #overlay{
             position:fixed;
@@ -99,80 +99,6 @@
             background-color: #01C853;
             font-family: Arial;
         }
-
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100vh;
-            background: #e3e3e3;
-        }
-
-        h1 {
-            position: absolute;
-            top: 42%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #101010;
-        }
-
-        body{
-        margin:0px;
-        padding:0px;
-        }
-
-        .pace {
-        pointer-events: none;
-        user-select: none;
-        z-index: 2000;
-        position: fixed;
-        margin: auto;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: 400px;
-        border: 0px;
-        height: 1px;
-        overflow: hidden;
-        background:rgb(40, 229, 103);
-        }
-
-        .pace .pace-progress {
-        box-sizing: border-box;
-        transform: translate3d(0, 0, 0);
-        max-width: 400px;
-        position: fixed;
-        z-index: 2000;
-        display: block;
-        position: absolute;
-        top: 0;
-        right: 100%;
-        height: 100%;
-        width: 100%;
-        background: grey;
-        }
-
-        .pace.pace-inactive {
-        display: none;
-        }
-
-        #preloader{
-        width:100%;
-        height:100vh;
-        background:#101010;
-        overflow:hidden;
-        position:fixed;
-        transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        .pw {
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #fff;
-        }
     </style>
 </head>
 <body>
@@ -198,8 +124,7 @@
                                 <div class="col-sm-12 col-xs-12 title">
                                     @if (session()->has('loginError'))
                                         <div class="alert alert-danger">{!! session('loginError') !!}
-                                            <button type="button" class="close" data-dismiss="alert"
-                                                aria-label="Close">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -207,8 +132,7 @@
 
                                     @if (session()->has('info'))
                                         <div class="alert alert-success">{!! session('info') !!}
-                                            <button type="button" class="close" data-dismiss="alert"
-                                                aria-label="Close">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -222,9 +146,7 @@
                                             @csrf
                                             <div class="form-group">
                                                 <label class="control-label mb-10" for="email">Email</label>
-                                                <input type="email" name="email" class="form-control" id="email"
-                                                    placeholder="Masukan email" @error('email') is-invalid @enderror
-                                                    autofocus required value="{{ old('email') }}">
+                                                <input type="email" name="email" class="form-control" id="email" placeholder="Masukan email" @error('email') is-invalid @enderror autofocus required value="{{ old('email') }}">
                                                 @error('email')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -232,12 +154,9 @@
                                                 @enderror
                                             </div>
                                             <div class="form-group">
-                                                <a class="capitalize-font txt-primary block mb-10 pull-right font-12"
-                                                    href="{{ route('forgot-password') }}">Lupa Password?</a>
-                                                <label class="pull-left control-label mb-10"
-                                                    for="password">Password</label>
-                                                <input type="password" name="password" class="form-control"
-                                                    id="password" placeholder="Masukan password" required>
+                                                <a class="capitalize-font txt-primary block mb-10 pull-right font-12" href="{{ route('forgot-password') }}">Lupa Password?</a>
+                                                <label class="pull-left control-label mb-10" for="password">Password</label>
+                                                <input type="password" name="password" class="form-control" id="password" placeholder="Masukan password" required>
                                                 <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye fa-eye-slash" id="eye"></i>
                                             </div>
                                             <div class="form-group text-center">

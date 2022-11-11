@@ -3,7 +3,6 @@
     <div class="page-wrapper">
         <div class="container-fluid">
             <div class="row heading-bg">
-                <!-- Breadcrumb -->
                 <div class="row">
                     <div class="container-fluid">
                         <div class="col-lg-8">
@@ -17,7 +16,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- /Breadcrumb -->
             </div>
             <div class="row">
                 <div class="col-12 d-flex justify-content-center">
@@ -25,19 +23,15 @@
                         <div class="form-group d-flex justify-content-center">
                             <ul role="tablist" class="nav nav-pills" id="myTabs_6">
                                 <li class="active" role="presentation">
-                                    <a class="tabs-log" aria-expanded="true" data-toggle="tab" role="tab"
-                                        href="#qrcode">
-                                        <input type="radio" name="status" id="radio_12" value="qr"
-                                            style="visibility:hidden;">
+                                    <a class="tabs-log" aria-expanded="true" data-toggle="tab" role="tab" href="#qrcode">
+                                        <input type="radio" name="status" id="radio_12" value="qr" style="visibility:hidden;">
                                         <label for="radio_12"></label>
                                         Verifikasi QR Code
                                     </a>
                                 </li>
                                 <li role="presentation">
-                                    <a class="tabs-log" data-toggle="tab" role="tab" href="#nohp"
-                                        aria-expanded="false">
-                                        <input type="radio" name="status" id="radio_12" value="hp"
-                                            style="visibility:hidden;">
+                                    <a class="tabs-log" data-toggle="tab" role="tab" href="#nohp" aria-expanded="false">
+                                        <input type="radio" name="status" id="radio_12" value="hp" style="visibility:hidden;">
                                         <label for="radio_12"></label>
                                         Verifikasi Kode Member
                                     </a>
@@ -50,22 +44,17 @@
                                     <div class="d-flex flex-column ">
                                         <a href="javascript:void()" id="show-qr-scan" data-scan-status="STOP">
                                             <script src="{{ asset('dist/asset_offline/lottie-player.js') }}"></script>
-                                            <lottie-player src="{{ asset('dist/asset_offline/lf20_6SsPj1.json') }}"
-                                                background="transparent" speed="1" style="width: 200px; height: 200px;"
-                                                hover loop autoplay></lottie-player>
+                                            <lottie-player src="{{ asset('dist/asset_offline/lf20_6SsPj1.json') }}" background="transparent" speed="1" style="width: 200px; height: 200px;" hover loop autoplay></lottie-player>
                                         </a>
                                     </div>
                                 </div>
-                                <div id="reader" class="disabled-show-scan">
-                                </div>
+                                <div id="reader" class="disabled-show-scan"></div>
                             </div>
                             <div id="nohp" class="tab-pane fade" role="tabpanel">
                                 <div class="panel-scan-qr d-flex justify-content-center align-items-center">
                                     <div class="input-group">
                                         <div class="input-group-addon">Kode</div>
-                                        <input type="text" min="0"
-                                            onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                            class="form-control" placeholder="Masukan Kode Member" id="verification-no-hp">
+                                        <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" placeholder="Masukan Kode Member" id="verification-no-hp">
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +76,6 @@
 
         $('#show-qr-scan').on('click', function() {
             $('.disabled-scan').addClass('d-none');
-
             function onScanSuccess(decodedText, decodedResult) {
                 $("#resultTEXT").val(decodedText)
                 $('#resultDECODE').val(JSON.stringify(decodedResult));
@@ -97,7 +85,6 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-
                 $.ajax({
                     type: 'GET',
                     url: "{{ route('visitor.qrcode') }}",

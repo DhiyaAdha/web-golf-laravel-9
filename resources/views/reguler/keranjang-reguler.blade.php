@@ -472,9 +472,6 @@
                         confirmButtonColor: "#01c853",
                     }, function(isConfirm) {
                         window.location.href = url;
-                        // checkout(url, response.order_number);
-                        // $('#checkout').attr('disabled', true);
-                        // window.close();
                     });
                 }
             });
@@ -561,12 +558,12 @@
                 },
                 {
                     "data": function(data) {
-                        return `<p>Rp ${data.price_weekdays}</p>`;
+                        return `<p>${data.price_weekdays}</p>`;
                     }
                 },
                 {
                     "data": function(data) {
-                        return `<p>Rp ${data.price_weekend}</p>`;
+                        return `<p>${data.price_weekend}</p>`;
                     }
                 },
                 {

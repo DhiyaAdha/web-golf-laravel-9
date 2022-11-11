@@ -1,23 +1,18 @@
-@extends('layouts.main')
-
+@extends('layouts.main', ['title' => 'TGCC | Daftar Admin'])
 @section('content')
     <div class="page-wrapper">
         <div class="container-fluid">
-            <!-- Title -->
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h5 class="txt-dark">Daftar Admin</h5>
                 </div>
-                <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
                         <li><a href="{{ url('daftar-admin') }}">Dashboard</a></li>
                         <li class="active"><span>Daftar Admin</span></li>
                     </ol>
                 </div>
-                <!-- /Breadcrumb -->
             </div>
-            <!-- /Title -->
             <div class="row">
                 <div class="col-sm-12">
                     <div class="panel panel-default card-view">
@@ -26,8 +21,7 @@
                                 <h6 class="panel-title txt-dark">Daftar Admin</h6>
                             </div>
                             <div class="pull-right">
-                                <a href="{{ route('tambah-admin') }}" class="btn btn-xs btn-success">Tambah
-                                    Admin</a>
+                                <a href="{{ route('tambah-admin') }}" class="btn btn-xs btn-success">Tambah Admin</a>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -55,7 +49,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- /Basic Table -->
             </div>
             <div class="row">
                 <div class="col-sm-12">
