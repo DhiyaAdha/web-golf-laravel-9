@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <title>Metode Pembayaran</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>Metode Pembayaran</title>
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
     <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
-    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/jquery.dataTables.min.css') }}">
-    <link href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet"
-        type="text/css">
-    <link href="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.css') }}" rel="stylesheet"type="text/css">
-    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/bootstrap.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/jquery.dataTables.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/font-awesome.min.css') }}" type="text/css">
     <style>
         .panel-green {
             color: #fff;
@@ -176,7 +174,6 @@
         }
     </style>
 </head>
-
 <body>
     <div class="row">
         <div class="container">
@@ -267,8 +264,7 @@
                                                                 <input type="button" value="100000" onclick="cal(100000)" class="btn mr-2 btn-sm btn-default">
                                                             </div>
                                                         </div>
-                                                        <img src="{{ asset('cash-on-delivery.png') }}" alt="cash"
-                                                            width="30" height="30">
+                                                        <img src="{{ asset('cash-on-delivery.png') }}" alt="cash" width="30" height="30">
                                                     </div>
                                                 </div>
                                             </div>
@@ -284,9 +280,7 @@
                                                 <div class="card-body">
                                                     <div class="d-flex">
                                                         <span class="flex-grow-1">Total tagihan</span>
-                                                        <span class="nilai-total1-td green"
-                                                            data-total="{{ $totalPrice }}">Rp.
-                                                            {{ formatrupiah($totalPrice) }}</span>
+                                                        <span class="nilai-total1-td green" data-total="{{ $totalPrice }}">Rp. {{ formatrupiah($totalPrice) }}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -320,8 +314,7 @@
                                         <div class="d-flex flex-column">
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Invoice</span>
-                                                <span style="font-size: small;"
-                                                    id="order-number">#{{ $order_number }}</span>
+                                                <span style="font-size: small;" id="order-number">#{{ $order_number }}</span>
                                             </div>
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Tamu</span>
@@ -346,7 +339,7 @@
                                                 @foreach ($orders as $cart)
                                                     <div class="d-flex">
                                                         <span class="flex-grow-1">{{ $cart['name'] }} {{ $cart['category'] == 'default' ? '| game' : '' }} x {{ $cart['qty'] }}</span>
-                                                        <small>Rp. {{ formatrupiah($cart['price']) }}</small>
+                                                        <small>{{ formatrupiah($cart['price']) }}</small>
                                                     </div>
                                                 @endforeach
                                             </div>
@@ -373,7 +366,6 @@
     <script src="{{ asset('dist/asset_offline/a076d05399.js') }}" crossorigin="anonymous"></script>
     <script src="{{ asset('dist/asset_offline/popper.min.js') }}"></script>
     <script src="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.min.js') }}"></script>
-
     <script>
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();
@@ -715,5 +707,4 @@
         });
     </script>
 </body>
-
 </html>

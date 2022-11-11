@@ -23,7 +23,6 @@
         <tbody>
         @foreach($visitor as $item)
             <tr>
-                {{-- <td>{{ $item->name }}</td> --}}
                 @if ($item->tipe_member == 'VVIP')
                     <td>{{ $item->name }}</td>
                 @endif
@@ -42,7 +41,6 @@
                     <td>Member</td>
                 @endif
                 <td>{{ $item->category }}</td>
-                {{-- <td>{{ $item->tipe_member }}</td> --}}
             </tr>
         @endforeach
         </tbody>

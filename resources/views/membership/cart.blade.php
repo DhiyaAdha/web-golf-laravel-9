@@ -577,12 +577,12 @@
                 },
                 {
                     "data": function(data) {
-                        return `<p>Rp ${data.price_weekdays}</p>`;
+                        return `<p>${data.price_weekdays}</p>`;
                     }
                 },
                 {
                     "data": function(data) {
-                        return `<p>Rp ${data.price_weekend}</p>`;
+                        return `<p>${data.price_weekend}</p>`;
                     }
                 },
                 {

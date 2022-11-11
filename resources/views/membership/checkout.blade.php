@@ -8,11 +8,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
     <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
-    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/jquery.dataTables.min.css') }}">
-    <link href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.css') }}" rel="stylesheet"type="text/css">
-    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/bootstrap.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/jquery.dataTables.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/font-awesome.min.css') }}" type="text/css">
     <style>
         #calculator .screen {
             width: 161px;
@@ -198,7 +198,6 @@
                                             <span class="text-capitalize">Kupon</span>
                                             <div class="d-flex">
                                                 <span class=" text-big" id="kupon" data-kupon="{{ $log_limit->quota_kupon }}">{{ $log_limit->quota_kupon ?? '0' }}</span>
-                                                <span></span>
                                             </div>
                                         </div>
                                     </div>
@@ -211,7 +210,6 @@
                                             <span class="text-capitalize">Limit</span>
                                             <div class="d-flex">
                                                 <span class="text-big" id="limit" data-limit="{{ $log_limit->quota }}">{{ $log_limit->quota ?? '0' }}</span>
-                                                <span></span>
                                             </div>
                                         </div>
                                     </div>
@@ -507,22 +505,6 @@
                                                                             </div>
                                                                         </label>
                                                                     @endif
-                                                                    {{-- @else
-                                                                        <input type="checkbox"
-                                                                            class="custom-control-input"
-                                                                            id="customCheck8" disabled>
-                                                                        <label class="custom-control-label"
-                                                                            for="customCheck8"
-                                                                            style="width: 100%; cursor:no-drop;">
-                                                                            <div
-                                                                                class="d-flex flex-column flex-grow-1 justify-content-center">
-                                                                                <strong>Deposit</strong>
-                                                                                <small class="text-muted mb-2"><i>Saldo
-                                                                                        tidak dapat
-                                                                                        digunakan</i></small>
-                                                                            </div>
-                                                                        </label>
-                                                                    @endif --}}
                                                                 @else
                                                                     <input type="checkbox" name="payment-type[]" value="deposit" data-deposit="{{ $deposit->balance }}" data-bill="{{ (int) ceil($totalPrice) }}" class="custom-control-input" id="customCheck8">
                                                                     <label class="custom-control-label" for="customCheck8" style="width: 100%; cursor:pointer;">
@@ -725,7 +707,7 @@
                                                 @foreach ($orders as $cart)
                                                     <div class="d-flex">
                                                         <span class="flex-grow-1">{{ $cart['name'] }} {{ $cart['category'] == 'default' ? '| game' : '' }} x {{ $cart['qty'] }}</span>
-                                                        <small>Rp. {{ formatrupiah($cart['price']) }}</small>
+                                                        <small>{{ formatrupiah($cart['price']) }}</small>
                                                     </div>
                                                 @endforeach
                                             </div>
@@ -733,12 +715,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- <div class="card mt-2 summary d-none">
-                                    <div class="card-body">
-                                        <strong>Ringkasan Pembayaran</strong>
-                                        <div id="summary"></div>
-                                    </div>
-                                </div> --}}
                                 <div class="discount"></div>
                                 <div class="card mt-2 deposit d-none">
                                     <div class="card-body">
@@ -973,7 +949,6 @@
         }
 
         $(document).ready(function() {
-
             $("[data-toggle=popover]").popover({
                 html : true,
                 sanitize: false,
@@ -1371,7 +1346,6 @@
                 let deposit = '';
                 let cash_transfer = '';
                 if ($(this).is(':checked')) {
-                    // $('.summary').removeClass('d-none');
                     if(data_deposit < data_bill) {
                         $('.remaining').removeClass('d-none');
                         if(type_multiple.length == 1) {
@@ -1589,7 +1563,6 @@
                                     icon: 'success',
                                     hideAfter: 700,
                                 });
-                                // $('#balance').text(format($('#balance').data('balance') - data_bill));
                                 $('#remaining').text('Rp. 0');
                             } else if (type_multiple[0] == 'cash/transfer') {
                                 $.toast({
@@ -1749,7 +1722,6 @@
                     if(data_deposit < data_bill) {
                         if(type_multiple.length == 0) {
                             $('.remaining').addClass('d-none');
-                            // $('.summary').addClass('d-none');
                             if ((type_multiple[0] == 'cash/transfer') == false) {
                                 $('.refund').addClass('d-none');
                                 $('.bayar-input').val('').removeClass('is-invalid');
@@ -1982,9 +1954,7 @@
                                     </div>
                                 </div>`;
                                 $('.discount').html(discount).show();
-
                                 $('.nilai-total1-td').text('Rp. ' + format(response.total_price - response.price_default) + ',00');
-
                                 $('#return').text('-').addClass('green').css({
                                     "background-color": "rgba(25, 216, 149, 0.2)",
                                     "color": "#19d895"
@@ -2094,7 +2064,6 @@
                 let order_number = $('#order-number').text();
                 let bayar_cash = $('.bayar-cash').val();
                 let bayar_input = $('.bayar-input').val();
-                console.log(bayar_input);
                 let refund = $('#return').data('refund');
                 let tg = window.location.href;
                 tg = tg.split("?");
@@ -2254,5 +2223,4 @@
         });
     </script>
 </body>
-
 </html>

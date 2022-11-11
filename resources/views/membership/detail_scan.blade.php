@@ -6,7 +6,6 @@
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h5 class="txt-dark">Scan tamu</h5>
                 </div>
-                <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
                         <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
@@ -14,7 +13,6 @@
                         <li class="active"><span>Detail Tamu</span></li>
                     </ol>
                 </div>
-                <!-- /Breadcrumb -->
             </div>
             <div class="row">
                 <div class="col-lg-7 col-md-7">
@@ -150,7 +148,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- {{ URL::signedRoute('order.cart', now()->addMinutes(10), ['id' => $visitor->id]) }} --}}
                                 @if($visitor->expired_date <= \Carbon\Carbon::now())
                                     <a href="javascript:void(0)" class="btn btn-block btn-outline-success btn-sm" id="expired_date">Deposit</a>
                                     <a href="javascript:void(0)" class="btn btn-block btn-success btn-sm" id="expired_date">Pilih paket bermain</a>
@@ -162,15 +159,12 @@
                                     <a href="{{ URL::signedRoute('order.cart', ['id' => $visitor->id]) }}" class="btn btn-block btn-success btn-sm">Pilih paket bermain</a>
                                 @endif
                             </div>
-                            <div id="myModal" class="modal fade" tabindex="-1" role="dialog"
-                                aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                aria-hidden="true">×</button>
-                                            <h5 class="modal-title" id="myModalLabel">
-                                                {{ $deposit->balance == 0 ? 'Tambah Deposit' : 'Update Deposit' }}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h5 class="modal-title" id="myModalLabel"> {{ $deposit->balance == 0 ? 'Tambah Deposit' : 'Update Deposit' }}</h5>
                                         </div>
                                         <div class="modal-body">
                                             <form action="{{ URL::signedRoute('update.deposit', ['id' => $visitor->id]) }}"
@@ -178,24 +172,17 @@
                                                 @csrf
                                                 <div class="form-group">
                                                     <div class="input-group-dropdown">
-                                                        <select name="payment_type" id="payment_type" class="form-control"
-                                                            required>
-                                                            <option disabled selected value="">Pilih Pembayaran
-                                                            </option>
-                                                            <option value="cash" name="payment_type" id="payment_type">
-                                                                Cash</option>
-                                                            <option value="transfer" name="payment_type"
-                                                                id="payment_type">Transfer</option>
+                                                        <select name="payment_type" id="payment_type" class="form-control" required>
+                                                            <option disabled selected value="">Pilih Pembayaran </option>
+                                                            <option value="cash" name="payment_type" id="payment_type">Cash</option>
+                                                            <option value="transfer" name="payment_type" id="payment_type">Transfer</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
-                                                        <input type="text" min="0"
-                                                            onkeypress="return event.charCode >= 48 && event.charCode <=57"
-                                                            class="form-control" name="balance"
-                                                            placeholder="Masukan jumlah deposit" required>
+                                                        <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="balance" placeholder="Masukan jumlah deposit" required>
                                                     </div>
                                                 </div>
                                                 <button type="submit" class="btn btn-success btn-anim">
@@ -205,9 +192,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <!-- /.modal-content -->
                                 </div>
-                                <!-- /.modal-dialog -->
                             </div>
                         </div>
                     </div>
