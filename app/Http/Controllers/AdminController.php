@@ -39,6 +39,10 @@ class AdminController extends Controller {
         return view('admin.daftar-admin', compact('user'));
     }
 
+    public function edit(User $users) {
+        return view('admin.edit-admin', compact('users'));
+    }
+
     /**
      * Update the specified resource in storage.
      *
