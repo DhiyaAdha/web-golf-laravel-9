@@ -1,7 +1,7 @@
-<head>
-    <link href="{{ asset('vendors/bower_components/morris.js/morris.css') }}" rel="stylesheet" type="text/css" />
-</head>
 @extends('layouts.main', ['title' => 'TGCC | Daftar Tamu'])
+@push('css')
+    <link href="{{ asset('vendors/bower_components/morris.js/morris.css') }}" rel="stylesheet" type="text/css" />
+@endpush
 @section('content')
     <div class="page-wrapper">
         <div class="container-fluid">

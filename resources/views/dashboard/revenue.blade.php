@@ -1,7 +1,7 @@
-<head>
-    <link href="{{ asset('vendors/bower_components/morris.js/morris.css') }}" rel="stylesheet" type="text/css" />
-</head>
 @extends('layouts.main', ['title' => 'TGCC | Analisis Revenue'])
+@push('css')
+    <link href="{{ asset('vendors/bower_components/morris.js/morris.css') }}" rel="stylesheet" type="text/css" />
+@endpush
 @section('content')
     <div class="page-wrapper">
         <div class="container-fluid pt-25">

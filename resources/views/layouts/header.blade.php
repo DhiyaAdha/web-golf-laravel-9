@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ asset('dist/css/style.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ asset('dist/css/custom.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/all.min.css') }}">
+    @stack('css')
     <script src="{{ asset('vendors/bower_components/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('dist/asset_offline/html5-qrcode.js') }}"></script>
 </head>
