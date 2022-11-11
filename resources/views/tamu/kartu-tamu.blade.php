@@ -50,22 +50,22 @@
                                                 <div class="resolution">
                                                     <div class="d-flex flex-column">
                                                         <div class="mb-5">
-                                                            <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/bg-vip.svg') : asset('dist/img/kartutamu/bg-reguler.svg') }}" alt="{{ $visitor->tipe_member }}">
+                                                            <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/front-vip-card.svg') : asset('dist/img/kartutamu/front-member-card.svg') }}" alt="{{ $visitor->tipe_member }}">
                                                             <div class="qr-code">
                                                                 {{ QrCode::size(80)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
                                                             </div>
                                                             <div class="identity">
-                                                                <h6>{{ $visitor->name }}</h6>
+                                                                <h6 style="text-transform: uppercase; font-size:8pt;">{{ $visitor->name }}</h6>
                                                             </div>
                                                         </div>
                                                         <div class="mt-5">
-                                                            <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/bg-vip.svg') : asset('dist/img/kartutamu/back-member-card.svg') }}" alt="{{ $visitor->tipe_member }}">
+                                                            <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/back-vip-card.svg') : asset('dist/img/kartutamu/back-member-card.svg') }}" alt="{{ $visitor->tipe_member }}">
                                                             <div class="qr-code">
                                                                 {{ QrCode::size(80)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
                                                             </div>
-                                                            <div class="identity">
+                                                            {{-- <div class="identity">
                                                                 <h6>{{ $visitor->name }}</h6>
-                                                            </div>
+                                                            </div> --}}
                                                         </div>
                                                     </div>
                                                 </div>
