@@ -774,6 +774,14 @@ video {
     left: 4%;
     opacity: 0.7;
 }
+.resolution .datetime {
+    position: absolute;
+    font-family: 'Montserrat';
+    font-weight: 500;
+    bottom: 6%;
+    left: 2%;
+    opacity: 0.7;
+}
 
 b,
 strong {

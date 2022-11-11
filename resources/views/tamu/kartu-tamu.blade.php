@@ -39,7 +39,8 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <div class="modal fade" id="kartu-tamu" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                        <div class="modal fade" id="kartu-tamu" tabindex="-1" role="dialog"
+                            aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
                             <div class="modal-dialog modal-dialog-centered modal-lg">
                                 <div class="modal-content hidden-content">
                                     <div class="modal-body">
@@ -48,28 +49,35 @@
                                                 <div class="resolution">
                                                     <div class="d-flex flex-column">
                                                         <div class="mb-5">
-                                                            <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/front-vip-card.svg') : asset('dist/img/kartutamu/front-member-card.svg') }}" alt="{{ $visitor->tipe_member }}">
+                                                            <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/front-vip-card.svg') : asset('dist/img/kartutamu/front-member-card.svg') }}"
+                                                                alt="{{ $visitor->tipe_member }}">
                                                             <div class="qr-code">
                                                                 {{ QrCode::size(80)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
                                                             </div>
                                                             <div class="identity">
-                                                                <h6 style="text-transform: uppercase; font-size:8pt;">{{ $visitor->name }}</h6>
+                                                                <h6 style="text-transform: uppercase; font-size:8pt;">
+                                                                    {{ $visitor->name }}</h6>
+                                                            </div>
+                                                            <div class="datetime">
+                                                                <h6 style="font-size: 5pt; color:white;">Berlaku hingga 
+                                                                </h6>
                                                             </div>
                                                         </div>
                                                         <div class="mt-5">
-                                                            <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/back-vip-card.svg') : asset('dist/img/kartutamu/back-member-card.svg') }}" alt="{{ $visitor->tipe_member }}">
+                                                            <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/back-vip-card.svg') : asset('dist/img/kartutamu/back-member-card.svg') }}"
+                                                                alt="{{ $visitor->tipe_member }}">
                                                             <div class="qr-code">
                                                                 {{ QrCode::size(80)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
                                                             </div>
-                                                            {{-- <div class="identity">
-                                                                <h6>{{ $visitor->name }}</h6>
-                                                            </div> --}}
+
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="text-center">
-                                                <button type="button" class="btn btn-sm download-kartu-tamu" style="margin-top: 200px;"><i class="fa fa-download"></i> Download Kartu (PDF)</button>
+                                                <button type="button" class="btn btn-sm download-kartu-tamu"
+                                                    style="margin-top: 200px;"><i class="fa fa-download"></i> Download Kartu
+                                                    (PDF)</button>
                                             </div>
                                         </div>
                                     </div>
@@ -97,7 +105,9 @@
                                     </div>
                                     <div class="mb-15 d-flex flex-column">
                                         <span class="txt-muted">Jenis Tamu</span>
-                                        <span class="{{ $visitor->tipe_member == 'VIP' ? 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-success' : 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-warning' }}" style="width:70px;">{{ $visitor->tipe_member == 'VVIP' ? 'VIP' : 'Member' }}</span>
+                                        <span
+                                            class="{{ $visitor->tipe_member == 'VIP' ? 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-success' : 'col-lg-1 col-md-1 col-sm-1 col-xs-1 label label-warning' }}"
+                                            style="width:70px;">{{ $visitor->tipe_member == 'VVIP' ? 'VIP' : 'Member' }}</span>
                                     </div>
                                     <div class="mb-15 d-flex flex-column">
                                         <span class="txt-muted">Kategori</span>
@@ -198,13 +208,13 @@
                                             <div id="all_line" class="tab-pane fade active in" role="tabpanel">
                                                 <div class="panel-body">
                                                     @if ($visitor->tipe_member == 'VIP')
-                                                    <div id="invoice_line_member" class="morris-chart"></div>
-                                                    <div id="invoice_line_vip" class="morris-chart" hidden></div>
+                                                        <div id="invoice_line_member" class="morris-chart"></div>
+                                                        <div id="invoice_line_vip" class="morris-chart" hidden></div>
                                                     @else
-                                                    <div id="invoice_line_member" class="morris-chart" hidden></div>
-                                                    <div id="invoice_line_vip" class="morris-chart"></div>
+                                                        <div id="invoice_line_member" class="morris-chart" hidden></div>
+                                                        <div id="invoice_line_vip" class="morris-chart"></div>
                                                     @endif
-                                                    
+
                                                 </div>
                                             </div>
                                         </div>
@@ -224,7 +234,8 @@
                                     <div class="panel-body">
                                         <div class="table-wrap">
                                             <div class="table-responsive">
-                                                <table width="100%" class="table table-hover mb-0" id="dt-tamu-transaksi">
+                                                <table width="100%" class="table table-hover mb-0"
+                                                    id="dt-tamu-transaksi">
                                                     <thead>
                                                         <tr>
                                                             <th>Order ID</th>
@@ -337,7 +348,8 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade modal-detail-invoice" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal fade modal-detail-invoice" tabindex="-1" role="dialog"
+                aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -368,14 +380,17 @@
                                                 <tr>
                                                     <td>
                                                         <strong>Nama Tamu:</strong><br />
-                                                        <span id="name_visitor" class="weight-500" style="color: #616161;"></span>
-                                                        <br /><p id="visitor_email"></p><p  id="visitor_phone"></p>
+                                                        <span id="name_visitor" class="weight-500"
+                                                            style="color: #616161;"></span>
+                                                        <br />
+                                                        <p id="visitor_email"></p>
+                                                        <p id="visitor_phone"></p>
                                                         <br>
                                                     </td>
                                                     <td>
                                                         <strong>Order Date:</strong><br>
                                                         <p id="date" style="color: #616161">
-                                                            
+
                                                         </p>
                                                         <br><br>
                                                     </td>
@@ -386,7 +401,7 @@
                                     <tr class="details">
                                         <td>
                                             <strong>Jenis Tamu:&nbsp;</strong>
-                                                <span class="text-capitalize" id="type_tamu"></span>
+                                            <span class="text-capitalize" id="type_tamu"></span>
                                         </td>
                                     </tr>
                                 </table>
@@ -406,7 +421,7 @@
                                         <td class="thick-line"></td>
                                         <td class="thick-line"></td>
                                         <td class="thick-line text-right">Jumlah Item</td>
-                                        <td  id="amount_item" class="thick-line text-right"></td>
+                                        <td id="amount_item" class="thick-line text-right"></td>
                                     </tr>
                                     <tr>
                                         <td class="thick-line"></td>
@@ -452,7 +467,7 @@
     <script src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
     <script>
         var invoiceMonth = {!! json_encode($invoice_chart) !!}
-        $('.modal-detail-invoice').on('show.bs.modal', function(e){
+        $('.modal-detail-invoice').on('show.bs.modal', function(e) {
             var id = $(e.relatedTarget).data('id');
             var url = "{{ route('modal.invoice', ':id') }}";
             url = url.replace(':id', id);
@@ -467,11 +482,12 @@
                 dataType: 'json',
                 success: function(data) {
                     $('.products').html('');
-                    $('#myLargeModalLabel').text('ORDER ID : '+ data.order_number);
+                    $('#myLargeModalLabel').text('ORDER ID : ' + data.order_number);
                     $('#name_visitor').text(data.name);
                     $('#method_payment').text(data.pay);
                     $('#date').text(data.date);
-                    $('#type_tamu').addClass(data.type_member == 'VIP' ? 'label label-success' : 'label label-warning').text(data.type_member == 'VIP' ? 'member' : 'VIP');
+                    $('#type_tamu').addClass(data.type_member == 'VIP' ? 'label label-success' :
+                        'label label-warning').text(data.type_member == 'VIP' ? 'member' : 'VIP');
                     $('#visitor_email').text(data.visitor_email);
                     $('#visitor_phone').text(data.visitor_phone);
                     $('#amount_item').text(data.amount_item);
@@ -516,7 +532,7 @@
             },
             "render": $.fn.dataTable.render.text(),
             "columns": [{
-                    'data' : function(data) {
+                    'data': function(data) {
                         return `<div data-toggle="tooltip" title="Lihat invoice"><a href="javascript:void(0)" data-id="${data.id}" data-toggle="modal" data-target=".modal-detail-invoice">${data.order_number}</a></div>`;
                     }
                 },
@@ -554,7 +570,7 @@
             columnDefs: [{
                 className: 'text-left',
                 targets: [0]
-            },{
+            }, {
                 className: 'text-center',
                 targets: [1, 2, 3, 4]
             }, {
@@ -569,7 +585,7 @@
             }, {
                 width: '7%',
                 targets: [3]
-            },{
+            }, {
                 orderable: false,
                 targets: [0]
             }]
@@ -632,7 +648,7 @@
             columnDefs: [{
                 className: 'text-left',
                 targets: [0, 1]
-            },{
+            }, {
                 className: 'text-center',
                 targets: [2, 3, 4]
             }]
@@ -690,7 +706,7 @@
             columnDefs: [{
                 className: 'text-left',
                 targets: [0]
-            },{
+            }, {
                 className: 'text-center',
                 targets: [2, 3]
             }]
@@ -748,7 +764,7 @@
             columnDefs: [{
                 className: 'text-left',
                 targets: [0]
-            },{
+            }, {
                 className: 'text-center',
                 targets: [2, 3]
             }]
