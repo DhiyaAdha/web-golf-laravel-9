@@ -23,8 +23,34 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request) {
-        // Statistika Pertahun Grafik-chart
+    public function analytic_week() {
+        $now = Carbon::now()->translatedFormat('Y-m-d');
+        $last7Days = Carbon::now()->subDays(6)->translatedFormat('Y-m-d');
+        $day_period = CarbonPeriod::create($last7Days, $now)->toArray();
+
+        foreach ($day_period as $key => $value) {
+            $data['visitor_daily'][$key]['y'] = Carbon::create(
+                $day_period[$key]
+            )->translatedFormat('l');
+
+            $data['visitor_daily'][$key]['a'] = Visitor::where('tipe_member', 'VVIP')->whereHas('log_transaction', function(Builder $query) use ($day_period, $key) {
+                $query->whereDate('created_at', $day_period[$key]);
+            })->count();
+            $data['visitor_daily'][$key]['b'] = Visitor::where('tipe_member', 'VIP')->whereHas('log_transaction', function(Builder $query) use ($day_period, $key) {
+                $query->whereDate('created_at', $day_period[$key]);
+            })->count();
+            $data['visitor_daily'][$key]['c'] = LogTransaction::where('payment_status', 'paid')->whereHas(
+                'visitor',
+                function (Builder $query) {
+                    $query->where('tipe_member', 'REGULER');
+                }
+            )->whereDate('created_at', $day_period[$key])->count();
+        }
+        $data = json_encode($data['visitor_daily']);
+        return response()->json($data);
+    }
+
+    public function analytic_month() {
         $months = [
             1 => 'Jan',
             2 => 'Feb',
@@ -85,30 +111,11 @@ class DashboardController extends Controller
             )->count();
         }
 
-        //statistika mingguan bar-chart 
-        $now = Carbon::now()->translatedFormat('Y-m-d');
-        $last7Days = Carbon::now()->subDays(6)->translatedFormat('Y-m-d');
-        $day_period = CarbonPeriod::create($last7Days, $now)->toArray();
+        $data = json_encode($data['visitor']);
+        return response()->json($data);
+    }
 
-        foreach ($day_period as $key => $value) {
-            $data['visitor_daily'][$key]['y'] = Carbon::create(
-                $day_period[$key]
-            )->translatedFormat('l');
-
-            $data['visitor_daily'][$key]['a'] = Visitor::where('tipe_member', 'VVIP')->whereHas('log_transaction', function(Builder $query) use ($day_period, $key) {
-                $query->whereDate('created_at', $day_period[$key]);
-            })->count();
-            $data['visitor_daily'][$key]['b'] = Visitor::where('tipe_member', 'VIP')->whereHas('log_transaction', function(Builder $query) use ($day_period, $key) {
-                $query->whereDate('created_at', $day_period[$key]);
-            })->count();
-            $data['visitor_daily'][$key]['c'] = LogTransaction::where('payment_status', 'paid')->whereHas(
-                'visitor',
-                function (Builder $query) {
-                    $query->where('tipe_member', 'REGULER');
-                }
-            )->whereDate('created_at', $day_period[$key])->count();
-        }
-
+    public function index(Request $request) {
         // statistika mingguan & tanggal
         $data['now'] = Carbon::now()->translatedFormat('Y-m-d');
         $data['visitor_week'] = LogTransaction::where('payment_status', 'paid')->whereBetween(

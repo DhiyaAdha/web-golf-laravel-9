@@ -1,13 +1,12 @@
 <html>
-
 <head>
     <title>{{ $log_transaction->order_number }}</title>
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
     <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
-    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/jquery.dataTables.min.css') }}">
-    <link href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.css') }}" rel="stylesheet"type="text/css">
+    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/bootstrap.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/jquery.dataTables.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.css') }}" type="text/css">
     <style type="text/css">
         /* width */
         ::-webkit-scrollbar {
@@ -62,6 +61,7 @@
             line-height: 30px;
             text-align: center;
             cursor: pointer;
+        }
     </style>
 </head>
 
@@ -412,5 +412,4 @@
         });
     </script>
 </body>
-
 </html>

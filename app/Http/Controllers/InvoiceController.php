@@ -56,7 +56,7 @@ class InvoiceController extends Controller
                 }
             })
             ->editColumn('total', function ($data) {
-                return  ('Rp. ' .formatrupiah($data->total));
+                return  (formatrupiah($data->total));
             })
             ->rawColumns(['name','action', 'payment_type'])
             ->make(true);

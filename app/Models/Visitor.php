@@ -32,6 +32,8 @@ class Visitor extends Model
         'updated_at',
     ];
 
+    
+
     public function logtransaction()
     {
         return $this->hasMany(LogTransaction::class);

@@ -1,14 +1,11 @@
 @extends('layouts.main', ['title' => 'TGCC | Invoice'])
 @section('content')
-    {{-- Main Content --}}
     <div class="page-wrapper">
         <div class="container-fluid">
-            <!-- Title -->
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h5 class="txt-dark">Detail invoice</h5>
                 </div>
-                <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
                         <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
@@ -16,14 +13,9 @@
                         <li class="active"><span>Detail invoice</span></li>
                     </ol>
                 </div>
-                <!-- /Breadcrumb -->
             </div>
-            <!-- /Title -->
-
             <a href="javascript:void(0)" >
-                <i class="fa fa-print  pull-right" target="_blank" data-toggle="tooltip" title="Klik untuk Cetak"
-                style="font-size:24px">
-                </i>
+                <i class="fa fa-print  pull-right" target="_blank" data-toggle="tooltip" title="Klik untuk Cetak" style="font-size:24px"></i>
             </a>
             <div class="row" id="cetak-invoice">
                 <body>
@@ -37,8 +29,7 @@
                                                 <h2 class="invoice">INVOICE</h2>
                                             </td>
                                             <td>
-                                                <strong>Order
-                                                    {{ $transaction->order_number }}</strong><br />
+                                                <strong>Order {{ $transaction->order_number }}</strong><br />
                                                 <strong>Metode Pembayaran:</strong><br>
                                                 <p style="color: #616161;">{{ $method_payment }}</p><br />
                                             </td>
@@ -58,9 +49,7 @@
                                             </td>
                                             <td>
                                                 <strong>Order Date:</strong><br>
-                                                <p style="color: #616161">
-                                                    {{ $transaction->created_at->format('d F Y | H:i:s') }}
-                                                </p>
+                                                <p style="color: #616161"> {{ $transaction->created_at->format('d F Y | H:i:s') }}</p>
                                                 <br><br>
                                             </td>
                                         </tr>
@@ -71,11 +60,9 @@
                                 <td>
                                     <strong>Jenis Tamu:&nbsp;</strong>
                                     @if ($visitor->tipe_member == 'VIP')
-                                        <span
-                                            class="label label-success">{{ $visitor->tipe_member == 'VIP' ? 'Member' : 'VIP' }}</span>
+                                        <span class="label label-success">{{ $visitor->tipe_member == 'VIP' ? 'Member' : 'VIP' }}</span>
                                     @elseif ($visitor->tipe_member == 'VVIP')
-                                        <span
-                                            class="label label-warning">{{ $visitor->tipe_member == 'VVIP' ? 'VIP' : 'Member' }}</span>
+                                        <span class="label label-warning">{{ $visitor->tipe_member == 'VVIP' ? 'VIP' : 'Member' }}</span>
                                     @else
                                         <span class="label label-primary">Umum</span>
                                     @endif
@@ -96,9 +83,6 @@
                                 <td class="text-right">Rp. {{ formatrupiah($item['price']) }}</td>
                             </tr>
                             @endforeach
-                            {{-- @php
-                                    dd($item);
-                                @endphp --}}
                             </tr>
                             <tr>
                                 <td class="thick-line"></td>

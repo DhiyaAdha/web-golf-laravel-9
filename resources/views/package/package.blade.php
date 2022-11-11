@@ -1,26 +1,19 @@
 @extends('layouts.main', ['title' => 'TGCC | Paket Bermain'])
 @section('content')
-    <!-- Main Content -->
     <div class="page-wrapper">
         <div class="container-fluid">
-            <!-- Title -->
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h5 class="txt-dark">Daftar Paket</h5>
                 </div>
-                <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
                         <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
                         <li class="active"><span>Daftar paket</span></li>
                     </ol>
                 </div>
-                <!-- /Breadcrumb --> 
             </div>
-            <!-- /Title -->
-
             <div class="row">
-                <!-- Basic Table -->
                 <div class="col-sm-12">
                     <div class="panel panel-default card-view">
                         <div class="panel-heading">
@@ -29,9 +22,7 @@
                             </div>
                             <div class="pull-right">
                                 <div class=" pull-left">
-                                    <a href="{{ route('package.create') }}" type="submit"
-                                        class="btn btn-xs btn-success">Tambah
-                                        Paket</a>
+                                    <a href="{{ route('package.create') }}" type="submit" class="btn btn-xs btn-success">Tambah Paket</a>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
@@ -105,12 +96,12 @@
                 },
                 {
                     "data": function(data) {
-                        return `<p>Rp ${data.price_weekdays}</p>`;
+                        return `<p>${data.price_weekdays}</p>`;
                     }
                 },
                 {
                     "data": function(data) {
-                        return `<p>Rp ${data.price_weekend}</p>`;
+                        return `<p>${data.price_weekend}</p>`;
                     }
                 },
                 {

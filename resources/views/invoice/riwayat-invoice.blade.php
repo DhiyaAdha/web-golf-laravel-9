@@ -1,33 +1,23 @@
 @extends('layouts.main', ['title' => 'TGCC | Invoice'])
 @section('content')
-    <!-- Main Content -->
     <div class="page-wrapper">
         <div class="container-fluid">
-            <!-- Title -->
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h5 class="txt-dark">Daftar invoice</h5>
                 </div>
-                <!-- Breadcrumb -->
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
                         <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
                         <li class="active"><span>Daftar invoice</span></li>
                     </ol>
                 </div>
-                <!-- /Breadcrumb -->
             </div>
-            <!-- /Title -->
-
             <div class="row">
-                <!-- Basic Table -->
                 <div class="col-sm-12">
                     <div class="panel panel-default card-view">
-                        {{-- <a href="{{ url('export_excel') }}"><i data-toggle="tooltip" title="Download Excell" class="fa fa-file-excel-o pull-right"></i></a> --}}
                         <div class="pull-right">
-                            <a href="{{ url('export_excel') }}" target="_blank" name="excel" data-toggle="tooltip"
-                                data-placement="top" title="Download Excel"><img src="dist/img/excel2.svg" width="25px"
-                                    height="25px"></a>
+                            <a href="{{ url('export_excel') }}" target="_blank" name="excel" data-toggle="tooltip" data-placement="top" title="Download Excel"><img src="dist/img/excel2.svg" width="25px" height="25px"></a>
                         </div>
                         <div class="pull-left">
                             <h6 class="panel-title txt-dark">Invoice</h6>
@@ -38,7 +28,6 @@
                                 <div class="table-wrap">
                                     <div class="table-responsive">
                                         <table class="table mb-0" id="dt-riwayat">
-
                                             <thead>
                                                 <tr>
                                                     <th class="">Nama</th>
@@ -58,15 +47,10 @@
                         </div>
                     </div>
                 </div>
-                <!-- /Basic Table -->
-
             </div>
         </div>
-        <!-- Footer -->
         @include('layouts.footer')
-        <!-- /Footer -->
     </div>
-    <!-- /Main Content -->
 @endsection
 @push('scripts')
     <script>

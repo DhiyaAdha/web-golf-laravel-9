@@ -13,7 +13,6 @@
                     </ol>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-sm-12">
                     <div class="panel panel-default card-view">
@@ -49,8 +48,7 @@
                                         </select>
                                     </div>	
                                     @if (auth()->user()->role_id == '2')
-                                    <a href="{{ url('export_excel_tamu') }}" target="_blank" name="excel"
-                                        data-toggle="tooltip" data-placement="top" title="Download Excel">
+                                    <a href="{{ url('export_excel_tamu') }}" target="_blank" name="excel" data-toggle="tooltip" data-placement="top" title="Download Excel">
                                         <img src="dist/img/excel.svg" width="25px" height="25px">
                                     </a>
                                     @endif
@@ -79,12 +77,10 @@
                                             </thead>
                                             <tbody>
                                             </tbody>
-
                                         </table>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -92,7 +88,6 @@
             @include('layouts.footer')
         </div>
     </div>
-    <!-- /Main Content -->
 @endsection
 @push('scripts')
     <script>
