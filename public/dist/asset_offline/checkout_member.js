@@ -902,6 +902,7 @@ $(document).ready(function() {
                                     </div>`;
                                     $('.discount').html(discount).show();
                                 $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
+                                sword();
                                 swal({
                                     title: "",
                                     type: "error",

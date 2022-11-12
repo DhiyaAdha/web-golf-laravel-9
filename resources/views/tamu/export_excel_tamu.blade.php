@@ -16,7 +16,7 @@
                 <th class="" style="text-align:center"><strong>Alamat</strong></th>
                 <th class="" style="text-align:center"><strong>Posisi</strong></th>
                 <th class="" style="text-align:center"><strong>Perusahaan</strong></th>
-                <th class="" style="text-align:center"><strong>Tipe</strong></th>
+                <th class="" style="text-align:center"><strong>Jenis</strong></th>
                 <th class="" style="text-align:center"><strong>Kategori</strong></th>
             </tr>
         </thead>

@@ -153,7 +153,7 @@
             </tr>
             <tr class="details">
                 <td>
-                    <strong>Jenis Tamu:</strong><br>
+                    <strong>Jenis Member:</strong><br>
                     @if ($visitor->tipe_member == 'VIP')
                         <span class="label label-success">{{ $visitor->tipe_member == 'VIP' ? 'Member' : 'VIP' }}</span>
                     @elseif($visitor->tipe_member == 'VVIP')

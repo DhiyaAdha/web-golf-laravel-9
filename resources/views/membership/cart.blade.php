@@ -178,7 +178,7 @@
     </div>
 @endsection
 @push('scripts')
-    <script src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
-    <script src="{{ asset('dist/asset_offline/popper.min.js') }}"></script>
-    <script src="{{ asset('dist/asset_offline/cart_member.js') }}"></script>
+    <script defer src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
+    <script defer src="{{ asset('dist/asset_offline/popper.min.js') }}"></script>
+    <script defer src="{{ asset('dist/asset_offline/cart_member.js') }}"></script>
 @endpush

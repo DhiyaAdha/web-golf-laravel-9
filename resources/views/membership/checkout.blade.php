@@ -752,11 +752,11 @@
     </div>
     <script src="{{ asset('dist/asset_offline/jquery.min.js') }}"></script>
     <script src="{{ asset('dist/asset_offline/popper2.min.js') }}"></script>
-    <script src="{{ asset('dist/asset_offline/lottie-player.js') }}"></script>
-    <script src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
+    <script defer src="{{ asset('dist/asset_offline/lottie-player.js') }}"></script>
+    <script defer src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
     <script src="{{ asset('dist/asset_offline/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.js') }}"></script>
-    <script src="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.min.js') }}"></script>
-    <script src="{{ asset('dist/asset_offline/checkout_member.js') }}"></script>
+    <script defer src="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.js') }}"></script>
+    <script defer src="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.min.js') }}"></script>
+    <script defer src="{{ asset('dist/asset_offline/checkout_member.js') }}"></script>
 </body>
 </html>

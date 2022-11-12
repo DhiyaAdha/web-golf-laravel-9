@@ -219,9 +219,9 @@
     </div>
 @endsection
 @push('scripts')
-    <script src="{{ asset('vendors/bower_components/raphael/raphael.min.js') }}"></script>
-    <script src="{{ asset('vendors/bower_components/morris.js/morris.min.js') }}"></script>
-    <script src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
+    <script defer src="{{ asset('vendors/bower_components/raphael/raphael.min.js') }}"></script>
+    <script defer src="{{ asset('vendors/bower_components/morris.js/morris.min.js') }}"></script>
+    <script defer src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
     <script>
         var revenueWeek = {!! json_encode($revenue_daily) !!}
         var revenueMonth = {!! json_encode($revenue) !!}

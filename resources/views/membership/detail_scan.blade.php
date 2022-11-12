@@ -76,7 +76,7 @@
                                     </div>
                                     <div class="mb-15 d-flex">
                                         <div class="col-medium-3">
-                                            <span class="txt-muted">Jenis Tamu</span>
+                                            <span class="txt-muted">Jenis Member</span>
                                         </div>
                                         <div class="col-lg-12 col-md-12">
                                             <span class="{{ $visitor->tipe_member == 'VIP' ? 'label label-success' : 'label label-warning' }}">{{ $visitor->tipe_member == 'VIP' ? 'Member' : 'VIP' }}</span>

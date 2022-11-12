@@ -17,7 +17,6 @@
             <div class="row">
                 <div class="col-lg-12" style="position: relative;">
                     <div style="" class="panel panel-default card-view">
-                        <h6 class="control-label mb-10">Edit Tamu</h6>
                         <div class="panel-body">
                             <div class="form-wrap">
                                 <form action="{{ route('update-tamu', $visitor->id) }}" method="POST">

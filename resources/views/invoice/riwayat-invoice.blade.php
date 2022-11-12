@@ -31,7 +31,7 @@
                                             <thead>
                                                 <tr>
                                                     <th class="">Nama</th>
-                                                    <th class="">Jenis Tamu</th>
+                                                    <th class="">Jenis Member</th>
                                                     <th class="">Metode Pembayaran</th>
                                                     <th class="">Total Bayar</th>
                                                     <th class="">Tanggal Bayar</th>
