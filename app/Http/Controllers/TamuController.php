@@ -165,7 +165,7 @@ class TamuController extends Controller {
             'address' => $request->address,
             'gender' => $request->gender,
             'email' => $request->email,
-            'phone' =>  Carbon::now()->format('d') .  '-' . Carbon::now()->format('Y') . '-TGCC'.  '-' . $counts,
+            'phone' =>  Carbon::now()->format('d') .  '-' . Carbon::now()->format('Y') . '-TGCC'.  '-' . $counts . '-' .  Carbon::now()->format('his'),
             'company' => $request->company,
             'position' => $request->position,
             'tipe_member' => $request->tipe_member,
