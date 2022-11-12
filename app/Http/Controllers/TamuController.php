@@ -133,7 +133,6 @@ class TamuController extends Controller {
                 'address' => 'required',
                 'gender' => 'required',
                 'email' => 'required|email|unique:visitors,email',
-                'phone' => 'required|min:12|unique:visitors,phone',
                 'company' => 'required',
                 'position' => 'required',
                 'tipe_member' => 'required',
@@ -149,8 +148,6 @@ class TamuController extends Controller {
                 'gender.unique' => 'Jenis Kelamin sudah ada',
                 'email.required' => 'Email masih kosong.',
                 'email.unique' => 'Email sudah ada',
-                'phone.required' => 'Nomer Hp masih kosong.',
-                'phone.unique' => 'Nomer Hp sudah ada',
                 'company.required' => 'Perusahaan masih kosong.',
                 'company.unique' => 'Perusahaan sudah ada',
                 'position.required' => 'Jabatan masih kosong.',
@@ -162,12 +159,13 @@ class TamuController extends Controller {
         $random = Str::random(15);
         $random_unique = Carbon::now()->format('Y-m');
         $token = $random_unique . '-' . $random;
+        $counts = Visitor::count() + 1;
         $visitors = Visitor::create([
             'name' => $request->name,
             'address' => $request->address,
             'gender' => $request->gender,
             'email' => $request->email,
-            'phone' => $request->phone,
+            'phone' =>  Carbon::now()->format('d') .  '-' . Carbon::now()->format('Y') . '-TGCC'.  '-' . $counts,
             'company' => $request->company,
             'position' => $request->position,
             'tipe_member' => $request->tipe_member,

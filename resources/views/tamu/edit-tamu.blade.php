@@ -65,8 +65,8 @@
                                             @enderror
                                         </div>
                                         <div class="form-group @error('phone') has-error @enderror">
-                                            <label class="control-label mb-10" for="">Nomer Hp</label>
-                                            <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" name="phone" value="{{ $visitor->phone }}" class="form-control" id="phone" size="50px" placeholder="Masukan Nomer Hp" autofocus>
+                                            {{-- <label class="control-label mb-10" for="">Nomer Hp</label>  --}}
+                                            <input type="hidden" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" name="phone" value="{{ $visitor->phone }}" class="form-control" id="phone" size="50px" placeholder="Masukan Nomer Hp" autofocus>
                                             @error('phone')
                                                 <div class="text-danger">
                                                     {{ $message }}
