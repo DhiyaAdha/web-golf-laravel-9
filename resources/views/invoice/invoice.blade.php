@@ -29,7 +29,7 @@
                                                 <h2 class="invoice">INVOICE</h2>
                                             </td>
                                             <td>
-                                                <strong>Order {{ $transaction->order_number }}</strong><br />
+                                                <strong>Order : {{ $transaction->order_number }}</strong><br />
                                                 <strong>Metode Pembayaran:</strong><br>
                                                 <p style="color: #616161;">{{ $method_payment }}</p><br />
                                             </td>
@@ -70,17 +70,17 @@
                             </tr>
                             <tr class="heading">
                                 <td>Nama Paket</td>
-                                <td style="text-align: center">Harga</td>
-                                <td style="text-align: center">Qty</td>
-                                <td style="text-align: right">Total</td>
+                                <td class="text-left">Harga</td>
+                                <td class="text-left">Qty</td>
+                                <td class="text-right">Total</td>
                             </tr>
                             <tr class="item">
                                 @foreach ($cart as $item)
                             <tr>
                                 <td>{{ $item['name'] }}</td>
-                                <td class="text-right">Rp. {{ formatrupiah($item['pricesingle']) }}</td>
-                                <td class="text-center">{{ $item['qty'] }}</td>
-                                <td class="text-right">Rp. {{ formatrupiah($item['price']) }}</td>
+                                <td class="text-left">{{ formatrupiah($item['pricesingle']) }}</td>
+                                <td class="text-left">{{ $item['qty'] }}</td>
+                                <td class="text-right">{{ formatrupiah($item['price']) }}</td>
                             </tr>
                             @endforeach
                             </tr>
@@ -101,20 +101,20 @@
                                 <td class="no-line"></td>
                                 <td class="no-line"></td>
                                 <td class="no-line text-right">Diskon</td>
-                                <td class="no-line text-right">Rp. {{ formatrupiah($discount) }}</td>
+                                <td class="no-line text-right">{{ formatrupiah($discount) }}</td>
                             </tr>
                             <tr>
                                 <td class="no-line"></td>
                                 <td class="no-line"></td>
                                 <td class="no-line text-right">Total Bayar</td>
-                                <td class="no-line text-right">Rp. {{ formatrupiah($transaction->total) }}</td>
+                                <td class="no-line text-right">{{ formatrupiah($transaction->total) }}</td>
                             </tr>
                             <tr>
                                 <td class="no-line"></td>
                                 <td class="no-line"></td>
                                 <td class="no-line text-right"><strong>Total Tagihan</strong></td>
                                 <td class="no-line text-right">
-                                    <span>Rp. {{ formatrupiah($total) }}</span>
+                                    <span>{{ formatrupiah($total) }}</span>
                                 </td>
                             </tr>
                         </table>

@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\LogTransactionExport;
 use Illuminate\Support\Facades\Crypt;
-// use Maatwebsite\Excel\Excel;
 use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
@@ -54,13 +53,10 @@ class InvoiceController extends Controller
                     $tagsString = implode("</span> <span class='label mr-5 label-info'>", $datax);
                     return sprintf('<div class="d-flex flex-wrap justify-content-center align-items-center"><span class="label mr-5 label-info">'.$tagsString.'</span></div>');
                 }
-            })
-            ->editColumn('total', function ($data) {
-                return  (formatrupiah($data->total));
-            })
-            ->rawColumns(['name','action', 'payment_type'])
-            ->make(true);
-            }
+            })->editColumn('total', function ($data) {
+                return  (formatrupiah($data->total_gross));
+            })->rawColumns(['name','action', 'payment_type'])->make(true);
+        }
         return view('invoice.riwayat-invoice');
     }
 

@@ -42,13 +42,6 @@ class ScanqrController extends Controller {
         return view('proses');
     }
 
-    public function kartutamu($id) {
-        $visitor = Visitor::findOrFail($id);
-        $qrcode = QrCode::size(180)->generate($visitor->unique_qr);
-        $data['visitor'] =  Visitor::find($id);
-        return view('tamu.kartu-tamu', compact('qrcode'), $data);
-    }
-
     public function detailscan() {
         return view('membership.detail_scan');
     }
