@@ -4,15 +4,15 @@
 <head>
     <title>Login</title>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="description" content="Tritih Golf & Country Club" />
     <meta name="keywords" content="tgcc" />
     <meta name="author" content="inovis" />
     <meta name="theme-color" content="#6777ef" />
+    <meta name="description" content="Tritih Golf & Country Club" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="shortcut icon" href="favicon.ico">
-    <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
-    <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
+    <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
+    <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="{{ asset('dist/css/style.css') }}" type="text/css">
     <link rel="stylesheet" type="text/css" href="{{ asset('dist/asset_offline/css/all.min.css') }}" type="text/css">
     <link rel="stylesheet" type="text/css" href="{{ asset('dist/asset_offline/toastr.css') }}" type="text/css">
@@ -209,12 +209,23 @@
             passwordField.setAttribute("type", type);
         });
 
+        function wrong() {
+            var audio = new Audio('../sound/wrong.mp3');
+            audio.play();
+        }
+
+        function empty() {
+            var audio = new Audio('../sound/empty.mp3');
+            audio.play();
+        }
+
         $(document).ready(function() {
             $(window).load(function() {
             $(".se-pre-con").fadeOut("slow");
         });
             $(document).on('click', '.btn-rounded', function(e) {
                 if($("input[name='email']").val() == '' || $("input[name='password']").val() == '') {
+                    empty();
                     toastr.error('Email dan password wajib diisi');
                 } else {
                     $.ajax({
@@ -239,6 +250,7 @@
             });
 
             @if (Session::has('error'))
+                wrong();
                 toastr.error('{{ Session::get('error') }}');
             @endif
 
