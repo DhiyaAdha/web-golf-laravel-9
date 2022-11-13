@@ -43,7 +43,6 @@
                                 <div class="panel-scan-qr d-flex justify-content-center align-items-center disabled-scan">
                                     <div class="d-flex flex-column ">
                                         <a href="javascript:void()" id="show-qr-scan" data-scan-status="STOP">
-                                            <script src="{{ asset('dist/asset_offline/lottie-player.js') }}"></script>
                                             <lottie-player src="{{ asset('dist/asset_offline/lf20_6SsPj1.json') }}" background="transparent" speed="1" style="width: 200px; height: 200px;" hover loop autoplay></lottie-player>
                                         </a>
                                     </div>
@@ -67,6 +66,7 @@
     </div>
     @endsection
 @push('scripts')
+    <script defer src="{{ asset('dist/asset_offline/lottie-player.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/scan_member.js') }}"></script>
 @endpush

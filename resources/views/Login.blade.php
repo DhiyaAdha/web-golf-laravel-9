@@ -17,6 +17,17 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('dist/asset_offline/css/all.min.css') }}" type="text/css">
     <link rel="stylesheet" type="text/css" href="{{ asset('dist/asset_offline/toastr.css') }}" type="text/css">
     <style>
+        .se-pre-con {
+            position: fixed;
+            top:0;
+            left:0;
+            bottom:0;
+            right:0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url('/animation_200_laeydhgu.gif') center no-repeat #fff;
+        }
         #overlay{
             position:fixed;
             z-index:99999;
@@ -102,10 +113,11 @@
     </style>
 </head>
 <body>
-    <div id="overlay">
+    <div class="se-pre-con"></div>
+    {{-- <div id="overlay">
         <div id="progstat"></div>
         <div id="progress"></div>
-    </div>
+    </div> --}}
     <div class="wrapper pa-0">
         <header class="sp-header">
             <div class="sp-logo-wrap pull-left">
@@ -174,12 +186,13 @@
     </div>
     <script src="{{ asset('vendors/bower_components/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('vendors/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('vendors/bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') }}"></script>
-    <script src="{{ asset('dist/js/init.js') }}"></script>
-    <script src="{{ asset('dist/js/jquery.slimscroll.js') }}"></script>
-    <script src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
-    <script src="{{ asset('dist/asset_offline/toastr.js') }}"></script>
-    <script src="{{ asset('/sw.js') }}"></script>
+    <script defer src="{{ asset('vendors/bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') }}"></script>
+    <script defer src="{{ asset('dist/asset_offline/lottie-player.js') }}"></script>
+    <script defer src="{{ asset('dist/js/init.js') }}"></script>
+    <script defer src="{{ asset('dist/js/jquery.slimscroll.js') }}"></script>
+    <script defer src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
+    <script defer src="{{ asset('dist/asset_offline/toastr.js') }}"></script>
+    <script defer src="{{ asset('/sw.js') }}"></script>
     <script>
         if (!navigator.serviceWorker.controller) {
             navigator.serviceWorker.register("/sw.js").then(function (reg) {
@@ -197,6 +210,9 @@
         });
 
         $(document).ready(function() {
+            $(window).load(function() {
+            $(".se-pre-con").fadeOut("slow");
+        });
             $(document).on('click', '.btn-rounded', function(e) {
                 if($("input[name='email']").val() == '' || $("input[name='password']").val() == '') {
                     toastr.error('Email dan password wajib diisi');

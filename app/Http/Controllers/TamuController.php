@@ -133,7 +133,6 @@ class TamuController extends Controller {
                 'address' => 'required',
                 'gender' => 'required',
                 'email' => 'required|email|unique:visitors,email',
-                'phone' => 'required|min:12|unique:visitors,phone',
                 'company' => 'required',
                 'position' => 'required',
                 'tipe_member' => 'required',
@@ -149,8 +148,6 @@ class TamuController extends Controller {
                 'gender.unique' => 'Jenis Kelamin sudah ada',
                 'email.required' => 'Email masih kosong.',
                 'email.unique' => 'Email sudah ada',
-                'phone.required' => 'Nomer Hp masih kosong.',
-                'phone.unique' => 'Nomer Hp sudah ada',
                 'company.required' => 'Perusahaan masih kosong.',
                 'company.unique' => 'Perusahaan sudah ada',
                 'position.required' => 'Jabatan masih kosong.',
@@ -162,12 +159,22 @@ class TamuController extends Controller {
         $random = Str::random(15);
         $random_unique = Carbon::now()->format('Y-m');
         $token = $random_unique . '-' . $random;
+        $type_member = $request->tipe_member == 'VVIP' ? 'VIP' : 'Member';
+        if($request->tipe_member == 'VVIP') {
+            $count_vvip = Visitor::where('tipe_member', 'VVIP')->count();
+            $count_vvip++;
+            $code_number = 'TGCC'.'-'.$type_member.'-'.Carbon::now()->format('Y').'-'.str_pad($count_vvip, 3, '0', STR_PAD_LEFT);
+        } else {
+            $count_vip = Visitor::where('tipe_member', 'VIP')->count();
+            $count_vip++;
+            $code_number = 'TGCC'.'-'.$type_member.'-'.Carbon::now()->format('Y').'-'.str_pad($count_vip, 3, '0', STR_PAD_LEFT);
+        }
         $visitors = Visitor::create([
             'name' => $request->name,
             'address' => $request->address,
             'gender' => $request->gender,
             'email' => $request->email,
-            'phone' => $request->phone,
+            'phone' => $code_number,
             'company' => $request->company,
             'position' => $request->position,
             'tipe_member' => $request->tipe_member,
@@ -219,14 +226,12 @@ class TamuController extends Controller {
             'status' => 'Bertambah',
         ]);
         $report_deposit->save();
-
         $deposit = Deposit::create([
             'visitor_id' => $visitors->id,
             'user_id' =>    Auth::user()->id,
             'report_deposit_id' => $report_deposit->id,
         ]);
         $deposit->save();
-
         $data = $request->all();
         dispatch(new SendMailJob($data));
         LogAdmin::create([
@@ -234,11 +239,108 @@ class TamuController extends Controller {
             'type' => 'CREATE',
             'activities' => 'Menambah member <b>' . $visitors->name . '</b>',
         ]);
-
         $encrypt = Crypt::encrypt($visitors->id);
         return redirect('/tambah-deposit/' . $encrypt)->with('success', 'Berhasil menambah tamu');
     }
     /* end insert tamu */
+
+    public function update(Request $request, $id, Loglimit $limit) {
+        $this->validate(
+            $request,
+            [
+                'name' => 'required',
+                'address' => 'required',
+                'gender' => 'required',
+                'email' => 'required|email',
+                'company' => 'required',
+                'position' => 'required',
+                'tipe_member' => 'required',
+                'category' => 'required',
+                'status' => 'required',
+            ],
+            [
+                'name.required' => 'Nama Tamu masih kosong.',
+                'address.required' => 'Alamat Tamu masih kosong.',
+                'email.required' => 'Email Tamu masih kosong.',
+                'company.required' => 'Nama perusahaan masih kosong.',
+                'position.required' => 'Posisi masih kosong.',
+                'category.required' => 'Kategori masih kosong.',
+                'status.required' => 'Status member masih kosong.',
+            ]
+        );
+        $visitor = Visitor::findOrFail($id);
+        $code_number = '';
+        $type_member = $request->tipe_member == 'VVIP' ? 'VIP' : 'Member';
+
+        if($request->tipe_member == 'VVIP') {
+            $count_vvip = Visitor::where('tipe_member', 'VVIP')->count();
+            $count_vvip++;
+            $code_number = 'TGCC'.'-'.$type_member.'-'.Carbon::now()->format('Y').'-'.str_pad($count_vvip, 3, '0', STR_PAD_LEFT);
+        } else {
+            $count_vip = Visitor::where('tipe_member', 'VIP')->count();
+            $count_vip++;
+            $code_number = 'TGCC'.'-'.$type_member.'-'.Carbon::now()->format('Y').'-'.str_pad($count_vip, 3, '0', STR_PAD_LEFT);
+        }
+
+        $visitor->name = $request->name;
+        $visitor->address = $request->address;
+        $visitor->email = $request->email;
+        $visitor->company = $request->company;
+        $visitor->position = $request->position;
+        $visitor->category = $request->category;
+        $visitor->gender = $request->gender;
+        $visitor->tipe_member = $request->tipe_member;
+        $visitor->status = $request->status;
+        $visitor->updated_at = Carbon::now();
+
+        if($request->status == 'active') {
+            $visitor->expired_date = Carbon::now()->addYear();
+            $visitor->phone = $code_number;
+            LogAdmin::create([
+                'user_id' => Auth::id(),
+                'quota' => $request->quota,
+                'type' => 'UPDATE',
+                'activities' => 'Mengubah member <b>' . $visitor->name . '</b>',
+            ]);
+        } else {
+            $visitor->phone = $code_number;
+            LogAdmin::create([
+                'user_id' => Auth::id(),
+                'quota' => $request->quota,
+                'type' => 'UPDATE',
+                'activities' => 'Menonaktifkan member <b>' . $visitor->name . '</b>',
+            ]);
+        }
+        
+        if($visitor->isDirty('tipe_member')) {
+            $visitor->save();
+        }
+
+        $visitor_limit = LogLimit::find($visitor->id);
+        $visitor_report_limit = ReportLimit::find($visitor->id);
+        if ($visitor->wasChanged('tipe_member')) {
+            $visitor_limit->update([
+                'quota' => $request->tipe_member == 'VIP' ? '4' : '10',
+                'created_at' => Carbon::now(),
+            ]);
+            if ($visitor->tipe_member == 'VVIP') {
+                $visitor_report_limit->update([
+                    'report_quota' => $request->tipe_member == 'VIP' ? '4' : '10',
+                    'created_at' => Carbon::now(),
+                    'status' => 'Reset',
+                    'activities' => 'Limit <b>' . $visitor->name . '</b> telah diubah menjadi <b>' . $request->tipe_member . '</b> dengan limit <b>10x Perbulan </b>',
+                ]);
+            } else {
+                $visitor_report_limit->update([
+                    'report_quota' => $request->tipe_member == 'VIP' ? '4' : '10',
+                    'created_at' => Carbon::now(),
+                    'status' => 'Reset',
+                    'activities' => 'Limit <b>' . $visitor->name . '</b> telah diubah menjadi <b>' . $request->tipe_member . '</b> dengan limit <b>4x</b> Perbulan ',
+                ]);
+            }
+        }
+        return redirect()->route('daftar-tamu')->with('success', 'Berhasil edit tamu');
+    }
 
     /* function tambahan deposit */
     public function tambahdeposit($id) {
@@ -667,99 +769,6 @@ class TamuController extends Controller {
      * @param  \App\Models\Visitor  $visitor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id, Loglimit $limit) {
-        $this->validate(
-            $request,
-            [
-                'name' => 'required',
-                'address' => 'required',
-                'gender' => 'required',
-                'email' => 'required|email',
-                'phone' => 'required|min:12',
-                'company' => 'required',
-                'position' => 'required',
-                'tipe_member' => 'required',
-                'category' => 'required',
-                'status' => 'required',
-            ],
-            [
-                'name.required' => 'Nama Tamu masih kosong.',
-                'address.required' => 'Alamat Tamu masih kosong.',
-                'email.required' => 'Email Tamu masih kosong.',
-                'phone.required' => 'Nomer Hp Tamu masih kosong.',
-                'company.required' => 'Nama perusahaan masih kosong.',
-                'position.required' => 'Posisi masih kosong.',
-                'category.required' => 'Kategori masih kosong.',
-                'status.required' => 'Status member masih kosong.',
-            ]
-        );
-        $visitor = Visitor::findOrFail($id);
-        if($request->status == 'active') {
-            $visitor->expired_date = Carbon::now()->addYear();
-            $visitor->name = $request->name;
-            $visitor->address = $request->address;
-            $visitor->email = $request->email;
-            $visitor->phone = $request->phone;
-            $visitor->company = $request->company;
-            $visitor->position = $request->position;
-            $visitor->category = $request->category;
-            $visitor->gender = $request->gender;
-            $visitor->tipe_member = $request->tipe_member;
-            $visitor->status = $request->status;
-            $visitor->updated_at = Carbon::now();
-            LogAdmin::create([
-                'user_id' => Auth::id(),
-                'quota' => $request->quota,
-                'type' => 'UPDATE',
-                'activities' => 'Mengubah member <b>' . $visitor->name . '</b>',
-            ]);
-        } else {
-            $visitor->name = $request->name;
-            $visitor->address = $request->address;
-            $visitor->email = $request->email;
-            $visitor->phone = $request->phone;
-            $visitor->company = $request->company;
-            $visitor->position = $request->position;
-            $visitor->category = $request->category;
-            $visitor->gender = $request->gender;
-            $visitor->tipe_member = $request->tipe_member;
-            $visitor->status = $request->status;
-            $visitor->updated_at = Carbon::now();
-            LogAdmin::create([
-                'user_id' => Auth::id(),
-                'quota' => $request->quota,
-                'type' => 'UPDATE',
-                'activities' => 'Menonaktifkan member <b>' . $visitor->name . '</b>',
-            ]);
-        }
-        $visitor->save();
-
-        $visitor_limit = LogLimit::find($visitor->id);
-        $visitor_report_limit = ReportLimit::find($visitor->id);
-        if ($visitor->wasChanged('tipe_member')) {
-            $visitor_limit->update([
-                'quota' => $request->tipe_member == 'VIP' ? '4' : '10',
-                'created_at' => Carbon::now(),
-            ]);
-
-            if ($visitor->tipe_member == 'VVIP') {
-                $visitor_report_limit->update([
-                    'report_quota' => $request->tipe_member == 'VIP' ? '4' : '10',
-                    'created_at' => Carbon::now(),
-                    'status' => 'Reset',
-                    'activities' => 'Limit <b>' . $visitor->name . '</b> telah diubah menjadi <b>' . $request->tipe_member . '</b> dengan limit <b>10x Perbulan </b>',
-                ]);
-            } else {
-                $visitor_report_limit->update([
-                    'report_quota' => $request->tipe_member == 'VIP' ? '4' : '10',
-                    'created_at' => Carbon::now(),
-                    'status' => 'Reset',
-                    'activities' => 'Limit <b>' . $visitor->name . '</b> telah diubah menjadi <b>' . $request->tipe_member . '</b> dengan limit <b>4x</b> Perbulan ',
-                ]);
-            }
-        }
-        return redirect()->route('daftar-tamu')->with('success', 'Berhasil edit tamu');
-    }
     
     public function tambahtamu() {
         return view('tamu.tambah-tamu');
