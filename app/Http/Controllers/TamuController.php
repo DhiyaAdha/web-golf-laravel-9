@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Deposit;
@@ -20,7 +21,6 @@ use App\Models\LogTransaction;
 use App\Jobs\SendMailJobDeposit;
 use PhpParser\Node\Stmt\Return_;
 use App\Exports\DaftarTamuExport;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use App\Jobs\SendMailJobKuponTambah;
 use Illuminate\Support\Facades\Auth;
@@ -159,13 +159,15 @@ class TamuController extends Controller {
         $random = Str::random(15);
         $random_unique = Carbon::now()->format('Y-m');
         $token = $random_unique . '-' . $random;
-        $counts = Visitor::count() + 1;
+        // $counts = Visitor::count() + 1;
+        // $counts = Visitor::find(1)->count('id') + 1;
         $visitors = Visitor::create([
             'name' => $request->name,
             'address' => $request->address,
             'gender' => $request->gender,
             'email' => $request->email,
-            'phone' =>  Carbon::now()->format('d') .  '-' . Carbon::now()->format('Y') . '-TGCC'.  '-' . $counts . '-' .  Carbon::now()->format('his'),
+            // 'phone' =>  Carbon::now()->format('d') .  '-' . Carbon::now()->format('Y') . '-TGCC'.  '-' . $counts . '-' .  Carbon::now()->format('his'),
+            'phone' =>  Carbon::now()->format('d') .  '-' . Carbon::now()->format('Y') . '-TGCC'. '-' . Carbon::now()->format('his'),
             'company' => $request->company,
             'position' => $request->position,
             'tipe_member' => $request->tipe_member,
@@ -174,6 +176,7 @@ class TamuController extends Controller {
             'expired_date' => Carbon::now()->addYear(),
             'created_at' => Carbon::now(),
         ]);
+
         $get_visitor = Visitor::where('id', $visitors->id)->latest()->first();
         $link_qr = URL::signedRoute('detail-scan', ['qr' => $token, 'e' => $visitors->id]);
         $get_visitor->unique_qr = $link_qr;
