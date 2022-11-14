@@ -49,7 +49,7 @@
                                                 <div class="radio-inline pl-0">
                                                     <span class="radio radio-info"> 
                                                         <input type="radio" name="category" id="radio_11" value="others" {{ $package->category == 'others' ? 'checked' : '' }}>
-                                                        <label for="radio_11">Lainnya</label>
+                                                        <label for="radio_11">Kantin</label>
                                                     </span>
                                                 </div>
                                             </div>
