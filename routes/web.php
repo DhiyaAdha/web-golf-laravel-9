@@ -33,7 +33,7 @@ Route::middleware(['htmlMinifier'])->group(static function() {
         return view('login');
     });
     Route::post('/forgot-password',[AuthController::class, 'email_test'])->name('email_test');
-    Route::get('/login', [AuthController::class, 'index'])->Middleware('guest')->name('login');
+    Route::get('/login', [AuthController::class, 'index'])->name('login')->Middleware('guest');
     Route::post('/login', [AuthController::class, 'login']);
     Route::get('/forgot-password', [AuthController::class, 'forgot_password'])->middleware('guest')->name('forgot-password');
     Route::get('/reset-password/{token}', [AuthController::class,'showResetForm'])->name('reset-password');

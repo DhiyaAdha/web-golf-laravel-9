@@ -81,7 +81,7 @@
                                                     for="password">Password</label>
                                                 <input type="password" name="password" class="form-control"
                                                     id="password" placeholder="Masukan password" required>
-                                                <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye fa-eye-slash" id="eye"></i>
+                                                <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye fa-eye-slash" id="eye_login"></i>
                                             </div>
                                             <div class="form-group text-center">
                                                 <button type="submit" class="btn btn-info btn-rounded">sign in</button>
@@ -113,8 +113,8 @@
     </script>
     <script>
         const passwordField = document.querySelector("#password");
-        const eyeIcon = document.querySelector("#eye");
-        eye.addEventListener("click", function() {
+        const eyeIcon = document.querySelector("#eye_login");
+        eye_login.addEventListener("click", function() {
             this.classList.toggle("fa-eye-slash");
             const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
             passwordField.setAttribute("type", type);
