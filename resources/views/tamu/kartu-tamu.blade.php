@@ -59,6 +59,7 @@
                                                                 <h6 style="text-transform: uppercase; font-size:8pt;">
                                                                     {{ $visitor->name }}</h6>
                                                             </div>
+                                                            
                                                             <div class="datetime">
                                                                 <h6 style="font-size: 5pt; color:white;">Berlaku hingga 
                                                                 </h6>
