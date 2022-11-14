@@ -770,17 +770,25 @@ video {
 
 .resolution .qr-code {
     position: absolute;
-    top: 26%;
-    right: 10%;
+    top: 22%;
+    right: 8%;
 }
 .resolution .identity {
     position: absolute;
     font-family: 'Montserrat';
     font-weight: 700;
-    bottom: 24%;
-    left: 4%;
-    opacity: 0.7;
+    top: 66%;
+    right: 8%;
 }
+.resolution .codemember {
+    position: absolute;
+    font-family: 'Ayuthaya';
+    font-weight: 600;
+    top: 72%;
+    right: 8%;
+    /* opacity: 0.7; */
+}
+
 .resolution .datetime {
     position: absolute;
     font-family: 'Montserrat';

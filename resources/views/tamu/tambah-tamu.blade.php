@@ -127,7 +127,8 @@
                             <div class="form-group">
                                 <label class="control-label mb-10" for="">Status Aktif</label>
                                 <label class="switch">
-                                    <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" name="status" value="active">
+                                    <input class="cmn-toggle cmn-toggle-round-flat" type="hidden" name="status"
+                                        value="active">
                                     <input type="checkbox" name="status" value="inactive">
                                     <div class="status-member round switch">
                                         <span class="off" style="margin-left: 10px !important;">Ya</span>
