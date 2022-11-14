@@ -178,7 +178,7 @@
                                                 <tr>
                                                     <th class="">NAMA TAMU</th>
                                                     <th class="">Kategori</th>
-                                                    <th class="">JENIS TAMU</th>
+                                                    <th class="">JENIS MEMBER</th>
                                                     <th class="table-th">PUKUL</th>
                                                 </tr>
                                             </thead>

@@ -399,7 +399,7 @@
                                     </tr>
                                     <tr class="details">
                                         <td>
-                                            <strong>Jenis Tamu:&nbsp;</strong>
+                                            <strong>Jenis Member:&nbsp;</strong>
                                             <span class="text-capitalize" id="type_tamu"></span>
                                         </td>
                                     </tr>

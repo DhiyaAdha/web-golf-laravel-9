@@ -282,7 +282,7 @@
                             <td>{{ $visitor->name }}</td>
                         </tr>
                         <tr>
-                            <td class="w-30">Tipe Member:</td>
+                            <td class="w-30">Jenis Member:</td>
                             <td>{{ $visitor->tipe_member == 'REGULER' ? 'Umum' : '' }}</td>
                         </tr>
                     </tbody>
