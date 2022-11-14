@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8" />
     <title>Cetak Invoice</title>
-
     <style>
         .invoice {
             font-size: 2.5rem;
@@ -132,7 +130,6 @@
                     </table>
                 </td>
             </tr>
-
             <tr class="information">
                 <td colspan="4">
                     <table>
@@ -143,7 +140,6 @@
                                 <br />{{ $visitor->email }}<br>
                                 {{ $visitor->phone }}<br>
                             </td>
-
                             <td>
                                 <strong>Order Date:</strong><br>
                                 <p style="color: #616161">{{ $transaction->created_at->format('d F Y | H:i:s') }}
@@ -155,11 +151,9 @@
                     </table>
                 </td>
             </tr>
-
-
             <tr class="details">
                 <td>
-                    <strong>Jenis Tamu:</strong><br>
+                    <strong>Jenis Member:</strong><br>
                     @if ($visitor->tipe_member == 'VIP')
                         <span class="label label-success">{{ $visitor->tipe_member == 'VIP' ? 'Member' : 'VIP' }}</span>
                     @elseif($visitor->tipe_member == 'VVIP')
@@ -169,28 +163,22 @@
                     @endif
                 </td>
             </tr>
-
             <tr class="heading">
                 <td>Nama Paket</td>
                 <td style="text-align: center">Harga</td>
                 <td style="text-align: center">Qty</td>
                 <td style="text-align: right">Total</td>
             </tr>
-
             <tr class="item">
                 @foreach ($cart as $item)
                     <tr>
                         <td>{{ $item['name'] }}</td>
-                        <td class="text-right">Rp. {{ formatrupiah($item['pricesingle']) }}</td>
+                        <td class="text-right">{{ formatrupiah($item['pricesingle']) }}</td>
                         <td class="text-center" style="text-align: center;">{{ $item['qty'] }}</td>
-                        <td class="text-right" style="text-align: right;">Rp. {{ formatrupiah($item['price']) }}</td>
+                        <td class="text-right" style="text-align: right;">{{ formatrupiah($item['price']) }}</td>
                     </tr>
                 @endforeach
-                {{-- @php
-                    dd($item);
-                @endphp --}}
             </tr>
-
 			<tr>
                 <td class="thick-line"></td>
                 <td class="thick-line"></td>
@@ -208,34 +196,30 @@
                 <td class="no-line"></td>
                 <td class="no-line"></td>
                 <td class="no-line text-right" style="text-align: right;">Diskon</td>
-                <td class="no-line text-right" style="text-align: right;">Rp. {{ formatrupiah($discount) }}</td>
+                <td class="no-line text-right" style="text-align: right;">{{ formatrupiah($discount) }}</td>
             </tr>
             <tr>
                 <td class="no-line"></td>
                 <td class="no-line"></td>
                 <td class="no-line text-right" style="text-align: right;">Total Bayar</td>
-                <td class="no-line text-right" style="text-align: right;">Rp. {{ formatrupiah($transaction->total) }}</td>
+                <td class="no-line text-right" style="text-align: right;">{{ formatrupiah($transaction->total) }}</td>
             </tr>
             <tr>
                 <td class="no-line"></td>
                 <td class="no-line"></td>
                 <td class="no-line text-right" style="text-align: right;"><strong>Total Tagihan</strong></td>
                 <td class="no-line text-right" style="text-align: right;">
-                    <span>Rp. {{ formatrupiah($total) }}</span>
+                    <span>{{ formatrupiah($total) }}</span>
                 </td>
             </tr>
-
-
         </table>
     </div>
     <footer class="footer container-fluid pl-30 pr-30">
         <div class="row">
             <div class="col-sm-12">
-                <p>2022 &copy; Tritih Golf & Country Club. Cilacap</p>
+                <p><script type="text/javascript">document.write(new Date().getFullYear());</script> &copy; Tritih Golf & Country Club. Cilacap</p>
             </div>
         </div>
     </footer>
-
 </body>
-
 </html>

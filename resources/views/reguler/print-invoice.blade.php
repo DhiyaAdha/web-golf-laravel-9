@@ -1,14 +1,12 @@
 <html>
-
 <head>
     <title>{{ $log_transaction->order_number }}</title>
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
     <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
-    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/jquery.dataTables.min.css') }}">
-    <link href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet"
-        type="text/css">
-    <link href="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.css') }}" rel="stylesheet"type="text/css">
+    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/bootstrap.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/jquery.dataTables.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.css') }}" type="text/css">
     <style type="text/css">
         /* width */
         ::-webkit-scrollbar {
@@ -63,9 +61,9 @@
             line-height: 30px;
             text-align: center;
             cursor: pointer;
+        }
     </style>
 </head>
-
 <body style="background:#ffffff;" id="print">
     <div class="col-xs-12 col-md-12">
         <style id="styles" type="text/css">
@@ -153,11 +151,6 @@
                 font-weight: 700;
             }
 
-            /* .receipt-template .listing-area table tbody tr {
-                border-top: 1px dashed #000;
-                border-bottom: 1px dashed #000;
-            } */
-
             .receipt-template .listing-area table tbody tr:last-child {
                 border-bottom: none;
             }
@@ -205,7 +198,6 @@
                 margin: 0;
                 padding: 0;
             }
-
 
             /*Invoice Info Area*/
             .receipt-template .invoice-info-area {}
@@ -266,8 +258,7 @@
                 <h5 class="mt-2">Tritih Golf & Country Club</h5>
                 <div class="address-area">
                     <div class="block">
-                        <span class="info phone">Jl. Kemuning, Sawah, Tritih Kulon, Kec. Cilacap Utara, Kabupaten
-                            Cilacap, Jawa Tengah 53253</span>
+                        <span class="info phone">Jl. Kemuning, Sawah, Tritih Kulon, Kec. Cilacap Utara, Kabupaten Cilacap, Jawa Tengah 53253</span>
                     </div>
                 </div>
             </header>
@@ -401,5 +392,4 @@
         });
     </script>
 </body>
-
 </html>

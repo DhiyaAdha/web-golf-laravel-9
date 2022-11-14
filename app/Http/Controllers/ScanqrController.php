@@ -42,13 +42,6 @@ class ScanqrController extends Controller {
         return view('proses');
     }
 
-    public function kartutamu($id) {
-        $visitor = Visitor::findOrFail($id);
-        $qrcode = QrCode::size(180)->generate($visitor->unique_qr);
-        $data['visitor'] =  Visitor::find($id);
-        return view('tamu.kartu-tamu', compact('qrcode'), $data);
-    }
-
     public function detailscan() {
         return view('membership.detail_scan');
     }
@@ -101,7 +94,7 @@ class ScanqrController extends Controller {
         $phone_visitor = Visitor::where("phone", $request->get('phone'))->first();
         try {
             if (is_null($phone_visitor)) {
-                $this->setResponse('INVALID', "No hp tidak ditemukan!");
+                $this->setResponse('INVALID', "Kode Member Tidak Ditemukan!");
                 return response()->json($this->getResponse());
             } else {
                 if($phone_visitor->expired_date <= Carbon::now()) {
@@ -112,7 +105,7 @@ class ScanqrController extends Controller {
                     return response()->json($this->getResponse());
                 } else {
                     try {
-                        $this->setResponse('VALID', "Valid No Hp", [
+                        $this->setResponse('VALID', "Valid Kode Member", [
                             'name' => $phone_visitor->name,
                             'unique_qr' => $phone_visitor->unique_qr,
                         ]);

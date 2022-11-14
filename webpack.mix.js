@@ -11,7 +11,24 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        //
-    ]);
+mix.js([
+    'resources/js/jquery.slimscroll.js',
+    'resources/js/jquery.waypoints.min.js',
+    'resources/js/jquery.counterup.min.js',
+    'resources/js/jquery.toast.min.js',
+    'resources/js/sweetalert.min.js',
+    'resources/js/init.js',
+    'resources/js/fontawsome.js',
+    'resources/js/lottie-player.js',
+    'resources/js/printThis.js',
+], 'public/js/app.js').version();
+
+mix.styles([
+    'resources/css/jquery.toast.min.css',
+    'resources/css/sweetalert.css',
+    'resources/css/all.min.css',
+    'resources/css/jquery.dataTables.min.css',
+], 'public/css/app.css').version();
+
+mix.minify('public/css/app.css');
+mix.minify('public/js/app.js');
