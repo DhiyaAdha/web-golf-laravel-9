@@ -29,6 +29,13 @@ class UserSeeder extends Seeder
             'password' => Hash::make('Tritihgolf123!'),
             'role_id' => '2',
         ]);
+        User::create([
+            'email' => 'yudistira@gmail.com',
+            'name' => 'Admin TGCC',
+            'phone' => '08733302888',
+            'password' => Hash::make('123'),
+            'role_id' => '2',
+        ]);
 
     }
 }

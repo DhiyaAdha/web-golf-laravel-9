@@ -149,7 +149,7 @@
                         } else {
                             return `<span class='label label-warning'>${data.tipe_member == 'VVIP' ? 'VIP' : 'Member'}</span>`;
                         }
-                    }
+                    } 
                 },
                 {
                     "data": function(data) {
