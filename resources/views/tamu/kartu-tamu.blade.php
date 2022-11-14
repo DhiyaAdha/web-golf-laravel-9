@@ -57,10 +57,15 @@
                                                             </div>
                                                             <div class="identity">
                                                                 <h6 style="text-transform: uppercase; font-size:8pt;">
-                                                                    {{ $visitor->name }}</h6>
+                                                                     {{ $visitor->name }} </h6> 
+                                                            </div>
+                                                            <div class="codemember">
+                                                                <h6 style="text-transform: uppercase; font-size:8pt;">
+                                                                    {{ $visitor->phone }}</h6>
                                                             </div>
                                                             <div class="datetime">
-                                                                <h6 style="font-size: 5pt; color:white;">Berlaku hingga 
+                                                                <h6 style="font-size: 5pt; color:white;">Berlaku hingga  
+                                                                    {{ $visitor->expired_date }}
                                                                 </h6>
                                                             </div>
                                                         </div>
