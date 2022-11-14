@@ -17,7 +17,6 @@
             <div class="row">
                 <div class="col-lg-12" style="position: relative;">
                     <div class="panel panel-default card-view">
-                        <h6 class="control-label mb-10">Tambah Tamu</h6>
                         <div class="panel-body">
                             <div class="form-wrap">
                                 <form action="{{ route('inserttamu') }}" method="POST">
@@ -62,21 +61,6 @@
                                         @enderror
                                     </div>
                             </div>
-                            {{-- <div class="form-group @error('phone') has-error @enderror">
-                                <label class="control-label mb-10" for="">Nomer Hp</label>
-                                <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" name="phone" class="form-control" id="phone" size="50px" value="{{ old('phone') }}" placeholder="Masukan Nomer Hp">
-                                @error('phone')
-                                    <div class="text-danger"> {{ $message }}</div>
-                                @enderror
-                            </div> --}}
-
-                            {{-- <div class="form-group ">
-                                <label class="control-label mb-10" for="">Nomer Hp</label>
-                                <input type="text" name="phone" class="form-control" id="phone" size="50px"
-                                    value="{{ $visitors->phone }}" placeholder="Masukan Nomer Hp">
-
-                            </div> --}}
-
                             <div class="form-group @error('company') has-error @enderror">
                                 <label class="control-label mb-10" for="">Perusahaan</label>
                                 <input type="text" name="company" class="form-control" id="company" size="50px" value="{{ old('company') }}" placeholder="Masukan Nama Perusahaan">

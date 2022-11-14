@@ -4,19 +4,30 @@
 <head>
     <title>Login</title>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="description" content="Tritih Golf & Country Club" />
     <meta name="keywords" content="tgcc" />
     <meta name="author" content="inovis" />
     <meta name="theme-color" content="#6777ef" />
+    <meta name="description" content="Tritih Golf & Country Club" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="shortcut icon" href="favicon.ico">
-    <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
-    <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
+    <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
+    <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="{{ asset('dist/css/style.css') }}" type="text/css">
     <link rel="stylesheet" type="text/css" href="{{ asset('dist/asset_offline/css/all.min.css') }}" type="text/css">
     <link rel="stylesheet" type="text/css" href="{{ asset('dist/asset_offline/toastr.css') }}" type="text/css">
     <style>
+        .se-pre-con {
+            position: fixed;
+            top:0;
+            left:0;
+            bottom:0;
+            right:0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url('/animation_200_laeydhgu.gif') center no-repeat #fff;
+        }
         #overlay{
             position:fixed;
             z-index:99999;
@@ -102,10 +113,11 @@
     </style>
 </head>
 <body>
-    <div id="overlay">
+    <div class="se-pre-con"></div>
+    {{-- <div id="overlay">
         <div id="progstat"></div>
         <div id="progress"></div>
-    </div>
+    </div> --}}
     <div class="wrapper pa-0">
         <header class="sp-header">
             <div class="sp-logo-wrap pull-left">
@@ -174,12 +186,13 @@
     </div>
     <script src="{{ asset('vendors/bower_components/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('vendors/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('vendors/bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') }}"></script>
-    <script src="{{ asset('dist/js/init.js') }}"></script>
-    <script src="{{ asset('dist/js/jquery.slimscroll.js') }}"></script>
-    <script src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
-    <script src="{{ asset('dist/asset_offline/toastr.js') }}"></script>
-    <script src="{{ asset('/sw.js') }}"></script>
+    <script defer src="{{ asset('vendors/bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') }}"></script>
+    <script defer src="{{ asset('dist/asset_offline/lottie-player.js') }}"></script>
+    <script defer src="{{ asset('dist/js/init.js') }}"></script>
+    <script defer src="{{ asset('dist/js/jquery.slimscroll.js') }}"></script>
+    <script defer src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
+    <script defer src="{{ asset('dist/asset_offline/toastr.js') }}"></script>
+    <script defer src="{{ asset('/sw.js') }}"></script>
     <script>
         if (!navigator.serviceWorker.controller) {
             navigator.serviceWorker.register("/sw.js").then(function (reg) {
@@ -196,9 +209,23 @@
             passwordField.setAttribute("type", type);
         });
 
+        function wrong() {
+            var audio = new Audio('../sound/wrong.mp3');
+            audio.play();
+        }
+
+        function empty() {
+            var audio = new Audio('../sound/empty.mp3');
+            audio.play();
+        }
+
         $(document).ready(function() {
+            $(window).load(function() {
+            $(".se-pre-con").fadeOut("slow");
+        });
             $(document).on('click', '.btn-rounded', function(e) {
                 if($("input[name='email']").val() == '' || $("input[name='password']").val() == '') {
+                    empty();
                     toastr.error('Email dan password wajib diisi');
                 } else {
                     $.ajax({
@@ -223,6 +250,7 @@
             });
 
             @if (Session::has('error'))
+                wrong();
                 toastr.error('{{ Session::get('error') }}');
             @endif
 

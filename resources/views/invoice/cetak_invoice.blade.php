@@ -153,7 +153,7 @@
             </tr>
             <tr class="details">
                 <td>
-                    <strong>Jenis Tamu:</strong><br>
+                    <strong>Jenis Member:</strong><br>
                     @if ($visitor->tipe_member == 'VIP')
                         <span class="label label-success">{{ $visitor->tipe_member == 'VIP' ? 'Member' : 'VIP' }}</span>
                     @elseif($visitor->tipe_member == 'VVIP')
@@ -173,9 +173,9 @@
                 @foreach ($cart as $item)
                     <tr>
                         <td>{{ $item['name'] }}</td>
-                        <td class="text-right">Rp. {{ formatrupiah($item['pricesingle']) }}</td>
+                        <td class="text-right">{{ formatrupiah($item['pricesingle']) }}</td>
                         <td class="text-center" style="text-align: center;">{{ $item['qty'] }}</td>
-                        <td class="text-right" style="text-align: right;">Rp. {{ formatrupiah($item['price']) }}</td>
+                        <td class="text-right" style="text-align: right;">{{ formatrupiah($item['price']) }}</td>
                     </tr>
                 @endforeach
             </tr>
@@ -196,20 +196,20 @@
                 <td class="no-line"></td>
                 <td class="no-line"></td>
                 <td class="no-line text-right" style="text-align: right;">Diskon</td>
-                <td class="no-line text-right" style="text-align: right;">Rp. {{ formatrupiah($discount) }}</td>
+                <td class="no-line text-right" style="text-align: right;">{{ formatrupiah($discount) }}</td>
             </tr>
             <tr>
                 <td class="no-line"></td>
                 <td class="no-line"></td>
                 <td class="no-line text-right" style="text-align: right;">Total Bayar</td>
-                <td class="no-line text-right" style="text-align: right;">Rp. {{ formatrupiah($transaction->total) }}</td>
+                <td class="no-line text-right" style="text-align: right;">{{ formatrupiah($transaction->total) }}</td>
             </tr>
             <tr>
                 <td class="no-line"></td>
                 <td class="no-line"></td>
                 <td class="no-line text-right" style="text-align: right;"><strong>Total Tagihan</strong></td>
                 <td class="no-line text-right" style="text-align: right;">
-                    <span>Rp. {{ formatrupiah($total) }}</span>
+                    <span>{{ formatrupiah($total) }}</span>
                 </td>
             </tr>
         </table>

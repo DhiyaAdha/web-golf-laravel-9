@@ -95,122 +95,130 @@ class OrderController extends Controller {
     }
 
     public function add(Request $request) {
-        $id = explode("/", parse_url($request->get('url'), PHP_URL_PATH));
-        $package = Package::find($id[3]);
-        $cart = \Cart::session($request->get('page'))->getContent();
-        $cek_itemId = $cart->whereIn('id', $id[3]);
+        $package = Package::find($request->get('package'));
+        $visitor = Visitor::find($request->get('member'));
+        $cart = \Cart::session($request->get('member'))->getContent();
+        $cek_itemId = $cart->whereIn('id', $request->get('package'));
         $today = Carbon::now()->isoFormat('dddd');
         $price = $today === 'Sabtu' || $today === 'Minggu' ? $package->price_weekend : $package->price_weekdays;
-        $get_total = \Cart::session($request->get('page'))->getTotal();
+        $get_total = \Cart::session($request->get('member'))->getTotal();
         $counted = ucwords(counted($get_total) . ' Rupiah');
         try {
             if ($cek_itemId->isNotEmpty()) {
-                if ($package->quantity == $cek_itemId[$id[3]]->quantity) {
+                if ($package->quantity == $cek_itemId[$request->get('package')]->quantity) {
                     return redirect()->back()->with('error', 'jumlah item kurang');
                 } else {
-                    // \Cart::session($request->get('page'))->update($id[3], array(
+                    // \Cart::session($request->get('member'))->update($request->get('package'), array(
                     //     'quantity' => 1
                     // ));
-                    if ($cek_itemId[$id[3]]->quantity >= 1) {
+                    if ($cek_itemId[$request->get('package')]->quantity >= 1) {
                         $this->setResponse('INVALID', "Sudah ditambahkan");
                         return response()->json($this->getResponse());
                     }
                     return response()->json([
-                        'id' => $id[3],
+                        'id' => $request->get('package'),
                         'total' => $get_total,
                         'counted' => $counted,
                         'cart' => $cart,
-                        'qty' => $cek_itemId[$id[3]]->quantity,
-                        'price' => $cek_itemId[$id[3]]->price
+                        'qty' => $cek_itemId[$request->get('package')]->quantity,
+                        'price' => $cek_itemId[$request->get('package')]->price
                     ], 200);
                 }
             } else {
-                \Cart::session($request->get('page'))->add(array(
-                    'id' => $id[3],
-                    'name' => $package->name,
-                    'price' => $price,
-                    'quantity' => 1,
-                    'category' => $package->category,
-                    'attributes' => array(
-                        'created_at' => date('Y-m-d H:i:s')
-                    ),
-                ));
-                $id_package = [];
-                foreach (\Cart::session($request->get('page'))->getContent() as $sd) {
-                    $id_package[] = $sd['id'];
-                }
-                $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
-                $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
-                
-                if (count($package_additional) == 0) {
-                    $cart = \Cart::session($request->get('page'))->getContent();
-                    $cek_itemId = $cart->whereIn('id', $id[3]);
-                    if (\Cart::isEmpty()) {
-                        $cart_data = [];
-                    } else {
-                        foreach ($cart as $row) {
-                            $package = Package::find($row->id);
-                            $cart[] = [
-                                'rowId' => $row->id,
-                                'name' => $row->name,
-                                'qty' => $row->quantity,
-                                'pricesingle' => $row->price,
-                                'price' => $row->getPriceSum(),
-                                'created_at' => $row->attributes['created_at'],
-                                'category' => $package->category,
-                            ];
-                        }
-                        $cart_data = collect($cart)->sortBy('created_at');
-                    }
-                    $get_total = \Cart::session($request->get('page'))->getTotal();
-                    $counted = ucwords(counted($get_total) . ' Rupiah');
-                    return response()->json([
-                        'id' => $id[3],
-                        'total' => $get_total,
-                        'counted' => $counted,
-                        'cart' => $cart_data,
-                        'qty' => $cek_itemId[$id[3]]->quantity,
-                        'name' => $cek_itemId[$id[3]]->name,
-                        'price' => $cek_itemId[$id[3]]->price,
-                        'category' => $cek_itemId[$id[3]]->category
-                    ], 200);
-                } else if(count($package_default) == 0) {
-                    \Cart::session($request->get('page'))->clear();
-                    $this->setResponse('INVALID', "Setidaknya pilih satu jenis permainan");
+                if($visitor->expired_date <= Carbon::now()) {
+                    $this->setResponse('INVALID', "Masa berlaku member habis");
+                    return response()->json($this->getResponse());
+                } else if($visitor->status == 'inactive') {
+                    $this->setResponse('INVALID', "Member tidak aktif");
                     return response()->json($this->getResponse());
                 } else {
-                    $cart = \Cart::session($request->get('page'))->getContent();
-                    $cek_itemId = $cart->whereIn('id', $id[3]);
-                    if (\Cart::isEmpty()) {
-                        $cart_data = [];
-                    } else {
-                        foreach ($cart as $row) {
-                            $package = Package::find($row->id);
-                            $cart[] = [
-                                'rowId' => $row->id,
-                                'name' => $row->name,
-                                'qty' => $row->quantity,
-                                'pricesingle' => $row->price,
-                                'price' => $row->getPriceSum(),
-                                'created_at' => $row->attributes['created_at'],
-                                'category' => $package->category
-                            ];
-                        }
-                        $cart_data = collect($cart)->sortBy('created_at');
+                    \Cart::session($request->get('member'))->add(array(
+                        'id' => $request->get('package'),
+                        'name' => $package->name,
+                        'price' => $price,
+                        'quantity' => 1,
+                        'category' => $package->category,
+                        'attributes' => array(
+                            'created_at' => date('Y-m-d H:i:s')
+                        ),
+                    ));
+                    $id_package = [];
+                    foreach (\Cart::session($request->get('member'))->getContent() as $sd) {
+                        $id_package[] = $sd['id'];
                     }
-                    $get_total = \Cart::session($request->get('page'))->getTotal();
-                    $counted = ucwords(counted($get_total) . ' Rupiah');
-                    return response()->json([
-                        'id' => $id[3],
-                        'total' => $get_total,
-                        'counted' => $counted,
-                        'cart' => $cart_data,
-                        'qty' => $cek_itemId[$id[3]]->quantity,
-                        'name' => $cek_itemId[$id[3]]->name,
-                        'price' => $cek_itemId[$id[3]]->price,
-                        'category' => $cek_itemId[$id[3]]->category,
-                        'status' => 'VALID'
-                    ], 200);
+                    $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
+                    $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
+                    
+                    if (count($package_additional) == 0) {
+                        $cart = \Cart::session($request->get('member'))->getContent();
+                        $cek_itemId = $cart->whereIn('id', $request->get('package'));
+                        if (\Cart::isEmpty()) {
+                            $cart_data = [];
+                        } else {
+                            foreach ($cart as $row) {
+                                $package = Package::find($row->id);
+                                $cart[] = [
+                                    'rowId' => $row->id,
+                                    'name' => $row->name,
+                                    'qty' => $row->quantity,
+                                    'pricesingle' => $row->price,
+                                    'price' => $row->getPriceSum(),
+                                    'created_at' => $row->attributes['created_at'],
+                                    'category' => $package->category,
+                                ];
+                            }
+                            $cart_data = collect($cart)->sortBy('created_at');
+                        }
+                        $get_total = \Cart::session($request->get('member'))->getTotal();
+                        $counted = ucwords(counted($get_total) . ' Rupiah');
+                        return response()->json([
+                            'id' => $request->get('package'),
+                            'total' => $get_total,
+                            'counted' => $counted,
+                            'cart' => $cart_data,
+                            'qty' => $cek_itemId[$request->get('package')]->quantity,
+                            'name' => $cek_itemId[$request->get('package')]->name,
+                            'price' => $cek_itemId[$request->get('package')]->price,
+                            'category' => $cek_itemId[$request->get('package')]->category
+                        ], 200);
+                    } else if(count($package_default) == 0) {
+                        \Cart::session($request->get('member'))->clear();
+                        $this->setResponse('INVALID', "Setidaknya pilih satu jenis permainan");
+                        return response()->json($this->getResponse());
+                    } else {
+                        $cart = \Cart::session($request->get('member'))->getContent();
+                        $cek_itemId = $cart->whereIn('id', $request->get('package'));
+                        if (\Cart::isEmpty()) {
+                            $cart_data = [];
+                        } else {
+                            foreach ($cart as $row) {
+                                $package = Package::find($row->id);
+                                $cart[] = [
+                                    'rowId' => $row->id,
+                                    'name' => $row->name,
+                                    'qty' => $row->quantity,
+                                    'pricesingle' => $row->price,
+                                    'price' => $row->getPriceSum(),
+                                    'created_at' => $row->attributes['created_at'],
+                                    'category' => $package->category
+                                ];
+                            }
+                            $cart_data = collect($cart)->sortBy('created_at');
+                        }
+                        $get_total = \Cart::session($request->get('member'))->getTotal();
+                        $counted = ucwords(counted($get_total) . ' Rupiah');
+                        return response()->json([
+                            'id' => $request->get('package'),
+                            'total' => $get_total,
+                            'counted' => $counted,
+                            'cart' => $cart_data,
+                            'qty' => $cek_itemId[$request->get('package')]->quantity,
+                            'name' => $cek_itemId[$request->get('package')]->name,
+                            'price' => $cek_itemId[$request->get('package')]->price,
+                            'category' => $cek_itemId[$request->get('package')]->category,
+                            'status' => 'VALID'
+                        ], 200);
+                    }
                 }
             }
         } catch (\Throwable $th) {
@@ -220,21 +228,21 @@ class OrderController extends Controller {
 
     public function update_qty(Request $request) {
         $package = Package::find($request->get('id'));
-        $cart = \Cart::session($request->get('page'))->getContent();
+        $cart = \Cart::session($request->get('member'))->getContent();
         $cek_itemId = $cart->whereIn('id', $request->get('id'));
         if ($request->get('type') == 'plus') {
             try {
                 if ($package->quantity == $cek_itemId[$request->get('id')]->quantity) {
                     return redirect()->back()->with('error', 'jumlah item kurang');
                 } else {
-                    \Cart::session($request->get('page'))->update($request->get('id'), array(
+                    \Cart::session($request->get('member'))->update($request->get('id'), array(
                         'quantity' => array(
                             'relative' => true,
                             'value' => 1
                         )
                     ));
-                    $items = \Cart::session($request->get('page'))->getContent();
-                    $get_total = \Cart::session($request->get('page'))->getTotal();
+                    $items = \Cart::session($request->get('member'))->getContent();
+                    $get_total = \Cart::session($request->get('member'))->getTotal();
                     $counted = ucwords(counted($get_total) . ' Rupiah');
                     return response()->json([
                         'id' => $request->get('id'),
@@ -251,17 +259,17 @@ class OrderController extends Controller {
         } else {
             try {
                 if ($cek_itemId[$request->get('id')]->quantity == 1) {
-                    \Cart::session($request->get('page'))->remove($request->get('id'));
+                    \Cart::session($request->get('member'))->remove($request->get('id'));
                 } else {
-                    \Cart::session($request->get('page'))->update($request->get('id'), array(
+                    \Cart::session($request->get('member'))->update($request->get('id'), array(
                         'quantity' => array(
                             'relative' => true,
                             'value' => -1
                         )
                     ));
                 }
-                $items = \Cart::session($request->get('page'))->getContent();
-                $get_total = \Cart::session($request->get('page'))->getTotal();
+                $items = \Cart::session($request->get('member'))->getContent();
+                $get_total = \Cart::session($request->get('member'))->getTotal();
                 $counted = '';
                 if (\Cart::isEmpty()) {
                     $counted = '-';
@@ -284,10 +292,9 @@ class OrderController extends Controller {
 
     public function remove(Request $request) {
         try {
-            $items = \Cart::session($request->get('page'))->getContent();
-            $id = explode("/", parse_url($request->get('url'), PHP_URL_PATH));
-            \Cart::session($request->get('page'))->remove($id[3]);
-            $get_total = \Cart::session($request->get('page'))->getTotal();
+            $items = \Cart::session($request->get('member'))->getContent();
+            \Cart::session($request->get('member'))->remove($request->get('package'));
+            $get_total = \Cart::session($request->get('member'))->getTotal();
             $counted = '';
             if (\Cart::isEmpty()) {
                 $counted = '-';
@@ -307,7 +314,7 @@ class OrderController extends Controller {
 
     public function clear_cart(Request $request) {
         try {
-            \Cart::session($request->get('page'))->clear();
+            \Cart::session($request->get('member'))->clear();
             return redirect()->back();
         } catch (\Throwable $th) {
             return redirect()->back();
@@ -343,6 +350,7 @@ class OrderController extends Controller {
                         $item_default += $item['quantity'];
                     }
                 }
+                
                 $price_single = 0;
                 $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
                 $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
