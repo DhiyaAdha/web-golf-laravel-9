@@ -371,9 +371,9 @@
             },
             "render": $.fn.dataTable.render.text(),
             "columns": [{
-                    "data": function(data) {
-                        return data.name
-                    }
+                    data: 'name',
+                    searchable: true,
+                    orderable: false
                 },
                 {
                     "data": function(data) {
@@ -416,7 +416,7 @@
             responsive: true,
             language: {
                 search: "",
-                searchPlaceholder: "Cari",
+                searchPlaceholder: "Cari Nama",
                 emptyTable: "Tidak ada data pada tabel ini",
                 info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
                 infoFiltered: "(difilter dari _MAX_ total data)",

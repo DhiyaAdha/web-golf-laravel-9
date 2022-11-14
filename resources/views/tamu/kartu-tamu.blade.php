@@ -221,7 +221,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="transaction_tabs" class="tab-pane fade active" role="tabpanel">
+                        <div id="transaction_tabs" class="tab-pane fade" role="tabpanel">
                             <div class="panel panel-default card-view">
                                 <div class="panel-heading">
                                     <div class="pull-left">
