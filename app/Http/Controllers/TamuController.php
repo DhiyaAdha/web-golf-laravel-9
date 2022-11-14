@@ -159,22 +159,13 @@ class TamuController extends Controller {
         $random = Str::random(15);
         $random_unique = Carbon::now()->format('Y-m');
         $token = $random_unique . '-' . $random;
-        $type_member = $request->tipe_member == 'VVIP' ? 'VIP' : 'Member';
-        if($request->tipe_member == 'VVIP') {
-            $count_vvip = Visitor::where('tipe_member', 'VVIP')->count();
-            $count_vvip++;
-            $code_number = 'TGCC'.'-'.$type_member.'-'.Carbon::now()->format('Y').'-'.str_pad($count_vvip, 3, '0', STR_PAD_LEFT);
-        } else {
-            $count_vip = Visitor::where('tipe_member', 'VIP')->count();
-            $count_vip++;
-            $code_number = 'TGCC'.'-'.$type_member.'-'.Carbon::now()->format('Y').'-'.str_pad($count_vip, 3, '0', STR_PAD_LEFT);
-        }
+
         $visitors = Visitor::create([
             'name' => $request->name,
             'address' => $request->address,
             'gender' => $request->gender,
             'email' => $request->email,
-            'phone' => $code_number,
+            'phone' => date('YmdHis'),
             'company' => $request->company,
             'position' => $request->position,
             'tipe_member' => $request->tipe_member,
@@ -269,18 +260,6 @@ class TamuController extends Controller {
             ]
         );
         $visitor = Visitor::findOrFail($id);
-        $code_number = '';
-        $type_member = $request->tipe_member == 'VVIP' ? 'VIP' : 'Member';
-
-        if($request->tipe_member == 'VVIP') {
-            $count_vvip = Visitor::where('tipe_member', 'VVIP')->count();
-            $count_vvip++;
-            $code_number = 'TGCC'.'-'.$type_member.'-'.Carbon::now()->format('Y').'-'.str_pad($count_vvip, 3, '0', STR_PAD_LEFT);
-        } else {
-            $count_vip = Visitor::where('tipe_member', 'VIP')->count();
-            $count_vip++;
-            $code_number = 'TGCC'.'-'.$type_member.'-'.Carbon::now()->format('Y').'-'.str_pad($count_vip, 3, '0', STR_PAD_LEFT);
-        }
 
         $visitor->name = $request->name;
         $visitor->address = $request->address;
@@ -295,7 +274,6 @@ class TamuController extends Controller {
 
         if($request->status == 'active') {
             $visitor->expired_date = Carbon::now()->addYear();
-            $visitor->phone = $code_number;
             LogAdmin::create([
                 'user_id' => Auth::id(),
                 'quota' => $request->quota,
@@ -303,7 +281,6 @@ class TamuController extends Controller {
                 'activities' => 'Mengubah member <b>' . $visitor->name . '</b>',
             ]);
         } else {
-            $visitor->phone = $code_number;
             LogAdmin::create([
                 'user_id' => Auth::id(),
                 'quota' => $request->quota,
@@ -311,10 +288,7 @@ class TamuController extends Controller {
                 'activities' => 'Menonaktifkan member <b>' . $visitor->name . '</b>',
             ]);
         }
-        
-        if($visitor->isDirty('tipe_member')) {
-            $visitor->save();
-        }
+        $visitor->save();
 
         $visitor_limit = LogLimit::find($visitor->id);
         $visitor_report_limit = ReportLimit::find($visitor->id);

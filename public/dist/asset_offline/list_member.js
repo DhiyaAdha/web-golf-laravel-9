@@ -79,10 +79,10 @@ var member = $('#dt-tamu').DataTable({
     language: {
         search: "",
         searchPlaceholder: "Cari nama",
-        emptyTable: "Tidak ada data pada tabel ini",
+        emptyTable: "Tidak ada data",
         info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
         infoFiltered: "(difilter dari _MAX_ total data)",
-        infoEmpty: "Tidak ada data pada tabel ini",
+        infoEmpty: "Tidak ada data",
         lengthMenu: "Menampilkan _MENU_ data",
         zeroRecords: "Tidak ada data pada tabel ini"
     },

@@ -65,7 +65,10 @@ class AdminController extends Controller {
                 'name.required' => 'Nama admin masih kosong.',
                 'email.required' => 'Email admin masih kosong.',
                 'phone.required' => 'Nomer Hp admin masih kosong.',
-                'password.required' => 'Password admin masih kosong.',
+                'password.required' => 'Password masih kosong.',
+                'password.min' => 'Minimal 8 karakter',
+                'password_confirmation.min' => 'Minimal 8 karakter',
+                'password_confirmation.same' => 'Password tidak sama',
                 'role_id.required' => ' Role admin masih kosong.',
             ]
         );
