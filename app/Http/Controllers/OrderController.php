@@ -10,9 +10,11 @@ use App\Models\Package;
 use App\Models\Visitor;
 use App\Models\LogAdmin;
 use App\Models\LogLimit;
+use App\Models\LogCoupon;
 use App\Models\ReportLimit;
 use Darryldecode\Cart\Cart;
 use Illuminate\Support\Arr;
+use App\Models\ReportCoupon;
 use Illuminate\Http\Request;
 use App\Models\ReportDeposit;
 use App\Models\LogTransaction;
@@ -363,10 +365,11 @@ class OrderController extends Controller {
             $order_number = 'INV/' . Carbon::now()->format('Ymd') . '/' . $visitor->tipe_member . '/' . Carbon::now()->format('his');
             $deposit = Deposit::where('visitor_id', $get_id)->first();
             $log_limit = LogLimit::where('visitor_id', $get_id)->first();
+            $log_coupon = LogCoupon::where('visitor_id', $get_id)->first();
             if ($request->ajax()) {
                 return response()->json(['order_number' => $order_number]);
             }
-            return view("membership.checkout", compact('log_limit', 'get_id', 'price_single', 'item_default', 'package_default', 'package_additional', 'package_others', 'visitor', 'deposit', 'totalPrice', 'order_number', 'orders'))->render();
+            return view("membership.checkout", compact('log_limit','log_coupon', 'get_id', 'price_single', 'item_default', 'package_default', 'package_additional', 'package_others', 'visitor', 'deposit', 'totalPrice', 'order_number', 'orders'))->render();
         } catch (\Throwable $th) {
             return redirect()->to($link_pos); 
         }
@@ -378,6 +381,7 @@ class OrderController extends Controller {
         $totalPrice = \Cart::session($request->get('param'))->getTotal();
         $deposit = Deposit::where('visitor_id', $request->get('param'))->first();
         $log_limit = LogLimit::where('visitor_id', $request->get('param'))->first();        
+        $log_coupon = LogCoupon::where('visitor_id', $request->get('param'))->first();        
         $today = Carbon::now()->isoFormat('dddd');
         $id_package = [];
         foreach ($items as $row) {
@@ -427,8 +431,8 @@ class OrderController extends Controller {
                 return response()->json($this->getResponse());
             }
         } else if ($type == 2) {
-            $resultKupon =  $log_limit->quota_kupon - 1;
-            if ($log_limit->quota_kupon == 0) {
+            $resultKupon =  $log_coupon->quota_kupon - 1;
+            if ($log_coupon->quota_kupon == 0) {
                 return response(['price' => $deposit->balance, 'limit' => $log_limit->quota, 'kupon' => 0, 'status' => 'INVALID', 'message' => 'Kupon tidak terpenuhi']);
             } else {
                 return response(['price' => $deposit->balance, 'total_price' => $totalPrice, 'price_default' => $price_default, 'orders' => $orders, 'limit' => $log_limit->quota, 'kupon' => $resultKupon, 'status' => 'VALID', 'message' => 'Limit telah dipilih']);
@@ -448,6 +452,7 @@ class OrderController extends Controller {
         $items = \Cart::session($req->get('page'))->getContent();
         $deposit = Deposit::where('visitor_id', $req->get('page'))->first();
         $log_limit = LogLimit::where('visitor_id', $req->get('page'))->first();
+        $log_coupon = LogCoupon::where('visitor_id', $req->get('page'))->first();
         $totalPrice = \Cart::session($req->get('page'))->getTotal();
         $price_single = 0;
         $today = Carbon::now()->isoFormat('dddd');
@@ -546,33 +551,6 @@ class OrderController extends Controller {
                                 ]);
                                 \Cart::session($req->get('page'))->clear();
     
-                                $data['qty'] = $row->quantity;
-                                $total_qty = 0;
-                                foreach ($cart_data as $get) {
-                                    $total_qty += $get['qty'];
-                                }
-                                $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
-                                $payment_type = unserialize($log_transaction->payment_type);
-    
-                                $data = [
-                                    'name' => $visitor->name,
-                                    'email' => $visitor->email,
-                                    'address' => $visitor->address,
-                                    'phone' => $visitor->phone,
-                                    'type_member' => $visitor->tipe_member,
-                                    'sisasaldo' => $deposit->balance,
-                                    'order_number' => $req->get('order_number'),
-                                    'payment_type' => $payment_type,
-                                    'date' => $row->attributes['created_at'],
-                                    'pricesingle' => $row->price,
-                                    'price' => $row->getPriceSum(),
-                                    'total' => $totalPrice,
-                                    'qty' => $row->quantity,
-                                    'total_qty' => $total_qty,
-                                    'cart' => $cart_data,
-                                ];
-                                dispatch(new SendMailPaymentsuccess4Job($data));
-    
                                 if ($req->ajax()) {
                                     $this->setResponse('VALID', "Pembayaran berhasil");
                                     return response()->json($this->getResponse());
@@ -626,33 +604,7 @@ class OrderController extends Controller {
                                     ]);
     
                                     \Cart::session($req->get('page'))->clear();
-    
-                                    $data['qty'] = $row->quantity;
-                                    $total_qty = 0;
-                                    foreach ($cart_data as $get) {
-                                        $total_qty += $get['qty'];
-                                    }
-                                    $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
-                                    $payment_type = unserialize($log_transaction->payment_type);
-    
-                                    $data = [
-                                        'name' => $visitor->name,
-                                        'email' => $visitor->email,
-                                        'address' => $visitor->address,
-                                        'phone' => $visitor->phone,
-                                        'type_member' => $visitor->tipe_member,
-                                        'order_number' => $req->get('order_number'),
-                                        'payment_type' => $payment_type,
-                                        'date' => $row->attributes['created_at'],
-                                        'pricesingle' => $row->price,
-                                        'price' => $row->getPriceSum(),
-                                        'total' => $totalPrice,
-                                        'qty' => $row->quantity,
-                                        'total_qty' => $total_qty,
-                                        'cart' => $cart_data,
-                                    ];
-                                    dispatch(new SendMailPaymentsuccess4Job($data));
-    
+
                                     if ($req->ajax()) {
                                         return response()->json([
                                             'status' => 'VALID',
@@ -674,7 +626,7 @@ class OrderController extends Controller {
                         $this->setResponse('INVALID', "Member tidak aktif");
                         return response()->json($this->getResponse());
                     } else {
-                        if ($log_limit->quota_kupon == 0) {
+                        if ($log_coupon->quota_kupon == 0) {
                             $this->setResponse('INVALID', "Kupon tidak terpenuhi");
                             return response()->json($this->getResponse());
                         } else {
@@ -702,8 +654,8 @@ class OrderController extends Controller {
                                         return response()->json($this->getResponse());
                                     } else {
                                         try {
-                                            $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
-                                            $log_limit->save();
+                                            $log_coupon->quota_kupon = $log_coupon->quota_kupon - 1;
+                                            $log_coupon->save();
         
                                             LogTransaction::create([
                                                 'order_number' => $req->get('order_number'),
@@ -713,7 +665,7 @@ class OrderController extends Controller {
                                                 'payment_type' => serialize([[
                                                     'payment_type' => 'kupon', 
                                                     'transaction_amount' => $price_single, 
-                                                    'balance' => $log_limit->quota_kupon,
+                                                    'balance' => $log_coupon->quota_kupon,
                                                     'discount' => $price_single,
                                                     'refund' => 0
                                                 ]]),
@@ -732,43 +684,14 @@ class OrderController extends Controller {
                                             ]);
         
                                             // informasi limit kupon
-                                            ReportLimit::create([
+                                            ReportCoupon::create([
                                                 'status' => 'Berkurang',
-                                                'report_quota' => $log_limit->quota,
-                                                'report_quota_kupon' => $log_limit->quota_kupon,
+                                                'report_quota_kupon' => $log_coupon->quota_kupon,
                                                 'visitor_id' => $req->get('page'),
                                                 'user_id' => Auth()->id(),
                                                 'created_at' => Carbon::now(),
                                             ]);
                                             \Cart::session($req->get('page'))->clear();
-        
-                                            $log_limit = LogLimit::where('visitor_id', $req->get('page'))->first();
-                                            $data['qty'] = $row->quantity;
-                                            $total_qty = 0;
-                                            foreach ($cart_data as $get) {
-                                                $total_qty += $get['qty'];
-                                            }
-                                            $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
-                                            $payment_type = unserialize($log_transaction->payment_type);
-        
-                                            $data = [
-                                                'name' => $visitor->name,
-                                                'email' => $visitor->email,
-                                                'address' => $visitor->address,
-                                                'phone' => $visitor->phone,
-                                                'type_member' => $visitor->tipe_member,
-                                                'order_number' => $req->get('order_number'),
-                                                'payment_type' => $payment_type,
-                                                'date' => $row->attributes['created_at'],
-                                                'pricesingle' => $row->price,
-                                                'price' => $row->getPriceSum(),
-                                                'total' => $totalPrice,
-                                                'qty' => $row->quantity,
-                                                'total_qty' => $total_qty,
-                                                'cart' => $cart_data,
-                                                'sisakupon' => $log_limit->quota_kupon,
-                                            ];
-                                            dispatch(new SendMailPaymentsuccess4Job($data));
         
                                             if ($req->ajax()) {
                                                 $this->setResponse('VALID', "Pembayaran berhasil");
@@ -851,40 +774,11 @@ class OrderController extends Controller {
                                             ReportLimit::create([
                                                 'status' => 'Berkurang',
                                                 'report_quota' => $log_limit->quota,
-                                                'report_quota_kupon' => $log_limit->quota_kupon,
                                                 'visitor_id' => $req->get('page'),
                                                 'user_id' => Auth()->id(),
                                                 'created_at' => Carbon::now(),
                                             ]);
                                             \Cart::session($req->get('page'))->clear();
-        
-                                            $log_limit = LogLimit::where('visitor_id', $req->get('page'))->first();
-                                            $data['qty'] = $row->quantity;
-                                            $total_qty = 0;
-                                            foreach ($cart_data as $get) {
-                                                $total_qty += $get['qty'];
-                                            }
-                                            $log_transaction = LogTransaction::where('visitor_id', $req->get('page'))->latest()->first();
-                                            $payment_type = unserialize($log_transaction->payment_type);
-        
-                                            $data = [
-                                                'name' => $visitor->name,
-                                                'email' => $visitor->email,
-                                                'address' => $visitor->address,
-                                                'phone' => $visitor->phone,
-                                                'type_member' => $visitor->tipe_member,
-                                                'order_number' => $req->get('order_number'),
-                                                'payment_type' => $payment_type,
-                                                'date' => $row->attributes['created_at'],
-                                                'pricesingle' => $row->price,
-                                                'price' => $row->getPriceSum(),
-                                                'total' => $totalPrice,
-                                                'qty' => $row->quantity,
-                                                'total_qty' => $total_qty,
-                                                'cart' => $cart_data,
-                                                'sisabulanan' => $log_limit->quota,
-                                            ];
-                                            dispatch(new SendMailPaymentsuccess4Job($data));
         
                                             if ($req->ajax()) {
                                                 $this->setResponse('VALID', "Pembayaran berhasil");
@@ -1077,8 +971,8 @@ class OrderController extends Controller {
                                     return response()->json($this->getResponse());
                                 } else {
                                     try {
-                                        $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
-                                        $log_limit->save();
+                                        $log_coupon->quota_kupon = $log_coupon->quota_kupon - 1;
+                                        $log_coupon->save();
         
                                         LogTransaction::create([
                                             'order_number' => $req->get('order_number'),
@@ -1088,7 +982,7 @@ class OrderController extends Controller {
                                             'payment_type' => serialize([[
                                                 'payment_type' => 'kupon',
                                                 'transaction_amount' => $price_single,
-                                                'balance' => $log_limit->quota_kupon,
+                                                'balance' => $log_coupon->quota_kupon,
                                                 'discount' => $price_single,
                                                 'refund' => 0
                                             ]]),
@@ -1106,11 +1000,10 @@ class OrderController extends Controller {
                                             'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
                                         ]);
         
-                                        ReportLimit::create([
+                                        ReportCoupon::create([
                                             'visitor_id' => $req->get('page'),
                                             'user_id' => Auth()->id(),
-                                            'report_quota' => $log_limit->quota,
-                                            'report_quota_kupon' => $log_limit->quota_kupon,
+                                            'report_quota_kupon' => $log_coupon->quota_kupon,
                                             'status' => 'Berkurang',
                                             'created_at' => Carbon::now(),
                                         ]);
@@ -1172,7 +1065,6 @@ class OrderController extends Controller {
                                             'visitor_id' => $req->get('page'),
                                             'user_id' => Auth()->id(),
                                             'report_quota' => $log_limit->quota,
-                                            'report_quota_kupon' => $log_limit->quota_kupon,
                                             'status' => 'Berkurang',
                                             'created_at' => Carbon::now(),
                                         ]);
@@ -1324,7 +1216,7 @@ class OrderController extends Controller {
                                             'cart' => serialize($cart_data),
                                             'payment_type' => serialize([
                                                 ['payment_type' => 'deposit','transaction_amount' => $deposit->balance,'balance' => $deposit_before, 'discount' => 0, 'refund' => 0],
-                                                ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon, 'discount' => $price_single, 'refund' => 0]
+                                                ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_coupon->quota_kupon, 'discount' => $price_single, 'refund' => 0]
                                             ]),
                                             'payment_status' => 'paid',
                                             'total' => $deposit->balance,
@@ -1350,15 +1242,14 @@ class OrderController extends Controller {
                                             'created_at' => Carbon::now(),
                                         ]);
     
-                                        $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
-                                        $log_limit->save();
+                                        $log_coupon->quota_kupon = $log_coupon->quota_kupon - 1;
+                                        $log_coupon->save();
                                         $deposit->save();
         
-                                        ReportLimit::create([
+                                        ReportCoupon::create([
                                             'visitor_id' => $req->get('page'),
                                             'user_id' => Auth()->id(),
-                                            'report_quota' => $log_limit->quota,
-                                            'report_quota_kupon' => $log_limit->quota_kupon,
+                                            'report_quota_kupon' => $log_coupon->quota_kupon,
                                             'status' => 'Berkurang',
                                             'created_at' => Carbon::now(),
                                         ]);
@@ -1426,7 +1317,6 @@ class OrderController extends Controller {
                                             'visitor_id' => $req->get('page'),
                                             'user_id' => Auth()->id(),
                                             'report_quota' => $log_limit->quota,
-                                            'report_quota_kupon' => $log_limit->quota_kupon,
                                             'status' => 'Berkurang',
                                             'created_at' => Carbon::now(),
                                         ]);
@@ -1465,7 +1355,7 @@ class OrderController extends Controller {
                                                     'cart' => serialize($cart_data),
                                                     'payment_type' => serialize([
                                                         ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => $req->get('refund')],
-                                                        ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
+                                                        ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_coupon->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
                                                     ]),
                                                     'payment_status' => 'paid',
                                                     'total' => $remaining_balance,
@@ -1475,8 +1365,8 @@ class OrderController extends Controller {
                                                     'jml_other' => array_sum(array_column($priceOthers,'price')),
                                                 ]);
                 
-                                                $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
-                                                $log_limit->save();
+                                                $log_coupon->quota_kupon = $log_coupon->quota_kupon - 1;
+                                                $log_coupon->save();
                 
                                                 LogAdmin::create([
                                                     'user_id' => Auth::id(),
@@ -1484,11 +1374,10 @@ class OrderController extends Controller {
                                                     'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>'
                                                 ]);
                 
-                                                ReportLimit::create([
+                                                ReportCoupon::create([
                                                     'visitor_id' => $req->get('page'),
                                                     'user_id' => Auth()->id(),
-                                                    'report_quota' => $log_limit->quota,
-                                                    'report_quota_kupon' => $log_limit->quota_kupon,
+                                                    'report_quota_kupon' => $log_coupon->quota_kupon,
                                                     'status' => 'Berkurang',
                                                     'created_at' => Carbon::now(),
                                                 ]);
@@ -1553,7 +1442,6 @@ class OrderController extends Controller {
                                                     'visitor_id' => $req->get('page'),
                                                     'user_id' => Auth()->id(),
                                                     'report_quota' => $log_limit->quota,
-                                                    'report_quota_kupon' => $log_limit->quota_kupon,
                                                     'status' => 'Berkurang',
                                                     'created_at' => Carbon::now(),
                                                 ]);
@@ -1595,7 +1483,7 @@ class OrderController extends Controller {
                                             'payment_type' => serialize([
                                                 ['payment_type' => 'deposit','transaction_amount' => 0,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
                                                 ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => $req->get('refund')],
-                                                ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
+                                                ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_coupon->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
                                             ]),
                                             'payment_status' => 'paid',
                                             'total' => $remaining_balance,
@@ -1605,8 +1493,8 @@ class OrderController extends Controller {
                                             'jml_other' => array_sum(array_column($priceOthers,'price')),
                                         ]);
         
-                                        $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
-                                        $log_limit->save();
+                                        $log_coupon->quota_kupon = $log_coupon->quota_kupon - 1;
+                                        $log_coupon->save();
         
                                         LogAdmin::create([
                                             'user_id' => Auth::id(),
@@ -1624,11 +1512,10 @@ class OrderController extends Controller {
                                             'created_at' => Carbon::now(),
                                         ]);
         
-                                        ReportLimit::create([
+                                        ReportCoupon::create([
                                             'visitor_id' => $req->get('page'),
                                             'user_id' => Auth()->id(),
-                                            'report_quota' => $log_limit->quota,
-                                            'report_quota_kupon' => $log_limit->quota_kupon,
+                                            'report_quota_kupon' => $log_coupon->quota_kupon,
                                             'status' => 'Berkurang',
                                             'created_at' => Carbon::now(),
                                         ]);
@@ -1654,7 +1541,7 @@ class OrderController extends Controller {
                                             'payment_type' => serialize([
                                                 ['payment_type' => 'deposit','transaction_amount' => $minus_deposit,'balance' => $deposit->balance, 'discount' => 0, 'refund' => 0],
                                                 ['payment_type' => 'cash/transfer','transaction_amount' => $req->get('bayar_input'),'balance' => 0, 'discount' => 0, 'refund' => 0],
-                                                ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_limit->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
+                                                ['payment_type' => 'kupon','transaction_amount' => $price_single,'balance' => $log_coupon->quota_kupon - 1, 'discount' => $price_single, 'refund' => 0]
                                             ]),
                                             'payment_status' => 'paid',
                                             'total' => $remaining_balance,
@@ -1664,8 +1551,8 @@ class OrderController extends Controller {
                                             'jml_other' => array_sum(array_column($priceOthers,'price')),
                                         ]);
                                         
-                                        $log_limit->quota_kupon = $log_limit->quota_kupon - 1;
-                                        $log_limit->save();
+                                        $log_coupon->quota_kupon = $log_coupon->quota_kupon - 1;
+                                        $log_coupon->save();
                                         $deposit->save();
         
                                         LogAdmin::create([
@@ -1684,11 +1571,10 @@ class OrderController extends Controller {
                                             'created_at' => Carbon::now(),
                                         ]);
         
-                                        ReportLimit::create([
+                                        ReportCoupon::create([
                                             'visitor_id' => $req->get('page'),
                                             'user_id' => Auth()->id(),
-                                            'report_quota' => $log_limit->quota,
-                                            'report_quota_kupon' => $log_limit->quota_kupon,
+                                            'report_quota_kupon' => $log_coupon->quota_kupon,
                                             'status' => 'Berkurang',
                                             'created_at' => Carbon::now(),
                                         ]);
@@ -1755,7 +1641,6 @@ class OrderController extends Controller {
                                             'visitor_id' => $req->get('page'),
                                             'user_id' => Auth()->id(),
                                             'report_quota' => $log_limit->quota,
-                                            'report_quota_kupon' => $log_limit->quota_kupon,
                                             'status' => 'Berkurang',
                                             'created_at' => Carbon::now(),
                                         ]);
@@ -1815,7 +1700,6 @@ class OrderController extends Controller {
                                             'visitor_id' => $req->get('page'),
                                             'user_id' => Auth()->id(),
                                             'report_quota' => $log_limit->quota,
-                                            'report_quota_kupon' => $log_limit->quota_kupon,
                                             'status' => 'Berkurang',
                                             'created_at' => Carbon::now(),
                                         ]);

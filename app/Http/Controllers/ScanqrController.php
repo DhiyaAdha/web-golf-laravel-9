@@ -6,6 +6,7 @@ use App\Models\Deposit;
 use App\Models\Visitor;
 use App\Models\LogAdmin;
 use App\Models\LogLimit;
+use App\Models\LogCoupon;
 use Illuminate\View\View;
 use App\Models\ReportLimit;
 use Illuminate\Http\Request;
@@ -51,6 +52,7 @@ class ScanqrController extends Controller {
             $visitor = Visitor::find($id);
             $deposit = Deposit::where('visitor_id', $id)->first();
             $log_limit = LogLimit::where('visitor_id', $id)->first();
+            $data['log_coupon'] = LogCoupon::where('visitor_id', $id)->first();
             $data['visitor'] = $visitor;
             $data['deposit'] = $deposit;
             $data['log_limit'] = $log_limit;

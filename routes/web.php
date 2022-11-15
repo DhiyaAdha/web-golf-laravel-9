@@ -79,6 +79,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('reportlimit', [TamuController::class, 'reportlimit'])->name('limit.report');
     Route::get('transaksideposit', [TamuController::class, 'transaksideposit'])->name('transaksideposit');
     Route::get('transaksilimit', [TamuController::class, 'transaksilimit'])->name('transaksilimit');
+    Route::get('transaksicoupon', [TamuController::class, 'transaksicoupon'])->name('transaksicoupon');
     Route::get('/reporttransaksi/{id}', [TamuController::class, 'reporttransaksi'])->name('transaksi.report.data');
     Route::get('/reportdeposit/{id}', [TamuController::class, 'reportdeposit'])->name('deposit.report.data');
     Route::get('/reportlimit/{id}', [TamuController::class, 'reportlimit'])->name('limit.report.data');
