@@ -215,6 +215,7 @@
                     </div>
                 </div>
             </div>
+            @include('layouts.footer')
         </div>
     </div>
 @endsection
@@ -222,27 +223,5 @@
     <script defer src="{{ asset('vendors/bower_components/raphael/raphael.min.js') }}"></script>
     <script defer src="{{ asset('vendors/bower_components/morris.js/morris.min.js') }}"></script>
     <script defer src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
-    <script>
-        var revenueWeek = {!! json_encode($revenue_daily) !!}
-        var revenueMonth = {!! json_encode($revenue) !!}
-
-        $('#b').click(function() {
-            document.getElementById('revenue_bar_game').style = 'display:visible;';
-        });
-        $('#c').click(function() {
-            document.getElementById('revenue_bar_facility').style = 'display:visible;';
-        });
-        $('#d').click(function() {
-            document.getElementById('revenue_bar_other').style = 'display:visible;';
-        });
-        $('#f').click(function() {
-            document.getElementById('revenue_line_game').style = 'display:visible;';
-        });
-        $('#g').click(function() {
-            document.getElementById('revenue_line_facility').style = 'display:visible;';
-        });
-        $('#h').click(function() {
-            document.getElementById('revenue_line_other').style = 'display:visible;';
-        });
-    </script>
+    <script defer src="{{ asset('dist/asset_offline/revenue.js') }}"></script>
 @endpush
