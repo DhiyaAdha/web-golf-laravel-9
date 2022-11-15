@@ -18,13 +18,7 @@ class RevenueController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function index() {
-        $data['revenue_today'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('total_gross');
-        $data['revenue_game'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('jml_default');
-        $data['revenue_proshop'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('jml_additional');
-        $data['revenue_store'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('jml_other');
-
+    public function analytic_week_revenue() {
         //statistic dynamic of weeks
         $now = Carbon::now()->translatedFormat('Y-m-d');
         $last7Days = Carbon::now()->subDays(6)->translatedFormat('Y-m-d');
@@ -39,7 +33,11 @@ class RevenueController extends Controller {
             $data['revenue_daily'][$key]['c'] = LogTransaction::whereDate('created_at', $day_period[$key])->where('payment_status', 'paid')->sum('jml_other');
             $data['revenue_daily'][$key]['d'] = $data['revenue_daily'][$key]['a'] + $data['revenue_daily'][$key]['b'] + $data['revenue_daily'][$key]['c'];
         }
+        $data = json_encode($data['revenue_daily']);
+        return response()->json($data);
+    }
 
+    public function analytic_month_revenue() {
         // Statistika Pertahun Grafik-chart
         $months = [
             1 => 'Jan',
@@ -67,6 +65,18 @@ class RevenueController extends Controller {
             $data['revenue'][$key]['i'] = LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('jml_other');
             $data['revenue'][$key]['f'] =  $data['revenue'][$key]['g'] + $data['revenue'][$key]['h'] + $data['revenue'][$key]['i'];
         }
+
+        $data = json_encode($data['revenue']);
+        return response()->json($data);
+    }
+
+
+    public function index() {
+        $data['revenue_today'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('total_gross');
+        $data['revenue_game'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('jml_default');
+        $data['revenue_proshop'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('jml_additional');
+        $data['revenue_store'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('jml_other');
+
         return view('dashboard.revenue', $data);
     }
 }

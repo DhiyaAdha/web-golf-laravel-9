@@ -51,11 +51,13 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     Route::post('/package/update/{id}', [PackageController::class, 'update'])->name('package.update');
     Route::post('/package/destroy', [PackageController::class, 'destroy'])->name('package.destroy');
     Route::post('/package/store', [PackageController::class, 'store'])->name('package.store');
-    Route::resource('revenue', RevenueController::class);
     Route::middleware(['htmlMinifier'])->group(static function () {
+        Route::resource('revenue', RevenueController::class);
         Route::resource('analisis-tamu', DashboardController::class);
         Route::get('/analytic/week', [DashboardController::class, 'analytic_week'])->name('analytic.week');
+        Route::get('/analytic/week/revenue', [RevenueController::class, 'analytic_week_revenue'])->name('analytic.week.revenue');
         Route::get('/analytic/month', [DashboardController::class, 'analytic_month'])->name('analytic.month');
+        Route::get('/analytic/month/revenue', [RevenueController::class, 'analytic_month_revenue'])->name('analytic.month.revenue');
         Route::get('/daftar-admin', [AdminController::class, 'index'])->name('daftar-admin');
         Route::get('/tambah-admin', [AdminController::class, 'tambahadmin'])->name('tambah-admin');
         Route::get('/edit-admin/{users}', [AdminController::class, 'edit'])->name('edit-admin');
