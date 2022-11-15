@@ -196,7 +196,7 @@
                                         <div class="d-flex-flex-column">
                                             <span class="text-capitalize">Kupon</span>
                                             <div class="d-flex">
-                                                <span class=" text-big" id="kupon" data-kupon="{{ $log_limit->quota_kupon }}">{{ $log_limit->quota_kupon ?? '0' }}</span>
+                                                <span class=" text-big" id="kupon" data-kupon="{{ $log_coupon->quota_kupon }}">{{ $log_coupon->quota_kupon ?? '0' }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -358,7 +358,7 @@
                                                                 @if (count($package_default) == 1)
                                                                     @if ($item_default == 1)
                                                                         @if (count($package_additional) == 0 && count($package_others) == 0)
-                                                                            @if ($log_limit->quota_kupon != 0)
+                                                                            @if ($log_coupon->quota_kupon != 0)
                                                                                 <input type="radio" id="customRadioInline2" name="payment-type" value="2" class="custom-control-input">
                                                                                 <label class="custom-control-label" for="customRadioInline2" style="width: 100%;cursor:pointer;">
                                                                                     <div class="d-flex flex-column flex-grow-1 justify-content-center">
@@ -485,7 +485,7 @@
                                                     <div class="card-body">
                                                         <div class="d-flex align-items-center choose" style="border-bottom: 1px solid rgba(0,0,0,.125);">
                                                             <div class="flex-grow-1 custom-control custom-checkbox" style="width:100%;">
-                                                                @if ($log_limit->quota != 0 || $log_limit->quota_kupon != 0)
+                                                                @if ($log_limit->quota != 0 || $log_coupon->quota_kupon != 0)
                                                                     {{-- @if ($totalPrice != $price_single) --}}
                                                                     @if ($deposit->balance != 0)
                                                                         <input type="checkbox" name="payment-type[]" value="deposit" data-deposit="{{ $deposit->balance }}" data-bill="{{ (int) ceil($totalPrice) }}" class="custom-control-input" id="customCheck8">
@@ -566,7 +566,7 @@
                                                             <div class="d-flex align-items-center mt-2 choose" style="border-bottom: 1px solid rgba(0,0,0,.125);">
                                                                 <div class="flex-grow-1 custom-control custom-radio custom-control-inline" style="width:100%;">
                                                                     @if (count($package_default) == 1)
-                                                                        @if ($log_limit->quota_kupon != 0)
+                                                                        @if ($log_coupon->quota_kupon != 0)
                                                                             <input type="radio" id="customRadioInline6" name="payment-type[]" value="kupon" class="custom-control-input">
                                                                             <label class="custom-control-label" for="customRadioInline6" style="width: 100%; cursor:pointer;">
                                                                                 <div class="d-flex flex-column flex-grow-1 justify-content-center">

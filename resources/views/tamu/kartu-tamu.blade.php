@@ -1,4 +1,4 @@
-@extends('layouts.main', ['title' => 'TGCC | Daftar Tamu'])
+@extends('layouts.main', ['title' => 'TGCC | Detail Tamu'])
 @push('css')
     <link href="{{ asset('vendors/bower_components/morris.js/morris.css') }}" rel="stylesheet" type="text/css" />
 @endpush
@@ -139,7 +139,7 @@
                         <div>
                             <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
                                 <img src="/dist/img/Golf.svg">
-                                <h6 class="text-center">{{ $quota_kupon }}</h6>
+                                <h6 class="text-center">{{ $quota_kupon ?? '0' }}</h6>
                             </div>
                         </div>
                     </div>

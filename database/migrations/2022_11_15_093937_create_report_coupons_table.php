@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLogLimitsTable extends Migration
+class CreateReportCouponsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,22 @@ class CreateLogLimitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('log_limits', function (Blueprint $table) {
+        Schema::create('report_coupons', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('visitor_id')->unsigned();
-            $table->integer('report_limit_id')->unsigned();
-            $table->integer('quota')->default(0);
+            $table->integer('user_id')->unsigned();
+            $table->integer('report_quota_kupon')->default(0);
+            $table->enum('status',['Reset', 'Bertambah','Berkurang']);
+            // $table->string('activities')->nullable();
             $table->timestamps();
             
             $table->foreign('visitor_id')
             ->references('id')
             ->on('visitors')
             ->onDelete('cascade');
-            $table->foreign('report_limit_id')
+            $table->foreign('user_id')
             ->references('id')
-            ->on('report_limits')
+            ->on('users')
             ->onDelete('cascade');
         });
     }
@@ -38,6 +40,6 @@ class CreateLogLimitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('log_limits');
+        Schema::dropIfExists('report_coupons');
     }
 }
