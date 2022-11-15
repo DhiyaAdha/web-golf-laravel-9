@@ -236,13 +236,10 @@ $(document).ready(function() {
         click();
         let data_bill = $('#customCheck8').data('bill');
         let data_deposit = $('#customCheck8').data('deposit');
-        let price_single = $('.kmt').data('pricesingle');
         let type_multiple = $('input[name="payment-type[]"]:checked')
             .map(function() {
                 return $(this).val();
             }).get();
-        let minus_deposit = data_bill - data_deposit;
-        let discount = '';
 
         if ($(this).is(':checked')) {
             $('#hide-limit').removeClass('d-none');
@@ -256,6 +253,8 @@ $(document).ready(function() {
                     $('.discount').hide();
                     $('.remaining').addClass('d-none');
                     $('#remaining').text('Rp. 0');
+                    $('.nilai-total1-td').text('Rp. ' + format(data_bill) + ',00');
+                    $('.nilai-total1-td').data('total', data_bill);
                 } else if (type_multiple.length == 2) {
                     type_multiple.splice(1,1);
                     $('.discount').hide();
@@ -290,6 +289,8 @@ $(document).ready(function() {
                 if (type_multiple.length == 1) {
                     type_multiple.splice(0,1);
                     $('.discount').hide();
+                    $('.nilai-total1-td').text('Rp. ' + format(data_bill) + ',00');
+                    $('.nilai-total1-td').data('total', data_bill);
                 } else if(type_multiple.length == 2) {
                     if(type_multiple[0] == 'deposit') {
                         type_multiple.splice(1,1);
@@ -341,6 +342,7 @@ $(document).ready(function() {
             }).data('refund', return_pay);
         }
     });
+
     $(document).on('input', '.bayar-input', function(e) {
         e.preventDefault();
         let total = $('.nilai-total1-td').data('total');
@@ -582,7 +584,6 @@ $(document).ready(function() {
         let discount = '';
         if ($(this).is(':checked')) {
             if(data_deposit < data_bill) {
-                $('.remaining').removeClass('d-none');
                 if(type_multiple.length == 1) {
                     if (type_multiple[0] == 'deposit') {
                         $.toast({
@@ -1115,7 +1116,7 @@ $(document).ready(function() {
             success: function(response) {
                 $.unblockUI();
                 if (response.status == "VALID") {
-                    $('#balance').text(format(response.price) + ',00');
+                    $('#balance').text('Rp. ' +format(response.price) + ',00');
                     $('#kupon').text(format(parseInt(response.kupon)));
                     $('#limit').text(format(parseInt(response.limit)));
 
