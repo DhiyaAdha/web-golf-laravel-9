@@ -14,7 +14,6 @@
                 "html": true,
             });
         });
-
         @if (Session::has('success'))
             window.setTimeout(function() {
                 $.toast({
