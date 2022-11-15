@@ -188,7 +188,7 @@ class TamuController extends Controller {
                 'report_quota' => 4,
                 'status' => 'Bertambah',
                 'created_at' => Carbon::now(),
-            ]);
+            ]); 
         } else {
             $report_quota = ReportLimit::create([
                 'visitor_id' => $visitors->id,
@@ -222,8 +222,16 @@ class TamuController extends Controller {
             'report_deposit_id' => $report_deposit->id,
         ]);
         $deposit->save();
+
+        LogCoupon::create([
+            'visitor_id' => $visitors->id,
+            'quota_kupon' => 0,
+        ]);
+
         $data = $request->all();
         dispatch(new SendMailJob($data));
+
+
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'CREATE',
@@ -795,42 +803,21 @@ class TamuController extends Controller {
 
     public function update_kupon(Request $request, $id) {
         try {
-            if (LogCoupon::count() == 0) {
-                LogCoupon::create([
-                    'visitor_id' => $id,
-                    'quota_kupon' => $request->quota_kupon,
-                ]);
-                ReportCoupon::create([
-                    'report_quota_kupon' => $request->quota_kupon,
-                    'visitor_id' => $id,
-                    'user_id' => Auth::id(),
-                    'status' => 'Bertambah',
-                ]);
-                
-                $visitor = LogCoupon::join('visitors', 'log_coupons.visitor_id', '=', 'visitors.id')->where('log_coupons.visitor_id', $id)->first();
-                LogAdmin::create([
-                    'user_id' => Auth::id(),
-                    'type' => 'CREATE',
-                    'activities' => 'Berhasil menambah kupon <b>' . $request->quota_kupon . '</b> atas nama <b>' . $visitor->name . '</b>',
-                ]);
-            } else {
-                $visitor = LogCoupon::join('visitors', 'log_coupons.visitor_id', '=', 'visitors.id')->where('log_coupons.visitor_id', $id)->first();
-                $log_coupon = LogCoupon::where('visitor_id', $id)->first();
-                $log_coupon->quota_kupon = $request->quota_kupon + $log_coupon->quota_kupon;
-                $log_coupon->save();
-                ReportCoupon::create([
-                    'report_quota_kupon' => $log_coupon->quota_kupon,
-                    'visitor_id' => $id,
-                    'user_id' => Auth::id(),
-                    'status' => 'Bertambah',
-                ]);
-                LogAdmin::create([
-                    'user_id' => Auth::id(),
-                    'type' => 'CREATE',
-                    'activities' => 'Berhasil menambah kupon <b>' . $request->quota_kupon . '</b> atas nama <b>' . $visitor->name . '</b>',
-                ]);
-            }
-
+            $visitor = LogCoupon::join('visitors', 'log_coupons.visitor_id', '=', 'visitors.id')->where('log_coupons.visitor_id', $id)->first();
+            $log_coupon = LogCoupon::where('visitor_id', $id)->first();
+            $log_coupon->quota_kupon = $request->quota_kupon + $log_coupon->quota_kupon;
+            $log_coupon->save();
+            ReportCoupon::create([
+                'report_quota_kupon' => $log_coupon->quota_kupon,
+                'visitor_id' => $id,
+                'user_id' => Auth::id(),
+                'status' => 'Bertambah',
+            ]);
+            LogAdmin::create([
+                'user_id' => Auth::id(),
+                'type' => 'CREATE',
+                'activities' => 'Berhasil menambah kupon <b>' . $request->quota_kupon . '</b> atas nama <b>' . $visitor->name . '</b>',
+            ]);
             return redirect()->back()->with('success', 'Berhasil menambah kupon');
         } catch (\Throwable $th) {
             return response()->json($this->getResponse());
