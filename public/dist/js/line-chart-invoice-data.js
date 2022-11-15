@@ -20,7 +20,7 @@ if($('#invoice_line_member')) {
         lineWidth: 2,
         resize: true,
         redraw: true,
-        pointStrokeColors: ["#32ffc1"],
+        pointStrokeColors: ["#01c853"],
         gridLineColor: "#878787",
         lineColors: ["#01c853"],
         gridTextColor: "#878787",

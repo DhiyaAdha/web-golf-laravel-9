@@ -50,7 +50,7 @@
                                         <label class="pull-left control-label mb-10" for="password_confirmation">Konfirmasi Password</label>
                                         <div class="clearfix"></div>
                                         <input type="password" name="password_confirmation" class="form-control @error('password') is-invalid @enderror" id="password_confirmation" placeholder="Masukan Password Baru" value="{{ $users->password }}">
-                                        <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
+                                        {{-- <div style="margin-top: 7px;" id="CheckPasswordMatch"></div> --}}
                                         <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye2 fa-eye-slash" id="eyee_edit_admin"></i>
                                     </div>
                                 </div>
@@ -128,7 +128,7 @@
                                         <label class="pull-left control-label mb-10" for="password_confirmation">Konfirmasi Password</label>
                                         <div class="clearfix"></div>
                                         <input type="password" name="password_confirmation" class="form-control @error('password') is-invalid @enderror" id="password_confirmation2" placeholder="Masukan Password Baru" value="">
-                                            <div style="margin-top: 7px;" id="CheckPasswordMatch2"></div>
+                                            {{-- <div style="margin-top: 7px;" id="CheckPasswordMatch2"></div> --}}
                                             @error('password_confirmation')
                                                 <div class="text-danger"> {{ $message }}</div>
                                             @enderror

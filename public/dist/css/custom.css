@@ -512,6 +512,15 @@ h6.panel-title.text-center {
     box-sizing: border-box;
 }
 
+/* start login */
+#eye_login {
+    position: absolute;
+    margin-top: 40px;
+    top: 198px;
+    right: 40px;
+}
+/* finish login */
+
 #eye {
     position: absolute;
     margin-top: 40px;

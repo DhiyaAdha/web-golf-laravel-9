@@ -167,6 +167,8 @@ class AdminController extends Controller {
                 'phone.required' => 'Nomer Hp admin masih kosong.',
                 'phone.unique' => 'Nomer Hp admin sudah ada',
                 'password.required' => 'Password admin masih kosong.',
+                'password_confirmation.min' => 'Minimal 8 karakter',
+                'password_confirmation.same' => 'Password tidak sama',
                 'role_id.required' => 'Role admin masih kosong.',
             ]
         );

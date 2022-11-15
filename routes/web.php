@@ -47,10 +47,10 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     Route::get('/aktifitas', [AdminController::class, 'aktifitas'])->name('admin.aktifitas');
     route::get('/invoice_cetakpdf/{id}', [InvoiceController::class, 'cetak_pdf'])->name('cetak_pdf');
     route::get('/export_excel', [InvoiceController::class, 'export_excel'])->name('export_excel');
-    Route::post('/package/store', [PackageController::class, 'store'])->name('package.store');
     Route::get('/package/edit/{package}', [PackageController::class, 'edit'])->name('package.edit');
     Route::post('/package/update/{id}', [PackageController::class, 'update'])->name('package.update');
     Route::post('/package/destroy', [PackageController::class, 'destroy'])->name('package.destroy');
+    Route::post('/package/store', [PackageController::class, 'store'])->name('package.store');
     Route::resource('revenue', RevenueController::class);
     Route::middleware(['htmlMinifier'])->group(static function () {
         Route::resource('analisis-tamu', DashboardController::class);
@@ -61,7 +61,8 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
         Route::get('/edit-admin/{users}', [AdminController::class, 'edit'])->name('edit-admin');
         Route::resource('/riwayat-invoice', InvoiceController::class)->except(['show', 'update']);
         Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name('show');
-        Route::resource('package', PackageController::class)->except(['update']);
+        Route::get('/package', [PackageController::class, 'index'])->name('package.index');
+        Route::get('/package/tambah-package', [PackageController::class, 'create'])->name('package.create');
     });
 });
     

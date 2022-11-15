@@ -59,6 +59,7 @@ class PackageController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
+        // return 1;
         $this->validate($request,
             [
                 'name' => 'required|unique:packages,name',

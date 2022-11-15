@@ -221,7 +221,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="transaction_tabs" class="tab-pane fade active" role="tabpanel">
+                        <div id="transaction_tabs" class="tab-pane fade" role="tabpanel">
                             <div class="panel panel-default card-view">
                                 <div class="panel-heading">
                                     <div class="pull-left">
@@ -433,7 +433,7 @@
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
                                         <td class="no-line text-right">Diskon</td>
-                                        <td id="discount" class="no-line text-right">Rp. </td>
+                                        <td id="discount" class="no-line text-right"></td>
                                     </tr>
                                     <tr>
                                         <td class="no-line"></td>
