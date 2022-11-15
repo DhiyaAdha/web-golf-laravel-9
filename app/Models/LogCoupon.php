@@ -13,7 +13,6 @@ class LogCoupon extends Model
 
     protected $fillable = [
         'visitor_id',
-        'report_coupon_id',
         'quota_kupon',
         'created_at',
         'updated_at',

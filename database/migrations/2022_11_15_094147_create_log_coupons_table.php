@@ -16,17 +16,12 @@ class CreateLogCouponsTable extends Migration
         Schema::create('log_coupons', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('visitor_id')->unsigned();
-            $table->integer('report_coupon_id')->unsigned();
             $table->integer('quota_kupon')->default(0);
             $table->timestamps();
             
             $table->foreign('visitor_id')
             ->references('id')
             ->on('visitors')
-            ->onDelete('cascade');
-            $table->foreign('report_coupon_id')
-            ->references('id')
-            ->on('report_coupons')
             ->onDelete('cascade');
         });
     }
