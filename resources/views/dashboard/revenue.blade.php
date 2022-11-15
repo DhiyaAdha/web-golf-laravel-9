@@ -223,5 +223,4 @@
     <script defer src="{{ asset('vendors/bower_components/raphael/raphael.min.js') }}"></script>
     <script defer src="{{ asset('vendors/bower_components/morris.js/morris.min.js') }}"></script>
     <script defer src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
-    <script defer src="{{ asset('dist/asset_offline/revenue.js') }}"></script>
 @endpush
