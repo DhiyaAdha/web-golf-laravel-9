@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class LogLimit extends Model
+class LogCoupon extends Model
 {
     use HasFactory;
 
-    protected $table = 'log_limits';
+    protected $table = 'log_coupons';
 
     protected $fillable = [
         'visitor_id',
-        'report_limit_id',
-        'quota',
+        'report_coupon_id',
+        'quota_kupon',
         'created_at',
         'updated_at',
     ];
@@ -26,6 +26,6 @@ class LogLimit extends Model
 
     public function ReportLimit()
     {
-        return $this->hasmany(ReportLimit::class);
+        return $this->hasmany(ReportCoupon::class);
     }  
 }
