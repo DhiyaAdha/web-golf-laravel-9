@@ -502,7 +502,7 @@ class TamuController extends Controller {
     /* data aktifitas tamu kupon */
     public function reportkupon(Request $request, $id) {
         $decrypt_id = Crypt::decryptString($id);
-        $aktifitas_limit = ReportLimit::whereIn('status', ['Bertambah', 'Berkurang'])->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
+        $aktifitas_limit = ReportLimit::whereIn('status', ['Bertambah', 'Berkurang'])->where('report_quota_kupon', '!=', 0)->where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
             return datatables()->of($aktifitas_limit)
                 ->addColumn('kupon', function ($data) {
