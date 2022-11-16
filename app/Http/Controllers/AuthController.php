@@ -55,7 +55,6 @@ class AuthController extends Controller {
             if(!Hash::check($request->password, $user->password, [])){
                 throw new Exception('Error in login');
             }
-            $tokenResult = $user->createToken('token-auth')->plainTextToken;
             if($user->role_id == 2){
                 return redirect()->intended('/analisis-tamu')->with('success', 'Selamat Datang Admin '.$user->name.'');
             }else {

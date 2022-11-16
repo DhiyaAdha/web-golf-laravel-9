@@ -12,7 +12,7 @@
             style="top:20;"><i class="zmdi zmdi-menu"></i></a>
         <a id="toggle_mobile_nav" class="mobile-only-view" href="javascript:void(0);"><i class="zmdi zmdi-more"></i></a>
     </div>
-    <div id="mobile_only_nav" class="mobile-only-nav pull-right">
+    <div id="mobile_only_nav" class="mobile-only-nav pull-right" data-title="Label Pengguna" data-intro="Bagian ini untuk menampilkan nama pengguna setelah login">
         <ul class="nav navbar-right top-nav pull-right">
             <li class="dropdown auth-drp">
                 <a href="#" class="dropdown-toggle pr-0" data-toggle="dropdown">
