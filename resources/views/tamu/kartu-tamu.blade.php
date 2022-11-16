@@ -53,23 +53,29 @@
                                                         <div class="mb-5">
                                                             <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/front-vip-card.svg') : asset('dist/img/kartutamu/front-member-card.svg') }}"
                                                                 alt="{{ $visitor->tipe_member }}">
-                                                            <div class="qr-code">
-                                                                {{ QrCode::size(80)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
-                                                            </div>
-                                                            <div class="identity">
-                                                                <h6 style="text-transform: uppercase; font-size:8pt;">
-                                                                    {{ $visitor->name }} 
-                                                                </h6>
-                                                            </div>
-                                                            <div class="codemember">
-                                                                <h6 style="text-transform: uppercase; font-size:6pt; color:black;">
-                                                                    {{ $visitor->phone }}</h6>
-                                                            </div>
-                                                            
-                                                            <div class="datetime ">
+                                                            <div class="container text-center">
+                                                                <div class="row g-2">
+                                                                    <div class="qr-code">
+                                                                        {{ QrCode::size(80)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
+                                                                    </div>
+                                                                    <div class="identity">
+                                                                        <h6
+                                                                            style="text-transform: uppercase; font-size:8pt;">
+                                                                            {{ $visitor->name }}
+                                                                        </h6>
+                                                                    </div>
+                                                                    <div class="codemember">
+                                                                        <h6
+                                                                            style="text-transform: uppercase; font-size:6pt; color:black;">
+                                                                            {{ $visitor->phone }}</h6>
+                                                                    </div>
+
+                                                                    <div class="datetime  ">
                                                                 <h6 style="font-size: 5pt; opacity: 0.5;">Berlaku hingga
                                                                     {{ $visitor->expired_date }}
                                                                 </h6>
+                                                            </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="mt-5">
