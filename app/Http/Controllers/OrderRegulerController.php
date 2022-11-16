@@ -96,7 +96,7 @@ class OrderRegulerController extends Controller
             'total' => $total
         ];
 
-        return view('reguler.keranjang-reguler', compact(
+        return view('reguler.cart-reguler', compact(
             'date_now',
             'today',
             'default',
