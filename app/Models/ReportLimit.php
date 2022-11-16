@@ -16,7 +16,6 @@ class ReportLimit extends Model
         'report_quota',
         // 'fund_limit',
         'status',
-        // 'activities',
         'created_at',
         'updated_at', 
     ];
