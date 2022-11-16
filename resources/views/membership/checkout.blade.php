@@ -233,9 +233,41 @@
                                                         <input type="radio" name="payment" id="kw" class="custom-control-input" value="multiple">
                                                         <label class="custom-control-label cursor" for="kw">Split</label>
                                                     </div>
-                                                    <button tabindex="0" type="button" class="btn btn-success btn-flat" title="Calculator" data-popover-content="#unique-id" data-toggle="popover" data-placement="bottom">
-                                                        <i class="fa fa-calculator fa-lg" aria-hidden="true"></i>
-                                                    </button>
+                                                    <div data-toggle="tooltip" title="Akses keyboard">
+                                                        <button tabindex="0" type="button" id="shortcut" class="btn btn-success btn-flat mr-2" data-popover-content="#shortcut-id" data-toggle="popover" data-placement="left">
+                                                            <i class="fa fa-key" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div data-toggle="tooltip" title="Kalkulator">
+                                                        <button tabindex="0" type="button" id="calculator" class="btn btn-success btn-flat" data-popover-content="#unique-id" data-toggle="popover" data-placement="left">
+                                                            <i class="fa fa-calculator" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div id="shortcut-id" style="display:none;">
+                                                        <h3 class="popover-header text-center">Shortcut keyboard</h3>
+                                                        <div class="popover-body">
+                                                            <div class="d-flex mb-2">
+                                                                <span class="mr-2" style="width:40px;">ALT+1</span>
+                                                                <span class="text-left text-capitalize">kalkulator popup</span>
+                                                            </div>
+                                                            <div class="d-flex mb-2">
+                                                                <span class="mr-2" style="width:40px;">ALT+2</span>
+                                                                <span class="text-left text-capitalize"> akses keyboard popup</span>
+                                                            </div>
+                                                            <div class="d-flex mb-2">
+                                                                <span class="mr-2" style="width:40px;">ALT+3</span>
+                                                                <span class="text-left text-capitalize"> refresh form bayar </span>
+                                                            </div>
+                                                            <div class="d-flex mb-2">
+                                                                <span class="mr-2" style="width:40px;">ALT+5</span>
+                                                                <span class="text-left text-capitalize"> kembali ke keranjang</span>
+                                                            </div>
+                                                            <div class="d-flex mb-2">
+                                                                <span class="mr-2" style="width:40px;">ALT+6</span>
+                                                                <span class="text-left text-capitalize"> bayar sekarang</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div id="unique-id" style="display:none;">
                                                         <h3 class="popover-header text-center">Calculator</h3>
                                                         <div class="popover-body">
@@ -486,7 +518,6 @@
                                                         <div class="d-flex align-items-center choose" style="border-bottom: 1px solid rgba(0,0,0,.125);">
                                                             <div class="flex-grow-1 custom-control custom-checkbox" style="width:100%;">
                                                                 @if ($log_limit->quota != 0 || $log_coupon->quota_kupon != 0)
-                                                                    {{-- @if ($totalPrice != $price_single) --}}
                                                                     @if ($deposit->balance != 0)
                                                                         <input type="checkbox" name="payment-type[]" value="deposit" data-deposit="{{ $deposit->balance }}" data-bill="{{ (int) ceil($totalPrice) }}" class="custom-control-input" id="customCheck8">
                                                                         <label class="custom-control-label" for="customCheck8" style="width: 100%; cursor:pointer;">
@@ -740,7 +771,7 @@
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <a href="{{ URL::signedRoute('order.cart', ['id' => $visitor->id]) }}" class="btn btn-primary btn-sm mt-2">Kembali</a>
+                                    <a href="{{ URL::signedRoute('order.cart', ['id' => $visitor->id]) }}" data-route="{{ URL::signedRoute('order.cart', ['id' => $visitor->id]) }}" class="btn btn-primary btn-sm mt-2" id="back">Kembali</a>
                                     <button type="submit" id="pay" class="btn btn-sm btn-success mt-2">Bayar</button>
                                 </div>
                             </div>
