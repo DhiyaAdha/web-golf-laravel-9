@@ -47,21 +47,24 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     Route::get('/aktifitas', [AdminController::class, 'aktifitas'])->name('admin.aktifitas');
     route::get('/invoice_cetakpdf/{id}', [InvoiceController::class, 'cetak_pdf'])->name('cetak_pdf');
     route::get('/export_excel', [InvoiceController::class, 'export_excel'])->name('export_excel');
-    Route::post('/package/store', [PackageController::class, 'store'])->name('package.store');
     Route::get('/package/edit/{package}', [PackageController::class, 'edit'])->name('package.edit');
     Route::post('/package/update/{id}', [PackageController::class, 'update'])->name('package.update');
     Route::post('/package/destroy', [PackageController::class, 'destroy'])->name('package.destroy');
-    Route::resource('revenue', RevenueController::class);
+    Route::post('/package/store', [PackageController::class, 'store'])->name('package.store');
     Route::middleware(['htmlMinifier'])->group(static function () {
+        Route::resource('revenue', RevenueController::class);
         Route::resource('analisis-tamu', DashboardController::class);
         Route::get('/analytic/week', [DashboardController::class, 'analytic_week'])->name('analytic.week');
+        Route::get('/analytic/week/revenue', [RevenueController::class, 'analytic_week_revenue'])->name('analytic.week.revenue');
         Route::get('/analytic/month', [DashboardController::class, 'analytic_month'])->name('analytic.month');
+        Route::get('/analytic/month/revenue', [RevenueController::class, 'analytic_month_revenue'])->name('analytic.month.revenue');
         Route::get('/daftar-admin', [AdminController::class, 'index'])->name('daftar-admin');
         Route::get('/tambah-admin', [AdminController::class, 'tambahadmin'])->name('tambah-admin');
         Route::get('/edit-admin/{users}', [AdminController::class, 'edit'])->name('edit-admin');
         Route::resource('/riwayat-invoice', InvoiceController::class)->except(['show', 'update']);
         Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name('show');
-        Route::resource('package', PackageController::class)->except(['update']);
+        Route::get('/package', [PackageController::class, 'index'])->name('package.index');
+        Route::get('/package/tambah-package', [PackageController::class, 'create'])->name('package.create');
     });
 });
     
@@ -78,6 +81,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('reportlimit', [TamuController::class, 'reportlimit'])->name('limit.report');
     Route::get('transaksideposit', [TamuController::class, 'transaksideposit'])->name('transaksideposit');
     Route::get('transaksilimit', [TamuController::class, 'transaksilimit'])->name('transaksilimit');
+    Route::get('transaksicoupon', [TamuController::class, 'transaksicoupon'])->name('transaksicoupon');
     Route::get('/reporttransaksi/{id}', [TamuController::class, 'reporttransaksi'])->name('transaksi.report.data');
     Route::get('/reportdeposit/{id}', [TamuController::class, 'reportdeposit'])->name('deposit.report.data');
     Route::get('/reportlimit/{id}', [TamuController::class, 'reportlimit'])->name('limit.report.data');

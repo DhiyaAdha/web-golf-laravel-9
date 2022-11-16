@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('role_id')->unsigned();
+            $table->timestamp('last_seen')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
@@ -29,12 +30,7 @@ class CreateUsersTable extends Migration
                 ->references('id')
                 ->on('roles')
                 ->onDelete('cascade');
-
-            
-
         });
-
-
     }
 
     /**

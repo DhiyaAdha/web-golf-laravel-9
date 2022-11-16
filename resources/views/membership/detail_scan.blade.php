@@ -129,7 +129,7 @@
                                             <div class="mt-15">
                                                 <div class="pull-left">
                                                     <strong>
-                                                        {{ $log_limit->quota_kupon ?? '0' }}
+                                                        {{ $log_coupon->quota_kupon ?? '0' }}
                                                     </strong>
                                                 </div>
                                             </div>

@@ -48,7 +48,7 @@
                                     <label class="pull-left control-label mb-10" for="password_confirmation">Ulangi Password</label>
                                     <div class="clearfix"></div>
                                     <input type="password" name="password_confirmation" class="form-control @error('password') is-invalid @enderror" id="password_confirmation" placeholder="Masukan Password Baru" value="{{ old('password_confirmation') }}" autocomplete="current-password">
-                                        <div id="CheckPasswordMatch"></div>
+                                        {{-- <div id="CheckPasswordMatch"></div> --}}
                                         @error('password_confirmation')
                                             <div class="text-danger"> {{ $message }}</div>
                                         @enderror

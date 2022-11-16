@@ -11,8 +11,10 @@ use App\Models\LogAdmin;
 use App\Models\LogLimit;
 use Carbon\CarbonPeriod;
 use App\Jobs\SendMailJob;
+use App\Models\LogCoupon;
 use App\Models\ReportLimit;
 use Illuminate\Support\Str;
+use App\Models\ReportCoupon;
 use FontLib\Table\Type\post;
 use Illuminate\Http\Request;
 use App\Models\ReportDeposit;
@@ -184,16 +186,14 @@ class TamuController extends Controller {
                 'visitor_id' => $visitors->id,
                 'user_id' =>    Auth::user()->id,
                 'report_quota' => 4,
-                'report_quota_kupon' => 0,
                 'status' => 'Bertambah',
                 'created_at' => Carbon::now(),
-            ]);
+            ]); 
         } else {
             $report_quota = ReportLimit::create([
                 'visitor_id' => $visitors->id,
                 'user_id' =>    Auth::user()->id,
                 'report_quota' => 10,
-                'report_quota_kupon' => 0,
                 'status' => 'Bertambah',
                 'created_at' => Carbon::now(),
             ]);
@@ -204,7 +204,6 @@ class TamuController extends Controller {
             'visitor_id' => $visitors->id,
             'report_limit_id' => $report_quota->id,
             'quota' => $request->tipe_member == 'VIP' ? '4' : '10',
-            'quota_kupon' => 0,
             'created_at' => Carbon::now(),
         ]);
         $quota->save();
@@ -223,10 +222,18 @@ class TamuController extends Controller {
             'report_deposit_id' => $report_deposit->id,
         ]);
         $deposit->save();
+
+        LogCoupon::create([
+            'visitor_id' => $visitors->id,
+            'quota_kupon' => 0,
+        ]);
+
         $data = $request->all();
         // dd($data);  
 
         dispatch(new SendMailJob($data));
+
+
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'CREATE',
@@ -390,49 +397,49 @@ class TamuController extends Controller {
             $decrypt_id = Crypt::decryptString($id);
             $data['visitor'] = Visitor::find($decrypt_id);
             $limit = LogLimit::where('visitor_id', $decrypt_id)->first();
+            $coupon = LogCoupon::where('visitor_id', $decrypt_id)->first();
             $deposit = Deposit::where('visitor_id', $decrypt_id)->first();
             $visitor = Visitor::findOrFail($decrypt_id);
             $data['qrcode'] = QrCode::size(180)->generate($visitor->id);
             $data['quota'] = $limit->quota;
-            $data['quota_kupon'] = $limit->quota_kupon;
+            $data['quota_kupon'] = $coupon->quota_kupon ?? '0';
             $data['balance'] = $deposit->balance;
             $data['deposit'] = Deposit::where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
             $data['limit'] = LogLimit::where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
-            // Statistika Pertahun Grafik-chart
-        $months = [
-            1 => 'Jan',
-            2 => 'Feb',
-            3 => 'Mar',
-            4 => 'Apr',
-            5 => 'May',
-            6 => 'Jun',
-            7 => 'Jul',
-            8 => 'Aug',
-            9 => 'Sep',
-            10 => 'Oct',
-            11 => 'Nov',
-            12 => 'Dec',
-        ];
-        $data['years'] = range(Carbon::now()->year - 3, Carbon::now()->year);
-        $month_period = CarbonPeriod::create(Carbon::now()->subMonths(11), Carbon::now());
-        foreach ($month_period as $key => $value) {
-            $month_new[$value->format('m')] = [$value->format('n'), $value->format('Y')];
-        }
-        foreach (array_values($month_new) as $key => $value) {
-            $data['invoice_chart'][$key]['e'] = $months[$value[0]];
-            $data['invoice_chart'][$key]['f'] =  LogTransaction::where('visitor_id', $decrypt_id)->whereHas(
-                'visitor',
-                function (Builder $query) {
-                    $query->where('tipe_member', 'VIP');
-                }
-            )->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->count();
-            $data['invoice_chart'][$key]['g'] =  LogTransaction::where('visitor_id', $decrypt_id)->whereHas(
-                'visitor',
-                function (Builder $query) {
-                    $query->where('tipe_member', 'VVIP');
-                }
-            )->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->count();
-        }
+            $months = [
+                1 => 'Jan',
+                2 => 'Feb',
+                3 => 'Mar',
+                4 => 'Apr',
+                5 => 'May',
+                6 => 'Jun',
+                7 => 'Jul',
+                8 => 'Aug',
+                9 => 'Sep',
+                10 => 'Oct',
+                11 => 'Nov',
+                12 => 'Dec',
+            ];
+            $data['years'] = range(Carbon::now()->year - 3, Carbon::now()->year);
+            $month_period = CarbonPeriod::create(Carbon::now()->subMonths(11), Carbon::now());
+            foreach ($month_period as $key => $value) {
+                $month_new[$value->format('m')] = [$value->format('n'), $value->format('Y')];
+            }
+            foreach (array_values($month_new) as $key => $value) {
+                $data['invoice_chart'][$key]['e'] = $months[$value[0]];
+                $data['invoice_chart'][$key]['f'] =  LogTransaction::where('visitor_id', $decrypt_id)->whereHas(
+                    'visitor',
+                    function (Builder $query) {
+                        $query->where('tipe_member', 'VIP');
+                    }
+                )->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->count();
+                $data['invoice_chart'][$key]['g'] =  LogTransaction::where('visitor_id', $decrypt_id)->whereHas(
+                    'visitor',
+                    function (Builder $query) {
+                        $query->where('tipe_member', 'VVIP');
+                    }
+                )->whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->count();
+            }
             return view('tamu.kartu-tamu', $data);
         } catch (\Throwable $th) {
             return redirect()->route('daftar-tamu');
@@ -482,9 +489,9 @@ class TamuController extends Controller {
             })->addColumn('Informasi', function ($data) {
                 if($data->status == 'Bertambah'){
                     return ' Limit anda bertambah!';
-            } elseif($data->status == 'Berkurang'){
-                return ' Limit anda berkurang! ';
-            } else {
+                } elseif($data->status == 'Berkurang'){
+                    return ' Limit anda berkurang! ';
+                } else {
                 return 'Limit berhasil direset';
             }})->addColumn('status', function ($data) {
                 if ($data->status == 'Bertambah') {
@@ -504,30 +511,24 @@ class TamuController extends Controller {
     /* data aktifitas tamu kupon */
     public function reportkupon(Request $request, $id) {
         $decrypt_id = Crypt::decryptString($id);
-        $aktifitas_limit = ReportLimit::select('id', 'report_quota_kupon', 'status', 'visitor_id',  'user_id', 'created_at')->where('visitor_id', $decrypt_id)->where('report_quota_kupon','!=',0)->orderBy('created_at', 'desc')->get();
+        $aktifitas_coupon = ReportCoupon::whereIn('status', ['Bertambah', 'Berkurang'])->where('visitor_id', $decrypt_id)->where('report_quota_kupon','!=' ,0)->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
-            return datatables()->of($aktifitas_limit)
+            return datatables()->of($aktifitas_coupon)
                 ->addColumn('kupon', function ($data) {
                     if ($data->report_quota_kupon > 0){
                         return $data->report_quota_kupon;
-                    } else {
-                        return ;
                     }
                 })->addColumn('Informasi', function ($data) {
                     if($data->status == 'Bertambah'){
                         return ' Kupon anda bertambah!';
                 } elseif($data->status == 'Berkurang'){
                     return ' Kupon anda berkurang! ';
-                } else {
-                    
                 }})
                 ->addColumn('status', function ($data) {
                     if ($data->status == 'Bertambah') {
                         return '<p class="label label-success">' . $data->status . '<div>';
                     } elseif ($data->status == 'Berkurang') {
                         return '<p class="label label-danger">' . $data->status . '<div>';
-                    } else {
-                        
                     }
                 })->editColumn('created_at', function ($data) {
                     if ($data->report_quota_kupon > 0){
@@ -723,7 +724,32 @@ class TamuController extends Controller {
         return redirect('/aktifitas-kartu-tamu/' . $visitors->id)
             ->with('toast_success', 'Transaksi Berhasil!');
     }
-    /* END SUCCEED TRANSAKSI limit */
+    /* END SUCCEED TRANSAKSI Coupon */
+    /* SUCCEED TRANSAKSI Coupon */
+    public function transaksicoupon(Request $request) {
+        $visitors = Visitor::create([
+            'name' => $request->name,
+            'address' => $request->address,
+            'gender' => $request->gender,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'company' => $request->company,
+            'position' => $request->position,
+            'tipe_member' => $request->tipe_member,
+            'created_at' => Carbon::now(),
+        ]);
+
+        LogCoupon::create([
+            'visitor_id' => $request->visitor_id,
+            'user_id' => Auth::id(),
+            'type' => 'SUCCEED',
+            'activities' => 'Transaksi berhasil! <b>' . $visitors->name . ' telah melakkan pembayaran menggunakan <b>' . $request->quota_kupon . '</b>',
+        ]);
+
+        return redirect('/aktifitas-kartu-tamu/' . $visitors->id)
+            ->with('toast_success', 'Transaksi Berhasil!');
+    }
+    /* END SUCCEED TRANSAKSI Coupon */
 
     /**
      * Show the form for editing the specified resource.
@@ -735,7 +761,8 @@ class TamuController extends Controller {
         $decrypt_id = Crypt::decryptString($id);
         $visitor = Visitor::find($decrypt_id);
         $limit = LogLimit::where('visitor_id', $decrypt_id)->first();
-        return view('tamu.edit-tamu', compact('visitor', 'limit'));
+        $coupon = LogCoupon::where('visitor_id', $decrypt_id)->first();
+        return view('tamu.edit-tamu', compact('visitor', 'limit', 'coupon'));
     }
 
     /**
@@ -778,39 +805,21 @@ class TamuController extends Controller {
 
     public function update_kupon(Request $request, $id) {
         try {
-            $visitor = LogLimit::join('visitors', 'log_limits.visitor_id', '=', 'visitors.id')->where('log_limits.visitor_id', $id)->first();
-            // $log_limit = LogLimit::where('visitor_id', $id)->first();
-            $log_limit = LogLimit::where('visitor_id', $id)->first();
-            $log_limit->quota_kupon = $request->quota_kupon + $log_limit->quota_kupon;
-            $log_limit->save();
-
-            //notifikasi email
-            $log_limit = LogLimit::where('visitor_id', $id)->first();
-            $data = $request->all();
-            $datav = Visitor::find($id);
-            $data['name'] = $datav->name;
-            $data['tambahkupon'] = $request->quota_kupon;
-            $data['sebelumkupon'] = $log_limit->quota_kupon - $request->quota_kupon;
-            $data['setelahkupon'] = $log_limit->quota_kupon;
-            $data['quota'] = $log_limit->quota;
-            $data['quota_kupon'] = $log_limit->quota_kupon;
-            $data['email'] = $visitor->email;
-            dispatch(new SendMailJobKuponTambah($data));
-
+            $visitor = LogCoupon::join('visitors', 'log_coupons.visitor_id', '=', 'visitors.id')->where('log_coupons.visitor_id', $id)->first();
+            $log_coupon = LogCoupon::where('visitor_id', $id)->first();
+            $log_coupon->quota_kupon = $request->quota_kupon + $log_coupon->quota_kupon;
+            $log_coupon->save();
+            ReportCoupon::create([
+                'report_quota_kupon' => $log_coupon->quota_kupon,
+                'visitor_id' => $id,
+                'user_id' => Auth::id(),
+                'status' => 'Bertambah',
+            ]);
             LogAdmin::create([
                 'user_id' => Auth::id(),
                 'type' => 'CREATE',
                 'activities' => 'Berhasil menambah kupon <b>' . $request->quota_kupon . '</b> atas nama <b>' . $visitor->name . '</b>',
             ]);
-
-            ReportLimit::create([
-                'report_quota_kupon' => $log_limit->quota_kupon,
-                'report_quota' => 0,
-                'visitor_id' => $id,
-                'user_id' => Auth::id(),
-                'status' => 'Bertambah',
-            ]);
-
             return redirect()->back()->with('success', 'Berhasil menambah kupon');
         } catch (\Throwable $th) {
             return response()->json($this->getResponse());

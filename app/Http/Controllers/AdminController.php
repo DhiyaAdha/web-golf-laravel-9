@@ -8,6 +8,7 @@ use App\Models\LogAdmin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use PHPUnit\Framework\Constraint\LogicalOr;
@@ -19,11 +20,11 @@ class AdminController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request) {
-        $user = User::join('roles', 'users.role_id', '=', 'roles.id')->orderBy('users.created_at', 'desc')->get(['users.*', 'roles.name as role']);
+        $user = User::join('roles', 'users.role_id', '=', 'roles.id')->orderBy('users.last_seen', 'DESC')->get(['users.*', 'roles.name as role']);
         if ($request->ajax()) {
             return datatables()->of($user)->addColumn('action', function ($user) {
-                if(Auth::id() == $user->id) {
-                    return 'Sedang login';
+                if(Cache::has('user-is-online-' . $user->id)) {
+                    return '<span class="text-success text-capitalize">online</span>';
                 } else {
                     $button = '<a data-toggle="tooltip" data-placement="top" title="Edit" href="' . url('edit-admin/' . $user->id) . '">
                                         <svg width="21" height="21";viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -167,6 +168,8 @@ class AdminController extends Controller {
                 'phone.required' => 'Nomer Hp admin masih kosong.',
                 'phone.unique' => 'Nomer Hp admin sudah ada',
                 'password.required' => 'Password admin masih kosong.',
+                'password_confirmation.min' => 'Minimal 8 karakter',
+                'password_confirmation.same' => 'Password tidak sama',
                 'role_id.required' => 'Role admin masih kosong.',
             ]
         );
