@@ -67,8 +67,8 @@
                                                             </div>
                                                             
                                                             <div class="datetime ">
-                                                                <h6 style="font-size: 5pt; opacity: 0.5;">Berlaku hingga
-                                                                    {{ $visitor->expired_date }}
+                                                                <h6 style="font-size: 5pt; color:white;">Berlaku hingga
+                                                                    {{ \Carbon\Carbon::parse($visitor->expired_date)->format('d-m-Y')}}
                                                                 </h6>
                                                             </div>
                                                         </div>

@@ -794,13 +794,10 @@ video {
 
 .resolution .datetime {
     position: absolute;
-    /* font-family: 'Montserrat'; */
-    font-family: "Ayuthaya";
+    font-family: 'Montserrat';
     font-weight: 500;
-    /* bottom: 9%; */
-    top: 160px; */
-    
-    left: 2%;
+    top: 82%; 
+    left: 10px;
     opacity: 0.7;
     margin-top: 8px;
 }
