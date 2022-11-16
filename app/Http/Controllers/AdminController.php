@@ -55,8 +55,8 @@ class AdminController extends Controller {
         $this->validate(
             $request,
             [
-                'name' => 'required',
-                'email' => 'required',
+                'name' => 'required|unique:visitors,name',
+                'email' => 'required|unique:visitors,email',
                 'password' => 'required|min:8',
                 'password_confirmation' => 'required_with:password|same:password|min:8',
                 'phone' => 'required|min:12',
@@ -64,7 +64,9 @@ class AdminController extends Controller {
             ],
             [
                 'name.required' => 'Nama admin masih kosong.',
+                'name.unique' => 'Nama Lengkap sudah ada',
                 'email.required' => 'Email admin masih kosong.',
+                'email.unique' => 'Email sudah ada',
                 'phone.required' => 'Nomer Hp admin masih kosong.',
                 'password.required' => 'Password masih kosong.',
                 'password.min' => 'Minimal 8 karakter',
