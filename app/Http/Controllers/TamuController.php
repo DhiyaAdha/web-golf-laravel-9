@@ -131,10 +131,10 @@ class TamuController extends Controller {
         $this->validate(
             $request,
             [
-                'name' => 'required|unique:visitors,name',
+                'name' => 'required|unique:visitors,name|unique:users,name',
                 'address' => 'required',
                 'gender' => 'required',
-                'email' => 'required|email|unique:visitors,email',
+                'email' => 'required|email|unique:visitors,email|unique:users,email',
                 'company' => 'required',
                 'position' => 'required',
                 'tipe_member' => 'required',
@@ -248,10 +248,10 @@ class TamuController extends Controller {
         $this->validate(
             $request,
             [
-                'name' => 'required',
+                'name' => 'required|unique:users,name',
                 'address' => 'required',
                 'gender' => 'required',
-                'email' => 'required|email',
+                'email' => 'required|email|unique:users,email',
                 'company' => 'required',
                 'position' => 'required',
                 'tipe_member' => 'required',
@@ -260,8 +260,10 @@ class TamuController extends Controller {
             ],
             [
                 'name.required' => 'Nama Tamu masih kosong.',
+                'name.unique' => 'Nama Lengkap sudah ada',
                 'address.required' => 'Alamat Tamu masih kosong.',
                 'email.required' => 'Email Tamu masih kosong.',
+                'email.unique' => 'Email sudah ada',
                 'company.required' => 'Nama perusahaan masih kosong.',
                 'position.required' => 'Posisi masih kosong.',
                 'category.required' => 'Kategori masih kosong.',

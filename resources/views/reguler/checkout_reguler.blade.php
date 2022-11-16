@@ -187,9 +187,45 @@
                                         <form>
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Metode Pembayaran</span>
-                                                <button tabindex="0" type="button" class="btn btn-success btn-flat" title="Calculator" data-popover-content="#unique-id" data-toggle="popover" data-placement="bottom">
-                                                    <i class="fa fa-calculator fa-lg" aria-hidden="true"></i>
-                                                </button>
+                                                <div data-toggle="tooltip" title="Akses keyboard">
+                                                    <button tabindex="0" type="button" id="shortcut" class="btn btn-success btn-flat mr-2" data-popover-content="#shortcut-id" data-toggle="popover" data-placement="left">
+                                                        <i class="fa fa-key" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                                <div data-toggle="tooltip" title="Kalkulator">
+                                                    <button tabindex="0" type="button" id="calculator" class="btn btn-success btn-flat" data-popover-content="#unique-id" data-toggle="popover" data-placement="left">
+                                                        <i class="fa fa-calculator" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                                <div id="shortcut-id" style="display:none;">
+                                                    <h3 class="popover-header text-center">Shortcut keyboard</h3>
+                                                    <div class="popover-body">
+                                                        <div class="d-flex mb-2">
+                                                            <span class="mr-2" style="width:40px;">ALT+1</span>
+                                                            <span class="text-left text-capitalize">kalkulator popup</span>
+                                                        </div>
+                                                        <div class="d-flex mb-2">
+                                                            <span class="mr-2" style="width:40px;">ALT+2</span>
+                                                            <span class="text-left text-capitalize"> akses keyboard popup</span>
+                                                        </div>
+                                                        <div class="d-flex mb-2">
+                                                            <span class="mr-2" style="width:40px;">ALT+3</span>
+                                                            <span class="text-left text-capitalize"> refresh form bayar </span>
+                                                        </div>
+                                                        <div class="d-flex mb-2">
+                                                            <span class="mr-2" style="width:40px;">ALT+4</span>
+                                                            <span class="text-left text-capitalize"> Aktifkan form tamu</span>
+                                                        </div>
+                                                        <div class="d-flex mb-2">
+                                                            <span class="mr-2" style="width:40px;">ALT+5</span>
+                                                            <span class="text-left text-capitalize"> kembali ke keranjang</span>
+                                                        </div>
+                                                        <div class="d-flex mb-2">
+                                                            <span class="mr-2" style="width:40px;">ALT+6</span>
+                                                            <span class="text-left text-capitalize"> bayar sekarang</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div id="unique-id" style="display:none;">
                                                     <h3 class="popover-header text-center">Calculator</h3>
                                                     <div class="popover-body">
@@ -347,7 +383,7 @@
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <a href="{{ route('proses_reguler') }}" class="btn btn-primary btn-sm mt-2">Kembali</a>
+                                    <a href="{{ route('proses_reguler') }}" class="btn btn-primary btn-sm mt-2" id="back">Kembali</a>
                                     <button type="submit" id="pay" class="btn btn-sm btn-success mt-2">Bayar</button>
                                 </div>
                             </div>
