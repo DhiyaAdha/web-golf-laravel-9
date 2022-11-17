@@ -7,12 +7,6 @@
     <script defer src="{{ mix('js/app.js') }}"></script>
     @stack('scripts')
     <script>
-        if(sessionStorage.getItem('TOUR') !== 'true') {
-            introJs().start();
-            sessionStorage.setItem('TOUR', true);
-        }
-    </script>
-    <script>
         $(window).load(function() {
             $(".se-pre-con").fadeOut("slow");
         });
