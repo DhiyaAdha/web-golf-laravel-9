@@ -72,7 +72,7 @@
 
                                                                     <div class="datetime  ">
                                                                 <h6 style="font-size: 5pt; opacity: 1;">Berlaku hingga
-                                                                    {{ $visitor->expired_date }}
+                                                                    {{ date('d m y', strtotime($visitor->expired_date)) }}
                                                                 </h6>
                                                             </div>
                                                                 </div>
