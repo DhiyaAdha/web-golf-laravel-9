@@ -510,6 +510,15 @@ h6.panel-title.text-center {
     box-sizing: border-box;
 }
 
+/* start login */
+#eye_login {
+    position: absolute;
+    margin-top: 40px;
+    top: 198px;
+    right: 40px;
+}
+/* finish login */
+
 #eye {
     position: absolute;
     margin-top: 40px;
@@ -786,11 +795,10 @@ video {
 .resolution .datetime {
     position: absolute;
     font-family: 'Montserrat';
-    /* font-family: "Ayuthaya"; */
     font-weight: 500;
-    /* bottom: 9%; */
-    top: 160px; */
-    opacity: 0.7;
+    top: 82%; 
+    left: 10px;
+    /* opacity: 0.7; */
     margin-top: 8px;
     left: 10px;
 }

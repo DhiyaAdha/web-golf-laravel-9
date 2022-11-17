@@ -325,7 +325,7 @@
                                         <td colspan="5">
                                             <table>
                                                     <td style="text-align: left">
-                                                        <strong>Jenis Tamu:</strong><br>
+                                                        <strong>Jenis Member:</strong><br>
                                                         <span class="label label-warning">{!! $data['type_member'] !!}</span>
                                                     </td>
                                                     @foreach ($data['payment_type'] as $items)

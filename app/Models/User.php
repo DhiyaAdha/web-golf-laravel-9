@@ -27,6 +27,7 @@ class User extends Authenticatable
         'password',
         'phone',
         'role_id',
+        'last_seen'
     ];
 
 
@@ -48,11 +49,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    // public function deposit_history()
-    // {
-    //     return $this->hasMany(DepositHistory::class);
-    // }
     
     public function admin()
     {

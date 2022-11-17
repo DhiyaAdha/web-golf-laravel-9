@@ -4,80 +4,120 @@
 
 /*****Ready function start*****/
 $( document ).ready(function() {
-    Morris.Bar({
-        element: 'revenue_bar',
-        data: revenueWeek,
-        xkey: 'y',
-        ykeys: ['a', 'b', 'c','d' ],
-        labels: ['Permainan', 'Proshop & Fasilitas', 'Kantin', 'Total' ],
-        stacked: true,
-        barColors:['#fec107', '#32FFC1', '#5F9DF7', '#00FFFFFF'],
-        hideHover: 'auto',
-        gridLineColor: '#878787',
-        stacked: true,
-        resize: true,
-        barGap: 4,
-        gridTextColor:'#878787',
-        gridTextFamily:"Roboto",
-        barSize: 30,
+    $('#b').click(function() {
+        document.getElementById('revenue_bar_game').style = 'display:visible;';
     });
-    Morris.Bar({
-        element: 'revenue_bar_game',
-        data: revenueWeek,
-        xkey: 'y',
-        ykeys: ['a'],
-        labels: ['Permainan'],
-        stacked: true,
-        barColors:['#fec107'],
-        hideHover: 'auto',
-        gridLineColor: '#878787',
-        stacked: true,
-        resize: true,
-        barGap: 4,
-        gridTextColor:'#878787',
-        gridTextFamily:"Roboto",
-        barSize: 30,
-    })
-    Morris.Bar({
-        element: 'revenue_bar_facility',
-        data: revenueWeek,
-        xkey: 'y',
-        ykeys: ['b'],
-        labels: ['Proshop & Fasilitas'],
-        stacked: true,
-        barColors:['#32FFC1'],
-        hideHover: 'auto',
-        gridLineColor: '#878787',
-        stacked: true,
-        resize: true,
-        barGap: 4,
-        gridTextColor:'#878787',
-        gridTextFamily:"Roboto",
-        barSize: 30,
-    })
-    Morris.Bar({
-        element: 'revenue_bar_other',
-        data: revenueWeek,
-        xkey: 'y',
-        ykeys: ['c'],
-        labels: ['Kantin'],
-        stacked: true,
-        barColors:['#5F9DF7'],
-        hideHover: 'auto',
-        gridLineColor: '#878787',
-        stacked: true,
-        resize: true,
-        barGap: 4,
-        gridTextColor:'#878787',
-        gridTextFamily:"Roboto",
-        barSize: 30,
-    })
+    $('#c').click(function() {
+        document.getElementById('revenue_bar_facility').style = 'display:visible;';
+    });
+    $('#d').click(function() {
+        document.getElementById('revenue_bar_other').style = 'display:visible;';
+    });
+    $('#f').click(function() {
+        document.getElementById('revenue_line_game').style = 'display:visible;';
+    });
+    $('#g').click(function() {
+        document.getElementById('revenue_line_facility').style = 'display:visible;';
+    });
+    $('#h').click(function() {
+        document.getElementById('revenue_line_other').style = 'display:visible;';
+    });
 
-// grafik line 
-if($('#revenue_line')) {
+    $.ajax({  
+        type: "GET",  
+        url: "/analytic/week/revenue",  
+        contentType: "application/json; charset=utf-8",  
+        dataType: "json",  
+        success: function(response) {  
+            analytic_week_revenue(response);  
+        },  
+    });
+
+    $.ajax({  
+        type: "GET",  
+        url: "/analytic/month/revenue",  
+        contentType: "application/json; charset=utf-8",  
+        dataType: "json",  
+        success: function(response) {  
+            analytic_month_revenue(response);  
+        },  
+    });
+
+    function analytic_week_revenue(days) {
+        Morris.Bar({
+            element: 'revenue_bar',
+            data: JSON.parse(days),
+            xkey: 'y',
+            ykeys: ['a', 'b', 'c','d' ],
+            labels: ['Permainan', 'Proshop & Fasilitas', 'Kantin', 'Total' ],
+            stacked: true,
+            barColors:['#fec107', '#32FFC1', '#5F9DF7', '#00FFFFFF'],
+            hideHover: 'auto',
+            gridLineColor: '#878787',
+            stacked: true,
+            resize: true,
+            barGap: 4,
+            gridTextColor:'#878787',
+            gridTextFamily:"Roboto",
+            barSize: 30,
+        });
+        Morris.Bar({
+            element: 'revenue_bar_game',
+            data: JSON.parse(days),
+            xkey: 'y',
+            ykeys: ['a'],
+            labels: ['Permainan'],
+            stacked: true,
+            barColors:['#fec107'],
+            hideHover: 'auto',
+            gridLineColor: '#878787',
+            stacked: true,
+            resize: true,
+            barGap: 4,
+            gridTextColor:'#878787',
+            gridTextFamily:"Roboto",
+            barSize: 30,
+        });
+        Morris.Bar({
+            element: 'revenue_bar_facility',
+            data: JSON.parse(days),
+            xkey: 'y',
+            ykeys: ['b'],
+            labels: ['Proshop & Fasilitas'],
+            stacked: true,
+            barColors:['#32FFC1'],
+            hideHover: 'auto',
+            gridLineColor: '#878787',
+            stacked: true,
+            resize: true,
+            barGap: 4,
+            gridTextColor:'#878787',
+            gridTextFamily:"Roboto",
+            barSize: 30,
+        });
+        Morris.Bar({
+            element: 'revenue_bar_other',
+            data: JSON.parse(days),
+            xkey: 'y',
+            ykeys: ['c'],
+            labels: ['Kantin'],
+            stacked: true,
+            barColors:['#5F9DF7'],
+            hideHover: 'auto',
+            gridLineColor: '#878787',
+            stacked: true,
+            resize: true,
+            barGap: 4,
+            gridTextColor:'#878787',
+            gridTextFamily:"Roboto",
+            barSize: 30,
+        });
+    }
+
+    function analytic_month_revenue(month) {
         Morris.Line({
             element: 'revenue_line',
-            data: revenueMonth,
+            data: JSON.parse(month),
             xkey: "e",
             parseTime: false,
             ykeys: ["f", "g", "h", "i"],
@@ -95,11 +135,9 @@ if($('#revenue_line')) {
             gridTextFamily: "Roboto",
             hideHover: 'auto',
         });
-    }
-if($('#revenue_line_game')) {
         Morris.Line({
             element: 'revenue_line_game',
-            data: revenueMonth,
+            data: JSON.parse(month),
             xkey: "e",
             parseTime: false,
             ykeys: ["g"],
@@ -117,11 +155,9 @@ if($('#revenue_line_game')) {
             gridTextFamily: "Roboto",
             hideHover: 'auto',
         });
-    }
-if($('#revenue_line_facility')) {
         Morris.Line({
             element: 'revenue_line_facility',
-            data: revenueMonth,
+            data: JSON.parse(month),
             xkey: "e",
             parseTime: false,
             ykeys: ["h"],
@@ -139,11 +175,9 @@ if($('#revenue_line_facility')) {
             gridTextFamily: "Roboto",
             hideHover: 'auto',
         });
-    }
-if($('#revenue_line_other')) {
         Morris.Line({
             element: 'revenue_line_other',
-            data: revenueMonth,
+            data: JSON.parse(month),
             xkey: "e",
             parseTime: false,
             ykeys: ["i"],
@@ -162,5 +196,4 @@ if($('#revenue_line_other')) {
             hideHover: 'auto',
         });
     }
-    // grafik line 
 });

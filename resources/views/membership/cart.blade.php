@@ -1,7 +1,7 @@
 @extends('layouts.main', ['title' => 'TGCC | Pilih Permainan'])
 @section('content')
-    <div class="page-wrapper">
-        <div class="container-fluid">
+    <div class="page-wrapper intro-foo">
+        <div class="container-fluid" data-title="Halaman Order" data-step="1" data-intro="Halaman ini digunakan oleh kasir atau admin untuk order jenis permainan, fasilitas atau kantin.">
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h5 class="txt-dark">Pilih Permainan</h5>
@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-8" data-title="Panel Paket" data-step="2" data-intro="Kemudian pada panel ini terdiri dari 3 jenis paket yang tersedia yang bisa dipesan oleh member yaitu jenis permainan, proshop fasilitas dan kantin.">
                     <div class="panel panel-default card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
@@ -30,7 +30,7 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <div class="d-flex flex-wrap">
+                        <div class="d-flex flex-wrap" data-title="Jenis Permainan" data-intro="Secara default data yang diinput sebanyak 3 jenis permainan yaitu 18 hole, 9 hole dan driving golf. Anda juga bisa menambahkan ataupun mengubah data permainan melalui menu paket bermain dengan penentuan harga weekdays dan weekend.">
                             @foreach ($default as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
@@ -44,7 +44,7 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <div class="d-flex flex-wrap">
+                        <div class="d-flex flex-wrap" data-title="Proshop dan Fasilitas" data-intro="Pilih jenis fasilitas sewa yang akan dimasukan ke keranjang">
                             @foreach ($additional as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
@@ -58,7 +58,7 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <div class="d-flex flex-wrap mb-15">
+                        <div class="d-flex flex-wrap mb-15" data-title="Kantin" data-intro="Pilih barang yang ingin dibeli member">
                             @foreach ($others as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
@@ -170,10 +170,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-            </div>
+            <button id="setting_panel_btn" data-toggle="tooltip" title="Panduan" data-placement="left" class="btn btn-success btn-circle setting-panel-btn shadow-2dp"><i class="zmdi zmdi-settings"></i></button>
             @include('layouts.footer')
-            <div id="lds-facebook"></div>
         </div>
     </div>
 @endsection

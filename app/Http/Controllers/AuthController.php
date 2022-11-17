@@ -19,67 +19,42 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class AuthController extends Controller {
-
-    //ini untuk route get pada web.php
-    public function index(){
+    public function index() {
             return view('/login');
     }
 
-    public function forgot_password(){
+    public function forgot_password() {
             return view('forgot-password');
     }
 
-    public function password_baru(){
+    public function password_baru() {
             return view('reset-password');
     }
 
-    //ini untuk function login
     public function login(Request $request) {
         $validate = Validator::make($request->all(), [
             'email' => 'required|email:dns',
             'password' => 'required',
         ]);
 
-        //berfungsi jika format email salah
         if($validate->fails()){
-            // return response(['message'=> $validate->errors()], 200);
             return back()->with('error', 'Email yang anda masukkan tidak valid!');
         } else {
-            //berfungsi jika password salah/tidak sama
             $credentials = request(['email', 'password']);
-            // $credentials = Arr::add($credentials, 'status', 'active');
             if(!Auth::attempt($credentials)){
-                $respon = [
-                    'status' => 'error',
-                    'msg' => 'Unauthorized',
-                    'errors' => null,
-                    'content' => null,
-                ];
                 return back()->with('error', 'Email atau Password yang anda masukkan salah!');
             }
-            //ini untuk menangkap error login
             $user = User::where('email', $request->email)->first();
             if(!Hash::check($request->password, $user->password, [])){
                 throw new Exception('Error in login');
             }
-            //ini untuk function ketika dinyatakan data valid dan di redirect menuju dashboard
-            $tokenResult = $user->createToken('token-auth')->plainTextToken;
-            $respon = [
-                'status' => 'success',
-                'msg' => 'Login successfully',
-                'content' => [
-                    'status_code' => 200,
-                    'access_code' => $tokenResult,
-                    'token_type' => 'Bearer',
-                ],
-            ];
-            //  return response()->json($respon, 200);
             if($user->role_id == 2){
                 return redirect()->intended('/analisis-tamu')->with('success', 'Selamat Datang Admin '.$user->name.'');
             }else {
@@ -88,14 +63,13 @@ class AuthController extends Controller {
         }
     }
 
-    //ini untuk function logout
     public function logout (Request $request) {
+        Cache::flush();
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/')->with('success','Anda Berhasil Logout');
     }
-    //ini untuk function reset password, email yang di input akan dicek
     public function resetPassword(Request $request){
             $validate = Validator::make($request->all(), [
                 'email'=>'required|email|exists:users,email',
@@ -103,38 +77,30 @@ class AuthController extends Controller {
                 'password_confirmation'=>'required',
             ]);
             if($validate->fails()){
-                // return response(['message'=> $validate->errors()], 200);
                 return back()->with('error', 'ada yang salah, pastikan password yang anda masukkan sama dan berisi minimal 8 karakter');
             }
-        //ini untuk function mengecek token dari database untuk mereset password
         $check_token = DB::table('password_resets')->where([
             'email'=>$request->email,
             'token'=>$request->token,
             ])->first();
-            //ini untuk function jika token yang dicek tidak ada
             if(!$check_token){
                 return back()->withInput()->with('fail', 'Invalid token');
             }else{
-                //ini untuk function jika token yang dicek ada
                 if (Carbon::now()->lte($check_token->created_at)){
-                    //ini untuk function jika token tidak expired setelah link diklik
                     User::where('email', $request->email)->update([
                         'password'=> Hash::make($request->password)
                     ]);
 
-                    //ini function untuk menghapus token jika user sudah mengganti password
                     PasswordReset::where([
                         'email'=> $request->email,
                     ])->delete();
                 }else{
                     return redirect()->route('login')->with('error', 'Masa habis token sudah tidak berlaku');
                 }
-            
-            //ini untuk function jika semua proses selesai dan akan di redirect ke menu login 
             return redirect()->intended('login')->with('success', 'Password berhasil diubah')->with('verifiedEmail', $request->email);
         }
     }
-    //ini untuk route get di web.php memasukkan password baru
+
     public function showResetForm(Request $request, $token = null){
         
         $check_expired = PasswordReset::where([
@@ -147,10 +113,8 @@ class AuthController extends Controller {
             ])->first();
 
         if(!$check_token){
-            //jika token yang dicek tidak ada
             return redirect()->route('login')->with('error', 'Token sudah tidak berlaku');
         }else{
-            //jika token yang dicek ada
             if (Carbon::now()->lte($check_expired->created_at)) {
                 return view('reset-password')->with(['token' => $token, 'email' => $request->email]);
             }else {
@@ -164,11 +128,10 @@ class AuthController extends Controller {
         ]);
 
         $token = Str::random(64);
-        //ini function untuk membuat token dan mengatur expired dari created at
         DB::table('password_resets')->insert([
             'email'=>$request->email,
             'token'=>$token,
-            'created_at'=>Carbon::now()->addMinutes(5), //batas waktu expired
+            'created_at'=>Carbon::now()->addMinutes(5),
             'is_verified' => 0,
         ]);
 

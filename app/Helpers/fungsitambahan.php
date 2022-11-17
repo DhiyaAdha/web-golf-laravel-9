@@ -1,6 +1,6 @@
 <?php
 function formatrupiah($nilai){
-    $formatrupiah ="Rp. " . number_format($nilai, '2', ',','.');
+    $formatrupiah = "Rp. " . number_format($nilai, '2', ',','.');
     return $formatrupiah;
 }
 

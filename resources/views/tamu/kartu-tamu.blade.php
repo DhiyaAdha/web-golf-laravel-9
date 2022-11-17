@@ -1,4 +1,4 @@
-@extends('layouts.main', ['title' => 'TGCC | Daftar Tamu'])
+@extends('layouts.main', ['title' => 'TGCC | Detail Tamu'])
 @push('css')
     <link href="{{ asset('vendors/bower_components/morris.js/morris.css') }}" rel="stylesheet" type="text/css" />
 @endpush
@@ -75,7 +75,15 @@
                                                                     {{ date('d m y', strtotime($visitor->expired_date)) }}
                                                                 </h6>
                                                             </div>
-                                                                </div>
+                                                            <div class="codemember">
+                                                                <h6 style="text-transform: uppercase; font-size:6pt; color:black;">
+                                                                    {{ $visitor->phone }}</h6>
+                                                            </div>
+                                                            
+                                                            <div class="datetime ">
+                                                                <h6 style="font-size: 5pt; color:white; opacity:1;">Berlaku hingga
+                                                                    {{ \Carbon\Carbon::parse($visitor->expired_date)->format('d-m-Y')}}
+                                                                </h6>
                                                             </div>
                                                         </div>
                                                         <div class="mt-5">
@@ -153,7 +161,7 @@
                         <div>
                             <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
                                 <img src="/dist/img/Golf.svg">
-                                <h6 class="text-center">{{ $quota_kupon }}</h6>
+                                <h6 class="text-center">{{ $quota_kupon ?? '0' }}</h6>
                             </div>
                         </div>
                     </div>
@@ -235,7 +243,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="transaction_tabs" class="tab-pane fade active" role="tabpanel">
+                        <div id="transaction_tabs" class="tab-pane fade" role="tabpanel">
                             <div class="panel panel-default card-view">
                                 <div class="panel-heading">
                                     <div class="pull-left">
@@ -415,7 +423,7 @@
                                     </tr>
                                     <tr class="details">
                                         <td>
-                                            <strong>Jenis Tamu:&nbsp;</strong>
+                                            <strong>Jenis Member:&nbsp;</strong>
                                             <span class="text-capitalize" id="type_tamu"></span>
                                         </td>
                                     </tr>
@@ -449,7 +457,7 @@
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
                                         <td class="no-line text-right">Diskon</td>
-                                        <td id="discount" class="no-line text-right">Rp. </td>
+                                        <td id="discount" class="no-line text-right"></td>
                                     </tr>
                                     <tr>
                                         <td class="no-line"></td>
