@@ -228,7 +228,7 @@
                     empty();
                     toastr.error('Email dan password wajib diisi');
                 } else if($("input[name='email']").val() != explode('@')){
-                    toastr.error('Format email salah');
+                    ''
                 } else {
                     $.ajax({
                         async: true,
