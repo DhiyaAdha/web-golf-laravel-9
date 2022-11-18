@@ -227,6 +227,8 @@
                 if($("input[name='email']").val() == '' || $("input[name='password']").val() == '') {
                     empty();
                     toastr.error('Email dan password wajib diisi');
+                } else if($("input[name='email']").val() != 'email:dns'){
+                    toastr.error('Format Email salah');
                 } else {
                     $.ajax({
                         async: true,
