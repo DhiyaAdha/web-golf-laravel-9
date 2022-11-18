@@ -219,35 +219,63 @@
             audio.play();
         }
 
+        function IsEmail(email) {
+            var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            if(!regex.test(email)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        // function checkconnection() {
+        //     var status = navigator.onLine;
+        //     if (status) {
+        //         alert('Internet connected !!');
+        //     } else {
+        //         toastr.error('Tidak ada jaringan');
+        //     }
+        // }
+
         $(document).ready(function() {
             $(window).load(function() {
-            $(".se-pre-con").fadeOut("slow");
-        });
+                $(".se-pre-con").fadeOut("slow");
+            });
+
             $(document).on('click', '.btn-rounded', function(e) {
-                if($("input[name='email']").val() == '' || $("input[name='password']").val() == '') {
-                    empty();
-                    toastr.error('Email dan password wajib diisi');
-                } else if($("input[name='email']").val() != explode('@')){
-                    ''
+                if($("input[name='email']").val() == '') {
+                    var audio = new Audio('../sound/email.mp3');
+                    audio.play();
+                    toastr.error('Email wajib diisi');
+                } else if ($("input[name='password']").val() == '') {
+                    var audio = new Audio('../sound/password.mp3');
+                    audio.play();
+                    toastr.error('Password wajib diisi');
                 } else {
-                    $.ajax({
-                        async: true,
-                        beforeSend: function(request) {
-                            $.blockUI({
-                                css: {
-                                    backgroundColor: 'transparent',
-                                    border: 'none'
-                                },
-                                message: '<img src="../img/rolling.svg">',
-                                baseZ: 1500,
-                                overlayCSS: {
-                                    backgroundColor: '#7C7C7C',
-                                    opacity: 0.4,
-                                    cursor: 'wait'
-                                }
-                            });
-                        }
-                    });
+                    if(IsEmail($('#email').val())==false){
+                        var audio = new Audio('../sound/format.mp3');
+                        audio.play();
+                        toastr.error('Format email salah');
+                    } else {
+                        $.ajax({
+                            async: true,
+                            beforeSend: function(request) {
+                                $.blockUI({
+                                    css: {
+                                        backgroundColor: 'transparent',
+                                        border: 'none'
+                                    },
+                                    message: '<img src="../img/rolling.svg">',
+                                    baseZ: 1500,
+                                    overlayCSS: {
+                                        backgroundColor: '#7C7C7C',
+                                        opacity: 0.4,
+                                        cursor: 'wait'
+                                    }
+                                });
+                            }
+                        });
+                    }
                 }
             });
 
@@ -255,7 +283,7 @@
                 wrong();
                 toastr.error('{{ Session::get('error') }}');
             @endif
-
+    
             toastr.options = {
                 "closeButton": true,
                 "debug": false,
@@ -273,7 +301,7 @@
                 "showMethod": "fadeIn",
                 "hideMethod": "fadeOut"
             };
-
+    
             toastr.options = {
                 "closeButton": true,
                 "debug": false,

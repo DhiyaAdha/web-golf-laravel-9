@@ -10,6 +10,7 @@
         "barryvdh/laravel-dompdf": "^2.0",
         "darryldecode/cart": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
+        "genealabs/laravel-model-caching": "*",
         "guzzlehttp/guzzle": "^7.0.1",
         "haruncpi/laravel-user-activity": "^1.0",
         "ladumor/laravel-pwa": "^0.0.3",
@@ -26,6 +27,7 @@
     },
     
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.7",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "jn-jairo/laravel-ngrok": "^2.0",
