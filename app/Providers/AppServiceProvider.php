@@ -30,9 +30,6 @@ class AppServiceProvider extends ServiceProvider
         // Paginator::useBootstrap();
         config(['app.locale' => 'id']);
         Carbon::setLocale('id');
-        if(App::environment(['staging', 'production'])){
-            URL::forceScheme('https');
-        }
     }
     protected function fungsiHelper()
     {

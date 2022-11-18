@@ -3,253 +3,181 @@
     <title>{{ $log_transaction->order_number }}</title>
     <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
     <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
-    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/bootstrap.min.css') }}" type="text/css">
-    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/jquery.dataTables.min.css') }}" type="text/css">
-    <link rel="stylesheet" href="{{ asset('vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" type="text/css">
-    <link rel="stylesheet" href="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.css') }}" type="text/css">
-    <style type="text/css">
+    <style>
         /* width */
         ::-webkit-scrollbar {
             width: 8px;
         }
-
         /* Track */
         ::-webkit-scrollbar-track {
             background: #fff;
         }
-
         /* Handle */
         ::-webkit-scrollbar-thumb:vertical {
             background: #888;
         }
-
         /* Handle on hover */
         ::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
-
-        a,
-        .no-print,
-        .modal-open.wrapper,
-        .main-footer,
-        .view-link,
-        .dataTables_length,
-        .dataTables_filter {
-            display: none !important;
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        @media print {
+            .receipt-template {
+                width: 100%;
+            }
+        }
+        .receipt-template {
+            margin: 0 auto;
+            width: 56mm;
+            background: #FFF;
         }
 
-        .box {
-            border-top: none !important;
+        .receipt-template .text-small {
+            font-size: 10px;
         }
 
-        .box-header.with-border {
+        .receipt-template .block {
+            display: block;
+        }
+
+        .receipt-template .bold {
+            font-weight: 700;
+        }
+
+        .receipt-template .italic {
+            font-style: italic;
+        }
+
+        .receipt-template .align-right {
+            text-align: right;
+        }
+
+        .receipt-template .align-center {
+            text-align: center;
+        }
+
+        .receipt-template .main-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-align: center;
+            margin: 10px 0 5px 0;
+            padding: 0;
+        }
+
+        .receipt-template .sub-title {
+            font-size: 10px;
+            font-weight: 700;
+            margin: 10px 0 5px 0;
+        }
+
+        .receipt-template table {
+            width: 100%;
+        }
+
+        .receipt-template td,
+        .receipt-template th {
+            font-size: 10px;
+        }
+
+        .receipt-template .info-area {
+            font-size: 10px;
+            line-height: 1.222;
+        }
+
+        .receipt-template .listing-area {
+            line-height: 1.222;
+        }
+
+        .receipt-template .listing-area table {}
+
+        .receipt-template .listing-area table thead tr {
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #000;
+            font-weight: 700;
+        }
+
+        .receipt-template .listing-area table tbody tr:last-child {
             border-bottom: none;
         }
 
-        .close,
-        .btn {
-            display: none !important
+        .receipt-template .listing-area table td {
+            vertical-align: top;
         }
 
-        .print-btn {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            height: 30px;
-            z-index: 1251;
-            background: #81ECFF;
-            line-height: 30px;
+        .receipt-template .info-area table thead tr {
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #000;
+        }
+
+        .receipt-template .receipt-header {
             text-align: center;
-            cursor: pointer;
         }
-    </style>
-</head>
-<body style="background:#ffffff;" id="print">
-    <div class="col-xs-12 col-md-12">
-        <style id="styles" type="text/css">
-            /*Common CSS*/
-            .receipt-template {
-                width: 302px;
-                margin: 0 auto;
-            }
 
-            .receipt-template .text-small {
-                font-size: 10px;
-            }
+        .receipt-template .receipt-header .logo-area {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto;
+        }
 
-            .receipt-template .block {
-                display: block;
-            }
+        .receipt-template .receipt-header .logo-area img.logo {
+            display: inline-block;
+            max-width: 100%;
+            max-height: 100%;
+        }
 
-            .receipt-template .inline-block {
-                display: inline-block;
-            }
+        .receipt-template .receipt-header .address-area {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            line-height: 1;
+        }
 
-            .receipt-template .bold {
-                font-weight: 700;
-            }
+        .receipt-template .receipt-header .info {
+            font-size: 10px;
+        }
 
-            .receipt-template .italic {
-                font-style: italic;
-            }
+        .receipt-template .receipt-header .store-name {
+            font-size: 10px;
+            font-weight: 700;
+            margin: 0;
+            padding: 0;
+        }
 
-            .receipt-template .align-right {
-                text-align: right;
-            }
+        /*Calculation Area*/
+        .receipt-template .calculation-area {
+            border-top: 2px solid #000;
+            font-weight: bold;
+        }
 
-            .receipt-template .align-center {
-                text-align: center;
-            }
+        .receipt-template .calculation-area table td {
+            text-align: right;
+        }
 
-            .receipt-template .main-title {
-                font-size: 14px;
-                font-weight: 700;
-                text-align: center;
-                margin: 10px 0 5px 0;
-                padding: 0;
-            }
+        .receipt-template .calculation-area table td:nth-child(2) {
+            border-bottom: 1px dashed #000;
+        }
 
-            .receipt-template .heading {
-                position: relation;
-            }
+        .receipt-template .barcode-area {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
 
-            .receipt-template .title {
-                font-size: 16px;
-                font-weight: 700;
-                margin: 10px 0 5px 0;
-            }
+        .receipt-template .footer-area {
+            line-height: 1.222;
+            font-size: 10px;
+        }
 
-            .receipt-template .sub-title {
-                font-size: 12px;
-                font-weight: 700;
-                margin: 10px 0 5px 0;
-            }
-
-            .receipt-template table {
-                width: 100%;
-            }
-
-            .receipt-template td,
-            .receipt-template th {
-                font-size: 12px;
-            }
-
-            .receipt-template .info-area {
-                font-size: 12px;
-                line-height: 1.222;
-            }
-
-            .receipt-template .listing-area {
-                line-height: 1.222;
-            }
-
-            .receipt-template .listing-area table {}
-
-            .receipt-template .listing-area table thead tr {
-                border-top: 1px solid #000;
-                border-bottom: 1px solid #000;
-                font-weight: 700;
-            }
-
-            .receipt-template .listing-area table tbody tr:last-child {
-                border-bottom: none;
-            }
-
-            .receipt-template .listing-area table td {
-                vertical-align: top;
-            }
-
-            .receipt-template .info-area table {}
-
-            .receipt-template .info-area table thead tr {
-                border-top: 1px solid #000;
-                border-bottom: 1px solid #000;
-            }
-
-            /*Receipt Heading*/
-            .receipt-template .receipt-header {
-                text-align: center;
-            }
-
-            .receipt-template .receipt-header .logo-area {
-                width: 80px;
-                height: 80px;
-                margin: 0 auto;
-            }
-
-            .receipt-template .receipt-header .logo-area img.logo {
-                display: inline-block;
-                max-width: 100%;
-                max-height: 100%;
-            }
-
-            .receipt-template .receipt-header .address-area {
-                margin-bottom: 5px;
-                line-height: 1;
-            }
-
-            .receipt-template .receipt-header .info {
-                font-size: 12px;
-            }
-
-            .receipt-template .receipt-header .store-name {
-                font-size: 24px;
-                font-weight: 700;
-                margin: 0;
-                padding: 0;
-            }
-
-            /*Invoice Info Area*/
-            .receipt-template .invoice-info-area {}
-
-            /*Customer Customer Area*/
-            .receipt-template .customer-area {
-                margin-top: 10px;
-            }
-
-            /*Calculation Area*/
-            .receipt-template .calculation-area {
-                border-top: 2px solid #000;
-                font-weight: bold;
-            }
-
-            .receipt-template .calculation-area table td {
-                text-align: right;
-            }
-
-            .receipt-template .calculation-area table td:nth-child(2) {
-                border-bottom: 1px dashed #000;
-            }
-
-            /*Item Listing*/
-            .receipt-template .item-list table tr {}
-
-            /*Barcode Area*/
-            .receipt-template .barcode-area {
-                margin-top: 10px;
-                text-align: center;
-            }
-
-            .receipt-template .barcode-area img {
-                max-width: 100%;
-                display: inline-block;
-            }
-
-            /*Footer Area*/
-            .receipt-template .footer-area {
-                line-height: 1.222;
-                font-size: 10px;
-            }
-
-            /*Media Query*/
-            @media print {
-                .receipt-template {
-                    width: 100%;
-                }
-            }
-
-            @media all and (max-width: 215px) {}
         </style>
+        <script>window.console = window.console || function(t) {};</script>
+        <script>
+            if (document.location.search.match(/type=embed/gi)) {
+                window.parent.postMessage("resize", "*");
+            }
+        </script>
+    </head>
+    <body style="background:#ffffff;" id="print">
         <section class="receipt-template">
             <header class="receipt-header">
                 <div class="logo-area">
@@ -380,16 +308,14 @@
                 <span class="block bold">Terima kasih telah bermain di tgcc!</span>
             </section>
         </section>
-    </div>
-    <script src="{{ asset('dist/asset_offline/jquery.min.js') }}"></script>
-    <script src="{{ asset('dist/asset_offline/bootstrap.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('/dist/js/printThis.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $('#print').printThis({
-                printContainer: true,
+        <script src="{{ asset('dist/asset_offline/jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/dist/js/printThis.js') }}"></script>
+        <script>
+            $(document).ready(function() {
+                $('#print').printThis({
+                    printContainer: true,
+                });
             });
-        });
-    </script>
-</body>
+        </script>
+    </body>
 </html>
