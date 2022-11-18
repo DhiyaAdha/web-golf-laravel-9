@@ -32,7 +32,8 @@
                             <div class="pull-right">
                                 <div class="dropdown  pull-left">
                                     <div data-toggle="tooltip" title="Lihat">
-                                        <a class="weight-500" data-toggle="modal" href="javascript:void(0)" data-target="#kartu-tamu">
+                                        <a class="weight-500" data-toggle="modal" href="javascript:void(0)"
+                                            data-target="#kartu-tamu">
                                             <i class="fa-solid fa-address-card"></i>
                                         </a>
                                     </div>
@@ -57,10 +58,17 @@
                                                             </div>
                                                             <div class="identity">
                                                                 <h6 style="text-transform: uppercase; font-size:8pt;">
-                                                                    {{ $visitor->name }}</h6>
+                                                                    {{ $visitor->name }} 
+                                                                </h6>
                                                             </div>
-                                                            <div class="datetime">
-                                                                <h6 style="font-size: 5pt; color:white;">Berlaku hingga 
+                                                            <div class="codemember">
+                                                                <h6 style="text-transform: uppercase; font-size:6pt; color:black;">
+                                                                    {{ $visitor->phone }}</h6>
+                                                            </div>
+                                                            
+                                                            <div class="datetime ">
+                                                                <h6 style="font-size: 5pt; color:white; opacity:1;">Berlaku hingga
+                                                                    {{ \Carbon\Carbon::parse($visitor->expired_date)->format('d-m-Y')}}
                                                                 </h6>
                                                             </div>
                                                         </div>
@@ -233,7 +241,8 @@
                                     <div class="panel-body">
                                         <div class="table-wrap">
                                             <div class="table-responsive">
-                                                <table width="100%" class="table table-hover mb-0" id="dt-tamu-transaksi">
+                                                <table width="100%" class="table table-hover mb-0"
+                                                    id="dt-tamu-transaksi">
                                                     <thead>
                                                         <tr>
                                                             <th>Order ID</th>
@@ -346,7 +355,8 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade modal-detail-invoice" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal fade modal-detail-invoice" tabindex="-1" role="dialog"
+                aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -465,5 +475,7 @@
     <script defer src="{{ asset('/dist/js/line-chart-invoice-data.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/detail_member.js') }}"></script>
-    <script>var invoiceMonth = {!! json_encode($invoice_chart) !!}</script>
+    <script>
+        var invoiceMonth = {!! json_encode($invoice_chart) !!}
+    </script>
 @endpush

@@ -2,7 +2,7 @@
     <div class="mobile-only-brand pull-left">
         <div class="nav-header pull-left">
             <div class="logo-wrap">
-                <a href="/dashboard">
+                <a href="/analisis-tamu">
                     <img class="brand-img" src="{{ asset('dist/img/tgcc_icon.svg') }}" alt="brand" />
                     <span class="brand-text">TGCC</span>
                 </a>
