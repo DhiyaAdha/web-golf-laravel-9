@@ -45,6 +45,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     Route::post('/edit-admin/{users}', [AdminController::class, 'update'])->name('admin.edit');
     Route::post('/daftar-admin/destroy', [AdminController::class, 'delete'])->name('hapus-admin');
     Route::get('/aktifitas', [AdminController::class, 'aktifitas'])->name('admin.aktifitas');
+    Route::post('update/password/{id}', [AdminController::class, 'update_password'])->name('update.password');
     route::get('/invoice_cetakpdf/{id}', [InvoiceController::class, 'cetak_pdf'])->name('cetak_pdf');
     route::get('/export_excel', [InvoiceController::class, 'export_excel'])->name('export_excel');
     Route::get('/package/edit/{package}', [PackageController::class, 'edit'])->name('package.edit');
@@ -53,7 +54,6 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     Route::post('/package/store', [PackageController::class, 'store'])->name('package.store');
     Route::middleware(['htmlMinifier'])->group(static function () {
         Route::resource('revenue', RevenueController::class);
-        Route::resource('analisis-tamu', DashboardController::class);
         Route::get('/analytic/week', [DashboardController::class, 'analytic_week'])->name('analytic.week');
         Route::get('/analytic/week/revenue', [RevenueController::class, 'analytic_week_revenue'])->name('analytic.week.revenue');
         Route::get('/analytic/month', [DashboardController::class, 'analytic_month'])->name('analytic.month');
@@ -99,6 +99,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::post('/pay', [OrderController::class, 'pay'])->name('pay');
     Route::get('/print_invoice/{id}', [OrderController::class, 'print_invoice'])->name('invoice.print');
     Route::middleware(['htmlMinifier'])->group(static function () {
+        Route::resource('analisis-tamu', DashboardController::class);
         Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name('scan-tamu');
         Route::get('/kartu-member/{e}', [ScanqrController::class, 'show_detail'])->name('detail-scan')->middleware('signed');
         Route::get('/cart/{id}', [OrderController::class, 'index'])->name('order.cart');

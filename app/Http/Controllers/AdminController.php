@@ -57,8 +57,6 @@ class AdminController extends Controller {
             [
                 'name' => 'required|unique:visitors,name',
                 'email' => 'required|unique:visitors,email',
-                'password' => 'required|min:8',
-                'password_confirmation' => 'required_with:password|same:password|min:8',
                 'phone' => 'required|min:12',
                 'role_id' => 'required',
             ],
@@ -68,17 +66,12 @@ class AdminController extends Controller {
                 'email.required' => 'Email admin masih kosong.',
                 'email.unique' => 'Email sudah ada',
                 'phone.required' => 'Nomer Hp admin masih kosong.',
-                'password.required' => 'Password masih kosong.',
-                'password.min' => 'Minimal 8 karakter',
-                'password_confirmation.min' => 'Minimal 8 karakter',
-                'password_confirmation.same' => 'Password tidak sama',
                 'role_id.required' => ' Role admin masih kosong.',
             ]
         );
         $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = Hash::make($request->password);
         $user->phone = $request->phone;
         $user->role_id = $request->role_id;
         $user->updated_at = Carbon::now();
@@ -190,5 +183,31 @@ class AdminController extends Controller {
             'activities' => 'Menambah admin <b>' . $user->name . '</b>',
         ]);
         return redirect('daftar-admin')->with('success', 'Data admin telah ditambahkan');
+    }
+    public function update_password(Request $request, $id){
+        $this->validate(
+            $request,
+            [
+                'password' => 'required|min:8',
+                'password_confirmation' => 'required_with:password|same:password|min:8',
+            ],
+            [
+                'password.required' => 'Password masih kosong.',
+                'password.min' => 'Minimal 8 karakter',
+                'password_confirmation.min' => 'Minimal 8 karakter',
+                'password_confirmation.same' => 'Password tidak sama',
+            ]
+        );
+        $user = User::findOrFail($id);
+        $user->password = Hash::make($request->password);;
+        $user->updated_at = Carbon::now();
+        $user->save();
+        LogAdmin::create([
+            'user_id' => Auth::id(),
+            'type' => 'UPDATE',
+            'activities' => 'Mengubah user <b>' . $user->name . '</b>',
+        ]);
+
+        return redirect()->back()->with('success', 'Berhasil edit password');
     }
 }
