@@ -4,7 +4,7 @@
 @endpush
 @section('content')
     <div class="page-wrapper intro-foo">
-        <div class="container-fluid pt-25" data-title="Halaman Analisis Tamu" data-intro="Halaman ini memberikan informasi transaksi jumlah pengunjung yang datang di tgcc">
+        <div class="container-fluid pt-25" data-title="Halaman Analisis Tamu" data-intro="Halaman ini memberikan informasi transaksi jumlah pengunjung yang <br> datang di tgcc">
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                     <div class="panel panel-default card-view pa-0">
@@ -30,6 +30,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                     <div class="panel panel-default card-view pa-0">
                         <div class="panel-wrapper collapse in">

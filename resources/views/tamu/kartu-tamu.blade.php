@@ -3,8 +3,8 @@
     <link href="{{ asset('vendors/bower_components/morris.js/morris.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 @section('content')
-    <div class="page-wrapper">
-        <div class="container-fluid">
+    <div class="page-wrapper intro-foo">
+        <div class="container-fluid" data-title="Halaman Detail Tamu" data-intro="Halaman ini memberikan informasi data detail dari membership di tgcc.">
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h5 class="txt-dark">Detail tamu</h5>
@@ -23,7 +23,7 @@
                         <img src="{{ asset('img/detail-kartutamu.jpg') }}" style="width: 100%; height: 200px;">
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6" data-title="Kartu Tamu" data-intro="Panel ini memberikan informasi data membership di tgcc. Berisi informasi nama, email, kode membership, jenil kelamin, jenis member, dan kategori member">
                     <div class="panel panel-default panel-dropdown card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
@@ -32,8 +32,7 @@
                             <div class="pull-right">
                                 <div class="dropdown  pull-left">
                                     <div data-toggle="tooltip" title="Lihat">
-                                        <a class="weight-500" data-toggle="modal" href="javascript:void(0)"
-                                            data-target="#kartu-tamu">
+                                        <a class="weight-500" data-toggle="modal" href="javascript:void(0)" data-target="#kartu-tamu">
                                             <i class="fa-solid fa-address-card"></i>
                                         </a>
                                     </div>
@@ -53,36 +52,15 @@
                                                         <div class="mb-5">
                                                             <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/front-vip-card.svg') : asset('dist/img/kartutamu/front-member-card.svg') }}"
                                                                 alt="{{ $visitor->tipe_member }}">
-                                                            <div class="container text-center">
-                                                                <div class="row g-2">
-                                                                    <div class="qr-code">
-                                                                        {{ QrCode::size(80)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
-                                                                    </div>
-                                                                    <div class="identity">
-                                                                        <h6
-                                                                            style="text-transform: uppercase; font-size:8pt;">
-                                                                            {{ $visitor->name }}
-                                                                        </h6>
-                                                                    </div>
-                                                                    <div class="codemember">
-                                                                        <h6
-                                                                            style="text-transform: uppercase; font-size:6pt; color:black;">
-                                                                            {{ $visitor->phone }}</h6>
-                                                                    </div>
-
-                                                                    <div class="datetime  ">
-                                                                <h6 style="font-size: 5pt; opacity: 1;">Berlaku hingga
-                                                                    {{ date('d m y', strtotime($visitor->expired_date)) }}
-                                                                </h6>
+                                                            <div class="qr-code">
+                                                                {{ QrCode::size(80)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
                                                             </div>
-                                                            <div class="codemember">
-                                                                <h6 style="text-transform: uppercase; font-size:6pt; color:black;">
-                                                                    {{ $visitor->phone }}</h6>
+                                                            <div class="identity">
+                                                                <h6 style="text-transform: uppercase; font-size:8pt;">
+                                                                    {{ $visitor->name }}</h6>
                                                             </div>
-                                                            
-                                                            <div class="datetime ">
-                                                                <h6 style="font-size: 5pt; color:white; opacity:1;">Berlaku hingga
-                                                                    {{ \Carbon\Carbon::parse($visitor->expired_date)->format('d-m-Y')}}
+                                                            <div class="datetime">
+                                                                <h6 style="font-size: 5pt; color:white;">Berlaku hingga 
                                                                 </h6>
                                                             </div>
                                                         </div>
@@ -140,8 +118,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="panel panel-default card-view limit" style="height: 209.4px;">
+                <div class="col-lg-3" >
+                    <div class="panel panel-default card-view limit" style="height: 209.4px;" data-title="Limit Tamu" data-intro="Panel ini memberikan informasi Kuota Limit membership yang tersisa, setiap membership mendapatkan kuota sesuai tipe member. kuota untuk member VIP 10 kuota dan MEMBER 4 kuota">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Limit</h6>
                             <div class="clearfix"></div>
@@ -153,7 +131,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default card-view limit" style="height: 209.4px;">
+                    <div class="panel panel-default card-view limit" style="height: 209.4px;" data-title="Kupon Tamu" data-intro="Panel ini memberikan informasi Kuota Kupon membership yang tersisa, kuota kupon hanya bisa didapat ketika membership menang perlombaan yang diselenggarakan tgcc.">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Kupon</h6>
                             <div class="clearfix"></div>
@@ -167,7 +145,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    <div class="panel panel-default card-view limit" style="height: 209.4px;">
+                    <div class="panel panel-default card-view limit" style="height: 209.4px;" data-title="Saldo" data-intro="Panel ini memberikan informasi Saldo tamu yang tersisa. Saldo bisa diisi melalui tambah deposit">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Saldo</h6>
                             <div class="clearfix"></div>
@@ -179,7 +157,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default card-view b" style="height: 209.4px;">
+                    <div class="panel panel-default card-view b" style="height: 209.4px;" data-title="Barcode" data-intro="Panel ini memberikan informasi Barcode yang dimiliki setiap membership di tgcc">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Barcode</h6>
                             <div class="clearfix"></div>
@@ -191,7 +169,7 @@
                 </div>
             </div>
             <br>
-            <div class="row">
+            <div class="row" data-title="Riwayat Tamu" data-intro="Panel ini memcatat informasi riwayat aktifitas membership. mencatat berdasarkan grafik invocie berdasarkan 12 bulan terakhir, rowaat transaksi, riwayat deposit, dan riwayat limit.">
                 <div class="panel-heading tabs">
                     <div class="d-flex">
                         <div class="flex-grow-1 d-flex align-items-center">
@@ -255,8 +233,7 @@
                                     <div class="panel-body">
                                         <div class="table-wrap">
                                             <div class="table-responsive">
-                                                <table width="100%" class="table table-hover mb-0"
-                                                    id="dt-tamu-transaksi">
+                                                <table width="100%" class="table table-hover mb-0" id="dt-tamu-transaksi">
                                                     <thead>
                                                         <tr>
                                                             <th>Order ID</th>
@@ -369,8 +346,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade modal-detail-invoice" tabindex="-1" role="dialog"
-                aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal fade modal-detail-invoice" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -479,6 +455,7 @@
                     </div>
                 </div>
             </div>
+            <button id="setting_panel_btn" data-toggle="tooltip" title="Panduan" data-placement="left" class="btn btn-success btn-circle setting-panel-btn shadow-2dp"><i class="zmdi zmdi-settings"></i></button>
             @include('layouts.footer')
         </div>
     </div>
@@ -489,7 +466,14 @@
     <script defer src="{{ asset('/dist/js/line-chart-invoice-data.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/detail_member.js') }}"></script>
+
     <script>
-        var invoiceMonth = {!! json_encode($invoice_chart) !!}
+        $(document).on('click', '#setting_panel_btn', function() {
+            introJs('.intro-foo').setOptions({
+                'showProgress': true,
+                'tooltipPosition': 'right'
+            }).start();
+        });
     </script>
+    <script>var invoiceMonth = {!! json_encode($invoice_chart) !!}</script>
 @endpush
