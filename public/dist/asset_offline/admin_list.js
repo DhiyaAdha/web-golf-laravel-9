@@ -72,7 +72,6 @@ $('#dt-admin').DataTable({
 /* delete admin */
 $(document).on('click', '.delete-admin', function() {
     id = $(this).data('id');
-    console.log(id)
     swal({
         title: "Anda yakin ingin menghapus admin ini?",
         imageUrl: "../img/Warning.svg",
@@ -85,6 +84,7 @@ $(document).on('click', '.delete-admin', function() {
     }, function(isConfirm) {
         if (isConfirm) {
             $.ajax({
+                async:true,
                 type: 'POST',
                 url: '/daftar-admin/destroy',
                 data:{id:id},

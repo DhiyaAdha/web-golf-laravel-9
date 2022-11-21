@@ -141,7 +141,6 @@
                                             </button>
                                         </div>
                                     @endif
-
                                     @if (session()->has('info'))
                                         <div class="alert alert-success">{!! session('info') !!}
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -192,14 +191,14 @@
     <script defer src="{{ asset('dist/js/jquery.slimscroll.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/toastr.js') }}"></script>
-    <script defer src="{{ asset('/sw.js') }}"></script>
+    {{-- <script defer src="{{ asset('/sw.js') }}"></script>
     <script>
         if (!navigator.serviceWorker.controller) {
             navigator.serviceWorker.register("/sw.js").then(function (reg) {
                 console.log("Service worker has been registered for scope: " + reg.scope);
             });
         }
-    </script>
+    </script> --}}
     <script>
         const passwordField = document.querySelector("#password");
         const eyeIcon = document.querySelector("#eye");
@@ -227,15 +226,6 @@
                 return true;
             }
         }
-
-        // function checkconnection() {
-        //     var status = navigator.onLine;
-        //     if (status) {
-        //         alert('Internet connected !!');
-        //     } else {
-        //         toastr.error('Tidak ada jaringan');
-        //     }
-        // }
 
         $(document).ready(function() {
             $(window).load(function() {

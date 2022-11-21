@@ -300,7 +300,7 @@
             </table>
         </section>
         <section class="info-area barcode-area">
-            {{ QrCode::size(50)->eye('circle')->style('round')->generate($log_transaction->order_number) }}
+            {{ QrCode::size(70)->eye('circle')->generate($log_transaction->order_number) }}
         </section>
         <section class="info-area align-center footer-area">
             <span class="block">Yuk kita hidupkan lagi kebiasaan berolahraga untuk pola hidup yang lebih sehat</span>

@@ -52,9 +52,6 @@ class AuthController extends Controller {
                 return back()->with('error', 'Email atau Password yang anda masukkan salah!');
             }
             $user = User::where('email', $request->email)->first();
-            if(!Hash::check($request->password, $user->password, [])){
-                throw new Exception('Error in login');
-            }
             if($user->role_id == 2){
                 return redirect()->intended('/analisis-tamu')->with('success', 'Selamat Datang Admin '.$user->name.'');
             }else {
