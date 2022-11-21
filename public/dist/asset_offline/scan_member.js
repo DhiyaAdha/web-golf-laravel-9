@@ -14,11 +14,13 @@ $('#show-qr-scan').on('click', function() {
         $("#resultTEXT").val(decodedText)
         $('#resultDECODE').val(JSON.stringify(decodedResult));
         html5QrcodeScanner.clear();
+        
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        
         $.ajax({
             type: 'GET',
             url: '/visitor/qrcode',
