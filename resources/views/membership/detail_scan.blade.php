@@ -96,7 +96,7 @@
                     </div>
                 </div>
                 <div class="col-lg-5 col-md-5">
-                    <div class="panel panel-default panel-dropdown card-view" style="height: 379px;" data-title="Halaman sisa <br> Limit & Saldo" data-intro="Panel ini memberikan informasi detail limit dan saldo membership tgcc, tamu bisa melakukan tambah deposit atau pilih paket bermain ">
+                    <div class="panel panel-default panel-dropdown card-view" style="height: 379px;" data-title="Halaman Sisa <br> Limit & Saldo" data-intro="Panel ini memberikan informasi detail limit dan saldo membership tgcc, tamu bisa melakukan tambah deposit atau pilih paket bermain ">
                         <div class="panel-heading d-flex justify-content-start k">
                             <div class="pull-left">
                                 <h6 class="panel-title txt-dark">Sisa Limit dan Saldo
