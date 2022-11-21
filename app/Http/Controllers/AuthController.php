@@ -40,7 +40,7 @@ class AuthController extends Controller {
 
     public function login(Request $request) {
         $validate = Validator::make($request->all(), [
-            'email' => 'required|email:dns',
+            'email' => 'required|email',
             'password' => 'required',
         ]);
 
