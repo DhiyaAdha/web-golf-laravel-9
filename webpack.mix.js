@@ -26,7 +26,6 @@ mix.js([
 mix.styles([
     'resources/css/jquery.toast.min.css',
     'resources/css/sweetalert.css',
-    'resources/css/all.min.css',
     'resources/css/jquery.dataTables.min.css',
 ], 'public/css/app.css').version();
 
