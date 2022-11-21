@@ -15,5 +15,7 @@
     <link rel="stylesheet" href="{{ asset('dist/css/custom.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/introjs.min.css') }}">
     <link rel="stylesheet" href="{{ mix('css/app.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/font-awesome.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('dist/asset_offline/css/all.min.css') }}" type="text/css">
     @stack('css')
 </head>

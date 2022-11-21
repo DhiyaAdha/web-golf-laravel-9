@@ -106,7 +106,7 @@
             <li>
                 <a class="{{ Request::is('riwayat-invoice') ? 'active' : '' }}" href="{{ route('riwayat-invoice.index') }}" data-title="Menu Invoice" data-intro="Menu ini berisi riwayat daftar invoice member">
                     <div class="pull-left">
-                        <i class="zmdi zmdi-money-box mr-30" style="font-size: 22px"></i>
+                        <i class="zmdi zmdi-money-box mr-20" style="font-size: 22px"></i>
                         <span class="right-nav-text">Invoice</span>
                     </div>
                     <div class="clearfix"></div>
