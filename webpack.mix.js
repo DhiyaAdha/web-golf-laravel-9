@@ -28,7 +28,6 @@ mix.styles([
     'resources/css/sweetalert.css',
     'resources/css/all.min.css',
     'resources/css/jquery.dataTables.min.css',
-    'resources/css/introjs.min.css',
 ], 'public/css/app.css').version();
 
 mix.minify('public/css/app.css');
