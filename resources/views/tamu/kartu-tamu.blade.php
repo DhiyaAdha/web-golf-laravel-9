@@ -59,8 +59,14 @@
                                                                 <h6 style="text-transform: uppercase; font-size:8pt;">
                                                                     {{ $visitor->name }}</h6>
                                                             </div>
-                                                            <div class="datetime">
-                                                                <h6 style="font-size: 5pt; color:white;">Berlaku hingga 
+                                                            <div class="codemember">
+                                                                <h6 style="text-transform: uppercase; font-size:6pt; color:black;">
+                                                                    {{ $visitor->phone }}</h6>
+                                                            </div>
+                                                            
+                                                            <div class="datetime ">
+                                                                <h6 style="font-size: 5pt; color:#3d481e; opacity:1;">Berlaku hingga
+                                                                    {{ \Carbon\Carbon::parse($visitor->expired_date)->format('d-m-Y')}}
                                                                 </h6>
                                                             </div>
                                                         </div>

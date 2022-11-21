@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Mail\Transport\LogTransport;
+use GeneaLabs\LaravelModelCaching\Traits\Cachable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Visitor extends Model
 {
-    use HasFactory;
+    use Cachable, HasFactory;
 
     protected $table = 'visitors';
     protected $dates = ['deleted_at'];
