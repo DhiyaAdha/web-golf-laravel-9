@@ -17,7 +17,7 @@
 
             <div class="row">
                 <div class="col-lg-8">
-                    <div class="panel panel-default card-view" data-title="Daftar Paket" data-intro="Panel ini menampilkan informasi data paket yang tersedia atau sedang aktif. Jenis paket diurut berdasarkan Kategori Permainan, Proshop, & Kantin">
+                    <div class="panel panel-default card-view" data-title="Daftar Paket" data-intro="Panel ini menampilkan informasi data paket yang tersedia atau sedang aktif. Jenis paket diurut berdasarkan Kategori Permainan, Proshop, dan Kantin">
                         <div class="panel-heading">
                             <div class="pull-left">
                                 <strong class="panel-title txt-dark">Permainan</strong>
