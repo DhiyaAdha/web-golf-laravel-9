@@ -1,8 +1,15 @@
 <html>
 <head>
     <title>{{ $log_transaction->order_number }}</title>
-    <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="Tritih Golf & Country Club" />
+    <meta name="author" content="inovis" />
+    <meta name="keywords" content="tgcc" />
+    <meta name="theme-color" content="#6777ef" />
     <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
+    <link rel="manifest" href="{{ asset('/manifest.json') }}">
     <style>
         @font-face{
             font-family:fake receipt;

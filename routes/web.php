@@ -97,13 +97,13 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/select', [OrderController::class, 'select'])->name('select.type');
     Route::post('/qty/minus/{id}', [OrderController::class, 'minus'])->name('qty.minus');
     Route::post('/pay', [OrderController::class, 'pay'])->name('pay');
-    Route::get('/print_invoice/{id}', [OrderController::class, 'print_invoice'])->name('invoice.print');
     Route::middleware(['htmlMinifier'])->group(static function () {
         Route::resource('analisis-tamu', DashboardController::class);
         Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name('scan-tamu');
         Route::get('/kartu-member/{e}', [ScanqrController::class, 'show_detail'])->name('detail-scan')->middleware('signed');
         Route::get('/cart/{id}', [OrderController::class, 'index'])->name('order.cart');
         Route::get('/checkout/{id}', [OrderController::class, 'checkout'])->name('checkout');
+        Route::get('/print_invoice/{id}', [OrderController::class, 'print_invoice'])->name('invoice.print');
         Route::get('/proses_reguler', [OrderRegulerController::class, 'index'])->name('proses_reguler');
         Route::get('/checkout_reguler', [OrderRegulerController::class, 'checkout'])->name('checkout_reguler');
         Route::get('/print_invoice_reguler', [OrderRegulerController::class, 'print_invoice'])->name('invoice.print.reguler');
