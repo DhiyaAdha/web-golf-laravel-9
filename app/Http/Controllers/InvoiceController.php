@@ -36,7 +36,7 @@ class InvoiceController extends Controller
         }
         if($request->ajax()){
             return datatables()->of($riwayat_invoice)->addColumn('action', function ($data) {
-                return '<div class="align-items-center"><a href="'.url('invoice_cetakpdf/'.$data->id).'" target="_blank" name="pdf" data-toggle="tooltip" data-placement="top" title="download pdf"><img src="dist/img/pdf.svg" width="23px" height="23px"></a></div>';
+                return '<div class="align-items-center" ><a href="'.url('invoice_cetakpdf/'.$data->id).'" target="_blank" name="pdf" data-toggle="tooltip" data-placement="top" title="download pdf"><img src="dist/img/pdf.svg" width="23px" height="23px"></a></div>';
             })->editColumn('name', function ($data) {
                 return '<a data-toggle="tooltip" data-placement="right" title="Klik detail invoice" href="'.url('invoice/'.$data->id).'">'.$data->name."</a>";
             })->editColumn('created_at', function ($data) {

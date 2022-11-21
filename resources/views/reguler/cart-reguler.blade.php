@@ -1,7 +1,7 @@
 @extends('layouts.main', ['title' => 'TGCC | Pilih Permainan'])
 @section('content')
-    <div class="page-wrapper">
-        <div class="container-fluid">
+    <div class="page-wrapper intro-foo">
+        <div class="container-fluid" data-title="Halaman Umum" data-intro="Halaman ini memberikan informasi daftar paket penjualan, daftar paket harga, dan daftar order. Pproses transaksi bagi tamu reguler atau diluar membership tgcc.">
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h5 class="txt-dark">Pilih Permainan</h5>
@@ -17,7 +17,7 @@
 
             <div class="row">
                 <div class="col-lg-8">
-                    <div class="panel panel-default card-view">
+                    <div class="panel panel-default card-view" data-title="Daftar Paket" data-intro="Panel ini menampilkan informasi data paket yang tersedia atau sedang aktif. Jenis paket diurut berdasarkan Kategori Permainan, Proshop, & Kantin">
                         <div class="panel-heading">
                             <div class="pull-left">
                                 <strong class="panel-title txt-dark">Permainan</strong>
@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4 sticky">
-                    <div class="panel panel-default border-panel card-view">
+                    <div class="panel panel-default border-panel card-view" data-title="Daftar Order" data-intro="Panel ini menampilkan informasi paket yang dipesan tamu untuk dilanjutkan ke proses checkout, terdapat informasi jumlah paket yang dipesan dan total bayar.">
                         <div class="panel-heading">
                             <div class="d-flex">
                                 <h6 class="panel-title flex-grow-1" style="font-weight: 600">Daftar Order</h6>
@@ -151,7 +151,7 @@
                     </div>
                 </div>
                 <div class="col-lg-8">
-                    <div class="panel panel-default card-view">
+                    <div class="panel panel-default card-view" data-title="Tabel Daftar <br> Paket Harga" data-intro="Tabel ini menampilkan informasi paket yang tersedia tampil berdasarkan kategori paket, harga paket weekdays, harga paket weekendend dan status paket">
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
                                 <div class="table-wrap">
@@ -178,6 +178,7 @@
             </div>
             <div class="row">
             </div>
+            <button id="setting_panel_btn" data-toggle="tooltip" title="Panduan" data-placement="left" class="btn btn-success btn-circle setting-panel-btn shadow-2dp"><i class="zmdi zmdi-settings"></i></button>
             @include('layouts.footer')
         </div>
     </div>
@@ -186,4 +187,12 @@
     <script src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
     <script src="{{ asset('dist/asset_offline/popper.min.js') }}"></script>
     <script src="{{ asset('dist/asset_offline/cart_reguler.js') }}"></script>
+    <script>
+        $(document).on('click', '#setting_panel_btn', function() {
+            introJs('.intro-foo').setOptions({
+                'showProgress': true,
+                'tooltipPosition': 'right'
+            }).start();
+        });
+    </script>
 @endpush
