@@ -14,7 +14,7 @@
         @if (auth()->user()->role_id == '2')
             <li>
                 <a href="javascript:void(0);" data-toggle="collapse" data-target="#dashboard" class="collapsed {{ Request::is('analisis-tamu') || Request::is('revenue') ? 'active' : '' }}" aria-expanded="false" data-title="Menu Dashboard" data-intro="Menu ini digunakan untuk analisis pengunjung TGCC">
-                    <div class="pull-left"><i class="fa fa-bar-chart-o mr-20"></i><span class="right-nav-text">Dashboard</span></div>
+                    <div class="pull-left"><i class="zmdi zmdi-chart mr-20"></i><span class="right-nav-text">Dashboard</span></div>
                     <div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div>
                     <div class="clearfix"></div>
                 </a>
@@ -80,7 +80,7 @@
         @if (auth()->user()->role_id == '2')
             <li>
                 <a href="javascript:void(0);" data-toggle="collapse" data-target="#pages_users" class="collapsed {{ Request::is('daftar-admin') || Request::is('daftar-tamu') ? 'active' : '' }}" aria-expanded="false" data-title="Menu Daftar Pengguna" data-intro="Menu ini digunakan mengelola data member dan berisi informasi detail riwayat bermain member">
-                    <div class="pull-left"><i class="fa fa-user mr-20"></i><span class="right-nav-text">Daftar Pengguna</span></div>
+                    <div class="pull-left"><i style="font-size: 22px" class="zmdi zmdi-account mr-20"></i><span class="right-nav-text">Daftar Pengguna</span></div>
                     <div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div>
                     <div class="clearfix"></div>
                 </a>
@@ -106,7 +106,7 @@
             <li>
                 <a class="{{ Request::is('riwayat-invoice') ? 'active' : '' }}" href="{{ route('riwayat-invoice.index') }}" data-title="Menu Invoice" data-intro="Menu ini berisi riwayat daftar invoice member">
                     <div class="pull-left">
-                        <i class="fa fa-money mr-20"></i>
+                        <i class="zmdi zmdi-money-box mr-30" style="font-size: 22px"></i>
                         <span class="right-nav-text">Invoice</span>
                     </div>
                     <div class="clearfix"></div>
