@@ -61,7 +61,7 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('success', 'Anda Berhasil Logout');
+        return redirect('/login')->with('success', 'Anda Berhasil Logout');
     }
 
     public function resetPassword(Request $request)
