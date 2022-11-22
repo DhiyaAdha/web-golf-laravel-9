@@ -231,7 +231,7 @@
                         <td>: {{ $user->name }}</td>
                     </tr>
                     <tr>
-                        <td class="w-30"><span>Invoice ID</span></td>
+                        <td class="w-30"><span>INV</span></td>
                         <td>: {{ $log_transaction->order_number }}</td>
                     </tr>
                     <tr>
