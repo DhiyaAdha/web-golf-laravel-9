@@ -38,7 +38,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\UserActivity::class,
-            /* \App\Http\Middleware\HttpsProtocol::class, */
+            \App\Http\Middleware\HttpsProtocol::class,
         ],
 
         'api' => [
@@ -67,6 +67,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'ceklevel' => \App\Http\Middleware\CekLevel::class,
         'prevent-back-history' => \App\Http\Middleware\PreventBackHistory::class,
-        'htmlMinifier' => \App\Http\Middleware\HtmlMinifier::class
+        'htmlMinifier' => \App\Http\Middleware\HtmlMinifier::class,
     ];
 }

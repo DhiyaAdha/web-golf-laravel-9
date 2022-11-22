@@ -3,14 +3,15 @@
     <link href="{{ asset('vendors/bower_components/morris.js/morris.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 @section('content')
-    <div class="page-wrapper">
-        <div class="container-fluid pt-25">
+    <div class="page-wrapper intro-foo">
+        <div class="container-fluid pt-25"  
+        data-title="Halaman Revenue" data-intro="Halaman ini memberikan informasi total revenue setiap kategori di tgcc. ">
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                     <div class="panel panel-default card-view pa-0">
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body pa-0">
-                                <div class="sm-data-box today">
+                                <div class="sm-data-box today" style="background-color:#01C853;" data-title="Jumlah Revenue <br> Hari Ini" data-intro="Panel ini memberikan informasi total keseluruhan Revenue pada hari ini.">
                                     <div class="container-fluid">
                                         <div class="row p-2">
                                             <div class="col-xs-8 text-left data-wrap-left">
@@ -34,7 +35,7 @@
                     <div class="panel panel-default card-view pa-0">
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body pa-0">
-                                <div class="sm-data-box vvip">
+                                <div class="sm-data-box vvip" data-title="Jumlah Revenue Permainan Hari Ini" data-intro="Panel ini memberikan informasi total keseluruhan revenue kategori permaian pada hari ini.">
                                     <div class="container-fluid">
                                         <div class="row p-2">
                                             <div class="col-xs-8 text-left data-wrap-left">
@@ -58,7 +59,7 @@
                     <div class="panel panel-default card-view pa-0">
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body pa-0">
-                                <div class="sm-data-box vip">
+                                <div class="sm-data-box vip" data-title="Jumlah Revenue Proshop & Fasilitas Hari Ini" data-intro="Panel ini memberikan informasi total keseluruhan revenue kategori proshop & fasilitas pada hari ini.">
                                     <div class="container-fluid">
                                         <div class="row p-2">
                                             <div class="col-xs-8 text-left data-wrap-left">
@@ -80,7 +81,7 @@
                     <div class="panel panel-default card-view pa-0">
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body pa-0">
-                                <div class="sm-data-box reguler">
+                                <div class="sm-data-box reguler" data-title="Jumlah Revenue <br> Kantin Hari Ini" data-intro="Panel ini memberikan informasi total keseluruhan revenue kategori kantin pada hari ini.">
                                     <div class="container-fluid">
                                         <div class="row p-2">
                                             <div class="col-xs-8 text-left data-wrap-left">
@@ -103,7 +104,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="panel panel-default card-view">
+                    <div class="panel panel-default card-view" data-title="Revenue 7 Hari Terakhir" data-intro="Panel ini berbentuk bar chart dan bersifat data objektif dinamis memberikan informasi jumlah revenue setiap hari berdasarkan kategori dalam kurun waktu satu minggu terakhir.">
                         <div class="panel-heading">
                             <div class="pull-left">
                                 <h6 class="pannel-title text-dark">Revenue Trendline 7 Hari Terakhir</h6>
@@ -130,7 +131,7 @@
                             <hr class="light-grey-hr row mt-20 mb-15 mb-10" />
                         </div>
                         <div class="panel-wrapper collapse in">
-                            <div class="panel-body">
+                            <div class="panel-body" >
                                 <div class="tab-content">
                                     <div id="all" class="tab-pane fade active in" role="tabpanel">
                                         <div class="panel-body">
@@ -160,7 +161,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="panel panel-default card-view">
+                    <div class="panel panel-default card-view" data-title="Revenue 12 Bulan Terakhir" data-intro="Panel ini berbentuk line chart dan bersifat data objektif dinamis memberikan informasi jumlah revenue setiap bulan berdasarkan kategori dalam kurun waktu satu tahun terakhir.">
                         <div class="panel-heading">
                             <div class="pull-left">
                                 <h6 class="pannel-title text-dark">Revenue Trendline 12 Bulan Terakhir</h6>
@@ -215,6 +216,7 @@
                     </div>
                 </div>
             </div>
+            <button id="setting_panel_btn" data-toggle="tooltip" title="Panduan" data-placement="left" class="btn btn-success btn-circle setting-panel-btn shadow-2dp"><i class="zmdi zmdi-settings"></i></button>
             @include('layouts.footer')
         </div>
     </div>
@@ -223,4 +225,14 @@
     <script defer src="{{ asset('vendors/bower_components/raphael/raphael.min.js') }}"></script>
     <script defer src="{{ asset('vendors/bower_components/morris.js/morris.min.js') }}"></script>
     <script defer src="{{ asset('/dist/js/dashboard3-data.js') }}"></script>
+
+    <script>
+        $(document).on('click', '#setting_panel_btn', function() {
+            introJs('.intro-foo').setOptions({
+                'showProgress': true,
+                'tooltipPosition': 'right'
+            }).start();
+        });
+    </script>
+
 @endpush

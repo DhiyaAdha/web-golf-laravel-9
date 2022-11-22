@@ -2,17 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class PasswordReset extends Model
 {
     use Cachable, HasFactory;
+
     protected $fillable = [
         'email',
         'token',
-        'is_verified'
+        'is_verified',
     ];
 
     /**
@@ -25,7 +26,7 @@ class PasswordReset extends Model
         'remember_token',
     ];
 
-     /**
+    /**
      * The attributes that should be cast to native types.
      *
      * @var array

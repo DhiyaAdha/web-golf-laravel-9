@@ -2,21 +2,15 @@
 
 namespace App\Console;
 
-use Carbon\Carbon;
-
-use App\Models\User;
-use App\Models\Visitor;
 use App\Models\LogLimit;
 use App\Models\ReportLimit;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Cache\RateLimiting\Limit;
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Visitor;
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
-
     /**
      * Define the application's command schedule.
      *
@@ -30,18 +24,18 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
-        
-            LogLimit::whereHas('visitor', function($query) {
+
+            LogLimit::whereHas('visitor', function ($query) {
                 $query->where('tipe_member', 'VVIP');
-            })->update(['quota'=>10]);
-            LogLimit::whereHas('visitor', function($query) {
+            })->update(['quota' => 10]);
+            LogLimit::whereHas('visitor', function ($query) {
                 $query->where('tipe_member', 'VIP');
-            })->update(['quota'=>4]);
-            
+            })->update(['quota' => 4]);
+
             $visitor = Visitor::where('status', 'active')->get();
 
-            foreach($visitor as $value){
-                if($value->tipe_member == 'VVIP'){
+            foreach($visitor as $value) {
+                if($value->tipe_member == 'VVIP') {
                     ReportLimit::create([
                         'visitor_id' => $value['id'],
                         'user_id' => '1',
@@ -49,7 +43,7 @@ class Kernel extends ConsoleKernel
                         'status' => 'Reset',
                         'created_at' => Carbon::now(),
                     ]);
-                }else{
+                }else {
                     ReportLimit::create([
                         'visitor_id' => $value['id'],
                         'user_id' => '1',
@@ -70,7 +64,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__ . '/Commands');
+        $this->load(__DIR__.'/Commands');
 
         require base_path('routes/console.php');
     }

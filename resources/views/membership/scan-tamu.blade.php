@@ -1,6 +1,6 @@
 @extends('layouts.main', ['title' => 'TGCC | Scan Tamu'])
 @section('content')
-    <div class="page-wrapper">
+    <div class="page-wrapper intro-foo ">
         <div class="container-fluid">
             <div class="row heading-bg">
                 <div class="row">
@@ -19,7 +19,7 @@
             </div>
             <div class="row">
                 <div class="col-12 d-flex justify-content-center">
-                    <div class="d-flex flex-column">
+                    <div class="d-flex flex-column" data-title="Scan Tamu" data-intro="Panel ini memberikan informasi verifikasi qr-code atau verifikasi kode membership yang sudah terdaftar di tgcc.">
                         <div class="form-group d-flex justify-content-center">
                             <ul role="tablist" class="nav nav-pills" id="myTabs_6">
                                 <li class="active" role="presentation">
@@ -61,6 +61,7 @@
                     </div>
                 </div>
             </div>
+            <button id="setting_panel_btn" data-toggle="tooltip" title="Panduan" data-placement="left" class="btn btn-success btn-circle setting-panel-btn shadow-2dp"><i class="zmdi zmdi-settings"></i></button>
             @include('layouts.footer')
         </div>
     </div>
@@ -69,4 +70,12 @@
     <script defer src="{{ asset('dist/asset_offline/lottie-player.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/scan_member.js') }}"></script>
-@endpush
+    <script>
+        $(document).on('click', '#setting_panel_btn', function() {
+            introJs('.intro-foo').setOptions({
+                'showProgress': true,
+                'tooltipPosition': 'right'
+            }).start();
+        });
+    </script>
+    @endpush

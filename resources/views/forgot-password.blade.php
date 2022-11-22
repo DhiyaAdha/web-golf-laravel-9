@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <title>Lupa Password</title>
     <meta charset="UTF-8" />

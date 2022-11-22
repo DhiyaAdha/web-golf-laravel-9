@@ -1,14 +1,14 @@
 $(document).on("change", "#filter-data", function(e) {
     // member.column($(this).data('column')).search($(this).val()).draw();
-    var filter_data = [];
-    var option = $(this).find(':selected');
-    var url = window.location.href;
+    let filter_data = [];
+    let option = $(this).find(':selected');
+    let url = window.location.href;
 
     $.each(option, function(index, value) {
         filter_data.push(option.val());
     });
 
-    var param = filter_data.join(","); 
+    let param = filter_data.join(","); 
     if(param != "") {
         if (url.indexOf('?') > -1) {
             url += '&filter='+param
@@ -17,15 +17,16 @@ $(document).on("change", "#filter-data", function(e) {
         }
     }
 
-    var EndUrl = url.split("?")[1];
+    let EndUrl = url.split("?")[1];
     if(EndUrl != "") {
         $('#dt-tamu').DataTable().ajax.url("/daftar-tamu?"+EndUrl).load();
     } else {
         $('#dt-tamu').DataTable().ajax.url("/daftar-tamu").load();
     }
 });
+
 /* data tamu */
-var member = $('#dt-tamu').DataTable({
+let member = $('#dt-tamu').DataTable({
     "processing": true,
     "serverSide": true,
     "lengthChange": false,

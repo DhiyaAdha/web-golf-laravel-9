@@ -1,8 +1,8 @@
 <?php
+
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Response;
 
 class HtmlMinifier
 {
@@ -15,28 +15,26 @@ class HtmlMinifier
         if (strpos($contentType, 'text/html') !== false) {
             $response = $next($request);
             $buffer = $response->getContent();
-            if(strpos($buffer,'<pre>') !== false)
-            {
-                $replace = array(
+            if(strpos($buffer, '<pre>') !== false) {
+                $replace = [
                     '/<!--[^\[](.*?)[^\]]-->/s' => '',
-                    "/<\?php/"                  => '<?php ',
-                    "/\r/"                      => '',
-                    "/>\n</"                    => '><',
-                    "/>\s+\n</"                 => '><',
-                    "/>\n\s+</"                 => '><',
-                );
+                    "/<\?php/" => '<?php ',
+                    "/\r/" => '',
+                    "/>\n</" => '><',
+                    "/>\s+\n</" => '><',
+                    "/>\n\s+</" => '><',
+                ];
             }
-            else
-            {
-                $replace = array(
+            else {
+                $replace = [
                     '/<!--[^\[](.*?)[^\]]-->/s' => '',
-                    "/<\?php/"                  => '<?php ',
-                    "/\n([\S])/"                => '$1',
-                    "/\r/"                      => '',
-                    "/\n/"                      => '',
-                    "/\t/"                      => '',
-                    "/ +/"                      => ' ',
-                );
+                    "/<\?php/" => '<?php ',
+                    "/\n([\S])/" => '$1',
+                    "/\r/" => '',
+                    "/\n/" => '',
+                    "/\t/" => '',
+                    '/ +/' => ' ',
+                ];
             }
             $buffer = preg_replace(array_keys($replace), array_values($replace), $buffer);
             $response->setContent($buffer);
@@ -46,8 +44,6 @@ class HtmlMinifier
         return $response;
 
     }
-
-
 
     public function minify2($input)
     {

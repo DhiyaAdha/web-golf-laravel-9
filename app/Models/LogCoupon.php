@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class LogCoupon extends Model
 {
@@ -22,10 +22,10 @@ class LogCoupon extends Model
     public function visitor()
     {
         return $this->belongsTo(Visitor::class);
-    }   
+    }
 
     public function ReportLimit()
     {
         return $this->hasmany(ReportCoupon::class);
-    }  
+    }
 }

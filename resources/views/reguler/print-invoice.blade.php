@@ -1,9 +1,23 @@
 <html>
 <head>
     <title>{{ $log_transaction->order_number }}</title>
-    <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="Tritih Golf & Country Club" />
+    <meta name="author" content="inovis" />
+    <meta name="keywords" content="tgcc" />
+    <meta name="theme-color" content="#6777ef" />
     <link rel="icon" href="{{ asset('tgcc144.png') }}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{{ asset('tgcc144.png') }}">
+    <link rel="manifest" href="{{ asset('/manifest.json') }}">
     <style>
+        @font-face{
+            font-family:fake receipt;
+            font-style:normal;
+            font-weight:400;
+            src:local('Fake Receipt'),
+            url('../dist/fonts/fake receipt.woff') format('woff')
+        }
         /* width */
         ::-webkit-scrollbar {
             width: 8px;
@@ -21,8 +35,21 @@
             background: #555;
         }
         body {
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: 'Fake Receipt', sans-serif;
         }
+
+        .text-left {
+            text-align: left;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
         @media print {
             .receipt-template {
                 width: 100%;
@@ -30,7 +57,8 @@
         }
         .receipt-template {
             margin: 0 auto;
-            width: 56mm;
+            /* width: 56mm; */
+            width: 302px;
             background: #FFF;
         }
 
@@ -44,6 +72,7 @@
 
         .receipt-template .bold {
             font-weight: 700;
+            padding-top: 5px;
         }
 
         .receipt-template .italic {
@@ -67,9 +96,11 @@
         }
 
         .receipt-template .sub-title {
-            font-size: 10px;
+            font-size: 12px;
             font-weight: 700;
+            text-align: center;
             margin: 10px 0 5px 0;
+            padding: 0;
         }
 
         .receipt-template table {
@@ -83,6 +114,7 @@
 
         .receipt-template .info-area {
             font-size: 10px;
+            margin-top: 5px; 
             line-height: 1.222;
         }
 
@@ -113,6 +145,7 @@
 
         .receipt-template .receipt-header {
             text-align: center;
+            font-size: 12px;
         }
 
         .receipt-template .receipt-header .logo-area {
@@ -146,7 +179,7 @@
 
         /*Calculation Area*/
         .receipt-template .calculation-area {
-            border-top: 2px solid #000;
+            border-top: 1px dashed  #000;
             font-weight: bold;
         }
 
@@ -169,153 +202,140 @@
             font-size: 10px;
         }
 
-        </style>
-        <script>window.console = window.console || function(t) {};</script>
-        <script>
-            if (document.location.search.match(/type=embed/gi)) {
-                window.parent.postMessage("resize", "*");
-            }
-        </script>
-    </head>
-    <body style="background:#ffffff;" id="print">
-        <section class="receipt-template">
-            <header class="receipt-header">
-                <div class="logo-area">
-                    <img class="logo" src="{{ asset('tgcc.png') }}">
+    </style>
+    <script>window.console = window.console || function(t) {};</script>
+    <script>
+        if (document.location.search.match(/type=embed/gi)) {
+            window.parent.postMessage("resize", "*");
+        }
+    </script>
+</head>
+<body style="background:#ffffff;" id="print">
+    <section class="receipt-template">
+        <header class="receipt-header">
+            <div class="logo-area">
+                <img class="logo" src="{{ asset('tgcc.png') }}">
+            </div>
+            <span class="mt-2">Tritih Golf & Country Club</span>
+            <div class="address-area">
+                <div class="block">
+                    <span class="info phone">Jl. Kemuning, Sawah, Tritih Kulon, Kec. Cilacap Utara, Kabupaten Cilacap, Jawa Tengah 53253</span>
                 </div>
-                <h5 class="mt-2">Tritih Golf & Country Club</h5>
-                <div class="address-area">
-                    <div class="block">
-                        <span class="info phone">Jl. Kemuning, Sawah, Tritih Kulon, Kec. Cilacap Utara, Kabupaten Cilacap, Jawa Tengah 53253</span>
-                    </div>
-                </div>
-            </header>
-            <section class="info-area">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td class="w-30"><span>Admin:</span></td>
-                            <td>{{ $user->name }}</td>
-                        </tr>
-                        <tr>
-                            <td class="w-30"><span>Invoice ID:</span></td>
-                            <td>{{ $log_transaction->order_number }}</td>
-                        </tr>
-                        <tr>
-                            <td class="w-30"><span>Tanggal:</span></td>
-                            <td>{{ \Carbon\Carbon::parse($log_transaction->created_at)->format('d M, Y H:i') }}</td>
-                        </tr>
-                        <tr>
-                            <td class="w-30">Nama Tamu:</td>
-                            <td>{{ $visitor->name }}</td>
-                        </tr>
-                        <tr>
-                            <td class="w-30">Jenis Member:</td>
-                            <td>{{ $visitor->tipe_member == 'REGULER' ? 'Umum' : '' }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-            <h4 class="main-title">INVOICE</h4>
-            <section class="listing-area item-list">
-                <table>
-                    <thead>
-                        <tr>
-                            <td class="w-10 text-center">No.</td>
-                            <td class="w-40">Item</td>
-                            <td class="w-15 text-center">Qty</td>
-                            <td class="w-15 text-right">Harga</td>
-                            <td class="w-20 text-right">Total Harga</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <input type="hidden" value="{{ $i = 1 }}">
-                        @foreach ($cart as $item)
-                            <tr>
-                                <td class="text-center">{{ $i++ }}</td>
-                                <td>{{ $item['name'] }}</td>
-                                <td class="text-center">{{ $item['qty'] }}</td>
-                                <td class="text-right">{{ $item['pricesingle'] }}</td>
-                                <td class="text-right">{{ $item['price'] }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </section>
-            <section class="info-area calculation-area">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td class="w-70">Jumlah Item:</td>
-                            <td>{{ count($cart) }}</td>
-                        </tr>
-                        <tr>
-                            <td class="w-70">Jumlah Order:</td>
-                            <td>{{ $qty }}</td>
-                        </tr>
-                        <tr>
-                            <td class="w-70">Total Bayar:</td>
-                            <td>{{ formatrupiah($transaction_amount) }}</td>
-                        </tr>
-                        <tr>
-                            <td class="w-70">Total Tagihan:</td>
-                            <td>{{ formatrupiah($log_transaction->total) }}</td>
-                        </tr>
-                        @if ($refund != 0)
-                            <tr>
-                                <td class="w-70">Kembalian:</td>
-                                <td>{{ formatrupiah($refund) }}</td>
-                            </tr>
-                        @endif
-                    </tbody>
-                </table>
-            </section>
-            <section class="info-area italic mt-2">
-                <span class="text-small"><b>Dalam Teks:</b> {{ $counted }}</span><br>
-            </section>
-            <section class="listing-area payment-list">
-                <div class="heading">
-                    <h2 class="sub-title">Pembayaran</h2>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <td class="w-10 text-center">No.</td>
-                            <td class="w-50">Metode</td>
-                            <td class="w-50">Transaksi</td>
-                            <td class="w-20">Sisa</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <input type="hidden" value="{{ $i = 1 }}">
-                        @foreach ($payment_type as $type)
-                            <tr>
-                                <td class="text-center">{{ $i++ }}</td>
-                                <td>{{ $type['payment_type'] }}</td>
-                                <td>{{ $type['transaction_amount'] }}</td>
-                                <td>{{ $type['balance'] }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </section>
-            <section class="info-area barcode-area">
-                {{ QrCode::size(50)->eye('circle')->style('round')->generate($log_transaction->order_number) }}
-            </section>
-            <section class="info-area align-center footer-area">
-                <span class="block">Yuk kita hidupkan lagi kebiasaan berolahraga untuk pola hidup yang lebih
-                    sehat</span>
-                <span class="block bold">Terima kasih telah bermain di tgcc!</span>
-            </section>
+            </div>
+        </header>
+        <section class="info-area">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="w-30"><span>Admin</span></td>
+                        <td>: {{ $user->name }}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-30"><span>Invoice ID</span></td>
+                        <td>: {{ $log_transaction->order_number }}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-30"><span>Tanggal</span></td>
+                        <td>: {{ \Carbon\Carbon::parse($log_transaction->created_at)->format('d M, Y H:i') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-30">Nama Tamu</td>
+                        <td>: {{ $visitor->name }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </section>
-        <script src="{{ asset('dist/asset_offline/jquery.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('/dist/js/printThis.js') }}"></script>
-        <script>
-            $(document).ready(function() {
-                $('#print').printThis({
-                    printContainer: true,
-                });
+        <h4 class="main-title">INVOICE</h4>
+        <section class="listing-area item-list">
+            <table>
+                <thead>
+                    <tr>
+                        <td class="w-40">Item</td>
+                        <td class="w-15 text-center">Qty</td>
+                        <td class="w-20 text-right">Total Harga</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($cart as $item)
+                        <tr>
+                            <td>{{ $item['name'] }}</td>
+                            <td class="text-center">{{ $item['qty'] }}</td>
+                            <td class="text-right">{{ $item['price'] }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </section>
+        <section class="info-area calculation-area">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="w-70">Jumlah Item:</td>
+                        <td>{{ count($cart) }}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-70">Jumlah Order:</td>
+                        <td>{{ $qty }}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-70">Total Bayar:</td>
+                        <td>{{ formatrupiah($transaction_amount) }}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-70">Total Tagihan:</td>
+                        <td>{{ formatrupiah($log_transaction->total) }}</td>
+                    </tr>
+                    @if ($refund != 0)
+                        <tr>
+                            <td class="w-70">Kembalian:</td>
+                            <td>{{ formatrupiah($refund) }}</td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+        </section>
+        <section class="info-area italic mt-2">
+            <span class="text-small"><b>Dalam Teks:</b> {{ $counted }}</span><br>
+        </section>
+        <section class="listing-area payment-list">
+            <div class="heading">
+                <h2 class="sub-title">Pembayaran</h2>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <td class="w-50 text-left">Metode</td>
+                        <td class="w-50 text-left">Transaksi</td>
+                        <td class="w-20 text-right">Sisa</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($payment_type as $type)
+                        <tr>
+                            <td class="text-left">{{ $type['payment_type'] }}</td>
+                            <td class="text-left">{{ $type['transaction_amount'] }}</td>
+                            <td class="text-right">{{ $type['balance'] }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </section>
+        <section class="info-area barcode-area">
+            {{ QrCode::size(70)->eye('circle')->generate($log_transaction->order_number) }}
+        </section>
+        <section class="info-area align-center footer-area">
+            <span class="block">Yuk kita hidupkan lagi kebiasaan berolahraga untuk pola hidup yang lebih sehat</span>
+            <span class="block bold">Terima kasih telah bermain di tgcc!</span>
+        </section>
+    </section>
+    <script src="{{ asset('dist/asset_offline/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/dist/js/printThis.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#print').printThis({
+                printContainer: true,
             });
-        </script>
-    </body>
+        });
+    </script>
+</body>
 </html>

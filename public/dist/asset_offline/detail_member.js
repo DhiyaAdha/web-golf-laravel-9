@@ -4,50 +4,64 @@ tg = tg[0];
 tg = tg.split("/");
 member = tg[tg.length - 1];
 
-$(".modal-detail-invoice").on("show.bs.modal", function (e) {
-    var id = $(e.relatedTarget).data("id");
+let invoice = (id) => {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            async: true,
+            type: "GET",
+            url: "/detail-invoice-member/" + id,
+            data: {
+                id: id,
+            },
+            dataType: "json",
+            success: function (data) {
+                resolve(data);
+            },
+            error: function (error){
+                reject(error);
+            }
+        });
+    });
+}
 
-    $.ajax({
-        async: true,
-        type: "GET",
-        url: "/detail-invoice-member/" + id,
-        data: {
-            id: id,
-        },
-        dataType: "json",
-        success: function (data) {
-            $(".products").html("");
-            $("#myLargeModalLabel").text("ORDER ID : " + data.order_number);
-            $("#name_visitor").text(data.name);
-            $("#method_payment").text(data.pay);
-            $("#date").text(data.date);
-            $("#type_tamu")
-                .addClass(
-                    data.type_member == "VIP"
-                        ? "label label-success"
-                        : "label label-warning"
-                )
-                .text(data.type_member == "VIP" ? "member" : "VIP");
-            $("#visitor_email").text(data.visitor_email);
-            $("#visitor_phone").text(data.visitor_phone);
-            $("#amount_item").text(data.amount_item);
-            $("#amount_order").text(data.amount_order);
-            $("#discount").text(data.discount);
-            $("#total_payment").text(data.total_payment);
-            $("#total_bill").text(data.total_bill);
-            $.each(data.products, function (b, val) {
-                $(".products")
-                    .append(
-                        `<tr>
-                        <td>${val.name}</td>    
-                        <td class="text-right">${val.pricesingle}</td>    
-                        <td class="text-right">${val.qty}</td>    
-                        <td class="text-right">${val.price}</td>    
-                    </tr>`
-                    )
-                    .one();
-            });
-        },
+$(".modal-detail-invoice").on("show.bs.modal", function (e) {
+    let id = $(e.relatedTarget).data("id");
+    let detail_invoice = invoice(id);
+
+    detail_invoice.finally(() => {
+        console.log('Tunggu proses selesai');
+    }).then((data) => {
+        $(".products").html("");
+        $("#myLargeModalLabel").text("ORDER ID : " + data.order_number);
+        $("#name_visitor").text(data.name);
+        $("#method_payment").text(data.pay);
+        $("#date").text(data.date);
+        $("#type_tamu")
+            .addClass(
+                data.type_member == "VIP"
+                    ? "label label-success"
+                    : "label label-warning"
+            )
+            .text(data.type_member == "VIP" ? "member" : "VIP");
+        $("#visitor_email").text(data.visitor_email);
+        $("#visitor_phone").text(data.visitor_phone);
+        $("#amount_item").text(data.amount_item);
+        $("#amount_order").text(data.amount_order);
+        $("#discount").text(data.discount);
+        $("#total_payment").text(data.total_payment);
+        $("#total_bill").text(data.total_bill);
+        $.each(data.products, function (b, val) {
+            $(".products").append(
+                    `<tr>
+                    <td>${val.name}</td>    
+                    <td class="text-right">${val.pricesingle}</td>    
+                    <td class="text-right">${val.qty}</td>    
+                    <td class="text-right">${val.price}</td>    
+                </tr>`
+                ).one();
+        });
+    }).catch((error) => {
+        console.log(error);
     });
 });
 

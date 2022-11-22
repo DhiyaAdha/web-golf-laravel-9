@@ -19,7 +19,7 @@ class CreateLogLimitsTable extends Migration
             $table->integer('report_limit_id')->unsigned();
             $table->integer('quota')->default(0);
             $table->timestamps();
-            
+
             $table->foreign('visitor_id')
             ->references('id')
             ->on('visitors')
