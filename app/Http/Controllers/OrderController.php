@@ -376,7 +376,7 @@ class OrderController extends Controller
                     $price_single += $today === 'Sabtu' || $today === 'Minggu' ? $default['price_weekend'] : $default['price_weekdays'];
                 }
             }
-            $order_number = 'INV/'.Carbon::now()->format('Ymd').'/'.$visitor->tipe_member.Carbon::now()->format('his');
+            $order_number = 'INV/'.Carbon::now()->format('Ymd').'/'.Carbon::now()->format('his');
             $deposit = Deposit::where('visitor_id', $get_id)->first();
             $log_limit = LogLimit::where('visitor_id', $get_id)->first();
             $log_coupon = LogCoupon::where('visitor_id', $get_id)->first();

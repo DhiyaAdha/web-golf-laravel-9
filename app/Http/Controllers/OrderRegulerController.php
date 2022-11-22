@@ -311,7 +311,6 @@ class OrderRegulerController extends Controller
             $items = \Cart::session(auth()->id())->getContent();
             $totalPrice = \Cart::session(auth()->id())->getTotal();
             $today = Carbon::now()->isoFormat('dddd');
-            // $categoryy = \Cart::session(auth()->id())->getContent();
             if (\Cart::isEmpty()) {
                 $cart_data = [];
             } else {
@@ -329,7 +328,7 @@ class OrderRegulerController extends Controller
                 }
                 $orders = collect($cart)->sortBy('created_at');
             }
-            $order_number = 'INV/'.Carbon::now()->format('Ymd').'/REGULER/'.Carbon::now()->format('his');
+            $order_number = 'INV/'.Carbon::now()->format('Ymd').'/'.Carbon::now()->format('his');
             if ($request->ajax()) {
                 return response()->json(['order_number' => $order_number]);
             }
