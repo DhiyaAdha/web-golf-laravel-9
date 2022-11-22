@@ -57,8 +57,8 @@
         }
         .receipt-template {
             margin: 0 auto;
-            /* width: 56mm; */
-            width: 302px;
+            width: 56mm;
+            /* width: 302px; */
             background: #FFF;
         }
 
@@ -152,6 +152,7 @@
             width: 50px;
             height: 50px;
             margin: 0 auto;
+            padding:10px;
         }
 
         .receipt-template .receipt-header .logo-area img.logo {
@@ -231,7 +232,7 @@
                         <td>: {{ $user->name }}</td>
                     </tr>
                     <tr>
-                        <td class="w-30"><span>Invoice ID</span></td>
+                        <td class="w-30"><span>INV</span></td>
                         <td>: {{ $log_transaction->order_number }}</td>
                     </tr>
                     <tr>
@@ -239,7 +240,7 @@
                         <td>: {{ \Carbon\Carbon::parse($log_transaction->created_at)->format('d M, Y H:i') }}</td>
                     </tr>
                     <tr>
-                        <td class="w-30">Nama Tamu</td>
+                        <td class="w-30">Nama</td>
                         <td>: {{ $visitor->name }}</td>
                     </tr>
                 </tbody>
