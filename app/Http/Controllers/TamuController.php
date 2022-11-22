@@ -16,7 +16,6 @@ use App\Models\ReportLimit;
 use App\Models\Visitor;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
-use DB;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
