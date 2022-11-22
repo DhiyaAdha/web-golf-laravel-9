@@ -121,7 +121,6 @@ $(document).ready(function () {
             resize: true,
             barGap: 4,
             gridTextColor:'#878787',
-            gridTextFamily:"Roboto",
             barSize: 30,
         });
     
@@ -150,7 +149,6 @@ $(document).ready(function () {
             resize: true,
             redraw: true,
             gridTextColor: "#878787",
-            gridTextFamily: "Roboto",
             parseTime: false,
         });
     

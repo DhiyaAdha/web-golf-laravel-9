@@ -58,7 +58,6 @@ $( document ).ready(function() {
             resize: true,
             barGap: 4,
             gridTextColor:'#878787',
-            gridTextFamily:"Roboto",
             barSize: 30,
         });
         Morris.Bar({
@@ -75,7 +74,6 @@ $( document ).ready(function() {
             resize: true,
             barGap: 4,
             gridTextColor:'#878787',
-            gridTextFamily:"Roboto",
             barSize: 30,
         });
         Morris.Bar({
@@ -92,7 +90,6 @@ $( document ).ready(function() {
             resize: true,
             barGap: 4,
             gridTextColor:'#878787',
-            gridTextFamily:"Roboto",
             barSize: 30,
         });
         Morris.Bar({
@@ -109,7 +106,6 @@ $( document ).ready(function() {
             resize: true,
             barGap: 4,
             gridTextColor:'#878787',
-            gridTextFamily:"Roboto",
             barSize: 30,
         });
     }
@@ -132,7 +128,6 @@ $( document ).ready(function() {
             gridLineColor: "#878787",
             lineColors: ["#00FFFFFF", "#fec107", "#32FFC1", "#5F9DF7"],
             gridTextColor: "#878787",
-            gridTextFamily: "Roboto",
             hideHover: 'auto',
         });
         Morris.Line({
@@ -152,7 +147,6 @@ $( document ).ready(function() {
             gridLineColor: "#878787",
             lineColors: ["#fec107"],
             gridTextColor: "#878787",
-            gridTextFamily: "Roboto",
             hideHover: 'auto',
         });
         Morris.Line({
@@ -172,7 +166,6 @@ $( document ).ready(function() {
             gridLineColor: "#878787",
             lineColors: ["#32FFC1"],
             gridTextColor: "#878787",
-            gridTextFamily: "Roboto",
             hideHover: 'auto',
         });
         Morris.Line({
@@ -192,7 +185,6 @@ $( document ).ready(function() {
             gridLineColor: "#878787",
             lineColors: ["#5F9DF7"],
             gridTextColor: "#878787",
-            gridTextFamily: "Roboto",
             hideHover: 'auto',
         });
     }
