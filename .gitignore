@@ -16,5 +16,5 @@ rr
 .rr.yaml
 *.release-it.json
 pint.
-.env
-.htaccess
+*.env
+*.htaccess
