@@ -239,7 +239,7 @@
                         <td>: {{ \Carbon\Carbon::parse($log_transaction->created_at)->format('d M, Y H:i') }}</td>
                     </tr>
                     <tr>
-                        <td class="w-30">Nama Tamu</td>
+                        <td class="w-30">Nama</td>
                         <td>: {{ $visitor->name }}</td>
                     </tr>
                 </tbody>
