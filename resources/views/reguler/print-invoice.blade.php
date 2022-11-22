@@ -57,8 +57,8 @@
         }
         .receipt-template {
             margin: 0 auto;
-            /* width: 56mm; */
-            width: 302px;
+            width: 56mm;
+            /* width: 302px; */
             background: #FFF;
         }
 
