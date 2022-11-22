@@ -329,7 +329,7 @@ class OrderRegulerController extends Controller
                 }
                 $orders = collect($cart)->sortBy('created_at');
             }
-            $order_number = 'INV/'.Carbon::now()->format('Ymd').'/REGULER/'.Carbon::now()->format('his');
+            $order_number = 'INV/'.Carbon::now()->format('Ymd').'/REGULER';
             if ($request->ajax()) {
                 return response()->json(['order_number' => $order_number]);
             }
