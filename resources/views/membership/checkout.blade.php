@@ -713,7 +713,7 @@
                                         <div class="d-flex flex-column">
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Invoice</span>
-                                                <span style="font-size: small;" id="order-number">#{{ $order_number }}</span>
+                                                <span style="font-size: small;" id="order-number">{{ $order_number }}</span>
                                             </div>
                                             <div class="d-flex">
                                                 <span class="flex-grow-1">Tamu</span>
