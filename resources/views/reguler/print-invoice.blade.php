@@ -153,11 +153,12 @@
             height: 50px;
             margin: 0 auto;
         }
-
+        
         .receipt-template .receipt-header .logo-area img.logo {
             display: inline-block;
             max-width: 100%;
             max-height: 100%;
+            padding: 10px;
         }
 
         .receipt-template .receipt-header .address-area {
