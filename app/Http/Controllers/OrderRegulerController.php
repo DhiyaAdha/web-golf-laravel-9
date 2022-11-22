@@ -333,7 +333,6 @@ class OrderRegulerController extends Controller
             if ($request->ajax()) {
                 return response()->json(['order_number' => $order_number]);
             }
-            // dd($items);
             return view('reguler.checkout_reguler', compact('totalPrice', 'order_number', 'orders'))->render();
         } catch (\Throwable $th) {
             return redirect()->route('proses_reguler');
@@ -343,9 +342,6 @@ class OrderRegulerController extends Controller
     public function pay_reguler(Request $request)
     {
         $items = \Cart::session(auth()->id())->getContent();
-        $jml_default = 0;
-        $jml_additional = 0;
-        $jml_other = 0;
         $totalPrice = \Cart::session(auth()->id())->getTotal();
         if (\Cart::isEmpty()) {
             $cart_data = [];
