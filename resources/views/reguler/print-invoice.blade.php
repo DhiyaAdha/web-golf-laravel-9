@@ -158,6 +158,7 @@
             display: inline-block;
             max-width: 100%;
             max-height: 100%;
+            padding: 10px;
         }
 
         .receipt-template .receipt-header .address-area {
