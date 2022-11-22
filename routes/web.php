@@ -12,7 +12,7 @@
     use App\Http\Controllers\TamuController;
     use Illuminate\Support\Facades\Auth;
     use Illuminate\Support\Facades\Route;
-    
+
     /*
     |--------------------------------------------------------------------------
     | Web Routes
@@ -23,12 +23,13 @@
     | contains the "web" middleware group. Now create something great!
     |
     */
-    
+
 Route::middleware(['htmlMinifier'])->group(static function () {
     Route::get('/', function () {
         if (Auth::user()) {
             return redirect('/analisis-tamu');
         }
+
         return view('login');
     });
     Route::post('/forgot-password', [AuthController::class, 'email_test'])->name('email_test');
@@ -67,7 +68,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
         Route::get('/package/tambah-package', [PackageController::class, 'create'])->name('package.create');
     });
 });
-    
+
 Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/visitor/qrcode', [ScanqrController::class, 'checkQRCode'])->name('visitor.qrcode');
     Route::get('/visitor/phone', [ScanqrController::class, 'checkNoHp'])->name('visitor.phone');

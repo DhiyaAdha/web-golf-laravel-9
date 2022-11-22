@@ -20,7 +20,7 @@ class CreateDepositsTable extends Migration
             $table->integer('report_deposit_id')->unsigned();
             $table->integer('balance')->default(0);
             $table->timestamps();
-            
+
             $table->foreign('visitor_id')
             ->references('id')
             ->on('visitors')

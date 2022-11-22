@@ -17,7 +17,7 @@ class CreatePersonalAccessTokensTable extends Migration
             $table->increments('id');
             // $table->morphs('tokenable');
             $table->string('tokenable_type');
-            $table->integer('tokenable_id')->unsigned();  
+            $table->integer('tokenable_id')->unsigned();
             // $table->foreign('tokenable_id')->reference('id')->on('users');
             //persolan accses tidak mau menggunankn relasi yg dibuat
             $table->string('name');
@@ -37,7 +37,6 @@ class CreatePersonalAccessTokensTable extends Migration
         // Schema::table('personal_access_tokens', function($table) {
         //     $table->foreign('tokenable_id')->references('id')->on('users');
         // });
-
 
     }
 

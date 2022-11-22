@@ -2,30 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use DB;
-use Throwable;
-use App\Models\User;
-use App\Models\Deposit;
-use App\Models\Package;
-use App\Models\Visitor;
 use App\Models\LogAdmin;
-use App\Models\LogLimit;
-use App\Models\ReportLimit;
-use Darryldecode\Cart\Cart;
-use Illuminate\Support\Arr;
-use Illuminate\Http\Request;
-use App\Models\ReportDeposit;
 use App\Models\LogTransaction;
+use App\Models\Package;
+use App\Models\User;
+use App\Models\Visitor;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
-
-use App\Jobs\SendEmailResetJob;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\SendEmailPaymentsuccess4;
 use Illuminate\Support\Facades\Session;
-use App\Jobs\SendMailPaymentsuccess4Job;
-use function PHPUnit\Framework\returnSelf;
+use Throwable;
 
 class OrderRegulerController extends Controller
 {
@@ -34,15 +21,16 @@ class OrderRegulerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
     private $status;
+
     private $message;
+
     private $data;
 
     public function __construct()
     {
-        $this->status = "INVALID";
-        $this->message = "Ada sesuatu yang salah!";
+        $this->status = 'INVALID';
+        $this->message = 'Ada sesuatu yang salah!';
         $this->data = [];
     }
 
@@ -82,18 +70,17 @@ class OrderRegulerController extends Controller
                 ];
             }
 
-
             $cart_data = collect($cart)->sortBy('created_at');
         }
 
         $sub_total = \Cart::session(auth()->id())->getSubTotal();
         $total = \Cart::session(auth()->id())->getTotal();
-        $counted = ucwords(counted($total) . ' Rupiah');
+        $counted = ucwords(counted($total).' Rupiah');
         $new_condition = \Cart::session(auth()->id())->getCondition('pajak');
 
         $data_total = [
             'sub_total' => $sub_total,
-            'total' => $total
+            'total' => $total,
         ];
 
         return view('reguler.cart-reguler', compact(
@@ -115,15 +102,17 @@ class OrderRegulerController extends Controller
         $today = Carbon::now()->isoFormat('dddd');
         $price = $today === 'Sabtu' || $today === 'Minggu' ? $package->price_weekend : $package->price_weekdays;
         $get_total = \Cart::session(auth()->id())->getTotal();
-        $counted = ucwords(counted($get_total) . ' Rupiah');
+        $counted = ucwords(counted($get_total).' Rupiah');
         if ($cek_itemId->isNotEmpty()) {
             if ($package->quantity == $cek_itemId[$request->get('id')]->quantity) {
                 return redirect()->back()->with('error', 'jumlah item kurang');
             } else {
                 if ($cek_itemId[$request->get('id')]->quantity >= 1) {
-                    $this->setResponse('INVALID', "Sudah ditambahkan");
+                    $this->setResponse('INVALID', 'Sudah ditambahkan');
+
                     return response()->json($this->getResponse());
                 }
+
                 return response()->json([
                     'id' => $request->get('id'),
                     'total' => $get_total,
@@ -134,17 +123,17 @@ class OrderRegulerController extends Controller
                 ], 200);
             }
         } else {
-            \Cart::session(auth()->id())->add(array(
+            \Cart::session(auth()->id())->add([
                 'id' => $request->get('id'),
                 'name' => $package->name,
                 'price' => $price,
                 'quantity' => 1,
                 'category' => $package->category,
-                'attributes' => array(
-                    'created_at' => date('Y-m-d H:i:s')
-                ),
-                
-            ));
+                'attributes' => [
+                    'created_at' => date('Y-m-d H:i:s'),
+                ],
+
+            ]);
             $id_package = [];
             foreach (\Cart::session(auth()->id())->getContent() as $sd) {
                 $id_package[] = $sd['id'];
@@ -173,7 +162,8 @@ class OrderRegulerController extends Controller
                     $cart_data = collect($cart)->sortBy('created_at');
                 }
                 $get_total = \Cart::session(auth()->id())->getTotal();
-                $counted = ucwords(counted($get_total) . ' Rupiah');
+                $counted = ucwords(counted($get_total).' Rupiah');
+
                 return response()->json([
                     'id' => $request->get('id'),
                     'total' => $get_total,
@@ -184,9 +174,10 @@ class OrderRegulerController extends Controller
                     'price' => $cek_itemId[$request->get('id')]->price,
                     'category' => $cek_itemId[$request->get('id')]->category,
                 ], 200);
-            } else if (count($package_default) == 0) {
+            } elseif (count($package_default) == 0) {
                 \Cart::session(auth()->id())->clear();
-                $this->setResponse('INVALID', "Setidaknya pilih satu jenis permainan");
+                $this->setResponse('INVALID', 'Setidaknya pilih satu jenis permainan');
+
                 return response()->json($this->getResponse());
             } else {
                 $cart = \Cart::session(auth()->id())->getContent();
@@ -203,13 +194,14 @@ class OrderRegulerController extends Controller
                             'pricesingle' => $row->price,
                             'price' => $row->getPriceSum(),
                             'created_at' => $row->attributes['created_at'],
-                            'category' => $package->category
+                            'category' => $package->category,
                         ];
                     }
                     $cart_data = collect($cart)->sortBy('created_at');
                 }
                 $get_total = \Cart::session(auth()->id())->getTotal();
-                $counted = ucwords(counted($get_total) . ' Rupiah');
+                $counted = ucwords(counted($get_total).' Rupiah');
+
                 return response()->json([
                     'id' => $request->get('id'),
                     'total' => $get_total,
@@ -219,10 +211,11 @@ class OrderRegulerController extends Controller
                     'name' => $cek_itemId[$request->get('id')]->name,
                     'price' => $cek_itemId[$request->get('id')]->price,
                     'category' => $cek_itemId[$request->get('id')]->category,
-                    'status' => 'VALID'
+                    'status' => 'VALID',
                 ], 200);
             }
         }
+
         return back();
     }
 
@@ -235,34 +228,35 @@ class OrderRegulerController extends Controller
             if ($package->quantity == $cek_itemId[$request->get('id')]->quantity) {
                 return redirect()->back()->with('error', 'jumlah item kurang');
             } else {
-                \Cart::session(auth()->id())->update($request->get('id'), array(
-                    'quantity' => array(
+                \Cart::session(auth()->id())->update($request->get('id'), [
+                    'quantity' => [
                         'relative' => true,
-                        'value' => 1
-                    )
-                ));
+                        'value' => 1,
+                    ],
+                ]);
                 $items = \Cart::session(auth()->id())->getContent();
                 $get_total = \Cart::session(auth()->id())->getTotal();
-                $counted = ucwords(counted($get_total) . ' Rupiah');
+                $counted = ucwords(counted($get_total).' Rupiah');
+
                 return response()->json([
                     'id' => $request->get('id'),
                     'total' => $get_total,
                     'counted' => $counted,
                     'cart' => $items,
                     'qty' => $cek_itemId[$request->get('id')]->quantity,
-                    'price' => $cek_itemId[$request->get('id')]->price
+                    'price' => $cek_itemId[$request->get('id')]->price,
                 ], 200);
             }
         } else {
             if ($cek_itemId[$request->get('id')]->quantity == 1) {
                 \Cart::session(auth()->id())->remove($request->get('id'));
             } else {
-                \Cart::session(auth()->id())->update($request->get('id'), array(
-                    'quantity' => array(
+                \Cart::session(auth()->id())->update($request->get('id'), [
+                    'quantity' => [
                         'relative' => true,
-                        'value' => -1
-                    )
-                ));
+                        'value' => -1,
+                    ],
+                ]);
             }
             $items = \Cart::session(auth()->id())->getContent();
             $get_total = \Cart::session(auth()->id())->getTotal();
@@ -270,15 +264,16 @@ class OrderRegulerController extends Controller
             if (\Cart::isEmpty()) {
                 $counted = '-';
             } else {
-                $counted = ucwords(counted($get_total) . ' Rupiah');
+                $counted = ucwords(counted($get_total).' Rupiah');
             }
+
             return response()->json([
                 'id' => $request->get('id'),
                 'total' => $get_total,
                 'counted' => $counted,
                 'cart' => $items,
                 'qty' => $cek_itemId[$request->get('id')]->quantity,
-                'price' => $cek_itemId[$request->get('id')]->price
+                'price' => $cek_itemId[$request->get('id')]->price,
             ], 200);
         }
     }
@@ -292,8 +287,9 @@ class OrderRegulerController extends Controller
         if (\Cart::isEmpty()) {
             $counted = '-';
         } else {
-            $counted = ucwords(counted($get_total) . ' Rupiah');
+            $counted = ucwords(counted($get_total).' Rupiah');
         }
+
         return response()->json([
             'id' => $request->get('id'),
             'total' => $get_total,
@@ -305,6 +301,7 @@ class OrderRegulerController extends Controller
     public function clear_cart()
     {
         \Cart::session(auth()->id())->clear();
+
         return redirect()->back();
     }
 
@@ -332,12 +329,12 @@ class OrderRegulerController extends Controller
                 }
                 $orders = collect($cart)->sortBy('created_at');
             }
-            $order_number = 'INV/' . Carbon::now()->format('Ymd') . '/REGULER/' . Carbon::now()->format('his');
+            $order_number = 'INV/'.Carbon::now()->format('Ymd').'/REGULER/'.Carbon::now()->format('his');
             if ($request->ajax()) {
                 return response()->json(['order_number' => $order_number]);
             }
             // dd($items);
-            return view("reguler.checkout_reguler", compact('totalPrice', 'order_number', 'orders'))->render();
+            return view('reguler.checkout_reguler', compact('totalPrice', 'order_number', 'orders'))->render();
         } catch (\Throwable $th) {
             return redirect()->route('proses_reguler');
         }
@@ -376,7 +373,7 @@ class OrderRegulerController extends Controller
         $priceOthers = Arr::where($cart, function ($value, $key) {
             return $value['category'] == 'others';
         });
-        
+
         try {
             Visitor::create([
                 'name' => $request->get('name'),
@@ -386,7 +383,7 @@ class OrderRegulerController extends Controller
 
             LogTransaction::create([
                 'order_number' => $request->get('order_number'),
-                'visitor_id' =>  Visitor::latest()->first()->id,
+                'visitor_id' => Visitor::latest()->first()->id,
                 'user_id' => Auth()->id(),
                 'cart' => serialize($cart_data),
                 'payment_type' => serialize([[
@@ -394,20 +391,20 @@ class OrderRegulerController extends Controller
                     'transaction_amount' => $request->get('pay_amount'),
                     'balance' => 0,
                     'discount' => 0,
-                    'refund' => $request->get('refund')
+                    'refund' => $request->get('refund'),
                 ]]),
                 'payment_status' => 'paid',
                 'total' => $totalPrice,
                 'total_gross' => $totalPrice,
-                'jml_default' => array_sum(array_column($priceDefault,'price')),
-                'jml_additional' => array_sum(array_column($priceAdditional,'price')),
-                'jml_other' => array_sum(array_column($priceOthers,'price')),
+                'jml_default' => array_sum(array_column($priceDefault, 'price')),
+                'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
+                'jml_other' => array_sum(array_column($priceOthers, 'price')),
             ]);
 
             LogAdmin::create([
                 'user_id' => Auth::id(),
                 'type' => 'CREATE',
-                'activities' => 'Melakukan transaksi tamu <b>' . Visitor::latest()->first()->name . '</b>'
+                'activities' => 'Melakukan transaksi tamu <b>'.Visitor::latest()->first()->name.'</b>',
             ]);
 
             \Cart::session(auth()->id())->clear();
@@ -416,7 +413,7 @@ class OrderRegulerController extends Controller
                 return response()->json([
                     'status' => 'VALID',
                     'message' => 'Pembayaran berhasil',
-                    'return' => $request->get('pay_amount')
+                    'return' => $request->get('pay_amount'),
                 ]);
             }
         } catch (Throwable $e) {
@@ -444,7 +441,8 @@ class OrderRegulerController extends Controller
                 $refund += $get['refund'];
                 $transaction_amount += $get['transaction_amount'];
             }
-            $counted = ucwords(counted($log_transaction->total) . ' Rupiah');
+            $counted = ucwords(counted($log_transaction->total).' Rupiah');
+
             return view('reguler.print-invoice', compact(
                 'visitor',
                 'log_transaction',
@@ -462,7 +460,7 @@ class OrderRegulerController extends Controller
         }
     }
 
-    private function setResponse($status = "INVALID", $message = "Ada sesuatu yang salah!", $data = [])
+    private function setResponse($status = 'INVALID', $message = 'Ada sesuatu yang salah!', $data = [])
     {
         $this->status = $status;
         $this->message = $message;
@@ -474,7 +472,7 @@ class OrderRegulerController extends Controller
         return [
             'status' => $this->status,
             'message' => $this->message,
-            'data' => $this->data ? $this->data : null
+            'data' => $this->data ? $this->data : null,
         ];
     }
 }

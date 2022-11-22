@@ -18,7 +18,7 @@ class CreateLogCouponsTable extends Migration
             $table->integer('visitor_id')->unsigned();
             $table->integer('quota_kupon')->default(0);
             $table->timestamps();
-            
+
             $table->foreign('visitor_id')
             ->references('id')
             ->on('visitors')

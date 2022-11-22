@@ -38,6 +38,7 @@ class CreateLogTransactionsTable extends Migration
                 ->onDelete('cascade');
         });
     }
+
     /**
      * Reverse the migrations.
      *
@@ -47,5 +48,4 @@ class CreateLogTransactionsTable extends Migration
     {
         Schema::dropIfExists('log_transactions');
     }
-
 }
