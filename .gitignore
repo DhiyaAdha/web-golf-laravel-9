@@ -16,3 +16,4 @@ yarn-error.log
 rr
 .rr.yaml
 *.release-it.json
+.htaccess
