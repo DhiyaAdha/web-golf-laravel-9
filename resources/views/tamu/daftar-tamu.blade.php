@@ -15,12 +15,12 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="panel panel-default card-view" data-title="Halaman Daftar Tamu" data-intro="Halaman ini memberikan informasi daftar membership yang sudah terdaftar di tgcc, diurut berdasarkan membership yang paling baru terdaftar di tgcc.">
+                    <div class="panel panel-default card-view" data-title="Halaman Daftar Tamu" data-intro="Halaman ini memberikan informasi data tamu yang sudah terdaftar sebagai membership.">
                         <div class="panel-heading">
                             <div class="pull-left" data-title="Tambah Tamu" data-intro="fitur tambah tamu untuk menambah data membership baru di tgcc.">
                                 <a href="{{ route('tambah-tamu') }}" class="btn btn-xs btn-success" style="margin-bottom: 0px;">Tambah Tamu</a>
                             </div>
-                            <div class="pull-right" data-title="Filter Satun" data-intro="Panel ini memberikan informasi berdasarkan kategori, jenis member, dan status membership" >
+                            <div class="pull-right" data-title="Filter Satuan" data-intro="panel ini merupakan panel informasi untuk filter data membership berdasarkan kategori, jenis member dan satuan. terdapat panel download rekap data membership dengan format exel" >
                                 <div class="d-flex">
                                     <span class="mr-5" style="right: 420px; top: 27px; position: responsive; margin-top: 4px;">Filter satuan</span>
                                     <div class="form-group mr-5">
@@ -58,7 +58,7 @@
                         </div>
                         <div class="clearfix"></div>
                         <div class="panel-wrapper collapse in">
-                            <div class="panel-body" data-title="Tabel Daftar Tamu" data-intro="Panel ini menampilkan data membership tgcc. Data pada tabel ini diurut berdasarkan data membership yang paling terbaru di tgcc. terdapat opsi untuk detail tamu, edit data tamu, tambah tamu dan hapus tamu.">
+                            <div class="panel-body" data-title="Tabel Daftar Tamu" data-intro="Panel ini menampilkan data membership tgcc. Data ditampilakn dalam bentuk tabel diurut berdasarkan daftar tamu yang paling baru dibuat. terdapat opsi untuk detail tamu, edit data tamu, tambah tamu dan hapus tamu.">
                                 <div style="position: absolute; padding-top: 5px">
                                     <h6 class="panel-title txt-dark mr-5" style="margin-top: 4px;">Daftar Tamu</h6>
                                 </div>

@@ -19,7 +19,7 @@
             </div>
             <div class="row">
                 <div class="col-12 d-flex justify-content-center">
-                    <div class="d-flex flex-column" data-title="Scan Tamu" data-intro="Panel ini memberikan informasi verifikasi qr-code atau verifikasi kode membership yang sudah terdaftar di tgcc.">
+                    <div class="d-flex flex-column" data-title="Scan Tamu" data-intro="Panel ini merupakan panel proses verifikasi qr-code atau verifikasi kode membership yang sudah terdaftar di tgcc.">
                         <div class="form-group d-flex justify-content-center">
                             <ul role="tablist" class="nav nav-pills" id="myTabs_6">
                                 <li class="active" role="presentation">

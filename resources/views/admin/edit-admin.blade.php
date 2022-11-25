@@ -1,7 +1,7 @@
 @extends('layouts.main', ['title' => 'TGCC | Edit Admin'])
 @section('content')
-    <div class="page-wrapper">
-        <div class="container-fluid">
+    <div class="page-wrapper intro-foo">
+        <div class="container-fluid" data-title="Edit Admin" data-intro="Panel ini merupakan panel proses edit data kasir, terbagi menjadi 2 form edit biodata dan edit password ">
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h5 class="txt-dark">Edit Admin</h5>
@@ -16,7 +16,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-12" style="position: relative;">
-                    <div class="panel panel-default card-view">
+                    <div class="panel panel-default card-view" data-title="Biodata" data-intro="Panel ini menampilkan detail data kasir di tgcc. berisi informasi nama, email, nomer hp, dan kategori role. Edit data bersifat optional sesuai kebutuhan.">
                         <div class="panel-body">
                             <div class="form-wrap">
                                 <form action="{{ route('admin.edit', $users->id) }}" method="POST">
@@ -67,8 +67,8 @@
                                         </div>
                                         @error('role')
                                             <div class="text-danger"> {{ $message }}</div>
-                                            @enderror
-                                        </div>
+                                        @enderror
+                                    </div>
                                     <div class="form-group text-left">
                                         <button type="submit" name="edit_admin" class="btn btn-info">Edit Admin</button>
                                     </div>
@@ -80,57 +80,47 @@
             </div>
             <div class="row">
                 <div class="col-lg-12" style="position: relative;">
-                    <div class="panel panel-default card-view">
+                    <div class="panel panel-default card-view" data-title="Edit Password" data-intro="Panel ini menampilkan detail password. Edit password bersifat optional sesuai kebutuhan.">
                         <h6 class="control-label mb-10">Edit Password</h6>
                         <div class="panel-body">
                             <div class="form-wrap">
                                 <form action="{{ route('update.password', $users->id) }}" method="POST">
                                     @csrf
                                     <div class="form-group password-container">
-                                        <label class="pull-left control-label mb-10"
-                                            for="password">Password</label>
+                                        <label class="pull-left control-label mb-10" for="password">Password</label>
                                         <input type="password" name="password"
-                                            class="form-control @error('password') has-error @enderror"
-                                            id="password2"
-                                            placeholder="Masukan Password Baru"
-                                            value="">
+                                            class="form-control @error('password') has-error @enderror" id="password2"
+                                            placeholder="Masukan Password Baru" value="">
                                         @error('password')
                                             <div class="text-danger">
                                                 {{ $message }}</div>
                                         @enderror
-                                        <input style="vertical-align: -3px"
-                                            class="checkbox-showPW"
-                                            type="checkbox"
+                                        <input style="vertical-align: -3px" class="checkbox-showPW" type="checkbox"
                                             onclick="myFunction()">&nbsp;
                                         <span style="color: #B2B2B2;">Lihat
                                             Password</span>
                                     </div>
                                     <div class="form-group password-container">
-                                        <label
-                                            class="pull-left control-label mb-10"
-                                            for="password_confirmation">Konfirmasi
+                                        <label class="pull-left control-label mb-10" for="password_confirmation">Konfirmasi
                                             Password</label>
                                         <div class="clearfix"></div>
-                                        <input type="password"
-                                            name="password_confirmation"
+                                        <input type="password" name="password_confirmation"
                                             class="form-control @error('password') is-invalid @enderror"
-                                            id="password_confirmation2"
-                                            placeholder="Masukan Password Baru"
+                                            id="password_confirmation2" placeholder="Masukan Password Baru"
                                             value="">
                                         {{-- <div style="margin-top: 7px;" id="CheckPasswordMatch2"></div> --}}
                                         @error('password_confirmation')
                                             <div class="text-danger">
                                                 {{ $message }}</div>
                                         @enderror
-                                        <input style="vertical-align: -3px"
-                                            class="checkbox-showPW"
-                                            type="checkbox"
+                                        <input style="vertical-align: -3px" class="checkbox-showPW" type="checkbox"
                                             onclick="myFunction2()">&nbsp;
                                         <span style="color: #B2B2B2;">Lihat
                                             Password</span>
                                     </div>
                                     <div class="form-group text-left">
-                                        <button type="submit" name="ubah_password" class="btn btn-info">Ubah Password</button>
+                                        <button type="submit" name="ubah_password" class="btn btn-info">Ubah
+                                            Password</button>
                                     </div>
                                 </form>
                             </div>
@@ -138,6 +128,7 @@
                     </div>
                 </div>
             </div>
+            <button id="setting_panel_btn" data-toggle="tooltip" title="Panduan" data-placement="left" class="btn btn-success btn-circle setting-panel-btn shadow-2dp"><i class="zmdi zmdi-settings"></i></button>
             @include('layouts.footer')
         </div>
     </div>
@@ -185,5 +176,15 @@
                 y.type = "password";
             }
         }
+    </script>
+
+    <script defer src="{{ asset('dist/asset_offline/list_package.js') }}"></script>
+    <script>
+        $(document).on('click', '#setting_panel_btn', function() {
+            introJs('.intro-foo').setOptions({
+                'showProgress': true,
+                'tooltipPosition': 'right'
+            }).start();
+        });
     </script>
 @endpush

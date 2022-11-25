@@ -1,7 +1,7 @@
 @extends('layouts.main', ['title' => 'TGCC | Pilih Permainan'])
 @section('content')
     <div class="page-wrapper intro-foo">
-        <div class="container-fluid" data-title="Halaman Umum" data-intro="Halaman ini memberikan informasi daftar paket penjualan, daftar paket harga, dan daftar order. Pproses transaksi bagi tamu reguler atau diluar membership tgcc.">
+        <div class="container-fluid" data-title="Halaman Umum" data-intro="Halaman ini digunakan oleh kasir atau admin untuk order jenis permainan, fasilitas atau kantin. Proses transaksi ini untuk tamu jenis reguler.">
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h5 class="txt-dark">Pilih Permainan</h5>
@@ -17,7 +17,7 @@
 
             <div class="row">
                 <div class="col-lg-8">
-                    <div class="panel panel-default card-view" data-title="Daftar Paket" data-intro="Panel ini menampilkan informasi data paket yang tersedia atau sedang aktif. Jenis paket diurut berdasarkan Kategori Permainan, Proshop, & Kantin">
+                    <div class="panel panel-default card-view" data-title="Panel Paket" data-intro="Kemudian pada panel ini terdiri dari 3 jenis paket yang tersedia yang bisa dipesan oleh tamu reguler yaitu jenis permainan, proshop fasilitas dan kantin.">
                         <div class="panel-heading">
                             <div class="pull-left">
                                 <strong class="panel-title txt-dark">Permainan</strong>
@@ -31,7 +31,7 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <div class="d-flex flex-wrap">
+                        <div class="d-flex flex-wrap" data-title="Jenis Permainan" data-intro="Secara default data yang diinput sebanyak 3 jenis permainan yaitu 18 hole, 9 hole dan driving golf. Anda juga bisa menambahkan ataupun mengubah data permainan melalui menu paket bermain dengan penentuan harga weekdays dan weekend.">
                             @foreach ($default as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
@@ -45,7 +45,7 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <div class="d-flex flex-wrap">
+                        <div class="d-flex flex-wrap" data-title="Proshop dan Fasilitas" data-intro="Pilih jenis fasilitas sewa yang akan dimasukan ke keranjang">
                             @foreach ($additional as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
@@ -59,7 +59,7 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <div class="d-flex flex-wrap mb-15">
+                        <div class="d-flex flex-wrap mb-15" data-title="Kantin" data-intro="Pilih barang yang ingin dibeli tamu reguler">
                             @foreach ($others as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4 sticky">
-                    <div class="panel panel-default border-panel card-view" data-title="Daftar Order" data-intro="Panel ini menampilkan informasi paket yang dipesan tamu untuk dilanjutkan ke proses checkout, terdapat informasi jumlah paket yang dipesan dan total bayar.">
+                    <div class="panel panel-default border-panel card-view" data-title="Daftar Order" data-intro="Panel ini merupakan panel proses pembelian paket yang dipesan member. Terdapat informasi jumlah paket yang dipesan dan nominal yang dibayarkan.">
                         <div class="panel-heading">
                             <div class="d-flex">
                                 <h6 class="panel-title flex-grow-1" style="font-weight: 600">Daftar Order</h6>
@@ -151,7 +151,7 @@
                     </div>
                 </div>
                 <div class="col-lg-8">
-                    <div class="panel panel-default card-view" data-title="Tabel Daftar <br> Paket Harga" data-intro="Tabel ini menampilkan informasi paket yang tersedia tampil berdasarkan kategori paket, harga paket weekdays, harga paket weekendend dan status paket">
+                    <div class="panel panel-default card-view" data-title="Tabel Daftar <br> Paket Harga" data-intro="Tabel ini menampilkan informasi paket yang tersedia diurut berdasarkan kategori paket, harga paket weekdays, harga paket weekend dan status paket">
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
                                 <div class="table-wrap">

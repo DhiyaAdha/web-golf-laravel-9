@@ -104,7 +104,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="panel panel-default card-view" data-title="Revenue 7 Hari Terakhir" data-intro="Panel ini berbentuk bar chart dan bersifat data objektif dinamis memberikan informasi jumlah revenue setiap hari berdasarkan kategori dalam kurun waktu satu minggu terakhir.">
+                    <div class="panel panel-default card-view" data-title="Revenue 7 Hari Terakhir" data-intro="Panel ini berbentuk bar chart dan bersifat data objektif dinamis memberikan informasi nominal revenue setiap hari berdasarkan kategori dalam kurun waktu satu minggu terakhir.">
                         <div class="panel-heading">
                             <div class="pull-left">
                                 <h6 class="pannel-title text-dark">Revenue Trendline 7 Hari Terakhir</h6>
@@ -161,7 +161,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="panel panel-default card-view" data-title="Revenue 12 Bulan Terakhir" data-intro="Panel ini berbentuk line chart dan bersifat data objektif dinamis memberikan informasi jumlah revenue setiap bulan berdasarkan kategori dalam kurun waktu satu tahun terakhir.">
+                    <div class="panel panel-default card-view" data-title="Revenue 12 Bulan Terakhir" data-intro="Panel ini berbentuk line chart dan bersifat data objektif dinamis memberikan informasi nominal revenue setiap bulan berdasarkan kategori dalam kurun waktu satu tahun terakhir.">
                         <div class="panel-heading">
                             <div class="pull-left">
                                 <h6 class="pannel-title text-dark">Revenue Trendline 12 Bulan Terakhir</h6>

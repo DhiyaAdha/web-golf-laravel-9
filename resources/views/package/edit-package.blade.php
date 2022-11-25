@@ -1,6 +1,6 @@
 @extends('layouts.main', ['title' => 'TGCC | Edit Paket Bermain'])
 @section('content')
-    <div class="page-wrapper">
+    <div class="page-wrapper intro-foo">
         <div class="container-fluid">
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
@@ -15,8 +15,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default card-view">
+                <div class="col-lg-12" >
+                    <div class="panel panel-default card-view" data-title="Edit Paket" data-intro="Panel ini merupakan panel proses edit data atau informasi paket. Proses edit bersifat opsional sesuai kebutuhan.">
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
                                 <div class="form-wrap">
@@ -110,6 +110,19 @@
                 </div>
             </div>
         </div>
+        <button id="setting_panel_btn" data-toggle="tooltip" title="Panduan" data-placement="left" class="btn btn-success btn-circle setting-panel-btn shadow-2dp"><i class="zmdi zmdi-settings"></i></button>
         @include('layouts.footer')
     </div>
 @endsection
+
+@push('scripts')
+    <script defer src="{{ asset('dist/asset_offline/list_invoice.js') }}"></script>
+    <script>
+        $(document).on('click', '#setting_panel_btn', function() {
+            introJs('.intro-foo').setOptions({
+                'showProgress': true,
+                'tooltipPosition': 'right'
+            }).start();
+        });
+    </script>
+@endpush

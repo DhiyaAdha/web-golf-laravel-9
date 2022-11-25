@@ -15,13 +15,13 @@
             </div>
             <div class="row" >
                 <div class="col-sm-12"  >
-                    <div class="panel panel-default card-view" data-title="Halaman Daftar Paket" data-intro="Halaman ini memberikan informasi data paket yang tersedia di tgcc. ">
+                    <div class="panel panel-default card-view" data-title="Halaman Daftar Paket" data-intro="Halaman ini memberikan informasi seluruh data paket yang tersedia. ">
                         <div class="panel-heading" >
                             <div class="pull-left" >
                                 <h6 class="panel-title txt-dark">Daftar Paket</h6>
                             </div>
                             <div class="pull-right">
-                                <div class=" pull-left" data-title="Tambah Paket" data-intro="panel ini untuk menambah daftar data paket baru di tgcc.">
+                                <div class=" pull-left" data-title="Tambah Paket" data-intro="panel ini merupakan panel untuk menambah daftar data paket baru.">
                                     <a href="{{ route('package.create') }}" type="submit" class="btn btn-xs btn-success">Tambah Paket</a>
                                 </div>
                             </div>
@@ -30,7 +30,7 @@
                         <div class="clearfix"></div>
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
-                                <div class="table-wrap" data-intro="Tabel ini berisi informasi nama-produk, kategori paket, harga paket weekdays(senin sd.jumat), harga paket weekend(sabtu & minggu), status paket aktif tau nonaktif, opsi edit dan hapus paket">
+                                <div class="table-wrap" data-title="Daftar Paket" data-intro="Panel ini menampilkan seluruh data paket di tgcc. berisi informasi nama-produk, kategori paket, harga paket weekdays(senin sd.jumat), harga paket weekend(sabtu & minggu), status paket aktif atau nonaktif, opsi edit dan hapus paket">
                                     <div class="table-responsive">
                                         <table class="table table-hover mb-0" id="dt-package" >
                                             <thead >
