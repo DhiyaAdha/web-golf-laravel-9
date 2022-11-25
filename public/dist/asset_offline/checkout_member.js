@@ -113,47 +113,63 @@ let cal = (price) => {
         $('.refund').removeClass('d-none');
         $('.bayar-cash').val(price);
         let return_pay = parseInt($('.bayar-cash').val()) - parseInt(total);
-        if($('.bayar-cash').val() > total) {
+        if(return_pay === 0) {
             $('.bayar-cash').removeClass('is-invalid');
-            $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+            $('#return').text(' Rp. 0,00').css({
                 "background-color": "rgba(25, 216, 149, 0.2)",
                 "color": "#19d895"
-            }).data('refund', return_pay).addClass('green');
+            }).data('refund', 0).addClass('green');
         } else {
-            $('.bayar-cash').addClass('is-invalid');
-            $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
-                "background-color": "rgba(216, 25, 25, 0.2)",
-                "color": "#d81c19d1"
-            }).data('refund', return_pay).addClass('green');
+            if($('.bayar-cash').val() > total) {
+                $('.bayar-cash').removeClass('is-invalid');
+                $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                    "background-color": "rgba(25, 216, 149, 0.2)",
+                    "color": "#19d895"
+                }).data('refund', return_pay).addClass('green');
+            } else {
+                $('.bayar-cash').addClass('is-invalid');
+                $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                    "background-color": "rgba(216, 25, 25, 0.2)",
+                    "color": "#d81c19d1"
+                }).data('refund', return_pay).addClass('green');
+            }
         }
     } else {
         let result = parseInt($('.bayar-cash').val());
         $('.bayar-cash').val(result + price);
         let return_pay = parseInt($('.bayar-cash').val()) - parseInt(total);
-        if($('.bayar-cash').val() > total) {
+        if(return_pay === 0) {
             $('.bayar-cash').removeClass('is-invalid');
-            $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+            $('#return').text(' Rp. 0,00').css({
                 "background-color": "rgba(25, 216, 149, 0.2)",
                 "color": "#19d895"
-            }).data('refund', return_pay);
+            }).data('refund', 0).addClass('green');
         } else {
-            $('.bayar-cash').addClass('is-invalid');
-            $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
-                "background-color": "rgba(216, 25, 25, 0.2)",
-                "color": "#d81c19d1"
-            }).data('refund', return_pay);
+            if($('.bayar-cash').val() > total) {
+                $('.bayar-cash').removeClass('is-invalid');
+                $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                    "background-color": "rgba(25, 216, 149, 0.2)",
+                    "color": "#19d895"
+                }).data('refund', return_pay);
+            } else {
+                $('.bayar-cash').addClass('is-invalid');
+                $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                    "background-color": "rgba(216, 25, 25, 0.2)",
+                    "color": "#d81c19d1"
+                }).data('refund', return_pay);
+            }
         }
     }
 }
 
-let call = (price) => {
-    if ($('.bayar-input').val() == '') {
-        $('.bayar-input').val(price);
-    } else {
-        let result = parseInt($('.bayar-input').val());
-        $('.bayar-input').val(result + price);
-    }
-}
+// let call = (price) => {
+//     if ($('.bayar-input').val() == '') {
+//         $('.bayar-input').val(price);
+//     } else {
+//         let result = parseInt($('.bayar-input').val());
+//         $('.bayar-input').val(result + price);
+//     }
+// }
 
 let formatIDR = (price) => {
     let number_string = price.toString(),

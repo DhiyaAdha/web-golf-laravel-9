@@ -567,7 +567,7 @@
                                                                                 <input type="number" data-bill="{{ $totalPrice }}" class="form-control number-input input-notzero bayar-input" name="bayar" placeholder="Masukkan nominal bayar" autocomplete="on">
                                                                                 </div>
                                                                         </div>
-                                                                        <div class="d-flex flex-wrap mb-2 ">
+                                                                        {{-- <div class="d-flex flex-wrap mb-2 ">
                                                                             <input type="button" value="500" onclick="call(500)" class="btn mr-2 mb-2 btn-sm btn-default">
                                                                             <input type="button" value="1000" onclick="call(1000)" class="btn mr-2 mb-2 btn-sm btn-default">
                                                                             <input type="button" value="2000" onclick="call(2000)" class="btn mr-2 mb-2 btn-sm btn-default">
@@ -576,7 +576,7 @@
                                                                             <input type="button" value="20000" onclick="call(20000)" class="btn mr-2 mb-2 btn-sm btn-default">
                                                                             <input type="button" value="50000" onclick="call(50000)" class="btn mr-2 mb-2 btn-sm btn-default">
                                                                             <input type="button" value="100000" onclick="call(100000)" class="btn mr-2 mb-2 btn-sm btn-default">
-                                                                        </div>
+                                                                        </div> --}}
                                                                     </div>
                                                                 </label>
                                                             </div>
