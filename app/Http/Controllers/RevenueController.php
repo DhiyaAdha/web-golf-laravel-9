@@ -2,23 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use App\Models\Package;
-use App\Models\Visitor;
-use Carbon\CarbonPeriod;
-use Illuminate\Http\Request;
 use App\Models\LogTransaction;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Builder;
-use Symfony\Component\Console\Input\Input;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
-class RevenueController extends Controller {
+class RevenueController extends Controller
+{
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function analytic_week_revenue() {
+    public function analytic_week_revenue()
+    {
         //statistic dynamic of weeks
         $now = Carbon::now()->translatedFormat('Y-m-d');
         $last7Days = Carbon::now()->subDays(6)->translatedFormat('Y-m-d');
@@ -34,10 +30,12 @@ class RevenueController extends Controller {
             $data['revenue_daily'][$key]['d'] = $data['revenue_daily'][$key]['a'] + $data['revenue_daily'][$key]['b'] + $data['revenue_daily'][$key]['c'];
         }
         $data = json_encode($data['revenue_daily']);
+
         return response()->json($data);
     }
 
-    public function analytic_month_revenue() {
+    public function analytic_month_revenue()
+    {
         // Statistika Pertahun Grafik-chart
         $months = [
             1 => 'Jan',
@@ -60,18 +58,19 @@ class RevenueController extends Controller {
         }
         foreach (array_values($month_new) as $key => $value) {
             $data['revenue'][$key]['e'] = $months[$value[0]];
-            $data['revenue'][$key]['g'] = LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('jml_default');
-            $data['revenue'][$key]['h'] =LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('jml_additional');
-            $data['revenue'][$key]['i'] = LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0' . $value[0] : $value[0])->whereYear('created_at',$value[1])->sum('jml_other');
-            $data['revenue'][$key]['f'] =  $data['revenue'][$key]['g'] + $data['revenue'][$key]['h'] + $data['revenue'][$key]['i'];
+            $data['revenue'][$key]['g'] = LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0'.$value[0] : $value[0])->whereYear('created_at', $value[1])->sum('jml_default');
+            $data['revenue'][$key]['h'] = LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0'.$value[0] : $value[0])->whereYear('created_at', $value[1])->sum('jml_additional');
+            $data['revenue'][$key]['i'] = LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0'.$value[0] : $value[0])->whereYear('created_at', $value[1])->sum('jml_other');
+            $data['revenue'][$key]['f'] = $data['revenue'][$key]['g'] + $data['revenue'][$key]['h'] + $data['revenue'][$key]['i'];
         }
 
         $data = json_encode($data['revenue']);
+
         return response()->json($data);
     }
 
-
-    public function index() {
+    public function index()
+    {
         $data['revenue_today'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('total_gross');
         $data['revenue_game'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('jml_default');
         $data['revenue_proshop'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('jml_additional');

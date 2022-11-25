@@ -137,19 +137,6 @@
     <script>
         const passwordField = document.querySelector("#password");
         const passwordCon = document.querySelector("#password_confirmation");
-        const eyeIcon = document.querySelector("#eye_edit_admin");
-        const eyeeIcon = document.querySelector("#eyee_edit_admin");
-
-        eye_edit_admin.addEventListener("click", function() {
-            this.classList.toggle("fa-eye");
-            const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
-            passwordField.setAttribute("type", type);
-        })
-        eyee_edit_admin.addEventListener("click", function() {
-            this.classList.toggle("fa-eye");
-            const typee = passwordCon.getAttribute("type") === "password" ? "text" : "password";
-            passwordCon.setAttribute("type", typee);
-        })
     </script>
     <script>
         $("#password_confirmation").on('keyup', function() {

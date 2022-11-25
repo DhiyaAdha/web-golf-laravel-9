@@ -3,15 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\Deposit;
-use App\Models\Visitor;
-
-use App\Models\LogLimit;
 use Faker\Factory as Faker;
-use App\Models\LogTransaction;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\App;
 
 class InvoiceSeeder extends Seeder
 {
@@ -33,8 +27,8 @@ class InvoiceSeeder extends Seeder
                 'payment_status' => $faker->randomElement(['paid', 'unpaid']),
                 'total' => $faker->randomFloat(2, 0, 10000000),
                 'created_at' => \Carbon\Carbon::now()->addMinutes(rand(0,
-                60 * 23))->addSeconds(rand(0, 60))
-                
+                60 * 23))->addSeconds(rand(0, 60)),
+
             ]);
         }
     }

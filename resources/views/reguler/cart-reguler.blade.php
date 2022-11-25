@@ -109,7 +109,7 @@
                                                 class="cart-qty-plus-{{ $item['rowId'] }} fa fa-plus-square"></i></button>
                                         <button class="mr-10 ml-10" data-toggle="tooltip" title="Hapus"
                                             onclick="removeItem({{ $item['rowId'] }})" id="remove-item"
-                                            style="color:red;"><i class="fa fa-trash-o"></i></button>
+                                            style="color:red;"><i class="zmdi zmdi-delete"></i></button>
                                     </div>
                                 @endforeach
                             </div>

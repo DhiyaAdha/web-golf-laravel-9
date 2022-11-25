@@ -19,10 +19,10 @@ class CreateReportDepositsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('report_balance')->default(0);
             $table->integer('fund')->default(0);
-            $table->enum('payment_type',['cash', 'transfer','deposit']);
-            $table->enum('status',['Bertambah','Berkurang']);
+            $table->enum('payment_type', ['cash', 'transfer', 'deposit']);
+            $table->enum('status', ['Bertambah', 'Berkurang']);
             $table->timestamps();
-            
+
             $table->foreign('visitor_id')
             ->references('id')
             ->on('visitors')
@@ -31,7 +31,7 @@ class CreateReportDepositsTable extends Migration
             ->references('id')
             ->on('users')
             ->onDelete('cascade');
-            
+
             // $table->enum('status',['tambah', 'kurang']);
         });
     }
