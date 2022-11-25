@@ -1,7 +1,7 @@
 @extends('layouts.main', ['title' => 'TGCC | Detail Scan'])
 @section('content')
     <div class="page-wrapper intro-foo">
-        <div class="container-fluid" data-title="Halaman Detail Scan" data-intro="Halaman ini memberikan informasi data membership yang sudah melakukan veirivikasi dengan scan/kode member tgcc">
+        <div class="container-fluid" data-title="Halaman Detail Scan" data-intro="Halaman ini memberikan informasi data membership yang sudah melakukan veirivikasi dengan scan atau kode member.">
             <div class="row heading-bg" >
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h5 class="txt-dark">Scan tamu</h5>
@@ -16,7 +16,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-7 col-md-7">
-                    <div class="panel panel-default panel-dropdown card-view" data-title="Halaman Data Tamu" data-intro="Panel ini memberikan informasi detail membership tgcc, menampilkan nama lengkap, jenis kelamin, email, kode membership, perusahaan, jabatan, jenis member dan kategori member.">
+                    <div class="panel panel-default panel-dropdown card-view" data-title="Data Tamu" data-intro="Panel ini memberikan informasi detail membership tgcc, menampilkan nama lengkap, jenis kelamin, email, kode membership, perusahaan, jabatan, jenis member dan kategori member.">
                         <div class="panel-heading">
                             <div class="pull-left">
                                 <h6 class="panel-title txt-dark">Data Tamu</h6>
@@ -96,7 +96,7 @@
                     </div>
                 </div>
                 <div class="col-lg-5 col-md-5">
-                    <div class="panel panel-default panel-dropdown card-view" style="height: 379px;" data-title="Halaman Sisa <br> Limit & Saldo" data-intro="Panel ini memberikan informasi detail limit dan saldo membership tgcc, tamu bisa melakukan tambah deposit atau pilih paket bermain ">
+                    <div class="panel panel-default panel-dropdown card-view" style="height: 379px;" data-title="Sisa Limit & Saldo" data-intro="Panel ini memberikan informasi detail limit dan saldo membership tgcc, tamu bisa melakukan tambah deposit atau pilih paket bermain. ">
                         <div class="panel-heading d-flex justify-content-start k">
                             <div class="pull-left">
                                 <h6 class="panel-title txt-dark">Sisa Limit dan Saldo
