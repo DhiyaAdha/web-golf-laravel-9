@@ -19,3 +19,18 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+# Disable Directory listing
+Options -Indexes
+
+# block files which needs to be hidden // in here specify .example extension of the files
+<Files ~ "\.(git|env|json|config.js|md|gitignore|gitattributes|lock|example)$">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# in here spesify full file name sperator '|'
+<Files ~ "(artisan)$">
+    Order allow,deny
+    Deny from all
+</Files>
