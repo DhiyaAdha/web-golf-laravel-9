@@ -1,70 +1,65 @@
 const sword = () => {
-    const audio = new Audio('../sound/sword.mp3');
+    var audio = new Audio('../sound/sword.mp3');
     audio.play();
 }
 
-const bell = () => {
-    const audio = new Audio('../sound/bell.mp3');
+const bell = () =>{
+    var audio = new Audio('../sound/bell.mp3');
     audio.play();
-}
-
-let onScanSuccess = (decodedText, decodedResult) => {
-    $("#resultTEXT").val(decodedText)
-    $('#resultDECODE').val(JSON.stringify(decodedResult));
-    html5QrcodeScanner.clear();
-    
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    
-    $.ajax({
-        type: 'GET',
-        url: '/visitor/qrcode',
-        data: {
-            qrCode: decodedText
-        },
-        dataType: 'json'
-    });
-}
-
-let onScanFailure = (error) => {
-    console.warn(`Code scan error = ${error}`);
 }
 
 $('#show-qr-scan').on('click', function() {
     $('.disabled-scan').addClass('d-none');
+    let onScanSuccess = (decodedText, decodedResult) => {
+        $("#resultTEXT").val(decodedText)
+        $('#resultDECODE').val(JSON.stringify(decodedResult));
+        html5QrcodeScanner.clear();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'GET',
+            url: '/visitor/qrcode',
+            data: {
+                qrCode: decodedText
+            },
+            dataType: 'json',
+            success: (response) => {
+                if (response.status === "VALID") {
+                    bell();
+                    swal({
+                        title: "Verifikasi berhasil",
+                        type: "success",
+                        text: "Atas nama " + response.data.name,
+                        confirmButtonColor: "#01c853",
+                        closeOnConfirm: false,
+                        closeOnCancel: false,
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                        timer: 2000,
+                    }, () => {
+                        window.location.href = decodedText;
+                    });
+                } else {
+                    sword();
+                    swal({
+                        title: "",
+                        type: "error",
+                        text: response.message,
+                        confirmButtonColor: "#01c853",
+                    }, () => {
+                        window.location.reload(true)
+                    });
+                }
+            }
+        });
+    }
 
-    let on_success = onScanSuccess();
-    on_success.done(function(response) {
-        if (response.status === "VALID") {
-            bell();
-            swal({
-                title: "Verifikasi berhasil",
-                type: "success",
-                text: "Atas nama " + response.data.name,
-                confirmButtonColor: "#01c853",
-                closeOnConfirm: false,
-                closeOnCancel: false,
-                showCancelButton: false,
-                showConfirmButton: false,
-                timer: 2000,
-            }, function() {
-                window.location.href = decodedText;
-            });
-        } else {
-            sword();
-            swal({
-                title: "",
-                type: "error",
-                text: response.message,
-                confirmButtonColor: "#01c853",
-            }, function() {
-                window.location.reload(true)
-            });
-        }
-    });
+    const onScanFailure = (error) => {
+        console.warn(`Code scan error = ${error}`);
+    }
 
     let html5QrcodeScanner = new Html5QrcodeScanner(
         "reader", {
@@ -104,7 +99,7 @@ $('#verification-no-hp').keypress(function(e) {
                             .attr(
                                 'content')
                     },
-                    beforeSend: function(request) {
+                    beforeSend: () => {
                         $.blockUI({
                             css: {
                                 backgroundColor: 'transparent',
@@ -119,7 +114,7 @@ $('#verification-no-hp').keypress(function(e) {
                             }
                         });
                     },
-                    success: function(response) {
+                    success: (response) => {
                         $.unblockUI();
                         if (response.status == "INVALID") {
                             sword();
@@ -136,10 +131,20 @@ $('#verification-no-hp').keypress(function(e) {
                                 type: "success",
                                 text: response.message,
                                 confirmButtonColor: "#01c853",
-                            }, function(isConfirm) {
+                            }, () => {
                                 window.location.href = response.data.unique_qr;
                             });
                         }
+                    },
+                    error: () => {
+                        sword();
+                        swal({
+                            title: "Internal Server Error",
+                            type: "error",
+                            text: "Terdapat kesalahan program pada action ini",
+                            confirmButtonColor: "#01c853",
+                        });
+                        return false;
                     }
                 });
             } else {

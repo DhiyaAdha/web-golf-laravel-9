@@ -301,7 +301,7 @@ $(document).ready(function() {
         let data_bill = $('#customCheck8').data('bill');
         let data_deposit = $('#customCheck8').data('deposit');
         let type_multiple = $('input[name="payment-type[]"]:checked')
-            .map(function() {
+            .map(() => {
                 return $(this).val();
             }).get();
 
@@ -417,7 +417,7 @@ $(document).ready(function() {
         let data_deposit = $('#customCheck8').data('deposit');
         let price_single = $('.kmt').data('pricesingle');
         let type_multiple = $('input[name="payment-type[]"]:checked')
-            .map(function() {
+            .map(() => {
                 return $(this).val();
             }).get();
 
@@ -641,7 +641,7 @@ $(document).ready(function() {
         let data_deposit = $('#customCheck8').data('deposit');
         let price_single = $('.kmt').data('pricesingle');
         let type_multiple = $('input[name="payment-type[]"]:checked')
-            .map(function() {
+            .map(() => {
                 return $(this).val();
             }).get();
         let minus_deposit = data_bill - data_deposit;
@@ -1162,7 +1162,7 @@ $(document).ready(function() {
                 param: $('input[type=hidden]').val()
             },
             url: '/select',
-            beforeSend: function(request) {
+            beforeSend: () => {
                 $.blockUI({
                     css: {
                         backgroundColor: 'transparent',
@@ -1177,7 +1177,7 @@ $(document).ready(function() {
                     }
                 });
             },
-            success: function(response) {
+            success: (response) => {
                 $.unblockUI();
                 if (response.status == "VALID") {
                     $('#balance').text('Rp. ' +format(response.price) + ',00');
@@ -1189,7 +1189,7 @@ $(document).ready(function() {
                     let price_discount = 0;
                     let price = 0;
                     if (type_single == 1) {
-                        $.each(response.orders, function(b, val) {
+                        $.each(response.orders, (b, val) => {
                             html += `<div class="d-flex">
                                         <span class="flex-grow-1">${val.name} ${response.orders[b].category == 'default' ? '| game' : ''} x ${val.qty}</span>
                                         <small>${response.orders[b].category == 'default' ? 'limit gratis' : 'Rp. ' + format(val.pricesingle) + ',00'}</small>
@@ -1232,7 +1232,7 @@ $(document).ready(function() {
                             </div>`
                         ).hide().prev().addClass('mb-2');
                     } else if (type_single == 2) {
-                        $.each(response.orders, function(b, val) {
+                        $.each(response.orders, (b, val) => {
                             html += `<div class="d-flex">
                                         <span class="flex-grow-1">${val.name} ${response.orders[b].category == 'default' ? '| game' : ''} x ${val.qty}</span>
                                         <small>${response.orders[b].category == 'default' ? 'kupon gratis' : 'Rp. ' + format(val.pricesingle) + ',00'}</small>
@@ -1273,7 +1273,7 @@ $(document).ready(function() {
                             </div>`
                         ).hide().prev().addClass('mb-2');
                     } else if (type_single == 4) {
-                        $.each(response.orders, function(b, val) {
+                        $.each(response.orders, (b, val) => {
                             html += `<div class="d-flex">
                                         <span class="flex-grow-1">${val.name} x ${val.qty}</span>
                                         <small>${'Rp. ' + format(val.price) + ',00'}</small>
@@ -1319,7 +1319,7 @@ $(document).ready(function() {
                             "color": "#19d895"
                         });
 
-                        $.each(response.orders, function(b, val) {
+                        $.each(response.orders, (b, val) => {
                             html += `<div class="d-flex">
                                             <span class="flex-grow-1">${val.name} x ${val.qty}</span>
                                             <small>${'Rp. ' + format(val.price) + ',00'}</small>
@@ -1351,12 +1351,12 @@ $(document).ready(function() {
                     return false;
                 }
             },
-            error: function (error){
+            error: () => {
                 sword();
                 swal({
                     title: "Internal Server Error",
                     type: "error",
-                    text: error,
+                    text: "Terdapat kesalahan program pada action ini",
                     confirmButtonColor: "#01c853",
                 });
                 return false;
@@ -1369,7 +1369,7 @@ $(document).ready(function() {
         let type = $('input[type=radio][name=payment]:checked').val();
         let type_single = $("input[name='payment-type']:checked").val();
         let type_multiple = $("input[name='payment-type[]']:checked")
-            .map(function() {
+            .map(() => {
                 return $(this).val();
             }).get();
         let order_number = $('#order-number').text();
@@ -1455,7 +1455,7 @@ $(document).ready(function() {
                             .attr(
                                 'content')
                     },
-                    beforeSend: function(request) {
+                    beforeSend: () => {
                         $.blockUI({
                             css: {
                                 backgroundColor: 'transparent',
@@ -1470,7 +1470,7 @@ $(document).ready(function() {
                             }
                         });
                     },
-                    success: function(response) {
+                    success: (response) => {
                         $.unblockUI();
                         if (response.status == "VALID") {
                             bell();
@@ -1479,7 +1479,7 @@ $(document).ready(function() {
                                 type: "success",
                                 text: response.message,
                                 confirmButtonColor: "#01c853",
-                            }, function(isConfirm) {
+                            }, () => {
                                 invoice('/print_invoice/'+$('input[type=hidden]').val(),
                                     'Print Invoice');
                                 history.go(0);
@@ -1495,12 +1495,12 @@ $(document).ready(function() {
                             return false;
                         }
                     },
-                    error: function (error){
+                    error: () => {
                         sword();
                         swal({
                             title: "Internal Server Error",
                             type: "error",
-                            text: error,
+                            text: "Terdapat kesalahan program pada action ini",
                             confirmButtonColor: "#01c853",
                         });
                         return false;

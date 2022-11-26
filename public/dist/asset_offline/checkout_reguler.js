@@ -328,7 +328,7 @@ $(document).ready(function() {
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        beforeSend: function(request) {
+                        beforeSend: () => {
                             $.blockUI({
                                 css: {
                                     backgroundColor: 'transparent',
@@ -343,7 +343,7 @@ $(document).ready(function() {
                                 }
                             });
                         },
-                        success: function(response) {
+                        success: (response) => {
                             $.unblockUI();
                             if (response.status == "VALID") {
                                 bell();
@@ -352,7 +352,7 @@ $(document).ready(function() {
                                     type: "success",
                                     text: response.message,
                                     confirmButtonColor: "#01c853",
-                                }, function(isConfirm) {
+                                }, () => {
                                     invoice("/print_invoice_reguler",
                                         'Print Invoice');
                                     history.go(0);
@@ -368,12 +368,12 @@ $(document).ready(function() {
                                 return false;
                             }
                         },
-                        error: function (error){
+                        error: () => {
                             sword();
                             swal({
                                 title: "Internal Server Error",
                                 type: "error",
-                                text: error,
+                                text: "Terdapat kesalahan program pada action ini",
                                 confirmButtonColor: "#01c853",
                             });
                             return false;
@@ -385,7 +385,6 @@ $(document).ready(function() {
             });
             return false;
         }
-
     });
 
     const invoice = (url, title) => {

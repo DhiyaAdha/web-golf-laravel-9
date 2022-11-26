@@ -14,10 +14,10 @@ let invoice = (id) => {
                 id: id,
             },
             dataType: "json",
-            success: function (data) {
+            success: (data) => {
                 resolve(data);
             },
-            error: function (error){
+            error: (error) => {
                 reject(error);
             }
         });
@@ -36,8 +36,7 @@ $(".modal-detail-invoice").on("show.bs.modal", function (e) {
         $("#name_visitor").text(data.name);
         $("#method_payment").text(data.pay);
         $("#date").text(data.date);
-        $("#type_tamu")
-            .addClass(
+        $("#type_tamu").addClass(
                 data.type_member == "VIP"
                     ? "label label-success"
                     : "label label-warning"

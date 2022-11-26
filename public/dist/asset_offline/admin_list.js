@@ -57,6 +57,7 @@ $('#dt-admin').DataTable({
         zeroRecords: "Tidak ada data pada tabel ini"
     },
     columnDefs: [{
+        orderable: false,
         className: 'text-left',
         targets: [0, 1, 2, 3]
     }, {
@@ -91,17 +92,14 @@ $(document).on('click', '.delete-admin', function() {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                beforeSend: function() {
-                    $('#ok_button').text('Hapus Data');
-                },
-                success: function(data) {
-                    setTimeout(function() {
+                success: () => {
+                    setTimeout(() => {
                         $('#confirmModal').modal('hide');
                         $('#dt-admin').DataTable().ajax.reload(null, false);
                         $('#dt-aktifitas').DataTable().ajax.reload(null, false);
                     });
 
-                    window.setTimeout(function() {
+                    window.setTimeout(() => {
                         $.toast({
                             text: 'Data admin berhasil dihapus',
                             position: 'top-right',
@@ -112,10 +110,20 @@ $(document).on('click', '.delete-admin', function() {
                         });
                     }, 1000);
                     swal("Terhapus!", "", "success");
+                },
+                error: () => {
+                    sword();
+                    swal({
+                        title: "Internal Server Error",
+                        type: "error",
+                        text: "Terdapat kesalahan program pada action ini",
+                        confirmButtonColor: "#01c853",
+                    });
+                    return false;
                 }
             })
         } else {
-            swal("Dibatalkan", "", "error");
+            swal("Dibatalkan", "", "info");
         }
     });
     return false;
@@ -180,6 +188,7 @@ $('#dt-aktifitas').DataTable({
         zeroRecords: "Tidak ada data pada tabel ini"
     },
     columnDefs: [{
+        orderable: false,
         className: 'text-left',
         targets: [1, 2, 3, 4]
     }],
