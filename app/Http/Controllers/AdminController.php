@@ -63,7 +63,7 @@ class AdminController extends Controller
             $request,
             [
                 'name' => 'required|unique:visitors,name',
-                'email' => 'required|unique:visitors,email',
+                'email' => 'required|unique:visitors,email|regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/',
                 'phone' => 'required|min:12',
                 'role_id' => 'required',
             ],
@@ -72,6 +72,7 @@ class AdminController extends Controller
                 'name.unique' => 'Nama Lengkap sudah ada',
                 'email.required' => 'Email admin masih kosong.',
                 'email.unique' => 'Email sudah ada',
+                'email.regex' => 'Email tidak valid',
                 'phone.required' => 'Nomer Hp admin masih kosong.',
                 'role_id.required' => ' Role admin masih kosong.',
             ]
@@ -163,7 +164,7 @@ class AdminController extends Controller
             $request,
             [
                 'name' => 'required|unique:users,name|unique:visitors,name',
-                'email' => 'required|unique:users,email|unique:visitors,email',
+                'email' => 'required|unique:users,email|unique:visitors,email|regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/',
                 'password' => 'required|min:8',
                 'password_confirmation' => 'required_with:password|same:password|min:8',
                 'phone' => 'required|unique:users,phone|min:12',
@@ -174,6 +175,7 @@ class AdminController extends Controller
                 'name.unique' => 'Nama admin sudah ada',
                 'email.required' => 'Email masih kosong.',
                 'email.unique' => 'Email sudah ada',
+                'email.regex' => 'Email tidak valid',
                 'phone.required' => 'Nomer Hp admin masih kosong.',
                 'phone.unique' => 'Nomer Hp admin sudah ada',
                 'password.required' => 'Password admin masih kosong.',
