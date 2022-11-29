@@ -131,6 +131,7 @@ class TamuController extends Controller
             $request,
             [
                 'name' => 'required|unique:visitors,name|unique:users,name',
+                'phone' => 'required|unique:visitors,phone|unique:users,phone',
                 'address' => 'required',
                 'gender' => 'required',
                 'email' => 'required|email|regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/|unique:visitors,email|unique:users,email',
@@ -143,6 +144,8 @@ class TamuController extends Controller
             [
                 'name.required' => 'Nama Lengkap masih kosong.',
                 'name.unique' => 'Nama Lengkap sudah ada',
+                'phone.required' => 'Nomor Hp masih kosong.',
+                'phone.unique' => 'Nomor Hp sudah ada',
                 'address.required' => 'Alamat masih kosong.',
                 'address.unique' => 'Alamat sudah ada',
                 'gender.required' => 'Jenis Kelamin masih kosong.',
@@ -166,7 +169,8 @@ class TamuController extends Controller
             'address' => $request->address,
             'gender' => $request->gender,
             'email' => $request->email,
-            'phone' => date('YmdHis'),
+            'phone' => $request->phone,
+            'code_member' => date('YmdHis'),
             'company' => $request->company,
             'position' => $request->position,
             'tipe_member' => $request->tipe_member,
@@ -250,6 +254,7 @@ class TamuController extends Controller
             $request,
             [
                 'name' => 'required|unique:users,name',
+                'phone' => 'required|unique:users,phone',
                 'address' => 'required',
                 'gender' => 'required',
                 'email' => 'required|email|regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/|unique:users,email',
@@ -262,6 +267,8 @@ class TamuController extends Controller
             [
                 'name.required' => 'Nama Tamu masih kosong.',
                 'name.unique' => 'Nama Lengkap sudah ada',
+                'phone.required' => 'Nomer Hp masih kosong.',
+                'phone.unique' => 'Nomer Hp sudah ada',
                 'address.required' => 'Alamat Tamu masih kosong.',
                 'email.required' => 'Email Tamu masih kosong.',
                 'email.unique' => 'Email sudah ada',
@@ -275,6 +282,7 @@ class TamuController extends Controller
         $visitor = Visitor::findOrFail($id);
 
         $visitor->name = $request->name;
+        $visitor->phone = $request->phone;
         $visitor->address = $request->address;
         $visitor->email = $request->email;
         $visitor->company = $request->company;
