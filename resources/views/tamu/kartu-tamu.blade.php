@@ -56,12 +56,12 @@
                                                                 {{ QrCode::size(80)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
                                                             </div>
                                                             <div class="identity">
-                                                                <h6 style="text-transform: uppercase; font-size:8pt;">
+                                                                <h6 style="text-transform: uppercase; font-size:10pt; letter-spacing:1px;">
                                                                     {{ $visitor->name }}</h6>
                                                             </div>
                                                             <div class="codemember">
-                                                                <h6 style="text-transform: uppercase; font-size:6pt; color:black;">
-                                                                    {{ $visitor->phone }}</h6>
+                                                                <h5 style="text-transform: uppercase; font-size:8pt; line-height:400%; letter-spacing:1px;">
+                                                                    {{ $visitor->phone }}</h5>
                                                             </div>
                                                             
                                                             <div class="datetime ">
