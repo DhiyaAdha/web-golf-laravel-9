@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class LogTransaction extends Model
 {
-    use Cachable, HasFactory;
+    use HasFactory;
 
     protected $table = 'log_transactions';
 
@@ -38,6 +36,4 @@ class LogTransaction extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-
 }

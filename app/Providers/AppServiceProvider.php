@@ -3,8 +3,6 @@
 namespace App\Providers;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -31,9 +29,10 @@ class AppServiceProvider extends ServiceProvider
         config(['app.locale' => 'id']);
         Carbon::setLocale('id');
     }
+
     protected function fungsiHelper()
     {
-        foreach (glob(__DIR__ . '/../Helpers/*.php') as $namafile) {
+        foreach (glob(__DIR__.'/../Helpers/*.php') as $namafile) {
             require_once $namafile;
         }
     }

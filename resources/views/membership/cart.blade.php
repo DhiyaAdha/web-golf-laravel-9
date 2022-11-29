@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4 sticky">
-                    <div class="panel panel-default border-panel card-view">
+                    <div class="panel panel-default border-panel card-view" data-title="Daftar Order" data-intro="Panel ini merupakan panel proses pembelian paket yang dipesan tamu. Terdapat informasi jumlah paket yang dipesan dan nominal yang dibayarkan.">
                         <div class="panel-heading">
                             <div class="d-flex">
                                 <h6 class="panel-title flex-grow-1" style="font-weight: 600">Daftar Order</h6>
@@ -103,7 +103,7 @@
                                             <i class="cart-qty-plus-{{ $item['rowId'] }} fa fa-plus-square"></i>
                                         </button>
                                         <button class="mr-10 ml-10" data-category="{{ $item['category'] }}" data-toggle="tooltip" title="Hapus" onclick="removeItem({{ $item['rowId'] }})" id="remove-item" style="color:red;">
-                                            <i class="fa fa-trash-o"></i>
+                                            <i class="zmdi zmdi-delete"></i>
                                         </button>
                                     </div>
                                 @endforeach
@@ -145,7 +145,7 @@
                     </div>
                 </div>
                 <div class="col-lg-8">
-                    <div class="panel panel-default card-view">
+                    <div class="panel panel-default card-view" data-title="Tabel Daftar <br> Paket Harga" data-intro="Tabel ini menampilkan informasi paket yang tersedia diurut berdasarkan kategori paket, harga paket weekdays, harga paket weekend dan status paket">
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
                                 <div class="table-wrap">

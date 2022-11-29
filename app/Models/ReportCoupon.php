@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class ReportCoupon extends Model
 {
-    use Cachable, HasFactory;
+    use HasFactory;
 
     protected $table = 'report_coupons';
 
@@ -20,21 +19,21 @@ class ReportCoupon extends Model
         'status',
         // 'activities',
         'created_at',
-        'updated_at', 
+        'updated_at',
     ];
 
     public function visitor()
     {
         return $this->belongsTo(Visitor::class);
-    }   
+    }
 
     public function User()
     {
         return $this->belongsTo(User::class);
-    }  
+    }
 
     public function Coupon()
     {
         return $this->hasmany(Coupon::class);
-    }  
+    }
 }

@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class ReportLimit extends Model
 {
-    use Cachable, HasFactory;
+    use HasFactory;
+
     protected $table = 'report_limits';
 
     protected $fillable = [
@@ -18,22 +18,21 @@ class ReportLimit extends Model
         // 'fund_limit',
         'status',
         'created_at',
-        'updated_at', 
+        'updated_at',
     ];
 
     public function visitor()
     {
         return $this->belongsTo(Visitor::class);
-    }   
+    }
 
     public function User()
     {
         return $this->belongsTo(User::class);
-    }  
+    }
 
     public function Limit()
     {
         return $this->hasmany(Limit::class);
-    }  
-
+    }
 }

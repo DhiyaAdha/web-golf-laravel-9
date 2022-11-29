@@ -1,16 +1,16 @@
-function sword() {
+const sword = () => {
     var audio = new Audio('../sound/sword.mp3');
     audio.play();
 }
 
-function bell() {
+const bell = () =>{
     var audio = new Audio('../sound/bell.mp3');
     audio.play();
 }
 
 $('#show-qr-scan').on('click', function() {
     $('.disabled-scan').addClass('d-none');
-    function onScanSuccess(decodedText, decodedResult) {
+    let onScanSuccess = (decodedText, decodedResult) => {
         $("#resultTEXT").val(decodedText)
         $('#resultDECODE').val(JSON.stringify(decodedResult));
         html5QrcodeScanner.clear();
@@ -26,7 +26,7 @@ $('#show-qr-scan').on('click', function() {
                 qrCode: decodedText
             },
             dataType: 'json',
-            success: function(response) {
+            success: (response) => {
                 if (response.status === "VALID") {
                     bell();
                     swal({
@@ -39,7 +39,7 @@ $('#show-qr-scan').on('click', function() {
                         showCancelButton: false,
                         showConfirmButton: false,
                         timer: 2000,
-                    }, function() {
+                    }, () => {
                         window.location.href = decodedText;
                     });
                 } else {
@@ -49,7 +49,7 @@ $('#show-qr-scan').on('click', function() {
                         type: "error",
                         text: response.message,
                         confirmButtonColor: "#01c853",
-                    }, function() {
+                    }, () => {
                         window.location.reload(true)
                     });
                 }
@@ -57,7 +57,7 @@ $('#show-qr-scan').on('click', function() {
         });
     }
 
-    function onScanFailure(error) {
+    const onScanFailure = (error) => {
         console.warn(`Code scan error = ${error}`);
     }
 
@@ -99,7 +99,7 @@ $('#verification-no-hp').keypress(function(e) {
                             .attr(
                                 'content')
                     },
-                    beforeSend: function(request) {
+                    beforeSend: () => {
                         $.blockUI({
                             css: {
                                 backgroundColor: 'transparent',
@@ -114,7 +114,7 @@ $('#verification-no-hp').keypress(function(e) {
                             }
                         });
                     },
-                    success: function(response) {
+                    success: (response) => {
                         $.unblockUI();
                         if (response.status == "INVALID") {
                             sword();
@@ -131,10 +131,20 @@ $('#verification-no-hp').keypress(function(e) {
                                 type: "success",
                                 text: response.message,
                                 confirmButtonColor: "#01c853",
-                            }, function(isConfirm) {
+                            }, () => {
                                 window.location.href = response.data.unique_qr;
                             });
                         }
+                    },
+                    error: () => {
+                        sword();
+                        swal({
+                            title: "Internal Server Error",
+                            type: "error",
+                            text: "Terdapat kesalahan program pada action ini",
+                            confirmButtonColor: "#01c853",
+                        });
+                        return false;
                     }
                 });
             } else {

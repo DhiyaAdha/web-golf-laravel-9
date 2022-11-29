@@ -24,7 +24,6 @@ if($('#invoice_line_member')) {
         gridLineColor: "#878787",
         lineColors: ["#01c853"],
         gridTextColor: "#878787",
-        gridTextFamily: "Roboto",
     });
 }
 
@@ -43,11 +42,10 @@ if($('#invoice_line_vip')) {
         lineWidth: 2,
         resize: true,
         redraw: true,
-        pointStrokeColors: ["ffde32"],
+        pointStrokeColors: ["#fec107"],
         gridLineColor: "#878787",
-        lineColors: ["#ffde32"],
+        lineColors: ["#fec107"],
         gridTextColor: "#878787",
-        gridTextFamily: "Roboto",
     });
 }
     // grafik line 

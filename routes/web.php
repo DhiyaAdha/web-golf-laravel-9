@@ -12,7 +12,7 @@
     use App\Http\Controllers\TamuController;
     use Illuminate\Support\Facades\Auth;
     use Illuminate\Support\Facades\Route;
-    
+
     /*
     |--------------------------------------------------------------------------
     | Web Routes
@@ -23,12 +23,13 @@
     | contains the "web" middleware group. Now create something great!
     |
     */
-    
+
 Route::middleware(['htmlMinifier'])->group(static function () {
     Route::get('/', function () {
         if (Auth::user()) {
             return redirect('/analisis-tamu');
         }
+
         return view('login');
     });
     Route::post('/forgot-password', [AuthController::class, 'email_test'])->name('email_test');
@@ -67,7 +68,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
         Route::get('/package/tambah-package', [PackageController::class, 'create'])->name('package.create');
     });
 });
-    
+
 Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/visitor/qrcode', [ScanqrController::class, 'checkQRCode'])->name('visitor.qrcode');
     Route::get('/visitor/phone', [ScanqrController::class, 'checkNoHp'])->name('visitor.phone');
@@ -97,13 +98,13 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/select', [OrderController::class, 'select'])->name('select.type');
     Route::post('/qty/minus/{id}', [OrderController::class, 'minus'])->name('qty.minus');
     Route::post('/pay', [OrderController::class, 'pay'])->name('pay');
-    Route::get('/print_invoice/{id}', [OrderController::class, 'print_invoice'])->name('invoice.print');
     Route::middleware(['htmlMinifier'])->group(static function () {
         Route::resource('analisis-tamu', DashboardController::class);
         Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name('scan-tamu');
         Route::get('/kartu-member/{e}', [ScanqrController::class, 'show_detail'])->name('detail-scan')->middleware('signed');
         Route::get('/cart/{id}', [OrderController::class, 'index'])->name('order.cart');
         Route::get('/checkout/{id}', [OrderController::class, 'checkout'])->name('checkout');
+        Route::get('/print_invoice/{id}', [OrderController::class, 'print_invoice'])->name('invoice.print');
         Route::get('/proses_reguler', [OrderRegulerController::class, 'index'])->name('proses_reguler');
         Route::get('/checkout_reguler', [OrderRegulerController::class, 'checkout'])->name('checkout_reguler');
         Route::get('/print_invoice_reguler', [OrderRegulerController::class, 'print_invoice'])->name('invoice.print.reguler');

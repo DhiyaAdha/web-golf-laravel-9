@@ -25,14 +25,15 @@ $(document).ready(function () {
 
         "render": $.fn.dataTable.render.text(),
         "columns": [{
-            data: 'name',
-            searchable: true,
-            orderable:false
+                data: 'name',
+                searchable: true,
+                orderable:false
             },
             {
                 "data": function(data) {
                     return `<span class='text-capitalize'>${data.category}</span>`;
-                }
+                },
+                orderable:false
             },
             {
                 "data": function(data) {
@@ -41,11 +42,11 @@ $(document).ready(function () {
                     } else {
                         return `<span class='label label-warning'>${data.tipe_member == 'VVIP' ? 'VIP' : 'Member'}</span>`;
                     }
-                }
+                },
+                orderable:false
             },
             {
                 data: 'times',
-
             }
         ],
         order: [
@@ -121,7 +122,6 @@ $(document).ready(function () {
             resize: true,
             barGap: 4,
             gridTextColor:'#878787',
-            gridTextFamily:"Roboto",
             barSize: 30,
         });
     
@@ -150,7 +150,6 @@ $(document).ready(function () {
             resize: true,
             redraw: true,
             gridTextColor: "#878787",
-            gridTextFamily: "Roboto",
             parseTime: false,
         });
     

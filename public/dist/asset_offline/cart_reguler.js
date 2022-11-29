@@ -1,28 +1,24 @@
 $('[data-toggle="tooltip"]').tooltip();
 
-function checkout(url, title) {
+const checkout = (url, title) => {
     popupCenter(url, title, 1000, 700);
 }
 
-function popupCenter(url, title, w, h) {
+const popupCenter = (url, title, w, h) => {
     const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
     const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
 
-    const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document
-        .documentElement.clientWidth : screen.width;
-    const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document
-        .documentElement.clientHeight : screen.height;
+    const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+    const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
 
     const systemZoom = width / window.screen.availWidth;
     const left = (width - w) / 2 / systemZoom + dualScreenLeft
     const top = (height - h) / 2 / systemZoom + dualScreenTop
-    const newWindow = window.open(url, title,
-        `scrollbars=yes,width  = ${w / systemZoom}, height = ${h / systemZoom}, top    = ${top}, left   = ${left}`
-    );
+    const newWindow = window.open(url, title, `scrollbars=yes,width  = ${w / systemZoom}, height = ${h / systemZoom}, top    = ${top}, left   = ${left}`);
     if (window.focus) newWindow.focus();
 }
 
-function loading() {
+const loading = () => {
     $.blockUI({
         css: {
             backgroundColor: 'transparent',
@@ -38,14 +34,14 @@ function loading() {
     });
 }
 
-var format = function(num){
-    var str = num.toString().replace("", ""), parts = false, output = [], i = 1, formatted = null;
+let format = (num) => {
+    let str = num.toString().replace("", ""), parts = false, output = [], i = 1, formatted = null;
     if(str.indexOf(".") > 0) {
         parts = str.split(".");
         str = parts[0];
     }
     str = str.split("").reverse();
-    for(var j = 0, len = str.length; j < len; j++) {
+    for(let j = 0, len = str.length; j < len; j++) {
         if(str[j] != ",") {
         output.push(str[j]);
         if(i%3 == 0 && j < (len - 1)) {
@@ -58,7 +54,7 @@ var format = function(num){
     return("" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ""));
 };
 
-function addCart(id) {
+let addCart = (id) => {
     $.ajax({
         async: true,
         type: 'POST',
@@ -68,7 +64,7 @@ function addCart(id) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         dataType: 'json',
-        success: function(response) {
+        success: response => {
             $.unblockUI();
             if (response.status == "INVALID") {
                 sword();
@@ -83,11 +79,21 @@ function addCart(id) {
                 beep();
             }
             location.reload();
+        },
+        error: () => {
+            sword();
+            swal({
+                title: "Internal Server Error",
+                type: "error",
+                text: "Terdapat kesalahan program pada action ini",
+                confirmButtonColor: "#01c853",
+            });
+            return false;
         }
     });
 }
 
-function updateQTY(id, type) {
+let updateQTY = (id, type) => {
     let $n = $(".qty-" + id);
     if (type === 'plus') {
         $n.val(Number($n.val()) + 1);
@@ -130,7 +136,7 @@ function updateQTY(id, type) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         dataType: 'json',
-        success: function(response) {
+        success: (response) => {
             $('.price-' + response.id).text('Rp. ' + format(response.qty * response.price));
             $("#total-pay").text('Rp. ' + format(response.total));
             $('.counted').text(response.counted);
@@ -150,11 +156,21 @@ function updateQTY(id, type) {
                                                 </button>`);
                 $('#qty').text('0');
             }
+        },
+        error: () => {
+            sword();
+            swal({
+                title: "Internal Server Error",
+                type: "error",
+                text: "Terdapat kesalahan program pada action ini",
+                confirmButtonColor: "#01c853",
+            });
+            return false;
         }
     });
 }
 
-function removeItem(id) {
+let removeItem = (id) => {
     $('.disabled-cart-' + id).css('background', 'tomato');
     $('.disabled-cart-' + id).fadeOut(800, function() {
         $(this).remove();
@@ -169,7 +185,7 @@ function removeItem(id) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         dataType: 'json',
-        success: function(response) {
+        success: response => {
             $.unblockUI();
             $("#total-pay").text('Rp. ' + format(response.total));
             $('.counted').text(response.counted);
@@ -185,17 +201,27 @@ function removeItem(id) {
                                     <span class="btn-text">Checkout</span>
                                 </button>`);
             }
+        },
+        error: () => {
+            sword();
+            swal({
+                title: "Internal Server Error",
+                type: "error",
+                text: "Terdapat kesalahan program pada action ini",
+                confirmButtonColor: "#01c853",
+            });
+            return false;
         }
     });
 }
 
-var interval = setInterval(function() {
-    var momentNow = moment().locale('fr');
+let interval = setInterval(function() {
+    let momentNow = moment().locale('fr');
     $('#time-part').html(momentNow.format('hh:mm:ss A'));
 }, 100);
 
 $(document).on('click', '#reset-order-reguler', function() {
-    var tg = window.location.href;
+    let tg = window.location.href;
     tg = tg.split("?")
     tg = tg[0];
     tg = tg.split("/");
@@ -221,20 +247,30 @@ $(document).on('click', '#reset-order-reguler', function() {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                beforeSend: function(request) {
+                beforeSend: () => {
                     loading();
                 },
-                success: function(data) {
+                success: () => {
                     rst();
                     swal({
                         title: "",
                         type: "success",
                         text: "Keranjang berhasil direset",
                         confirmButtonColor: "#01c853",
-                    }, function(isConfirm) {
+                    }, () => {
                         $.unblockUI();
                         location.reload();
                     });
+                },
+                error: () => {
+                    sword();
+                    swal({
+                        title: "Internal Server Error",
+                        type: "error",
+                        text: "Terdapat kesalahan program pada action ini",
+                        confirmButtonColor: "#01c853",
+                    });
+                    return false;
                 }
             })
         } else {
@@ -254,10 +290,10 @@ $(document).on('click', '#checkout', function() {
         async: true,
         type: 'GET',
         url: '/checkout_reguler',
-        beforeSend: function(request) {
+        beforeSend: () => {
             loading();
         },
-        success: function(response) {
+        success: () => {
             $.unblockUI();
             bell();
             swal({
@@ -265,9 +301,19 @@ $(document).on('click', '#checkout', function() {
                 type: "success",
                 text: "Order berhasil dibuat",
                 confirmButtonColor: "#01c853",
-            }, function(isConfirm) {
+            }, () => {
                 window.location.href = '/checkout_reguler';
             });
+        },
+        error: () => {
+            sword();
+            swal({
+                title: "Internal Server Error",
+                type: "error",
+                text: "Terdapat kesalahan program pada action ini",
+                confirmButtonColor: "#01c853",
+            });
+            return false;
         }
     });
 });
@@ -283,37 +329,38 @@ $(document).on('click', '#disabled-pay', function() {
     return false;
 });
 
-function add() {
-    var audio = new Audio('../sound/add.mp3');
+const add = () => {
+    const audio = new Audio('../sound/add.mp3');
     audio.play();
 }
 
-function beep() {
-    var audio = new Audio('../sound/beep.mp3');
-    audio.play();
-}
-function click() {
-    var audio = new Audio('../sound/click.mp3');
+const beep = () => {
+    const audio = new Audio('../sound/beep.mp3');
     audio.play();
 }
 
-function dlt() {
-    var audio = new Audio('../sound/remove.mp3');
+const click = () => {
+    const audio = new Audio('../sound/click.mp3');
     audio.play();
 }
 
-function rst() {
-    var audio = new Audio('../sound/reset.mp3');
+const dlt = () => {
+    const audio = new Audio('../sound/remove.mp3');
     audio.play();
 }
 
-function sword() {
-    var audio = new Audio('../sound/sword.mp3');
+const rst = () => {
+    const audio = new Audio('../sound/reset.mp3');
     audio.play();
 }
 
-function bell() {
-    var audio = new Audio('../sound/bell.mp3');
+const sword = () => {
+    const audio = new Audio('../sound/sword.mp3');
+    audio.play();
+}
+
+const bell = () => {
+    const audio = new Audio('../sound/bell.mp3');
     audio.play();
 }
 

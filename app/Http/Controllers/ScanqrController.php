@@ -2,52 +2,56 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Deposit;
-use App\Models\Visitor;
-use App\Models\LogAdmin;
-use App\Models\LogLimit;
-use App\Models\LogCoupon;
-use Illuminate\View\View;
-use App\Models\ReportLimit;
-use Illuminate\Http\Request;
-use App\Models\ReportDeposit;
-use Illuminate\Support\Carbon;
-use App\Jobs\SendMailJobDeposit;
-use illuminate\support\facades\DB;
-use App\Jobs\SendMailJobKuponTambah;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
 use App\Jobs\SendMailJobDepositTambah;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use App\Jobs\SendMailJobKuponTambah;
+use App\Models\Deposit;
+use App\Models\LogAdmin;
+use App\Models\LogCoupon;
+use App\Models\LogLimit;
+use App\Models\ReportDeposit;
+use App\Models\ReportLimit;
+use App\Models\Visitor;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
-class ScanqrController extends Controller {
+class ScanqrController extends Controller
+{
     private $status;
+
     private $message;
+
     private $data;
 
-    public function __construct() {
-        $this->status = "INVALID";
-        $this->message = "Ada sesuatu yang salah!";
+    public function __construct()
+    {
+        $this->status = 'INVALID';
+        $this->message = 'Ada sesuatu yang salah!';
         $this->data = [];
     }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         return view('membership.scan-tamu');
     }
 
-    public function proses() {
+    public function proses()
+    {
         return view('proses');
     }
 
-    public function detailscan() {
+    public function detailscan()
+    {
         return view('membership.detail_scan');
     }
 
-    public function show_detail($id = null) {
+    public function show_detail($id = null)
+    {
         try {
             $visitor = Visitor::find($id);
             $deposit = Deposit::where('visitor_id', $id)->first();
@@ -56,31 +60,37 @@ class ScanqrController extends Controller {
             $data['visitor'] = $visitor;
             $data['deposit'] = $deposit;
             $data['log_limit'] = $log_limit;
+
             return view('membership.detail_scan', $data);
         } catch (\Throwable $th) {
             return redirect()->back();
         }
     }
 
-    public function checkQRCode(Request $request) {
-        $url_qr = explode("/", parse_url($request->get('qrCode'), PHP_URL_PATH));
-        $get_visitor = Visitor::where("id", $url_qr[2])->first();
+    public function checkQRCode(Request $request)
+    {
+        $url_qr = explode('/', parse_url($request->get('qrCode'), PHP_URL_PATH));
+        $get_visitor = Visitor::where('id', $url_qr[2])->first();
         try {
             if ($get_visitor == null) {
-                $this->setResponse('INVALID', "Qr Code tidak ditemukan!");
+                $this->setResponse('INVALID', 'Qr Code tidak ditemukan!');
+
                 return response()->json($this->getResponse());
             } else {
                 if($get_visitor->expired_date <= Carbon::now()) {
-                    $this->setResponse('INVALID', "Masa berlaku member habis");
+                    $this->setResponse('INVALID', 'Masa berlaku member habis');
+
                     return response()->json($this->getResponse());
-                } else if($get_visitor->status == 'inactive') {
-                    $this->setResponse('INVALID', "Member tidak aktif");
+                } elseif($get_visitor->status == 'inactive') {
+                    $this->setResponse('INVALID', 'Member tidak aktif');
+
                     return response()->json($this->getResponse());
                 } else {
                     try {
-                        $this->setResponse('VALID', "Valid QR code", [
+                        $this->setResponse('VALID', 'Valid QR code', [
                             'name' => $get_visitor->name,
                         ]);
+
                         return response()->json($this->getResponse());
                     } catch (\Throwable $th) {
                         return response()->json($this->getResponse());
@@ -92,25 +102,30 @@ class ScanqrController extends Controller {
         }
     }
 
-    public function checkNoHp(Request $request) {
-        $phone_visitor = Visitor::where("phone", $request->get('phone'))->first();
+    public function checkNoHp(Request $request)
+    {
+        $phone_visitor = Visitor::where('phone', $request->get('phone'))->first();
         try {
             if (is_null($phone_visitor)) {
-                $this->setResponse('INVALID', "Kode Member Tidak Ditemukan!");
+                $this->setResponse('INVALID', 'Kode Member Tidak Ditemukan!');
+
                 return response()->json($this->getResponse());
             } else {
                 if($phone_visitor->expired_date <= Carbon::now()) {
-                    $this->setResponse('INVALID', "Masa berlaku member habis");
+                    $this->setResponse('INVALID', 'Masa berlaku member habis');
+
                     return response()->json($this->getResponse());
-                } else if($phone_visitor->status == 'inactive') {
-                    $this->setResponse('INVALID', "Member tidak aktif");
+                } elseif($phone_visitor->status == 'inactive') {
+                    $this->setResponse('INVALID', 'Member tidak aktif');
+
                     return response()->json($this->getResponse());
                 } else {
                     try {
-                        $this->setResponse('VALID', "Valid Kode Member", [
+                        $this->setResponse('VALID', 'Valid Kode Member', [
                             'name' => $phone_visitor->name,
                             'unique_qr' => $phone_visitor->unique_qr,
                         ]);
+
                         return response()->json($this->getResponse());
                     } catch (\Throwable $th) {
                         return response()->json($this->getResponse());
@@ -122,23 +137,26 @@ class ScanqrController extends Controller {
         }
     }
 
-    private function setResponse($status = "INVALID", $message = "Ada sesuatu yang salah!", $data = []) {
+    private function setResponse($status = 'INVALID', $message = 'Ada sesuatu yang salah!', $data = [])
+    {
         $this->status = $status;
         $this->message = $message;
         $this->data = $data;
     }
 
-    private function getResponse() {
+    private function getResponse()
+    {
         return [
             'status' => $this->status,
             'message' => $this->message,
-            'data' => $this->data ? $this->data : null
+            'data' => $this->data ? $this->data : null,
         ];
     }
 
-    public function update_deposit(Request $request, $id) {
+    public function update_deposit(Request $request, $id)
+    {
         try {
-            $get_uri = explode("/", parse_url($request->getRequestUri(), PHP_URL_PATH));
+            $get_uri = explode('/', parse_url($request->getRequestUri(), PHP_URL_PATH));
             $visitor = Deposit::join('visitors', 'deposits.visitor_id', '=', 'visitors.id')->where('deposits.visitor_id', $get_uri[3])->first();
             $deposit = Deposit::where('visitor_id', $get_uri[3])->first();
             $deposit->balance = $request->balance + $deposit->balance;
@@ -160,7 +178,7 @@ class ScanqrController extends Controller {
             LogAdmin::create([
                 'user_id' => Auth::id(),
                 'type' => 'CREATE',
-                'activities' => 'Berhasil menambah deposit <b>' . $request->balance . '</b> atas nama <b>' . $visitor->name . '</b>',
+                'activities' => 'Berhasil menambah deposit <b>'.$request->balance.'</b> atas nama <b>'.$visitor->name.'</b>',
             ]);
 
             ReportDeposit::create([
@@ -178,9 +196,10 @@ class ScanqrController extends Controller {
         }
     }
 
-    public function update_kupon(Request $request, $id) {
+    public function update_kupon(Request $request, $id)
+    {
         try {
-            $get_uri = explode("/", parse_url($request->getRequestUri(), PHP_URL_PATH));
+            $get_uri = explode('/', parse_url($request->getRequestUri(), PHP_URL_PATH));
             $visitor = LogLimit::join('visitors', 'log_limits.visitor_id', '=', 'visitors.id')->where('log_limits.visitor_id', $get_uri[3])->first();
             $log_limit = LogLimit::where('visitor_id', $get_uri[3])->first();
             $log_limit->quota_kupon = $request->quota_kupon + $log_limit->quota_kupon;
@@ -202,7 +221,7 @@ class ScanqrController extends Controller {
             LogAdmin::create([
                 'user_id' => Auth::id(),
                 'type' => 'CREATE',
-                'activities' => 'Berhasil menambah kupon <b>' . $request->quota_kupon . '</b> atas nama <b>' . $visitor->name . '</b>',
+                'activities' => 'Berhasil menambah kupon <b>'.$request->quota_kupon.'</b> atas nama <b>'.$visitor->name.'</b>',
             ]);
 
             ReportLimit::create([

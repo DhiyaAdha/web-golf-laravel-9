@@ -1,14 +1,14 @@
 $(document).on("change", "#filter-data", function(e) {
     // member.column($(this).data('column')).search($(this).val()).draw();
-    var filter_data = [];
-    var option = $(this).find(':selected');
-    var url = window.location.href;
+    let filter_data = [];
+    let option = $(this).find(':selected');
+    let url = window.location.href;
 
     $.each(option, function(index, value) {
         filter_data.push(option.val());
     });
 
-    var param = filter_data.join(","); 
+    let param = filter_data.join(","); 
     if(param != "") {
         if (url.indexOf('?') > -1) {
             url += '&filter='+param
@@ -17,19 +17,21 @@ $(document).on("change", "#filter-data", function(e) {
         }
     }
 
-    var EndUrl = url.split("?")[1];
+    let EndUrl = url.split("?")[1];
     if(EndUrl != "") {
         $('#dt-tamu').DataTable().ajax.url("/daftar-tamu?"+EndUrl).load();
     } else {
         $('#dt-tamu').DataTable().ajax.url("/daftar-tamu").load();
     }
 });
+
 /* data tamu */
-var member = $('#dt-tamu').DataTable({
+let member = $('#dt-tamu').DataTable({
     "processing": true,
     "serverSide": true,
     "lengthChange": false,
     "bDestroy": true,
+    "orderable": false,
     "searching": true,
     "paginate": {
         "first": "First",
@@ -45,9 +47,11 @@ var member = $('#dt-tamu').DataTable({
     "render": $.fn.dataTable.render.text(),
     "columns": [{
             data: 'name',
+            orderable: false
         },
         {
             data: 'email',
+            orderable: false
         },
         {
             "data": function(data) {
@@ -56,17 +60,20 @@ var member = $('#dt-tamu').DataTable({
                 } else {
                     return `<span class='label label-warning'>${data.tipe_member == 'VVIP' ? 'VIP' : 'Member'}</span>`;
                 }
-            }
+            },
+            orderable: false
         },
         {
             "data": function(data) {
                 return data.status == 'active' ? 'Aktif' : 'Non Aktif'
-            }
+            },
+            orderable: false
         },
         {
             "data": function(data) {
                 return data.expired_date;
-            }
+            },
+            orderable: false
         },
         {
             data: 'action',
@@ -126,16 +133,13 @@ $(document).on('click', '.delete-confirm', function() {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                beforeSend: function() {
-                    $('#ok_button').text('Hapus Data');
-                },
-                success: function(data) {
-                    setTimeout(function() {
+                success: () => {
+                    setTimeout(() => {
                         $('#confirmModal').modal('hide');
                         $('#dt-tamu').DataTable().ajax.reload(null, false);
                     });
 
-                    window.setTimeout(function() {
+                    window.setTimeout(() => {
                         $.toast({
                             text: 'Data berhasil dihapus',
                             position: 'top-right',
@@ -146,10 +150,20 @@ $(document).on('click', '.delete-confirm', function() {
                         });
                     }, 1000);
                     swal("Terhapus!", "", "success");
+                },
+                error: () => {
+                    sword();
+                    swal({
+                        title: "Internal Server Error",
+                        type: "error",
+                        text: "Terdapat kesalahan program pada action ini",
+                        confirmButtonColor: "#01c853",
+                    });
+                    return false;
                 }
             })
         } else {
-            swal("Dibatalkan", "", "error");
+            swal("Dibatalkan", "", "info");
         }
     });
     return false;

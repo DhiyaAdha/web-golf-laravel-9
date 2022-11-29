@@ -3,14 +3,14 @@ $(function () {
 });
 
 ;(function ($, document) {
-    var keys = {a:65,b:66,c:67,d:68,e:69,f:70,g:71,h:72,i:73,j:74,k:75,l:76,m:77,n:78,o:79,p:80,q:81,r:82,s:83,t:84,u:85,v:86,w:87,x:88,y:89,z:90,"0":48,"1":49,"2":50,"3":51,"4":52,"5":53,"6":54,"7":55,"8":56,"9":57,f1:112,f2:113,f3:114,f4:115,f5:116,f6:117,f7:118,f8:119,f9:120,f10:121,f11:122,f12:123,shift:16,ctrl:17,control:17,alt:18,option:18,opt:18,cmd:224,command:224,fn:255,"function":255,backspace:8,osxdelete:8,enter:13,"return":13,space:32,spacebar:32,esc:27,escape:27,tab:9,capslock:20,capslk:20,"super":91,windows:91,insert:45,"delete":46,home:36,end:35,pgup:33,pageup:33,pgdn:34,pagedown:34,left:37,up:38,right:39,down:40,"!":49,"@":50,"#":51,"$":52,"%":53,"^":54,"&":55,"*":56,"(":57,")":48,"`":96,"~":96,"-":45,_:45,"=":187,"+":187,"[":219,"{":219,"]":221,"}":221,"\\":220,"|":220,";":59,":":59,"'":222,'"':222,",":188,"<":188,".":190,">":190,"/":191,"?":191};
+    let keys = {a:65,b:66,c:67,d:68,e:69,f:70,g:71,h:72,i:73,j:74,k:75,l:76,m:77,n:78,o:79,p:80,q:81,r:82,s:83,t:84,u:85,v:86,w:87,x:88,y:89,z:90,"0":48,"1":49,"2":50,"3":51,"4":52,"5":53,"6":54,"7":55,"8":56,"9":57,f1:112,f2:113,f3:114,f4:115,f5:116,f6:117,f7:118,f8:119,f9:120,f10:121,f11:122,f12:123,shift:16,ctrl:17,control:17,alt:18,option:18,opt:18,cmd:224,command:224,fn:255,"function":255,backspace:8,osxdelete:8,enter:13,"return":13,space:32,spacebar:32,esc:27,escape:27,tab:9,capslock:20,capslk:20,"super":91,windows:91,insert:45,"delete":46,home:36,end:35,pgup:33,pageup:33,pgdn:34,pagedown:34,left:37,up:38,right:39,down:40,"!":49,"@":50,"#":51,"$":52,"%":53,"^":54,"&":55,"*":56,"(":57,")":48,"`":96,"~":96,"-":45,_:45,"=":187,"+":187,"[":219,"{":219,"]":221,"}":221,"\\":220,"|":220,";":59,":":59,"'":222,'"':222,",":188,"<":188,".":190,">":190,"/":191,"?":191};
     $.key = $.fn.key = function (code, fn) {
         if (!(this instanceof $)) { return $.fn.key.apply($(document), arguments); }
-        var i = 0,
+        let i = 0,
             cache = [];
         return this.on({
             keydown: function (e) {
-                var key = e.which;
+                let key = e.which;
                 if (cache[cache.length - 1] === key) return;
                 cache.push(key);
                 i = key === code[i] || ( typeof code === 'string' && key === keys[code.split("+")[i]] ) ? i + 1 : 0;
@@ -27,13 +27,13 @@ $(function () {
     };
 })(jQuery, document);
 
-function deleteCharacter() {
+let deleteCharacter = () => {
     dlt();
     let currentValue = $('.inputDisplay').val();
     $('.inputDisplay').val(currentValue.substring(0, currentValue.length - 1));
 }
 
-function insertCharacter(char) {
+let insertCharacter = (char) => {
     click();
     let currentValue = $('.inputDisplay').val();
     let length = currentValue.length;
@@ -54,12 +54,12 @@ function insertCharacter(char) {
         $('.inputDisplay').val($('.inputDisplay').val() + char);
 }
 
-function clearInput() {
+let clearInput = () => {
     dlt();
     $('.inputDisplay').val('');
 }
 
-function result() {
+let result = () => {
     dlt();
     let currentValue = $('.inputDisplay').val();
     let length = currentValue.length;
@@ -73,96 +73,106 @@ function result() {
         $('.inputDisplay').val(eval($('.inputDisplay').val()));
 }
 
-function add() {
-    var audio = new Audio('../sound/add.mp3');
+const add = () => {
+    const audio = new Audio('../sound/add.mp3');
+    audio.play();
+}
+const beep = () => {
+    const audio = new Audio('../sound/beep.mp3');
+    audio.play();
+}
+const click = () => {
+    const audio = new Audio('../sound/click.mp3');
+    audio.play();
+}
+const dlt = () => {
+    const audio = new Audio('../sound/remove.mp3');
+    audio.play();
+}
+const rst = () => {
+    const audio = new Audio('../sound/reset.mp3');
+    audio.play();
+}
+const sword = () => {
+    const audio = new Audio('../sound/sword.mp3');
+    audio.play();
+}
+const bell = () => {
+    const audio = new Audio('../sound/bell.mp3');
+    audio.play();
+}
+const remaining = () => {
+    const audio = new Audio('../sound/remaining.mp3');
     audio.play();
 }
 
-function beep() {
-    var audio = new Audio('../sound/beep.mp3');
-    audio.play();
-}
-function click() {
-    var audio = new Audio('../sound/click.mp3');
-    audio.play();
-}
-
-function dlt() {
-    var audio = new Audio('../sound/remove.mp3');
-    audio.play();
-}
-
-function rst() {
-    var audio = new Audio('../sound/reset.mp3');
-    audio.play();
-}
-
-function sword() {
-    var audio = new Audio('../sound/sword.mp3');
-    audio.play();
-}
-
-function bell() {
-    var audio = new Audio('../sound/bell.mp3');
-    audio.play();
-}
-
-function remaining() {
-    var audio = new Audio('../sound/remaining.mp3');
-    audio.play();
-}
-
-function cal(price) {
+let cal = (price) => {
     let total = $('.nilai-total1-td').data('total');
     $('#customRadioInline3').prop('checked', true);
     if ($('.bayar-cash').val() == '') {
         $('.refund').removeClass('d-none');
         $('.bayar-cash').val(price);
         let return_pay = parseInt($('.bayar-cash').val()) - parseInt(total);
-        if($('.bayar-cash').val() > total) {
+        if(return_pay === 0) {
             $('.bayar-cash').removeClass('is-invalid');
-            $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+            $('#return').text(' Rp. 0,00').css({
                 "background-color": "rgba(25, 216, 149, 0.2)",
                 "color": "#19d895"
-            }).data('refund', return_pay).addClass('green');
+            }).data('refund', 0).addClass('green');
         } else {
-            $('.bayar-cash').addClass('is-invalid');
-            $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
-                "background-color": "rgba(216, 25, 25, 0.2)",
-                "color": "#d81c19d1"
-            }).data('refund', return_pay).addClass('green');
+            if($('.bayar-cash').val() > total) {
+                $('.bayar-cash').removeClass('is-invalid');
+                $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                    "background-color": "rgba(25, 216, 149, 0.2)",
+                    "color": "#19d895"
+                }).data('refund', return_pay).addClass('green');
+            } else {
+                $('.bayar-cash').addClass('is-invalid');
+                $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                    "background-color": "rgba(216, 25, 25, 0.2)",
+                    "color": "#d81c19d1"
+                }).data('refund', return_pay).addClass('green');
+            }
         }
     } else {
         let result = parseInt($('.bayar-cash').val());
         $('.bayar-cash').val(result + price);
         let return_pay = parseInt($('.bayar-cash').val()) - parseInt(total);
-        if($('.bayar-cash').val() > total) {
+        if(return_pay === 0) {
             $('.bayar-cash').removeClass('is-invalid');
-            $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+            $('#return').text(' Rp. 0,00').css({
                 "background-color": "rgba(25, 216, 149, 0.2)",
                 "color": "#19d895"
-            }).data('refund', return_pay);
+            }).data('refund', 0).addClass('green');
         } else {
-            $('.bayar-cash').addClass('is-invalid');
-            $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
-                "background-color": "rgba(216, 25, 25, 0.2)",
-                "color": "#d81c19d1"
-            }).data('refund', return_pay);
+            if($('.bayar-cash').val() > total) {
+                $('.bayar-cash').removeClass('is-invalid');
+                $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                    "background-color": "rgba(25, 216, 149, 0.2)",
+                    "color": "#19d895"
+                }).data('refund', return_pay);
+            } else {
+                $('.bayar-cash').addClass('is-invalid');
+                $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                    "background-color": "rgba(216, 25, 25, 0.2)",
+                    "color": "#d81c19d1"
+                }).data('refund', return_pay);
+            }
         }
     }
 }
 
-function call(price) {
-    if ($('.bayar-input').val() == '') {
-        $('.bayar-input').val(price);
-    } else {
-        let result = parseInt($('.bayar-input').val());
-        $('.bayar-input').val(result + price);
-    }
-}
+// let call = (price) => {
+//     if ($('.bayar-input').val() == '') {
+//         $('.bayar-input').val(price);
+//     } else {
+//         let result = parseInt($('.bayar-input').val());
+//         $('.bayar-input').val(result + price);
+//     }
+// }
 
-function formatIDR(price) {
-    var number_string = price.toString(),
+let formatIDR = (price) => {
+    let number_string = price.toString(),
         split = number_string.split(','),
         remainder = split[0].length % 3,
         idr = split[0].substr(0, remainder),
@@ -174,14 +184,14 @@ function formatIDR(price) {
     return split[1] != undefined ? idr + ',' + split[1] : idr;
 }
 
-var format = function(num){
-    var str = num.toString().replace("", ""), parts = false, output = [], i = 1, formatted = null;
+let format = (num) => {
+    let str = num.toString().replace("", ""), parts = false, output = [], i = 1, formatted = null;
     if(str.indexOf(".") > 0) {
         parts = str.split(".");
         str = parts[0];
     }
     str = str.split("").reverse();
-    for(var j = 0, len = str.length; j < len; j++) {
+    for(let j = 0, len = str.length; j < len; j++) {
         if(str[j] != ",") {
         output.push(str[j]);
         if(i%3 == 0 && j < (len - 1)) {
@@ -194,7 +204,7 @@ var format = function(num){
     return("" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ""));
 };
 
-function refreshInput() {
+let refreshInput = () => {
     $('.bayar-input').removeClass('is-invalid').val()
     $('.bayar-cash').removeClass('is-invalid').val();
     $('#return').text('Rp. 0,00').css({
@@ -215,11 +225,11 @@ $(document).ready(function() {
         html : true,
         sanitize: false,
         content: function() {
-            var content = $(this).attr("data-popover-content");
+            let content = $(this).attr("data-popover-content");
             return $(content).children(".popover-body").html();
         },
         title: function() {
-            var title = $(this).attr("data-popover-content");
+            let title = $(this).attr("data-popover-content");
             return $(title).children(".popover-header").html();
         }
     });
@@ -228,11 +238,11 @@ $(document).ready(function() {
         html : true,
         sanitize: false,
         content: function() {
-            var content = $(this).attr("data-popover-content");
+            let content = $(this).attr("data-popover-content");
             return $(content).children(".popover-body").html();
         },
         title: function() {
-            var title = $(this).attr("data-popover-content");
+            let title = $(this).attr("data-popover-content");
             return $(title).children(".popover-header").html();
         }
     });
@@ -291,7 +301,7 @@ $(document).ready(function() {
         let data_bill = $('#customCheck8').data('bill');
         let data_deposit = $('#customCheck8').data('deposit');
         let type_multiple = $('input[name="payment-type[]"]:checked')
-            .map(function() {
+            .map(() => {
                 return $(this).val();
             }).get();
 
@@ -407,7 +417,7 @@ $(document).ready(function() {
         let data_deposit = $('#customCheck8').data('deposit');
         let price_single = $('.kmt').data('pricesingle');
         let type_multiple = $('input[name="payment-type[]"]:checked')
-            .map(function() {
+            .map(() => {
                 return $(this).val();
             }).get();
 
@@ -631,7 +641,7 @@ $(document).ready(function() {
         let data_deposit = $('#customCheck8').data('deposit');
         let price_single = $('.kmt').data('pricesingle');
         let type_multiple = $('input[name="payment-type[]"]:checked')
-            .map(function() {
+            .map(() => {
                 return $(this).val();
             }).get();
         let minus_deposit = data_bill - data_deposit;
@@ -1152,7 +1162,7 @@ $(document).ready(function() {
                 param: $('input[type=hidden]').val()
             },
             url: '/select',
-            beforeSend: function(request) {
+            beforeSend: () => {
                 $.blockUI({
                     css: {
                         backgroundColor: 'transparent',
@@ -1167,7 +1177,7 @@ $(document).ready(function() {
                     }
                 });
             },
-            success: function(response) {
+            success: (response) => {
                 $.unblockUI();
                 if (response.status == "VALID") {
                     $('#balance').text('Rp. ' +format(response.price) + ',00');
@@ -1179,7 +1189,7 @@ $(document).ready(function() {
                     let price_discount = 0;
                     let price = 0;
                     if (type_single == 1) {
-                        $.each(response.orders, function(b, val) {
+                        $.each(response.orders, (b, val) => {
                             html += `<div class="d-flex">
                                         <span class="flex-grow-1">${val.name} ${response.orders[b].category == 'default' ? '| game' : ''} x ${val.qty}</span>
                                         <small>${response.orders[b].category == 'default' ? 'limit gratis' : 'Rp. ' + format(val.pricesingle) + ',00'}</small>
@@ -1222,7 +1232,7 @@ $(document).ready(function() {
                             </div>`
                         ).hide().prev().addClass('mb-2');
                     } else if (type_single == 2) {
-                        $.each(response.orders, function(b, val) {
+                        $.each(response.orders, (b, val) => {
                             html += `<div class="d-flex">
                                         <span class="flex-grow-1">${val.name} ${response.orders[b].category == 'default' ? '| game' : ''} x ${val.qty}</span>
                                         <small>${response.orders[b].category == 'default' ? 'kupon gratis' : 'Rp. ' + format(val.pricesingle) + ',00'}</small>
@@ -1263,7 +1273,7 @@ $(document).ready(function() {
                             </div>`
                         ).hide().prev().addClass('mb-2');
                     } else if (type_single == 4) {
-                        $.each(response.orders, function(b, val) {
+                        $.each(response.orders, (b, val) => {
                             html += `<div class="d-flex">
                                         <span class="flex-grow-1">${val.name} x ${val.qty}</span>
                                         <small>${'Rp. ' + format(val.price) + ',00'}</small>
@@ -1309,7 +1319,7 @@ $(document).ready(function() {
                             "color": "#19d895"
                         });
 
-                        $.each(response.orders, function(b, val) {
+                        $.each(response.orders, (b, val) => {
                             html += `<div class="d-flex">
                                             <span class="flex-grow-1">${val.name} x ${val.qty}</span>
                                             <small>${'Rp. ' + format(val.price) + ',00'}</small>
@@ -1340,6 +1350,16 @@ $(document).ready(function() {
                     });
                     return false;
                 }
+            },
+            error: () => {
+                sword();
+                swal({
+                    title: "Internal Server Error",
+                    type: "error",
+                    text: "Terdapat kesalahan program pada action ini",
+                    confirmButtonColor: "#01c853",
+                });
+                return false;
             }
         });
     });
@@ -1349,7 +1369,7 @@ $(document).ready(function() {
         let type = $('input[type=radio][name=payment]:checked').val();
         let type_single = $("input[name='payment-type']:checked").val();
         let type_multiple = $("input[name='payment-type[]']:checked")
-            .map(function() {
+            .map(() => {
                 return $(this).val();
             }).get();
         let order_number = $('#order-number').text();
@@ -1435,7 +1455,7 @@ $(document).ready(function() {
                             .attr(
                                 'content')
                     },
-                    beforeSend: function(request) {
+                    beforeSend: () => {
                         $.blockUI({
                             css: {
                                 backgroundColor: 'transparent',
@@ -1450,7 +1470,7 @@ $(document).ready(function() {
                             }
                         });
                     },
-                    success: function(response) {
+                    success: (response) => {
                         $.unblockUI();
                         if (response.status == "VALID") {
                             bell();
@@ -1459,7 +1479,7 @@ $(document).ready(function() {
                                 type: "success",
                                 text: response.message,
                                 confirmButtonColor: "#01c853",
-                            }, function(isConfirm) {
+                            }, () => {
                                 invoice('/print_invoice/'+$('input[type=hidden]').val(),
                                     'Print Invoice');
                                 history.go(0);
@@ -1474,6 +1494,16 @@ $(document).ready(function() {
                             });
                             return false;
                         }
+                    },
+                    error: () => {
+                        sword();
+                        swal({
+                            title: "Internal Server Error",
+                            type: "error",
+                            text: "Terdapat kesalahan program pada action ini",
+                            confirmButtonColor: "#01c853",
+                        });
+                        return false;
                     }
                 });
             } else {
@@ -1483,29 +1513,19 @@ $(document).ready(function() {
         return false;
     });
 
-    function invoice(url, title) {
+    const invoice = (url, title) => {
         popupCenter(url, title, 340, 550);
     }
 
-    function popupCenter(url, title, w, h) {
-        const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window
-            .screenX;
-        const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window
-            .screenY;
-        const width = window.innerWidth ? window.innerWidth : document.documentElement
-            .clientWidth ?
-            document
-            .documentElement.clientWidth : screen.width;
-        const height = window.innerHeight ? window.innerHeight : document.documentElement
-            .clientHeight ?
-            document
-            .documentElement.clientHeight : screen.height;
+    const popupCenter = (url, title, w, h) => {
+        const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+        const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+        const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+        const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
         const systemZoom = width / window.screen.availWidth;
         const left = (width - w) / 2 / systemZoom + dualScreenLeft
         const top = (height - h) / 2 / systemZoom + dualScreenTop
-        const newWindow = window.open(url, title,
-            `scrollbars=yes,width  = ${w / systemZoom}, height = ${h / systemZoom}, top    = ${top}, left   = ${left}`
-        );
+        const newWindow = window.open(url, title, `scrollbars=yes,width  = ${w / systemZoom}, height = ${h / systemZoom}, top    = ${top}, left   = ${left}`);
         if (window.focus) newWindow.focus();
     }
 });

@@ -165,7 +165,7 @@
                                                 @enderror
                                             </div>
                                             <div class="form-group">
-                                                <a class="capitalize-font txt-primary block mb-10 pull-right font-12" href="{{ route('forgot-password') }}">Lupa Password?</a>
+                                                {{-- <a class="capitalize-font txt-primary block mb-10 pull-right font-12" href="{{ route('forgot-password') }}">Lupa Password?</a> --}}
                                                 <label class="pull-left control-label mb-10" for="password">Password</label>
                                                 <input type="password" name="password" class="form-control" id="password" placeholder="Masukan password" required>
                                                 <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye fa-eye-slash" id="eye"></i>
@@ -191,14 +191,14 @@
     <script defer src="{{ asset('dist/js/jquery.slimscroll.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/toastr.js') }}"></script>
-    {{-- <script defer src="{{ asset('/sw.js') }}"></script>
+    <script defer src="{{ asset('/sw.js') }}"></script>
     <script>
         if (!navigator.serviceWorker.controller) {
             navigator.serviceWorker.register("/sw.js").then(function (reg) {
                 console.log("Service worker has been registered for scope: " + reg.scope);
             });
         }
-    </script> --}}
+    </script>
     <script>
         const passwordField = document.querySelector("#password");
         const eyeIcon = document.querySelector("#eye");

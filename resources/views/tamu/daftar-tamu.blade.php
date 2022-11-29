@@ -1,6 +1,6 @@
 @extends('layouts.main', ['title' => 'TGCC | Daftar Tamu'])
 @section('content')
-    <div class="page-wrapper">
+    <div class="page-wrapper intro-foo">
         <div class="container-fluid">
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
@@ -15,12 +15,12 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="panel panel-default card-view">
+                    <div class="panel panel-default card-view" data-title="Halaman Daftar Tamu" data-intro="Halaman ini memberikan informasi data tamu yang sudah terdaftar sebagai membership.">
                         <div class="panel-heading">
-                            <div class="pull-left">
-                                <a href="{{ route('tambah-tamu') }}" class="btn btn-xs btn-success" style="margin-bottom: 20px;">Tambah Tamu</a>
+                            <div class="pull-left" data-title="Tambah Tamu" data-intro="fitur tambah tamu untuk menambah data membership baru di tgcc.">
+                                <a href="{{ route('tambah-tamu') }}" class="btn btn-xs btn-success" style="margin-bottom: 0px;">Tambah Tamu</a>
                             </div>
-                            <div class="pull-right">
+                            <div class="pull-right" data-title="Filter Satuan" data-intro="panel ini merupakan panel informasi untuk filter data membership berdasarkan kategori, jenis member dan satuan. terdapat panel download rekap data membership dengan format exel" >
                                 <div class="d-flex">
                                     <span class="mr-5" style="right: 420px; top: 27px; position: responsive; margin-top: 4px;">Filter satuan</span>
                                     <div class="form-group mr-5">
@@ -58,7 +58,7 @@
                         </div>
                         <div class="clearfix"></div>
                         <div class="panel-wrapper collapse in">
-                            <div class="panel-body">
+                            <div class="panel-body" data-title="Tabel Daftar Tamu" data-intro="Panel ini menampilkan data membership tgcc. Data ditampilakn dalam bentuk tabel diurut berdasarkan daftar tamu yang paling baru dibuat. terdapat opsi untuk detail tamu, edit data tamu, tambah tamu dan hapus tamu.">
                                 <div style="position: absolute; padding-top: 5px">
                                     <h6 class="panel-title txt-dark mr-5" style="margin-top: 4px;">Daftar Tamu</h6>
                                 </div>
@@ -85,10 +85,20 @@
                     </div>
                 </div>
             </div>
+            <button id="setting_panel_btn" data-toggle="tooltip" title="Panduan" data-placement="left" class="btn btn-success btn-circle setting-panel-btn shadow-2dp"><i class="zmdi zmdi-settings"></i></button>
             @include('layouts.footer')
         </div>
     </div>
 @endsection
 @push('scripts')
     <script defer src="{{ asset('dist/asset_offline/list_member.js') }}"></script>
-@endpush
+    <script>
+        $(document).on('click', '#setting_panel_btn', function() {
+            introJs('.intro-foo').setOptions({
+                'showProgress': true,
+                'tooltipPosition': 'right'
+            }).start();
+        });
+    </script>
+
+    @endpush

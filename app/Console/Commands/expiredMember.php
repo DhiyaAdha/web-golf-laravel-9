@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Models\Visitor;
-use Illuminate\Support\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
 
 class expiredMember extends Command
 {
@@ -31,7 +31,7 @@ class expiredMember extends Command
     {
         parent::__construct();
     }
-    
+
     /**
      * Execute the console command.
      *
@@ -40,6 +40,7 @@ class expiredMember extends Command
     public function handle()
     {
         $user = Visitor::where('expired_date', '<=', Carbon::now())->update(['status' => 'inactive']);
+
         return $user;
     }
 }

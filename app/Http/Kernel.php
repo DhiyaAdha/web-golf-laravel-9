@@ -67,6 +67,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'ceklevel' => \App\Http\Middleware\CekLevel::class,
         'prevent-back-history' => \App\Http\Middleware\PreventBackHistory::class,
-        'htmlMinifier' => \App\Http\Middleware\HtmlMinifier::class
+        'htmlMinifier' => \App\Http\Middleware\HtmlMinifier::class,
     ];
 }

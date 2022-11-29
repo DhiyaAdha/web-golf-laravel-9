@@ -2,16 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Mail\Transport\LogTransport;
-use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Visitor extends Model
 {
-    use Cachable, HasFactory;
+    use HasFactory;
 
     protected $table = 'visitors';
+
     protected $dates = ['deleted_at'];
 
     // protected $guarded = [];
@@ -33,34 +32,33 @@ class Visitor extends Model
         'updated_at',
     ];
 
-    
-
     public function logtransaction()
     {
         return $this->hasMany(LogTransaction::class);
     }
-    
+
     // deposit
     public function deposit()
     {
         return $this->hasMany(Deposit::class);
     }
-    
+
     public function repordtdeposit()
     {
         return $this->hasMany(ReportDeposit::class);
     }
-    
+
     // limit
     public function loglimit()
     {
         return $this->hasMany(LogLimit::class);
     }
+
     public function ReportLimit()
     {
         return $this->hasMany(ReportLimit::class);
-    }  
-    
+    }
+
     public function transaction($visitorId)
     {
         return LogTransaction::where('visitor_id', $visitorId)
@@ -77,5 +75,4 @@ class Visitor extends Model
     {
         return $this->hasOne(LogTransaction::class, 'visitor_id');
     }
-    
 }

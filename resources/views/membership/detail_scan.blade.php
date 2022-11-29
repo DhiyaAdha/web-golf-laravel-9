@@ -1,8 +1,8 @@
 @extends('layouts.main', ['title' => 'TGCC | Detail Scan'])
 @section('content')
-    <div class="page-wrapper">
-        <div class="container-fluid">
-            <div class="row heading-bg">
+    <div class="page-wrapper intro-foo">
+        <div class="container-fluid" data-title="Halaman Detail Scan" data-intro="Halaman ini memberikan informasi data membership yang sudah melakukan veirivikasi dengan scan atau kode member.">
+            <div class="row heading-bg" >
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h5 class="txt-dark">Scan tamu</h5>
                 </div>
@@ -16,7 +16,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-7 col-md-7">
-                    <div class="panel panel-default panel-dropdown card-view">
+                    <div class="panel panel-default panel-dropdown card-view" data-title="Data Tamu" data-intro="Panel ini memberikan informasi detail membership tgcc, menampilkan nama lengkap, jenis kelamin, email, kode membership, perusahaan, jabatan, jenis member dan kategori member.">
                         <div class="panel-heading">
                             <div class="pull-left">
                                 <h6 class="panel-title txt-dark">Data Tamu</h6>
@@ -96,7 +96,7 @@
                     </div>
                 </div>
                 <div class="col-lg-5 col-md-5">
-                    <div class="panel panel-default panel-dropdown card-view" style="height: 379px;">
+                    <div class="panel panel-default panel-dropdown card-view" style="height: 379px;" data-title="Sisa Limit & Saldo" data-intro="Panel ini memberikan informasi detail limit dan saldo membership tgcc, tamu bisa melakukan tambah deposit atau pilih paket bermain. ">
                         <div class="panel-heading d-flex justify-content-start k">
                             <div class="pull-left">
                                 <h6 class="panel-title txt-dark">Sisa Limit dan Saldo
@@ -198,6 +198,7 @@
                     </div>
                 </div>
             </div>
+            <button id="setting_panel_btn" data-toggle="tooltip" title="Panduan" data-placement="left" class="btn btn-success btn-circle setting-panel-btn shadow-2dp"><i class="zmdi zmdi-settings"></i></button>
             @include('layouts.footer')
         </div>
     </div>
@@ -229,6 +230,14 @@
             });
             sword();
             return false;
+        });
+    </script>
+    <script>
+         $(document).on('click', '#setting_panel_btn', function() {
+            introJs('.intro-foo').setOptions({
+                'showProgress': true,
+                'tooltipPosition': 'right'
+            }).start();
         });
     </script>
 @endpush
