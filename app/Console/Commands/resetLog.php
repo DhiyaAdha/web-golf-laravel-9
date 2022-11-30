@@ -2,25 +2,25 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Visitor;
-use Illuminate\Console\Command;
+use App\Models\LogAdmin;
 use Illuminate\Support\Carbon;
+use Illuminate\Console\Command;
 
-class expiredMember extends Command
+class resetLog extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:member';
+    protected $signature = 'command:reset_log';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Reset log activity admin setiap setahun sekali';
 
     /**
      * Create a new command instance.
@@ -39,7 +39,6 @@ class expiredMember extends Command
      */
     public function handle()
     {
-        $user = Visitor::where('expired_date', '<=', Carbon::now())->update(['status' => 'inactive']);
-        return $user;
+        return LogAdmin::whereYear('created_at', '<=', Carbon::now()->year)->delete();
     }
 }

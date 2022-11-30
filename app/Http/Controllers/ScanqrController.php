@@ -108,16 +108,13 @@ class ScanqrController extends Controller
         try {
             if (is_null($phone_visitor)) {
                 $this->setResponse('INVALID', 'Kode Member Tidak Ditemukan!');
-
                 return response()->json($this->getResponse());
             } else {
                 if($phone_visitor->expired_date <= Carbon::now()) {
                     $this->setResponse('INVALID', 'Masa berlaku member habis');
-
                     return response()->json($this->getResponse());
                 } elseif($phone_visitor->status == 'inactive') {
                     $this->setResponse('INVALID', 'Member tidak aktif');
-
                     return response()->json($this->getResponse());
                 } else {
                     try {
@@ -125,7 +122,6 @@ class ScanqrController extends Controller
                             'name' => $phone_visitor->name,
                             'unique_qr' => $phone_visitor->unique_qr,
                         ]);
-
                         return response()->json($this->getResponse());
                     } catch (\Throwable $th) {
                         return response()->json($this->getResponse());
