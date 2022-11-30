@@ -93,7 +93,9 @@
                                             <div class="text-center">
                                                 <button type="button" class="btn btn-sm download-kartu-tamu"
                                                     style="margin-top: 200px;"><i class="fa fa-download"></i> <b>Download Kartu
-                                                        Member</b></button>
+                                                        Member</b>
+                                                </button>
+                                                <a href="{{ route('printkartu') }}">DOWNLOAD KARTU MEMBER</a>
                                             </div>
                                         </div>
                                     </div>
