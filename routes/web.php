@@ -70,6 +70,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
 });
 
 Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
+    Route::get('/verification/identity', [ScanqrController::class, 'checkNIK'])->name('visitor.nik');
     Route::get('/visitor/qrcode', [ScanqrController::class, 'checkQRCode'])->name('visitor.qrcode');
     Route::get('/visitor/phone', [ScanqrController::class, 'checkNoHp'])->name('visitor.phone');
     Route::post('update/deposit/{id}', [ScanqrController::class, 'update_deposit'])->name('update.deposit')->middleware('signed');

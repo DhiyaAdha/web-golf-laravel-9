@@ -93,8 +93,7 @@ class ScanqrController extends Controller
                             'type' => 'CREATE',
                             'activities' => 'Verifikasi Qr Code member <b>'.$get_visitor->name.'</b>',
                         ]);
-
-                        $this->setResponse('VALID', 'Valid QR code', [
+                        $this->setResponse('VALID', 'Valid QR Code', [
                             'name' => $get_visitor->name,
                             'detail_scan' => URL::signedRoute('detail-scan', ['e' => $get_visitor->code_member]),
                         ]);
@@ -102,6 +101,30 @@ class ScanqrController extends Controller
                     } catch (\Throwable $th) {
                         return response()->json($this->getResponse());
                     }
+                }
+            }
+        } catch (\Throwable $th) {
+            return response()->json($this->getResponse());
+        }
+    }
+
+
+    public function checkNIK(Request $request)
+    {
+        $get_visitor = Visitor::where('nik', $request->get('nik'))->first();
+        try {
+            if($get_visitor == null) {
+                $this->setResponse('INVALID', 'NIK tidak ditemukan!');
+                return response()->json($this->getResponse());
+            } else {
+                try {
+                    $this->setResponse('VALID', 'Verifikasi Valid', [
+                        'name' => $get_visitor->name,
+                        'detail_scan' => URL::signedRoute('detail-scan', ['e' => $get_visitor->code_member]),
+                    ]);
+                    return response()->json($this->getResponse(), 200);
+                } catch (\Throwable $th) {
+                    return response()->json($this->getResponse());
                 }
             }
         } catch (\Throwable $th) {
