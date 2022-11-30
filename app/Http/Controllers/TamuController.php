@@ -130,9 +130,10 @@ class TamuController extends Controller
             $request,
             [
                 'name' => 'required|unique:visitors,name|unique:users,name',
+                'phone' => 'required|unique:visitors,phone|unique:users,phone',
                 'address' => 'required',
                 'gender' => 'required',
-                'email' => 'required|email|unique:visitors,email|unique:users,email',
+                'email' => 'required|email|regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/|unique:visitors,email|unique:users,email',
                 'company' => 'required',
                 'position' => 'required',
                 'tipe_member' => 'required',
@@ -142,12 +143,15 @@ class TamuController extends Controller
             [
                 'name.required' => 'Nama Lengkap masih kosong.',
                 'name.unique' => 'Nama Lengkap sudah ada',
+                'phone.required' => 'Nomor Hp masih kosong.',
+                'phone.unique' => 'Nomor Hp sudah ada',
                 'address.required' => 'Alamat masih kosong.',
                 'address.unique' => 'Alamat sudah ada',
                 'gender.required' => 'Jenis Kelamin masih kosong.',
                 'gender.unique' => 'Jenis Kelamin sudah ada',
                 'email.required' => 'Email masih kosong.',
                 'email.unique' => 'Email sudah ada',
+                'email.regex' => 'Email tidak valid',
                 'company.required' => 'Perusahaan masih kosong.',
                 'company.unique' => 'Perusahaan sudah ada',
                 'position.required' => 'Jabatan masih kosong.',
@@ -164,7 +168,8 @@ class TamuController extends Controller
             'address' => $request->address,
             'gender' => $request->gender,
             'email' => $request->email,
-            'phone' => date('YmdHis'),
+            'phone' => $request->phone,
+            'code_member' => date('YmdHis'),
             'company' => $request->company,
             'position' => $request->position,
             'tipe_member' => $request->tipe_member,
@@ -175,7 +180,7 @@ class TamuController extends Controller
         ]);
 
         $get_visitor = Visitor::where('id', $visitors->id)->latest()->first();
-        $link_qr = URL::signedRoute('detail-scan', ['qr' => $token, 'e' => $visitors->id]);
+        $link_qr = URL::Route('detail-scan', ['code' => $visitors->code_member, 'e' => $visitors->id]);
         $get_visitor->unique_qr = $link_qr;
         $get_visitor->save();
 
@@ -248,9 +253,10 @@ class TamuController extends Controller
             $request,
             [
                 'name' => 'required|unique:users,name',
+                'phone' => 'required|unique:users,phone',
                 'address' => 'required',
                 'gender' => 'required',
-                'email' => 'required|email|unique:users,email',
+                'email' => 'required|email|regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/|unique:users,email',
                 'company' => 'required',
                 'position' => 'required',
                 'tipe_member' => 'required',
@@ -260,9 +266,12 @@ class TamuController extends Controller
             [
                 'name.required' => 'Nama Tamu masih kosong.',
                 'name.unique' => 'Nama Lengkap sudah ada',
+                'phone.required' => 'Nomer Hp masih kosong.',
+                'phone.unique' => 'Nomer Hp sudah ada',
                 'address.required' => 'Alamat Tamu masih kosong.',
                 'email.required' => 'Email Tamu masih kosong.',
                 'email.unique' => 'Email sudah ada',
+                'email.regex' => 'Email tidak valid',
                 'company.required' => 'Nama perusahaan masih kosong.',
                 'position.required' => 'Posisi masih kosong.',
                 'category.required' => 'Kategori masih kosong.',
@@ -272,6 +281,7 @@ class TamuController extends Controller
         $visitor = Visitor::findOrFail($id);
 
         $visitor->name = $request->name;
+        $visitor->phone = $request->phone;
         $visitor->address = $request->address;
         $visitor->email = $request->email;
         $visitor->company = $request->company;

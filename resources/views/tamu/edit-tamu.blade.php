@@ -63,6 +63,13 @@
                                                 </div>
                                             @enderror
                                         </div>
+                                        <div class="form-group @error('phone') has-error @enderror">
+                                            <label  class="control-label mb-10" for="">Nomer Hp</label>
+                                            <input type="text" value="{{ $visitor->phone }}" name="phone" class="form-control" id="phone" size="50px" placeholder="Masukan Nomer Hp" autofocus>
+                                            @error('phone')
+                                                <div class="text-danger"> {{ $message }}</div>
+                                            @enderror
+                                        </div>
                                         <div class="form-group @error('company') has-error @enderror">
                                             <label class="control-label mb-10" for="">Perusahaan</label>
                                             <input type="text" name="company" value="{{ $visitor->company }}" class="form-control" id="company" size="50px" placeholder="Masukan Nama Perusahaan" autofocus>

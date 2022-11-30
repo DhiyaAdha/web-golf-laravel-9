@@ -107,7 +107,8 @@ class ScanqrController extends Controller
         $phone_visitor = Visitor::where('phone', $request->get('phone'))->first();
         try {
             if (is_null($phone_visitor)) {
-                $this->setResponse('INVALID', 'Kode Member Tidak Ditemukan!');
+                $this->setResponse('INVALID', 'Nomor Hp Tidak Ditemukan!');
+
                 return response()->json($this->getResponse());
             } else {
                 if($phone_visitor->expired_date <= Carbon::now()) {
@@ -118,7 +119,7 @@ class ScanqrController extends Controller
                     return response()->json($this->getResponse());
                 } else {
                     try {
-                        $this->setResponse('VALID', 'Valid Kode Member', [
+                        $this->setResponse('VALID', 'Valid Nomor Hp', [
                             'name' => $phone_visitor->name,
                             'unique_qr' => $phone_visitor->unique_qr,
                         ]);

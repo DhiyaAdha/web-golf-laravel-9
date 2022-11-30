@@ -52,10 +52,18 @@
                                     </div>
                                     <div class="mb-15 d-flex">
                                         <div class="col-medium-3">
-                                            <span class="txt-muted">Kode Member</span>
+                                            <span class="txt-muted">Nomor Hp</span>
                                         </div>
                                         <div class="col-lg-12 col-md-12">
                                             <span>{{ $visitor->phone }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="mb-15 d-flex">
+                                        <div class="col-medium-3">
+                                            <span class="txt-muted">Kode Member</span>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <span>{{ $visitor->code_member }}</span>
                                         </div>
                                     </div>
                                     <div class="mb-15 d-flex">
@@ -96,7 +104,7 @@
                     </div>
                 </div>
                 <div class="col-lg-5 col-md-5">
-                    <div class="panel panel-default panel-dropdown card-view" style="height: 379px;" data-title="Sisa Limit & Saldo" data-intro="Panel ini memberikan informasi detail limit dan saldo membership tgcc, tamu bisa melakukan tambah deposit atau pilih paket bermain. ">
+                    <div class="panel panel-default panel-dropdown card-view" style="height: 415px;" data-title="Sisa Limit & Saldo" data-intro="Panel ini memberikan informasi detail limit dan saldo membership tgcc, tamu bisa melakukan tambah deposit atau pilih paket bermain. ">
                         <div class="panel-heading d-flex justify-content-start k">
                             <div class="pull-left">
                                 <h6 class="panel-title txt-dark">Sisa Limit dan Saldo
@@ -148,7 +156,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if($visitor->expired_date <= \Carbon\Carbon::now())
+                                <div class="mt-40">
+                                    @if($visitor->expired_date <= \Carbon\Carbon::now())
                                     <a href="javascript:void(0)" class="btn btn-block btn-outline-success btn-sm" id="expired_date">Deposit</a>
                                     <a href="javascript:void(0)" class="btn btn-block btn-success btn-sm" id="expired_date">Pilih paket bermain</a>
                                 @elseif ($visitor->status == 'inactive')
@@ -158,6 +167,8 @@
                                     <a href="javascript:void(0)" class="btn btn-block btn-outline-success btn-sm" data-toggle="modal" data-target="#myModal">Deposit</a>
                                     <a href="{{ URL::signedRoute('order.cart', ['id' => $visitor->id]) }}" class="btn btn-block btn-success btn-sm">Pilih paket bermain</a>
                                 @endif
+                                </div>
+                                
                             </div>
                             <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">

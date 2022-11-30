@@ -112,8 +112,12 @@
                                         <span>{{ $visitor->email }}</span>
                                     </div>
                                     <div class="mb-15 d-flex flex-column">
-                                        <span class="txt-muted">Kode Member</span>
+                                        <span class="txt-muted">Nomor Hp</span>
                                         <span>{{ $visitor->phone }}</span>
+                                    </div>
+                                    <div class="mb-15 d-flex flex-column">
+                                        <span class="txt-muted">Kode Member</span>
+                                        <span>{{ $visitor->code_member }}</span>
                                     </div>
                                     <div class="mb-15 d-flex flex-column">
                                         <span class="txt-muted">Jenis Kelamin</span>
@@ -134,9 +138,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="panel panel-default card-view limit" style="height: 209.4px;" data-title="Limit Tamu"
-                        data-intro="Panel ini memberikan informasi Kuota Limit membership yang tersisa, setiap membership mendapatkan kuota sesuai tipe member. kuota untuk member VIP 10 kuota dan MEMBER 4 kuota">
+                <div class="col-lg-3" >
+                    <div class="panel panel-default card-view limit" style="height: 238px;" data-title="Limit Tamu" data-intro="Panel ini memberikan informasi Kuota Limit membership yang tersisa, setiap membership mendapatkan kuota sesuai tipe member. kuota untuk member VIP 10 kuota dan MEMBER 4 kuota">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Limit</h6>
                             <div class="clearfix"></div>
@@ -148,8 +151,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default card-view limit" style="height: 209.4px;" data-title="Kupon Tamu"
-                        data-intro="Panel ini memberikan informasi Kuota Kupon membership yang tersisa, kuota kupon hanya bisa didapat ketika membership menang perlombaan yang diselenggarakan tgcc.">
+                    <div class="panel panel-default card-view limit" style="height: 238px;" data-title="Kupon Tamu" data-intro="Panel ini memberikan informasi Kuota Kupon membership yang tersisa, kuota kupon hanya bisa didapat ketika membership menang perlombaan yang diselenggarakan tgcc.">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Kupon</h6>
                             <div class="clearfix"></div>
@@ -163,8 +165,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    <div class="panel panel-default card-view limit" style="height: 209.4px;" data-title="Saldo"
-                        data-intro="Panel ini memberikan informasi Saldo tamu yang tersisa. Saldo bisa diisi melalui tambah deposit">
+                    <div class="panel panel-default card-view limit" style="height: 238px;" data-title="Saldo" data-intro="Panel ini memberikan informasi Saldo tamu yang tersisa. Saldo bisa diisi melalui tambah deposit">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Saldo</h6>
                             <div class="clearfix"></div>
@@ -176,8 +177,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default card-view b" style="height: 209.4px;" data-title="Barcode"
-                        data-intro="Panel ini memberikan informasi Barcode yang dimiliki setiap membership di tgcc">
+                    <div class="panel panel-default card-view b" style="height: 238px;" data-title="Barcode" data-intro="Panel ini memberikan informasi Barcode yang dimiliki setiap membership di tgcc">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Qr Code</h6>
                             <div class="clearfix"></div>

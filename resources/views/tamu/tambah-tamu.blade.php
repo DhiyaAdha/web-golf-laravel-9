@@ -61,6 +61,13 @@
                                         @enderror
                                     </div>
                             </div>
+                            <div class="form-group @error('phone') has-error @enderror">
+                                <label  class="control-label mb-10" for="">Nomor Hp</label>
+                                <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <=57" name="phone" class="form-control" id="phone" size="50px" placeholder="Masukan Nomor Hp" value="{{ old('phone') }}">
+                                @error('phone')
+                                    <div class="text-danger"> {{ $message }}</div>
+                                @enderror
+                            </div>
                             <div class="form-group @error('company') has-error @enderror">
                                 <label class="control-label mb-10" for="">Perusahaan</label>
                                 <input type="text" name="company" class="form-control" id="company" size="50px" value="{{ old('company') }}" placeholder="Masukan Nama Perusahaan">
