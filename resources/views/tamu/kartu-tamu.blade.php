@@ -165,11 +165,11 @@
                     </div>
                     <div class="panel panel-default card-view b" style="height: 209.4px;" data-title="Barcode" data-intro="Panel ini memberikan informasi Barcode yang dimiliki setiap membership di tgcc">
                         <div class="panel-heading">
-                            <h6 class="panel-title text-center">Barcode</h6>
+                            <h6 class="panel-title text-center">Qr Code</h6>
                             <div class="clearfix"></div>
                         </div>
                         <div class="d-flex justify-content-center p">
-                            {{ QrCode::size(100)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
+                            {{ QrCode::size(120)->generate($visitor->unique_qr) }}
                         </div>
                     </div>
                 </div>
