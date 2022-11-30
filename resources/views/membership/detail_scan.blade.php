@@ -108,7 +108,6 @@
                         <div class="panel-heading d-flex justify-content-start k">
                             <div class="pull-left">
                                 <h6 class="panel-title txt-dark">Sisa Limit dan Saldo
-                                    <strong>{{ $visitor->name }}</strong>
                                 </h6>
                             </div>
                             <div class="clearfix"></div>
