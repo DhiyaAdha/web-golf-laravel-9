@@ -70,7 +70,7 @@
                                                             <div class="codemember">
                                                                 <h5
                                                                     style="text-transform: uppercase; font-size:8pt; line-height:400%; letter-spacing:1px;">
-                                                                    {{ $visitor->phone }}</h5>
+                                                                    {{ $visitor->code_member }}</h5>
                                                             </div>
 
                                                             <div class="datetime ">
@@ -84,7 +84,7 @@
                                                             <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/back-vip-card.svg') : asset('dist/img/kartutamu/back-member-card.svg') }}"
                                                                 alt="{{ $visitor->tipe_member }}">
                                                             <div class="qr-code">
-                                                                {{ QrCode::size(80)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
+                                                                {{ QrCode::size(80)->generate($visitor->code_member) }}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -183,7 +183,7 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="d-flex justify-content-center p">
-                            {{ QrCode::size(120)->generate($visitor->unique_qr) }}
+                            {{ QrCode::size(140)->generate($visitor->code_member) }}
                         </div>
                     </div>
                 </div>

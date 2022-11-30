@@ -51,7 +51,7 @@
                 <li>
                     <a class="{{ Request::is('scan-tamu') ? 'active-page' : '' }}" href="{{ route('scan-tamu') }}">
                         <div class="pull-left">
-                            <span class="right-nav-text">Scan QR Code</span>
+                            <span class="right-nav-text">Verifikasi Scan</span>
                         </div>
                         <div class="clearfix"></div>
                     </a>

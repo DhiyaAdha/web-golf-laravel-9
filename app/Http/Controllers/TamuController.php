@@ -130,7 +130,8 @@ class TamuController extends Controller
             $request,
             [
                 'name' => 'required|unique:visitors,name|unique:users,name',
-                'phone' => 'required|unique:visitors,phone|unique:users,phone',
+                'nik' => 'required|unique:visitors,nik|numeric|digits_between:16,16',
+                'phone' => 'required|unique:visitors,phone|numeric|unique:users,phone',
                 'address' => 'required',
                 'gender' => 'required',
                 'email' => 'required|email|regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/|unique:visitors,email|unique:users,email',
@@ -143,8 +144,13 @@ class TamuController extends Controller
             [
                 'name.required' => 'Nama Lengkap masih kosong.',
                 'name.unique' => 'Nama Lengkap sudah ada',
+                'nik.required' => 'NIK masih kosong.',
+                'nik.unique' => 'NIK sudah ada',
+                'nik.numeric' => 'NIK hanya boleh angka',
+                'nik.digits_between' => 'NIK maksimal 16 digit',
                 'phone.required' => 'Nomor Hp masih kosong.',
                 'phone.unique' => 'Nomor Hp sudah ada',
+                'phone.numeric' => 'Nomor Hp hanya boleh angka',
                 'address.required' => 'Alamat masih kosong.',
                 'address.unique' => 'Alamat sudah ada',
                 'gender.required' => 'Jenis Kelamin masih kosong.',
@@ -160,11 +166,9 @@ class TamuController extends Controller
                 'status.required' => 'Status member masih kosong',
             ]
         );
-        $random = Str::random(15);
-        $random_unique = Carbon::now()->format('Y-m');
-        $token = $random_unique.'-'.$random;
         $visitors = Visitor::create([
             'name' => $request->name,
+            'nik' => $request->nik,
             'address' => $request->address,
             'gender' => $request->gender,
             'email' => $request->email,
@@ -232,8 +236,6 @@ class TamuController extends Controller
         ]);
 
         $data = $request->all();
-        // dd($data);
-
         dispatch(new SendMailJob($data));
 
         LogAdmin::create([
@@ -242,7 +244,6 @@ class TamuController extends Controller
             'activities' => 'Menambah member <b>'.$visitors->name.'</b>',
         ]);
         $encrypt = Crypt::encrypt($visitors->id);
-
         return redirect('/tambah-deposit/'.$encrypt)->with('success', 'Berhasil menambah tamu');
     }
     /* end insert tamu */
@@ -252,11 +253,12 @@ class TamuController extends Controller
         $this->validate(
             $request,
             [
-                'name' => 'required|unique:users,name',
-                'phone' => 'required|unique:users,phone',
+                'name' => 'required|unique:users,name|unique:visitors,name,'.$id,
+                'nik' => 'required|numeric|digits_between:16,16|unique:visitors,nik,'.$id,
+                'phone' => 'required|numeric|unique:visitors,phone,'.$id,
                 'address' => 'required',
                 'gender' => 'required',
-                'email' => 'required|email|regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/|unique:users,email',
+                'email' => 'required|email|regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/|unique:users,email|unique:visitors,email,'.$id,
                 'company' => 'required',
                 'position' => 'required',
                 'tipe_member' => 'required',
@@ -266,8 +268,13 @@ class TamuController extends Controller
             [
                 'name.required' => 'Nama Tamu masih kosong.',
                 'name.unique' => 'Nama Lengkap sudah ada',
+                'nik.required' => 'NIK masih kosong.',
+                'nik.unique' => 'NIK sudah ada',
+                'nik.numeric' => 'NIK hanya boleh angka',
+                'nik.digits_between' => 'NIK maksimal 16 digit',
                 'phone.required' => 'Nomer Hp masih kosong.',
                 'phone.unique' => 'Nomer Hp sudah ada',
+                'phone.numeric' => 'Nomor Hp hanya boleh angka',
                 'address.required' => 'Alamat Tamu masih kosong.',
                 'email.required' => 'Email Tamu masih kosong.',
                 'email.unique' => 'Email sudah ada',
@@ -281,6 +288,7 @@ class TamuController extends Controller
         $visitor = Visitor::findOrFail($id);
 
         $visitor->name = $request->name;
+        $visitor->name = $request->nik;
         $visitor->phone = $request->phone;
         $visitor->address = $request->address;
         $visitor->email = $request->email;
@@ -457,7 +465,7 @@ class TamuController extends Controller
                     }
                 )->whereMonth('created_at', strlen($value[0]) == 1 ? '0'.$value[0] : $value[0])->whereYear('created_at', $value[1])->count();
             }
-
+            
             return view('tamu.kartu-tamu', $data);
         } catch (\Throwable $th) {
             return redirect()->route('daftar-tamu');
