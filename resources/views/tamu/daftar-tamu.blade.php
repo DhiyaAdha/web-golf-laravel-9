@@ -20,40 +20,42 @@
                             <div class="pull-left" data-title="Tambah Tamu" data-intro="fitur tambah tamu untuk menambah data membership baru di tgcc.">
                                 <a href="{{ route('tambah-tamu') }}" class="btn btn-xs btn-success" style="margin-bottom: 0px;">Tambah Tamu</a>
                             </div>
-                            <div class="pull-right" data-title="Filter Satuan" data-intro="panel ini merupakan panel informasi untuk filter data membership berdasarkan kategori, jenis member dan satuan. terdapat panel download rekap data membership dengan format exel" >
-                                <div class="d-flex">
-                                    <span class="mr-5" style="right: 420px; top: 27px; position: responsive; margin-top: 4px;">Filter satuan</span>
-                                    <div class="form-group mr-5">
-                                        <select class="form-control" style="height: 32px" id="filter-data" name="category">
-                                            <option selected disabled>Kategori</option>
-                                            @foreach($category as $ct)
-                                                <option class="text-capitalize" value="{{ $ct }}">{{ $ct }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>	
-                                    <div class="form-group mr-5">
-                                        <select class="form-control" style="height: 32px" id="filter-data" name="type">
-                                            <option selected disabled>Jenis member</option>
-                                            @foreach($types as $type)
-                                                <option class="text-capitalize" value="{{ $type }}">{{ $type == 'VIP' ? 'member' : 'VIP' }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>	
-                                    <div class="form-group mr-5">
-                                        <select class="form-control" style="height: 32px" id="filter-data" name="status">
-                                            <option selected disabled>Status</option>
-                                            @foreach($status as $st)
-                                                <option class="text-capitalize" value="{{ $st }}">{{ $st == 'active' ? 'aktif' : 'non aktif' }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>	
-                                    @if (auth()->user()->role_id == '2')
-                                    <a href="{{ url('export_excel_tamu') }}" target="_blank" name="excel" data-toggle="tooltip" data-placement="top" title="Download Excel">
-                                        <img src="dist/img/excel.svg" width="25px" height="25px">
-                                    </a>
-                                    @endif
+                            @if($ount_visitor != 0)
+                                <div class="pull-right" data-title="Filter Satuan" data-intro="panel ini merupakan panel informasi untuk filter data membership berdasarkan kategori, jenis member dan satuan. terdapat panel download rekap data membership dengan format exel" >
+                                    <div class="d-flex">
+                                        <span class="mr-5" style="right: 420px; top: 27px; position: responsive; margin-top: 4px;">Filter satuan</span>
+                                        <div class="form-group mr-5">
+                                            <select class="form-control" style="height: 32px" id="filter-data" name="category">
+                                                <option selected disabled>Kategori</option>
+                                                @foreach($category as $ct)
+                                                    <option class="text-capitalize" value="{{ $ct }}">{{ $ct }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>	
+                                        <div class="form-group mr-5">
+                                            <select class="form-control" style="height: 32px" id="filter-data" name="type">
+                                                <option selected disabled>Jenis member</option>
+                                                @foreach($types as $type)
+                                                    <option class="text-capitalize" value="{{ $type }}">{{ $type == 'VIP' ? 'member' : 'VIP' }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>	
+                                        <div class="form-group mr-5">
+                                            <select class="form-control" style="height: 32px" id="filter-data" name="status">
+                                                <option selected disabled>Status</option>
+                                                @foreach($status as $st)
+                                                    <option class="text-capitalize" value="{{ $st }}">{{ $st == 'active' ? 'aktif' : 'non aktif' }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>	
+                                        @if (auth()->user()->role_id == '2')
+                                        <a href="{{ url('export_excel_tamu') }}" target="_blank" name="excel" data-toggle="tooltip" data-placement="top" title="Download Excel">
+                                            <img src="dist/img/excel.svg" width="25px" height="25px">
+                                        </a>
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                             <div class="clearfix"></div>
                         </div>
                         <div class="clearfix"></div>

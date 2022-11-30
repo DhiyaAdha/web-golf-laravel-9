@@ -24,7 +24,6 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
-
             LogLimit::whereHas('visitor', function ($query) {
                 $query->where('tipe_member', 'VVIP');
             })->update(['quota' => 10]);
@@ -54,6 +53,7 @@ class Kernel extends ConsoleKernel
                 }
             }
         })->monthly();
+        $schedule->command('command:reset_log')->yearly();
         $schedule->command('command:member')->cron('59 23 * * *');
     }
 

@@ -50,6 +50,7 @@ class TamuController extends Controller
             ->orWhere('tipe_member', $filter)
             ->orWhere('status', $filter);
         })->orderBy('created_at', 'desc')->get();
+        $ount_visitor = count($visitor);
         $category = $visitor->sortBy('category')->pluck('category')->unique();
         $types = $visitor->sortBy('tipe_member')->pluck('tipe_member')->unique();
         $status = $visitor->sortBy('status')->pluck('status')->unique();
@@ -111,7 +112,6 @@ class TamuController extends Controller
                     return $button;
                 } else {
                     $button = '<div class="d-flex align-items-center"><a data-toggle="tooltip" data-placement="top" title="Detail Tamu" href="'.url('kartu-tamu/'.Crypt::encryptString($visitor->id)).'"><img src="'.url('dist/img/Card-Tamu.svg').'"></a>';
-
                     return $button;
                 }
             })->editColumn('expired_date', function ($data) {
@@ -120,8 +120,7 @@ class TamuController extends Controller
                 return '<a href="'.url('kartu-tamu/'.$data->id).'">'.$data->name.'</a>';
             })->rawColumns(['qrcode', 'action', 'tipe_member'])->make(true);
         }
-
-        return view('tamu.daftar-tamu', compact('visitor', 'category', 'types', 'status'));
+        return view('tamu.daftar-tamu', compact('visitor', 'category', 'types', 'status', 'ount_visitor'));
     }
 
     /* insert tamu(store) */
@@ -817,7 +816,6 @@ class TamuController extends Controller
             'activities' => 'Menghapus member <b>'.$visitor->name.'</b>',
         ]);
         $visitor->delete();
-
         return redirect()->route('daftar-tamu');
     }
 
