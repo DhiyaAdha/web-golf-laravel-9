@@ -1376,6 +1376,7 @@ $(document).ready(function() {
         let bayar_cash = $('.bayar-cash').val();
         let bayar_input = $('.bayar-input').val();
         let refund = $('#return').data('refund');
+        console.log(refund);
         let tg = window.location.href;
         tg = tg.split("?");
         tg = tg[0];

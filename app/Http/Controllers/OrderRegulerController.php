@@ -53,7 +53,7 @@ class OrderRegulerController extends Controller
         $additional = Package::where('category', 'additional')->where('status', 0)->get();
         $others = Package::where('category', 'others')->where('status', 0)->get();
         $items = \Cart::session(auth()->id())->getContent();
-        // dd($items);
+
         if (\Cart::isEmpty()) {
             $cart_data = [];
         } else {
@@ -131,7 +131,6 @@ class OrderRegulerController extends Controller
                 'attributes' => [
                     'created_at' => date('Y-m-d H:i:s'),
                 ],
-
             ]);
 
             $cart = \Cart::session(auth()->id())->getContent();
@@ -168,7 +167,6 @@ class OrderRegulerController extends Controller
                 'status' => 'VALID',
             ], 200);
         }
-
         return back();
     }
 
@@ -254,7 +252,6 @@ class OrderRegulerController extends Controller
     public function clear_cart()
     {
         \Cart::session(auth()->id())->clear();
-
         return redirect()->back();
     }
 
