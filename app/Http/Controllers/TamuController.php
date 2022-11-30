@@ -163,8 +163,7 @@ class TamuController extends Controller
         );
         $random = Str::random(15);
         $random_unique = Carbon::now()->format('Y-m');
-        $code = date('YmdHis');
-        $token = $random_unique.'-'.$code;
+        $token = $random_unique.'-'.$random;
         $visitors = Visitor::create([
             'name' => $request->name,
             'address' => $request->address,
@@ -182,7 +181,7 @@ class TamuController extends Controller
         ]);
 
         $get_visitor = Visitor::where('id', $visitors->id)->latest()->first();
-        $link_qr = URL::signedRoute('detail-scan', ['e' => $visitors->id]);
+        $link_qr = URL::Route('detail-scan', ['code' => $visitors->code_member, 'e' => $visitors->id]);
         $get_visitor->unique_qr = $link_qr;
         $get_visitor->save();
 
