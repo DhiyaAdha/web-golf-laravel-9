@@ -60,7 +60,7 @@
                                                             </div>
                                                             <div class="identity">
                                                                 <h6
-                                                                    style="text-transform: uppercase; font-size:10pt; letter-spacing:1px;">
+                                                                    style="text-transform: uppercase; font-size:14pt; letter-spacing:1px;">
                                                                     @php
                                                                         $visitor->name;
                                                                         $slice = explode(' ', $visitor->name);
@@ -69,8 +69,8 @@
                                                             </div>
                                                             <div class="codemember">
                                                                 <h5
-                                                                    style="text-transform: uppercase; font-size:8pt; line-height:400%; letter-spacing:1px;">
-                                                                    {{ $visitor->phone }}</h5>
+                                                                    style="text-transform: uppercase; font-size:12pt; line-height:400%; letter-spacing:2px;">
+                                                                    {{ $visitor->code_member }}</h5>
                                                             </div>
 
                                                             <div class="datetime ">
