@@ -40,7 +40,7 @@ $('#show-qr-scan').on('click', function() {
                         showConfirmButton: false,
                         timer: 2000,
                     }, () => {
-                        window.location.href = decodedText;
+                        window.location = response.data.detail_scan;
                     });
                 } else {
                     sword();
@@ -77,7 +77,7 @@ $('#verification-no-hp').keypress(function(e) {
     if (e.which == 13) {
         swal({
             title: "",
-            text: "Verifikasi Kode Member?",
+            text: "Verifikasi No Hp?",
             type: "info",
             showCancelButton: true,
             confirmButtonColor: "#01c853",
@@ -132,7 +132,7 @@ $('#verification-no-hp').keypress(function(e) {
                                 text: response.message,
                                 confirmButtonColor: "#01c853",
                             }, () => {
-                                window.location.href = response.data.unique_qr;
+                                window.location = response.data.detail_scan;
                             });
                         }
                     },

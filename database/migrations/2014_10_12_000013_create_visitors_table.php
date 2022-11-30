@@ -17,6 +17,7 @@ class CreateVisitorsTable extends Migration
             $table->increments('id');
             $table->text('unique_qr')->nullable();
             $table->string('name');
+            $table->string('nik')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('code_member')->nullable();

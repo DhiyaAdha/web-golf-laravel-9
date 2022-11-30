@@ -271,8 +271,8 @@ $(document).ready(function() {
     $(document).on('click', '#pay', function(e) {
         e.preventDefault();
         let refund = $('#return').data('refund');
-        let pay_amount = $('.bayar-input').val();
         let order_number = $('#order-number').text();
+        let pay_amount = $('.bayar-input').val();
         let total_payment = $('.nilai-total1-td').data('total');
         let name = '';
 

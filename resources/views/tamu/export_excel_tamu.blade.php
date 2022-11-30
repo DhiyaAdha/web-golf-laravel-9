@@ -12,7 +12,7 @@
             <tr>
                 <th class="" style="text-align:center"><strong>Nama</strong></th>
                 <th class="" style="text-align:center"><strong>Email</strong></th>
-                <th class="" style="text-align:center"><strong>Kode Member</strong></th>
+                <th class="" style="text-align:center"><strong>No Hp</strong></th>
                 <th class="" style="text-align:center"><strong>Alamat</strong></th>
                 <th class="" style="text-align:center"><strong>Posisi</strong></th>
                 <th class="" style="text-align:center"><strong>Perusahaan</strong></th>
