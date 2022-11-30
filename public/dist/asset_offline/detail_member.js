@@ -65,13 +65,14 @@ $(".modal-detail-invoice").on("show.bs.modal", function (e) {
 });
 
 $(".download-kartu-tamu").on("click", function () {
-    $(".resolution").printThis({
-        importCSS: true,
-        importStylse: true,
-        loadCSS: "dist/css/custom.css",
-        base: "https://jasonday.github.io/printThis/",
-        header: "<h6>Kartu Member</h6>",
-    });
+    // $(".resolution").printThis({
+    //     importCSS: true,
+    //     importStylse: true,
+    //     loadCSS: "dist/css/custom.css",
+    //     base: "https://jasonday.github.io/printThis/",
+    //     header: "<h6>Kartu Member</h6>",
+    // });
+    $(".resolution").printThis();
 });
 
 $("#dt-tamu-transaksi").DataTable({
