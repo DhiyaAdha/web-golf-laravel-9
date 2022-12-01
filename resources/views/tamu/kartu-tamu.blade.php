@@ -48,12 +48,12 @@
                             <div class="modal-dialog modal-dialog-centered modal-sm">
                                 <div class="modal-content hidden-content">
                                     <div class="modal-body">
-                                        <div class="row get-content">
+                                        <div class="row">
                                             <div class="d-flex align-items-center justify-content-center">
                                                 <div class="resolution">
                                                     <div class="d-flex flex-column">
-                                                        <div class="mb-5">
-                                                            <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/front-vip-card.svg') : asset('dist/img/kartutamu/front-member-card.svg') }}"
+                                                        <div class="front-content">
+                                                            <img class="front" src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/front-vip-card.svg') : asset('dist/img/kartutamu/front-member-card.svg') }}"
                                                                 alt="{{ $visitor->tipe_member }}">
                                                             <div class="qr-code">
                                                                 {{ QrCode::size(80)->generate($visitor->unique_qr) }}
@@ -72,14 +72,14 @@
                                                             </div>
 
                                                             <div class="datetime ">
-                                                                <h6 style="font-size: 5pt; color:#3d481e; opacity:1;">
+                                                                <h6 style="font-size: 8px;font-weight: 600; color:#3d481e;">
                                                                     Berlaku hingga
                                                                     {{ \Carbon\Carbon::parse($visitor->expired_date)->format('d-m-Y') }}
                                                                 </h6>
                                                             </div>
                                                         </div>
-                                                        <div class="mt-5">
-                                                            <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/back-vip-card.svg') : asset('dist/img/kartutamu/back-member-card.svg') }}"
+                                                        <div class="back-content">
+                                                            <img class="back" src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/back-vip-card.svg') : asset('dist/img/kartutamu/back-member-card.svg') }}"
                                                                 alt="{{ $visitor->tipe_member }}">
                                                             <div class="qr-code">
                                                                 {{ QrCode::size(80)->generate($visitor->code_member) }}
@@ -90,7 +90,7 @@
                                             </div>
                                         </div>
                                         <div class="text-center">
-                                            <button type="button" class="btn btn-sm download-kartu-tamu" style="margin-top: 200px;"><i class="fa fa-download"></i> <b>Download Kartu Member</b></button>
+                                            <button type="button" class="btn btn-sm download-kartu-tamu" data-name="{{ $visitor->name }}"><i class="fa fa-download"></i> <b>Cetak Kartu Member</b></button>
                                         </div>
                                     </div>
                                 </div>

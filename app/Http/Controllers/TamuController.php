@@ -2,29 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\DaftarTamuExport;
-use App\Jobs\SendMailJob;
-use App\Jobs\SendMailJobDeposit;
-use App\Models\Deposit;
-use App\Models\LogAdmin;
-use App\Models\LogCoupon;
-use App\Models\LogLimit;
-use App\Models\LogTransaction;
-use App\Models\ReportCoupon;
-use App\Models\ReportDeposit;
-use App\Models\ReportLimit;
-use App\Models\Visitor;
 use Carbon\Carbon;
+use App\Models\Deposit;
+use App\Models\Visitor;
+use App\Models\LogAdmin;
+use App\Models\LogLimit;
 use Carbon\CarbonPeriod;
-use Illuminate\Cache\RateLimiting\Limit;
-use Illuminate\Database\Eloquent\Builder;
+use App\Jobs\SendMailJob;
+use App\Models\LogCoupon;
+use App\Models\ReportLimit;
+use Illuminate\Support\Str;
+use App\Models\ReportCoupon;
 use Illuminate\Http\Request;
+use App\Models\ReportDeposit;
+use App\Models\LogTransaction;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Jobs\SendMailJobDeposit;
+use App\Exports\DaftarTamuExport;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Str;
-use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Database\Eloquent\Builder;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class TamuController extends Controller
