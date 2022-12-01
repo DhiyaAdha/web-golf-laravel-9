@@ -2,33 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\SendEmailResetJob;
-use App\Models\PasswordReset;
-use App\Models\User;
+use Exception;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use App\Models\User;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Models\PasswordReset;
+use App\Jobs\SendEmailResetJob;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
     public function index()
     {
-            return view('/login');
+        return view('/login');
     }
 
     public function forgot_password()
     {
-            return view('forgot-password');
+        return view('forgot-password');
     }
 
     public function password_baru()
     {
-            return view('reset-password');
+        return view('reset-password');
     }
 
     public function login(Request $request)
@@ -42,14 +43,18 @@ class AuthController extends Controller
             return back()->with('error', 'Email yang anda masukkan tidak valid!');
         } else {
             $credentials = request(['email', 'password']);
-            if(! Auth::attempt($credentials)) {
+            if(!Auth::attempt($credentials)){
                 return back()->with('error', 'Email atau Password yang anda masukkan salah!');
             }
             $user = User::where('email', $request->email)->first();
-            if($user->role_id == 2) {
+            if(!Hash::check($request->password, $user->password, [])){
+                throw new Exception('Error in login');
+            }
+            $tokenResult = $user->createToken('token-auth')->plainTextToken;
+            if($user->role_id == 2){
                 return redirect()->intended('/analisis-tamu')->with('success', 'Selamat Datang Admin '.$user->name.'');
             }else {
-                return redirect()->intended('/scan-tamu')->with('success', 'Selamat Datang Admin '.$user->name.'');
+                return redirect()->intended('/scan-tamu')->with('success', 'Selamat Datang Admin '.$user->name.''); 
             }
         }
     }
@@ -85,7 +90,6 @@ class AuthController extends Controller
                     User::where('email', $request->email)->update([
                         'password' => Hash::make($request->password),
                     ]);
-
                     PasswordReset::where([
                         'email' => $request->email,
                     ])->delete();
@@ -99,7 +103,6 @@ class AuthController extends Controller
 
     public function showResetForm(Request $request, $token = null)
     {
-
         $check_expired = PasswordReset::where([
             'email' => $request->input('email'),
             'token' => $request->token,

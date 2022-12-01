@@ -90,7 +90,7 @@
                                                     <span class="txt-light block counter">
                                                         <span class="counter-anim">{{ $visitor_reguler }}</span>
                                                     </span>
-                                                    <span class="weight-500 txt-light block">Transaksi Umum <br> Hari Ini </span>
+                                                    <span class="weight-500 txt-light block">Transaksi Reguler <br> Hari Ini </span>
                                                 </div>
                                                 <div class="col-xs-4 text-right data-wrap-right">
                                                     <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i>

@@ -13,16 +13,17 @@ class Visitor extends Model
 
     protected $dates = ['deleted_at'];
 
-    // protected $guarded = [];
     protected $fillable = [
         'id',
         'unique_qr',
         'name',
+        'nik',
         'email',
         'address',
         'position',
         'company',
         'phone',
+        'code_member',
         'gender',
         'category',
         'tipe_member',

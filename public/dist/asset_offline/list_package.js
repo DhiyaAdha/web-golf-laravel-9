@@ -102,16 +102,13 @@ $(document).on('click', '.delete', function() {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                beforeSend: function() {
-                    $('#ok_button').text('Hapus Data');
-                },
-                success: function(data) {
-                    setTimeout(function() {
+                success: () => {
+                    setTimeout(() => {
                         $('#confirmModal').modal('hide');
                         $('#dt-package').DataTable().ajax.reload(null, false);
                     });
 
-                    window.setTimeout(function() {
+                    window.setTimeout(() => {
                         $.toast({
                             text: 'Product berhasil dihapus permanen',
                             position: 'top-right',
@@ -122,10 +119,20 @@ $(document).on('click', '.delete', function() {
                         });
                     }, 1000);
                     swal("Terhapus!", "", "success");
+                },
+                error: () => {
+                    sword();
+                    swal({
+                        title: "Internal Server Error",
+                        type: "error",
+                        text: "Terdapat kesalahan program pada action ini",
+                        confirmButtonColor: "#01c853",
+                    });
+                    return false;
                 }
             })
         } else {
-            swal("Dibatalkan", "Paket Tidak Dihapus", "error");
+            swal("Dibatalkan", "", "info");
         }
     });
     return false;

@@ -118,6 +118,7 @@
         <div id="progstat"></div>
         <div id="progress"></div>
     </div> --}}
+    
     <div class="wrapper pa-0">
         <header class="sp-header">
             <div class="sp-logo-wrap pull-left">
@@ -165,7 +166,7 @@
                                                 @enderror
                                             </div>
                                             <div class="form-group">
-                                                <a class="capitalize-font txt-primary block mb-10 pull-right font-12" href="{{ route('forgot-password') }}">Lupa Password?</a>
+                                                {{-- <a class="capitalize-font txt-primary block mb-10 pull-right font-12" href="{{ route('forgot-password') }}">Lupa Password?</a> --}}
                                                 <label class="pull-left control-label mb-10" for="password">Password</label>
                                                 <input type="password" name="password" class="form-control" id="password" placeholder="Masukan password" required>
                                                 <i style="color: rgb(114, 114, 114);" class="fa-solid fa-eye fa-eye-slash" id="eye"></i>
@@ -348,5 +349,6 @@
         }());
     </script>
 </body>
+@include('layouts.footer')
 
 </html>

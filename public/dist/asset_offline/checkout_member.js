@@ -113,47 +113,63 @@ let cal = (price) => {
         $('.refund').removeClass('d-none');
         $('.bayar-cash').val(price);
         let return_pay = parseInt($('.bayar-cash').val()) - parseInt(total);
-        if($('.bayar-cash').val() > total) {
+        if(return_pay === 0) {
             $('.bayar-cash').removeClass('is-invalid');
-            $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+            $('#return').text(' Rp. 0,00').css({
                 "background-color": "rgba(25, 216, 149, 0.2)",
                 "color": "#19d895"
-            }).data('refund', return_pay).addClass('green');
+            }).data('refund', 0).addClass('green');
         } else {
-            $('.bayar-cash').addClass('is-invalid');
-            $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
-                "background-color": "rgba(216, 25, 25, 0.2)",
-                "color": "#d81c19d1"
-            }).data('refund', return_pay).addClass('green');
+            if($('.bayar-cash').val() > total) {
+                $('.bayar-cash').removeClass('is-invalid');
+                $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                    "background-color": "rgba(25, 216, 149, 0.2)",
+                    "color": "#19d895"
+                }).data('refund', return_pay).addClass('green');
+            } else {
+                $('.bayar-cash').addClass('is-invalid');
+                $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                    "background-color": "rgba(216, 25, 25, 0.2)",
+                    "color": "#d81c19d1"
+                }).data('refund', return_pay).addClass('green');
+            }
         }
     } else {
         let result = parseInt($('.bayar-cash').val());
         $('.bayar-cash').val(result + price);
         let return_pay = parseInt($('.bayar-cash').val()) - parseInt(total);
-        if($('.bayar-cash').val() > total) {
+        if(return_pay === 0) {
             $('.bayar-cash').removeClass('is-invalid');
-            $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+            $('#return').text(' Rp. 0,00').css({
                 "background-color": "rgba(25, 216, 149, 0.2)",
                 "color": "#19d895"
-            }).data('refund', return_pay);
+            }).data('refund', 0).addClass('green');
         } else {
-            $('.bayar-cash').addClass('is-invalid');
-            $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
-                "background-color": "rgba(216, 25, 25, 0.2)",
-                "color": "#d81c19d1"
-            }).data('refund', return_pay);
+            if($('.bayar-cash').val() > total) {
+                $('.bayar-cash').removeClass('is-invalid');
+                $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                    "background-color": "rgba(25, 216, 149, 0.2)",
+                    "color": "#19d895"
+                }).data('refund', return_pay);
+            } else {
+                $('.bayar-cash').addClass('is-invalid');
+                $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                    "background-color": "rgba(216, 25, 25, 0.2)",
+                    "color": "#d81c19d1"
+                }).data('refund', return_pay);
+            }
         }
     }
 }
 
-let call = (price) => {
-    if ($('.bayar-input').val() == '') {
-        $('.bayar-input').val(price);
-    } else {
-        let result = parseInt($('.bayar-input').val());
-        $('.bayar-input').val(result + price);
-    }
-}
+// let call = (price) => {
+//     if ($('.bayar-input').val() == '') {
+//         $('.bayar-input').val(price);
+//     } else {
+//         let result = parseInt($('.bayar-input').val());
+//         $('.bayar-input').val(result + price);
+//     }
+// }
 
 let formatIDR = (price) => {
     let number_string = price.toString(),
@@ -209,11 +225,11 @@ $(document).ready(function() {
         html : true,
         sanitize: false,
         content: function() {
-            let content = $(this).attr("data-popover-content");
+            var content = $(this).attr("data-popover-content");
             return $(content).children(".popover-body").html();
         },
         title: function() {
-            let title = $(this).attr("data-popover-content");
+            var title = $(this).attr("data-popover-content");
             return $(title).children(".popover-header").html();
         }
     });
@@ -222,11 +238,11 @@ $(document).ready(function() {
         html : true,
         sanitize: false,
         content: function() {
-            let content = $(this).attr("data-popover-content");
+            var content = $(this).attr("data-popover-content");
             return $(content).children(".popover-body").html();
         },
         title: function() {
-            let title = $(this).attr("data-popover-content");
+            var title = $(this).attr("data-popover-content");
             return $(title).children(".popover-header").html();
         }
     });
@@ -1334,16 +1350,6 @@ $(document).ready(function() {
                     });
                     return false;
                 }
-            },
-            error: function (error){
-                sword();
-                swal({
-                    title: "Internal Server Error",
-                    type: "error",
-                    text: error,
-                    confirmButtonColor: "#01c853",
-                });
-                return false;
             }
         });
     });
@@ -1365,10 +1371,6 @@ $(document).ready(function() {
         tg = tg[0];
         tg = tg.split("/");
         page = tg[tg.length - 1];
-
-        let data_deposit = $('#customCheck8').data('deposit');
-        let data_bill = $('#customCheck8').data('bill');
-        let pay_deposit = data_bill - data_deposit;
 
         if (type_single == 3) {
             if (!bayar_cash) {
@@ -1430,7 +1432,6 @@ $(document).ready(function() {
                         order_number: order_number,
                         bayar_input: bayar_input,
                         bayar_cash: bayar_cash,
-                        pay_deposit: pay_deposit,
                         refund: refund
                     },
                     url: '/pay',
@@ -1478,16 +1479,6 @@ $(document).ready(function() {
                             });
                             return false;
                         }
-                    },
-                    error: function (error){
-                        sword();
-                        swal({
-                            title: "Internal Server Error",
-                            type: "error",
-                            text: error,
-                            confirmButtonColor: "#01c853",
-                        });
-                        return false;
                     }
                 });
             } else {
@@ -1497,19 +1488,29 @@ $(document).ready(function() {
         return false;
     });
 
-    const invoice = (url, title) => {
+    function invoice(url, title) {
         popupCenter(url, title, 340, 550);
     }
 
-    const popupCenter = (url, title, w, h) => {
-        const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
-        const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
-        const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
-        const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+    function popupCenter(url, title, w, h) {
+        const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window
+            .screenX;
+        const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window
+            .screenY;
+        const width = window.innerWidth ? window.innerWidth : document.documentElement
+            .clientWidth ?
+            document
+            .documentElement.clientWidth : screen.width;
+        const height = window.innerHeight ? window.innerHeight : document.documentElement
+            .clientHeight ?
+            document
+            .documentElement.clientHeight : screen.height;
         const systemZoom = width / window.screen.availWidth;
         const left = (width - w) / 2 / systemZoom + dualScreenLeft
         const top = (height - h) / 2 / systemZoom + dualScreenTop
-        const newWindow = window.open(url, title, `scrollbars=yes,width  = ${w / systemZoom}, height = ${h / systemZoom}, top    = ${top}, left   = ${left}`);
+        const newWindow = window.open(url, title,
+            `scrollbars=yes,width  = ${w / systemZoom}, height = ${h / systemZoom}, top    = ${top}, left   = ${left}`
+        );
         if (window.focus) newWindow.focus();
     }
 });

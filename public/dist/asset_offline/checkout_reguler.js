@@ -107,35 +107,51 @@ let cal = (price) => {
     if ($('.bayar-input').val() == '') {
         $('.bayar-input').val(price);
         let return_pay = parseInt($('.bayar-input').val()) - parseInt(total);
-        if($('.bayar-input').val() > total) {
+        if(return_pay === 0) {
             $('.bayar-input').removeClass('is-invalid');
-            $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+            $('#return').text(' Rp. 0,00').css({
                 "background-color": "rgba(25, 216, 149, 0.2)",
                 "color": "#19d895"
-            }).data('refund', return_pay);
+            }).data('refund', 0);
         } else {
-            $('.bayar-input').addClass('is-invalid');
-            $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
-                "background-color": "rgba(216, 25, 25, 0.2)",
-                "color": "#d81c19d1"
-            }).data('refund', return_pay);
+            if($('.bayar-input').val() > total) {
+                $('.bayar-input').removeClass('is-invalid');
+                $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                    "background-color": "rgba(25, 216, 149, 0.2)",
+                    "color": "#19d895"
+                }).data('refund', return_pay);
+            } else {
+                $('.bayar-input').addClass('is-invalid');
+                $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                    "background-color": "rgba(216, 25, 25, 0.2)",
+                    "color": "#d81c19d1"
+                }).data('refund', return_pay);
+            }
         }
     } else {
         let result = parseInt($('.bayar-input').val());
         $('.bayar-input').val(result + price);
         let return_pay = parseInt($('.bayar-input').val()) - parseInt(total);
-        if($('.bayar-input').val() > total) {
+        if(return_pay === 0) {
             $('.bayar-input').removeClass('is-invalid');
-            $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+            $('#return').text(' Rp. 0,00').css({
                 "background-color": "rgba(25, 216, 149, 0.2)",
                 "color": "#19d895"
-            }).data('refund', return_pay);
+            }).data('refund', 0);
         } else {
-            $('.bayar-input').addClass('is-invalid');
-            $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
-                "background-color": "rgba(216, 25, 25, 0.2)",
-                "color": "#d81c19d1"
-            }).data('refund', return_pay);
+            if($('.bayar-input').val() > total) {
+                $('.bayar-input').removeClass('is-invalid');
+                $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                    "background-color": "rgba(25, 216, 149, 0.2)",
+                    "color": "#19d895"
+                }).data('refund', return_pay);
+            } else {
+                $('.bayar-input').addClass('is-invalid');
+                $('#return').text(' Rp. ' + format(return_pay) + ',00').css({
+                    "background-color": "rgba(216, 25, 25, 0.2)",
+                    "color": "#d81c19d1"
+                }).data('refund', return_pay);
+            }
         }
     }
 }
@@ -255,8 +271,8 @@ $(document).ready(function() {
     $(document).on('click', '#pay', function(e) {
         e.preventDefault();
         let refund = $('#return').data('refund');
-        let pay_amount = $('.bayar-input').val();
         let order_number = $('#order-number').text();
+        let pay_amount = $('.bayar-input').val();
         let total_payment = $('.nilai-total1-td').data('total');
         let name = '';
 
@@ -312,7 +328,7 @@ $(document).ready(function() {
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        beforeSend: function(request) {
+                        beforeSend: () => {
                             $.blockUI({
                                 css: {
                                     backgroundColor: 'transparent',
@@ -327,7 +343,7 @@ $(document).ready(function() {
                                 }
                             });
                         },
-                        success: function(response) {
+                        success: (response) => {
                             $.unblockUI();
                             if (response.status == "VALID") {
                                 bell();
@@ -336,7 +352,7 @@ $(document).ready(function() {
                                     type: "success",
                                     text: response.message,
                                     confirmButtonColor: "#01c853",
-                                }, function(isConfirm) {
+                                }, () => {
                                     invoice("/print_invoice_reguler",
                                         'Print Invoice');
                                     history.go(0);
@@ -352,12 +368,12 @@ $(document).ready(function() {
                                 return false;
                             }
                         },
-                        error: function (error){
+                        error: () => {
                             sword();
                             swal({
                                 title: "Internal Server Error",
                                 type: "error",
-                                text: error,
+                                text: "Terdapat kesalahan program pada action ini",
                                 confirmButtonColor: "#01c853",
                             });
                             return false;
@@ -369,7 +385,6 @@ $(document).ready(function() {
             });
             return false;
         }
-
     });
 
     const invoice = (url, title) => {

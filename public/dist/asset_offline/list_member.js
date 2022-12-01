@@ -31,6 +31,7 @@ let member = $('#dt-tamu').DataTable({
     "serverSide": true,
     "lengthChange": false,
     "bDestroy": true,
+    "orderable": false,
     "searching": true,
     "paginate": {
         "first": "First",
@@ -46,9 +47,11 @@ let member = $('#dt-tamu').DataTable({
     "render": $.fn.dataTable.render.text(),
     "columns": [{
             data: 'name',
+            orderable: false
         },
         {
             data: 'email',
+            orderable: false
         },
         {
             "data": function(data) {
@@ -57,17 +60,20 @@ let member = $('#dt-tamu').DataTable({
                 } else {
                     return `<span class='label label-warning'>${data.tipe_member == 'VVIP' ? 'VIP' : 'Member'}</span>`;
                 }
-            }
+            },
+            orderable: false
         },
         {
             "data": function(data) {
                 return data.status == 'active' ? 'Aktif' : 'Non Aktif'
-            }
+            },
+            orderable: false
         },
         {
             "data": function(data) {
                 return data.expired_date;
-            }
+            },
+            orderable: false
         },
         {
             data: 'action',
@@ -127,16 +133,13 @@ $(document).on('click', '.delete-confirm', function() {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                beforeSend: function() {
-                    $('#ok_button').text('Hapus Data');
-                },
-                success: function(data) {
-                    setTimeout(function() {
+                success: () => {
+                    setTimeout(() => {
                         $('#confirmModal').modal('hide');
                         $('#dt-tamu').DataTable().ajax.reload(null, false);
                     });
 
-                    window.setTimeout(function() {
+                    window.setTimeout(() => {
                         $.toast({
                             text: 'Data berhasil dihapus',
                             position: 'top-right',
@@ -147,10 +150,20 @@ $(document).on('click', '.delete-confirm', function() {
                         });
                     }, 1000);
                     swal("Terhapus!", "", "success");
+                },
+                error: () => {
+                    sword();
+                    swal({
+                        title: "Internal Server Error",
+                        type: "error",
+                        text: "Terdapat kesalahan program pada action ini",
+                        confirmButtonColor: "#01c853",
+                    });
+                    return false;
                 }
             })
         } else {
-            swal("Dibatalkan", "", "error");
+            swal("Dibatalkan", "", "info");
         }
     });
     return false;

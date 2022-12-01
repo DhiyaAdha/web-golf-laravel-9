@@ -25,14 +25,15 @@ $(document).ready(function () {
 
         "render": $.fn.dataTable.render.text(),
         "columns": [{
-            data: 'name',
-            searchable: true,
-            orderable:false
+                data: 'name',
+                searchable: true,
+                orderable:false
             },
             {
                 "data": function(data) {
                     return `<span class='text-capitalize'>${data.category}</span>`;
-                }
+                },
+                orderable:false
             },
             {
                 "data": function(data) {
@@ -41,11 +42,11 @@ $(document).ready(function () {
                     } else {
                         return `<span class='label label-warning'>${data.tipe_member == 'VVIP' ? 'VIP' : 'Member'}</span>`;
                     }
-                }
+                },
+                orderable:false
             },
             {
                 data: 'times',
-
             }
         ],
         order: [
@@ -114,7 +115,7 @@ $(document).ready(function () {
             data: JSON.parse(days),
             xkey: 'y',
             ykeys: ['a', 'b', 'c' ],
-            labels: ['VIP', 'Member', 'Umum' ],
+            labels: ['VIP', 'Member', 'Reguler' ],
             barColors:['#fec107', '#32FFC1', '#21E1E1'],
             hideHover: 'auto',
             gridLineColor: '#878787',
@@ -136,8 +137,8 @@ $(document).ready(function () {
             element: "statistic_visitor_line",
             data: JSON.parse(month),
             xkey: "period", 
-            ykeys: ["VIP", "Member","Umum"],
-            labels: ["VIP", "Member", "Umum"],
+            ykeys: ["VIP", "Member","Reguler"],
+            labels: ["VIP", "Member", "Reguler"],
             pointSize: 2,
             fillOpacity: 0,
             lineWidth: 2,
@@ -162,8 +163,8 @@ $(document).ready(function () {
             element: "bar-chart",
             data: JSON.parse(month),
             xkey: 'period',
-            ykeys: ['pertamina', 'pensiunan' , 'forkopimda', 'perpesi', 'umum'],
-            labels: ['Pertamina', 'Pensiunan', 'Forkopimda', 'Perpesi', 'Umum'],
+            ykeys: ['pertamina', 'pensiunan' , 'forkopimda', 'perpesi', 'Reguler'],
+            labels: ['Pertamina', 'Pensiunan', 'Forkopimda', 'Perpesi', 'Reguler'],
             fillOpacity: 0.6,
             hideHover: 'auto',
             stacked: true,

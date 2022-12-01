@@ -73,7 +73,7 @@ let addCart = (id) => {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         dataType: 'json',
-        success: function(response) {
+        success: response => {
             $.unblockUI();
             if (response.status == "INVALID") {
                 sword();
@@ -89,12 +89,12 @@ let addCart = (id) => {
             }
             location.reload();
         },
-        error: function (error){
+        error: () => {
             sword();
             swal({
                 title: "Internal Server Error",
                 type: "error",
-                text: error,
+                text: "Terdapat error program pada action ini",
                 confirmButtonColor: "#01c853",
             });
             return false;
@@ -153,7 +153,7 @@ let updateQTY = (id, type) => {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         dataType: 'json',
-        success: function(response) {
+        success: response => {
             $('.price-' + response.id).text('Rp. ' + format(response.qty * response.price));
             $("#total-pay").text('Rp. ' + format(response.total));
             $('.counted').text(response.counted);
@@ -174,12 +174,12 @@ let updateQTY = (id, type) => {
                 $('#qty').text('0');
             }
         },
-        error: function (error){
+        error: () => {
             sword();
             swal({
                 title: "Internal Server Error",
                 type: "error",
-                text: error,
+                text: "Terdapat kesalahan program pada action ini",
                 confirmButtonColor: "#01c853",
             });
             return false;
@@ -212,7 +212,7 @@ let removeItem = (id) => {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         dataType: 'json',
-        success: function(response) {
+        success: response => {
             $.unblockUI();
             $("#total-pay").text('Rp. ' + format(response.total));
             $('.counted').text(response.counted);
@@ -229,12 +229,12 @@ let removeItem = (id) => {
                                                 </button>`);
             }
         },
-        error: function (error){
+        error: () => {
             sword();
             swal({
                 title: "Internal Server Error",
                 type: "error",
-                text: error,
+                text: "Terdapat kesalahan program pada action ini",
                 confirmButtonColor: "#01c853",
             });
             return false;
@@ -275,27 +275,27 @@ $(document).on('click', '#reset-order', function() {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                beforeSend: function(request) {
+                beforeSend: () => {
                     loading();
                 },
-                success: function(data) {
+                success: () => {
                     rst();
                     swal({
                         title: "",
                         type: "success",
                         text: "Keranjang berhasil direset",
                         confirmButtonColor: "#01c853",
-                    }, function(isConfirm) {
+                    }, () => {
                         $.unblockUI();
                         location.reload();
                     });
                 },
-                error: function (error){
+                error: () => {
                     sword();
                     swal({
                         title: "Internal Server Error",
                         type: "error",
-                        text: error,
+                        text: "Terdapat kesalahan program pada action ini",
                         confirmButtonColor: "#01c853",
                     });
                     return false;
@@ -325,10 +325,10 @@ $(document).on('click', '#checkout', function() {
         async: true,
         type: 'GET',
         url: '/checkout/'+page,
-        beforeSend: function(request) {
+        beforeSend: () => {
             loading();
         },
-        success: function(response) {
+        success: () => {
             $.unblockUI();
             bell();
             swal({
@@ -336,16 +336,16 @@ $(document).on('click', '#checkout', function() {
                 type: "success",
                 text: "Order berhasil dibuat",
                 confirmButtonColor: "#01c853",
-            }, function(isConfirm) {
+            }, () => {
                 window.location.href = '/checkout/'+page;
             });
         },
-        error: function (error){
+        error: () => {
             sword();
             swal({
                 title: "Internal Server Error",
                 type: "error",
-                text: error,
+                text: "Terdapat kesalahan program pada action ini",
                 confirmButtonColor: "#01c853",
             });
             return false;

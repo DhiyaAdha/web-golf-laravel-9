@@ -70,6 +70,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
 });
 
 Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
+    Route::get('/verification/identity', [ScanqrController::class, 'checkNIK'])->name('visitor.nik');
     Route::get('/visitor/qrcode', [ScanqrController::class, 'checkQRCode'])->name('visitor.qrcode');
     Route::get('/visitor/phone', [ScanqrController::class, 'checkNoHp'])->name('visitor.phone');
     Route::post('update/deposit/{id}', [ScanqrController::class, 'update_deposit'])->name('update.deposit')->middleware('signed');
@@ -101,7 +102,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::middleware(['htmlMinifier'])->group(static function () {
         Route::resource('analisis-tamu', DashboardController::class);
         Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name('scan-tamu');
-        Route::get('/kartu-member/{e}', [ScanqrController::class, 'show_detail'])->name('detail-scan')->middleware('signed');
+        Route::get('/kartu-member/{code}', [ScanqrController::class, 'show_detail'])->name('detail-scan')->middleware('signed');
         Route::get('/cart/{id}', [OrderController::class, 'index'])->name('order.cart');
         Route::get('/checkout/{id}', [OrderController::class, 'checkout'])->name('checkout');
         Route::get('/print_invoice/{id}', [OrderController::class, 'print_invoice'])->name('invoice.print');

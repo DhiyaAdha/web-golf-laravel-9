@@ -23,6 +23,13 @@
                                     @csrf
                                     @method('POST')
                                     <div class="col-lg-6">
+                                        <div class="form-group @error('NIK') has-error @enderror">
+                                            <label class="control-label mb-10" for="name">NIK KTP</label>
+                                            <input type="text" name="nik" value="{{ $visitor->nik }}" class="form-control" id="NIK" size="50px" placeholder="Masukan NIK" autofocus>
+                                            @error('nik')
+                                                <div class="text-danger"> {{ $message }}</div>
+                                            @enderror
+                                        </div>
                                         <div class="form-group @error('name') has-error @enderror">
                                             <label class="control-label mb-10" for="name">Nama Lengkap</label>
                                             <input type="text" name="name" value="{{ $visitor->name }}" class="form-control" id="name" size="50px" placeholder="Masukan Nama" autofocus>
@@ -63,6 +70,15 @@
                                                 </div>
                                             @enderror
                                         </div>
+                                        <div class="form-group @error('phone') has-error @enderror">
+                                            <label  class="control-label mb-10" for="">Nomer Hp</label>
+                                            <input type="text" value="{{ $visitor->phone }}" name="phone" class="form-control" id="phone" size="50px" placeholder="Masukan Nomer Hp" autofocus>
+                                            @error('phone')
+                                                <div class="text-danger"> {{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
                                         <div class="form-group @error('company') has-error @enderror">
                                             <label class="control-label mb-10" for="">Perusahaan</label>
                                             <input type="text" name="company" value="{{ $visitor->company }}" class="form-control" id="company" size="50px" placeholder="Masukan Nama Perusahaan" autofocus>
@@ -70,8 +86,6 @@
                                                 <div class="text-danger"> {{ $message }}</div>
                                             @enderror
                                         </div>
-                                    </div>
-                                    <div class="col-lg-6">
                                         <div class="form-group @error('position') has-error @enderror">
                                             <label class="control-label mb-10" for="">Jabatan</label>
                                             <input type="text" name="position" value="{{ $visitor->position }}" class="form-control" id="position" size="50px" placeholder="Masukan Jabatan" autofocus>
