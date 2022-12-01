@@ -6,12 +6,12 @@
                 <div class="row">
                     <div class="container-fluid">
                         <div class="col-lg-8">
-                            <h5>Scan Tamu</h5>
+                            <h5>Verifikasi</h5>
                         </div>
                         <div class="col-lg-4 col-sm-8 col-md-8 col-xs-12">
                             <ol class="breadcrumb">
                                 <li><a href="javascript:void(0)">Dashboard</a></li>
-                                <li class="active"><span>scan tamu</span></li>
+                                <li class="active"><span>Verifikasi Scan</span></li>
                             </ol>
                         </div>
                     </div>
@@ -26,14 +26,14 @@
                                     <a class="tabs-log" aria-expanded="true" data-toggle="tab" role="tab" href="#qrcode">
                                         <input type="radio" name="status" id="radio_12" value="qr" style="visibility:hidden;">
                                         <label for="radio_12"></label>
-                                        Verifikasi QR Code
+                                        QR Code
                                     </a>
                                 </li>
                                 <li role="presentation">
                                     <a class="tabs-log" data-toggle="tab" role="tab" href="#nohp" aria-expanded="false">
                                         <input type="radio" name="status" id="radio_12" value="hp" style="visibility:hidden;">
                                         <label for="radio_12"></label>
-                                        Verifikasi Nomor Hp
+                                        Nomor Hp
                                     </a>
                                 </li>
                             </ul>

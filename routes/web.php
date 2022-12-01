@@ -102,7 +102,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::middleware(['htmlMinifier'])->group(static function () {
         Route::resource('analisis-tamu', DashboardController::class);
         Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name('scan-tamu');
-        Route::get('/kartu-member/{e}', [ScanqrController::class, 'show_detail'])->name('detail-scan')->middleware('signed');
+        Route::get('/kartu-member/{code}', [ScanqrController::class, 'show_detail'])->name('detail-scan')->middleware('signed');
         Route::get('/cart/{id}', [OrderController::class, 'index'])->name('order.cart');
         Route::get('/checkout/{id}', [OrderController::class, 'checkout'])->name('checkout');
         Route::get('/print_invoice/{id}', [OrderController::class, 'print_invoice'])->name('invoice.print');

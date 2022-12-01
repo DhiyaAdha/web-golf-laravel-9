@@ -48,7 +48,7 @@
                             <div class="modal-dialog modal-dialog-centered modal-sm">
                                 <div class="modal-content hidden-content">
                                     <div class="modal-body">
-                                        <div class="row">
+                                        <div class="row get-content">
                                             <div class="d-flex align-items-center justify-content-center">
                                                 <div class="resolution">
                                                     <div class="d-flex flex-column">
@@ -56,11 +56,10 @@
                                                             <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/front-vip-card.svg') : asset('dist/img/kartutamu/front-member-card.svg') }}"
                                                                 alt="{{ $visitor->tipe_member }}">
                                                             <div class="qr-code">
-                                                                {{ QrCode::size(80)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
+                                                                {{ QrCode::size(80)->generate($visitor->unique_qr) }}
                                                             </div>
                                                             <div class="identity">
-                                                                <h6
-                                                                    style="text-transform: uppercase; font-size:10pt; letter-spacing:1px;">
+                                                                <h6 style="text-transform: uppercase; font-size:10pt; letter-spacing:1px;">
                                                                     @php
                                                                         $visitor->name;
                                                                         $slice = explode(' ', $visitor->name);
@@ -68,8 +67,7 @@
                                                                     @endphp</h6>
                                                             </div>
                                                             <div class="codemember">
-                                                                <h5
-                                                                    style="text-transform: uppercase; font-size:8pt; line-height:400%; letter-spacing:1px;">
+                                                                <h5 style="text-transform: uppercase; font-size:8pt; line-height:400%; letter-spacing:1px;">
                                                                     {{ $visitor->code_member }}</h5>
                                                             </div>
 
@@ -90,11 +88,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="text-center">
-                                                <button type="button" class="btn btn-sm download-kartu-tamu"
-                                                    style="margin-top: 200px;"><i class="fa fa-download"></i> <b>Download Kartu
-                                                        Member</b></button>
-                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-sm download-kartu-tamu" style="margin-top: 200px;"><i class="fa fa-download"></i> <b>Download Kartu Member</b></button>
                                         </div>
                                     </div>
                                 </div>
@@ -491,7 +487,8 @@
     <script defer src="{{ asset('/dist/js/line-chart-invoice-data.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/detail_member.js') }}"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         $(document).on('click', '#setting_panel_btn', function() {
             introJs('.intro-foo').setOptions({

@@ -120,7 +120,7 @@ $('#verification-no-hp').keypress(function(e) {
                             swal({
                                 title: 'Verifikasi Identitas',
                                 text: 'Masukkan NIK KTP',
-                                type: 'input',
+                                type: 'input'
                             }, function(isConfirm) {
                                 if (isConfirm) {
                                     $.ajax({
@@ -173,7 +173,7 @@ $('#verification-no-hp').keypress(function(e) {
                                                 }, function(isConfirm) {
                                                     window.setTimeout(() => {
                                                         location.reload();
-                                                    }, 200);
+                                                    }, 100);
                                                 });
                                             }
                                         },
