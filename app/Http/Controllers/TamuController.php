@@ -132,7 +132,7 @@ class TamuController extends Controller
             [
                 'name' => 'required|unique:visitors,name|unique:users,name',
                 'nik' => 'required|unique:visitors,nik|numeric|digits_between:16,16',
-                'phone' => 'required|unique:visitors,phone|numeric|unique:users,phone',
+                'phone' => 'required|unique:visitors,phone|unique:users,phone|numeric|digits_between:11,12',
                 'address' => 'required',
                 'gender' => 'required',
                 'email' => 'required|email|regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/|unique:visitors,email|unique:users,email',
@@ -152,6 +152,7 @@ class TamuController extends Controller
                 'phone.required' => 'Nomor Hp masih kosong.',
                 'phone.unique' => 'Nomor Hp sudah ada',
                 'phone.numeric' => 'Nomor Hp hanya boleh angka',
+                'phone.digits_between' => 'Nomor Hp minimal 11 digit dan maksimal 12 digit',
                 'address.required' => 'Alamat masih kosong.',
                 'address.unique' => 'Alamat sudah ada',
                 'gender.required' => 'Jenis Kelamin masih kosong.',
@@ -289,7 +290,7 @@ class TamuController extends Controller
         $visitor = Visitor::findOrFail($id);
 
         $visitor->name = $request->name;
-        $visitor->name = $request->nik;
+        $visitor->nik = $request->nik;
         $visitor->phone = $request->phone;
         $visitor->address = $request->address;
         $visitor->email = $request->email;
