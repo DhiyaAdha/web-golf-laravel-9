@@ -113,7 +113,7 @@ class ScanqrController extends Controller
 
     public function checkNIK(Request $request)
     {
-        $get_visitor = Visitor::where('nik', $request->get('nik'))->first();
+        $get_visitor = Visitor::where('nik', $request->get('nik'))->where('phone', $request->get('phone'))->first();
         Cache::put('random', Str::random(5));
         try {
             if(is_null($get_visitor)) {

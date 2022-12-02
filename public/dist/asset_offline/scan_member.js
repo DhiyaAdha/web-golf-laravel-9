@@ -75,6 +75,7 @@ $('#show-qr-scan').on('click', function() {
 
 $('#verification-no-hp').keypress(function(e) {
     if (e.which == 13) {
+        var phone = $('#verification-no-hp').val();
         swal({
             title: "",
             text: "Verifikasi No Hp?",
@@ -127,7 +128,7 @@ $('#verification-no-hp').keypress(function(e) {
                                         async: true,
                                         type: 'GET',
                                         url: '/verification/identity',
-                                        data: {nik:isConfirm},
+                                        data: {nik:isConfirm, phone:phone},
                                         headers: {
                                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                         },
