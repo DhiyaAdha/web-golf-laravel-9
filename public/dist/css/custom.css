@@ -773,39 +773,40 @@ video {
 
 .resolution .qr-code {
     position: absolute;
-    top: 22%;
-    right: 8%;
+    top: 26%;
+    right: 6%;
 }
 .resolution .identity {
     position: absolute;
     font-family: "Montserrat";
-    font-weight: 700;
-    top: 66%;
-    right: 8%;
+    font-weight: 800;
+    top: 70%;
+    right: 6%;
 }
 .resolution .codemember {
     position: absolute;
     font-family: "Ayuthaya";
     font-weight: 600;
-    top: 72%;
-    right: 8%;
+    top: 74%;
+    right: 6%;
     /* opacity: 0.7; */
 }
 
 .resolution .datetime {
     position: absolute;
     font-family: 'Montserrat';
-    font-weight: 500;
-    top: 85%; 
-    left: 10px;
-    /* opacity: 0.7; */
-    margin-top: 8px;
+    font-size: 24px;
+    top: 180px;
     left: 10px;
 }
 
-
-
-
+.download-kartu-tamu {
+    position: absolute;
+    display: inherit;
+    top: 410px;
+    align-items: center;
+    left: 45px;
+}
 /* tambahan */
 
 b,

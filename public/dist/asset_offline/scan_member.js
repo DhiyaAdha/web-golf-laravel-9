@@ -40,7 +40,7 @@ $('#show-qr-scan').on('click', function() {
                         showConfirmButton: false,
                         timer: 2000,
                     }, () => {
-                        window.location.href = decodedText;
+                        window.location = response.data.detail_scan;
                     });
                 } else {
                     sword();
@@ -75,9 +75,10 @@ $('#show-qr-scan').on('click', function() {
 
 $('#verification-no-hp').keypress(function(e) {
     if (e.which == 13) {
+        var phone = $('#verification-no-hp').val();
         swal({
             title: "",
-            text: "Verifikasi Kode Member?",
+            text: "Verifikasi No Hp?",
             type: "info",
             showCancelButton: true,
             confirmButtonColor: "#01c853",
@@ -116,23 +117,89 @@ $('#verification-no-hp').keypress(function(e) {
                     },
                     success: (response) => {
                         $.unblockUI();
-                        if (response.status == "INVALID") {
+                        if (response.status === "VALID") {
+                            swal({
+                                title: 'Verifikasi Identitas',
+                                text: 'Masukkan NIK KTP',
+                                type: 'input'
+                            }, function(isConfirm) {
+                                if (isConfirm) {
+                                    $.ajax({
+                                        async: true,
+                                        type: 'GET',
+                                        url: '/verification/identity',
+                                        data: {nik:isConfirm, phone:phone},
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        beforeSend: () => {
+                                            $.blockUI({
+                                                css: {
+                                                    backgroundColor: 'transparent',
+                                                    border: 'none'
+                                                },
+                                                message: '<img src="../img/rolling.svg">',
+                                                baseZ: 1500,
+                                                overlayCSS: {
+                                                    backgroundColor: '#7C7C7C',
+                                                    opacity: 0.4,
+                                                    cursor: 'wait'
+                                                }
+                                            });
+                                        },
+                                        success: (response) => {
+                                            $.unblockUI();
+                                            if (response.status == "VALID") {
+                                                bell();
+                                                swal({
+                                                    title: response.message,
+                                                    type: "success",
+                                                    text: "Atas nama " + response.data.name,
+                                                    confirmButtonColor: "#01c853",
+                                                    closeOnConfirm: false,
+                                                    closeOnCancel: false,
+                                                    showCancelButton: false,
+                                                    showConfirmButton: false,
+                                                    timer: 2000,
+                                                }, () => {
+                                                    window.location = response.data.detail_scan;
+                                                })
+                                            } else {
+                                                sword();
+                                                swal({
+                                                    title: "Verifikasi gagal",
+                                                    type: "error",
+                                                    text: response.message,
+                                                    confirmButtonColor: "#01c853",
+                                                }, function(isConfirm) {
+                                                    window.setTimeout(() => {
+                                                        location.reload();
+                                                    }, 100);
+                                                });
+                                            }
+                                        },
+                                        error: () => {
+                                            sword();
+                                            swal({
+                                                title: "Internal Server Error",
+                                                type: "error",
+                                                text: "Terdapat kesalahan program pada action ini",
+                                                confirmButtonColor: "#01c853",
+                                            });
+                                            return false;
+                                        }
+                                    });
+                                }
+                            });
+                        } else {
                             sword();
                             swal({
                                 title: "",
                                 type: "error",
                                 text: response.message,
                                 confirmButtonColor: "#01c853",
-                            });
-                        } else {
-                            bell();
-                            swal({
-                                title: '',
-                                type: "success",
-                                text: response.message,
-                                confirmButtonColor: "#01c853",
                             }, () => {
-                                window.location.href = response.data.unique_qr;
+                                window.location.reload(true)
                             });
                         }
                     },

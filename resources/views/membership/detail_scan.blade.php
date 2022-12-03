@@ -1,7 +1,7 @@
 @extends('layouts.main', ['title' => 'TGCC | Detail Scan'])
 @section('content')
     <div class="page-wrapper intro-foo">
-        <div class="container-fluid" data-title="Halaman Detail Scan" data-intro="Halaman ini memberikan informasi data membership yang sudah melakukan veirivikasi dengan scan atau kode member.">
+        <div class="container-fluid" data-title="Halaman Detail Scan" data-intro="Halaman ini memberikan informasi data membership yang sudah melakukan verifikasi dengan scan atau no hp.">
             <div class="row heading-bg" >
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h5 class="txt-dark">Scan tamu</h5>
@@ -108,7 +108,6 @@
                         <div class="panel-heading d-flex justify-content-start k">
                             <div class="pull-left">
                                 <h6 class="panel-title txt-dark">Sisa Limit dan Saldo
-                                    <strong>{{ $visitor->name }}</strong>
                                 </h6>
                             </div>
                             <div class="clearfix"></div>

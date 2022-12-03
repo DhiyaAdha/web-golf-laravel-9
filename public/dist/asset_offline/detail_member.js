@@ -69,9 +69,39 @@ $(".download-kartu-tamu").on("click", function () {
         importCSS: true,
         importStylse: true,
         loadCSS: "dist/css/custom.css",
-        base: "https://jasonday.github.io/printThis/",
         header: "<h6>Kartu Member</h6>",
     });
+
+    // const fullName = $(this).data('name');
+    // const [first, last] = fullName.split(' ');
+
+    // html2canvas($('.front-content')[0], {
+    //     logging: true,
+    //     profile: true,
+    //     useCORS: true,
+    //     width: 1200,
+    //     height: 1200
+    // }).then(function(canvas) {
+    //     let a = document.createElement('a');
+    //     a.href = canvas.toDataURL("image/png", 1);
+    //     a.download =  first + '-front.png';
+    //     a.target = '_blank';
+    //     a.click();
+    // });
+
+    // html2canvas($('.back-content')[0], {
+    //     logging: true,
+    //     profile: true,
+    //     useCORS: true,
+    //     width: 1200,
+    //     height: 1200
+    // }).then(function(canvas) {
+    //     let a = document.createElement('a');
+    //     a.href = canvas.toDataURL("image/png", 1);
+    //     a.download = first + '-back.png';
+    //     a.target = '_blank';
+    //     a.click();
+    // });
 });
 
 $("#dt-tamu-transaksi").DataTable({
@@ -95,7 +125,7 @@ $("#dt-tamu-transaksi").DataTable({
     columns: [
         {
             data: function (data) {
-                return `<div data-toggle="tooltip" title="Lihat invoice"><a href="javascript:void(0)" data-id="${data.id}" data-toggle="modal" data-target=".modal-detail-invoice">${data.order_number}</a></div>`;
+                return `<a href="javascript:void(0)" data-id="${data.id}" title="Klik untuk Cetak" data-toggle="modal" data-target=".modal-detail-invoice">${data.order_number}</a>`;
             },
         },
         {

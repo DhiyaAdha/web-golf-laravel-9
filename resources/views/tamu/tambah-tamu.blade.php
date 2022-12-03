@@ -21,6 +21,13 @@
                             <div class="form-wrap">
                                 <form action="{{ route('inserttamu') }}" method="POST">
                                     @csrf
+                                    <div class="form-group @error('nik') has-error @enderror">
+                                        <label class="control-label mb-10" for="">NIK KTP</label>
+                                        <input type="text" name="nik" class="form-control" id="nik" size="50px" onkeypress="return event.charCode >= 48 && event.charCode <=57" placeholder="Masukan nik" value="{{ old('nik') }}" autofocus>
+                                        @error('nik')
+                                            <div class="text-danger"> {{ $message }}</div>
+                                        @enderror
+                                    </div>
                                     <div class="form-group @error('name') has-error @enderror">
                                         <label class="control-label mb-10" for="">Nama Lengkap</label>
                                         <input type="text" name="name" class="form-control" id="name" size="50px" placeholder="Masukan Nama" value="{{ old('name') }}" autofocus>

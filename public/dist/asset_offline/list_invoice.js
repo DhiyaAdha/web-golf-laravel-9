@@ -27,7 +27,7 @@ $('#dt-riwayat').dataTable({
                 } else if (data.tipe_member == 'VVIP') {
                     return `<span class='label label-warning'>${data.tipe_member == 'VVIP' ? 'VIP' : 'MEMBER'}</span>`;
                 } else {
-                    return `<span class='label label-primary'>${data.tipe_member == 'REGULER' ? 'Umum' : ''}</span>`;
+                    return `<span class='label label-primary'>${data.tipe_member}</span>`;
                 }
             }
         },

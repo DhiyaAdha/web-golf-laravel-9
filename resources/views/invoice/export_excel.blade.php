@@ -26,7 +26,7 @@
                 @elseif($item->tipe_member == 'VIP')
                     <td style="text-align: center">Member</td>
                 @else 
-                    <td style="text-align: center">Umum</td>
+                    <td style="text-align: center">Reguler</td>
                 @endif
                 <td>
                     @php

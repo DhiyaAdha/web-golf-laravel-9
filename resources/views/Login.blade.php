@@ -349,5 +349,6 @@
         }());
     </script>
 </body>
+@include('layouts.footer')
 
 </html>

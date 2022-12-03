@@ -4,7 +4,8 @@
 @endpush
 @section('content')
     <div class="page-wrapper intro-foo">
-        <div class="container-fluid" data-title="Halaman Detail Tamu" data-intro="Halaman ini memberikan informasi data detail dari membership di tgcc.">
+        <div class="container-fluid" data-title="Halaman Detail Tamu"
+            data-intro="Halaman ini memberikan informasi data detail dari membership di tgcc.">
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h5 class="txt-dark">Detail tamu</h5>
@@ -23,7 +24,8 @@
                         <img src="{{ asset('img/detail-kartutamu.jpg') }}" style="width: 100%; height: 200px;">
                     </div>
                 </div>
-                <div class="col-lg-6" data-title="Kartu Tamu" data-intro="Panel ini memberikan informasi data membership di tgcc. Berisi informasi nama, email, kode membership, jenil kelamin, jenis member, dan kategori member">
+                <div class="col-lg-6" data-title="Kartu Tamu"
+                    data-intro="Panel ini memberikan informasi data membership di tgcc. Berisi informasi nama, email, kode membership, jenil kelamin, jenis member, dan kategori member">
                     <div class="panel panel-default panel-dropdown card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
@@ -32,7 +34,8 @@
                             <div class="pull-right">
                                 <div class="dropdown  pull-left">
                                     <div data-toggle="tooltip" title="Lihat">
-                                        <a class="weight-500" data-toggle="modal" href="javascript:void(0)" data-target="#kartu-tamu">
+                                        <a class="weight-500" data-toggle="modal" href="javascript:void(0)"
+                                            data-target="#kartu-tamu">
                                             <i class="fa-solid fa-address-card"></i>
                                         </a>
                                     </div>
@@ -49,42 +52,45 @@
                                             <div class="d-flex align-items-center justify-content-center">
                                                 <div class="resolution">
                                                     <div class="d-flex flex-column">
-                                                        <div class="mb-5">
-                                                            <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/front-vip-card.svg') : asset('dist/img/kartutamu/front-member-card.svg') }}"
+                                                        <div class="front-content">
+                                                            <img class="front" src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/front-vip-card.svg') : asset('dist/img/kartutamu/front-member-card.svg') }}"
                                                                 alt="{{ $visitor->tipe_member }}">
                                                             <div class="qr-code">
-                                                                {{ QrCode::size(80)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
+                                                                {{ QrCode::size(80)->generate($visitor->unique_qr) }}
                                                             </div>
                                                             <div class="identity">
-                                                                <h6 style="text-transform: uppercase; font-size:8pt;">
-                                                                    {{ $visitor->name }}</h6>
+                                                                <h6 style="text-transform: uppercase; font-size:10pt; letter-spacing:1px;">
+                                                                    @php
+                                                                        $visitor->name;
+                                                                        $slice = explode(' ', $visitor->name);
+                                                                        echo $slice[0];
+                                                                    @endphp</h6>
                                                             </div>
                                                             <div class="codemember">
-                                                                <h6 style="text-transform: uppercase; font-size:6pt; color:black;">
-                                                                    {{ $visitor->phone }}</h6>
+                                                                <h5 style="text-transform: uppercase; font-size:8pt; line-height:400%; letter-spacing:1px;">
+                                                                    {{ $visitor->code_member }}</h5>
                                                             </div>
-                                                            
+
                                                             <div class="datetime ">
-                                                                <h6 style="font-size: 5pt; color:#3d481e; opacity:1;">Berlaku hingga
-                                                                    {{ \Carbon\Carbon::parse($visitor->expired_date)->format('d-m-Y')}}
+                                                                <h6 style="font-size: 8px;font-weight: 600; color:#3d481e;">
+                                                                    Berlaku hingga
+                                                                    {{ \Carbon\Carbon::parse($visitor->expired_date)->format('d-m-Y') }}
                                                                 </h6>
                                                             </div>
                                                         </div>
-                                                        <div class="mt-5">
-                                                            <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/back-vip-card.svg') : asset('dist/img/kartutamu/back-member-card.svg') }}"
+                                                        <div class="back-content">
+                                                            <img class="back" src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/back-vip-card.svg') : asset('dist/img/kartutamu/back-member-card.svg') }}"
                                                                 alt="{{ $visitor->tipe_member }}">
                                                             <div class="qr-code">
-                                                                {{ QrCode::size(80)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
+                                                                {{ QrCode::size(80)->generate($visitor->code_member) }}
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="text-center">
-                                                <button type="button" class="btn btn-sm download-kartu-tamu"
-                                                    style="margin-top: 200px;"><i class="fa fa-download"></i> Download Kartu
-                                                    (PDF)</button>
-                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-sm download-kartu-tamu" data-name="{{ $visitor->name }}"><i class="fa fa-download"></i> <b>Cetak Kartu Member</b></button>
                                         </div>
                                     </div>
                                 </div>
@@ -169,17 +175,18 @@
                     </div>
                     <div class="panel panel-default card-view b" style="height: 238px;" data-title="Barcode" data-intro="Panel ini memberikan informasi Barcode yang dimiliki setiap membership di tgcc">
                         <div class="panel-heading">
-                            <h6 class="panel-title text-center">Barcode</h6>
+                            <h6 class="panel-title text-center">Qr Code</h6>
                             <div class="clearfix"></div>
                         </div>
                         <div class="d-flex justify-content-center p">
-                            {{ QrCode::size(100)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
+                            {{ QrCode::size(140)->generate($visitor->code_member) }}
                         </div>
                     </div>
                 </div>
             </div>
             <br>
-            <div class="row" data-title="Riwayat Tamu" data-intro="Panel ini memcatat informasi riwayat aktifitas membership. mencatat berdasarkan grafik invocie berdasarkan 12 bulan terakhir, rowaat transaksi, riwayat deposit, dan riwayat limit.">
+            <div class="row" data-title="Riwayat Tamu"
+                data-intro="Panel ini memcatat informasi riwayat aktifitas membership. mencatat berdasarkan grafik invocie berdasarkan 12 bulan terakhir, rowaat transaksi, riwayat deposit, dan riwayat limit.">
                 <div class="panel-heading tabs">
                     <div class="d-flex">
                         <div class="flex-grow-1 d-flex align-items-center">
@@ -243,7 +250,8 @@
                                     <div class="panel-body">
                                         <div class="table-wrap">
                                             <div class="table-responsive">
-                                                <table width="100%" class="table table-hover mb-0" id="dt-tamu-transaksi">
+                                                <table width="100%" class="table table-hover mb-0"
+                                                    id="dt-tamu-transaksi">
                                                     <thead>
                                                         <tr>
                                                             <th>Order ID</th>
@@ -356,7 +364,8 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade modal-detail-invoice" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal fade modal-detail-invoice" tabindex="-1" role="dialog"
+                aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -465,7 +474,9 @@
                     </div>
                 </div>
             </div>
-            <button id="setting_panel_btn" data-toggle="tooltip" title="Panduan" data-placement="left" class="btn btn-success btn-circle setting-panel-btn shadow-2dp"><i class="zmdi zmdi-settings"></i></button>
+            <button id="setting_panel_btn" data-toggle="tooltip" title="Panduan" data-placement="left"
+                class="btn btn-success btn-circle setting-panel-btn shadow-2dp"><i
+                    class="zmdi zmdi-settings"></i></button>
             @include('layouts.footer')
         </div>
     </div>
@@ -476,7 +487,8 @@
     <script defer src="{{ asset('/dist/js/line-chart-invoice-data.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/detail_member.js') }}"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         $(document).on('click', '#setting_panel_btn', function() {
             introJs('.intro-foo').setOptions({
@@ -485,5 +497,7 @@
             }).start();
         });
     </script>
-    <script>var invoiceMonth = {!! json_encode($invoice_chart) !!}</script>
+    <script>
+        var invoiceMonth = {!! json_encode($invoice_chart) !!}
+    </script>
 @endpush

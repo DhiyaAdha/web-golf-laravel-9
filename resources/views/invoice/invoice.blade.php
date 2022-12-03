@@ -14,11 +14,11 @@
                     </ol>
                 </div>
             </div>
-            <a href="javascript:void(0)" >
-                <i class="fa fa-print  pull-right" target="_blank" data-toggle="tooltip" title="Klik untuk Cetak" style="font-size:24px"></i>
-            </a>
+            <button class="printin pull-right" data-toggle="tooltip" title="Klik untuk Cetak">
+                <i class="fa fa-print" style="font-size:24px"></i>
+            </button>
             <div class="row" id="cetak-invoice">
-                <body>
+                <div class="container">
                     <div class="invoice-box">
                         <table cellpadding="0" cellspacing="0">
                             <tr class="top">
@@ -64,7 +64,7 @@
                                     @elseif ($visitor->tipe_member == 'VVIP')
                                         <span class="label label-warning">{{ $visitor->tipe_member == 'VVIP' ? 'VIP' : 'Member' }}</span>
                                     @else
-                                        <span class="label label-primary">Umum</span>
+                                        <span class="label label-primary">Reguler</span>
                                     @endif
                                 </td>
                             </tr>
@@ -119,15 +119,15 @@
                             </tr>
                         </table>
                     </div>
-                    @include('layouts.footer')
-                </body>
+                </div>
             </div>
         </div>
+        @include('layouts.footer')
     </div>
 @endsection
 @push('scripts')
     <script>
-        $('.fa-print').on("click", function() {
+        $('.printin').on("click", function() {
             $('#cetak-invoice').printThis({
                 printContainer: true,
             });
