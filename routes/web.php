@@ -73,7 +73,9 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
         // Route::get('/laporan/permainan', [ReportController::class, 'games'])->name('report.games');
         // Route::get('/laporan/fasilitas', [ReportController::class, 'proshop'])->name('report.proshop');
         // Route::get('/laporan/kantin', [ReportController::class, 'canteen'])->name('report.canteen');
-        Route::get('/setting', [ReportController::class, 'index'])->name('setting');
+        Route::get('/setting', [ReportController::class, 'setting_limit'])->name('setting');
+        Route::get('/select/member', [ReportController::class, 'select_member'])->name('setting.select');
+        Route::post('/update/limit', [ReportController::class, 'update_limit'])->name('setting.limit');
     });
 });
 

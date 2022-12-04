@@ -203,7 +203,7 @@ class ScanqrController extends Controller
             $get_uri = explode('/', parse_url($request->getRequestUri(), PHP_URL_PATH));
             $visitor = Deposit::join('visitors', 'deposits.visitor_id', '=', 'visitors.id')->where('deposits.visitor_id', $get_uri[3])->first();
             $deposit = Deposit::where('visitor_id', $get_uri[3])->first();
-            $deposit->balance = $request->balance + $deposit->balance;
+            $deposit->balance = str_replace('.','',$request->balance) + $deposit->balance;
             $deposit->save();
 
             //notifikasi email
@@ -212,7 +212,7 @@ class ScanqrController extends Controller
             $datav = Visitor::find($id);
             $data['name'] = $datav->name;
             $data['tambahdeposit'] = $request->balance;
-            $data['sebelumdeposit'] = $deposit->balance - $request->balance;
+            $data['sebelumdeposit'] = $deposit->balance - str_replace('.','',$request->balance);
             $data['setelahdeposit'] = $deposit->balance;
             $data['quota'] = $log_limit->quota;
             $data['quota_kupon'] = $log_limit->quota_kupon;
@@ -231,7 +231,7 @@ class ScanqrController extends Controller
                 'user_id' => Auth::id(),
                 'fund' => $deposit->balance,
                 'status' => 'Bertambah',
-                'report_balance' => $request->balance,
+                'report_balance' => str_replace('.','',$request->balance),
             ]);
 
             return redirect()->back()->with('success', 'Berhasil menambah deposit');

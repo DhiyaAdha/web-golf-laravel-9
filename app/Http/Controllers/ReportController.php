@@ -6,6 +6,7 @@ use Carbon\CarbonPeriod;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Models\LogTransaction;
+use App\Models\SettingLimit;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -166,5 +167,29 @@ class ReportController extends Controller
                 return $data['created_at'];
             })->addIndexColumn()->make(true);
         }
+    }
+
+    public function setting_limit()
+    {
+        return view('setting.update-limit');
+    }
+
+    public function select_member(Request $request)
+    {
+        $limit = SettingLimit::where('tipe_member', $request->get('type_member'))->first();
+        return response()->json(['limit' => $limit->limit]);
+    }
+
+    public function update_limit(Request $request)
+    {
+        $this->validate($request, [
+            'tipe_member' => 'required',
+            'limit' => 'required',
+        ]);
+
+        $limit = SettingLimit::where('tipe_member', $request->tipe_member)->first();
+        $limit->limit = $request->limit;
+        $limit->save();
+        return redirect()->back()->with('success', 'Berhasil edit limit');
     }
 }
