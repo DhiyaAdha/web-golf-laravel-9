@@ -93,6 +93,13 @@
                                                 <div class="text-danger"> {{ $message }}</div>
                                             @enderror
                                         </div>
+                                        <div class="form-group @error('handicap') has-error @enderror">
+                                            <label class="control-label mb-10" for="">Handicap</label>
+                                            <input type="text" name="handicap" value="{{ $visitor->handicap }}" class="form-control" id="handicap" size="50px" placeholder="Masukan Jabatan" autofocus>
+                                                @error('handicap')
+                                                <div class="text-danger"> {{ $message }}</div>
+                                            @enderror
+                                        </div>
                                         <div class="form-group">
                                             <label class="control-label mb-5" for="">Jenis member
                                             <label class="switch" style="margin-top:10px;">

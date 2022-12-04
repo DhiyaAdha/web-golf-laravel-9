@@ -24,7 +24,7 @@
                         <img src="{{ asset('img/detail-kartutamu.jpg') }}" style="width: 100%; height: 200px;">
                     </div>
                 </div>
-                <div class="col-lg-6" data-title="Kartu Tamu"
+                <div class="col-lg-4" data-title="Kartu Tamu"
                     data-intro="Panel ini memberikan informasi data membership di tgcc. Berisi informasi nama, email, kode membership, jenil kelamin, jenis member, dan kategori member">
                     <div class="panel panel-default panel-dropdown card-view">
                         <div class="panel-heading">
@@ -59,7 +59,8 @@
                                                                 {{ QrCode::size(80)->generate($visitor->unique_qr) }}
                                                             </div>
                                                             <div class="identity">
-                                                                <h6 style="text-transform: uppercase; font-size:10pt; letter-spacing:1px;">
+                                                                <h6
+                                                                    style="text-transform: uppercase; font-size:14pt; letter-spacing:1px;">
                                                                     @php
                                                                         $visitor->name;
                                                                         $slice = explode(' ', $visitor->name);
@@ -67,11 +68,10 @@
                                                                     @endphp</h6>
                                                             </div>
                                                             <div class="codemember">
-                                                                <h5 style="text-transform: uppercase; font-size:8pt; line-height:400%; letter-spacing:1px;">
-                                                                    {{ $visitor->code_member }}</h5>
-                                                            </div>
+                                                                <h5
+                                                                    style="text-transform: uppercase; font-size:12pt; line-height:400%; letter-spacing:2px;">
 
-                                                            <div class="datetime ">
+                                                                    {{ $visitor->code_member }}</h5>
                                                                 <h6 style="font-size: 8px;font-weight: 600; color:#3d481e;">
                                                                     Berlaku hingga
                                                                     {{ \Carbon\Carbon::parse($visitor->expired_date)->format('d-m-Y') }}
@@ -88,9 +88,14 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="text-center">
-                                            <button type="button" class="btn btn-sm download-kartu-tamu" data-name="{{ $visitor->name }}"><i class="fa fa-download"></i> <b>Cetak Kartu Member</b></button>
+                                            <div class="text-center">
+                                                <button type="button" class="btn btn-sm download-kartu-tamu"
+                                                    style="margin-top: 200px;"><i class="fa fa-download"></i> <b>Download Kartu
+                                                        Member</b>
+                                                </button>
+                                                <a href="{{ route('printkartu') }}">DOWNLOAD KARTU MEMBER</a>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -134,33 +139,47 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3" >
+                <div class="col-lg-4" >
                     <div class="panel panel-default card-view limit" style="height: 238px;" data-title="Limit Tamu" data-intro="Panel ini memberikan informasi Kuota Limit membership yang tersisa, setiap membership mendapatkan kuota sesuai tipe member. kuota untuk member VIP 10 kuota dan MEMBER 4 kuota">
-                        <div class="panel-heading">
-                            <h6 class="panel-title text-center">Limit</h6>
-                            <div class="clearfix"></div>
+                        <div class="col-lg-6">
+                            <div class="panel-heading">
+                                <h6 class="panel-title text-center">Limit</h6>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div>
+                                <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
+                                    <img src="/dist/img/Golf.svg">
+                                    <h6 class="text-center">{{ $quota }}</h6>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
-                                <img src="/dist/img/Golf.svg">
-                                <h6 class="text-center">{{ $quota }}</h6>
+                        <div class="col-lg-6">
+                            <div class="panel-heading">
+                                <h6 class="panel-title text-center">Kupon</h6>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div>
+                                <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
+                                    <img src="/dist/img/Golf.svg">
+                                    <h6 class="text-center">{{ $quota_kupon ?? '0' }}</h6>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="panel panel-default card-view limit" style="height: 238px;" data-title="Kupon Tamu" data-intro="Panel ini memberikan informasi Kuota Kupon membership yang tersisa, kuota kupon hanya bisa didapat ketika membership menang perlombaan yang diselenggarakan tgcc.">
                         <div class="panel-heading">
-                            <h6 class="panel-title text-center">Kupon</h6>
+                            <h6 class="panel-title text-center">HandyCap</h6>
                             <div class="clearfix"></div>
                         </div>
                         <div>
                             <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
-                                <img src="/dist/img/Golf.svg">
-                                <h6 class="text-center">{{ $quota_kupon ?? '0' }}</h6>
+                                <img src="/dist/img/handycap.svg" style="width: 60px; height: 60px;">
+                                <h6 class="text-center">{{ $handicap }}</h6>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                     <div class="panel panel-default card-view limit" style="height: 238px;" data-title="Saldo" data-intro="Panel ini memberikan informasi Saldo tamu yang tersisa. Saldo bisa diisi melalui tambah deposit">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Saldo</h6>

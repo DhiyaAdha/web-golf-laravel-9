@@ -387,6 +387,12 @@ i.fa.fa-trash-o {
 .label-kantin {
     background: #1746a2;
 }
+.label-sewa {
+    background: #E32249;
+}
+.label-service {
+    background: #9A69E1;
+}
 
 .align-self-end {
     -ms-flex-item-align: end !important;
@@ -779,7 +785,7 @@ video {
 .resolution .identity {
     position: absolute;
     font-family: "Montserrat";
-    font-weight: 800;
+    font-weight: 750;
     top: 70%;
     right: 6%;
 }

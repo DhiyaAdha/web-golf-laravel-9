@@ -53,6 +53,18 @@
                                                             <label for="radio_11">Kantin</label>
                                                         </span>
                                                     </div>
+                                                    <div class="radio-inline pl-0">
+                                                        <span class="radio radio-info"> 
+                                                            <input type="radio" name="category" id="radio_12" value="rental" {{ old('category') == 'rental' ? 'checked' : '' }}>
+                                                            <label for="radio_12">Sewa</label>
+                                                        </span>
+                                                    </div>
+                                                    <div class="radio-inline pl-0">
+                                                        <span class="radio radio-info"> 
+                                                            <input type="radio" name="category" id="radio_13" value="service" {{ old('category') == 'service' ? 'checked' : '' }}>
+                                                            <label for="radio_13">Service Fee</label>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                                 @error('category')
                                                     <div class="text-danger"> {{ $message }}</div>
@@ -64,14 +76,14 @@
                                                 <div class="radio-list">
                                                     <div class="radio-inline pl-0">
                                                         <span class="radio radio-info"> 
-                                                            <input type="radio" name="status" id="radio_12" value="0" {{ old('status') == '0' ? 'checked' : '' }}>
-                                                            <label for="radio_12">ON</label>
+                                                            <input type="radio" name="status" id="radio_14" value="0" {{ old('status') == '0' ? 'checked' : '' }}>
+                                                            <label for="radio_14">ON</label>
                                                         </span>
                                                     </div>
                                                     <div class="radio-inline pl-0">
                                                         <span class="radio radio-info"> 
-                                                            <input type="radio" name="status" id="radio_13" value="1" {{ old('status') == '1' ? 'checked' : '' }}>
-                                                            <label for="radio_13">OFF</label>
+                                                            <input type="radio" name="status" id="radio_15" value="1" {{ old('status') == '1' ? 'checked' : '' }}>
+                                                            <label for="radio_15">OFF</label>
                                                         </span>
                                                     </div>
                                                 </div>
