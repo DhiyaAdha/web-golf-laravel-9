@@ -101,12 +101,16 @@ class OrderRegulerController extends Controller
         $cek_itemId = $cart->whereIn('id', $request->get('id'));
         $today = Carbon::now()->isoFormat('dddd');
         $price = 0;
-        if($today === 'Senin') {
-            $price += $package->price_discount;
-        } else if ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat') {
+        if ($package->category === 'default'){
+            if($today === 'Senin') {
+                $price += $package->price_discount;
+            } else if ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat') {
+                $price += $package->price_weekdays;
+            } else {
+                $price += $package->price_weekend;
+            }
+        }else{
             $price += $package->price_weekdays;
-        } else {
-            $price += $package->price_weekend;
         }
 
         $get_total = \Cart::session(auth()->id())->getTotal();
