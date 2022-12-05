@@ -46,12 +46,12 @@ class OrderController extends Controller
         $data['products'] = Package::orderBy('id', 'desc')->where('status', '0')->get();
         if ($request->ajax()) {
             return datatables()->of($data['products'])->editColumn('price_weekdays', function ($data) {
-                    return formatrupiah($data->price_weekdays);
-                })->editColumn('price_weekend', function ($data) {
-                    return formatrupiah($data->price_weekend);
-                })->addIndexColumn()->make(true);
+                return formatrupiah($data->price_weekdays);
+            })->editColumn('price_weekend', function ($data) {
+                return formatrupiah($data->price_weekend);
+            })->addIndexColumn()->make(true);
         }
-        if (! $request->hasValidSignature()) {
+        if (!$request->hasValidSignature()) {
             return \redirect('/analisis-tamu');
         }
         $data['today'] = Carbon::now()->isoFormat('dddd');
@@ -61,6 +61,8 @@ class OrderController extends Controller
         $data['default'] = Package::where('category', 'default')->where('status', 0)->get();
         $data['additional'] = Package::where('category', 'additional')->where('status', 0)->get();
         $data['others'] = Package::where('category', 'others')->where('status', 0)->get();
+        $data['sewa'] = Package::where('category', 'sewa')->where('status', 0)->get();
+        $data['service'] = Package::where('category', 'service')->where('status', 0)->get();
         $items = \Cart::session(request()->segment(2))->getContent();
 
         if (\Cart::isEmpty()) {
@@ -84,7 +86,7 @@ class OrderController extends Controller
         }
         $sub_total = \Cart::session(request()->segment(2))->getSubTotal();
         $total = \Cart::session(request()->segment(2))->getTotal();
-        $data['counted'] = ucwords(counted($total).' Rupiah');
+        $data['counted'] = ucwords(counted($total) . ' Rupiah');
 
         $data['data_total'] = [
             'sub_total' => $sub_total,
@@ -101,9 +103,9 @@ class OrderController extends Controller
         $cart = \Cart::session($request->get('member'))->getContent();
         $cek_itemId = $cart->whereIn('id', $request->get('package'));
         $today = Carbon::now()->isoFormat('dddd');
-        
+
         $price = 0;
-        if($today === 'Senin') {
+        if ($today === 'Senin') {
             $price += $package->price_discount;
         } else if ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat') {
             $price += $package->price_weekdays;
@@ -112,7 +114,7 @@ class OrderController extends Controller
         }
 
         $get_total = \Cart::session($request->get('member'))->getTotal();
-        $counted = ucwords(counted($get_total).' Rupiah');
+        $counted = ucwords(counted($get_total) . ' Rupiah');
         try {
             if ($cek_itemId->isNotEmpty()) {
                 if ($package->quantity == $cek_itemId[$request->get('package')]->quantity) {
@@ -137,11 +139,11 @@ class OrderController extends Controller
                     ], 200);
                 }
             } else {
-                if($visitor->expired_date <= Carbon::now()) {
+                if ($visitor->expired_date <= Carbon::now()) {
                     $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                     return response()->json($this->getResponse());
-                } elseif($visitor->status == 'inactive') {
+                } elseif ($visitor->status == 'inactive') {
                     $this->setResponse('INVALID', 'Member tidak aktif');
 
                     return response()->json($this->getResponse());
@@ -177,7 +179,7 @@ class OrderController extends Controller
                         $cart_data = collect($cart)->sortBy('created_at');
                     }
                     $get_total = \Cart::session($request->get('member'))->getTotal();
-                    $counted = ucwords(counted($get_total).' Rupiah');
+                    $counted = ucwords(counted($get_total) . ' Rupiah');
 
                     return response()->json([
                         'id' => $request->get('package'),
@@ -215,7 +217,7 @@ class OrderController extends Controller
                     ]);
                     $items = \Cart::session($request->get('member'))->getContent();
                     $get_total = \Cart::session($request->get('member'))->getTotal();
-                    $counted = ucwords(counted($get_total).' Rupiah');
+                    $counted = ucwords(counted($get_total) . ' Rupiah');
 
                     return response()->json([
                         'id' => $request->get('id'),
@@ -247,7 +249,7 @@ class OrderController extends Controller
                 if (\Cart::isEmpty()) {
                     $counted = '-';
                 } else {
-                    $counted = ucwords(counted($get_total).' Rupiah');
+                    $counted = ucwords(counted($get_total) . ' Rupiah');
                 }
 
                 return response()->json([
@@ -274,7 +276,7 @@ class OrderController extends Controller
             if (\Cart::isEmpty()) {
                 $counted = '-';
             } else {
-                $counted = ucwords(counted($get_total).' Rupiah');
+                $counted = ucwords(counted($get_total) . ' Rupiah');
             }
 
             return response()->json([
@@ -333,7 +335,7 @@ class OrderController extends Controller
                         'created_at' => $row->attributes['created_at'],
                         'category' => $package->category,
                     ];
-                    foreach($cek_itemId as $item) {
+                    foreach ($cek_itemId as $item) {
                         $item_default += $item['quantity'];
                     }
                 }
@@ -342,12 +344,14 @@ class OrderController extends Controller
                 $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
                 $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
                 $package_others = Package::whereIn('id', $id_package)->where('category', 'others')->get();
+                $package_sewa = Package::whereIn('id', $id_package)->where('category', 'sewa')->get();
+                $package_service = Package::whereIn('id', $id_package)->where('category', 'service')->get();
                 $orders = collect($cart)->sortBy('created_at');
-                foreach($package_default as $default) {
+                foreach ($package_default as $default) {
                     $price_single += $today === 'Sabtu' || $today === 'Minggu' ? $default['price_weekend'] : $default['price_weekdays'];
                 }
             }
-            $order_number = 'INV/'.Carbon::now()->format('Ymd').'/'.Carbon::now()->format('his');
+            $order_number = 'INV/' . Carbon::now()->format('Ymd') . '/' . Carbon::now()->format('his');
             $deposit = Deposit::where('visitor_id', $get_id)->first();
             $log_limit = LogLimit::where('visitor_id', $get_id)->first();
             $log_coupon = LogCoupon::where('visitor_id', $get_id)->first();
@@ -355,7 +359,7 @@ class OrderController extends Controller
                 return response()->json(['order_number' => $order_number]);
             }
 
-            return view('membership.checkout', compact('log_limit', 'log_coupon', 'get_id', 'price_single', 'item_default', 'package_default', 'package_additional', 'package_others', 'visitor', 'deposit', 'totalPrice', 'order_number', 'orders'))->render();
+            return view('membership.checkout', compact('log_limit', 'log_coupon', 'get_id', 'price_single', 'item_default', 'package_default', 'package_additional', 'package_service', 'visitor', 'deposit', 'totalPrice', 'order_number', 'orders'))->render();
         } catch (\Throwable $th) {
             return redirect()->to($link_pos);
         }
@@ -386,7 +390,7 @@ class OrderController extends Controller
         }
         $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
         $price_default = 0;
-        foreach($package_default as $default) {
+        foreach ($package_default as $default) {
             $price_default += $today === 'Sabtu' || $today === 'Minggu' ? $default['price_weekend'] : $default['price_weekdays'];
         }
         $orders = collect($cart)->sortBy('created_at');
@@ -462,7 +466,7 @@ class OrderController extends Controller
                     'price' => $row->getPriceSum(),
                     'created_at' => $row->attributes['created_at'],
                 ];
-                foreach($cek_itemId as $item) {
+                foreach ($cek_itemId as $item) {
                     $item_default += $item['quantity'];
                 }
             }
@@ -477,8 +481,14 @@ class OrderController extends Controller
         $priceOthers = Arr::where($cart, function ($value, $key) {
             return $value['category'] == 'others';
         });
+        $priceSewa = Arr::where($cart, function ($value, $key) {
+            return $value['category'] == 'sewa';
+        });
+        $priceService = Arr::where($cart, function ($value, $key) {
+            return $value['category'] == 'service';
+        });
         $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
-        foreach($package_default as $default) {
+        foreach ($package_default as $default) {
             $price_single += $today === 'Sabtu' || $today === 'Minggu' ? $default['price_weekend'] : $default['price_weekdays'];
         }
 
@@ -489,11 +499,11 @@ class OrderController extends Controller
                 return response()->json($this->getResponse());
             } else {
                 if ($req->get('type_single') == 4) {
-                    if($visitor->expired_date <= Carbon::now()) {
+                    if ($visitor->expired_date <= Carbon::now()) {
                         $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                         return response()->json($this->getResponse());
-                    } elseif($visitor->status == 'inactive') {
+                    } elseif ($visitor->status == 'inactive') {
                         $this->setResponse('INVALID', 'Member tidak aktif');
 
                         return response()->json($this->getResponse());
@@ -513,24 +523,28 @@ class OrderController extends Controller
                                     'user_id' => Auth()->id(),
                                     'cart' => serialize($cart_data),
                                     'payment_type' => serialize([
-                                        ['payment_type' => 'deposit',
+                                        [
+                                            'payment_type' => 'deposit',
                                             'transaction_amount' => $totalPrice,
                                             'balance' => $deposit->balance,
                                             'discount' => 0,
                                             'refund' => 0,
-                                        ], ]),
+                                        ],
+                                    ]),
                                     'payment_status' => 'paid',
                                     'total' => $totalPrice,
                                     'total_gross' => $totalPrice,
                                     'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                     'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                     'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                    'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                    'jml_service' => array_sum(array_column($priceService, 'price')),
                                 ]);
 
                                 LogAdmin::create([
                                     'user_id' => Auth::id(),
                                     'type' => 'CREATE',
-                                    'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                 ]);
 
                                 ReportDeposit::create([
@@ -555,11 +569,11 @@ class OrderController extends Controller
                         }
                     }
                 } elseif ($req->get('type_single') == 3) {
-                    if($visitor->expired_date <= Carbon::now()) {
+                    if ($visitor->expired_date <= Carbon::now()) {
                         $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                         return response()->json($this->getResponse());
-                    } elseif($visitor->status == 'inactive') {
+                    } elseif ($visitor->status == 'inactive') {
                         $this->setResponse('INVALID', 'Member tidak aktif');
 
                         return response()->json($this->getResponse());
@@ -598,7 +612,7 @@ class OrderController extends Controller
                                     LogAdmin::create([
                                         'user_id' => Auth::id(),
                                         'type' => 'CREATE',
-                                        'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                     ]);
 
                                     \Cart::session($req->get('page'))->clear();
@@ -617,11 +631,11 @@ class OrderController extends Controller
                         }
                     }
                 } elseif ($req->get('type_single') == 2) {
-                    if($visitor->expired_date <= Carbon::now()) {
+                    if ($visitor->expired_date <= Carbon::now()) {
                         $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                         return response()->json($this->getResponse());
-                    } elseif($visitor->status == 'inactive') {
+                    } elseif ($visitor->status == 'inactive') {
                         $this->setResponse('INVALID', 'Member tidak aktif');
 
                         return response()->json($this->getResponse());
@@ -649,7 +663,7 @@ class OrderController extends Controller
                                 } else {
                                     $cek_itemId = $items->whereIn('id', $id_package);
                                     $item_default = 0;
-                                    foreach($cek_itemId as $item) {
+                                    foreach ($cek_itemId as $item) {
                                         $item_default += $item['quantity'];
                                     }
                                     if ($item_default != 1) {
@@ -679,12 +693,14 @@ class OrderController extends Controller
                                                 'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                 'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                 'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                                'jml_service' => array_sum(array_column($priceService, 'price')),
                                             ]);
 
                                             LogAdmin::create([
                                                 'user_id' => Auth::id(),
                                                 'type' => 'CREATE',
-                                                'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                             ]);
 
                                             // informasi limit kupon
@@ -711,11 +727,11 @@ class OrderController extends Controller
                         }
                     }
                 } else {
-                    if($visitor->expired_date <= Carbon::now()) {
+                    if ($visitor->expired_date <= Carbon::now()) {
                         $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                         return response()->json($this->getResponse());
-                    } elseif($visitor->status == 'inactive') {
+                    } elseif ($visitor->status == 'inactive') {
                         $this->setResponse('INVALID', 'Member tidak aktif');
 
                         return response()->json($this->getResponse());
@@ -743,7 +759,7 @@ class OrderController extends Controller
                                 } else {
                                     $cek_itemId = $items->whereIn('id', $id_package);
                                     $item_default = 0;
-                                    foreach($cek_itemId as $item) {
+                                    foreach ($cek_itemId as $item) {
                                         $item_default += $item['quantity'];
                                     }
                                     if ($item_default != 1) {
@@ -773,12 +789,14 @@ class OrderController extends Controller
                                                 'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                 'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                 'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                                'jml_service' => array_sum(array_column($priceService, 'price')),
                                             ]);
 
                                             LogAdmin::create([
                                                 'user_id' => Auth::id(),
                                                 'type' => 'CREATE',
-                                                'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                             ]);
 
                                             // informasi limit bulanan
@@ -812,14 +830,14 @@ class OrderController extends Controller
 
                 return response()->json($this->getResponse());
             } else {
-                if($deposit->balance == $totalPrice) {
-                    if(count($req->get('type_multiple')) == 1) {
+                if ($deposit->balance == $totalPrice) {
+                    if (count($req->get('type_multiple')) == 1) {
                         if ($req->get('type_multiple')[0] == 'deposit') {
-                            if($visitor->expired_date <= Carbon::now()) {
+                            if ($visitor->expired_date <= Carbon::now()) {
                                 $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                 return response()->json($this->getResponse());
-                            } elseif($visitor->status == 'inactive') {
+                            } elseif ($visitor->status == 'inactive') {
                                 $this->setResponse('INVALID', 'Member tidak aktif');
 
                                 return response()->json($this->getResponse());
@@ -846,12 +864,14 @@ class OrderController extends Controller
                                         'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                         'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                         'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                        'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                        'jml_service' => array_sum(array_column($priceService, 'price')),
                                     ]);
 
                                     LogAdmin::create([
                                         'user_id' => Auth::id(),
                                         'type' => 'CREATE',
-                                        'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                     ]);
 
                                     ReportDeposit::create([
@@ -875,11 +895,11 @@ class OrderController extends Controller
                                 }
                             }
                         } elseif ($req->get('type_multiple')[0] == 'cash/transfer') {
-                            if($visitor->expired_date <= Carbon::now()) {
+                            if ($visitor->expired_date <= Carbon::now()) {
                                 $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                 return response()->json($this->getResponse());
-                            } elseif($visitor->status == 'inactive') {
+                            } elseif ($visitor->status == 'inactive') {
                                 $this->setResponse('INVALID', 'Member tidak aktif');
 
                                 return response()->json($this->getResponse());
@@ -910,12 +930,14 @@ class OrderController extends Controller
                                                     'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                     'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                     'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                    'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                                    'jml_service' => array_sum(array_column($priceService, 'price')),
                                                 ]);
 
                                                 LogAdmin::create([
                                                     'user_id' => Auth::id(),
                                                     'type' => 'CREATE',
-                                                    'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                                 ]);
 
                                                 \Cart::session($req->get('page'))->clear();
@@ -955,12 +977,14 @@ class OrderController extends Controller
                                                 'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                 'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                 'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                                'jml_service' => array_sum(array_column($priceService, 'price')),
                                             ]);
 
                                             LogAdmin::create([
                                                 'user_id' => Auth::id(),
                                                 'type' => 'CREATE',
-                                                'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                             ]);
 
                                             \Cart::session($req->get('page'))->clear();
@@ -979,16 +1003,16 @@ class OrderController extends Controller
                                 }
                             }
                         } elseif ($req->get('type_multiple')[0] == 'kupon') {
-                            if($visitor->expired_date <= Carbon::now()) {
+                            if ($visitor->expired_date <= Carbon::now()) {
                                 $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                 return response()->json($this->getResponse());
-                            } elseif($visitor->status == 'inactive') {
+                            } elseif ($visitor->status == 'inactive') {
                                 $this->setResponse('INVALID', 'Member tidak aktif');
 
                                 return response()->json($this->getResponse());
                             } else {
-                                if($item_default != 1) {
+                                if ($item_default != 1) {
                                     $this->setResponse('INVALID', 'Gunakan split deposit atau cash/transfer');
 
                                     return response()->json($this->getResponse());
@@ -1015,12 +1039,14 @@ class OrderController extends Controller
                                             'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                             'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                             'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                            'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                            'jml_service' => array_sum(array_column($priceService, 'price')),
                                         ]);
 
                                         LogAdmin::create([
                                             'user_id' => Auth::id(),
                                             'type' => 'CREATE',
-                                            'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                         ]);
 
                                         ReportCoupon::create([
@@ -1044,16 +1070,16 @@ class OrderController extends Controller
                                 }
                             }
                         } elseif ($req->get('type_multiple')[0] == 'limit') {
-                            if($visitor->expired_date <= Carbon::now()) {
+                            if ($visitor->expired_date <= Carbon::now()) {
                                 $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                 return response()->json($this->getResponse());
-                            } elseif($visitor->status == 'inactive') {
+                            } elseif ($visitor->status == 'inactive') {
                                 $this->setResponse('INVALID', 'Member tidak aktif');
 
                                 return response()->json($this->getResponse());
                             } else {
-                                if($item_default != 1) {
+                                if ($item_default != 1) {
                                     $this->setResponse('INVALID', 'Gunakan split deposit atau cash/transfer');
 
                                     return response()->json($this->getResponse());
@@ -1080,12 +1106,14 @@ class OrderController extends Controller
                                             'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                             'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                             'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                            'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                            'jml_service' => array_sum(array_column($priceService, 'price')),
                                         ]);
 
                                         LogAdmin::create([
                                             'user_id' => Auth::id(),
                                             'type' => 'CREATE',
-                                            'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                         ]);
 
                                         ReportLimit::create([
@@ -1110,13 +1138,13 @@ class OrderController extends Controller
                             }
                         }
                     } elseif (count($req->get('type_multiple')) == 2) {
-                        if($req->get('type_multiple')[0] == 'deposit') {
-                            if($req->get('type_multiple')[1] == 'cash/transfer') {
-                                if($visitor->expired_date <= Carbon::now()) {
+                        if ($req->get('type_multiple')[0] == 'deposit') {
+                            if ($req->get('type_multiple')[1] == 'cash/transfer') {
+                                if ($visitor->expired_date <= Carbon::now()) {
                                     $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                     return response()->json($this->getResponse());
-                                } elseif($visitor->status == 'inactive') {
+                                } elseif ($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', 'Member tidak aktif');
 
                                     return response()->json($this->getResponse());
@@ -1143,12 +1171,14 @@ class OrderController extends Controller
                                                     'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                     'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                     'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                    'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                                    'jml_service' => array_sum(array_column($priceService, 'price')),
                                                 ]);
 
                                                 LogAdmin::create([
                                                     'user_id' => Auth::id(),
                                                     'type' => 'CREATE',
-                                                    'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                                 ]);
 
                                                 ReportDeposit::create([
@@ -1170,7 +1200,6 @@ class OrderController extends Controller
                                                         'return' => $req->get('bayar_input'),
                                                     ]);
                                                 }
-
                                             } catch (\Throwable $th) {
                                                 return response()->json($this->getResponse());
                                             }
@@ -1194,12 +1223,14 @@ class OrderController extends Controller
                                                     'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                     'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                     'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                    'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                                    'jml_service' => array_sum(array_column($priceService, 'price')),
                                                 ]);
 
                                                 LogAdmin::create([
                                                     'user_id' => Auth::id(),
                                                     'type' => 'CREATE',
-                                                    'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                                 ]);
 
                                                 ReportDeposit::create([
@@ -1221,7 +1252,6 @@ class OrderController extends Controller
                                                         'return' => $req->get('bayar_input'),
                                                     ]);
                                                 }
-
                                             } catch (\Throwable $th) {
                                                 return response()->json($this->getResponse());
                                             }
@@ -1229,11 +1259,11 @@ class OrderController extends Controller
                                     }
                                 }
                             } elseif ($req->get('type_multiple')[1] == 'kupon') {
-                                if($visitor->expired_date <= Carbon::now()) {
+                                if ($visitor->expired_date <= Carbon::now()) {
                                     $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                     return response()->json($this->getResponse());
-                                } elseif($visitor->status == 'inactive') {
+                                } elseif ($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', 'Member tidak aktif');
 
                                     return response()->json($this->getResponse());
@@ -1257,12 +1287,14 @@ class OrderController extends Controller
                                             'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                             'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                             'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                            'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                            'jml_service' => array_sum(array_column($priceService, 'price')),
                                         ]);
 
                                         LogAdmin::create([
                                             'user_id' => Auth::id(),
                                             'type' => 'CREATE',
-                                            'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                         ]);
 
                                         ReportDeposit::create([
@@ -1299,11 +1331,11 @@ class OrderController extends Controller
                                     }
                                 }
                             } elseif ($req->get('type_multiple')[1] == 'limit') {
-                                if($visitor->expired_date <= Carbon::now()) {
+                                if ($visitor->expired_date <= Carbon::now()) {
                                     $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                     return response()->json($this->getResponse());
-                                } elseif($visitor->status == 'inactive') {
+                                } elseif ($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', 'Member tidak aktif');
 
                                     return response()->json($this->getResponse());
@@ -1327,12 +1359,14 @@ class OrderController extends Controller
                                             'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                             'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                             'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                            'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                            'jml_service' => array_sum(array_column($priceService, 'price')),
                                         ]);
 
                                         LogAdmin::create([
                                             'user_id' => Auth::id(),
                                             'type' => 'CREATE',
-                                            'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                         ]);
 
                                         ReportDeposit::create([
@@ -1369,13 +1403,13 @@ class OrderController extends Controller
                                     }
                                 }
                             }
-                        } elseif($req->get('type_multiple')[0] == 'cash/transfer') {
-                            if($req->get('type_multiple')[1] == 'kupon') {
-                                if($visitor->expired_date <= Carbon::now()) {
+                        } elseif ($req->get('type_multiple')[0] == 'cash/transfer') {
+                            if ($req->get('type_multiple')[1] == 'kupon') {
+                                if ($visitor->expired_date <= Carbon::now()) {
                                     $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                     return response()->json($this->getResponse());
-                                } elseif($visitor->status == 'inactive') {
+                                } elseif ($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', 'Member tidak aktif');
 
                                     return response()->json($this->getResponse());
@@ -1411,7 +1445,7 @@ class OrderController extends Controller
                                                 LogAdmin::create([
                                                     'user_id' => Auth::id(),
                                                     'type' => 'CREATE',
-                                                    'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                                 ]);
 
                                                 ReportCoupon::create([
@@ -1439,12 +1473,12 @@ class OrderController extends Controller
                                         }
                                     }
                                 }
-                            } elseif($req->get('type_multiple')[1] == 'limit') {
-                                if($visitor->expired_date <= Carbon::now()) {
+                            } elseif ($req->get('type_multiple')[1] == 'limit') {
+                                if ($visitor->expired_date <= Carbon::now()) {
                                     $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                     return response()->json($this->getResponse());
-                                } elseif($visitor->status == 'inactive') {
+                                } elseif ($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', 'Member tidak aktif');
 
                                     return response()->json($this->getResponse());
@@ -1480,7 +1514,7 @@ class OrderController extends Controller
                                                 LogAdmin::create([
                                                     'user_id' => Auth::id(),
                                                     'type' => 'CREATE',
-                                                    'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                                 ]);
 
                                                 ReportLimit::create([
@@ -1512,12 +1546,12 @@ class OrderController extends Controller
                         }
                     } elseif (count($req->get('type_multiple')) == 3) {
                         $remaining_balance = $totalPrice - $price_single;
-                        if($req->get('type_multiple')[2] == 'kupon') {
-                            if($visitor->expired_date <= Carbon::now()) {
+                        if ($req->get('type_multiple')[2] == 'kupon') {
+                            if ($visitor->expired_date <= Carbon::now()) {
                                 $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                 return response()->json($this->getResponse());
-                            } elseif($visitor->status == 'inactive') {
+                            } elseif ($visitor->status == 'inactive') {
                                 $this->setResponse('INVALID', 'Member tidak aktif');
 
                                 return response()->json($this->getResponse());
@@ -1540,6 +1574,8 @@ class OrderController extends Controller
                                             'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                             'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                             'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                            'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                            'jml_service' => array_sum(array_column($priceService, 'price')),
                                         ]);
 
                                         $log_coupon->quota_kupon = $log_coupon->quota_kupon - 1;
@@ -1548,7 +1584,7 @@ class OrderController extends Controller
                                         LogAdmin::create([
                                             'user_id' => Auth::id(),
                                             'type' => 'CREATE',
-                                            'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                         ]);
 
                                         ReportDeposit::create([
@@ -1599,6 +1635,8 @@ class OrderController extends Controller
                                             'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                             'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                             'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                            'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                            'jml_service' => array_sum(array_column($priceService, 'price')),
                                         ]);
 
                                         $log_coupon->quota_kupon = $log_coupon->quota_kupon - 1;
@@ -1608,7 +1646,7 @@ class OrderController extends Controller
                                         LogAdmin::create([
                                             'user_id' => Auth::id(),
                                             'type' => 'CREATE',
-                                            'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                         ]);
 
                                         ReportDeposit::create([
@@ -1642,11 +1680,11 @@ class OrderController extends Controller
                                 }
                             }
                         } elseif ($req->get('type_multiple')[2] == 'limit') {
-                            if($visitor->expired_date <= Carbon::now()) {
+                            if ($visitor->expired_date <= Carbon::now()) {
                                 $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                 return response()->json($this->getResponse());
-                            } elseif($visitor->status == 'inactive') {
+                            } elseif ($visitor->status == 'inactive') {
                                 $this->setResponse('INVALID', 'Member tidak aktif');
 
                                 return response()->json($this->getResponse());
@@ -1669,6 +1707,8 @@ class OrderController extends Controller
                                             'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                             'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                             'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                            'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                            'jml_service' => array_sum(array_column($priceService, 'price')),
                                         ]);
 
                                         $log_limit->quota = $log_limit->quota - 1;
@@ -1677,7 +1717,7 @@ class OrderController extends Controller
                                         LogAdmin::create([
                                             'user_id' => Auth::id(),
                                             'type' => 'CREATE',
-                                            'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                         ]);
 
                                         ReportDeposit::create([
@@ -1728,6 +1768,8 @@ class OrderController extends Controller
                                             'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                             'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                             'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                            'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                            'jml_service' => array_sum(array_column($priceService, 'price')),
                                         ]);
 
                                         $log_limit->quota = $log_limit->quota - 1;
@@ -1737,7 +1779,7 @@ class OrderController extends Controller
                                         LogAdmin::create([
                                             'user_id' => Auth::id(),
                                             'type' => 'CREATE',
-                                            'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                         ]);
 
                                         ReportDeposit::create([
@@ -1773,14 +1815,14 @@ class OrderController extends Controller
                         }
                     }
                 } else {
-                    if($deposit->balance < $totalPrice) {
-                        if(count($req->get('type_multiple')) == 1) {
+                    if ($deposit->balance < $totalPrice) {
+                        if (count($req->get('type_multiple')) == 1) {
                             if ($req->get('type_multiple')[0] == 'deposit') {
-                                if($visitor->expired_date <= Carbon::now()) {
+                                if ($visitor->expired_date <= Carbon::now()) {
                                     $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                     return response()->json($this->getResponse());
-                                } elseif($visitor->status == 'inactive') {
+                                } elseif ($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', 'Member tidak aktif');
 
                                     return response()->json($this->getResponse());
@@ -1792,11 +1834,11 @@ class OrderController extends Controller
                                     }
                                 }
                             } elseif ($req->get('type_multiple')[0] == 'cash/transfer') {
-                                if($visitor->expired_date <= Carbon::now()) {
+                                if ($visitor->expired_date <= Carbon::now()) {
                                     $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                     return response()->json($this->getResponse());
-                                } elseif($visitor->status == 'inactive') {
+                                } elseif ($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', 'Member tidak aktif');
 
                                     return response()->json($this->getResponse());
@@ -1832,7 +1874,7 @@ class OrderController extends Controller
                                                     LogAdmin::create([
                                                         'user_id' => Auth::id(),
                                                         'type' => 'CREATE',
-                                                        'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                                     ]);
 
                                                     \Cart::session($req->get('page'))->clear();
@@ -1877,7 +1919,7 @@ class OrderController extends Controller
                                                 LogAdmin::create([
                                                     'user_id' => Auth::id(),
                                                     'type' => 'CREATE',
-                                                    'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                                 ]);
 
                                                 \Cart::session($req->get('page'))->clear();
@@ -1895,17 +1937,17 @@ class OrderController extends Controller
                                         }
                                     }
                                 }
-                            } elseif($req->get('type_multiple')[0] == 'kupon') {
-                                if($visitor->expired_date <= Carbon::now()) {
+                            } elseif ($req->get('type_multiple')[0] == 'kupon') {
+                                if ($visitor->expired_date <= Carbon::now()) {
                                     $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                     return response()->json($this->getResponse());
-                                } elseif($visitor->status == 'inactive') {
+                                } elseif ($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', 'Member tidak aktif');
 
                                     return response()->json($this->getResponse());
                                 } else {
-                                    if($item_default != 1) {
+                                    if ($item_default != 1) {
                                         $this->setResponse('INVALID', 'Gunakan split deposit atau cash/transfer');
 
                                         return response()->json($this->getResponse());
@@ -1937,7 +1979,7 @@ class OrderController extends Controller
                                             LogAdmin::create([
                                                 'user_id' => Auth::id(),
                                                 'type' => 'CREATE',
-                                                'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                             ]);
 
                                             ReportCoupon::create([
@@ -1960,17 +2002,17 @@ class OrderController extends Controller
                                         }
                                     }
                                 }
-                            } elseif($req->get('type_multiple')[0] == 'limit') {
-                                if($visitor->expired_date <= Carbon::now()) {
+                            } elseif ($req->get('type_multiple')[0] == 'limit') {
+                                if ($visitor->expired_date <= Carbon::now()) {
                                     $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                     return response()->json($this->getResponse());
-                                } elseif($visitor->status == 'inactive') {
+                                } elseif ($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', 'Member tidak aktif');
 
                                     return response()->json($this->getResponse());
                                 } else {
-                                    if($item_default != 1) {
+                                    if ($item_default != 1) {
                                         $this->setResponse('INVALID', 'Gunakan split deposit atau cash/transfer');
 
                                         return response()->json($this->getResponse());
@@ -2002,7 +2044,7 @@ class OrderController extends Controller
                                             LogAdmin::create([
                                                 'user_id' => Auth::id(),
                                                 'type' => 'CREATE',
-                                                'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                             ]);
 
                                             ReportLimit::create([
@@ -2027,13 +2069,13 @@ class OrderController extends Controller
                                 }
                             }
                         } elseif (count($req->get('type_multiple')) == 2) {
-                            if($req->get('type_multiple')[0] == 'deposit') {
-                                if($req->get('type_multiple')[1] == 'cash/transfer') {
-                                    if($visitor->expired_date <= Carbon::now()) {
+                            if ($req->get('type_multiple')[0] == 'deposit') {
+                                if ($req->get('type_multiple')[1] == 'cash/transfer') {
+                                    if ($visitor->expired_date <= Carbon::now()) {
                                         $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                         return response()->json($this->getResponse());
-                                    } elseif($visitor->status == 'inactive') {
+                                    } elseif ($visitor->status == 'inactive') {
                                         $this->setResponse('INVALID', 'Member tidak aktif');
 
                                         return response()->json($this->getResponse());
@@ -2071,7 +2113,7 @@ class OrderController extends Controller
                                                         LogAdmin::create([
                                                             'user_id' => Auth::id(),
                                                             'type' => 'CREATE',
-                                                            'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                                         ]);
 
                                                         ReportDeposit::create([
@@ -2090,7 +2132,6 @@ class OrderController extends Controller
 
                                                             return response()->json($this->getResponse());
                                                         }
-
                                                     } catch (Throwable $e) {
                                                         return response()->json($this->getResponse());
                                                     }
@@ -2125,7 +2166,7 @@ class OrderController extends Controller
                                                     LogAdmin::create([
                                                         'user_id' => Auth::id(),
                                                         'type' => 'CREATE',
-                                                        'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                                     ]);
 
                                                     ReportDeposit::create([
@@ -2144,25 +2185,24 @@ class OrderController extends Controller
 
                                                         return response()->json($this->getResponse());
                                                     }
-
                                                 } catch (Throwable $e) {
                                                     return response()->json($this->getResponse());
                                                 }
                                             }
                                         }
                                     }
-                                } elseif($req->get('type_multiple')[1] == 'kupon') {
+                                } elseif ($req->get('type_multiple')[1] == 'kupon') {
                                     $remaining_balance = $totalPrice - $deposit->balance;
-                                    if($visitor->expired_date <= Carbon::now()) {
+                                    if ($visitor->expired_date <= Carbon::now()) {
                                         $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                         return response()->json($this->getResponse());
-                                    } elseif($visitor->status == 'inactive') {
+                                    } elseif ($visitor->status == 'inactive') {
                                         $this->setResponse('INVALID', 'Member tidak aktif');
 
                                         return response()->json($this->getResponse());
                                     } else {
-                                        if($remaining_balance != $price_single) {
+                                        if ($remaining_balance != $price_single) {
                                             if ($remaining_balance >= $price_single) {
                                                 $this->setResponse('INVALID', 'Tambahkan cash/transfer untuk sisa bayar');
 
@@ -2200,7 +2240,7 @@ class OrderController extends Controller
                                                 LogAdmin::create([
                                                     'user_id' => Auth::id(),
                                                     'type' => 'CREATE',
-                                                    'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                                 ]);
 
                                                 ReportDeposit::create([
@@ -2233,18 +2273,18 @@ class OrderController extends Controller
                                             }
                                         }
                                     }
-                                } elseif($req->get('type_multiple')[1] == 'limit') {
+                                } elseif ($req->get('type_multiple')[1] == 'limit') {
                                     $remaining_balance = $totalPrice - $deposit->balance;
-                                    if($visitor->expired_date <= Carbon::now()) {
+                                    if ($visitor->expired_date <= Carbon::now()) {
                                         $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                         return response()->json($this->getResponse());
-                                    } elseif($visitor->status == 'inactive') {
+                                    } elseif ($visitor->status == 'inactive') {
                                         $this->setResponse('INVALID', 'Member tidak aktif');
 
                                         return response()->json($this->getResponse());
                                     } else {
-                                        if($remaining_balance != $price_single) {
+                                        if ($remaining_balance != $price_single) {
                                             if ($remaining_balance >= $price_single) {
                                                 $this->setResponse('INVALID', 'Tambahkan cash/transfer untuk sisa bayar');
 
@@ -2282,7 +2322,7 @@ class OrderController extends Controller
                                                 LogAdmin::create([
                                                     'user_id' => Auth::id(),
                                                     'type' => 'CREATE',
-                                                    'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                                 ]);
 
                                                 ReportDeposit::create([
@@ -2316,13 +2356,13 @@ class OrderController extends Controller
                                         }
                                     }
                                 }
-                            } elseif($req->get('type_multiple')[0] == 'cash/transfer') {
-                                if($req->get('type_multiple')[1] == 'kupon') {
-                                    if($visitor->expired_date <= Carbon::now()) {
+                            } elseif ($req->get('type_multiple')[0] == 'cash/transfer') {
+                                if ($req->get('type_multiple')[1] == 'kupon') {
+                                    if ($visitor->expired_date <= Carbon::now()) {
                                         $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                         return response()->json($this->getResponse());
-                                    } elseif($visitor->status == 'inactive') {
+                                    } elseif ($visitor->status == 'inactive') {
                                         $this->setResponse('INVALID', 'Member tidak aktif');
 
                                         return response()->json($this->getResponse());
@@ -2333,8 +2373,8 @@ class OrderController extends Controller
                                             return response()->json($this->getResponse());
                                         } else {
                                             $coupon_free = $totalPrice - $price_single;
-                                            if($req->get('bayar_input') != $coupon_free) {
-                                                if($req->get('bayar_input') >= $coupon_free) {
+                                            if ($req->get('bayar_input') != $coupon_free) {
+                                                if ($req->get('bayar_input') >= $coupon_free) {
                                                     $log_coupon->quota_kupon = $log_coupon->quota_kupon - 1;
                                                     $log_coupon->save();
 
@@ -2359,7 +2399,7 @@ class OrderController extends Controller
                                                         LogAdmin::create([
                                                             'user_id' => Auth::id(),
                                                             'type' => 'CREATE',
-                                                            'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                                         ]);
 
                                                         ReportCoupon::create([
@@ -2411,7 +2451,7 @@ class OrderController extends Controller
                                                     LogAdmin::create([
                                                         'user_id' => Auth::id(),
                                                         'type' => 'CREATE',
-                                                        'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                                     ]);
 
                                                     ReportCoupon::create([
@@ -2437,12 +2477,12 @@ class OrderController extends Controller
                                             }
                                         }
                                     }
-                                } elseif($req->get('type_multiple')[1] == 'limit') {
-                                    if($visitor->expired_date <= Carbon::now()) {
+                                } elseif ($req->get('type_multiple')[1] == 'limit') {
+                                    if ($visitor->expired_date <= Carbon::now()) {
                                         $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                         return response()->json($this->getResponse());
-                                    } elseif($visitor->status == 'inactive') {
+                                    } elseif ($visitor->status == 'inactive') {
                                         $this->setResponse('INVALID', 'Member tidak aktif');
 
                                         return response()->json($this->getResponse());
@@ -2453,8 +2493,8 @@ class OrderController extends Controller
                                             return response()->json($this->getResponse());
                                         } else {
                                             $limit_free = $totalPrice - $price_single;
-                                            if($req->get('bayar_input') != $limit_free) {
-                                                if($req->get('bayar_input') >= $limit_free) {
+                                            if ($req->get('bayar_input') != $limit_free) {
+                                                if ($req->get('bayar_input') >= $limit_free) {
                                                     $log_limit->quota = $log_limit->quota - 1;
                                                     $log_limit->save();
 
@@ -2479,7 +2519,7 @@ class OrderController extends Controller
                                                         LogAdmin::create([
                                                             'user_id' => Auth::id(),
                                                             'type' => 'CREATE',
-                                                            'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                                         ]);
 
                                                         ReportLimit::create([
@@ -2531,7 +2571,7 @@ class OrderController extends Controller
                                                     LogAdmin::create([
                                                         'user_id' => Auth::id(),
                                                         'type' => 'CREATE',
-                                                        'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                                     ]);
 
                                                     ReportLimit::create([
@@ -2564,12 +2604,12 @@ class OrderController extends Controller
                             $deposit_before = $deposit->balance;
                             $minus_deposit = $disc - $deposit->balance;
                             $deposit->balance = $deposit->balance - $deposit->balance;
-                            if($req->get('type_multiple')[2] == 'kupon') {
-                                if($visitor->expired_date <= Carbon::now()) {
+                            if ($req->get('type_multiple')[2] == 'kupon') {
+                                if ($visitor->expired_date <= Carbon::now()) {
                                     $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                     return response()->json($this->getResponse());
-                                } elseif($visitor->status == 'inactive') {
+                                } elseif ($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', 'Member tidak aktif');
 
                                     return response()->json($this->getResponse());
@@ -2610,7 +2650,7 @@ class OrderController extends Controller
                                                 LogAdmin::create([
                                                     'user_id' => Auth::id(),
                                                     'type' => 'CREATE',
-                                                    'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                                 ]);
 
                                                 ReportDeposit::create([
@@ -2646,12 +2686,12 @@ class OrderController extends Controller
                                         }
                                     }
                                 }
-                            } elseif($req->get('type_multiple')[2] == 'limit') {
-                                if($visitor->expired_date <= Carbon::now()) {
+                            } elseif ($req->get('type_multiple')[2] == 'limit') {
+                                if ($visitor->expired_date <= Carbon::now()) {
                                     $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                     return response()->json($this->getResponse());
-                                } elseif($visitor->status == 'inactive') {
+                                } elseif ($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', 'Member tidak aktif');
 
                                     return response()->json($this->getResponse());
@@ -2692,7 +2732,7 @@ class OrderController extends Controller
                                                 LogAdmin::create([
                                                     'user_id' => Auth::id(),
                                                     'type' => 'CREATE',
-                                                    'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                                 ]);
 
                                                 ReportDeposit::create([
@@ -2731,13 +2771,13 @@ class OrderController extends Controller
                             }
                         }
                     } else {
-                        if(count($req->get('type_multiple')) == 1) {
+                        if (count($req->get('type_multiple')) == 1) {
                             if ($req->get('type_multiple')[0] == 'deposit') {
-                                if($visitor->expired_date <= Carbon::now()) {
+                                if ($visitor->expired_date <= Carbon::now()) {
                                     $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                     return response()->json($this->getResponse());
-                                } elseif($visitor->status == 'inactive') {
+                                } elseif ($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', 'Member tidak aktif');
 
                                     return response()->json($this->getResponse());
@@ -2764,12 +2804,14 @@ class OrderController extends Controller
                                             'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                             'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                             'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                            'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                            'jml_service' => array_sum(array_column($priceService, 'price')),
                                         ]);
 
                                         LogAdmin::create([
                                             'user_id' => Auth::id(),
                                             'type' => 'CREATE',
-                                            'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                            'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                         ]);
 
                                         ReportDeposit::create([
@@ -2793,11 +2835,11 @@ class OrderController extends Controller
                                     }
                                 }
                             } elseif ($req->get('type_multiple')[0] == 'cash/transfer') {
-                                if($visitor->expired_date <= Carbon::now()) {
+                                if ($visitor->expired_date <= Carbon::now()) {
                                     $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                     return response()->json($this->getResponse());
-                                } elseif($visitor->status == 'inactive') {
+                                } elseif ($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', 'Member tidak aktif');
 
                                     return response()->json($this->getResponse());
@@ -2833,7 +2875,7 @@ class OrderController extends Controller
                                                     LogAdmin::create([
                                                         'user_id' => Auth::id(),
                                                         'type' => 'CREATE',
-                                                        'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                                     ]);
 
                                                     \Cart::session($req->get('page'))->clear();
@@ -2878,7 +2920,7 @@ class OrderController extends Controller
                                                 LogAdmin::create([
                                                     'user_id' => Auth::id(),
                                                     'type' => 'CREATE',
-                                                    'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                    'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                                 ]);
 
                                                 \Cart::session($req->get('page'))->clear();
@@ -2897,16 +2939,16 @@ class OrderController extends Controller
                                     }
                                 }
                             } elseif ($req->get('type_multiple')[0] == 'kupon') {
-                                if($visitor->expired_date <= Carbon::now()) {
+                                if ($visitor->expired_date <= Carbon::now()) {
                                     $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                     return response()->json($this->getResponse());
-                                } elseif($visitor->status == 'inactive') {
+                                } elseif ($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', 'Member tidak aktif');
 
                                     return response()->json($this->getResponse());
                                 } else {
-                                    if($item_default != 1) {
+                                    if ($item_default != 1) {
                                         $this->setResponse('INVALID', 'Gunakan split deposit atau cash/transfer');
 
                                         return response()->json($this->getResponse());
@@ -2938,7 +2980,7 @@ class OrderController extends Controller
                                             LogAdmin::create([
                                                 'user_id' => Auth::id(),
                                                 'type' => 'CREATE',
-                                                'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                             ]);
 
                                             ReportCoupon::create([
@@ -2962,16 +3004,16 @@ class OrderController extends Controller
                                     }
                                 }
                             } elseif ($req->get('type_multiple')[0] == 'limit') {
-                                if($visitor->expired_date <= Carbon::now()) {
+                                if ($visitor->expired_date <= Carbon::now()) {
                                     $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                     return response()->json($this->getResponse());
-                                } elseif($visitor->status == 'inactive') {
+                                } elseif ($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', 'Member tidak aktif');
 
                                     return response()->json($this->getResponse());
                                 } else {
-                                    if($item_default != 1) {
+                                    if ($item_default != 1) {
                                         $this->setResponse('INVALID', 'Gunakan split deposit atau cash/transfer');
 
                                         return response()->json($this->getResponse());
@@ -3003,7 +3045,7 @@ class OrderController extends Controller
                                             LogAdmin::create([
                                                 'user_id' => Auth::id(),
                                                 'type' => 'CREATE',
-                                                'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                             ]);
 
                                             ReportLimit::create([
@@ -3028,13 +3070,13 @@ class OrderController extends Controller
                                 }
                             }
                         } elseif (count($req->get('type_multiple')) == 2) {
-                            if($req->get('type_multiple')[0] == 'deposit') {
-                                if($req->get('type_multiple')[1] == 'cash/transfer') {
-                                    if($visitor->expired_date <= Carbon::now()) {
+                            if ($req->get('type_multiple')[0] == 'deposit') {
+                                if ($req->get('type_multiple')[1] == 'cash/transfer') {
+                                    if ($visitor->expired_date <= Carbon::now()) {
                                         $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                         return response()->json($this->getResponse());
-                                    } elseif($visitor->status == 'inactive') {
+                                    } elseif ($visitor->status == 'inactive') {
                                         $this->setResponse('INVALID', 'Member tidak aktif');
 
                                         return response()->json($this->getResponse());
@@ -3066,7 +3108,7 @@ class OrderController extends Controller
                                                     LogAdmin::create([
                                                         'user_id' => Auth::id(),
                                                         'type' => 'CREATE',
-                                                        'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                                     ]);
 
                                                     ReportDeposit::create([
@@ -3088,7 +3130,6 @@ class OrderController extends Controller
                                                             'return' => $req->get('bayar_input'),
                                                         ]);
                                                     }
-
                                                 } catch (\Throwable $th) {
                                                     return response()->json($this->getResponse());
                                                 }
@@ -3117,7 +3158,7 @@ class OrderController extends Controller
                                                     LogAdmin::create([
                                                         'user_id' => Auth::id(),
                                                         'type' => 'CREATE',
-                                                        'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                                     ]);
 
                                                     ReportDeposit::create([
@@ -3139,7 +3180,6 @@ class OrderController extends Controller
                                                             'return' => $req->get('bayar_input'),
                                                         ]);
                                                     }
-
                                                 } catch (\Throwable $th) {
                                                     return response()->json($this->getResponse());
                                                 }
@@ -3147,11 +3187,11 @@ class OrderController extends Controller
                                         }
                                     }
                                 } elseif ($req->get('type_multiple')[1] == 'kupon') {
-                                    if($visitor->expired_date <= Carbon::now()) {
+                                    if ($visitor->expired_date <= Carbon::now()) {
                                         $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                         return response()->json($this->getResponse());
-                                    } elseif($visitor->status == 'inactive') {
+                                    } elseif ($visitor->status == 'inactive') {
                                         $this->setResponse('INVALID', 'Member tidak aktif');
 
                                         return response()->json($this->getResponse());
@@ -3180,7 +3220,7 @@ class OrderController extends Controller
                                             LogAdmin::create([
                                                 'user_id' => Auth::id(),
                                                 'type' => 'CREATE',
-                                                'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                             ]);
 
                                             ReportDeposit::create([
@@ -3218,11 +3258,11 @@ class OrderController extends Controller
                                         }
                                     }
                                 } elseif ($req->get('type_multiple')[1] == 'limit') {
-                                    if($visitor->expired_date <= Carbon::now()) {
+                                    if ($visitor->expired_date <= Carbon::now()) {
                                         $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                         return response()->json($this->getResponse());
-                                    } elseif($visitor->status == 'inactive') {
+                                    } elseif ($visitor->status == 'inactive') {
                                         $this->setResponse('INVALID', 'Member tidak aktif');
 
                                         return response()->json($this->getResponse());
@@ -3251,7 +3291,7 @@ class OrderController extends Controller
                                             LogAdmin::create([
                                                 'user_id' => Auth::id(),
                                                 'type' => 'CREATE',
-                                                'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                             ]);
 
                                             ReportDeposit::create([
@@ -3289,13 +3329,13 @@ class OrderController extends Controller
                                         }
                                     }
                                 }
-                            } elseif($req->get('type_multiple')[0] == 'cash/transfer') {
-                                if($req->get('type_multiple')[1] == 'kupon') {
-                                    if($visitor->expired_date <= Carbon::now()) {
+                            } elseif ($req->get('type_multiple')[0] == 'cash/transfer') {
+                                if ($req->get('type_multiple')[1] == 'kupon') {
+                                    if ($visitor->expired_date <= Carbon::now()) {
                                         $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                         return response()->json($this->getResponse());
-                                    } elseif($visitor->status == 'inactive') {
+                                    } elseif ($visitor->status == 'inactive') {
                                         $this->setResponse('INVALID', 'Member tidak aktif');
 
                                         return response()->json($this->getResponse());
@@ -3331,7 +3371,7 @@ class OrderController extends Controller
                                                     LogAdmin::create([
                                                         'user_id' => Auth::id(),
                                                         'type' => 'CREATE',
-                                                        'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                                     ]);
 
                                                     ReportCoupon::create([
@@ -3365,12 +3405,12 @@ class OrderController extends Controller
                                             }
                                         }
                                     }
-                                } elseif($req->get('type_multiple')[1] == 'limit') {
-                                    if($visitor->expired_date <= Carbon::now()) {
+                                } elseif ($req->get('type_multiple')[1] == 'limit') {
+                                    if ($visitor->expired_date <= Carbon::now()) {
                                         $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                         return response()->json($this->getResponse());
-                                    } elseif($visitor->status == 'inactive') {
+                                    } elseif ($visitor->status == 'inactive') {
                                         $this->setResponse('INVALID', 'Member tidak aktif');
 
                                         return response()->json($this->getResponse());
@@ -3406,7 +3446,7 @@ class OrderController extends Controller
                                                     LogAdmin::create([
                                                         'user_id' => Auth::id(),
                                                         'type' => 'CREATE',
-                                                        'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                        'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                                     ]);
 
                                                     ReportLimit::create([
@@ -3438,12 +3478,12 @@ class OrderController extends Controller
                             }
                         } elseif (count($req->get('type_multiple')) == 3) {
                             $remaining_balance = $totalPrice - $price_single;
-                            if($req->get('type_multiple')[2] == 'kupon') {
-                                if($visitor->expired_date <= Carbon::now()) {
+                            if ($req->get('type_multiple')[2] == 'kupon') {
+                                if ($visitor->expired_date <= Carbon::now()) {
                                     $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                     return response()->json($this->getResponse());
-                                } elseif($visitor->status == 'inactive') {
+                                } elseif ($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', 'Member tidak aktif');
 
                                     return response()->json($this->getResponse());
@@ -3474,7 +3514,7 @@ class OrderController extends Controller
                                             LogAdmin::create([
                                                 'user_id' => Auth::id(),
                                                 'type' => 'CREATE',
-                                                'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                             ]);
 
                                             ReportDeposit::create([
@@ -3534,7 +3574,7 @@ class OrderController extends Controller
                                             LogAdmin::create([
                                                 'user_id' => Auth::id(),
                                                 'type' => 'CREATE',
-                                                'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                             ]);
 
                                             ReportDeposit::create([
@@ -3568,11 +3608,11 @@ class OrderController extends Controller
                                     }
                                 }
                             } elseif ($req->get('type_multiple')[2] == 'limit') {
-                                if($visitor->expired_date <= Carbon::now()) {
+                                if ($visitor->expired_date <= Carbon::now()) {
                                     $this->setResponse('INVALID', 'Masa berlaku member habis');
 
                                     return response()->json($this->getResponse());
-                                } elseif($visitor->status == 'inactive') {
+                                } elseif ($visitor->status == 'inactive') {
                                     $this->setResponse('INVALID', 'Member tidak aktif');
 
                                     return response()->json($this->getResponse());
@@ -3603,7 +3643,7 @@ class OrderController extends Controller
                                             LogAdmin::create([
                                                 'user_id' => Auth::id(),
                                                 'type' => 'CREATE',
-                                                'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                             ]);
 
                                             ReportDeposit::create([
@@ -3663,7 +3703,7 @@ class OrderController extends Controller
                                             LogAdmin::create([
                                                 'user_id' => Auth::id(),
                                                 'type' => 'CREATE',
-                                                'activities' => 'Melakukan transaksi tamu <b>'.$visitor->name.'</b>',
+                                                'activities' => 'Melakukan transaksi tamu <b>' . $visitor->name . '</b>',
                                             ]);
 
                                             ReportDeposit::create([
@@ -3727,7 +3767,7 @@ class OrderController extends Controller
                 $data['refund'] += $get['refund'];
                 $data['transaction_amount'] += $get['transaction_amount'];
             }
-            $data['counted'] = ucwords(counted($data['log_transaction']->total).' Rupiah');
+            $data['counted'] = ucwords(counted($data['log_transaction']->total) . ' Rupiah');
 
             return view('membership.print-invoice', $data);
         } catch (Throwable $e) {

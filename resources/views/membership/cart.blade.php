@@ -84,6 +84,46 @@
                                     class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
                             @endforeach
                         </div>
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <strong class="panel-title txt-dark">Penyewaan</strong>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="d-flex flex-wrap mb-15" data-title="Sewa" data-intro="Pilih jenis layanan penyewaan">
+                            @foreach ($sewa as $item)
+                                <button type="button" id="package-{{ $item->id }}"
+                                    onclick="addCart({{ $item->id }})" data-toggle="tooltip"
+                                    @if ($today === 'Senin')
+                                        title="Rp. {{ number_format($item->price_discount, 0, ',', '.') }}"
+                                    @elseif ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat')
+                                        title="Rp. {{ number_format($item->price_weekdays, 0, ',', '.') }}"
+                                    @else
+                                        title="Rp. {{ number_format($item->price_weekend, 0, ',', '.') }}"
+                                    @endif
+                                    class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
+                            @endforeach
+                        </div>
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <strong class="panel-title txt-dark">Service Fee</strong>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="d-flex flex-wrap mb-15" data-title="Sewa" data-intro="Pilih jenis layanan penyewaan">
+                            @foreach ($service as $item)
+                                <button type="button" id="package-{{ $item->id }}"
+                                    onclick="addCart({{ $item->id }})" data-toggle="tooltip"
+                                    @if ($today === 'Senin')
+                                        title="Rp. {{ number_format($item->price_discount, 0, ',', '.') }}"
+                                    @elseif ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat')
+                                        title="Rp. {{ number_format($item->price_weekdays, 0, ',', '.') }}"
+                                    @else
+                                        title="Rp. {{ number_format($item->price_weekend, 0, ',', '.') }}"
+                                    @endif
+                                    class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-4 sticky">
