@@ -481,11 +481,11 @@ class TamuController extends Controller
         $aktifitas_deposit = ReportDeposit::select('id', 'report_balance', 'payment_type', 'status', 'visitor_id', 'user_id', 'fund', 'created_at')->where('visitor_id', $decrypt_id)->where('fund', '!=', 0)->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
             return datatables()->of($aktifitas_deposit)->editColumn('report_balance', function ($data) {
-                return 'Rp. '.number_format($data->fund, 0, ',', '.');
+                return formatrupiah($data->fund);
             })->addColumn(
                 'transaction',
                 function ($data) {
-                    return 'Rp. '.number_format($data->report_balance, 0, ',', '.');
+                    return formatrupiah($data->report_balance);
                 }
             )->addColumn('payment_type', function ($data) {
                 if ($data->payment_type == 'cash') {
@@ -507,6 +507,37 @@ class TamuController extends Controller
         }
     }
     /* end data aktifitas tamu Deposit */
+
+    /* data history tamu Deposit */
+    public function historydeposit(Request $request)
+    {
+        $history_deposit = ReportDeposit::join('visitors', 'report_deposits.visitor_id', '=', 'visitors.id')
+        ->where('report_deposits.fund', '!=', 0)
+        ->when($request->filter, function ($query, $filter) {
+            $query->where('report_deposits.payment_type', $filter);
+        })
+        ->orderBy('report_deposits.id', 'desc')
+        ->get(['report_deposits.*', 'visitors.name as name']);
+
+        if ($request->ajax()) {
+            return datatables()->of($history_deposit)->addColumn('name', function ($data) {
+                return $data->name;
+            })->addColumn('report_balance', function($data){
+                return formatrupiah($data->report_balance);
+            })->addColumn('fund', function($data){
+                return formatrupiah($data->fund);
+            })->addColumn('payment_type', function($data){
+                if ($data->payment_type == 'cash') {
+                    return '<p class="label label-success">'.$data->payment_type.'</p>';
+                } elseif ($data->payment_type == 'transfer') {
+                    return '<p class="label label-warning">'.$data->payment_type.'</p>';
+                }
+            })->addColumn('created_at', function($data){
+                return $data->created_at->translatedFormat('d F Y').', '.$data->created_at->translatedFormat('h:i a');
+            })->rawColumns(['name', 'report_balance', 'fund', 'payment_type', 'created_at'])->make(true);
+        }
+    }
+    /* end data history tamu Deposit */
 
     /* data aktifitas tamu limit */
     public function reportlimit(Request $request, $id)
@@ -696,7 +727,7 @@ class TamuController extends Controller
             })->editColumn('created_at', function ($data) {
                 return date_format($data->created_at, 'd-m-Y H:i');
             })->editColumn('total_gross', function ($data) {
-                return 'Rp. '.number_format($data->total_gross, 0, ',', '.');
+                return formatrupiah($data->total_gross);
             })->editColumn('transaction_id', function ($data) {
                 return $data->id;
             })->rawColumns(['order_number', 'total_gross', 'information', 'status', 'created_at'])->make(true);

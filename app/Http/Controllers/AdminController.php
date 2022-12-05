@@ -19,7 +19,7 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-        $user = User::join('roles', 'users.role_id', '=', 'roles.id')->orderBy('users.last_seen', 'DESC')->get(['users.*', 'roles.name as role']);
+        $user = User::join('roles', 'users.role_id', '=', 'roles.id')->orderBy('users.last_seen', 'desc')->get(['users.*', 'roles.name as role']);
         if ($request->ajax()) {
             return datatables()->of($user)->addColumn('action', function ($user) {
                 if(Cache::has('user-is-online-'.$user->id)) {
@@ -62,9 +62,9 @@ class AdminController extends Controller
         $this->validate(
             $request,
             [
-                'name' => 'required|unique:visitors,name',
+                'name' => 'required|unique:visitors,name,'.$id,
                 'email' => 'required|unique:visitors,email|regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/',
-                'phone' => 'required|min:12',
+                'phone' => 'required|numeric|digits_between:11,12',
                 'role_id' => 'required',
             ],
             [
@@ -74,6 +74,8 @@ class AdminController extends Controller
                 'email.unique' => 'Email sudah ada',
                 'email.regex' => 'Email tidak valid',
                 'phone.required' => 'Nomer Hp admin masih kosong.',
+                'phone.numeric' => 'Nomer Hp admin hanya boleh angka',
+                'phone.digits_between' => 'Nomer Hp admin minimal 11 digit',
                 'role_id.required' => ' Role admin masih kosong.',
             ]
         );
@@ -167,7 +169,7 @@ class AdminController extends Controller
                 'email' => 'required|unique:users,email|unique:visitors,email|regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/',
                 'password' => 'required|min:8',
                 'password_confirmation' => 'required_with:password|same:password|min:8',
-                'phone' => 'required|unique:users,phone|min:12',
+                'phone' => 'required|numeric|unique:users,phone|digits_between:11,12',
                 'role_id' => 'required',
             ],
             [
@@ -178,6 +180,7 @@ class AdminController extends Controller
                 'email.regex' => 'Email tidak valid',
                 'phone.required' => 'Nomer Hp admin masih kosong.',
                 'phone.unique' => 'Nomer Hp admin sudah ada',
+                'phone.digits_between' => 'Nomer Hp admin minimal 11 digit',
                 'password.required' => 'Password admin masih kosong.',
                 'password_confirmation.min' => 'Minimal 8 karakter',
                 'password_confirmation.same' => 'Password tidak sama',

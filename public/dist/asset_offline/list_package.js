@@ -35,6 +35,11 @@ $('#dt-package').DataTable({
         },
         {
             "data": function(data) {
+                return `<p>${data.price_discount}</p>`;
+            }
+        },
+        {
+            "data": function(data) {
                 return `<p>${data.price_weekdays}</p>`;
             }
         },

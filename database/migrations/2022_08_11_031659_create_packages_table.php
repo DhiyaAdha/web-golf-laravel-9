@@ -17,6 +17,7 @@ class CreatePackagesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('category');
+            $table->integer('price_discount');
             $table->integer('price_weekdays');
             $table->integer('price_weekend');
             $table->integer('status');
