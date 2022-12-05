@@ -220,6 +220,14 @@
             audio.play();
         }
 
+        $("[name='balance']").autoNumeric('init', {
+            aSep: '.', 
+            aDec: ',',
+            aForm: true,
+            vMax: '999999999',
+            vMin: '-999999999'
+        });
+
         $(document).on('click', '#expired_date', function() {
             swal({
                 title: "",
@@ -241,9 +249,7 @@
             sword();
             return false;
         });
-    </script>
-    <script>
-         $(document).on('click', '#setting_panel_btn', function() {
+        $(document).on('click', '#setting_panel_btn', function() {
             introJs('.intro-foo').setOptions({
                 'showProgress': true,
                 'tooltipPosition': 'right'

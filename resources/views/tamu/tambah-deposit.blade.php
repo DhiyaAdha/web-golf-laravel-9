@@ -47,16 +47,25 @@
                 </div>
             </div>
         </div>
-        <script type="text/javascript">
-            function showDiv(select) {
-                if (select.value == 'cash') {
-                    document.getElementById('hidden_div').style.display = "block";
-                } else if (select.value == 'transfer') {
-                    document.getElementById('hidden_div').style.display = "block";
-                } else {
-                    document.getElementById('hidden_div').style.display = "none";
-                    document.getElementById("balance").value = "0";
-                }
-            }
-        </script>
 @endsection
+@push('scripts')
+    <script>
+        $("[name='balance']").autoNumeric('init', {
+            aSep: '.', 
+            aDec: ',',
+            aForm: true,
+            vMax: '999999999',
+            vMin: '-999999999'
+        });
+        function showDiv(select) {
+            if (select.value == 'cash') {
+                document.getElementById('hidden_div').style.display = "block";
+            } else if (select.value == 'transfer') {
+                document.getElementById('hidden_div').style.display = "block";
+            } else {
+                document.getElementById('hidden_div').style.display = "none";
+                document.getElementById("balance").value = "0";
+            }
+        }
+    </script>
+@endpush

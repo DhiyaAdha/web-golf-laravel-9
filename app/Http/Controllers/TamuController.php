@@ -370,8 +370,8 @@ class TamuController extends Controller
                 'payment_type' => $request->payment_type,
                 'visitor_id' => $request->visitor_id,
                 'user_id' => Auth::user()->id,
-                'fund' => $request->balance,
-                'report_balance' => $request->balance,
+                'fund' => str_replace('.','',$request->balance),
+                'report_balance' => str_replace('.','',$request->balance),
                 'status' => 'Bertambah',
             ]);
         } else {
@@ -387,11 +387,11 @@ class TamuController extends Controller
 
         $report_deposit->save();
         $deposit = Deposit::where('visitor_id', $request->visitor_id)->first();
-        $deposit->balance = $request->balance + $deposit->balance;
+        $deposit->balance = str_replace('.','',$request->balance) + $deposit->balance;
         $deposit->save();
         $data = [
             'visitor_id' => $request->visitor_id,
-            'balance' => $request->balance,
+            'balance' => str_replace('.','',$request->balance),
             'name' => $visitor->name,
             'address' => $visitor->address,
             'gender' => $visitor->gender,
@@ -533,7 +533,7 @@ class TamuController extends Controller
                     return '<p class="label label-warning">'.$data->payment_type.'</p>';
                 }
             })->addColumn('created_at', function($data){
-                return $data->created_at->translatedFormat('d F Y').', '.$data->created_at->translatedFormat('h:i a');
+                return $data->created_at->translatedFormat('d F Y').', '.$data->created_at->translatedFormat('H:i a');
             })->rawColumns(['name', 'report_balance', 'fund', 'payment_type', 'created_at'])->make(true);
         }
     }
