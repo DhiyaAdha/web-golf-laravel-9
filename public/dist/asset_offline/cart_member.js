@@ -302,7 +302,7 @@ $(document).on('click', '#reset-order', function() {
                 }
             })
         } else {
-            swal("Dibatalkan", "", "error");
+            swal("Dibatalkan", "", "info");
         }
     });
     return false;
@@ -334,7 +334,7 @@ $(document).on('click', '#checkout', function() {
             swal({
                 title: "",
                 type: "success",
-                text: "Order berhasil dibuat",
+                text: "Pemesanan berhasil dibuat",
                 confirmButtonColor: "#01c853",
             }, () => {
                 window.location.href = '/checkout/'+page;
@@ -440,27 +440,17 @@ $('#dt-package').DataTable({
         },
         {
             "data": function(data) {
+                return `<p>${data.price_discount}</p>`;
+            }
+        },
+        {
+            "data": function(data) {
                 return `<p>${data.price_weekdays}</p>`;
             }
         },
         {
             "data": function(data) {
                 return `<p>${data.price_weekend}</p>`;
-            }
-        },
-        {
-            "data": function(data) {
-                if (data.status == 0) {
-                    return `<div class="checkbox checkbox-success checkbox-circle">
-                        <input id="checkbox-10" type="checkbox" checked="" disabled>
-                        <label for="checkbox-10" data-toggle="tooltip" data-placement="top" title="ON"></label>
-                    </div>`;
-                } else {
-                    return `<div class="checkbox checkbox-danger checkbox-circle">
-                        <input id="checkbox-12" type="checkbox" checked="" disabled>
-                        <label for="checkbox-12" data-toggle="tooltip" data-placement="top" title="OFF"></label>
-                    </div>`;
-                }
             }
         }
     ],

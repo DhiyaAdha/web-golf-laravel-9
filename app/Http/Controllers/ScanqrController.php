@@ -15,6 +15,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\URL;
 use App\Jobs\SendMailJobKuponTambah;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use App\Jobs\SendMailJobDepositTambah;
 
 class ScanqrController extends Controller
@@ -75,6 +76,7 @@ class ScanqrController extends Controller
     public function checkQRCode(Request $request)
     {
         $get_visitor = Visitor::where('code_member', $request->get('qrCode'))->first();
+        Cache::put('random', Str::random(5));
         try {
             if ($get_visitor == null) {
                 $this->setResponse('INVALID', 'Qr Code tidak ditemukan!');
@@ -95,7 +97,7 @@ class ScanqrController extends Controller
                         ]);
                         $this->setResponse('VALID', 'Valid QR Code', [
                             'name' => $get_visitor->name,
-                            'detail_scan' => URL::signedRoute('detail-scan', ['e' => $get_visitor->code_member]),
+                            'detail_scan' => URL::temporarySignedRoute('detail-scan', now()->addMinutes(45), ['rdm' => Cache::get('random'), 'code' => $get_visitor->code_member]),
                         ]);
                         return response()->json($this->getResponse(), 200);
                     } catch (\Throwable $th) {
@@ -111,20 +113,29 @@ class ScanqrController extends Controller
 
     public function checkNIK(Request $request)
     {
-        $get_visitor = Visitor::where('nik', $request->get('nik'))->first();
+        $get_visitor = Visitor::where('nik', $request->get('nik'))->where('phone', $request->get('phone'))->first();
+        Cache::put('random', Str::random(5));
         try {
-            if($get_visitor == null) {
+            if(is_null($get_visitor)) {
                 $this->setResponse('INVALID', 'NIK tidak ditemukan!');
                 return response()->json($this->getResponse());
             } else {
-                try {
-                    $this->setResponse('VALID', 'Verifikasi Valid', [
-                        'name' => $get_visitor->name,
-                        'detail_scan' => URL::signedRoute('detail-scan', ['e' => $get_visitor->code_member]),
-                    ]);
-                    return response()->json($this->getResponse(), 200);
-                } catch (\Throwable $th) {
+                if($get_visitor->expired_date <= Carbon::now()) {
+                    $this->setResponse('INVALID', 'Masa berlaku member habis');
                     return response()->json($this->getResponse());
+                } elseif($get_visitor->status == 'inactive') {
+                    $this->setResponse('INVALID', 'Member tidak aktif');
+                    return response()->json($this->getResponse());
+                } else {
+                    try {
+                        $this->setResponse('VALID', 'Verifikasi Valid', [
+                            'name' => $get_visitor->name,
+                            'detail_scan' => URL::temporarySignedRoute('detail-scan', now()->addMinutes(45), ['rdm' => Cache::get('random'), 'code' => $get_visitor->code_member]),
+                        ]);
+                        return response()->json($this->getResponse(), 200);
+                    } catch (\Throwable $th) {
+                        return response()->json($this->getResponse());
+                    }
                 }
             }
         } catch (\Throwable $th) {
@@ -135,6 +146,7 @@ class ScanqrController extends Controller
     public function checkNoHp(Request $request)
     {
         $phone_visitor = Visitor::where('phone', $request->get('phone'))->first();
+        Cache::put('random', Str::random(5));
         try {
             if (is_null($phone_visitor)) {
                 $this->setResponse('INVALID', 'Nomor Hp Tidak Ditemukan!');
@@ -156,7 +168,7 @@ class ScanqrController extends Controller
 
                         $this->setResponse('VALID', 'Valid Nomor Hp', [
                             'name' => $phone_visitor->name,
-                            'detail_scan' => URL::signedRoute('detail-scan', ['e' => $phone_visitor->code_member]),
+                            'detail_scan' => URL::temporarySignedRoute('detail-scan', now()->addMinutes(45), ['rdm' => Cache::get('random'), 'code' => $phone_visitor->code_member]),
                         ]);
                         return response()->json($this->getResponse(), 200);
                     } catch (\Throwable $th) {

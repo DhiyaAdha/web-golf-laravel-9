@@ -1,5 +1,6 @@
 <?php
 
+    use App\Http\Controllers\ReportController;
     use App\Http\Controllers\AdminController;
     use App\Http\Controllers\AuthController;
     use App\Http\Controllers\DashboardController;
@@ -53,6 +54,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     Route::post('/package/update/{id}', [PackageController::class, 'update'])->name('package.update');
     Route::post('/package/destroy', [PackageController::class, 'destroy'])->name('package.destroy');
     Route::post('/package/store', [PackageController::class, 'store'])->name('package.store');
+    route::get('/export_excel_package', [PackageController::class, 'export_excel_package'])->name('export_excel_package');
     Route::middleware(['htmlMinifier'])->group(static function () {
         Route::resource('revenue', RevenueController::class);
         Route::get('/analytic/week', [DashboardController::class, 'analytic_week'])->name('analytic.week');
@@ -66,6 +68,12 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
         Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name('show');
         Route::get('/package', [PackageController::class, 'index'])->name('package.index');
         Route::get('/package/tambah-package', [PackageController::class, 'create'])->name('package.create');
+        // Route::get('/laporan/transaksi', [ReportController::class, 'index'])->name('transaction');
+        // Route::get('/laporan/semua', [ReportController::class, 'all'])->name('report.all');
+        // Route::get('/laporan/permainan', [ReportController::class, 'games'])->name('report.games');
+        // Route::get('/laporan/fasilitas', [ReportController::class, 'proshop'])->name('report.proshop');
+        // Route::get('/laporan/kantin', [ReportController::class, 'canteen'])->name('report.canteen');
+        Route::get('/setting', [ReportController::class, 'index'])->name('setting');
     });
 });
 
@@ -73,12 +81,13 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/verification/identity', [ScanqrController::class, 'checkNIK'])->name('visitor.nik');
     Route::get('/visitor/qrcode', [ScanqrController::class, 'checkQRCode'])->name('visitor.qrcode');
     Route::get('/visitor/phone', [ScanqrController::class, 'checkNoHp'])->name('visitor.phone');
-    Route::post('update/deposit/{id}', [ScanqrController::class, 'update_deposit'])->name('update.deposit')->middleware('signed');
+    Route::post('/update/deposit/{id}', [ScanqrController::class, 'update_deposit'])->name('update.deposit')->middleware('signed');
     Route::post('/inserttamu', [TamuController::class, 'inserttamu'])->name('inserttamu');
     Route::post('/daftar-tamu/destroy', [TamuController::class, 'delete'])->name('hapus-tamu');
     Route::post('/update-tamu/{id}', [TamuController::class, 'update'])->name('update-tamu');
     Route::get('/tambah-deposit/{id}', [TamuController::class, 'tambahdeposit'])->name('tambah-deposit');
-    Route::get('reportdeposit', [TamuController::class, 'reportdeposit'])->name('deposit.report');
+    Route::get('/reportdeposit', [TamuController::class, 'reportdeposit'])->name('deposit.report');
+    Route::get('/historydeposit', [TamuController::class, 'historydeposit'])->name('deposit.history');
     Route::get('/aktifitas-kartu-tamu/{id}', [TamuController::class, 'updatedeposit'])->name('updatedeposit');
     Route::get('reportlimit', [TamuController::class, 'reportlimit'])->name('limit.report');
     Route::get('transaksideposit', [TamuController::class, 'transaksideposit'])->name('transaksideposit');
@@ -90,19 +99,20 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::get('/reportkupon/{id}', [TamuController::class, 'reportkupon'])->name('kupon.report.data');
     Route::post('/tambah-deposit', [TamuController::class, 'insertdeposit'])->name('insertdeposit');
     route::get('/export_excel_tamu', [TamuController::class, 'export_excel_tamu'])->name('export_excel_tamu');
-    Route::post('update/kupon/{id}', [TamuController::class, 'update_kupon'])->name('update.kupon');
+    Route::post('/update/kupon/{id}', [TamuController::class, 'update_kupon'])->name('update.kupon');
     Route::get('/proses', [OrderController::class, 'index'])->name('proses');
     Route::post('/cart/add', [OrderController::class, 'add'])->name('cart.add');
     Route::post('/update/qty', [OrderController::class, 'update_qty'])->name('update.qty');
     Route::post('/cart/remove', [OrderController::class, 'remove'])->name('remove.item');
     Route::post('/cart/clear', [OrderController::class, 'clear_cart'])->name('cart.clear');
+    Route::post('/checkout/clear', [OrderController::class, 'checkout_clear'])->name('checkout.clear');
     Route::get('/select', [OrderController::class, 'select'])->name('select.type');
     Route::post('/qty/minus/{id}', [OrderController::class, 'minus'])->name('qty.minus');
     Route::post('/pay', [OrderController::class, 'pay'])->name('pay');
     Route::middleware(['htmlMinifier'])->group(static function () {
         Route::resource('analisis-tamu', DashboardController::class);
         Route::get('/scan-tamu', [ScanqrController::class, 'index'])->name('scan-tamu');
-        Route::get('/kartu-member/{e}', [ScanqrController::class, 'show_detail'])->name('detail-scan')->middleware('signed');
+        Route::get('/kartu-member/{code}', [ScanqrController::class, 'show_detail'])->name('detail-scan')->middleware('signed');
         Route::get('/cart/{id}', [OrderController::class, 'index'])->name('order.cart');
         Route::get('/checkout/{id}', [OrderController::class, 'checkout'])->name('checkout');
         Route::get('/print_invoice/{id}', [OrderController::class, 'print_invoice'])->name('invoice.print');
@@ -120,6 +130,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
     Route::post('/cart_remove/reguler', [OrderRegulerController::class, 'remove'])->name('cart_remove.reguler');
     Route::post('/reguler_update/qty', [OrderRegulerController::class, 'update_qty'])->name('reguler_update.qty');
     Route::post('/cart_reguler/clear', [OrderRegulerController::class, 'clear_cart'])->name('cart_reguler.clear');
+    Route::post('/checkout/reguler/clear', [OrderRegulerController::class, 'checkout_reguler_clear'])->name('reguler.clear');
     Route::post('/pay_reguler', [OrderRegulerController::class, 'pay_reguler'])->name('pay_reguler');
     Route::get('/detail-invoice-member/{id}', [TamuController::class, 'data_modal_invoice'])->name('modal.invoice');
 });

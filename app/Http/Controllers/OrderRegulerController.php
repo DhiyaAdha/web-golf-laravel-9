@@ -39,13 +39,13 @@ class OrderRegulerController extends Controller
         $products = Package::orderBy('id', 'desc')->where('status', '0')->get();
         if ($request->ajax()) {
             return datatables()
-                ->of($products)->editColumn('price_weekdays', function ($data) {
+                ->of($products)->editColumn('price_discount', function ($data) {
+                    return formatrupiah($data->price_discount);
+                })->editColumn('price_weekdays', function ($data) {
                     return formatrupiah($data->price_weekdays);
                 })->editColumn('price_weekend', function ($data) {
                     return formatrupiah($data->price_weekend);
-                })
-                ->addIndexColumn()
-                ->make(true);
+                })->addIndexColumn()->make(true);
         }
         $today = Carbon::now()->isoFormat('dddd');
         $date_now = Carbon::now()->translatedFormat('d F Y');
@@ -90,7 +90,7 @@ class OrderRegulerController extends Controller
             'additional',
             'others',
             'data_total',
-            'cart_data'
+            'cart_data',
         ));
     }
 
@@ -100,7 +100,15 @@ class OrderRegulerController extends Controller
         $cart = \Cart::session(auth()->id())->getContent();
         $cek_itemId = $cart->whereIn('id', $request->get('id'));
         $today = Carbon::now()->isoFormat('dddd');
-        $price = $today === 'Sabtu' || $today === 'Minggu' ? $package->price_weekend : $package->price_weekdays;
+        $price = 0;
+        if($today === 'Senin') {
+            $price += $package->price_discount;
+        } else if ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat') {
+            $price += $package->price_weekdays;
+        } else {
+            $price += $package->price_weekend;
+        }
+
         $get_total = \Cart::session(auth()->id())->getTotal();
         $counted = ucwords(counted($get_total).' Rupiah');
         if ($cek_itemId->isNotEmpty()) {
@@ -251,8 +259,21 @@ class OrderRegulerController extends Controller
 
     public function clear_cart()
     {
-        \Cart::session(auth()->id())->clear();
-        return redirect()->back();
+        try {
+            \Cart::session(auth()->id())->clear();
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            return redirect()->back();
+        }
+    }
+
+    public function checkout_reguler_clear()
+    {
+        try {
+            \Cart::session(auth()->id())->clear();
+        } catch (\Throwable $th) {
+            return redirect()->back();
+        }
     }
 
     public function checkout(Request $request)

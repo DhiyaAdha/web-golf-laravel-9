@@ -25,6 +25,32 @@ $(document).on("change", "#filter-data", function(e) {
     }
 });
 
+$(document).on("change", "#filter-deposit", function(e) {
+    let filter_data = [];
+    let option = $(this).find(':selected');
+    let url = window.location.href;
+
+    $.each(option, function(index, value) {
+        filter_data.push(option.val());
+    });
+
+    let param = filter_data.join(","); 
+    if(param != "") {
+        if (url.indexOf('?') > -1) {
+            url += '&filter='+param
+        } else {
+            url += '?filter='+param
+        }
+    }
+
+    let EndUrl = url.split("?")[1];
+    if(EndUrl != "") {
+        $('#dt-riwayat-deposit').DataTable().ajax.url("/historydeposit?"+EndUrl).load();
+    } else {
+        $('#dt-riwayat-deposit').DataTable().ajax.url("/historydeposit").load();
+    }
+});
+
 /* data tamu */
 let member = $('#dt-tamu').DataTable({
     "processing": true,
@@ -101,10 +127,12 @@ let member = $('#dt-tamu').DataTable({
         {
             className: 'text-center',
             targets: [4]
-        }, {
+        }, 
+        {
             width: '25%',
             targets: [0,1, 5]
-        }, {
+        }, 
+        {
             width: '12%',
             targets: [2, 3, 4]
         }
@@ -169,3 +197,74 @@ $(document).on('click', '.delete-confirm', function() {
     return false;
 });
 /* delete tamu */
+
+let history_deposit = $("#dt-riwayat-deposit").DataTable({
+    processing: true,
+    serverSide: true,
+    lengthChange: false,
+    bDestroy: true,
+    searching: false,
+    paginate: {
+        first: "First",
+        last: "Last",
+        next: "Next",
+        previous: "Previous",
+    },
+    ajax: {
+        url: "/historydeposit",
+        type: "GET",
+        datatype: "json",
+    },
+    render: $.fn.dataTable.render.text(),
+    columns: [
+        {
+            data: "name",
+            searchable: true,
+            orderable: false,
+        },
+        {
+            data: "report_balance",
+            searchable: true,
+            orderable: false,
+        },
+        {
+            data: "fund",
+            searchable: true,
+            orderable: false,
+        },
+        {
+            data: "payment_type",
+            searchable: true,
+            orderable: false,
+        },
+        {
+            data: "created_at",
+            searchable: true,
+            orderable: false,
+        },
+    ],
+    order: [],
+    responsive: true,
+    language: {
+        emptyTable: "Tidak ada data pada tabel ini",
+        info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
+        infoFiltered: "(difilter dari _MAX_ total data)",
+        infoEmpty: "Tidak ada data pada tabel ini",
+        lengthMenu: "Menampilkan _MENU_ data",
+        zeroRecords: "Tidak ada data pada tabel ini",
+    },
+    columnDefs: [
+        {
+            className: "text-left",
+            targets: [0, 1],
+        },
+        {
+            className: "text-center",
+            targets: [2, 3, 4],
+        },
+        {
+            width: '25%',
+            targets: [0,4]
+        },
+    ],
+});

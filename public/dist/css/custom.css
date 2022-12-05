@@ -795,17 +795,18 @@ video {
 .resolution .datetime {
     position: absolute;
     font-family: 'Montserrat';
-    font-weight: 500;
-    top: 85%; 
-    left: 10px;
-    /* opacity: 0.7; */
-    margin-top: 8px;
+    font-size: 24px;
+    top: 180px;
     left: 10px;
 }
 
-
-
-
+.download-kartu-tamu {
+    position: absolute;
+    display: inherit;
+    top: 410px;
+    align-items: center;
+    left: 45px;
+}
 /* tambahan */
 
 b,

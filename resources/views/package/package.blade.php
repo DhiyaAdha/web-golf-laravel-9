@@ -18,12 +18,12 @@
                     <div class="panel panel-default card-view" data-title="Halaman Daftar Paket" data-intro="Halaman ini memberikan informasi seluruh data paket yang tersedia. ">
                         <div class="panel-heading" >
                             <div class="pull-left" >
-                                <h6 class="panel-title txt-dark">Daftar Paket</h6>
+                                <a href="{{ route('package.create') }}" type="submit" class="btn btn-xs btn-success" data-title="Tambah Paket" data-intro="panel ini merupakan panel untuk menambah daftar data paket baru.">Tambah Paket</a>
                             </div>
                             <div class="pull-right">
-                                <div class=" pull-left" data-title="Tambah Paket" data-intro="panel ini merupakan panel untuk menambah daftar data paket baru.">
-                                    <a href="{{ route('package.create') }}" type="submit" class="btn btn-xs btn-success">Tambah Paket</a>
-                                </div>
+                                <a href="{{ url('export_excel_package') }}" target="_blank" name="excel" data-toggle="tooltip" data-placement="top" title="Download Excel" data-title="Download Paket" data-intro="Icon ini digunakan untuk download seluruh data paket yang tersedia di tgcc dalam bentuk data excel">
+                                    <img src="{{ asset('dist/img/excel.svg') }}" width="25px" height="25px">
+                                </a>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -35,12 +35,13 @@
                                         <table class="table table-hover mb-0" id="dt-package" >
                                             <thead >
                                                 <tr data-title="Daftar Paket" >
-                                                    <th class="table-th">Nama Produk</th>
-                                                    <th class="table-th">Kategori</th>
-                                                    <th class="table-th">Harga Weekdays</th>
-                                                    <th class="table-th">Harga Weekend</th>
-                                                    <th class="table-th">Status</th>
-                                                    <th class="table-th">Opsi</th>
+                                                    <th class="table-th">nama paket</th>
+                                                    <th class="table-th">kategori</th>
+                                                    <th class="table-th">senin</th>
+                                                    <th class="table-th">selasa-jumat</th>
+                                                    <th class="table-th">sabtu-minggu</th>
+                                                    <th class="table-th">status</th>
+                                                    <th class="table-th">opsi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

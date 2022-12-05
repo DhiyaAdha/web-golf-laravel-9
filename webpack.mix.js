@@ -21,6 +21,7 @@ mix.js([
     'resources/js/fontawsome.js',
     'resources/js/lottie-player.js',
     'resources/js/printThis.js',
+    'resources/js/html2canvas.js',
 ], 'public/js/app.js').version();
 
 mix.styles([

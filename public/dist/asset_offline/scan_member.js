@@ -75,6 +75,7 @@ $('#show-qr-scan').on('click', function() {
 
 $('#verification-no-hp').keypress(function(e) {
     if (e.which == 13) {
+        var phone = $('#verification-no-hp').val();
         swal({
             title: "",
             text: "Verifikasi No Hp?",
@@ -120,14 +121,14 @@ $('#verification-no-hp').keypress(function(e) {
                             swal({
                                 title: 'Verifikasi Identitas',
                                 text: 'Masukkan NIK KTP',
-                                type: 'input',
+                                type: 'input'
                             }, function(isConfirm) {
                                 if (isConfirm) {
                                     $.ajax({
                                         async: true,
                                         type: 'GET',
                                         url: '/verification/identity',
-                                        data: {nik:isConfirm},
+                                        data: {nik:isConfirm, phone:phone},
                                         headers: {
                                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                         },
@@ -173,7 +174,7 @@ $('#verification-no-hp').keypress(function(e) {
                                                 }, function(isConfirm) {
                                                     window.setTimeout(() => {
                                                         location.reload();
-                                                    }, 200);
+                                                    }, 100);
                                                 });
                                             }
                                         },

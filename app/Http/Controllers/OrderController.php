@@ -101,7 +101,16 @@ class OrderController extends Controller
         $cart = \Cart::session($request->get('member'))->getContent();
         $cek_itemId = $cart->whereIn('id', $request->get('package'));
         $today = Carbon::now()->isoFormat('dddd');
-        $price = $today === 'Sabtu' || $today === 'Minggu' ? $package->price_weekend : $package->price_weekdays;
+        
+        $price = 0;
+        if($today === 'Senin') {
+            $price += $package->price_discount;
+        } else if ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat') {
+            $price += $package->price_weekdays;
+        } else {
+            $price += $package->price_weekend;
+        }
+
         $get_total = \Cart::session($request->get('member'))->getTotal();
         $counted = ucwords(counted($get_total).' Rupiah');
         try {
@@ -283,8 +292,16 @@ class OrderController extends Controller
     {
         try {
             \Cart::session($request->get('member'))->clear();
-
             return redirect()->back();
+        } catch (\Throwable $th) {
+            return redirect()->back();
+        }
+    }
+
+    public function checkout_clear(Request $request)
+    {
+        try {
+            \Cart::session($request->get('member'))->clear();
         } catch (\Throwable $th) {
             return redirect()->back();
         }

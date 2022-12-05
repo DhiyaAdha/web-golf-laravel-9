@@ -1,7 +1,7 @@
 @extends('layouts.main', ['title' => 'TGCC | Daftar Tamu'])
 @section('content')
     <div class="page-wrapper intro-foo">
-        <div class="container-fluid">
+        <div class="container-fluid" data-title="Halaman Daftar Tamu" data-intro="Halaman ini memberikan informasi data tamu yang sudah terdaftar sebagai membership.">
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h5 class="txt-dark">Daftar Tamu</h5>
@@ -13,9 +13,10 @@
                     </ol>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="panel panel-default card-view" data-title="Halaman Daftar Tamu" data-intro="Halaman ini memberikan informasi data tamu yang sudah terdaftar sebagai membership.">
+                    <div class="panel panel-default card-view">
                         <div class="panel-heading">
                             <div class="pull-left" data-title="Tambah Tamu" data-intro="fitur tambah tamu untuk menambah data membership baru di tgcc.">
                                 <a href="{{ route('tambah-tamu') }}" class="btn btn-xs btn-success" style="margin-bottom: 0px;">Tambah Tamu</a>
@@ -50,7 +51,7 @@
                                         </div>	
                                         @if (auth()->user()->role_id == '2')
                                         <a href="{{ url('export_excel_tamu') }}" target="_blank" name="excel" data-toggle="tooltip" data-placement="top" title="Download Excel">
-                                            <img src="dist/img/excel.svg" width="25px" height="25px">
+                                            <img src="{{ asset('dist/img/excel.svg') }}" width="25px" height="25px">
                                         </a>
                                         @endif
                                     </div>
@@ -87,6 +88,55 @@
                     </div>
                 </div>
             </div>
+
+            @if (auth()->user()->role_id == '2')
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="panel panel-default card-view" data-title="Daftar Riwayat Deposit" data-intro="Tabel ini memberikan informasi log deposit membership tgcc diurutkan berdasarkan data baru deposit.">
+                            <div class="panel-heading">
+                                <div class="pull-left">
+                                    Daftar Riwayat Deposit
+                                </div>
+                                <div class="pull-right" data-title="Filter Pembayaran" data-intro="Admin dapat memilih jenis pembayaran untuk memfilter member mana yang melakukan pembayaran deposit dengan cash atau transfer">
+                                    <div class="d-flex">
+                                        <span class="mr-5" style="right: 420px; top: 27px; position: responsive; margin-top: 4px;">Filter pembayaran</span>
+                                        <div class="form-group mr-5">
+                                            <select class="form-control" style="height: 32px" id="filter-deposit" name="deposit">
+                                                <option selected disabled>Jenis pembayaran</option>
+                                                <option value="cash">Cash</option>
+                                                <option value="transfer">Transfer</option>
+                                            </select>
+                                        </div>	
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="panel-wrapper collapse in">
+                                <div class="panel-body">
+                                    <div class="table-wrap">
+                                        <div class="table-responsive">
+                                            <table class="table mb-0 table-hover" id="dt-riwayat-deposit">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="test-uppercase">nama</th>
+                                                        <th class="test-uppercase">nominal deposit</th>
+                                                        <th class="test-uppercase">saldo terkini</th>
+                                                        <th >jenis pembayaran</th>
+                                                        <th class="test-uppercase">tanggal input</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
             <button id="setting_panel_btn" data-toggle="tooltip" title="Panduan" data-placement="left" class="btn btn-success btn-circle setting-panel-btn shadow-2dp"><i class="zmdi zmdi-settings"></i></button>
             @include('layouts.footer')
         </div>

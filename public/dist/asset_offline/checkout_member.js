@@ -225,11 +225,11 @@ $(document).ready(function() {
         html : true,
         sanitize: false,
         content: function() {
-            let content = $(this).attr("data-popover-content");
+            var content = $(this).attr("data-popover-content");
             return $(content).children(".popover-body").html();
         },
         title: function() {
-            let title = $(this).attr("data-popover-content");
+            var title = $(this).attr("data-popover-content");
             return $(title).children(".popover-header").html();
         }
     });
@@ -238,11 +238,11 @@ $(document).ready(function() {
         html : true,
         sanitize: false,
         content: function() {
-            let content = $(this).attr("data-popover-content");
+            var content = $(this).attr("data-popover-content");
             return $(content).children(".popover-body").html();
         },
         title: function() {
-            let title = $(this).attr("data-popover-content");
+            var title = $(this).attr("data-popover-content");
             return $(title).children(".popover-header").html();
         }
     });
@@ -301,7 +301,7 @@ $(document).ready(function() {
         let data_bill = $('#customCheck8').data('bill');
         let data_deposit = $('#customCheck8').data('deposit');
         let type_multiple = $('input[name="payment-type[]"]:checked')
-            .map(() => {
+            .map(function() {
                 return $(this).val();
             }).get();
 
@@ -417,7 +417,7 @@ $(document).ready(function() {
         let data_deposit = $('#customCheck8').data('deposit');
         let price_single = $('.kmt').data('pricesingle');
         let type_multiple = $('input[name="payment-type[]"]:checked')
-            .map(() => {
+            .map(function() {
                 return $(this).val();
             }).get();
 
@@ -641,7 +641,7 @@ $(document).ready(function() {
         let data_deposit = $('#customCheck8').data('deposit');
         let price_single = $('.kmt').data('pricesingle');
         let type_multiple = $('input[name="payment-type[]"]:checked')
-            .map(() => {
+            .map(function() {
                 return $(this).val();
             }).get();
         let minus_deposit = data_bill - data_deposit;
@@ -1162,7 +1162,7 @@ $(document).ready(function() {
                 param: $('input[type=hidden]').val()
             },
             url: '/select',
-            beforeSend: () => {
+            beforeSend: function(request) {
                 $.blockUI({
                     css: {
                         backgroundColor: 'transparent',
@@ -1177,7 +1177,7 @@ $(document).ready(function() {
                     }
                 });
             },
-            success: (response) => {
+            success: function(response) {
                 $.unblockUI();
                 if (response.status == "VALID") {
                     $('#balance').text('Rp. ' +format(response.price) + ',00');
@@ -1189,7 +1189,7 @@ $(document).ready(function() {
                     let price_discount = 0;
                     let price = 0;
                     if (type_single == 1) {
-                        $.each(response.orders, (b, val) => {
+                        $.each(response.orders, function(b, val) {
                             html += `<div class="d-flex">
                                         <span class="flex-grow-1">${val.name} ${response.orders[b].category == 'default' ? '| game' : ''} x ${val.qty}</span>
                                         <small>${response.orders[b].category == 'default' ? 'limit gratis' : 'Rp. ' + format(val.pricesingle) + ',00'}</small>
@@ -1232,7 +1232,7 @@ $(document).ready(function() {
                             </div>`
                         ).hide().prev().addClass('mb-2');
                     } else if (type_single == 2) {
-                        $.each(response.orders, (b, val) => {
+                        $.each(response.orders, function(b, val) {
                             html += `<div class="d-flex">
                                         <span class="flex-grow-1">${val.name} ${response.orders[b].category == 'default' ? '| game' : ''} x ${val.qty}</span>
                                         <small>${response.orders[b].category == 'default' ? 'kupon gratis' : 'Rp. ' + format(val.pricesingle) + ',00'}</small>
@@ -1273,7 +1273,7 @@ $(document).ready(function() {
                             </div>`
                         ).hide().prev().addClass('mb-2');
                     } else if (type_single == 4) {
-                        $.each(response.orders, (b, val) => {
+                        $.each(response.orders, function(b, val) {
                             html += `<div class="d-flex">
                                         <span class="flex-grow-1">${val.name} x ${val.qty}</span>
                                         <small>${'Rp. ' + format(val.price) + ',00'}</small>
@@ -1319,7 +1319,7 @@ $(document).ready(function() {
                             "color": "#19d895"
                         });
 
-                        $.each(response.orders, (b, val) => {
+                        $.each(response.orders, function(b, val) {
                             html += `<div class="d-flex">
                                             <span class="flex-grow-1">${val.name} x ${val.qty}</span>
                                             <small>${'Rp. ' + format(val.price) + ',00'}</small>
@@ -1350,16 +1350,6 @@ $(document).ready(function() {
                     });
                     return false;
                 }
-            },
-            error: () => {
-                sword();
-                swal({
-                    title: "Internal Server Error",
-                    type: "error",
-                    text: "Terdapat kesalahan program pada action ini",
-                    confirmButtonColor: "#01c853",
-                });
-                return false;
             }
         });
     });
@@ -1369,7 +1359,7 @@ $(document).ready(function() {
         let type = $('input[type=radio][name=payment]:checked').val();
         let type_single = $("input[name='payment-type']:checked").val();
         let type_multiple = $("input[name='payment-type[]']:checked")
-            .map(() => {
+            .map(function() {
                 return $(this).val();
             }).get();
         let order_number = $('#order-number').text();
@@ -1381,10 +1371,6 @@ $(document).ready(function() {
         tg = tg[0];
         tg = tg.split("/");
         page = tg[tg.length - 1];
-
-        let data_deposit = $('#customCheck8').data('deposit');
-        let data_bill = $('#customCheck8').data('bill');
-        let pay_deposit = data_bill - data_deposit;
 
         if (type_single == 3) {
             if (!bayar_cash) {
@@ -1446,7 +1432,6 @@ $(document).ready(function() {
                         order_number: order_number,
                         bayar_input: bayar_input,
                         bayar_cash: bayar_cash,
-                        pay_deposit: pay_deposit,
                         refund: refund
                     },
                     url: '/pay',
@@ -1455,7 +1440,7 @@ $(document).ready(function() {
                             .attr(
                                 'content')
                     },
-                    beforeSend: () => {
+                    beforeSend: function(request) {
                         $.blockUI({
                             css: {
                                 backgroundColor: 'transparent',
@@ -1470,7 +1455,7 @@ $(document).ready(function() {
                             }
                         });
                     },
-                    success: (response) => {
+                    success: function(response) {
                         $.unblockUI();
                         if (response.status == "VALID") {
                             bell();
@@ -1479,7 +1464,7 @@ $(document).ready(function() {
                                 type: "success",
                                 text: response.message,
                                 confirmButtonColor: "#01c853",
-                            }, () => {
+                            }, function(isConfirm) {
                                 invoice('/print_invoice/'+$('input[type=hidden]').val(),
                                     'Print Invoice');
                                 history.go(0);
@@ -1494,6 +1479,47 @@ $(document).ready(function() {
                             });
                             return false;
                         }
+                    }
+                });
+            } else {
+                swal("Dibatalkan", "", "info");
+            }
+        });
+        return false;
+    });
+
+    $(document).on('click', '#reset', function(e) {
+        let member = $(this).data('member');
+        swal({
+            title: "Batalkan Pemesanan?",
+            text: "Seluruh data keranjang akan dihapus",
+            type: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#c82333",
+            confirmButtonText: "Batalkan",
+            cancelButtonText: "Batal",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function(isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    async: true,
+                    type: 'POST',
+                    url: '/checkout/clear',
+                    data: {member: member},
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: () => {
+                        rst();
+                        swal({
+                            title: "",
+                            type: "success",
+                            text: "Keranjang berhasil direset",
+                            confirmButtonColor: "#01c853",
+                        }, () => {
+                            history.go(0);
+                        });
                     },
                     error: () => {
                         sword();
@@ -1505,27 +1531,36 @@ $(document).ready(function() {
                         });
                         return false;
                     }
-                });
+                })
             } else {
-                swal("Dibatalkan", "", "info");
+                swal("Kembali", "", "info");
             }
         });
-        return false;
     });
 
-    const invoice = (url, title) => {
+    function invoice(url, title) {
         popupCenter(url, title, 340, 550);
     }
 
-    const popupCenter = (url, title, w, h) => {
-        const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
-        const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
-        const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
-        const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+    function popupCenter(url, title, w, h) {
+        const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window
+            .screenX;
+        const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window
+            .screenY;
+        const width = window.innerWidth ? window.innerWidth : document.documentElement
+            .clientWidth ?
+            document
+            .documentElement.clientWidth : screen.width;
+        const height = window.innerHeight ? window.innerHeight : document.documentElement
+            .clientHeight ?
+            document
+            .documentElement.clientHeight : screen.height;
         const systemZoom = width / window.screen.availWidth;
         const left = (width - w) / 2 / systemZoom + dualScreenLeft
         const top = (height - h) / 2 / systemZoom + dualScreenTop
-        const newWindow = window.open(url, title, `scrollbars=yes,width  = ${w / systemZoom}, height = ${h / systemZoom}, top    = ${top}, left   = ${left}`);
+        const newWindow = window.open(url, title,
+            `scrollbars=yes,width  = ${w / systemZoom}, height = ${h / systemZoom}, top    = ${top}, left   = ${left}`
+        );
         if (window.focus) newWindow.focus();
     }
 });

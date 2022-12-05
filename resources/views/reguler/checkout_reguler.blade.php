@@ -384,6 +384,7 @@
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <a href="{{ route('proses_reguler') }}" class="btn btn-primary btn-sm mt-2" id="back">Kembali</a>
+                                    <button id="reset" class="btn btn-sm btn-danger mt-2">Batalkan</button>
                                     <button type="submit" id="pay" class="btn btn-sm btn-success mt-2">Bayar</button>
                                 </div>
                             </div>

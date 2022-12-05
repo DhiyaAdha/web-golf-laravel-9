@@ -34,7 +34,13 @@
                             @foreach ($default as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                    title="Rp. {{ number_format($today === 'Sabtu' || $today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
+                                    @if ($today === 'Senin')
+                                        title="Rp. {{ number_format($item->price_discount, 0, ',', '.') }}"
+                                    @elseif ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat')
+                                        title="Rp. {{ number_format($item->price_weekdays, 0, ',', '.') }}"
+                                    @else
+                                        title="Rp. {{ number_format($item->price_weekend, 0, ',', '.') }}"
+                                    @endif
                                     class="btn btn-default txt-success mr-15 mb-15">{{ $item->name }}</button>
                             @endforeach
                         </div>
@@ -48,7 +54,13 @@
                             @foreach ($additional as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                    title="Rp. {{ number_format($today === 'Sabtu' || $today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
+                                    @if ($today === 'Senin')
+                                        title="Rp. {{ number_format($item->price_discount, 0, ',', '.') }}"
+                                    @elseif ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat')
+                                        title="Rp. {{ number_format($item->price_weekdays, 0, ',', '.') }}"
+                                    @else
+                                        title="Rp. {{ number_format($item->price_weekend, 0, ',', '.') }}"
+                                    @endif
                                     class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
                             @endforeach
                         </div>
@@ -62,7 +74,13 @@
                             @foreach ($others as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                    title="Rp. {{ number_format($today === 'Sabtu' || $today === 'Minggu' ? $item->price_weekend : $item->price_weekdays, 0, ',', '.') }}"
+                                    @if ($today === 'Senin')
+                                        title="Rp. {{ number_format($item->price_discount, 0, ',', '.') }}"
+                                    @elseif ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat')
+                                        title="Rp. {{ number_format($item->price_weekdays, 0, ',', '.') }}"
+                                    @else
+                                        title="Rp. {{ number_format($item->price_weekend, 0, ',', '.') }}"
+                                    @endif
                                     class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
                             @endforeach
                         </div>
@@ -153,11 +171,11 @@
                                         <table class="table table-hover mb-0" id="dt-package">
                                             <thead>
                                                 <tr>
-                                                    <th class="table-th">Nama Produk</th>
-                                                    <th class="table-th">Kategori</th>
-                                                    <th class="table-th">Harga Weekdays</th>
-                                                    <th class="table-th">Harga Weekend</th>
-                                                    <th class="table-th">Status</th>
+                                                    <th class="table-th">nama paket</th>
+                                                    <th class="table-th">kategori</th>
+                                                    <th class="table-th">senin</th>
+                                                    <th class="table-th">selasa-jumat</th>
+                                                    <th class="table-th">sabtu-minggu</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

@@ -35,6 +35,11 @@ $('#dt-package').DataTable({
         },
         {
             "data": function(data) {
+                return `<p>${data.price_discount}</p>`;
+            }
+        },
+        {
+            "data": function(data) {
                 return `<p>${data.price_weekdays}</p>`;
             }
         },
@@ -48,12 +53,12 @@ $('#dt-package').DataTable({
                 if (data.status == 0) {
                     return `<div class="checkbox checkbox-success checkbox-circle">
                             <input id="checkbox-10" type="checkbox" checked="" disabled>
-                            <label for="checkbox-10" data-toggle="tooltip" data-placement="top" title="ON"></label>
+                            <label for="checkbox-10"></label>
                         </div>`;
                 } else {
                     return `<div class="checkbox checkbox-danger checkbox-circle">
                             <input id="checkbox-12" type="checkbox" checked="" disabled>
-                            <label for="checkbox-12" data-toggle="tooltip" data-placement="top" title="OFF"></label>
+                            <label for="checkbox-12"></label>
                         </div>`;
                 }
             }

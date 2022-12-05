@@ -8,9 +8,9 @@
     @stack('scripts')
     <script>
         $(window).load(function() {
-            $(".se-pre-con").fadeOut("slow");
+            $('.se-pre-con').fadeOut('slow');
         });
-        $( document ).ajaxComplete(function() {
+        $(document).ajaxComplete(function() {
             $('[data-toggle="tooltip"]').tooltip({
                 "html": true,
             });
@@ -39,7 +39,4 @@
                 });
             }, 1000);
         @endif
-        $(function() {
-            $('[data-toogle="tooltip"]').tooltip()
-        })
     </script>

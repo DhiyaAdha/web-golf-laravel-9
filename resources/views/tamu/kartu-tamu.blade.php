@@ -52,11 +52,11 @@
                                             <div class="d-flex align-items-center justify-content-center">
                                                 <div class="resolution">
                                                     <div class="d-flex flex-column">
-                                                        <div class="mb-5">
-                                                            <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/front-vip-card.svg') : asset('dist/img/kartutamu/front-member-card.svg') }}"
+                                                        <div class="front-content">
+                                                            <img class="front" src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/front-vip-card.svg') : asset('dist/img/kartutamu/front-member-card.svg') }}"
                                                                 alt="{{ $visitor->tipe_member }}">
                                                             <div class="qr-code">
-                                                                {{ QrCode::size(80)->eye('circle')->style('round')->generate($visitor->unique_qr) }}
+                                                                {{ QrCode::size(80)->generate($visitor->unique_qr) }}
                                                             </div>
                                                             <div class="identity">
                                                                 <h6
@@ -70,18 +70,16 @@
                                                             <div class="codemember">
                                                                 <h5
                                                                     style="text-transform: uppercase; font-size:12pt; line-height:400%; letter-spacing:2px;">
-                                                                    {{ $visitor->code_member }}</h5>
-                                                            </div>
 
-                                                            <div class="datetime ">
-                                                                <h6 style="font-size: 5pt; color:#3d481e; opacity:1;">
+                                                                    {{ $visitor->code_member }}</h5>
+                                                                <h6 style="font-size: 8px;font-weight: 600; color:#3d481e;">
                                                                     Berlaku hingga
                                                                     {{ \Carbon\Carbon::parse($visitor->expired_date)->format('d-m-Y') }}
                                                                 </h6>
                                                             </div>
                                                         </div>
-                                                        <div class="mt-5">
-                                                            <img src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/back-vip-card.svg') : asset('dist/img/kartutamu/back-member-card.svg') }}"
+                                                        <div class="back-content">
+                                                            <img class="back" src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/back-vip-card.svg') : asset('dist/img/kartutamu/back-member-card.svg') }}"
                                                                 alt="{{ $visitor->tipe_member }}">
                                                             <div class="qr-code">
                                                                 {{ QrCode::size(80)->generate($visitor->code_member) }}
@@ -97,6 +95,7 @@
                                                 </button>
                                                 <a href="{{ route('printkartu') }}">DOWNLOAD KARTU MEMBER</a>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -493,7 +492,8 @@
     <script defer src="{{ asset('/dist/js/line-chart-invoice-data.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/detail_member.js') }}"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         $(document).on('click', '#setting_panel_btn', function() {
             introJs('.intro-foo').setOptions({

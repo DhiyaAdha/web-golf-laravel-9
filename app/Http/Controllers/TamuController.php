@@ -2,29 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\DaftarTamuExport;
-use App\Jobs\SendMailJob;
-use App\Jobs\SendMailJobDeposit;
-use App\Models\Deposit;
-use App\Models\LogAdmin;
-use App\Models\LogCoupon;
-use App\Models\LogLimit;
-use App\Models\LogTransaction;
-use App\Models\ReportCoupon;
-use App\Models\ReportDeposit;
-use App\Models\ReportLimit;
-use App\Models\Visitor;
 use Carbon\Carbon;
+use App\Models\Deposit;
+use App\Models\Visitor;
+use App\Models\LogAdmin;
+use App\Models\LogLimit;
 use Carbon\CarbonPeriod;
-use Illuminate\Cache\RateLimiting\Limit;
-use Illuminate\Database\Eloquent\Builder;
+use App\Jobs\SendMailJob;
+use App\Models\LogCoupon;
+use App\Models\ReportLimit;
+use Illuminate\Support\Str;
+use App\Models\ReportCoupon;
 use Illuminate\Http\Request;
+use App\Models\ReportDeposit;
+use App\Models\LogTransaction;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Jobs\SendMailJobDeposit;
+use App\Exports\DaftarTamuExport;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Str;
-use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Database\Eloquent\Builder;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class TamuController extends Controller
@@ -131,7 +132,7 @@ class TamuController extends Controller
             [
                 'name' => 'required|unique:visitors,name|unique:users,name',
                 'nik' => 'required|unique:visitors,nik|numeric|digits_between:16,16',
-                'phone' => 'required|unique:visitors,phone|numeric|unique:users,phone',
+                'phone' => 'required|unique:visitors,phone|unique:users,phone|numeric|digits_between:11,12',
                 'address' => 'required',
                 'gender' => 'required',
                 'email' => 'email|regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/|unique:visitors,email|unique:users,email',
@@ -151,6 +152,7 @@ class TamuController extends Controller
                 'phone.required' => 'Nomor Hp masih kosong.',
                 'phone.unique' => 'Nomor Hp sudah ada',
                 'phone.numeric' => 'Nomor Hp hanya boleh angka',
+                'phone.digits_between' => 'Nomor Hp minimal 11 digit dan maksimal 12 digit',
                 'address.required' => 'Alamat masih kosong.',
                 'address.unique' => 'Alamat sudah ada',
                 'gender.required' => 'Jenis Kelamin masih kosong.',
@@ -287,7 +289,7 @@ class TamuController extends Controller
         $visitor = Visitor::findOrFail($id);
 
         $visitor->name = $request->name;
-        $visitor->name = $request->nik;
+        $visitor->nik = $request->nik;
         $visitor->phone = $request->phone;
         $visitor->address = $request->address;
         $visitor->email = $request->email;
@@ -478,11 +480,11 @@ class TamuController extends Controller
         $aktifitas_deposit = ReportDeposit::select('id', 'report_balance', 'payment_type', 'status', 'visitor_id', 'user_id', 'fund', 'created_at')->where('visitor_id', $decrypt_id)->where('fund', '!=', 0)->orderBy('created_at', 'desc')->get();
         if ($request->ajax()) {
             return datatables()->of($aktifitas_deposit)->editColumn('report_balance', function ($data) {
-                return 'Rp. ' . number_format($data->fund, 0, ',', '.');
+                return formatrupiah($data->fund);
             })->addColumn(
                 'transaction',
                 function ($data) {
-                    return 'Rp. ' . number_format($data->report_balance, 0, ',', '.');
+                    return formatrupiah($data->report_balance);
                 }
             )->addColumn('payment_type', function ($data) {
                 if ($data->payment_type == 'cash') {
@@ -504,6 +506,37 @@ class TamuController extends Controller
         }
     }
     /* end data aktifitas tamu Deposit */
+
+    /* data history tamu Deposit */
+    public function historydeposit(Request $request)
+    {
+        $history_deposit = ReportDeposit::join('visitors', 'report_deposits.visitor_id', '=', 'visitors.id')
+        ->where('report_deposits.fund', '!=', 0)
+        ->when($request->filter, function ($query, $filter) {
+            $query->where('report_deposits.payment_type', $filter);
+        })
+        ->orderBy('report_deposits.id', 'desc')
+        ->get(['report_deposits.*', 'visitors.name as name']);
+
+        if ($request->ajax()) {
+            return datatables()->of($history_deposit)->addColumn('name', function ($data) {
+                return $data->name;
+            })->addColumn('report_balance', function($data){
+                return formatrupiah($data->report_balance);
+            })->addColumn('fund', function($data){
+                return formatrupiah($data->fund);
+            })->addColumn('payment_type', function($data){
+                if ($data->payment_type == 'cash') {
+                    return '<p class="label label-success">'.$data->payment_type.'</p>';
+                } elseif ($data->payment_type == 'transfer') {
+                    return '<p class="label label-warning">'.$data->payment_type.'</p>';
+                }
+            })->addColumn('created_at', function($data){
+                return $data->created_at->translatedFormat('d F Y').', '.$data->created_at->translatedFormat('h:i a');
+            })->rawColumns(['name', 'report_balance', 'fund', 'payment_type', 'created_at'])->make(true);
+        }
+    }
+    /* end data history tamu Deposit */
 
     /* data aktifitas tamu limit */
     public function reportlimit(Request $request, $id)
@@ -693,7 +726,7 @@ class TamuController extends Controller
             })->editColumn('created_at', function ($data) {
                 return date_format($data->created_at, 'd-m-Y H:i');
             })->editColumn('total_gross', function ($data) {
-                return 'Rp. ' . number_format($data->total_gross, 0, ',', '.');
+                return formatrupiah($data->total_gross);
             })->editColumn('transaction_id', function ($data) {
                 return $data->id;
             })->rawColumns(['order_number', 'total_gross', 'information', 'status', 'created_at'])->make(true);
