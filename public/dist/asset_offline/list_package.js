@@ -28,8 +28,14 @@ $('#dt-package').DataTable({
                     return `<span class="label label-permainan">${data.category == 'default' ? 'Permainan' : 'Proshop & Fasilitas'}</span>`;
                 } else if (data.category == 'additional') {
                     return `<span class="label label-fasilitas">${data.category == 'additional' ? 'Proshop & Fasilitas' : 'Permainan'}</span>`;
-                } else {
-                    return `<span class="label label-kantin">${data.category == 'others' ? 'Kantin' : 'Permainan'}</span>`;
+                } else if (data.category == 'others') {
+                    return `<span class="label label-kantin">${data.category == 'others' ? 'Kantin' : 'Sewa'}</span>`;
+                }
+                else if (data.category == 'sewa') {
+                    return `<span class="label label-sewa">${data.category == 'sewa' ? 'Sewa' : 'Service Fee'}</span>`;
+                }
+                else {
+                    return `<span class="label label-service">${data.category == 'service' ? 'Service Fee' : 'Service Fee'}</span>`;
                 }
             }
         },
