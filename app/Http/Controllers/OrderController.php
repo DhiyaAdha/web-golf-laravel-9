@@ -45,7 +45,9 @@ class OrderController extends Controller
     {
         $data['products'] = Package::orderBy('id', 'desc')->where('status', '0')->get();
         if ($request->ajax()) {
-            return datatables()->of($data['products'])->editColumn('price_weekdays', function ($data) {
+            return datatables()->of($data['products'])->editColumn('price_discount', function ($data) {
+                return formatrupiah($data->price_discount);
+            })->editColumn('price_weekdays', function ($data) {
                 return formatrupiah($data->price_weekdays);
             })->editColumn('price_weekend', function ($data) {
                 return formatrupiah($data->price_weekend);
