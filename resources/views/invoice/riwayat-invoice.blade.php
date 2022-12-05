@@ -17,10 +17,12 @@
                 <div class="col-sm-12">
                     <div class="panel panel-default card-view">
                         <div class="pull-right">
-                            <a href="{{ url('export_excel') }}" target="_blank" name="excel" data-toggle="tooltip" data-placement="top" title="Download Excel" data-title="Download Invoice" data-intro="kemudian panel ini memberikan informasi pendataan transaksi tamu yang sudah lunas. Hasil rekap data bisa di download dengan format exel. "><img src="dist/img/excel2.svg" width="25px" height="25px"></a>
+                            <a href="{{ url('export_excel') }}" target="_blank" name="excel" data-toggle="tooltip" data-placement="top" title="Download Excel" data-title="Download Invoice" data-intro="kemudian panel ini memberikan informasi pendataan transaksi tamu yang sudah lunas. Hasil rekap data bisa di download dengan format exel. ">
+                                <img src="{{ asset('dist/img/excel.svg') }}" width="25px" height="25px">
+                            </a>
                         </div>
                         <div class="pull-left">
-                            <h6 class="panel-title txt-dark">Invoice</h6>
+                            <h6 class="panel-title txt-dark">daftar transaksi tgcc</h6>
                         </div>
                         <div class="clearfix"></div>
                         <div class="panel-wrapper collapse in">

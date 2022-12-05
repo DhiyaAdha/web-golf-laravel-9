@@ -387,6 +387,54 @@ $(document).ready(function() {
         }
     });
 
+    $(document).on('click', '#reset', function(e) {
+        swal({
+            title: "Batalkan Pemesanan?",
+            text: "Seluruh data keranjang akan dihapus",
+            type: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#c82333",
+            confirmButtonText: "Batalkan",
+            cancelButtonText: "Batal",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function(isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    async: true,
+                    type: 'POST',
+                    url: '/checkout/reguler/clear',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: () => {
+                        rst();
+                        swal({
+                            title: "",
+                            type: "success",
+                            text: "Keranjang berhasil direset",
+                            confirmButtonColor: "#01c853",
+                        }, () => {
+                            history.go(0);
+                        });
+                    },
+                    error: () => {
+                        sword();
+                        swal({
+                            title: "Internal Server Error",
+                            type: "error",
+                            text: "Terdapat kesalahan program pada action ini",
+                            confirmButtonColor: "#01c853",
+                        });
+                        return false;
+                    }
+                })
+            } else {
+                swal("Kembali", "", "info");
+            }
+        });
+    });
+
     const invoice = (url, title) => {
         popupCenter(url, title, 340, 550);
     }

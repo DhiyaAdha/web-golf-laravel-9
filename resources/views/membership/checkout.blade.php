@@ -772,6 +772,7 @@
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <a href="{{ URL::signedRoute('order.cart', ['id' => $visitor->id]) }}" data-route="{{ URL::signedRoute('order.cart', ['id' => $visitor->id]) }}" class="btn btn-primary btn-sm mt-2" id="back">Kembali</a>
+                                    <button id="reset" data-member={{ $visitor->id }} class="btn btn-sm btn-danger mt-2">Batalkan</button>
                                     <button type="submit" id="pay" class="btn btn-sm btn-success mt-2">Bayar</button>
                                 </div>
                             </div>
