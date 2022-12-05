@@ -91,6 +91,12 @@
                                                     <div class="text-danger"> {{ $message }}</div>
                                                 @enderror
                                         </div>
+                                        <div class="checkbox checkbox-primary">
+                                            <input id="checkbox-harga" type="checkbox" value="hrg">
+                                            <label for="checkbox-harga">
+                                                Harga Sama Senin-Minggu ?
+                                            </label>
+                                        </div>
                                         <div class="d-flex justify-content-between">
                                             <div class="form-group @error('price_discount') has-error @enderror">
                                                 <label class="control-label mb-10 text-left" for="examp">
@@ -103,7 +109,7 @@
                                                         <div class="text-danger"> {{ $message }}</div>
                                                     @enderror
                                             </div>
-                                            <div class="form-group @error('price_weekdays') has-error @enderror">
+                                            <div class="form-group @error('price_weekdays') has-error @enderror hrg">
                                                 <label class="control-label mb-10 text-left" for="examp">
                                                     <label class="control-label mb-10 text-left" for="example-email">selasa - jumat<span class="help"></span></label>
                                                     <div class="input-group">
@@ -114,7 +120,7 @@
                                                         <div class="text-danger"> {{ $message }}</div>
                                                     @enderror
                                             </div>
-                                            <div class="form-group @error('price_weekend') has-error @enderror">
+                                            <div class="form-group @error('price_weekend') has-error @enderror hrg">
                                                 <label class="control-label mb-10 text-left" for="examp">
                                                     <label class="control-label mb-10 text-left" for="example-email">sabtu - minggu<span class="help"></span></label>
                                                     <div class="input-group">
@@ -161,5 +167,14 @@
             vMax: '999999999',
             vMin: '-999999999'
         });
+    </script>
+    <script>
+       $(document).ready(function() {
+                $('input[type="checkbox"]').click(function() {
+                    var inputValue = $(this).attr("value");
+                    $("." + inputValue).toggle();
+  
+                });
+            });
     </script>
 @endpush
