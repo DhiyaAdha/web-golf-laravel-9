@@ -175,6 +175,7 @@ class TamuController extends Controller
             'gender' => $request->gender,
             'email' => $request->email,
             'phone' => $request->phone,
+            'handicap' => $request->handicap,
             'code_member' => date('YmdHis'),
             'company' => $request->company,
             'position' => $request->position,
@@ -300,6 +301,7 @@ class TamuController extends Controller
         $visitor->gender = $request->gender;
         $visitor->tipe_member = $request->tipe_member;
         $visitor->status = $request->status;
+        $visitor->handicap = $request->handicap;
         $visitor->updated_at = Carbon::now();
 
         if($request->status == 'active') {

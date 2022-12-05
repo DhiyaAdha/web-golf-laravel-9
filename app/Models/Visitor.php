@@ -23,6 +23,7 @@ class Visitor extends Model
         'position',
         'company',
         'phone',
+        'handicap',
         'code_member',
         'gender',
         'category',
