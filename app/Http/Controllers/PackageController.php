@@ -87,14 +87,26 @@ class PackageController extends Controller
                 // 'price_weekend.required' => 'Harga hari sabtu - minggu masih kosong.',
             ]
         );
-        Package::create([
-            'name' => $request->name,
-            'category' => $request->category,
-            'price_discount' => str_replace('.','',$request->price_discount),
-            'price_weekdays' => str_replace('.','',$request->price_weekdays),
-            'price_weekend' => str_replace('.','',$request->price_weekend),
-            'status' => $request->status,
-        ]);
+        // dd($request->price_weekdays == null);
+        if($request->price_weekdays == null){
+            Package::create([
+                'name' => $request->name,
+                'category' => $request->category,
+                'price_discount' => str_replace('.','',$request->price_discount),
+                'price_weekdays' => str_replace('.','',$request->price_discount),
+                'price_weekend' => str_replace('.','',$request->price_discount),
+                'status' => $request->status,
+            ]);
+        }else{
+            Package::create([
+                'name' => $request->name,
+                'category' => $request->category,
+                'price_discount' => str_replace('.','',$request->price_discount),
+                'price_weekdays' => str_replace('.','',$request->price_weekdays),
+                'price_weekend' => str_replace('.','',$request->price_weekend),
+                'status' => $request->status,
+            ]);
+        }
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'CREATE',
