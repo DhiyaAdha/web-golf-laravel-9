@@ -91,7 +91,7 @@
                             </div>
                             <div class="form-group @error('handicap') has-error @enderror">
                                 <label class="control-label mb-10" for="">Handicap</label>
-                                <input type="text" name="handicap" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" id="handicap" size="50px" value="{{ old('handicap') }}" placeholder="Isi Rating">
+                                <input type="text" name="handicap" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" id="handicap" size="50px" value="{{ old('handicap') }}" placeholder="Isi Ranking">
                                 @error('handicap')
                                     <div class="text-danger"> {{ $message }}</div>
                                 @enderror
