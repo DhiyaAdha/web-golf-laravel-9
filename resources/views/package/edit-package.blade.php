@@ -90,7 +90,7 @@
                                             @enderror
                                         </div>
                                         <div class="checkbox checkbox-primary">
-                                            <input id="checkbox-harga" type="checkbox" value="hrg">
+                                            <input id="checkbox-harga" type="checkbox" value="hrg" onclick="myFunction()">
                                             <label for="checkbox-harga">
                                                 Harga Sama Senin-Minggu ?
                                             </label>
@@ -194,22 +194,16 @@
                  });
              });
      </script>
-    <script>
-        $(document).ready(function() {
-                 $('input[type="checkbox"]').change(function() {
-                     var inputValue = $(this).attr("value");
-                     $("#hrg2").val('');
-                     $("." + inputValue).toggle();
-                 });
-             });
-     </script>
      <script>
-        (function($) {
-            $(document).ready( function() {
-                     if ($('input[type=checkbox]').prop('checked',false)){
-                        location.reload();
-                     }
-            });
-        })(jQuery);
-     </script>
+        function myFunction() {
+          var checkBox = document.getElementById("checkbox-harga");
+        //   var text = document.getElementById("text");
+          if (checkBox.checked == true){
+            // text.style.display = "block";
+          } else {
+            //  text.style.display = "none";
+            location.reload();
+          }
+        }
+        </script>
 @endpush
