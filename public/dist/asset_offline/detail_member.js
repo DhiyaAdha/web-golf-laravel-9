@@ -83,8 +83,8 @@ $(".download-kartu-tamu").on("click", function () {
     //     height: 1200
     // }).then(function(canvas) {
     //     let a = document.createElement('a');
-    //     a.href = canvas.toDataURL("image/png", 1);
-    //     a.download =  first + '-front.png';
+    //     a.href = canvas.toDataURL("image/jpeg", 1);
+    //     a.download =  first + '-front.jpg';
     //     a.target = '_blank';
     //     a.click();
     // });
