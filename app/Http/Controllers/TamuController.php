@@ -431,6 +431,7 @@ class TamuController extends Controller
             $data['qrcode'] = QrCode::size(180)->generate($visitor->id);
             $data['quota'] = $limit->quota;
             $data['quota_kupon'] = $coupon->quota_kupon ?? '0';
+            $data['handicap'] = $visitor->handicap;
             $data['balance'] = $deposit->balance;
             $data['deposit'] = Deposit::where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
             $data['limit'] = LogLimit::where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();

@@ -173,8 +173,8 @@
                         </div>
                         <div>
                             <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
-                                <img src="/dist/img/Golf.svg">
-                                <h6 class="text-center">{{ $quota }}</h6>
+                                <img src="/dist/img/handycap.svg" style="width: 80px; height: 80px;">
+                                <h6 class="text-center">{{ $handicap }}</h6>
                             </div>
                         </div>
                     </div>
