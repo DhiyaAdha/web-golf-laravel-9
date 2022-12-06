@@ -24,7 +24,7 @@
                         <img src="{{ asset('img/detail-kartutamu.jpg') }}" style="width: 100%; height: 200px;">
                     </div>
                 </div>
-                <div class="col-lg-6" data-title="Kartu Tamu"
+                <div class="col-lg-4" data-title="Kartu Tamu"
                     data-intro="Panel ini memberikan informasi data membership di tgcc. Berisi informasi nama, email, kode membership, jenil kelamin, jenis member, dan kategori member">
                     <div class="panel panel-default panel-dropdown card-view">
                         <div class="panel-heading">
@@ -139,10 +139,36 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3" >
+                <div class="col-lg-4" >
                     <div class="panel panel-default card-view limit" style="height: 238px;" data-title="Limit Tamu" data-intro="Panel ini memberikan informasi Kuota Limit membership yang tersisa, setiap membership mendapatkan kuota sesuai tipe member. kuota untuk member VIP 10 kuota dan MEMBER 4 kuota">
+                        <div class="col-lg-6">
+                            <div class="panel-heading">
+                                <h6 class="panel-title text-center">Limit</h6>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div>
+                                <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
+                                    <img src="/dist/img/Golf.svg">
+                                    <h6 class="text-center">{{ $quota }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="panel-heading">
+                                <h6 class="panel-title text-center">Kupon</h6>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div>
+                                <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
+                                    <img src="/dist/img/Golf.svg">
+                                    <h6 class="text-center">{{ $quota_kupon ?? '0' }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default card-view limit" style="height: 238px;" data-title="Kupon Tamu" data-intro="Panel ini memberikan informasi Kuota Kupon membership yang tersisa, kuota kupon hanya bisa didapat ketika membership menang perlombaan yang diselenggarakan tgcc.">
                         <div class="panel-heading">
-                            <h6 class="panel-title text-center">Limit</h6>
+                            <h6 class="panel-title text-center">HandyCap</h6>
                             <div class="clearfix"></div>
                         </div>
                         <div>
@@ -152,20 +178,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default card-view limit" style="height: 238px;" data-title="Kupon Tamu" data-intro="Panel ini memberikan informasi Kuota Kupon membership yang tersisa, kuota kupon hanya bisa didapat ketika membership menang perlombaan yang diselenggarakan tgcc.">
-                        <div class="panel-heading">
-                            <h6 class="panel-title text-center">Kupon</h6>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div>
-                            <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
-                                <img src="/dist/img/Golf.svg">
-                                <h6 class="text-center">{{ $quota_kupon ?? '0' }}</h6>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                     <div class="panel panel-default card-view limit" style="height: 238px;" data-title="Saldo" data-intro="Panel ini memberikan informasi Saldo tamu yang tersisa. Saldo bisa diisi melalui tambah deposit">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Saldo</h6>
