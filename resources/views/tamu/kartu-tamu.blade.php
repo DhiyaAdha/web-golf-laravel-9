@@ -53,28 +53,25 @@
                                                 <div class="resolution">
                                                     <div class="d-flex flex-column">
                                                         <div class="front-content">
-                                                            <img class="front" src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/front-vip-card.svg') : asset('dist/img/kartutamu/front-member-card.svg') }}"
-                                                                alt="{{ $visitor->tipe_member }}">
+                                                            <img class="front" src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/front-vip-card.svg') : asset('dist/img/kartutamu/front-member-card.svg') }}" alt="{{ $visitor->tipe_member }}">
                                                             <div class="qr-code">
                                                                 {{ QrCode::size(80)->generate($visitor->unique_qr) }}
                                                             </div>
                                                             <div class="identity">
-                                                                <h6
-                                                                    style="text-transform: uppercase; font-size:14pt; letter-spacing:1px;">
+                                                                <h6 style="text-transform: uppercase; font-size:14px; letter-spacing:1px;">
                                                                     @php
                                                                         $visitor->name;
                                                                         $slice = explode(' ', $visitor->name);
                                                                         echo $slice[0];
-                                                                    @endphp</h6>
+                                                                    @endphp
+                                                                </h6>
                                                             </div>
                                                             <div class="codemember">
-                                                                <h5
-                                                                    style="text-transform: uppercase; font-size:12pt; line-height:400%; letter-spacing:2px;">
-
-                                                                    {{ $visitor->code_member }}</h5>
-                                                                <h6 style="font-size: 8px;font-weight: 600; color:#3d481e;">
-                                                                    Berlaku hingga
-                                                                    {{ \Carbon\Carbon::parse($visitor->expired_date)->format('d-m-Y') }}
+                                                                <h5 style="text-transform: uppercase; font-size:12px; line-height:400%; letter-spacing:2px;">{{ $visitor->code_member }}</h5>
+                                                            </div>
+                                                            <div class="expired-member">
+                                                                <h6 style="font-size: 7px;font-weight: 600; color:#3d481e;">
+                                                                    Berlaku hingga {{ \Carbon\Carbon::parse($visitor->expired_date)->format('d-m-Y') }}
                                                                 </h6>
                                                             </div>
                                                         </div>
@@ -89,13 +86,11 @@
                                                 </div>
                                             </div>
                                             <div class="text-center">
-                                                <button type="button" class="btn btn-sm download-kartu-tamu"
-                                                    style="margin-top: 200px;"><i class="fa fa-download"></i> <b>Download Kartu
-                                                        Member</b>
+                                                <button type="button" class="btn btn-sm download-kartu-tamu"><i class="fa fa-download"></i> 
+                                                    <b>Download Kartu Member</b>
                                                 </button>
                                                 <a href="{{ route('printkartu') }}">DOWNLOAD KARTU MEMBER</a>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
