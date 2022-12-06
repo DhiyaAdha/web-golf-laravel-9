@@ -55,13 +55,7 @@
                             @foreach ($additional as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                    @if ($today === 'Senin')
-                                        title="Rp. {{ number_format($item->price_discount, 0, ',', '.') }}"
-                                    @elseif ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat')
                                         title="Rp. {{ number_format($item->price_weekdays, 0, ',', '.') }}"
-                                    @else
-                                        title="Rp. {{ number_format($item->price_weekend, 0, ',', '.') }}"
-                                    @endif
                                     class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
                             @endforeach
                         </div>
@@ -75,13 +69,7 @@
                             @foreach ($others as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                    @if ($today === 'Senin')
-                                        title="Rp. {{ number_format($item->price_discount, 0, ',', '.') }}"
-                                    @elseif ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat')
                                         title="Rp. {{ number_format($item->price_weekdays, 0, ',', '.') }}"
-                                    @else
-                                        title="Rp. {{ number_format($item->price_weekend, 0, ',', '.') }}"
-                                    @endif
                                     class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
                             @endforeach
                         </div>
@@ -95,13 +83,7 @@
                             @foreach ($rental as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                    @if ($today === 'Senin')
-                                        title="Rp. {{ number_format($item->price_discount, 0, ',', '.') }}"
-                                    @elseif ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat')
                                         title="Rp. {{ number_format($item->price_weekdays, 0, ',', '.') }}"
-                                    @else
-                                        title="Rp. {{ number_format($item->price_weekend, 0, ',', '.') }}"
-                                    @endif
                                     class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
                             @endforeach
                         </div>
@@ -115,13 +97,7 @@
                             @foreach ($service as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                    @if ($today === 'Senin')
-                                        title="Rp. {{ number_format($item->price_discount, 0, ',', '.') }}"
-                                    @elseif ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat')
                                         title="Rp. {{ number_format($item->price_weekdays, 0, ',', '.') }}"
-                                    @else
-                                        title="Rp. {{ number_format($item->price_weekend, 0, ',', '.') }}"
-                                    @endif
                                     class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
                             @endforeach
                         </div>

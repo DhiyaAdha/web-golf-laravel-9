@@ -73,8 +73,8 @@ class PackageController extends Controller
                 'name' => 'required|unique:packages,name',
                 'category' => 'required',
                 'price_discount' => 'required',
-                'price_weekdays' => 'required',
-                'price_weekend' => 'required',
+                // 'price_weekdays' => 'required',
+                // 'price_weekend' => 'required',
                 'status' => 'required',
             ],
             [
@@ -83,8 +83,8 @@ class PackageController extends Controller
                 'category.required' => 'Kategori Paket masih kosong.',
                 'status.required' => 'Status Paket masih kosong.',
                 'price_discount.required' => 'Harga hari senin masih kosong.',
-                'price_weekdays.required' => 'Harga hari selasa - jumat masih kosong.',
-                'price_weekend.required' => 'Harga hari sabtu - minggu masih kosong.',
+                // 'price_weekdays.required' => 'Harga hari selasa - jumat masih kosong.',
+                // 'price_weekend.required' => 'Harga hari sabtu - minggu masih kosong.',
             ]
         );
         Package::create([
