@@ -13,6 +13,7 @@ use App\Models\LogCoupon;
 use App\Models\ReportLimit;
 use Illuminate\Support\Str;
 use App\Models\ReportCoupon;
+use App\Models\SettingLimit;
 use Illuminate\Http\Request;
 use App\Models\ReportDeposit;
 use App\Models\LogTransaction;
@@ -190,29 +191,20 @@ class TamuController extends Controller
         $get_visitor->unique_qr = $link_qr;
         $get_visitor->save();
 
-        if ($request->tipe_member == 'VIP') {
-            $report_quota = ReportLimit::create([
-                'visitor_id' => $visitors->id,
-                'user_id' => Auth::user()->id,
-                'report_quota' => 4,
-                'status' => 'Bertambah',
-                'created_at' => Carbon::now(),
-            ]);
-        } else {
-            $report_quota = ReportLimit::create([
-                'visitor_id' => $visitors->id,
-                'user_id' => Auth::user()->id,
-                'report_quota' => 10,
-                'status' => 'Bertambah',
-                'created_at' => Carbon::now(),
-            ]);
-        }
+        $limit = SettingLimit::where('tipe_member', $request->tipe_member)->first();
+        $report_quota = ReportLimit::create([
+            'visitor_id' => $visitors->id,
+            'user_id' => Auth::user()->id,
+            'report_quota' => $limit->limit,
+            'status' => 'Bertambah',
+            'created_at' => Carbon::now(),
+        ]);
         $report_quota->save();
 
         $quota = LogLimit::create([
             'visitor_id' => $visitors->id,
             'report_limit_id' => $report_quota->id,
-            'quota' => $request->tipe_member == 'VIP' ? '4' : '10',
+            'quota' => $limit->limit,
             'created_at' => Carbon::now(),
         ]);
         $quota->save();
@@ -322,28 +314,28 @@ class TamuController extends Controller
 
         $visitor_limit = LogLimit::find($visitor->id);
         $visitor_report_limit = ReportLimit::find($visitor->id);
+        $limit = SettingLimit::where('tipe_member', $request->tipe_member)->first();
         if ($visitor->wasChanged('tipe_member')) {
             $visitor_limit->update([
-                'quota' => $request->tipe_member == 'VIP' ? '4' : '10',
+                'quota' => $limit->limit,
                 'created_at' => Carbon::now(),
             ]);
             if ($visitor->tipe_member == 'VVIP') {
                 $visitor_report_limit->update([
-                    'report_quota' => $request->tipe_member == 'VIP' ? '4' : '10',
+                    'report_quota' => $limit->limit,
                     'created_at' => Carbon::now(),
                     'status' => 'Reset',
                     'activities' => 'Limit <b>'.$visitor->name.'</b> telah diubah menjadi <b>'.$request->tipe_member.'</b> dengan limit <b>10x Perbulan </b>',
                 ]);
             } else {
                 $visitor_report_limit->update([
-                    'report_quota' => $request->tipe_member == 'VIP' ? '4' : '10',
+                    'report_quota' => $limit->limit,
                     'created_at' => Carbon::now(),
                     'status' => 'Reset',
                     'activities' => 'Limit <b>'.$visitor->name.'</b> telah diubah menjadi <b>'.$request->tipe_member.'</b> dengan limit <b>4x</b> Perbulan ',
                 ]);
             }
         }
-
         return redirect()->route('daftar-tamu')->with('success', 'Berhasil edit tamu');
     }
 

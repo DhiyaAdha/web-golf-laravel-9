@@ -152,5 +152,4 @@
             }).start();
         });
     </script>
-
-    @endpush
+@endpush
