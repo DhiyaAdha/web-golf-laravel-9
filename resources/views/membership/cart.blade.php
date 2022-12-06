@@ -1,26 +1,28 @@
-@extends('layouts.main', ['title' => 'TGCC | Pilih Permainan'])
+@extends('layouts.main', ['title' => 'TGCC | Pilih Paket'])
 @section('content')
     <div class="page-wrapper intro-foo">
         <div class="container-fluid" data-title="Halaman Order" data-step="1" data-intro="Halaman ini digunakan oleh kasir atau admin untuk order jenis permainan, fasilitas atau kantin.">
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                    <h5 class="txt-dark">Pilih Permainan</h5>
+                    <h5 class="txt-dark">Pilih Paket</h5>
                 </div>
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
                         <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
                         <li><a href="{{ url('scan-tamu') }}">Scan Tamu</a></li>
-                        <li class="active"><span>Pilih Permainan</span></li>
+                        <li class="active"><span>Pilih Paket</span></li>
                     </ol>
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-8" data-title="Panel Paket" data-step="2" data-intro="Kemudian pada panel ini terdiri dari 3 jenis paket yang tersedia yang bisa dipesan oleh member yaitu jenis permainan, proshop fasilitas dan kantin.">
-                    <div class="panel panel-default card-view">
+                <div class="col-lg-8">
+                    <div class="panel panel-default card-view" data-title="Panel Paket" data-step="2" data-intro="Kemudian pada panel ini terdiri dari 3 jenis paket yang tersedia yang bisa dipesan oleh member yaitu jenis permainan, proshop fasilitas dan kantin.">
                         <div class="panel-heading">
-                            <div class="pull-left">
-                                <strong class="panel-title txt-dark">Permainan</strong>
-                            </div>
+                            @if(count($default) != 0)
+                                <div class="pull-left">
+                                    <strong class="panel-title txt-dark">Permainan</strong>
+                                </div>
+                            @endif
                             <div class="pull-right">
                                 <div class='d-flex '>
                                     <span class="text-muted mr-15" style="float: right;">{{ $date_now }},
@@ -30,100 +32,98 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <div class="d-flex flex-wrap" data-title="Jenis Permainan" data-intro="Secara default data yang diinput sebanyak 3 jenis permainan yaitu 18 hole, 9 hole dan driving golf. Anda juga bisa menambahkan ataupun mengubah data permainan melalui menu paket bermain dengan penentuan harga weekdays dan weekend.">
-                            @foreach ($default as $item)
-                                <button type="button" id="package-{{ $item->id }}"
-                                    onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                    @if ($today === 'Senin')
-                                        title="Rp. {{ number_format($item->price_discount, 0, ',', '.') }}"
-                                    @elseif ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat')
-                                        title="Rp. {{ number_format($item->price_weekdays, 0, ',', '.') }}"
-                                    @else
-                                        title="Rp. {{ number_format($item->price_weekend, 0, ',', '.') }}"
-                                    @endif
-                                    class="btn btn-default txt-success mr-15 mb-15">{{ $item->name }}</button>
-                            @endforeach
-                        </div>
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                <strong class="panel-title txt-dark">Proshop & Fasilitas</strong>
+                        @if(count($default) != 0)
+                            <div class="d-flex flex-wrap" data-title="Jenis Permainan" data-intro="Secara default data yang diinput sebanyak 3 jenis permainan yaitu 18 hole, 9 hole dan driving golf. Anda juga bisa menambahkan ataupun mengubah data permainan melalui menu paket bermain dengan penentuan harga weekdays dan weekend.">
+                                @foreach ($default as $item)
+                                    <button type="button" id="package-{{ $item->id }}"
+                                        onclick="addCart({{ $item->id }})" data-toggle="tooltip"
+                                        @if ($today === 'Senin')
+                                            title="Rp. {{ number_format($item->price_discount, 0, ',', '.') }}"
+                                        @elseif ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat')
+                                            title="Rp. {{ number_format($item->price_weekdays, 0, ',', '.') }}"
+                                        @else
+                                            title="Rp. {{ number_format($item->price_weekend, 0, ',', '.') }}"
+                                        @endif
+                                        class="btn btn-default txt-success mr-15 mb-15">{{ $item->name }}</button>
+                                @endforeach
                             </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="d-flex flex-wrap" data-title="Proshop dan Fasilitas" data-intro="Pilih jenis fasilitas sewa yang akan dimasukan ke keranjang">
-                            @foreach ($additional as $item)
-                                <button type="button" id="package-{{ $item->id }}"
-                                    onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                    @if ($today === 'Senin')
-                                        title="Rp. {{ number_format($item->price_discount, 0, ',', '.') }}"
-                                    @elseif ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat')
-                                        title="Rp. {{ number_format($item->price_weekdays, 0, ',', '.') }}"
-                                    @else
-                                        title="Rp. {{ number_format($item->price_weekend, 0, ',', '.') }}"
-                                    @endif
-                                    class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
-                            @endforeach
-                        </div>
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                <strong class="panel-title txt-dark">Kantin</strong>
+                        @endif
+                        @if(count($additional) != 0)
+                            <div class="panel-heading">
+                                <div class="pull-left">
+                                    <strong class="panel-title txt-dark">Proshop & Fasilitas</strong>
+                                </div>
+                                <div class="clearfix"></div>
                             </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="d-flex flex-wrap mb-15" data-title="Kantin" data-intro="Pilih barang yang ingin dibeli member">
-                            @foreach ($others as $item)
-                                <button type="button" id="package-{{ $item->id }}"
-                                    onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                    @if ($today === 'Senin')
-                                        title="Rp. {{ number_format($item->price_discount, 0, ',', '.') }}"
-                                    @elseif ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat')
-                                        title="Rp. {{ number_format($item->price_weekdays, 0, ',', '.') }}"
-                                    @else
-                                        title="Rp. {{ number_format($item->price_weekend, 0, ',', '.') }}"
-                                    @endif
-                                    class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
-                            @endforeach
-                        </div>
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                <strong class="panel-title txt-dark">Penyewaan</strong>
+                            <div class="d-flex flex-wrap" data-title="Proshop dan Fasilitas" data-intro="Pilih jenis fasilitas sewa yang akan dimasukan ke keranjang">
+                                @foreach ($additional as $item)
+                                    <button type="button" id="package-{{ $item->id }}"
+                                        onclick="addCart({{ $item->id }})" data-toggle="tooltip"
+                                            title="Rp. {{ number_format($item->price_weekdays, 0, ',', '.') }}"
+                                        class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
+                                @endforeach
                             </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="d-flex flex-wrap mb-15" data-title="Sewa" data-intro="Pilih jenis layanan penyewaan">
-                            @foreach ($rental as $item)
-                                <button type="button" id="package-{{ $item->id }}"
-                                    onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                    @if ($today === 'Senin')
-                                        title="Rp. {{ number_format($item->price_discount, 0, ',', '.') }}"
-                                    @elseif ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat')
-                                        title="Rp. {{ number_format($item->price_weekdays, 0, ',', '.') }}"
-                                    @else
-                                        title="Rp. {{ number_format($item->price_weekend, 0, ',', '.') }}"
-                                    @endif
-                                    class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
-                            @endforeach
-                        </div>
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                <strong class="panel-title txt-dark">Service Fee</strong>
+                        @endif
+                        @if(count($others) != 0)
+                            <div class="panel-heading">
+                                <div class="pull-left">
+                                    <strong class="panel-title txt-dark">Kantin</strong>
+                                </div>
+                                <div class="clearfix"></div>
                             </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="d-flex flex-wrap mb-15" data-title="Sewa" data-intro="Pilih jenis layanan penyewaan">
-                            @foreach ($service as $item)
-                                <button type="button" id="package-{{ $item->id }}"
-                                    onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                    @if ($today === 'Senin')
-                                        title="Rp. {{ number_format($item->price_discount, 0, ',', '.') }}"
-                                    @elseif ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat')
-                                        title="Rp. {{ number_format($item->price_weekdays, 0, ',', '.') }}"
-                                    @else
-                                        title="Rp. {{ number_format($item->price_weekend, 0, ',', '.') }}"
-                                    @endif
-                                    class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
-                            @endforeach
-                        </div>
+                            <div class="d-flex flex-wrap mb-15" data-title="Kantin" data-intro="Pilih barang yang ingin dibeli tamu reguler">
+                                @foreach ($others as $item)
+                                    <button type="button" id="package-{{ $item->id }}"
+                                        onclick="addCart({{ $item->id }})" data-toggle="tooltip"
+                                            title="Rp. {{ number_format($item->price_weekdays, 0, ',', '.') }}"
+                                        class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
+                                @endforeach
+                            </div>
+                        @endif
+                        @if(count($rental) != 0)
+                            <div class="panel-heading">
+                                <div class="pull-left">
+                                    <strong class="panel-title txt-dark">Penyewaan</strong>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="d-flex flex-wrap mb-15" data-title="Sewa" data-intro="Pilih jenis layanan penyewaan">
+                                @foreach ($rental as $item)
+                                    <button type="button" id="package-{{ $item->id }}"
+                                        onclick="addCart({{ $item->id }})" data-toggle="tooltip"
+                                        @if ($today === 'Senin')
+                                            title="Rp. {{ number_format($item->price_discount, 0, ',', '.') }}"
+                                        @elseif ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat')
+                                            title="Rp. {{ number_format($item->price_weekdays, 0, ',', '.') }}"
+                                        @else
+                                            title="Rp. {{ number_format($item->price_weekend, 0, ',', '.') }}"
+                                        @endif
+                                        class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
+                                @endforeach
+                            </div>
+                        @endif
+                        @if(count($service) != 0)
+                            <div class="panel-heading">
+                                <div class="pull-left">
+                                    <strong class="panel-title txt-dark">Service Fee</strong>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="d-flex flex-wrap mb-15" data-title="Sewa" data-intro="Pilih jenis layanan penyewaan">
+                                @foreach ($service as $item)
+                                    <button type="button" id="package-{{ $item->id }}"
+                                        onclick="addCart({{ $item->id }})" data-toggle="tooltip"
+                                        @if ($today === 'Senin')
+                                            title="Rp. {{ number_format($item->price_discount, 0, ',', '.') }}"
+                                        @elseif ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat')
+                                            title="Rp. {{ number_format($item->price_weekdays, 0, ',', '.') }}"
+                                        @else
+                                            title="Rp. {{ number_format($item->price_weekend, 0, ',', '.') }}"
+                                        @endif
+                                        class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="col-lg-4 sticky">
