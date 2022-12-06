@@ -2,10 +2,11 @@
 
 namespace App\Console;
 
+use Carbon\Carbon;
+use App\Models\Visitor;
 use App\Models\LogLimit;
 use App\Models\ReportLimit;
-use App\Models\Visitor;
-use Carbon\Carbon;
+use App\Models\SettingLimit;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,21 +25,23 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
+            $limit_vip = SettingLimit::where('tipe_member', 'VIP')->first();
+            $limit_vvip = SettingLimit::where('tipe_member', 'VVIP')->first();
+
             LogLimit::whereHas('visitor', function ($query) {
                 $query->where('tipe_member', 'VVIP');
-            })->update(['quota' => 10]);
+            })->update(['quota' => $limit_vvip->limit]);
             LogLimit::whereHas('visitor', function ($query) {
                 $query->where('tipe_member', 'VIP');
-            })->update(['quota' => 4]);
+            })->update(['quota' => $limit_vip->limit]);
 
             $visitor = Visitor::where('status', 'active')->get();
-
             foreach($visitor as $value) {
                 if($value->tipe_member == 'VVIP') {
                     ReportLimit::create([
                         'visitor_id' => $value['id'],
                         'user_id' => '1',
-                        'report_quota' => $value['tipe_member'] == 'VIP' ? '4' : '10',
+                        'report_quota' => $value['tipe_member'] == 'VIP' ? $limit_vip->limit : $limit_vvip->limit,
                         'status' => 'Reset',
                         'created_at' => Carbon::now(),
                     ]);
@@ -46,7 +49,7 @@ class Kernel extends ConsoleKernel
                     ReportLimit::create([
                         'visitor_id' => $value['id'],
                         'user_id' => '1',
-                        'report_quota' => $value['tipe_member'] == 'VIP' ? '4' : '10',
+                        'report_quota' => $value['tipe_member'] == 'VIP' ? $limit_vip->limit : $limit_vvip->limit,
                         'status' => 'Reset',
                         'created_at' => Carbon::now(),
                     ]);

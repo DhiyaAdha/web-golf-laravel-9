@@ -389,7 +389,7 @@
                                                             <div class="flex-grow-1 custom-control custom-radio custom-control-inline" style="width:100%;">
                                                                 @if (count($package_default) == 1)
                                                                     @if ($item_default == 1)
-                                                                        @if (count($package_additional) == 0 && count($package_others) == 0)
+                                                                        @if (count($package_additional) == 0 && count($package_others) == 0 && count($package_rental) == 0 && count($package_service) == 0)
                                                                             @if ($log_coupon->quota_kupon != 0)
                                                                                 <input type="radio" id="customRadioInline2" name="payment-type" value="2" class="custom-control-input">
                                                                                 <label class="custom-control-label" for="customRadioInline2" style="width: 100%;cursor:pointer;">
@@ -451,7 +451,7 @@
                                                             <div class="flex-grow-1 custom-control custom-radio custom-control-inline" style="width:100%;">
                                                                 @if (count($package_default) == 1)
                                                                     @if ($item_default == 1)
-                                                                        @if (count($package_additional) == 0 && count($package_others) == 0)
+                                                                        @if (count($package_additional) == 0 && count($package_others) == 0 && count($package_rental) == 0 && count($package_service) == 0)
                                                                             @if ($log_limit->quota != 0)
                                                                                 <input type="radio" id="customRadioInline1" name="payment-type" value="1" class="custom-control-input">
                                                                                 <label class="custom-control-label" for="customRadioInline1" style="width: 100%;cursor:pointer;">

@@ -317,19 +317,19 @@ class OrderController extends Controller
 
     public function checkout(Request $request, $id)
     {
-        $get_id = $id;
+        $data['get_id'] = $id;
         $link_pos = URL::signedRoute('order.cart', ['id' => $id]);
         try {
-            $visitor = Visitor::find($get_id);
-            $items = \Cart::session($get_id)->getContent();
-            $totalPrice = \Cart::session($get_id)->getTotal();
+            $data['visitor'] = Visitor::find($data['get_id']);
+            $items = \Cart::session($data['get_id'])->getContent();
+            $data['totalPrice'] = \Cart::session($data['get_id'])->getTotal();
             $today = Carbon::now()->isoFormat('dddd');
             if (\Cart::isEmpty()) {
                 $cart_data = [];
             } else {
                 foreach ($items as $row) {
                     $id_package[] = $row->id;
-                    $item_default = 0;
+                    $data['item_default'] = 0;
                     $cek_itemId = $items->whereIn('id', $id_package);
                     $package = Package::find($row->id);
                     $cart[] = [
@@ -342,30 +342,30 @@ class OrderController extends Controller
                         'category' => $package->category,
                     ];
                     foreach ($cek_itemId as $item) {
-                        $item_default += $item['quantity'];
+                        $data['item_default'] += $item['quantity'];
                     }
                 }
 
-                $price_single = 0;
-                $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
-                $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
-                $package_others = Package::whereIn('id', $id_package)->where('category', 'others')->get();
-                $package_rental = Package::whereIn('id', $id_package)->where('category', 'rental')->get();
-                $package_service = Package::whereIn('id', $id_package)->where('category', 'service')->get();
-                $orders = collect($cart)->sortBy('created_at');
-                foreach ($package_default as $default) {
-                    $price_single += $today === 'Sabtu' || $today === 'Minggu' ? $default['price_weekend'] : $default['price_weekdays'];
+                $data['price_single'] = 0;
+                $data['package_additional'] = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
+                $data['package_default'] = Package::whereIn('id', $id_package)->where('category', 'default')->get();
+                $data['package_others']= Package::whereIn('id', $id_package)->where('category', 'others')->get();
+                $data['package_rental']= Package::whereIn('id', $id_package)->where('category', 'rental')->get();
+                $data['package_service'] = Package::whereIn('id', $id_package)->where('category', 'service')->get();
+                $data['orders'] = collect($cart)->sortBy('created_at');
+                foreach ($data['package_default'] as $default) {
+                    $data['price_single'] += $today === 'Sabtu' || $today === 'Minggu' ? $default['price_weekend'] : $default['price_weekdays'];
                 }
             }
-            $order_number = 'INV/' . Carbon::now()->format('Ymd') . '/' . Carbon::now()->format('his');
-            $deposit = Deposit::where('visitor_id', $get_id)->first();
-            $log_limit = LogLimit::where('visitor_id', $get_id)->first();
-            $log_coupon = LogCoupon::where('visitor_id', $get_id)->first();
+            $data['order_number'] = 'INV/' . Carbon::now()->format('Ymd') . '/' . Carbon::now()->format('his');
+            $data['deposit'] = Deposit::where('visitor_id', $data['get_id'])->first();
+            $data['log_limit'] = LogLimit::where('visitor_id', $data['get_id'])->first();
+            $data['log_coupon'] = LogCoupon::where('visitor_id', $data['get_id'])->first();
             if ($request->ajax()) {
-                return response()->json(['order_number' => $order_number]);
+                return response()->json(['order_number' => $data['order_number']]);
             }
 
-            return view('membership.checkout', compact('log_limit', 'log_coupon', 'get_id', 'price_single', 'item_default', 'package_default', 'package_additional', 'package_service', 'visitor', 'deposit', 'totalPrice', 'order_number', 'orders'))->render();
+            return view('membership.checkout', $data)->render();
         } catch (\Throwable $th) {
             return redirect()->to($link_pos);
         }
