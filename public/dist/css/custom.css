@@ -797,11 +797,28 @@ video {
     right: 6%;
 }
 
+.resolution .front-content {
+    width: 323px;
+    height: 204px;
+}
+.resolution .front-content img {
+    width: 323px;
+    height: 204px;
+}
+.resolution .back-content {
+    width: 323px;
+    height: 204px;
+}
+.resolution .back-content img{
+    width: 323px;
+    height: 204px;
+}
+
 .resolution .expired-member {
     position: absolute;
     font-family: "Ayuthaya";
     font-weight: 600;
-    top: 80%;
+    top: 86%;
     padding: 0 4px;
 }
 

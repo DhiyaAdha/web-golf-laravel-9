@@ -76,17 +76,13 @@
                                                             </div>
                                                         </div>
                                                         <div class="back-content">
-                                                            <img class="back" src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/back-vip-card.svg') : asset('dist/img/kartutamu/back-member-card.svg') }}"
-                                                                alt="{{ $visitor->tipe_member }}">
-                                                            <div class="qr-code">
-                                                                {{ QrCode::size(80)->generate($visitor->code_member) }}
-                                                            </div>
+                                                            <img class="back" src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/back-vip-card.svg') : asset('dist/img/kartutamu/back-member-card.svg') }}" alt="{{ $visitor->tipe_member }}">
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="text-center">
-                                                <button type="button" class="btn btn-sm download-kartu-tamu"><i class="fa fa-download"></i> 
+                                                <button type="button" class="btn btn-sm download-kartu-tamu" data-name="{{ $visitor->name}}" style="margin-top: 2rem"><i class="fa fa-download"></i> 
                                                     <b>Download Kartu Member</b>
                                                 </button>
                                                 <a href="{{ route('printkartu') }}">DOWNLOAD KARTU MEMBER</a>
@@ -501,6 +497,7 @@
     <script defer src="{{ asset('/dist/js/line-chart-invoice-data.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/detail_member.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.js" integrity="sha512-sn/GHTj+FCxK5wam7k9w4gPPm6zss4Zwl/X9wgrvGMFbnedR8lTUSLdsolDRBRzsX6N+YgG6OWyvn9qaFVXH9w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
