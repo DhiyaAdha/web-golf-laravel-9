@@ -154,8 +154,8 @@ class PackageController extends Controller
                 'name' => 'required|unique:packages,name,'.$id,
                 'category' => 'required',
                 'price_discount' => 'required',
-                'price_weekdays' => 'required',
-                'price_weekend' => 'required',
+                // 'price_weekdays' => 'required',
+                // 'price_weekend' => 'required',
                 'status' => 'required',
             ],
             [
@@ -164,19 +164,31 @@ class PackageController extends Controller
                 'category.required' => 'Kategori Paket masih kosong.',
                 'status.required' => 'Status Paket masih kosong.',
                 'price_discount.required' => 'Harga hari senin masih kosong.',
-                'price_weekdays.required' => 'Harga hari selasa - jumat masih kosong.',
-                'price_weekend.required' => 'Harga hari sabtu - minggu masih kosong.',
+                // 'price_weekdays.required' => 'Harga hari selasa - jumat masih kosong.',
+                // 'price_weekend.required' => 'Harga hari sabtu - minggu masih kosong.',
             ]
         );
-
-        $package = Package::findOrFail($id);
-        $package->name = $request->name;
-        $package->category = $request->category;
-        $package->price_discount = str_replace('.','',$request->price_discount);
-        $package->price_weekdays = str_replace('.','',$request->price_weekdays);
-        $package->price_weekend = str_replace('.','',$request->price_weekend);
-        $package->status = $request->status;
-        $package->updated_at = Carbon::now();
+        // dd($request->price_weekdays == null);
+        if($request->price_weekdays == null){
+            $package = Package::findOrFail($id);
+            $package->name = $request->name;
+            $package->category = $request->category;
+            $package->price_discount = str_replace('.','',$request->price_discount);
+            $package->price_weekdays = str_replace('.','',$request->price_discount);
+            $package->price_weekend = str_replace('.','',$request->price_discount);
+            $package->status = $request->status;
+            $package->updated_at = Carbon::now();
+        }else{
+            $package = Package::findOrFail($id);
+            $package->name = $request->name;
+            $package->category = $request->category;
+            $package->price_discount = str_replace('.','',$request->price_discount);
+            $package->price_weekdays = str_replace('.','',$request->price_weekdays);
+            $package->price_weekend = str_replace('.','',$request->price_weekend);
+            $package->status = $request->status;
+            $package->updated_at = Carbon::now();
+        }
+        
 
         LogAdmin::create([
             'user_id' => Auth::id(),

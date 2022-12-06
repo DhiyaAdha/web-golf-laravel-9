@@ -89,6 +89,12 @@
                                                 <div class="text-danger"> {{ $message }}</div>
                                             @enderror
                                         </div>
+                                        <div class="checkbox checkbox-primary">
+                                            <input id="checkbox-harga" type="checkbox" value="hrg">
+                                            <label for="checkbox-harga">
+                                                Harga Sama Senin-Minggu ?
+                                            </label>
+                                        </div>
                                         <div class="d-flex justify-content-between">
                                             <div class="form-group @error('price_discount') has-error @enderror">
                                                 <label class="control-label mb-10 text-left" for="examp">
@@ -101,23 +107,23 @@
                                                         <div class="text-danger"> {{ $message }}</div>
                                                     @enderror
                                             </div>
-                                            <div class="form-group @error('price_weekdays') has-error @enderror">
+                                            <div class="form-group @error('price_weekdays') has-error @enderror hrg">
                                                 <label class="control-label mb-10 text-left" for="examp">
                                                     <label class="control-label mb-10 text-left" for="example-email">selasa - jumat<span class="help"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
-                                                        <input type="text" value="{{ $package->price_weekdays }}" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekdays" placeholder="harga selasa - jumat">
+                                                        <input id="hrg" type="text" value="{{ $package->price_weekdays }}" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekdays" placeholder="harga selasa - jumat">
                                                     </div>
                                                     @error('price_weekdays')
                                                         <div class="text-danger"> {{ $message }}</div>
                                                     @enderror
                                             </div>
-                                            <div class="form-group @error('price_weekend') has-error @enderror">
+                                            <div class="form-group @error('price_weekend') has-error @enderror hrg">
                                                 <label class="control-label mb-10 text-left" for="examp">
                                                     <label class="control-label mb-10 text-left" for="example-email">sabtu - minggu<span class="help"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
-                                                        <input type="text" value="{{ $package->price_weekend }}"min="0"onkeypress="return event.charCode >= 48 && event.charCode <=57"class="form-control" name="price_weekend" placeholder="harga sabtu - minggu">
+                                                        <input id="hrg2" type="text" value="{{ $package->price_weekend }}"min="0"onkeypress="return event.charCode >= 48 && event.charCode <=57"class="form-control" name="price_weekend" placeholder="harga sabtu - minggu">
                                                     </div>
                                                     @error('price_weekend')
                                                         <div class="text-danger"> {{ $message }}</div>
@@ -170,4 +176,40 @@
             }).start();
         });
     </script>
+    <script>
+        $(document).ready(function() {
+                 $('input[type="checkbox"]').change(function() {
+                     var inputValue = $(this).attr("value");
+                     $("#hrg").val('');
+                    
+                 });
+             });
+     </script>
+    <script>
+        $(document).ready(function() {
+                 $('input[type="checkbox"]').change(function() {
+                     var inputValue = $(this).attr("value");
+                     $("#hrg2").val('');
+                     $("." + inputValue).toggle();
+                 });
+             });
+     </script>
+    <script>
+        $(document).ready(function() {
+                 $('input[type="checkbox"]').change(function() {
+                     var inputValue = $(this).attr("value");
+                     $("#hrg2").val('');
+                     $("." + inputValue).toggle();
+                 });
+             });
+     </script>
+     <script>
+        (function($) {
+            $(document).ready( function() {
+                     if ($('input[type=checkbox]').prop('checked',false)){
+                        location.reload();
+                     }
+            });
+        })(jQuery);
+     </script>
 @endpush
