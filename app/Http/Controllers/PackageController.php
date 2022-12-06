@@ -88,7 +88,7 @@ class PackageController extends Controller
             ]
         );
         // dd($request->price_weekdays == null);
-        if($request->price_weekdays == null){
+        if($request->price_weekdays == null && $request->price_weekend == null){
             Package::create([
                 'name' => $request->name,
                 'category' => $request->category,
