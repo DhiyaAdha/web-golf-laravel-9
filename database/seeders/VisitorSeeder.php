@@ -18,7 +18,7 @@ class VisitorSeeder extends Seeder
         $faker = Faker::create('id_ID');
         for ($i = 0; $i < 30; $i++) {
             Visitor::create([
-                'unique_qr' => 'http://127.0.0.1:8000/kartu-member/'.$i.'?qr=2022-10-Ecyzf0pYBcP6Xda&signature=eee291ddf516c915c4290838dd1d25a715738ef218139625ab315e3e192decf9',
+                'unique_qr' => '',
                 'name' => $faker->name(),
                 'email' => $faker->email(),
                 'phone' => $faker->numerify('08#########'),
