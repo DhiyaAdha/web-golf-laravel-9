@@ -72,9 +72,9 @@ class PackageController extends Controller
             [
                 'name' => 'required|unique:packages,name',
                 'category' => 'required',
-                'price_discount' => 'required|numeric',
-                'price_weekdays' => 'required|numeric',
-                'price_weekend' => 'required|numeric',
+                'price_discount' => 'required',
+                'price_weekdays' => 'required',
+                'price_weekend' => 'required',
                 'status' => 'required',
             ],
             [
@@ -83,19 +83,16 @@ class PackageController extends Controller
                 'category.required' => 'Kategori Paket masih kosong.',
                 'status.required' => 'Status Paket masih kosong.',
                 'price_discount.required' => 'Harga hari senin masih kosong.',
-                'price_discount.numeric' => 'Hanya menggunakan angka untuk harga',
                 'price_weekdays.required' => 'Harga hari selasa - jumat masih kosong.',
-                'price_weekdays.numeric' => 'Hanya menggunakan angka untuk harga',
                 'price_weekend.required' => 'Harga hari sabtu - minggu masih kosong.',
-                'price_weekend.numeric' => 'Hanya menggunakan angka untuk harga',
             ]
         );
         Package::create([
             'name' => $request->name,
             'category' => $request->category,
-            'price_discount' => $request->price_discount,
-            'price_weekdays' => $request->price_weekdays,
-            'price_weekend' => $request->price_weekend,
+            'price_discount' => str_replace('.','',$request->price_discount),
+            'price_weekdays' => str_replace('.','',$request->price_weekdays),
+            'price_weekend' => str_replace('.','',$request->price_weekend),
             'status' => $request->status,
         ]);
         LogAdmin::create([
@@ -144,9 +141,9 @@ class PackageController extends Controller
             [
                 'name' => 'required|unique:packages,name,'.$id,
                 'category' => 'required',
-                'price_discount' => 'required|numeric',
-                'price_weekdays' => 'required|numeric',
-                'price_weekend' => 'required|numeric',
+                'price_discount' => 'required',
+                'price_weekdays' => 'required',
+                'price_weekend' => 'required',
                 'status' => 'required',
             ],
             [
@@ -155,20 +152,17 @@ class PackageController extends Controller
                 'category.required' => 'Kategori Paket masih kosong.',
                 'status.required' => 'Status Paket masih kosong.',
                 'price_discount.required' => 'Harga hari senin masih kosong.',
-                'price_discount.numeric' => 'Hanya menggunakan angka untuk harga',
                 'price_weekdays.required' => 'Harga hari selasa - jumat masih kosong.',
-                'price_weekdays.numeric' => 'Hanya menggunakan angka untuk harga',
                 'price_weekend.required' => 'Harga hari sabtu - minggu masih kosong.',
-                'price_weekend.numeric' => 'Hanya menggunakan angka untuk harga',
             ]
         );
 
         $package = Package::findOrFail($id);
         $package->name = $request->name;
         $package->category = $request->category;
-        $package->price_discount = $request->price_discount;
-        $package->price_weekdays = $request->price_weekdays;
-        $package->price_weekend = $request->price_weekend;
+        $package->price_discount = str_replace('.','',$request->price_discount);
+        $package->price_weekdays = str_replace('.','',$request->price_weekdays);
+        $package->price_weekend = str_replace('.','',$request->price_weekend);
         $package->status = $request->status;
         $package->updated_at = Carbon::now();
 

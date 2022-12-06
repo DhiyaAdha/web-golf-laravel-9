@@ -228,7 +228,7 @@ class DashboardController extends Controller
                     return $data->category;
             })
             ->addColumn('times', function ($data) {
-                return empty($data->transaction($data->id)) ? '-' : $data->transaction($data->id)->created_at->translatedFormat('d F Y').', '.$data->transaction($data->id)->created_at->translatedFormat('h:i a');
+                return empty($data->transaction($data->id)) ? '-' : $data->transaction($data->id)->created_at->translatedFormat('d F Y').', '.$data->transaction($data->id)->created_at->translatedFormat('H:i a');
             })
             ->editColumn('tipe_member', function ($data) {
                 return $data->tipe_member;

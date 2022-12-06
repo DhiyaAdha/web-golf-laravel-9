@@ -202,7 +202,7 @@
                 <a class="{{ Request::is('setting') ? 'active' : '' }}" href="{{ route('setting') }}">
                     <div class="pull-left">
                         <i class="zmdi zmdi-settings"></i>
-                        <span class="right-nav-text">pengaturan limit</span>
+                        <span class="right-nav-text">pengaturan</span>
                     </div>
                     <div class="clearfix"></div>
                 </a>
