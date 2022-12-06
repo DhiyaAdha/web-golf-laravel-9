@@ -92,7 +92,7 @@
                                                 @enderror
                                         </div>
                                         <div class="checkbox checkbox-primary">
-                                            <input id="checkbox-harga" type="checkbox" value="hrg">
+                                            <input id="checkbox-harga" type="checkbox" value="hrg" onclick="myFunction()">
                                             <label for="checkbox-harga">
                                                 Harga Sama Senin-Minggu ?
                                             </label>
@@ -114,7 +114,7 @@
                                                     <label class="control-label mb-10 text-left" for="example-email">selasa - jumat<span class="help"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
-                                                        <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekdays" placeholder="harga selasa - jumat">
+                                                        <input id="hrg" type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekdays" placeholder="harga selasa - jumat">
                                                     </div>
                                                     @error('price_weekdays')
                                                         <div class="text-danger"> {{ $message }}</div>
@@ -125,7 +125,7 @@
                                                     <label class="control-label mb-10 text-left" for="example-email">sabtu - minggu<span class="help"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
-                                                        <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekend" placeholder="harga sabtu - minggu">
+                                                        <input id="hrg2" type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekend" placeholder="harga sabtu - minggu">
                                                     </div>
                                                     @error('price_weekend')
                                                         <div class="text-danger"> {{ $message }}</div>
@@ -169,12 +169,21 @@
         });
     </script>
     <script>
-       $(document).ready(function() {
-                $('input[type="checkbox"]').click(function() {
-                    var inputValue = $(this).attr("value");
-                    $("." + inputValue).toggle();
-  
-                });
-            });
-    </script>
+        $(document).ready(function() {
+                 $('input[type="checkbox"]').change(function() {
+                     var inputValue = $(this).attr("value");
+                     $("#hrg").val('');
+                    
+                 });
+             });
+     </script>
+    <script>
+        $(document).ready(function() {
+                 $('input[type="checkbox"]').change(function() {
+                     var inputValue = $(this).attr("value");
+                     $("#hrg2").val('');
+                     $("." + inputValue).toggle();
+                 });
+             });
+     </script>
 @endpush

@@ -205,5 +205,5 @@
             location.reload();
           }
         }
-        </script>
+    </script>
 @endpush
