@@ -175,6 +175,7 @@ class TamuController extends Controller
             'gender' => $request->gender,
             'email' => $request->email,
             'phone' => $request->phone,
+            'handicap' => $request->handicap,
             'code_member' => date('YmdHis'),
             'company' => $request->company,
             'position' => $request->position,
@@ -291,6 +292,7 @@ class TamuController extends Controller
         $visitor->gender = $request->gender;
         $visitor->tipe_member = $request->tipe_member;
         $visitor->status = $request->status;
+        $visitor->handicap = $request->handicap;
         $visitor->updated_at = Carbon::now();
 
         if ($request->status == 'active') {
@@ -421,6 +423,7 @@ class TamuController extends Controller
             $data['qrcode'] = QrCode::size(180)->generate($visitor->id);
             $data['quota'] = $limit->quota;
             $data['quota_kupon'] = $coupon->quota_kupon ?? '0';
+            $data['handicap'] = $visitor->handicap;
             $data['balance'] = $deposit->balance;
             $data['deposit'] = Deposit::where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
             $data['limit'] = LogLimit::where('visitor_id', $decrypt_id)->orderBy('created_at', 'desc')->get();
