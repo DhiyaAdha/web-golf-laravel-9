@@ -436,8 +436,8 @@ $('#dt-package').DataTable({
                 } else if (data.category == 'others') {
                     return `<span class="label label-kantin">${data.category == 'others' ? 'Kantin' : 'Sewa'}</span>`;
                 }
-                else if (data.category == 'sewa') {
-                    return `<span class="label label-sewa">${data.category == 'sewa' ? 'Sewa' : 'Service Fee'}</span>`;
+                else if (data.category == 'rental') {
+                    return `<span class="label label-sewa">${data.category == 'rental' ? 'Sewa' : 'Service Fee'}</span>`;
                 }
                 else {
                     return `<span class="label label-service">${data.category == 'service' ? 'Service Fee' : 'Service Fee'}</span>`;

@@ -54,7 +54,7 @@
                                                 </div>
                                                 <div class="radio-inline pl-0">
                                                     <span class="radio radio-info"> 
-                                                        <input type="radio" name="category" id="radio_12" value="sewa" {{ $package->category == 'sewa' ? 'checked' : '' }}>
+                                                        <input type="radio" name="category" id="radio_12" value="rental" {{ $package->category == 'rental' ? 'checked' : '' }}>
                                                         <label for="radio_12">Sewa</label>
                                                     </span>
                                                 </div>

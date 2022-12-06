@@ -52,7 +52,7 @@ class OrderRegulerController extends Controller
         $default = Package::where('category', 'default')->where('status', 0)->get();
         $additional = Package::where('category', 'additional')->where('status', 0)->get();
         $others = Package::where('category', 'others')->where('status', 0)->get();
-        $sewa = Package::where('category', 'sewa')->where('status', 0)->get();
+        $rental = Package::where('category', 'rental')->where('status', 0)->get();
         $service = Package::where('category', 'service')->where('status', 0)->get();
         $items = \Cart::session(auth()->id())->getContent();
 
@@ -91,7 +91,7 @@ class OrderRegulerController extends Controller
             'default',
             'additional',
             'others',
-            'sewa',
+            'rental',
             'service',
             'data_total',
             'cart_data',
@@ -343,8 +343,8 @@ class OrderRegulerController extends Controller
         $priceOthers = Arr::where($cart, function ($value, $key) {
             return $value['category'] == 'others';
         });
-        $priceSewa = Arr::where($cart, function ($value, $key) {
-            return $value['category'] == 'sewa';
+        $priceRental = Arr::where($cart, function ($value, $key) {
+            return $value['category'] == 'rental';
         });
         $priceService = Arr::where($cart, function ($value, $key) {
             return $value['category'] == 'service';
@@ -375,7 +375,7 @@ class OrderRegulerController extends Controller
                 'jml_default' => array_sum(array_column($priceDefault, 'price')),
                 'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                 'jml_other' => array_sum(array_column($priceOthers, 'price')),
-                'sewa' => array_sum(array_column($priceSewa, 'price')),
+                'rental' => array_sum(array_column($priceRental, 'price')),
             ]);
 
             LogAdmin::create([

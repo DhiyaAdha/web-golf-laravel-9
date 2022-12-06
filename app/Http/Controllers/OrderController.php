@@ -61,7 +61,7 @@ class OrderController extends Controller
         $data['default'] = Package::where('category', 'default')->where('status', 0)->get();
         $data['additional'] = Package::where('category', 'additional')->where('status', 0)->get();
         $data['others'] = Package::where('category', 'others')->where('status', 0)->get();
-        $data['sewa'] = Package::where('category', 'sewa')->where('status', 0)->get();
+        $data['rental'] = Package::where('category', 'rental')->where('status', 0)->get();
         $data['service'] = Package::where('category', 'service')->where('status', 0)->get();
         $items = \Cart::session(request()->segment(2))->getContent();
 
@@ -344,7 +344,7 @@ class OrderController extends Controller
                 $package_additional = Package::whereIn('id', $id_package)->where('category', 'additional')->get();
                 $package_default = Package::whereIn('id', $id_package)->where('category', 'default')->get();
                 $package_others = Package::whereIn('id', $id_package)->where('category', 'others')->get();
-                $package_sewa = Package::whereIn('id', $id_package)->where('category', 'sewa')->get();
+                $package_rental = Package::whereIn('id', $id_package)->where('category', 'rental')->get();
                 $package_service = Package::whereIn('id', $id_package)->where('category', 'service')->get();
                 $orders = collect($cart)->sortBy('created_at');
                 foreach ($package_default as $default) {
@@ -481,8 +481,8 @@ class OrderController extends Controller
         $priceOthers = Arr::where($cart, function ($value, $key) {
             return $value['category'] == 'others';
         });
-        $priceSewa = Arr::where($cart, function ($value, $key) {
-            return $value['category'] == 'sewa';
+        $priceRental = Arr::where($cart, function ($value, $key) {
+            return $value['category'] == 'rental';
         });
         $priceService = Arr::where($cart, function ($value, $key) {
             return $value['category'] == 'service';
@@ -537,7 +537,7 @@ class OrderController extends Controller
                                     'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                     'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                     'jml_other' => array_sum(array_column($priceOthers, 'price')),
-                                    'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                    'jml_rental' => array_sum(array_column($pricRental, 'price')),
                                     'jml_service' => array_sum(array_column($priceService, 'price')),
                                 ]);
 
@@ -693,7 +693,7 @@ class OrderController extends Controller
                                                 'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                 'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                 'jml_other' => array_sum(array_column($priceOthers, 'price')),
-                                                'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                                'jml_rental' => array_sum(array_column($priceRental, 'price')),
                                                 'jml_service' => array_sum(array_column($priceService, 'price')),
                                             ]);
 
@@ -789,7 +789,7 @@ class OrderController extends Controller
                                                 'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                 'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                 'jml_other' => array_sum(array_column($priceOthers, 'price')),
-                                                'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                                'jml_rental' => array_sum(array_column($priceRental, 'price')),
                                                 'jml_service' => array_sum(array_column($priceService, 'price')),
                                             ]);
 
@@ -864,7 +864,7 @@ class OrderController extends Controller
                                         'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                         'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                         'jml_other' => array_sum(array_column($priceOthers, 'price')),
-                                        'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                        'jml_rental' => array_sum(array_column($priceRental, 'price')),
                                         'jml_service' => array_sum(array_column($priceService, 'price')),
                                     ]);
 
@@ -930,7 +930,7 @@ class OrderController extends Controller
                                                     'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                     'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                     'jml_other' => array_sum(array_column($priceOthers, 'price')),
-                                                    'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                                    'jml_rental' => array_sum(array_column($priceRental, 'price')),
                                                     'jml_service' => array_sum(array_column($priceService, 'price')),
                                                 ]);
 
@@ -977,7 +977,7 @@ class OrderController extends Controller
                                                 'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                 'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                 'jml_other' => array_sum(array_column($priceOthers, 'price')),
-                                                'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                                'jml_rental' => array_sum(array_column($priceRental, 'price')),
                                                 'jml_service' => array_sum(array_column($priceService, 'price')),
                                             ]);
 
@@ -1039,7 +1039,7 @@ class OrderController extends Controller
                                             'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                             'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                             'jml_other' => array_sum(array_column($priceOthers, 'price')),
-                                            'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                            'jml_rental' => array_sum(array_column($priceRental, 'price')),
                                             'jml_service' => array_sum(array_column($priceService, 'price')),
                                         ]);
 
@@ -1106,7 +1106,7 @@ class OrderController extends Controller
                                             'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                             'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                             'jml_other' => array_sum(array_column($priceOthers, 'price')),
-                                            'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                            'jml_rental' => array_sum(array_column($priceRental, 'price')),
                                             'jml_service' => array_sum(array_column($priceService, 'price')),
                                         ]);
 
@@ -1171,7 +1171,7 @@ class OrderController extends Controller
                                                     'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                     'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                     'jml_other' => array_sum(array_column($priceOthers, 'price')),
-                                                    'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                                    'jml_rental' => array_sum(array_column($priceRental, 'price')),
                                                     'jml_service' => array_sum(array_column($priceService, 'price')),
                                                 ]);
 
@@ -1223,7 +1223,7 @@ class OrderController extends Controller
                                                     'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                     'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                     'jml_other' => array_sum(array_column($priceOthers, 'price')),
-                                                    'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                                    'jml_rental' => array_sum(array_column($priceRental, 'price')),
                                                     'jml_service' => array_sum(array_column($priceService, 'price')),
                                                 ]);
 
@@ -1287,7 +1287,7 @@ class OrderController extends Controller
                                             'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                             'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                             'jml_other' => array_sum(array_column($priceOthers, 'price')),
-                                            'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                            'jml_rental' => array_sum(array_column($priceRental, 'price')),
                                             'jml_service' => array_sum(array_column($priceService, 'price')),
                                         ]);
 
@@ -1359,7 +1359,7 @@ class OrderController extends Controller
                                             'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                             'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                             'jml_other' => array_sum(array_column($priceOthers, 'price')),
-                                            'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                            'jml_rental' => array_sum(array_column($priceRental, 'price')),
                                             'jml_service' => array_sum(array_column($priceService, 'price')),
                                         ]);
 
@@ -1574,7 +1574,7 @@ class OrderController extends Controller
                                             'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                             'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                             'jml_other' => array_sum(array_column($priceOthers, 'price')),
-                                            'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                            'jml_rental' => array_sum(array_column($priceRental, 'price')),
                                             'jml_service' => array_sum(array_column($priceService, 'price')),
                                         ]);
 
@@ -1635,7 +1635,7 @@ class OrderController extends Controller
                                             'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                             'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                             'jml_other' => array_sum(array_column($priceOthers, 'price')),
-                                            'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                            'jml_rental' => array_sum(array_column($priceRental, 'price')),
                                             'jml_service' => array_sum(array_column($priceService, 'price')),
                                         ]);
 
@@ -1707,7 +1707,7 @@ class OrderController extends Controller
                                             'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                             'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                             'jml_other' => array_sum(array_column($priceOthers, 'price')),
-                                            'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                            'jml_rental' => array_sum(array_column($priceRental, 'price')),
                                             'jml_service' => array_sum(array_column($priceService, 'price')),
                                         ]);
 
@@ -1768,7 +1768,7 @@ class OrderController extends Controller
                                             'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                             'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                             'jml_other' => array_sum(array_column($priceOthers, 'price')),
-                                            'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                            'jml_rental' => array_sum(array_column($priceRental, 'price')),
                                             'jml_service' => array_sum(array_column($priceService, 'price')),
                                         ]);
 
@@ -2804,7 +2804,7 @@ class OrderController extends Controller
                                             'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                             'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                             'jml_other' => array_sum(array_column($priceOthers, 'price')),
-                                            'jml_sewa' => array_sum(array_column($priceSewa, 'price')),
+                                            'jml_rental' => array_sum(array_column($priceRental, 'price')),
                                             'jml_service' => array_sum(array_column($priceService, 'price')),
                                         ]);
 

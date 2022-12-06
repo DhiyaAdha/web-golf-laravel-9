@@ -91,7 +91,7 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="d-flex flex-wrap mb-15" data-title="Sewa" data-intro="Pilih jenis layanan penyewaan">
-                            @foreach ($sewa as $item)
+                            @foreach ($rental as $item)
                                 <button type="button" id="package-{{ $item->id }}"
                                     onclick="addCart({{ $item->id }})" data-toggle="tooltip"
                                     @if ($today === 'Senin')
