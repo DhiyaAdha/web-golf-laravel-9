@@ -59,7 +59,8 @@
                                                                 {{ QrCode::size(80)->generate($visitor->unique_qr) }}
                                                             </div>
                                                             <div class="identity">
-                                                                <h6 style="text-transform: uppercase; font-size:10pt; letter-spacing:1px;">
+                                                                <h6
+                                                                    style="text-transform: uppercase; font-size:14pt; letter-spacing:1px;">
                                                                     @php
                                                                         $visitor->name;
                                                                         $slice = explode(' ', $visitor->name);
@@ -67,11 +68,10 @@
                                                                     @endphp</h6>
                                                             </div>
                                                             <div class="codemember">
-                                                                <h5 style="text-transform: uppercase; font-size:8pt; line-height:400%; letter-spacing:1px;">
-                                                                    {{ $visitor->code_member }}</h5>
-                                                            </div>
+                                                                <h5
+                                                                    style="text-transform: uppercase; font-size:12pt; line-height:400%; letter-spacing:2px;">
 
-                                                            <div class="datetime ">
+                                                                    {{ $visitor->code_member }}</h5>
                                                                 <h6 style="font-size: 8px;font-weight: 600; color:#3d481e;">
                                                                     Berlaku hingga
                                                                     {{ \Carbon\Carbon::parse($visitor->expired_date)->format('d-m-Y') }}
@@ -88,9 +88,14 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="text-center">
-                                            <button type="button" class="btn btn-sm download-kartu-tamu" data-name="{{ $visitor->name }}"><i class="fa fa-download"></i> <b>Cetak Kartu Member</b></button>
+                                            <div class="text-center">
+                                                <button type="button" class="btn btn-sm download-kartu-tamu"
+                                                    style="margin-top: 200px;"><i class="fa fa-download"></i> <b>Download Kartu
+                                                        Member</b>
+                                                </button>
+                                                <a href="{{ route('printkartu') }}">DOWNLOAD KARTU MEMBER</a>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
