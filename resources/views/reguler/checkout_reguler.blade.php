@@ -287,7 +287,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <div class="input-group-text">Rp.</div>
                                                                 </div>
-                                                                <input type="number" value="{{ $totalPrice }}" data-bill="{{ $totalPrice }}" class="form-control bayar-input" name="bayar" placeholder="Masukkan nominal bayar">
+                                                                <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" value="{{ $totalPrice }}" data-bill="{{ $totalPrice }}" class="form-control bayar-input" name="bayar" placeholder="Masukkan nominal bayar">
                                                             </div>
                                                             <div class="d-flex flex-wrap mb-2 ">
                                                                 <input type="button" value="500" onclick="cal(500)" class="btn mr-2 btn-sm btn-default">

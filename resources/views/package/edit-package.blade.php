@@ -141,6 +141,28 @@
 @push('scripts')
     <script defer src="{{ asset('dist/asset_offline/list_invoice.js') }}"></script>
     <script>
+        $("[name='price_discount']").autoNumeric('init', {
+            aSep: '.', 
+            aDec: ',',
+            aForm: true,
+            vMax: '999999999',
+            vMin: '-999999999'
+        });
+        $("[name='price_weekdays']").autoNumeric('init', {
+            aSep: '.', 
+            aDec: ',',
+            aForm: true,
+            vMax: '999999999',
+            vMin: '-999999999'
+        });
+        $("[name='price_weekend']").autoNumeric('init', {
+            aSep: '.', 
+            aDec: ',',
+            aForm: true,
+            vMax: '999999999',
+            vMin: '-999999999'
+        });
+        
         $(document).on('click', '#setting_panel_btn', function() {
             introJs('.intro-foo').setOptions({
                 'showProgress': true,
