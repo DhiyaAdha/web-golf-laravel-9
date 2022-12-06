@@ -32,10 +32,9 @@
                                 <h6 class="panel-title txt-dark">Kartu Tamu</h6>
                             </div>
                             <div class="pull-right">
-                                <div class="dropdown  pull-left">
+                                <div class="dropdown pull-left" data-title="Kartu Tamu" data-intro="Kartu tamu dapat dilihat dengan mengklik tombol icon ini sesuai jenis member tgcc">
                                     <div data-toggle="tooltip" title="Lihat">
-                                        <a class="weight-500" data-toggle="modal" href="javascript:void(0)"
-                                            data-target="#kartu-tamu">
+                                        <a class="weight-500" data-toggle="modal" href="javascript:void(0)" data-target="#kartu-tamu">
                                             <i class="fa-solid fa-address-card"></i>
                                         </a>
                                     </div>
@@ -50,7 +49,7 @@
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="d-flex align-items-center justify-content-center">
-                                                <div class="resolution">
+                                                <div class="resolution" id="resolution">
                                                     <div class="d-flex flex-column">
                                                         <div class="front-content">
                                                             <img class="front" src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/front-vip-card.svg') : asset('dist/img/kartutamu/front-member-card.svg') }}" alt="{{ $visitor->tipe_member }}">
@@ -131,8 +130,8 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="panel panel-default card-view limit" style="height: 238px;" data-title="Limit Tamu" data-intro="Panel ini memberikan informasi Kuota Limit membership yang tersisa, setiap membership mendapatkan kuota sesuai tipe member. kuota untuk member VIP 10 kuota dan MEMBER 4 kuota">
-                        <div class="col-lg-6">
+                    <div class="panel panel-default card-view limit" style="height: 238px;">
+                        <div class="col-lg-6" data-title="Limit Tamu" data-intro="Panel ini memberikan informasi kuota limit member yang tersisa, setiap member mendapatkan kuota bermainan gratis dan limit akan direset setiap bulannya sesuai dengan jenis membernya">
                             <div class="panel-heading">
                                 <h6 class="panel-title text-center">Limit</h6>
                                 <div class="clearfix"></div>
@@ -144,7 +143,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-6" data-title="Kupon Tamu" data-intro="Panel ini memberikan informasi kuota kupon membership yang tersisa, kuota kupon hanya bisa didapat ketika membership menang perlombaan yang diselenggarakan tgcc.">
                             <div class="panel-heading">
                                 <h6 class="panel-title text-center">Kupon</h6>
                                 <div class="clearfix"></div>
@@ -157,7 +156,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default card-view limit" style="height: 238px;" data-title="Kupon Tamu" data-intro="Panel ini memberikan informasi Kuota Kupon membership yang tersisa, kuota kupon hanya bisa didapat ketika membership menang perlombaan yang diselenggarakan tgcc.">
+                    <div class="panel panel-default card-view limit" style="height: 238px;">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">HandiCap</h6>
                             <div class="clearfix"></div>
@@ -171,7 +170,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    <div class="panel panel-default card-view limit" style="height: 238px;" data-title="Saldo" data-intro="Panel ini memberikan informasi Saldo tamu yang tersisa. Saldo bisa diisi melalui tambah deposit">
+                    <div class="panel panel-default card-view limit" style="height: 238px;" data-title="Saldo" data-intro="Panel ini memberikan informasi saldo tamu yang tersisa. Saldo bisa diisi melalui sub menu veriifikasi scan dengan persetujuan validasi NIK KTP">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Saldo</h6>
                             <div class="clearfix"></div>
@@ -183,7 +182,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default card-view b" style="height: 238px;" data-title="Barcode" data-intro="Panel ini memberikan informasi Barcode yang dimiliki setiap membership di tgcc">
+                    <div class="panel panel-default card-view b" style="height: 238px;" data-title="QR Code" data-intro="Panel ini memberikan informasi QR Code yang dimiliki setiap membership di tgcc">
                         <div class="panel-heading">
                             <h6 class="panel-title text-center">Qr Code</h6>
                             <div class="clearfix"></div>
@@ -196,7 +195,7 @@
             </div>
             <br>
             <div class="row" data-title="Riwayat Tamu"
-                data-intro="Panel ini memcatat informasi riwayat aktifitas membership. mencatat berdasarkan grafik invocie berdasarkan 12 bulan terakhir, rowaat transaksi, riwayat deposit, dan riwayat limit.">
+                data-intro="Panel ini memcatat informasi riwayat aktifitas membership. mencatat berdasarkan grafik invocie berdasarkan 12 bulan terakhir, riwayat transaksi, riwayat deposit, riwayat limit dan riwayat kupon">
                 <div class="panel-heading tabs">
                     <div class="d-flex">
                         <div class="flex-grow-1 d-flex align-items-center">
@@ -497,8 +496,6 @@
     <script defer src="{{ asset('/dist/js/line-chart-invoice-data.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/detail_member.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.js" integrity="sha512-sn/GHTj+FCxK5wam7k9w4gPPm6zss4Zwl/X9wgrvGMFbnedR8lTUSLdsolDRBRzsX6N+YgG6OWyvn9qaFVXH9w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         $(document).on('click', '#setting_panel_btn', function() {

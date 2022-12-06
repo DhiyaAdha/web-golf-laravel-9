@@ -26,6 +26,8 @@ class CreateLogTransactionsTable extends Migration
             $table->integer('jml_default')->nullable();
             $table->integer('jml_additional')->nullable();
             $table->integer('jml_other')->nullable();
+            $table->integer('jml_rental')->nullable();
+            $table->integer('jml_service')->nullable();
             $table->timestamps();
 
             $table->foreign('visitor_id')
