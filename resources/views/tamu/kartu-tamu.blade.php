@@ -173,7 +173,7 @@
                         </div>
                         <div>
                             <div class="cus-sat-stat weight-500 txt-success text-center mt-5">
-                                <img src="/dist/img/handycap.svg" style="width: 80px; height: 80px;">
+                                <img src="/dist/img/handycap.svg" style="width: 60px; height: 60px;">
                                 <h6 class="text-center">{{ $handicap }}</h6>
                             </div>
                         </div>
