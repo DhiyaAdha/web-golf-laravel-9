@@ -9,6 +9,10 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use App\Models\Package;
+use Illuminate\Support\Arr;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\AnalisisTamu;
 
 class DashboardController extends Controller
 {
@@ -236,6 +240,41 @@ class DashboardController extends Controller
             ->rawColumns(['name', 'action'])->make(true);
         }
 
+        $data['category'] = collect(Package::pluck('category'))->unique();
+        // dd($data['category']);
         return view('dashboard.analisis-tamu', $data);
+    }
+
+    public function download(Request $request)
+    {
+        $dates = explode(' - ', $request->daterange);
+        $category = $request->category;
+        $data = LogTransaction::whereDate('created_at', '>=', $dates[0])->whereDate('created_at', '<=', $dates[1])->get();
+        $newItem = array();
+        foreach ($data as $key => $value) {
+            if ($category == 'all') {
+                $products = unserialize($value->cart)->toArray();
+            } else {
+                $arr = unserialize($value->cart)->toArray();
+                $products = Arr::where($arr, function ($value, $key) use ($category) {
+                    return $value['category'] == $category;
+                });
+            }
+            foreach ($products as $i => $val) {
+                $item['id'] = $i;
+                $item['inv'] = $value->order_number;
+                $item['category'] = $val['category'];
+                $item['product'] = $val['name'];
+                $item['username'] = $value->visitor->name;
+                $item['qty'] = $val['qty'];
+                $item['pricesingle'] = $val['pricesingle'];
+                $item['price'] = $val['price'];
+                $item['date'] = $value->created_at;
+                array_push($newItem, $item);
+            }
+        }
+
+        $sheets = collect(Arr::pluck($newItem, 'category'))->unique();
+        return Excel::download(new AnalisisTamu($newItem, $sheets), 'analisis-tamu-'.date('YmdHis').'.xlsx');
     }
 }

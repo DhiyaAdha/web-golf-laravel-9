@@ -141,7 +141,6 @@
                 </div>
             </div>
         </div>
-        <button id="setting_panel_btn" data-toggle="tooltip" title="Panduan" data-placement="left" class="btn btn-success btn-circle setting-panel-btn shadow-2dp"><i class="zmdi zmdi-settings"></i></button>
         @include('layouts.footer')
     </div>
 @endsection

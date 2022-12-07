@@ -67,10 +67,10 @@
             direction: 'ltr',
             format: 'MM/DD/YYYY',
             separator: ' - ',
-            applyLabel: 'Apply',
-            cancelLabel: 'Cancel',
+            applyLabel: 'Submit',
+            cancelLabel: 'Batal',
             weekLabel: 'W',
-            customRangeLabel: 'Custom Range',
+            customRangeLabel: 'Pilih Tanggal',
             daysOfWeek: moment.weekdaysMin(),
             monthNames: moment.monthsShort(),
             firstDay: moment.localeData().firstDayOfWeek()

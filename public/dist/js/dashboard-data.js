@@ -4,6 +4,44 @@
 
 /*****Ready function start*****/
 $(document).ready(function () {
+    if(sessionStorage.getItem('TOUR') !== 'true') {
+        introJs().setOption("dontShowAgain", true).start();
+        sessionStorage.setItem('TOUR', true);
+    }
+    $(document).on('click', '#setting_panel_btn', function() {
+        introJs('.intro-foo').setOptions({
+            'showProgress': true,
+            'tooltipPosition': 'right'
+        }).start();
+    });
+    $(document).on('click', '.download', function () {
+        // $('#modal-filter').modal('toggle');
+        $('#modal-filter').modal('hide');
+    });
+
+    var start = moment().subtract(29, 'days');
+    var end = moment();
+
+    function cb(start, end) {
+        console.log(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+        $('input[name=daterange]').val(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+    }
+
+    $('#daterange-btn').daterangepicker({
+            ranges   : {
+                'Hari ini'       : [moment(), moment()],
+                'Kemarin'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                '7 Hari Terakhir' : [moment().subtract(6, 'days'), moment()],
+                '30 Hari Terakhir': [moment().subtract(29, 'days'), moment()],
+                'Bulan Ini'  : [moment().startOf('month'), moment().endOf('month')],
+                'Bulan Lalu'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            },
+            startDate: moment().subtract(29, 'days'),
+            endDate  : moment()
+    }, cb);
+    cb(start, end)
+    
     /* data analisis */
     $('#dt-analisis').DataTable({
         "processing": true,
