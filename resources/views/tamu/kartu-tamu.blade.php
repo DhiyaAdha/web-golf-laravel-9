@@ -51,7 +51,7 @@
                                             <div class="d-flex align-items-center justify-content-center">
                                                 <div class="resolution" id="resolution">
                                                     <div class="d-flex flex-column">
-                                                        <div class="front-content">
+                                                        <div class="front-content" id="front-content">
                                                             <img class="front" src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/front-vip-card.png') : asset('dist/img/kartutamu/front-member-card.png') }}" style="width:100%; height:200px" alt="{{ $visitor->tipe_member }}">
                                                             <div class="qr-code">
                                                                 {{ QrCode::size(80)->generate($visitor->unique_qr) }}
@@ -74,7 +74,7 @@
                                                                 </h6>
                                                             </div>
                                                         </div>
-                                                        <div class="back-content">
+                                                        <div class="back-content" id="back-content">
                                                             <img class="back" src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/back-vip-card.png') : asset('dist/img/kartutamu/back-member-card.png') }}" alt="{{ $visitor->tipe_member }}">
                                                         </div>
                                                     </div>

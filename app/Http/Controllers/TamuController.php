@@ -133,7 +133,7 @@ class TamuController extends Controller
             $request,
             [
                 'name' => 'required|unique:visitors,name|unique:users,name',
-                // 'nik' => 'required|unique:visitors,nik|numeric|digits_between:16,16',
+                'nik' => 'nullable|unique:visitors,nik|numeric|digits_between:16,16',
                 'phone' => 'required|unique:visitors,phone|unique:users,phone|numeric|digits_between:11,12',
                 'address' => 'required',
                 'gender' => 'required',
@@ -147,10 +147,9 @@ class TamuController extends Controller
             [
                 'name.required' => 'Nama Lengkap masih kosong.',
                 'name.unique' => 'Nama Lengkap sudah ada',
-                // 'nik.required' => 'NIK masih kosong.',
-                // 'nik.unique' => 'NIK sudah ada',
-                // 'nik.numeric' => 'NIK hanya boleh angka',
-                // 'nik.digits_between' => 'NIK maksimal 16 digit',
+                'nik.unique' => 'NIK sudah ada',
+                'nik.numeric' => 'NIK hanya boleh angka',
+                'nik.digits_between' => 'NIK maksimal 16 digit',
                 'phone.required' => 'Nomor Hp masih kosong.',
                 'phone.unique' => 'Nomor Hp sudah ada',
                 'phone.numeric' => 'Nomor Hp hanya boleh angka',
@@ -257,7 +256,7 @@ class TamuController extends Controller
             $request,
             [
                 'name' => 'required|unique:users,name|unique:visitors,name,' . $id,
-                'nik' => 'required|numeric|digits_between:16,16|unique:visitors,nik,' . $id,
+                'nik' => 'nullable|numeric|digits_between:16,16|unique:visitors,nik,' . $id,
                 'phone' => 'required|numeric|unique:visitors,phone,' . $id,
                 'address' => 'required',
                 'gender' => 'required',
@@ -271,7 +270,6 @@ class TamuController extends Controller
             [
                 'name.required' => 'Nama Tamu masih kosong.',
                 'name.unique' => 'Nama Lengkap sudah ada',
-                'nik.required' => 'NIK masih kosong.',
                 'nik.unique' => 'NIK sudah ada',
                 'nik.numeric' => 'NIK hanya boleh angka',
                 'nik.digits_between' => 'NIK maksimal 16 digit',
@@ -288,10 +286,17 @@ class TamuController extends Controller
                 'status.required' => 'Status member masih kosong.',
             ]
         );
-        $visitor = Visitor::findOrFail($id);
+        $status_nik = '';
+        if($request->status_nik == true){
+            $status_nik = 'yes';
+        } else {
+            $status_nik = 'no';
+        }
 
+        $visitor = Visitor::findOrFail($id);
         $visitor->name = $request->name;
         $visitor->nik = $request->nik;
+        $visitor->status_nik = $status_nik;
         $visitor->phone = $request->phone;
         $visitor->address = $request->address;
         $visitor->email = $request->email;
