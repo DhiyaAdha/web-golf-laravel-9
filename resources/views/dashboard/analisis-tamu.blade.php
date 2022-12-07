@@ -2,6 +2,7 @@
     @extends('layouts.main', ['title' => 'TGCC | Analisis Tamu'])
     @push('css')
         <link href="{{ asset('vendors/bower_components/morris.js/morris.css') }}" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="{{asset('vendors/bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
     @endpush
     @section('content')
         <div class="page-wrapper intro-foo">
@@ -173,6 +174,7 @@
                             <div class="panel-wrapper collapse in">
                                 <div class="panel-body">
                                     <div class="table-wrap">
+                                        <button class="btn btn-primary btn-filter">Filter</button>
                                         <div class="table-responsive">
                                             <table class="table table-hover mb-0" id="dt-analisis">
                                                 <thead>
@@ -198,12 +200,51 @@
             @include('layouts.footer')
         </div>
         </div>
+        <div id="modal-filter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h5 class="modal-title" id="myModalLabel"></h5>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{url('export-analisis-tamu')}}" method="POST">
+                        @csrf
+                        <input type="hidden" name="daterange"/>
+                            <div class="form-group">
+                                <label class="control-label mb-10" for="">Jenis</label>
+                                <select class="form-control" name="category">
+                                    <option value="all">- Semua -</option>
+                                    @foreach ($category as $value)
+                                        <option value="{{$value}}">{{$value}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label mb-10" for="">Tanggal</label>
+                                <div class="input-group">
+                                    <button type="button" class="btn btn-default pull-right" id="daterange-btn">
+                                        <span><i class="fa fa-calendar"></i> Date range picker</span><i class="fa fa-caret-down"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-success">Download</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     @endsection
     @push('scripts')
         <script defer src="{{ asset('vendors/bower_components/raphael/raphael.min.js') }}"></script>
         <script defer src="{{ asset('vendors/bower_components/morris.js/morris.min.js') }}"></script>
+        <script src="{{asset('vendors/bower_components/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
         <script defer src="{{ asset('/dist/js/dashboard-data.js') }}"></script>
         <script>
+        $(function () {
+
             if(sessionStorage.getItem('TOUR') !== 'true') {
                 introJs().setOption("dontShowAgain", true).start();
                 sessionStorage.setItem('TOUR', true);
@@ -214,6 +255,34 @@
                     'tooltipPosition': 'right'
                 }).start();
             });
+            $(document).on('click', '.btn-filter', function () {
+                $('#modal-filter').modal('toggle');
+            });
+
+            var start = moment().subtract(29, 'days');
+            var end = moment();
+
+            function cb(start, end) {
+                console.log(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+                $('input[name=daterange]').val(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+                $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            }
+
+            $('#daterange-btn').daterangepicker({
+                    ranges   : {
+                    'Today'       : [moment(), moment()],
+                    'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    },
+                    startDate: moment().subtract(29, 'days'),
+                    endDate  : moment()
+            }, cb);
+            cb(start, end)
+        });
+
         </script>
     @endpush
 @else
