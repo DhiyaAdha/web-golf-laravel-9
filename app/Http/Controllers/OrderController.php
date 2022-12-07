@@ -45,7 +45,9 @@ class OrderController extends Controller
     {
         $data['products'] = Package::orderBy('id', 'desc')->where('status', '0')->get();
         if ($request->ajax()) {
-            return datatables()->of($data['products'])->editColumn('price_weekdays', function ($data) {
+            return datatables()->of($data['products'])->editColumn('price_discount', function ($data) {
+                return formatrupiah($data->price_discount);
+            })->editColumn('price_weekdays', function ($data) {
                 return formatrupiah($data->price_weekdays);
             })->editColumn('price_weekend', function ($data) {
                 return formatrupiah($data->price_weekend);
@@ -105,12 +107,16 @@ class OrderController extends Controller
         $today = Carbon::now()->isoFormat('dddd');
 
         $price = 0;
-        if ($today === 'Senin') {
-            $price += $package->price_discount;
-        } else if ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat') {
+        if ($package->category === 'default'){
+            if ($today === 'Senin') {
+                $price += $package->price_discount;
+            } else if ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat') {
+                $price += $package->price_weekdays;
+            } else {
+                $price += $package->price_weekend;
+            }
+        }else{
             $price += $package->price_weekdays;
-        } else {
-            $price += $package->price_weekend;
         }
 
         $get_total = \Cart::session($request->get('member'))->getTotal();
@@ -537,7 +543,7 @@ class OrderController extends Controller
                                     'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                     'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                     'jml_other' => array_sum(array_column($priceOthers, 'price')),
-                                    'jml_rental' => array_sum(array_column($pricRental, 'price')),
+                                    'jml_rental' => array_sum(array_column($priceRental, 'price')),
                                     'jml_service' => array_sum(array_column($priceService, 'price')),
                                 ]);
 
@@ -607,6 +613,8 @@ class OrderController extends Controller
                                         'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                         'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                         'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                        'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                        'jml_service' => array_sum(array_column($priceService, 'price')),
                                     ]);
 
                                     LogAdmin::create([
@@ -1437,6 +1445,8 @@ class OrderController extends Controller
                                                     'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                     'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                     'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                    'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                    'jml_service' => array_sum(array_column($priceService, 'price')),
                                                 ]);
 
                                                 $log_coupon->quota_kupon = $log_coupon->quota_kupon - 1;
@@ -1506,6 +1516,8 @@ class OrderController extends Controller
                                                     'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                     'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                     'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                    'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                    'jml_service' => array_sum(array_column($priceService, 'price')),
                                                 ]);
 
                                                 $log_limit->quota = $log_limit->quota - 1;
@@ -1869,6 +1881,8 @@ class OrderController extends Controller
                                                         'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                         'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                         'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                        'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                        'jml_service' => array_sum(array_column($priceService, 'price')),
                                                     ]);
 
                                                     LogAdmin::create([
@@ -1914,6 +1928,8 @@ class OrderController extends Controller
                                                     'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                     'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                     'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                    'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                    'jml_service' => array_sum(array_column($priceService, 'price')),
                                                 ]);
 
                                                 LogAdmin::create([
@@ -1974,6 +1990,8 @@ class OrderController extends Controller
                                                 'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                 'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                 'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                'jml_service' => array_sum(array_column($priceService, 'price')),
                                             ]);
 
                                             LogAdmin::create([
@@ -2039,6 +2057,8 @@ class OrderController extends Controller
                                                 'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                 'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                 'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                'jml_service' => array_sum(array_column($priceService, 'price')),
                                             ]);
 
                                             LogAdmin::create([
@@ -2108,6 +2128,8 @@ class OrderController extends Controller
                                                             'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                             'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                             'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                            'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                            'jml_service' => array_sum(array_column($priceService, 'price')),
                                                         ]);
 
                                                         LogAdmin::create([
@@ -2161,6 +2183,8 @@ class OrderController extends Controller
                                                         'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                         'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                         'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                        'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                        'jml_service' => array_sum(array_column($priceService, 'price')),
                                                     ]);
 
                                                     LogAdmin::create([
@@ -2235,6 +2259,8 @@ class OrderController extends Controller
                                                     'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                     'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                     'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                    'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                    'jml_service' => array_sum(array_column($priceService, 'price')),
                                                 ]);
 
                                                 LogAdmin::create([
@@ -2317,6 +2343,8 @@ class OrderController extends Controller
                                                     'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                     'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                     'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                    'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                    'jml_service' => array_sum(array_column($priceService, 'price')),
                                                 ]);
 
                                                 LogAdmin::create([
@@ -2394,6 +2422,8 @@ class OrderController extends Controller
                                                             'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                             'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                             'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                            'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                            'jml_service' => array_sum(array_column($priceService, 'price')),
                                                         ]);
 
                                                         LogAdmin::create([
@@ -2446,6 +2476,8 @@ class OrderController extends Controller
                                                         'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                         'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                         'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                        'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                        'jml_service' => array_sum(array_column($priceService, 'price')),
                                                     ]);
 
                                                     LogAdmin::create([
@@ -2514,6 +2546,8 @@ class OrderController extends Controller
                                                             'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                             'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                             'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                            'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                            'jml_service' => array_sum(array_column($priceService, 'price')),
                                                         ]);
 
                                                         LogAdmin::create([
@@ -2566,6 +2600,8 @@ class OrderController extends Controller
                                                         'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                         'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                         'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                        'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                        'jml_service' => array_sum(array_column($priceService, 'price')),
                                                     ]);
 
                                                     LogAdmin::create([
@@ -2641,6 +2677,8 @@ class OrderController extends Controller
                                                     'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                     'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                     'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                    'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                    'jml_service' => array_sum(array_column($priceService, 'price')),
                                                 ]);
 
                                                 $log_coupon->quota_kupon = $log_coupon->quota_kupon - 1;
@@ -2723,6 +2761,8 @@ class OrderController extends Controller
                                                     'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                     'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                     'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                    'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                    'jml_service' => array_sum(array_column($priceService, 'price')),
                                                 ]);
 
                                                 $log_limit->quota = $log_limit->quota - 1;
@@ -2870,6 +2910,8 @@ class OrderController extends Controller
                                                         'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                         'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                         'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                        'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                        'jml_service' => array_sum(array_column($priceService, 'price')),
                                                     ]);
 
                                                     LogAdmin::create([
@@ -2915,6 +2957,8 @@ class OrderController extends Controller
                                                     'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                     'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                     'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                    'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                    'jml_service' => array_sum(array_column($priceService, 'price')),
                                                 ]);
 
                                                 LogAdmin::create([
@@ -2975,6 +3019,8 @@ class OrderController extends Controller
                                                 'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                 'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                 'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                'jml_service' => array_sum(array_column($priceService, 'price')),
                                             ]);
 
                                             LogAdmin::create([
@@ -3040,6 +3086,8 @@ class OrderController extends Controller
                                                 'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                 'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                 'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                'jml_service' => array_sum(array_column($priceService, 'price')),
                                             ]);
 
                                             LogAdmin::create([
@@ -3103,6 +3151,8 @@ class OrderController extends Controller
                                                         'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                         'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                         'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                        'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                        'jml_service' => array_sum(array_column($priceService, 'price')),
                                                     ]);
 
                                                     LogAdmin::create([
@@ -3153,6 +3203,8 @@ class OrderController extends Controller
                                                         'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                         'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                         'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                        'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                        'jml_service' => array_sum(array_column($priceService, 'price')),
                                                     ]);
 
                                                     LogAdmin::create([
@@ -3215,6 +3267,8 @@ class OrderController extends Controller
                                                 'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                 'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                 'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                'jml_service' => array_sum(array_column($priceService, 'price')),
                                             ]);
 
                                             LogAdmin::create([
@@ -3286,6 +3340,8 @@ class OrderController extends Controller
                                                 'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                 'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                 'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                'jml_service' => array_sum(array_column($priceService, 'price')),
                                             ]);
 
                                             LogAdmin::create([
@@ -3363,6 +3419,8 @@ class OrderController extends Controller
                                                         'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                         'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                         'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                        'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                        'jml_service' => array_sum(array_column($priceService, 'price')),
                                                     ]);
 
                                                     $log_coupon->quota_kupon = $log_coupon->quota_kupon - 1;
@@ -3438,6 +3496,8 @@ class OrderController extends Controller
                                                         'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                         'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                         'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                        'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                        'jml_service' => array_sum(array_column($priceService, 'price')),
                                                     ]);
 
                                                     $log_limit->quota = $log_limit->quota - 1;
@@ -3506,6 +3566,8 @@ class OrderController extends Controller
                                                 'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                 'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                 'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                'jml_service' => array_sum(array_column($priceService, 'price')),
                                             ]);
 
                                             $log_coupon->quota_kupon = $log_coupon->quota_kupon - 1;
@@ -3565,6 +3627,8 @@ class OrderController extends Controller
                                                 'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                 'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                 'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                'jml_service' => array_sum(array_column($priceService, 'price')),
                                             ]);
 
                                             $log_coupon->quota_kupon = $log_coupon->quota_kupon - 1;
@@ -3635,6 +3699,8 @@ class OrderController extends Controller
                                                 'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                 'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                 'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                'jml_service' => array_sum(array_column($priceService, 'price')),
                                             ]);
 
                                             $log_limit->quota = $log_limit->quota - 1;
@@ -3694,6 +3760,8 @@ class OrderController extends Controller
                                                 'jml_default' => array_sum(array_column($priceDefault, 'price')),
                                                 'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                                                 'jml_other' => array_sum(array_column($priceOthers, 'price')),
+                                                'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                                                'jml_service' => array_sum(array_column($priceService, 'price')),
                                             ]);
 
                                             $log_limit->quota = $log_limit->quota - 1;

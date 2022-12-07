@@ -249,11 +249,5 @@
             sword();
             return false;
         });
-        $(document).on('click', '#setting_panel_btn', function() {
-            introJs('.intro-foo').setOptions({
-                'showProgress': true,
-                'tooltipPosition': 'right'
-            }).start();
-        });
     </script>
 @endpush

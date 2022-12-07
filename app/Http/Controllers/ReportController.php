@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Visitor;
+use App\Models\LogLimit;
 use Carbon\CarbonPeriod;
+use App\Models\ReportLimit;
 use Illuminate\Support\Arr;
+use App\Models\SettingLimit;
 use Illuminate\Http\Request;
 use App\Models\LogTransaction;
-use App\Models\SettingLimit;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 
 class ReportController extends Controller
@@ -187,9 +191,15 @@ class ReportController extends Controller
             'limit' => 'required',
         ]);
 
-        $limit = SettingLimit::where('tipe_member', $request->tipe_member)->first();
-        $limit->limit = $request->limit;
-        $limit->save();
+        $update_limit = SettingLimit::where('tipe_member', $request->tipe_member)->first();
+        $update_limit->limit = $request->limit;
+        $update_limit->save();
+
+        $arrayId = Visitor::where('tipe_member', $request->tipe_member)->pluck('id');
+        LogLimit::whereIn('visitor_id', $arrayId)->update([
+            'quota' => $request->limit
+        ]);
+
         return redirect()->back()->with('success', 'Berhasil edit limit');
     }
 }

@@ -1,4 +1,4 @@
-@extends('layouts.main', ['title' => 'TGCC | Daftar Tamu'])
+@extends('layouts.main', ['title' => 'TGCC | Pengaturan'])
 @section('content')
     <div class="page-wrapper intro-foo">
         <div class="container-fluid" data-title="Halaman Daftar Tamu" data-intro="Halaman ini memberikan informasi data tamu yang sudah terdaftar sebagai membership.">
@@ -23,7 +23,7 @@
                                         <form action="{{ route('setting.limit') }}" method="POST">
                                             <div class="form-group">
                                                 @csrf
-                                                <label class="control-label mb-10" for="">Ubah limit jenis member</label>
+                                                <label class="control-label mb-10" for="">Ubah limit</label>
                                                 <select name="tipe_member" class="form-control" onchange="showDiv(this)" required>
                                                     <option disabled selected>Pilih jenis member</option>
                                                     <option value="VIP" name="tipe_member">Member</option>

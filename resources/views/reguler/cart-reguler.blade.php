@@ -1,23 +1,23 @@
-@extends('layouts.main', ['title' => 'TGCC | Pilih Paket'])
+@extends('layouts.main', ['title' => 'TGCC | Pilih Permainan'])
 @section('content')
     <div class="page-wrapper intro-foo">
         <div class="container-fluid" data-title="Halaman Umum" data-intro="Halaman ini digunakan oleh kasir atau admin untuk order jenis permainan, fasilitas atau kantin. Proses transaksi ini untuk tamu jenis reguler.">
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                    <h5 class="txt-dark">Pilih Paket</h5>
+                    <h5 class="txt-dark">Pilih Permainan</h5>
                 </div>
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
                         <li><a href="{{ url('analisis-tamu') }}">Dashboard</a></li>
                         <li><a href="{{ url('proses_reguler') }}">Reguler</a></li>
-                        <li class="active"><span>Pilih Paket</span></li>
+                        <li class="active"><span>Pilih Permainan</span></li>
                     </ol>
                 </div>
             </div>
-            
+
             <div class="row">
-                <div class="col-lg-8">
-                    <div class="panel panel-default card-view" data-title="Panel Paket" data-intro="Kemudian pada panel ini terdiri dari 3 jenis paket yang tersedia yang bisa dipesan oleh tamu reguler yaitu jenis permainan, proshop fasilitas dan kantin.">
+                <div class="col-lg-8" data-title="Panel Paket" data-step="2" data-intro="Kemudian pada panel ini terdiri dari 3 jenis paket yang tersedia yang bisa dipesan oleh member yaitu jenis permainan, proshop fasilitas dan kantin.">
+                    <div class="panel panel-default card-view">
                         <div class="panel-heading">
                             @if(count($default) != 0)
                                 <div class="pull-left">
@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-                            <div class="d-flex flex-wrap mb-15" data-title="Kantin" data-intro="Pilih barang yang ingin dibeli tamu reguler">
+                            <div class="d-flex flex-wrap mb-15" data-title="Kantin" data-intro="Pilih barang yang ingin dibeli member">
                                 @foreach ($others as $item)
                                     <button type="button" id="package-{{ $item->id }}"
                                         onclick="addCart({{ $item->id }})" data-toggle="tooltip"
@@ -92,13 +92,7 @@
                                 @foreach ($rental as $item)
                                     <button type="button" id="package-{{ $item->id }}"
                                         onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                        @if ($today === 'Senin')
-                                            title="Rp. {{ number_format($item->price_discount, 0, ',', '.') }}"
-                                        @elseif ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat')
                                             title="Rp. {{ number_format($item->price_weekdays, 0, ',', '.') }}"
-                                        @else
-                                            title="Rp. {{ number_format($item->price_weekend, 0, ',', '.') }}"
-                                        @endif
                                         class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
                                 @endforeach
                             </div>
@@ -114,13 +108,7 @@
                                 @foreach ($service as $item)
                                     <button type="button" id="package-{{ $item->id }}"
                                         onclick="addCart({{ $item->id }})" data-toggle="tooltip"
-                                        @if ($today === 'Senin')
-                                            title="Rp. {{ number_format($item->price_discount, 0, ',', '.') }}"
-                                        @elseif ($today === 'Selasa' || $today === 'Rabu' || $today === 'Kamis' || $today === 'Jumat')
                                             title="Rp. {{ number_format($item->price_weekdays, 0, ',', '.') }}"
-                                        @else
-                                            title="Rp. {{ number_format($item->price_weekend, 0, ',', '.') }}"
-                                        @endif
                                         class="btn btn-default txt-success mr-15 mb-15 package-{{ $item->id }}">{{ $item->name }}</button>
                                 @endforeach
                             </div>
