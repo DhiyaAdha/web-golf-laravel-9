@@ -94,7 +94,7 @@
                                         <div class="checkbox checkbox-primary">
                                             <input id="checkbox-harga" type="checkbox" value="hrg" checked="" onclick="myFunction()">
                                             <label for="checkbox-harga">
-                                                Harga Sama Setiap Hari ?
+                                                Harga Sama Senin-Minggu?
                                             </label>
                                         </div>
                                         <div class="d-flex justify-content-between">
@@ -103,7 +103,7 @@
                                                     <label class="control-label mb-10 text-left" for="example-email">senin<span class="help"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
-                                                        <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_discount" placeholder="harga hari senin" onfocus="this.value=''" value="0">
+                                                        <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_discount" placeholder="masukkan harga">
                                                     </div>
                                                     @error('price_discount')
                                                         <div class="text-danger"> {{ $message }}</div>
@@ -114,7 +114,7 @@
                                                     <label class="control-label mb-10 text-left" for="example-email">selasa - jumat<span class="help"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
-                                                        <input id="hrg" type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekdays" placeholder="harga selasa - jumat" onfocus="this.value=''" value="0">
+                                                        <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekdays" placeholder="masukkan harga">
                                                     </div>
                                                     @error('price_weekdays')
                                                         <div class="text-danger"> {{ $message }}</div>
@@ -125,7 +125,7 @@
                                                     <label class="control-label mb-10 text-left" for="example-email">sabtu - minggu<span class="help"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
-                                                        <input id="hrg2" type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekend" placeholder="harga sabtu - minggu" onfocus="this.value=''" value="0">
+                                                        <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekend" placeholder="masukkan harga">
                                                     </div>
                                                     @error('price_weekend')
                                                         <div class="text-danger"> {{ $message }}</div>
@@ -167,43 +167,9 @@
             vMax: '999999999',
             vMin: '-999999999'
         });
+        $('input[type="checkbox"]').click(function() {
+            var inputValue = $(this).attr("value");
+            $("." + inputValue).toggle();
+        });
     </script>
-    <script>
-        $(document).ready(function() {
-                 $('input[type="checkbox"]').change(function() {
-                     var inputValue = $(this).attr("value");
-                     $("#hrg").val('0');
-                    
-                 });
-             });
-     </script>
-    <script>
-        $(document).ready(function() {
-                 $('input[type="checkbox"]').change(function() {
-                     var inputValue = $(this).attr("value");
-                     $("#hrg2").val('0');
-                     $("." + inputValue).toggle();
-                 });
-             });
-     </script>
-     {{-- <script>
-        function myFunction()
-            {
-                var isi = document.getElementById("isi");
-                var isi2 = document.getElementById("isi2");
-            if (document.getElementById('checkbox-harga').checked) 
-            {
-                alert("Hello! I am an alert box!!");
-                isi.style.display = "none";
-                isi2.style.display = "none";
-                $("#hrg").val('');
-                $("#hrg2").val('');
-            } else {
-                isi.style.display = "block";
-                isi2.style.display = "block";
-                $("#hrg").val('0');
-                $("#hrg2").val('0');
-            }
-            }
-     </script> --}}
 @endpush

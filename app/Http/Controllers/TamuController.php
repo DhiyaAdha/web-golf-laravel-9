@@ -11,6 +11,7 @@ use Carbon\CarbonPeriod;
 use App\Jobs\SendMailJob;
 use App\Models\LogCoupon;
 use App\Models\ReportLimit;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use App\Models\ReportCoupon;
 use App\Models\SettingLimit;
