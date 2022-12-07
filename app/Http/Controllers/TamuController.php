@@ -133,7 +133,7 @@ class TamuController extends Controller
             $request,
             [
                 'name' => 'required|unique:visitors,name|unique:users,name',
-                'nik' => 'required|unique:visitors,nik|numeric|digits_between:16,16',
+                // 'nik' => 'required|unique:visitors,nik|numeric|digits_between:16,16',
                 'phone' => 'required|unique:visitors,phone|unique:users,phone|numeric|digits_between:11,12',
                 'address' => 'required',
                 'gender' => 'required',
@@ -147,10 +147,10 @@ class TamuController extends Controller
             [
                 'name.required' => 'Nama Lengkap masih kosong.',
                 'name.unique' => 'Nama Lengkap sudah ada',
-                'nik.required' => 'NIK masih kosong.',
-                'nik.unique' => 'NIK sudah ada',
-                'nik.numeric' => 'NIK hanya boleh angka',
-                'nik.digits_between' => 'NIK maksimal 16 digit',
+                // 'nik.required' => 'NIK masih kosong.',
+                // 'nik.unique' => 'NIK sudah ada',
+                // 'nik.numeric' => 'NIK hanya boleh angka',
+                // 'nik.digits_between' => 'NIK maksimal 16 digit',
                 'phone.required' => 'Nomor Hp masih kosong.',
                 'phone.unique' => 'Nomor Hp sudah ada',
                 'phone.numeric' => 'Nomor Hp hanya boleh angka',
@@ -169,9 +169,17 @@ class TamuController extends Controller
                 'status.required' => 'Status member masih kosong',
             ]
         );
+        $status_nik = '';
+        if($request->status_nik == true){
+            $status_nik = 'yes';
+        } else {
+            $status_nik = 'no';
+        }
+
         $visitors = Visitor::create([
             'name' => $request->name,
             'nik' => $request->nik,
+            'status_nik' => $status_nik,
             'address' => $request->address,
             'gender' => $request->gender,
             'email' => $request->email,

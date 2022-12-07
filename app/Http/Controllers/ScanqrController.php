@@ -168,6 +168,7 @@ class ScanqrController extends Controller
 
                         $this->setResponse('VALID', 'Valid Nomor Hp', [
                             'name' => $phone_visitor->name,
+                            'status_nik' => $phone_visitor->status_nik,
                             'detail_scan' => URL::temporarySignedRoute('detail-scan', now()->addMinutes(45), ['rdm' => Cache::get('random'), 'code' => $phone_visitor->code_member]),
                         ]);
                         return response()->json($this->getResponse(), 200);

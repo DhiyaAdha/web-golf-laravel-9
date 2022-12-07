@@ -1797,6 +1797,18 @@ input.cmn-toggle-round-flat:checked + label:after {
     transition: 0.4s;
 }
 
+.status-nik {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #01c853;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
 .slider:before {
     position: absolute;
     content: "";
@@ -1808,7 +1820,20 @@ input.cmn-toggle-round-flat:checked + label:after {
     -webkit-transition: 0.4s;
     transition: 0.4s;
 }
+
 .status-member:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+.status-nik:before {
     position: absolute;
     content: "";
     height: 26px;
@@ -1826,11 +1851,16 @@ input:checked + .slider {
 input:checked + .status-member {
     background-color: #ff0000;
 }
-
+input:checked + .status-nik {
+    background-color: #ff0000;
+}
 input:focus + .slider {
     box-shadow: 0 0 1px #2196f3;
 }
 input:focus + .status-member {
+    box-shadow: 0 0 1px #2196f3;
+}
+input:focus + .status-nik {
     box-shadow: 0 0 1px #2196f3;
 }
 
@@ -1840,6 +1870,11 @@ input:checked + .slider:before {
     transform: translateX(55px);
 }
 input:checked + .status-member:before {
+    -webkit-transform: translateX(55px);
+    -ms-transform: translateX(55px);
+    transform: translateX(55px);
+}
+input:checked + .status-nik:before {
     -webkit-transform: translateX(55px);
     -ms-transform: translateX(55px);
     transform: translateX(55px);
@@ -1867,11 +1902,17 @@ input:checked + .slider .on {
 input:checked + .status-member .on {
     display: block;
 }
+input:checked + .status-nik .on {
+    display: block;
+}
 
 input:checked + .slider .off {
     display: none;
 }
 input:checked + .status-member .off {
+    display: none;
+}
+input:checked + .status-nik .off {
     display: none;
 }
 
@@ -1884,11 +1925,17 @@ input:checked + .status-member .off {
 .status-member.round {
     border-radius: 34px;
 }
+.status-nik.round {
+    border-radius: 34px;
+}
 
 .slider.round:before {
     border-radius: 50%;
 }
 .status-member.round:before {
+    border-radius: 50%;
+}
+.status-nik.round:before {
     border-radius: 50%;
 }
 
