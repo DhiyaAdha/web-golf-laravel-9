@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use App\Models\Package;
 
 class DashboardController extends Controller
 {
@@ -236,6 +237,13 @@ class DashboardController extends Controller
             ->rawColumns(['name', 'action'])->make(true);
         }
 
+        $data['category'] = collect(Package::pluck('category'))->unique();
+        // dd($data['category']);
         return view('dashboard.analisis-tamu', $data);
+    }
+
+    public function download()
+    {
+        
     }
 }

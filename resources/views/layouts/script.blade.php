@@ -3,7 +3,7 @@
     <script src="{{ asset('vendors/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('dist/asset_offline/intro.min.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/html5-qrcode.js') }}"></script>
-    <script defer src="{{ asset('vendors/bower_components/moment/min/moment.min.js') }}"></script>
+    <script src="{{ asset('vendors/bower_components/moment/min/moment.min.js') }}"></script>
     <script src="{{ mix('js/app.js') }}"></script>
     @stack('scripts')
     <script>
