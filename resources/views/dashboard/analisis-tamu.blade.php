@@ -208,7 +208,9 @@
                         <h5 class="modal-title" id="myModalLabel"></h5>
                     </div>
                     <div class="modal-body">
-                        <form action="#" method="POST">
+                        <form action="{{url('export-analisis-tamu')}}" method="POST">
+                        @csrf
+                        <input type="hidden" name="daterange"/>
                             <div class="form-group">
                                 <label class="control-label mb-10" for="">Jenis</label>
                                 <select class="form-control" name="category">
@@ -257,8 +259,16 @@
                 $('#modal-filter').modal('toggle');
             });
 
-            $('#daterange-btn').daterangepicker(
-                {
+            var start = moment().subtract(29, 'days');
+            var end = moment();
+
+            function cb(start, end) {
+                console.log(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+                $('input[name=daterange]').val(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+                $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            }
+
+            $('#daterange-btn').daterangepicker({
                     ranges   : {
                     'Today'       : [moment(), moment()],
                     'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -269,11 +279,8 @@
                     },
                     startDate: moment().subtract(29, 'days'),
                     endDate  : moment()
-                },
-                function (start, end) {
-                    $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-                }
-            );
+            }, cb);
+            cb(start, end)
         });
 
         </script>
