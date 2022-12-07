@@ -97,7 +97,7 @@ $(".download-kartu-tamu").on("click", function () {
     $('#kartu-tamu').modal('hide');
     screenshot();
     
-    // $(".resolution").printThis({
+    // $(".resolution").modal('hide').printThis({
     //     importCSS: true,
     //     importStylse: true,
     //     loadCSS: "dist/css/custom.css",
