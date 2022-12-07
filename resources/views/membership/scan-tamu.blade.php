@@ -70,12 +70,4 @@
     <script defer src="{{ asset('dist/asset_offline/lottie-player.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/scan_member.js') }}"></script>
-    <script>
-        $(document).on('click', '#setting_panel_btn', function() {
-            introJs('.intro-foo').setOptions({
-                'showProgress': true,
-                'tooltipPosition': 'right'
-            }).start();
-        });
-    </script>
-    @endpush
+@endpush

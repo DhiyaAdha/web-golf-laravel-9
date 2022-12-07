@@ -94,7 +94,7 @@
                                         <div class="checkbox checkbox-primary">
                                             <input id="checkbox-harga" type="checkbox" value="hrg">
                                             <label for="checkbox-harga">
-                                                Harga Sama Senin-Minggu ?
+                                                Harga Sama Senin-Minggu?
                                             </label>
                                         </div>
                                         <div class="d-flex justify-content-between">
@@ -103,7 +103,7 @@
                                                     <label class="control-label mb-10 text-left" for="example-email">senin<span class="help"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
-                                                        <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_discount" placeholder="harga hari senin">
+                                                        <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_discount" placeholder="masukkan harga">
                                                     </div>
                                                     @error('price_discount')
                                                         <div class="text-danger"> {{ $message }}</div>
@@ -114,7 +114,7 @@
                                                     <label class="control-label mb-10 text-left" for="example-email">selasa - jumat<span class="help"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
-                                                        <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekdays" placeholder="harga selasa - jumat">
+                                                        <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekdays" placeholder="masukkan harga">
                                                     </div>
                                                     @error('price_weekdays')
                                                         <div class="text-danger"> {{ $message }}</div>
@@ -125,7 +125,7 @@
                                                     <label class="control-label mb-10 text-left" for="example-email">sabtu - minggu<span class="help"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
-                                                        <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekend" placeholder="harga sabtu - minggu">
+                                                        <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekend" placeholder="masukkan harga">
                                                     </div>
                                                     @error('price_weekend')
                                                         <div class="text-danger"> {{ $message }}</div>
@@ -167,14 +167,9 @@
             vMax: '999999999',
             vMin: '-999999999'
         });
-    </script>
-    <script>
-       $(document).ready(function() {
-                $('input[type="checkbox"]').click(function() {
-                    var inputValue = $(this).attr("value");
-                    $("." + inputValue).toggle();
-  
-                });
-            });
+        $('input[type="checkbox"]').click(function() {
+            var inputValue = $(this).attr("value");
+            $("." + inputValue).toggle();
+        });
     </script>
 @endpush

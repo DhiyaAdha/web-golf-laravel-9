@@ -221,7 +221,6 @@
                     </div>
                 </div>
             </div>
-
             <button id="setting_panel_btn" data-toggle="tooltip" title="Panduan" data-placement="left" class="btn btn-success btn-circle setting-panel-btn shadow-2dp"><i class="zmdi zmdi-settings"></i></button>
             @include('layouts.footer')
         </div>
@@ -229,13 +228,5 @@
 @endsection
 @push('scripts')
     <script defer src="{{ asset('dist/asset_offline/list_report_games.js') }}"></script>
-    <script defer src="{{ asset('/vendors/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
-    <script>
-        $(document).on('click', '#setting_panel_btn', function() {
-            introJs('.intro-foo').setOptions({
-                'showProgress': true,
-                'tooltipPosition': 'right'
-            }).start();
-        });
-    </script>
+    <script src="{{ asset('/vendors/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 @endpush

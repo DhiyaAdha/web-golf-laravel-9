@@ -92,7 +92,7 @@
                                         <div class="checkbox checkbox-primary">
                                             <input id="checkbox-harga" type="checkbox" value="hrg" onclick="myFunction()">
                                             <label for="checkbox-harga">
-                                                Harga Sama Senin-Minggu ?
+                                                Harga Sama Senin-Minggu?
                                             </label>
                                         </div>
                                         <div class="d-flex justify-content-between">
@@ -101,7 +101,7 @@
                                                     <label class="control-label mb-10 text-left" for="example-email">senin<span class="help"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
-                                                        <input type="text" value="{{ $package->price_discount }}" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_discount" placeholder="harga hari senin">
+                                                        <input type="text" value="{{ $package->price_discount }}" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_discount" placeholder="masukkan harga">
                                                     </div>
                                                     @error('price_discount')
                                                         <div class="text-danger"> {{ $message }}</div>
@@ -112,7 +112,7 @@
                                                     <label class="control-label mb-10 text-left" for="example-email">selasa - jumat<span class="help"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
-                                                        <input id="hrg" type="text" value="{{ $package->price_weekdays }}" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekdays" placeholder="harga selasa - jumat">
+                                                        <input id="hrg" type="text" value="{{ $package->price_weekdays }}" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekdays" placeholder="masukkan harga">
                                                     </div>
                                                     @error('price_weekdays')
                                                         <div class="text-danger"> {{ $message }}</div>
@@ -123,7 +123,7 @@
                                                     <label class="control-label mb-10 text-left" for="example-email">sabtu - minggu<span class="help"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
-                                                        <input id="hrg2" type="text" value="{{ $package->price_weekend }}"min="0"onkeypress="return event.charCode >= 48 && event.charCode <=57"class="form-control" name="price_weekend" placeholder="harga sabtu - minggu">
+                                                        <input id="hrg2" type="text" value="{{ $package->price_weekend }}"min="0"onkeypress="return event.charCode >= 48 && event.charCode <=57"class="form-control" name="price_weekend" placeholder="masukkan harga">
                                                     </div>
                                                     @error('price_weekend')
                                                         <div class="text-danger"> {{ $message }}</div>
@@ -168,42 +168,22 @@
             vMax: '999999999',
             vMin: '-999999999'
         });
-        
-        $(document).on('click', '#setting_panel_btn', function() {
-            introJs('.intro-foo').setOptions({
-                'showProgress': true,
-                'tooltipPosition': 'right'
-            }).start();
+        $(document).ready(function() {
+            $('input[type="checkbox"]').change(function() {
+                var inputValue = $(this).attr("value");
+                $("#hrg").val('');
+            });
+            $('input[type="checkbox"]').change(function() {
+                var inputValue = $(this).attr("value");
+                $("#hrg2").val('');
+                $("." + inputValue).toggle();
+            });
         });
-    </script>
-    <script>
-        $(document).ready(function() {
-                 $('input[type="checkbox"]').change(function() {
-                     var inputValue = $(this).attr("value");
-                     $("#hrg").val('');
-                    
-                 });
-             });
-     </script>
-    <script>
-        $(document).ready(function() {
-                 $('input[type="checkbox"]').change(function() {
-                     var inputValue = $(this).attr("value");
-                     $("#hrg2").val('');
-                     $("." + inputValue).toggle();
-                 });
-             });
-     </script>
-     <script>
         function myFunction() {
-          var checkBox = document.getElementById("checkbox-harga");
-        //   var text = document.getElementById("text");
-          if (checkBox.checked == true){
-            // text.style.display = "block";
-          } else {
-            //  text.style.display = "none";
-            location.reload();
-          }
+            var checkBox = document.getElementById("checkbox-harga");
+            if (checkBox.checked == false){
+                location.reload();
+            }
         }
-        </script>
+    </script>
 @endpush

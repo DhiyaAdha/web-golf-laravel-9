@@ -144,12 +144,4 @@
 @endsection
 @push('scripts')
     <script defer src="{{ asset('dist/asset_offline/list_member.js') }}"></script>
-    <script>
-        $(document).on('click', '#setting_panel_btn', function() {
-            introJs('.intro-foo').setOptions({
-                'showProgress': true,
-                'tooltipPosition': 'right'
-            }).start();
-        });
-    </script>
 @endpush
