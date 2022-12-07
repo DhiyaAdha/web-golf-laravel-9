@@ -18,10 +18,10 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(PackageSeeder::class);
         $this->call(SettingLimitSeeder::class);
-        // $this->call(ReportDepositSeeder::class);
-        // $this->call(DepositSeeder::class);
-        // $this->call(ReportLimitSeeder::class);
-        // $this->call(LogLimitSeeder::class);
+        $this->call(ReportDepositSeeder::class);
+        $this->call(DepositSeeder::class);
+        $this->call(ReportLimitSeeder::class);
+        $this->call(LogLimitSeeder::class);
         // $this->call(InvoiceSeeder::class);
     }
 }

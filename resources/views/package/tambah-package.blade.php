@@ -1,7 +1,7 @@
 @extends('layouts.main', ['title' => 'TGCC | Tambah Paket Bermain'])
 @section('content')
     <div class="page-wrapper" style="min-height: 259px;">
-        <div class="container-fluid">
+        <div class="container-fluid" data-title="Halaman Tambah Paket" data-intro="Admin dapat menambah data paket baru dengan mengisi formulir dan harga">
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h5 class="txt-dark">Tambah Paket</h5>
@@ -141,6 +141,7 @@
                 </div>
             </div>
         </div>
+        <button id="setting_panel_btn" data-toggle="tooltip" title="Panduan" data-placement="left" class="btn btn-success btn-circle setting-panel-btn shadow-2dp"><i class="zmdi zmdi-settings"></i></button>
         @include('layouts.footer')
     </div>
 @endsection

@@ -18,11 +18,12 @@ class ReportLimitSeeder extends Seeder
     public function run()
     {
 
-        for($i = 1; $i <= 30; $i++) {
+        for($i = 1; $i <= 20; $i++) {
             $faker = Faker::create('id_ID');
             DB::table('report_limits')->insert([
                 'visitor_id' => $i,
                 'user_id' => User::all()->random()->id,
+                'report_quota' => 4,
                 'status' => $faker->randomElement(['Reset', 'Bertambah', 'Berkurang']),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
