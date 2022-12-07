@@ -92,40 +92,40 @@
                                                 @enderror
                                         </div>
                                         <div class="checkbox checkbox-primary">
-                                            <input id="checkbox-harga" type="checkbox" value="hrg">
+                                            <input id="checkbox-harga" type="checkbox" value="hrg" onclick="myFunction()">
                                             <label for="checkbox-harga">
-                                                Harga Sama Senin-Minggu ?
+                                                Harga Sama Senin-Minggu?
                                             </label>
                                         </div>
                                         <div class="d-flex justify-content-between">
                                             <div class="form-group @error('price_discount') has-error @enderror">
                                                 <label class="control-label mb-10 text-left" for="examp">
-                                                    <label class="control-label mb-10 text-left" for="example-email">senin<span class="help"></span></label>
+                                                    <label id="senin" class="control-label mb-10 text-left" for="example-email">senin<span class="help"></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
-                                                        <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_discount" placeholder="harga hari senin">
+                                                        <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_discount" placeholder="masukkan harga">
                                                     </div>
                                                     @error('price_discount')
                                                         <div class="text-danger"> {{ $message }}</div>
                                                     @enderror
                                             </div>
-                                            <div class="form-group @error('price_weekdays') has-error @enderror hrg">
+                                            <div id="isi" class="form-group @error('price_weekdays') has-error @enderror hrg">
                                                 <label class="control-label mb-10 text-left" for="examp">
                                                     <label class="control-label mb-10 text-left" for="example-email">selasa - jumat<span class="help"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
-                                                        <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekdays" placeholder="harga selasa - jumat">
+                                                        <input id="hrg_input1" type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekdays" placeholder="masukkan harga">
                                                     </div>
                                                     @error('price_weekdays')
                                                         <div class="text-danger"> {{ $message }}</div>
                                                     @enderror
                                             </div>
-                                            <div class="form-group @error('price_weekend') has-error @enderror hrg">
+                                            <div id="isi2" class="form-group @error('price_weekend') has-error @enderror hrg">
                                                 <label class="control-label mb-10 text-left" for="examp">
                                                     <label class="control-label mb-10 text-left" for="example-email">sabtu - minggu<span class="help"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
-                                                        <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekend" placeholder="harga sabtu - minggu">
+                                                        <input id="hrg_input2" type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekend" placeholder="masukkan harga">
                                                     </div>
                                                     @error('price_weekend')
                                                         <div class="text-danger"> {{ $message }}</div>
@@ -167,14 +167,21 @@
             vMax: '999999999',
             vMin: '-999999999'
         });
-    </script>
-    <script>
-       $(document).ready(function() {
-                $('input[type="checkbox"]').click(function() {
-                    var inputValue = $(this).attr("value");
-                    $("." + inputValue).toggle();
-  
-                });
-            });
+        $('input[type="checkbox"]').click(function() {
+            var inputValue = $(this).attr("value");
+            $("#hrg_input1").val('');
+            $("#hrg_input2").val('');
+            $("." + inputValue).toggle();
+        });
+        function myFunction() {
+        var checkBox = document.getElementById("checkbox-harga");
+        var senin = document.getElementById("senin");
+        if (checkBox.checked == true){
+            $("#senin").html("Senin-Minggu");
+        } else {
+            $("#senin").html("Senin");
+        }
+        }
+        
     </script>
 @endpush

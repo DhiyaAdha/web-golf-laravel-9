@@ -15,6 +15,12 @@
                 "html": true,
             });
         });
+        $(document).on('click', '#setting_panel_btn', function() {
+            introJs('.intro-foo').setOptions({
+                'showProgress': true,
+                'tooltipPosition': 'right'
+            }).start();
+        });
         @if (Session::has('success'))
             window.setTimeout(function() {
                 $.toast({

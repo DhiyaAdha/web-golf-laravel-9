@@ -379,7 +379,8 @@ class OrderRegulerController extends Controller
                 'jml_default' => array_sum(array_column($priceDefault, 'price')),
                 'jml_additional' => array_sum(array_column($priceAdditional, 'price')),
                 'jml_other' => array_sum(array_column($priceOthers, 'price')),
-                'rental' => array_sum(array_column($priceRental, 'price')),
+                'jml_rental' => array_sum(array_column($priceRental, 'price')),
+                'jml_service' => array_sum(array_column($priceService, 'price')),
             ]);
 
             LogAdmin::create([
