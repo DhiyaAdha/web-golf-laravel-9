@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
         $this->call(DepositSeeder::class);
         $this->call(ReportLimitSeeder::class);
         $this->call(LogLimitSeeder::class);
+        $this->call(ReportCouponSeeder::class);
+        $this->call(LogCouponSeeder::class);
         // $this->call(InvoiceSeeder::class);
     }
 }
