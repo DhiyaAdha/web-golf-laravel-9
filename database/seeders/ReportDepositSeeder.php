@@ -20,7 +20,7 @@ class ReportDepositSeeder extends Seeder
         //
         $faker = Faker::create('id_ID');
         $visitor = Visitor::pluck('id');
-        for($i = 1; $i <= 30; $i++) {
+        for($i = 1; $i <= 20; $i++) {
             DB::table('report_deposits')->insert([
                 'visitor_id' => $i,
                 'user_id' => $faker->randomElement([1, 2]),

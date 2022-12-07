@@ -77,7 +77,7 @@ $('#dt-package').DataTable({
     responsive: true,
     language: {
         search: "",
-        searchPlaceholder: "Cari Nama",
+        searchPlaceholder: "Cari name paket",
         emptyTable: "Tidak ada data pada tabel ini",
         info: "Menampilkan _START_ s/d _END_ dari _TOTAL_ data",
         infoFiltered: "(difilter dari _MAX_ total data)",
