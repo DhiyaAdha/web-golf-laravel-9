@@ -189,6 +189,9 @@ class ReportController extends Controller
         $this->validate($request, [
             'tipe_member' => 'required',
             'limit' => 'required',
+        ],
+        [
+            'limit.required' => 'Limit masih kosong',
         ]);
 
         $update_limit = SettingLimit::where('tipe_member', $request->tipe_member)->first();
