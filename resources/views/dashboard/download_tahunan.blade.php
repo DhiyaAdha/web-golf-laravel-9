@@ -41,7 +41,7 @@
     </tbody>
     <tfoot>
         <tr>
-            <th>Jumlah</th>
+            <th>JUMLAH</th>
             <th>{{$pertamina}}</th>
             <th>{{$pensiunan}}</th>
             <th>{{$forkopimda}}</th>
