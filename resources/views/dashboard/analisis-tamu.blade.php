@@ -171,6 +171,7 @@
                     <div class="panel panel-default card-view" data-title="Tabel Daftar Nama Terakhir Berkunjung" data-intro="Panel ini menampilkan seluruh data membership tgcc dan data pada tabel diurutkan berdasarkan tanggal terakhir member yang berkunjung ke tgcc.">
                         <div class="panel-heading">
                             <div class="pull-right">
+                                <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-filter-two" data-title="Unduh Laporan Transaksi" data-intro="Klik tombol ini untuk memunculkan popup. Admin dapat mengunduh laporan transaksi dengan filter kategori paket dan pilih tanggal. kemudian klik tombol unduh.">Unduh Laporan Tahunan</button>
                                 <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-filter" data-title="Unduh Laporan Transaksi" data-intro="Klik tombol ini untuk memunculkan popup. Admin dapat mengunduh laporan transaksi dengan filter kategori paket dan pilih tanggal. kemudian klik tombol unduh.">Unduh Laporan</button>
                             </div>
                             <div class="clearfix"></div>
@@ -243,6 +244,36 @@
                         </div>
                         <div class="form-group">
                             <button class="btn btn-success download">Unduh</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-filter-two" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h5 class="modal-title" id="myModalLabel">Unduh Transaksi Tahunan</h5>
+                </div>
+                <div class="modal-body">
+                    <form action="{{url('export-laporan-tahunan')}}" method="POST">
+                        @csrf
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="form-group">
+                                    <label class="control-label mb-10" for="">Tahun</label>
+                                    <select class="form-control" name="year">
+                                        @foreach ($years as $row)
+                                            <option value="{{$row}}">{{$row}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success" type="submit">Unduh</button>
                         </div>
                     </form>
                 </div>

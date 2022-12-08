@@ -57,6 +57,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     route::get('/export_excel_package', [PackageController::class, 'export_excel_package'])->name('export_excel_package');
     Route::post('/update/limit', [ReportController::class, 'update_limit'])->name('setting.limit');
     Route::post('export-analisis-tamu', [DashboardController::class, 'download']);
+    Route::post('export-laporan-tahunan', [DashboardController::class, 'download_laporan_tahunan']);
     Route::middleware(['htmlMinifier'])->group(static function () {
         Route::resource('revenue', RevenueController::class);
         Route::get('/analytic/week', [DashboardController::class, 'analytic_week'])->name('analytic.week');
