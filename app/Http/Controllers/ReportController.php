@@ -186,10 +186,16 @@ class ReportController extends Controller
 
     public function update_limit(Request $request)
     {
-        $this->validate($request, [
-            'tipe_member' => 'required',
-            'limit' => 'required',
-        ]);
+        $this->validate(
+            $request, 
+            [
+                'tipe_member' => 'required',
+                'limit' => 'required',
+            ],
+            [
+                'limit.required' => 'Limit masih kosong',
+            ]
+    );
 
         $update_limit = SettingLimit::where('tipe_member', $request->tipe_member)->first();
         $update_limit->limit = $request->limit;
@@ -199,7 +205,6 @@ class ReportController extends Controller
         LogLimit::whereIn('visitor_id', $arrayId)->update([
             'quota' => $request->limit
         ]);
-
-        return redirect()->back()->with('success', 'Berhasil edit limit');
+            return redirect()->back()->with('success', 'Berhasil edit limit');
     }
 }

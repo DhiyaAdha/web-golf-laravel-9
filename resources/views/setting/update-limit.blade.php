@@ -30,9 +30,14 @@
                                                     <option value="VVIP" name="tipe_member">VIP</option>
                                                 </select>
                                                 <br>
+                                                @error('limit')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                                <br>
                                                 <label class="control-label mb-10" for="" style="display:none;" id="hidden_div">
                                                     <label class="control-label mb-10" for="">Ubah Jumlah Limit</label>
                                                     <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="limit" size="50px" placeholder="Masukan Jumlah limit" id="limit">
+                                                    
                                                 </label>
                                             </div>
                                             <div class="form-group text-left">
