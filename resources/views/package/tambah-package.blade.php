@@ -114,7 +114,7 @@
                                                     <label class="control-label mb-10 text-left" for="example-email">selasa - jumat<span class="help"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
-                                                        <input id="hrg_input1" type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekdays" placeholder="masukkan harga">
+                                                        <input id="hrg_input1" type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekdays" placeholder="masukkan harga" required>
                                                     </div>
                                                     @error('price_weekdays')
                                                         <div class="text-danger"> {{ $message }}</div>
@@ -125,7 +125,7 @@
                                                     <label class="control-label mb-10 text-left" for="example-email">sabtu - minggu<span class="help"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
-                                                        <input id="hrg_input2" type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekend" placeholder="masukkan harga">
+                                                        <input id="hrg_input2" type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekend" placeholder="masukkan harga" required>
                                                     </div>
                                                     @error('price_weekend')
                                                         <div class="text-danger"> {{ $message }}</div>
@@ -182,6 +182,19 @@
             $("#senin").html("Senin");
         }
         }
-        
+        $(document).on('change', '#checkbox-harga', function () {
+            if($('#checkbox-harga').prop('checked')) {
+                $('#hrg_input1').removeAttr('required')
+            } else {
+                $('#hrg_input1').attr('required','')
+            }
+        });
+        $(document).on('change', '#checkbox-harga', function () {
+            if($('#checkbox-harga').prop('checked')) {
+                $('#hrg_input2').removeAttr('required')
+            } else {
+                $('#hrg_input2').attr('required','')
+            }
+        });
     </script>
 @endpush
