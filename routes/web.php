@@ -55,6 +55,8 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
     Route::post('/package/destroy', [PackageController::class, 'destroy'])->name('package.destroy');
     Route::post('/package/store', [PackageController::class, 'store'])->name('package.store');
     route::get('/export_excel_package', [PackageController::class, 'export_excel_package'])->name('export_excel_package');
+    Route::post('/update/limit', [ReportController::class, 'update_limit'])->name('setting.limit');
+    Route::post('export-analisis-tamu', [DashboardController::class, 'download']);
     Route::middleware(['htmlMinifier'])->group(static function () {
         Route::resource('revenue', RevenueController::class);
         Route::get('/analytic/week', [DashboardController::class, 'analytic_week'])->name('analytic.week');
@@ -75,7 +77,6 @@ Route::group(['middleware' => ['auth', 'ceklevel:2']], function () {
         // Route::get('/laporan/kantin', [ReportController::class, 'canteen'])->name('report.canteen');
         Route::get('/pengaturan', [ReportController::class, 'setting_limit'])->name('setting');
         Route::get('/select/member', [ReportController::class, 'select_member'])->name('setting.select');
-        Route::post('/update/limit', [ReportController::class, 'update_limit'])->name('setting.limit');
     });
 });
 
@@ -126,8 +127,6 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
         Route::get('/edit-tamu/{id}', [TamuController::class, 'edit'])->name('edit-tamu');
         Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name('show');
         Route::get('/print-kartu', [TamuController::class, 'printkartu'])->name('printkartu');
-        Route::post('export-analisis-tamu', [DashboardController::class, 'download']);
-
     });
     Route::post('/cart_add/reguler', [OrderRegulerController::class, 'add'])->name('cart_add.reguler');
     Route::post('/cart_remove/reguler', [OrderRegulerController::class, 'remove'])->name('cart_remove.reguler');

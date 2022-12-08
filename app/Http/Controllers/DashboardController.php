@@ -230,18 +230,14 @@ class DashboardController extends Controller
         if ($request->ajax()) {
             return datatables()->of($visitor)->editColumn('category', function ($data) {
                     return $data->category;
-            })
-            ->addColumn('times', function ($data) {
+            })->addColumn('times', function ($data) {
                 return empty($data->transaction($data->id)) ? '-' : $data->transaction($data->id)->created_at->translatedFormat('d F Y').', '.$data->transaction($data->id)->created_at->translatedFormat('H:i a');
-            })
-            ->editColumn('tipe_member', function ($data) {
+            })->editColumn('tipe_member', function ($data) {
                 return $data->tipe_member;
-            })
-            ->rawColumns(['name', 'action'])->make(true);
+            })->rawColumns(['name', 'action'])->make(true);
         }
 
         $data['category'] = collect(Package::pluck('category'))->unique();
-        // dd($data['category']);
         return view('dashboard.analisis-tamu', $data);
     }
 
