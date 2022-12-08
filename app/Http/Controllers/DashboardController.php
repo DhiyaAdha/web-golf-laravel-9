@@ -282,18 +282,18 @@ class DashboardController extends Controller
         $category = collect(Visitor::whereNotNull('category')->pluck('category'))->unique();
         $amount = array();
         $months = [
-            1 => 'Jan',
-            2 => 'Feb',
-            3 => 'Mar',
-            4 => 'Apr',
-            5 => 'May',
-            6 => 'Jun',
-            7 => 'Jul',
-            8 => 'Aug',
-            9 => 'Sep',
-            10 => 'Oct',
-            11 => 'Nov',
-            12 => 'Dec',
+            1 => 'JANUARI',
+            2 => 'FEBRUARI',
+            3 => 'MARET',
+            4 => 'APRIL',
+            5 => 'MEI',
+            6 => 'JUNI',
+            7 => 'JULI',
+            8 => 'AGUSTUS',
+            9 => 'SEPTEMBER',
+            10 => 'OKTOBER',
+            11 => 'NOVEMBER',
+            12 => 'DESEMBER',
         ];
         foreach ($category as $key => $value) {
             for ($i=1; $i <= 12; $i++) { 

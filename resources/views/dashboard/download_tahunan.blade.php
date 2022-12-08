@@ -17,19 +17,19 @@
     @endphp
     @foreach($data as $i => $row)
         @php
-        $forkopimda += $row['forkopimda'];
-        $umum += $row['umum'];
-        $pertamina += $row['pertamina'];
-        $pensiunan += $row['pensiunan'];
-        $perpesi += $row['perpesi'];
+        $forkopimda += $row['forkopimda'] ?? 0;
+        $umum += $row['umum'] ?? 0;
+        $pertamina += $row['pertamina'] ?? 0;
+        $pensiunan += $row['pensiunan'] ?? 0;
+        $perpesi += $row['perpesi'] ?? 0;
         @endphp
         <tr>
-            <td>{{ $row['bulan'] }}</td>
-            <td>{{ $row['forkopimda'] }}</td>
-            <td>{{ $row['umum'] }}</td>
-            <td>{{ $row['pertamina'] }}</td>
-            <td>{{ $row['pensiunan'] }}</td>
-            <td>{{ $row['perpesi'] }}</td>
+            <td>{{ $row['bulan'] ?? 0 }}</td>
+            <td>{{ $row['forkopimda'] ?? 0 }}</td>
+            <td>{{ $row['umum'] ?? 0 }}</td>
+            <td>{{ $row['pertamina'] ?? 0 }}</td>
+            <td>{{ $row['pensiunan'] ?? 0 }}</td>
+            <td>{{ $row['perpesi'] ?? 0 }}</td>
         </tr>
     @endforeach
     </tbody>
