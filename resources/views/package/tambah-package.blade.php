@@ -1,7 +1,7 @@
 @extends('layouts.main', ['title' => 'TGCC | Tambah Paket Bermain'])
 @section('content')
     <div class="page-wrapper" style="min-height: 259px;">
-        <div class="container-fluid">
+        <div class="container-fluid" data-title="Halaman Tambah Paket" data-intro="Admin dapat menambah data paket baru dengan mengisi formulir dan harga">
             <div class="row heading-bg">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h5 class="txt-dark">Tambah Paket</h5>
@@ -114,7 +114,7 @@
                                                     <label class="control-label mb-10 text-left" for="example-email">selasa - jumat<span class="help"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
-                                                        <input id="hrg_input1" type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekdays" placeholder="masukkan harga">
+                                                        <input id="hrg_input1" type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekdays" placeholder="masukkan harga" required>
                                                     </div>
                                                     @error('price_weekdays')
                                                         <div class="text-danger"> {{ $message }}</div>
@@ -125,7 +125,7 @@
                                                     <label class="control-label mb-10 text-left" for="example-email">sabtu - minggu<span class="help"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
-                                                        <input id="hrg_input2" type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekend" placeholder="masukkan harga">
+                                                        <input id="hrg_input2" type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekend" placeholder="masukkan harga" required>
                                                     </div>
                                                     @error('price_weekend')
                                                         <div class="text-danger"> {{ $message }}</div>
@@ -177,11 +177,24 @@
         var checkBox = document.getElementById("checkbox-harga");
         var senin = document.getElementById("senin");
         if (checkBox.checked == true){
-            $("#senin").html("Senin-Minggu");
+            $("#senin").html("Senin - Minggu");
         } else {
             $("#senin").html("Senin");
         }
         }
-        
+        $(document).on('change', '#checkbox-harga', function () {
+            if($('#checkbox-harga').prop('checked')) {
+                $('#hrg_input1').removeAttr('required')
+            } else {
+                $('#hrg_input1').attr('required','')
+            }
+        });
+        $(document).on('change', '#checkbox-harga', function () {
+            if($('#checkbox-harga').prop('checked')) {
+                $('#hrg_input2').removeAttr('required')
+            } else {
+                $('#hrg_input2').attr('required','')
+            }
+        });
     </script>
 @endpush

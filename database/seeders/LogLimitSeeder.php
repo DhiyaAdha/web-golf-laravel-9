@@ -19,12 +19,13 @@ class LogLimitSeeder extends Seeder
     public function run()
     {
 
-            for($i = 1; $i <= 30; $i++) {
+        for($i = 1; $i <= 20; $i++) {
             $faker = Faker::create('id_ID');
             $visitor = Visitor::pluck('id');
             DB::table('log_limits')->insert([
                 'visitor_id' => $i,
-                'report_limit_id' => ReportLimit::all()->random()->id,
+                'report_limit_id' => $i,
+                'quota' => 4,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);

@@ -126,6 +126,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
         Route::get('/edit-tamu/{id}', [TamuController::class, 'edit'])->name('edit-tamu');
         Route::get('/kartu-tamu/{id}', [TamuController::class, 'show'])->name('show');
         Route::get('/print-kartu', [TamuController::class, 'printkartu'])->name('printkartu');
+        Route::post('export-analisis-tamu', [DashboardController::class, 'download']);
 
     });
     Route::post('/cart_add/reguler', [OrderRegulerController::class, 'add'])->name('cart_add.reguler');

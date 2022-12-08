@@ -25,12 +25,16 @@
                                     <div class="col-lg-6">
                                         <div class="form-group @error('NIK') has-error @enderror">
                                             <label class="control-label mb-10" for="name">NIK KTP</label>
-                                            <input type="text" name="nik" value="{{ $visitor->nik }}" class="form-control" id="NIK" size="50px" placeholder="Masukan NIK" autofocus>
+                                            <input type="text" name="nik" value="{{ $visitor->nik }}" class="form-control" id="NIK" size="50px" placeholder="Masukan NIK" autofocus required>
                                             @error('nik')
                                                 <div class="text-danger"> {{ $message }}</div>
                                             @enderror
                                         </div>
-                                        <div class="form-group @error('name') has-error @enderror">
+                                        <div class="checkbox checkbox-success">
+                                            <input id="status_nik" name="status_nik" type="checkbox" {{ $visitor->status_nik == 'yes' ? 'checked' : '' }}>
+                                            <label for="status_nik">apakah anda yakin mengisi deposit tanpa mengisi NIK KTP?</label>
+                                        </div>
+                                        <div class="form-group @error('name') has-error @enderror" style="margin-top: 1.5rem;">
                                             <label class="control-label mb-10" for="name">Nama Lengkap</label>
                                             <input type="text" name="name" value="{{ $visitor->name }}" class="form-control" id="name" size="50px" placeholder="Masukan Nama" autofocus>
                                             @error('name')
@@ -171,3 +175,14 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script>
+        $(document).on('change', '#status_nik', function () {
+            if($('#status_nik').prop('checked')) {
+                $('#NIK').removeAttr('required')
+            } else {
+                $('#NIK').attr('required','')
+            }
+        })
+    </script>
+@endpush

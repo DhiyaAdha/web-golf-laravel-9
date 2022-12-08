@@ -186,16 +186,13 @@ class ReportController extends Controller
 
     public function update_limit(Request $request)
     {
-        $this->validate(
-            $request, 
-            [
-                'tipe_member' => 'required',
-                'limit' => 'required',
-            ],
-            [
-                'limit.required' => 'Limit masih kosong',
-            ]
-    );
+        $this->validate($request, [
+            'tipe_member' => 'required',
+            'limit' => 'required',
+        ],
+        [
+            'limit.required' => 'Limit masih kosong',
+        ]);
 
         $update_limit = SettingLimit::where('tipe_member', $request->tipe_member)->first();
         $update_limit->limit = $request->limit;

@@ -98,7 +98,7 @@
                                         <div class="d-flex justify-content-between">
                                             <div class="form-group @error('price_discount') has-error @enderror">
                                                 <label class="control-label mb-10 text-left" for="examp">
-                                                    <label class="control-label mb-10 text-left" for="example-email">senin<span class="help"></span></label>
+                                                    <label id="senin" class="control-label mb-10 text-left" for="example-email">senin<span class="help"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
                                                         <input type="text" value="{{ $package->price_discount }}" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_discount" placeholder="masukkan harga">
@@ -112,7 +112,7 @@
                                                     <label class="control-label mb-10 text-left" for="example-email">selasa - jumat<span class="help"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
-                                                        <input id="hrg" type="text" value="{{ $package->price_weekdays }}" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekdays" placeholder="masukkan harga">
+                                                        <input id="hrg" type="text" value="{{ $package->price_weekdays }}" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_weekdays" placeholder="masukkan harga" required>
                                                     </div>
                                                     @error('price_weekdays')
                                                         <div class="text-danger"> {{ $message }}</div>
@@ -123,7 +123,7 @@
                                                     <label class="control-label mb-10 text-left" for="example-email">sabtu - minggu<span class="help"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
-                                                        <input id="hrg2" type="text" value="{{ $package->price_weekend }}"min="0"onkeypress="return event.charCode >= 48 && event.charCode <=57"class="form-control" name="price_weekend" placeholder="masukkan harga">
+                                                        <input id="hrg2" type="text" value="{{ $package->price_weekend }}"min="0"onkeypress="return event.charCode >= 48 && event.charCode <=57"class="form-control" name="price_weekend" placeholder="masukkan harga" required>
                                                     </div>
                                                     @error('price_weekend')
                                                         <div class="text-danger"> {{ $message }}</div>
@@ -183,7 +183,29 @@
             var checkBox = document.getElementById("checkbox-harga");
             if (checkBox.checked == false){
                 location.reload();
+            }else{
+                var checkBox = document.getElementById("checkbox-harga");
+                var senin = document.getElementById("senin");
+                if (checkBox.checked == true){
+                    $("#senin").html("Senin - Minggu");
+                } else {
+                    $("#senin").html("Senin");
+                }
             }
         }
+        $(document).on('change', '#checkbox-harga', function () {
+            if($('#checkbox-harga').prop('checked')) {
+                $('#hrg').removeAttr('required')
+            } else {
+                $('#hrg').attr('required','')
+            }
+        });
+        $(document).on('change', '#checkbox-harga', function () {
+            if($('#checkbox-harga').prop('checked')) {
+                $('#hrg2').removeAttr('required')
+            } else {
+                $('#hrg2').attr('required','')
+            }
+        });
     </script>
 @endpush

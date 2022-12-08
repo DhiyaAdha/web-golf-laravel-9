@@ -67,7 +67,6 @@ class PackageController extends Controller
      */
     public function store(Request $request)
     {
-        // return 1;
         $this->validate($request,
             [
                 'name' => 'required|unique:packages,name',
@@ -189,7 +188,6 @@ class PackageController extends Controller
             $package->updated_at = Carbon::now();
         }
         
-
         LogAdmin::create([
             'user_id' => Auth::id(),
             'type' => 'UPDATE',

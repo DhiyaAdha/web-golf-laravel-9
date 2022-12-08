@@ -64,9 +64,12 @@ $(".modal-detail-invoice").on("show.bs.modal", function (e) {
     });
 });
 
-function screenshot(){
-    html2canvas(document.getElementById("resolution")).then(function(canvas){
-        downloadImage(canvas.toDataURL(),"UsersInformation.png");
+function screenshot(first){
+    html2canvas(document.getElementById("front-content")).then(function(canvas){
+        downloadImage(canvas.toDataURL(), first + '-front.jpg');
+    });
+    html2canvas(document.getElementById("back-content")).then(function(canvas){
+        downloadImage(canvas.toDataURL(), first + '-back.jpg');
     });
 }
 
@@ -74,8 +77,7 @@ function downloadImage(uri, filename){
     var link = document.createElement('a');
     if(typeof link.download !== 'string'){
         window.open(uri);
-    }
-    else{
+    }else{
         link.href = uri;
         link.download = filename;
         accountForFirefox(clickLink, link);
@@ -95,7 +97,9 @@ function accountForFirefox(click){
 
 $(".download-kartu-tamu").on("click", function () {
     $('#kartu-tamu').modal('hide');
-    screenshot();
+    const fullName = $(this).data('name');
+    const [first, last] = fullName.split(' ');
+    screenshot(first);
     
     // $(".resolution").modal('hide').printThis({
     //     importCSS: true,
@@ -104,8 +108,6 @@ $(".download-kartu-tamu").on("click", function () {
     //     header: "<h6>Kartu Member</h6>",
     // });
 
-    // const fullName = $(this).data('name');
-    // const [first, last] = fullName.split(' ');
 
     // html2canvas($('.front-content')[0], {
     //     logging: true,

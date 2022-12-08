@@ -118,79 +118,96 @@ $('#verification-no-hp').keypress(function(e) {
                     success: (response) => {
                         $.unblockUI();
                         if (response.status === "VALID") {
-                            swal({
-                                title: 'Verifikasi Identitas',
-                                text: 'Masukkan NIK KTP',
-                                type: 'input'
-                            }, function(isConfirm) {
-                                if (isConfirm) {
-                                    $.ajax({
-                                        async: true,
-                                        type: 'GET',
-                                        url: '/verification/identity',
-                                        data: {nik:isConfirm, phone:phone},
-                                        headers: {
-                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                        },
-                                        beforeSend: () => {
-                                            $.blockUI({
-                                                css: {
-                                                    backgroundColor: 'transparent',
-                                                    border: 'none'
-                                                },
-                                                message: '<img src="../img/rolling.svg">',
-                                                baseZ: 1500,
-                                                overlayCSS: {
-                                                    backgroundColor: '#7C7C7C',
-                                                    opacity: 0.4,
-                                                    cursor: 'wait'
+                            if(response.data.status_nik === "yes") {
+                                bell();
+                                swal({
+                                    title: response.message,
+                                    type: "success",
+                                    text: "Atas nama " + response.data.name,
+                                    confirmButtonColor: "#01c853",
+                                    closeOnConfirm: false,
+                                    closeOnCancel: false,
+                                    showCancelButton: false,
+                                    showConfirmButton: false,
+                                    timer: 2000,
+                                }, () => {
+                                    window.location = response.data.detail_scan;
+                                })
+                            } else {
+                                swal({
+                                    title: 'Verifikasi Identitas',
+                                    text: 'Masukkan NIK KTP',
+                                    type: 'input'
+                                }, function(isConfirm) {
+                                    if (isConfirm) {
+                                        $.ajax({
+                                            async: true,
+                                            type: 'GET',
+                                            url: '/verification/identity',
+                                            data: {nik:isConfirm, phone:phone},
+                                            headers: {
+                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                            },
+                                            beforeSend: () => {
+                                                $.blockUI({
+                                                    css: {
+                                                        backgroundColor: 'transparent',
+                                                        border: 'none'
+                                                    },
+                                                    message: '<img src="../img/rolling.svg">',
+                                                    baseZ: 1500,
+                                                    overlayCSS: {
+                                                        backgroundColor: '#7C7C7C',
+                                                        opacity: 0.4,
+                                                        cursor: 'wait'
+                                                    }
+                                                });
+                                            },
+                                            success: (response) => {
+                                                $.unblockUI();
+                                                if (response.status == "VALID") {
+                                                    bell();
+                                                    swal({
+                                                        title: response.message,
+                                                        type: "success",
+                                                        text: "Atas nama " + response.data.name,
+                                                        confirmButtonColor: "#01c853",
+                                                        closeOnConfirm: false,
+                                                        closeOnCancel: false,
+                                                        showCancelButton: false,
+                                                        showConfirmButton: false,
+                                                        timer: 2000,
+                                                    }, () => {
+                                                        window.location = response.data.detail_scan;
+                                                    })
+                                                } else {
+                                                    sword();
+                                                    swal({
+                                                        title: "Verifikasi gagal",
+                                                        type: "error",
+                                                        text: response.message,
+                                                        confirmButtonColor: "#01c853",
+                                                    }, function(isConfirm) {
+                                                        window.setTimeout(() => {
+                                                            location.reload();
+                                                        }, 100);
+                                                    });
                                                 }
-                                            });
-                                        },
-                                        success: (response) => {
-                                            $.unblockUI();
-                                            if (response.status == "VALID") {
-                                                bell();
-                                                swal({
-                                                    title: response.message,
-                                                    type: "success",
-                                                    text: "Atas nama " + response.data.name,
-                                                    confirmButtonColor: "#01c853",
-                                                    closeOnConfirm: false,
-                                                    closeOnCancel: false,
-                                                    showCancelButton: false,
-                                                    showConfirmButton: false,
-                                                    timer: 2000,
-                                                }, () => {
-                                                    window.location = response.data.detail_scan;
-                                                })
-                                            } else {
+                                            },
+                                            error: () => {
                                                 sword();
                                                 swal({
-                                                    title: "Verifikasi gagal",
+                                                    title: "Internal Server Error",
                                                     type: "error",
-                                                    text: response.message,
+                                                    text: "Terdapat kesalahan program pada action ini",
                                                     confirmButtonColor: "#01c853",
-                                                }, function(isConfirm) {
-                                                    window.setTimeout(() => {
-                                                        location.reload();
-                                                    }, 100);
                                                 });
+                                                return false;
                                             }
-                                        },
-                                        error: () => {
-                                            sword();
-                                            swal({
-                                                title: "Internal Server Error",
-                                                type: "error",
-                                                text: "Terdapat kesalahan program pada action ini",
-                                                confirmButtonColor: "#01c853",
-                                            });
-                                            return false;
-                                        }
-                                    });
-                                }
-                            });
+                                        });
+                                    }
+                                });
+                            }
                         } else {
                             sword();
                             swal({

@@ -21,7 +21,7 @@ class DepositSeeder extends Seeder
 
         $faker = Faker::create('id_ID');
         $visitor = Visitor::pluck('id');
-        for($i = 1; $i <= 30; $i++) {
+        for($i = 1; $i <= 20; $i++) {
             DB::table('deposits')->insert([
                 'visitor_id' => $i,
                 'report_deposit_id' => ReportDeposit::all()->random()->id,

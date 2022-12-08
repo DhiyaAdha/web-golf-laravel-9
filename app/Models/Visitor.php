@@ -18,6 +18,7 @@ class Visitor extends Model
         'unique_qr',
         'name',
         'nik',
+        'status_nik',
         'email',
         'address',
         'position',

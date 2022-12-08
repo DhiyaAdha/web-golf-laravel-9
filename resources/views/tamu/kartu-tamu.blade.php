@@ -51,8 +51,8 @@
                                             <div class="d-flex align-items-center justify-content-center">
                                                 <div class="resolution" id="resolution">
                                                     <div class="d-flex flex-column">
-                                                        <div class="front-content">
-                                                            <img class="front" src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/front-vip-card.svg') : asset('dist/img/kartutamu/front-member-card.svg') }}" alt="{{ $visitor->tipe_member }}">
+                                                        <div class="front-content" id="front-content">
+                                                            <img class="front" src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/front-vip-card.png') : asset('dist/img/kartutamu/front-member-card.png') }}"  alt="{{ $visitor->tipe_member }}">
                                                             <div class="qr-code">
                                                                 {{ QrCode::size(80)->generate($visitor->unique_qr) }}
                                                             </div>
@@ -74,8 +74,8 @@
                                                                 </h6>
                                                             </div>
                                                         </div>
-                                                        <div class="back-content">
-                                                            <img class="back" src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/back-vip-card.svg') : asset('dist/img/kartutamu/back-member-card.svg') }}" alt="{{ $visitor->tipe_member }}">
+                                                        <div class="back-content" id="back-content">
+                                                            <img class="back" src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/back-vip-card.png') : asset('dist/img/kartutamu/back-member-card.png') }}" alt="{{ $visitor->tipe_member }}">
                                                         </div>
                                                     </div>
                                                 </div>
