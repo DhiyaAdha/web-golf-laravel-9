@@ -21,7 +21,7 @@
                             <div class="panel-heading">
                                     <div class="col-lg-6">
                                         <form action="{{ route('setting.limit') }}" method="POST">
-                                            <div class="form-group">
+                                            <div class="form-group @error('limit') has-error @enderror">
                                                 @csrf
                                                 <label class="control-label mb-10" for="">Ubah limit</label>
                                                 <select name="tipe_member" class="form-control" onchange="showDiv(this)" required data-title="Ubah limit member" data-intro="Admin dapat mengubah limit sesuai dengan jenis member. Limit semua membership akan direset sesuai dengan jenis membernya">
@@ -34,6 +34,9 @@
                                                     <label class="control-label mb-10" for="">Ubah Jumlah Limit</label>
                                                     <input type="text" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="limit" size="50px" placeholder="Masukan Jumlah limit" id="limit">
                                                 </label>
+                                                @error('limit')
+                                                <div class="text-danger"> {{ $message }}</div>
+                                                @enderror
                                             </div>
                                             <div class="form-group text-left" data-title="Submit" data-intro="Klik submit jika limit yang dimasukan sudah benar">
                                                 <a href="daftar-tamu"><button type="submit" class="btn btn-info">Submit</button></a>   

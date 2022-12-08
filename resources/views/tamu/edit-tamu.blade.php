@@ -25,7 +25,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group @error('NIK') has-error @enderror">
                                             <label class="control-label mb-10" for="name">NIK KTP</label>
-                                            <input type="text" name="nik" value="{{ $visitor->nik }}" class="form-control" id="NIK" size="50px" placeholder="Masukan NIK" autofocus>
+                                            <input type="text" name="nik" value="{{ $visitor->nik }}" class="form-control" id="NIK" size="50px" placeholder="Masukan NIK" autofocus required>
                                             @error('nik')
                                                 <div class="text-danger"> {{ $message }}</div>
                                             @enderror
@@ -175,3 +175,14 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script>
+        $(document).on('change', '#status_nik', function () {
+            if($('#status_nik').prop('checked')) {
+                $('#NIK').removeAttr('required')
+            } else {
+                $('#NIK').attr('required','')
+            }
+        })
+    </script>
+@endpush
