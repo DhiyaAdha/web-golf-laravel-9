@@ -98,7 +98,7 @@
                                         <div class="d-flex justify-content-between">
                                             <div class="form-group @error('price_discount') has-error @enderror">
                                                 <label class="control-label mb-10 text-left" for="examp">
-                                                    <label class="control-label mb-10 text-left" for="example-email">senin<span class="help"></span></label>
+                                                    <label id="senin" class="control-label mb-10 text-left" for="example-email">senin<span class="help"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">Rp</div>
                                                         <input type="text" value="{{ $package->price_discount }}" min="0" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" name="price_discount" placeholder="masukkan harga">
@@ -183,6 +183,14 @@
             var checkBox = document.getElementById("checkbox-harga");
             if (checkBox.checked == false){
                 location.reload();
+            }else{
+                var checkBox = document.getElementById("checkbox-harga");
+                var senin = document.getElementById("senin");
+                if (checkBox.checked == true){
+                    $("#senin").html("Senin-Minggu");
+                } else {
+                    $("#senin").html("Senin");
+                }
             }
         }
     </script>
