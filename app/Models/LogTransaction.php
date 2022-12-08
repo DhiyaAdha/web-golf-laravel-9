@@ -25,6 +25,7 @@ class LogTransaction extends Model
         'jml_other',
         'cart',
         'created_at',
+        'updated_at',
     ];
 
     public function visitor()
