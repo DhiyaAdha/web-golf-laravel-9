@@ -82,9 +82,9 @@
                                             </div>
                                             <div class="text-center">
                                                 <button type="button" class="btn btn-sm download-kartu-tamu" data-name="{{ $visitor->name}}" style="margin-top: 2rem"><i class="fa fa-download"></i> 
-                                                    <b>Download Kartu Member</b>
+                                                    <b>Unduh Kartu Member</b>
                                                 </button>
-                                                <a href="{{ route('printkartu') }}">DOWNLOAD KARTU MEMBER</a>
+                                                <a href="{{ route('printkartu') }}">UNDUH KARTU MEMBER</a>
                                             </div>
                                         </div>
                                     </div>

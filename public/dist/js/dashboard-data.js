@@ -15,8 +15,12 @@ $(document).ready(function () {
         }).start();
     });
     $(document).on('click', '.download', function () {
-        // $('#modal-filter').modal('toggle');
         $('#modal-filter').modal('hide');
+    });
+
+    $(document).on('click', '.download-visitor', function () {
+        // $('#modal-filter').modal('toggle');
+        $('#modal-filter-two').modal('hide');
     });
 
     var start = moment().subtract(29, 'days');
