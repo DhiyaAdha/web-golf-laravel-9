@@ -11,9 +11,12 @@
     </tr>
     </thead>
     <tbody>
+    @php
+    $no = 1;
+    @endphp
     @foreach($data as $i => $row)
         <tr>
-            <td>{{ $i++ }}</td>
+            <td>{{ $no++ }}</td>
             <td>{{ $row['inv'] }}</td>
             <td>{{ $row['date'] }}</td>
             <td>{{ $row['product'] }}</td>

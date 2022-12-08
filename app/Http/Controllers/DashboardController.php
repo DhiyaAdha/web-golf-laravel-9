@@ -13,6 +13,7 @@ use App\Models\Package;
 use Illuminate\Support\Arr;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\AnalisisTamu;
+use App\Exports\LaporanTahunan;
 
 class DashboardController extends Controller
 {
@@ -238,6 +239,7 @@ class DashboardController extends Controller
         }
 
         $data['category'] = collect(Package::pluck('category'))->unique();
+        $data['years'] = range(2021, date('Y'));
         return view('dashboard.analisis-tamu', $data);
     }
 
@@ -272,5 +274,43 @@ class DashboardController extends Controller
 
         $sheets = collect(Arr::pluck($newItem, 'category'))->unique();
         return Excel::download(new AnalisisTamu($newItem, $sheets), 'analisis-tamu-'.date('YmdHis').'.xlsx');
+    }
+
+    public function download_laporan_tahunan(Request $request)
+    {
+        $year = $request->year;
+        $category = collect(Visitor::whereNotNull('category')->pluck('category'))->unique();
+        $amount = array();
+        $months = [
+            1 => 'Jan',
+            2 => 'Feb',
+            3 => 'Mar',
+            4 => 'Apr',
+            5 => 'May',
+            6 => 'Jun',
+            7 => 'Jul',
+            8 => 'Aug',
+            9 => 'Sep',
+            10 => 'Oct',
+            11 => 'Nov',
+            12 => 'Dec',
+        ];
+        foreach ($category as $key => $value) {
+            for ($i=1; $i <= 12; $i++) { 
+                $amount[$i]['bulan'] = $months[$i]; 
+                $amount[$i][$value] = LogTransaction::whereHas('visitor', function ($query) use ($value) {
+                                        $query->where('category', $value);
+                                    })
+                                    ->whereYear('created_at', $request->year)
+                                    ->whereMonth('created_at', strlen($i) == 1 ? '0'.$i : $i)->count();
+            }
+        }
+        
+        // $data['category'] = $category;
+        // $data['year'] = $year;
+        // $data['month'] = $months;
+        // $data['amount'] = $amount;
+        // return response()->json($amount);
+        return Excel::download(new LaporanTahunan($amount, $year, $category), 'laporan-tahunan-'.date('YmdHis').'.xlsx');
     }
 }
