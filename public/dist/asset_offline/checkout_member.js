@@ -713,22 +713,22 @@ $(document).ready(function() {
                             $('.bayar-input').val(minus_deposit);
                             $('#remaining').text('Rp. ' + format(minus_deposit - minus_deposit));
                         } else if (type_multiple[1] == 'kupon' || type_multiple[1] == 'limit') {
-                            if (((data_bill - price_single) - data_deposit) < price_single) {
-                                $('.nilai-total1-td').data('total', data_bill);
-                                $('.nilai-total1-td').text('Rp. ' + format(data_bill) + ',00');
-                                $('.discount').hide();
-                                type_multiple.splice(0,1)
-                                $("#customRadioInline6").prop("checked", false);
-                                $("#customRadioInline5").prop('checked', false);
-                                sword();
-                                swal({
-                                    title: "",
-                                    type: "error",
-                                    text: 'Harga satuan limit/kupon tidak terpenuhi',
-                                    confirmButtonColor: "#01c853",
-                                });
-                                return false;
-                            } else {
+                            // if (((data_bill - price_single) - data_deposit) < price_single) {
+                            //     $('.nilai-total1-td').data('total', data_bill);
+                            //     $('.nilai-total1-td').text('Rp. ' + format(data_bill) + ',00');
+                            //     $('.discount').hide();
+                            //     type_multiple.splice(0,1)
+                            //     $("#customRadioInline6").prop("checked", false);
+                            //     $("#customRadioInline5").prop('checked', false);
+                            //     sword();
+                            //     swal({
+                            //         title: "",
+                            //         type: "error",
+                            //         text: 'Harga satuan limit/kupon tidak terpenuhi',
+                            //         confirmButtonColor: "#01c853",
+                            //     });
+                            //     return false;
+                            // } else {
                                 $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
                                 $('.nilai-total1-td').data('total', data_bill - price_single);
                                 $('#remaining').text('Rp. ' + format((data_bill - price_single) - data_deposit));
@@ -755,7 +755,7 @@ $(document).ready(function() {
                                     });
                                     return false;
                                 }
-                            }
+                            // }
                         }
                     } else if (type_multiple[0] == 'cash/transfer') {
                         if (type_multiple[1] == 'kupon') {
@@ -816,19 +816,19 @@ $(document).ready(function() {
                     }
                 } else if (type_multiple.length == 3) {
                     if (type_multiple[2] == 'kupon' || type_multiple[2] == 'limit') {
-                        if (((data_bill - price_single) - data_deposit) < price_single) {
-                            type_multiple.splice(0,1)
-                            $("#customRadioInline6").prop("checked", false);
-                            $("#customRadioInline5").prop('checked', false);
-                            sword();
-                            swal({
-                                title: "",
-                                type: "error",
-                                text: 'Harga satuan limit/kupon tidak terpenuhi',
-                                confirmButtonColor: "#01c853",
-                            });
-                            return false;
-                        } else {
+                        // if (((data_bill - price_single) - data_deposit) < price_single) {
+                        //     type_multiple.splice(0,1)
+                        //     $("#customRadioInline6").prop("checked", false);
+                        //     $("#customRadioInline5").prop('checked', false);
+                        //     sword();
+                        //     swal({
+                        //         title: "",
+                        //         type: "error",
+                        //         text: 'Harga satuan limit/kupon tidak terpenuhi',
+                        //         confirmButtonColor: "#01c853",
+                        //     });
+                        //     return false;
+                        // } else {
                             $('.refund').removeClass('d-none');
                             $('#return').addClass('green').text(0);
                             $('.bayar-input').val((data_bill - price_single) - data_deposit);
@@ -846,14 +846,14 @@ $(document).ready(function() {
                                 </div>`;
                                 $('.discount').html(discount).show();
                             $.toast({
-                                text: 'Kupon/limit ditambahkan',
+                                text: 'Cash/transfer ditambahkan',
                                 position: 'top-right',
                                 loaderBg: '#fec107',
                                 icon: 'success',
                                 hideAfter: 700,
                             });
                             $('#remaining').text('Rp. 0');
-                        }
+                        // }
                     }
                 }
             } else {
@@ -900,7 +900,6 @@ $(document).ready(function() {
                                 </div>
                             </div>`;
                             $('.discount').html(discount).show();
-
                         $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
                         $('#remaining').text('Rp. ' + format(data_bill - price_single) + ',00');
                     }
@@ -950,35 +949,35 @@ $(document).ready(function() {
                         }
                     } else if (type_multiple[0] == 'cash/transfer') {
                         if(type_multiple[1] == 'kupon' || type_multiple[1] == 'limit') {
-                            if(JSON.parse($('.package-default').val()).length == 1) {
-                                $("#customCheck7").prop("checked", false);
-                                $('.bayar-input').val('');
-                                $('#return').text('0').css({
-                                    "background-color": "rgba(25, 216, 149, 0.2)",
-                                    "color": "#19d895"
-                                }).data('refund', 0);
-                                $('.refund').addClass('d-none');
-                                discount += `<div class="card mt-2">
-                                        <div class="card-body">
-                                            <div class="d-flex flex-column">
-                                                <div class="d-flex">
-                                                    <span class="flex-grow-1">Diskon</span>
-                                                    <span>Rp. ${format(price_single)},00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>`;
-                                    $('.discount').html(discount).show();
-                                $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
-                                sword();
-                                swal({
-                                    title: "",
-                                    type: "error",
-                                    text: "Gunakan limit atau kupon",
-                                    confirmButtonColor: "#01c853",
-                                });
-                                return false;
-                            } else {
+                            // if(JSON.parse($('.package-default').val()).length == 1) {
+                            //     $("#customCheck7").prop("checked", false);
+                            //     $('.bayar-input').val('');
+                            //     $('#return').text('0').css({
+                            //         "background-color": "rgba(25, 216, 149, 0.2)",
+                            //         "color": "#19d895"
+                            //     }).data('refund', 0);
+                            //     $('.refund').addClass('d-none');
+                            //     discount += `<div class="card mt-2">
+                            //             <div class="card-body">
+                            //                 <div class="d-flex flex-column">
+                            //                     <div class="d-flex">
+                            //                         <span class="flex-grow-1">Diskon</span>
+                            //                         <span>Rp. ${format(price_single)},00</span>
+                            //                     </div>
+                            //                 </div>
+                            //             </div>
+                            //         </div>`;
+                            //         $('.discount').html(discount).show();
+                            //     $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
+                            //     sword();
+                            //     swal({
+                            //         title: "",
+                            //         type: "error",
+                            //         text: "Gunakan limit atau kupon",
+                            //         confirmButtonColor: "#01c853",
+                            //     });
+                            //     return false;
+                            // } else {
                                 $('.bayar-input').val(data_bill - price_single).removeClass('is-invalid');
                                 $('#return').text('0').css({
                                     "background-color": "rgba(25, 216, 149, 0.2)",
@@ -997,7 +996,7 @@ $(document).ready(function() {
                                     $('.discount').html(discount).show();
                                 $('.nilai-total1-td').text('Rp. ' + format(data_bill - price_single) + ',00');
                                 $('.refund').removeClass('d-none');
-                            }
+                            // }
                         }
                     }
                 } else if (type_multiple.length == 3) {
@@ -1128,6 +1127,7 @@ $(document).ready(function() {
                     if((type_multiple[0] == 'deposit') == false) {
                         $('.deposit').addClass('d-none');
                         $('#deposit').text('Rp. 0');
+                        $('.bayar-input').val(data_bill - price_single);
                     } else if ((type_multiple[1] == 'cash/transfer') == false) {
                         $('.bayar-input').val('');
                         $('.refund').addClass('d-none');
