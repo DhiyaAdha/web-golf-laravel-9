@@ -305,12 +305,10 @@ class DashboardController extends Controller
                                     ->whereMonth('created_at', strlen($i) == 1 ? '0'.$i : $i)->count();
             }
         }
-        
-        // $data['category'] = $category;
-        // $data['year'] = $year;
-        // $data['month'] = $months;
-        // $data['amount'] = $amount;
+
+        // return response()->json($category);
         // return response()->json($amount);
+        
         return Excel::download(new LaporanTahunan($amount, $year, $category), 'laporan-tahunan-'.date('YmdHis').'.xlsx');
     }
 }
