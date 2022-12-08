@@ -714,6 +714,9 @@ $(document).ready(function() {
                             $('#remaining').text('Rp. ' + format(minus_deposit - minus_deposit));
                         } else if (type_multiple[1] == 'kupon' || type_multiple[1] == 'limit') {
                             if (((data_bill - price_single) - data_deposit) < price_single) {
+                                $('.nilai-total1-td').data('total', data_bill);
+                                $('.nilai-total1-td').text('Rp. ' + format(data_bill) + ',00');
+                                $('.discount').hide();
                                 type_multiple.splice(0,1)
                                 $("#customRadioInline6").prop("checked", false);
                                 $("#customRadioInline5").prop('checked', false);
