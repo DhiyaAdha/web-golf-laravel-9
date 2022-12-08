@@ -187,7 +187,7 @@
                 var checkBox = document.getElementById("checkbox-harga");
                 var senin = document.getElementById("senin");
                 if (checkBox.checked == true){
-                    $("#senin").html("Senin-Minggu");
+                    $("#senin").html("Senin - Minggu");
                 } else {
                     $("#senin").html("Senin");
                 }
