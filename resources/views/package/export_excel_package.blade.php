@@ -22,7 +22,7 @@
         @foreach($package as $item)
             <tr>
                 <td>{{ $item->name }}</td>
-                <td>{{ $item->category }}</td>
+                <td>{{ $item->category == 'default' ? 'Permainan' : ($item->category == 'additional' ? 'Proshop & Fasilitas' : ($item->category == 'others' ? 'Kantin' : ($item->category == 'rental' ? 'Penyewaan' : 'Service Fee'))) }}</td>
                 <td>Rp.{{ number_format($item->price_discount, 0, ',', '.') }}</td>
                 <td>Rp.{{ number_format($item->price_weekdays, 0, ',', '.') }}</td>
                 <td>Rp.{{ number_format($item->price_weekend, 0, ',', '.') }}</td>

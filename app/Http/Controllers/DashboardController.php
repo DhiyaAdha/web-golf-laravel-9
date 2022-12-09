@@ -298,7 +298,7 @@ class DashboardController extends Controller
         foreach ($category as $key => $value) {
             for ($i=1; $i <= 12; $i++) { 
                 $amount[$i]['bulan'] = $months[$i]; 
-                $amount[$i][$value] = LogTransaction::whereHas('visitor', function ($query) use ($value) {
+                $amount[$i][$value] = Visitor::whereHas('log_transaction', function ($query) use ($value) {
                                         $query->where('category', $value);
                                     })
                                     ->whereYear('created_at', $request->year)
@@ -308,7 +308,6 @@ class DashboardController extends Controller
 
         // return response()->json($category);
         // return response()->json($amount);
-        
         return Excel::download(new LaporanTahunan($amount, $year, $category), 'laporan-tahunan-'.date('YmdHis').'.xlsx');
     }
 }

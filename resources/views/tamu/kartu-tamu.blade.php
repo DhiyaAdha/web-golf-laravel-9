@@ -54,7 +54,7 @@
                                                         <div class="front-content" id="front-content">
                                                             <img class="front" src="{{ $visitor->tipe_member == 'VVIP' ? asset('dist/img/kartutamu/front-vip-card.png') : asset('dist/img/kartutamu/front-member-card.png') }}"  alt="{{ $visitor->tipe_member }}">
                                                             <div class="qr-code">
-                                                                {{ QrCode::size(80)->generate($visitor->unique_qr) }}
+                                                                {{ QrCode::size(80)->generate($visitor->code_member) }}
                                                             </div>
                                                             <div class="identity">
                                                                 <h6 style="text-transform: uppercase; font-size:14px; letter-spacing:1px;">
@@ -496,7 +496,7 @@
     <script defer src="{{ asset('/dist/js/line-chart-invoice-data.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/jquery.blockUI.min.js') }}"></script>
     <script defer src="{{ asset('dist/asset_offline/detail_member.js') }}"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+	<script src="{{  asset('dist/asset_offline/html2canvas.min.js')  }}"></script>
     <script>
         var invoiceMonth = {!! json_encode($invoice_chart) !!}
     </script>
