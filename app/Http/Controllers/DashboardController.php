@@ -272,8 +272,12 @@ class DashboardController extends Controller
             }
         }
 
-        $sheets = collect(Arr::pluck($newItem, 'category'))->unique();
-        return Excel::download(new AnalisisTamu($newItem, $sheets), 'analisis-tamu-'.date('YmdHis').'.xlsx');
+        if (count($data) > 0) {
+            $sheets = collect(Arr::pluck($newItem, 'category'))->unique();
+            return Excel::download(new AnalisisTamu($newItem, $sheets), 'analisis-tamu-'.date('YmdHis').'.xlsx');
+        } else {
+            return 'Data Kosong';
+        }
     }
 
     public function download_laporan_tahunan(Request $request)
