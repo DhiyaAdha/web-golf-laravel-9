@@ -25,7 +25,8 @@ class AnalisisTamuSheet implements FromView, WithTitle
             return $value['category'] == $category;
         });
         return view('dashboard.export', [
-            'data' => $data
+            'data' => $data,
+            'category' => $category
         ]);
     }
 

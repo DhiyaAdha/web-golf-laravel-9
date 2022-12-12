@@ -1,7 +1,7 @@
 <table>
     <thead>
     <tr>
-        <th>No</th>
+        <th>No {{ $category }}</th>
         <th>Invoice</th>
         <th>Tanggal</th>
         <th>Nama Barang</th>
