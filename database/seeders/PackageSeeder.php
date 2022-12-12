@@ -104,7 +104,7 @@ class PackageSeeder extends Seeder
             'status' => '0',
         ]);
         Package::create([
-            'name' => 'green Fee',
+            'name' => 'Green Fee',
             'price_discount' => 250000,
             'price_weekdays' => 300000,
             'price_weekend' => 500000,

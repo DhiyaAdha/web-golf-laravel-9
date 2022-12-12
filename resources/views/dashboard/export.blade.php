@@ -5,7 +5,7 @@
             @if($category == 'default')
                 <th>Invoice</th>
                 <th>Tanggal</th>
-                <th>Nama</th>
+                <th>Nama Tamu</th>
                 <th>Paket Permainan</th>
                 <th>Total Paket</th>
                 <th>Total Nilai</th>

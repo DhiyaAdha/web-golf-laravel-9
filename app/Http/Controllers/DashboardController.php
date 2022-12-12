@@ -276,7 +276,7 @@ class DashboardController extends Controller
             $sheets = collect(Arr::pluck($newItem, 'category'))->unique();
             return Excel::download(new AnalisisTamu($newItem, $sheets), 'analisis-tamu-'.date('YmdHis').'.xlsx');
         } else {
-            return 'Data Kosong';
+            return redirect()->route('analisis-tamu.index')->with('error', 'Transaksi tidak ditemukan');
         }
     }
 
