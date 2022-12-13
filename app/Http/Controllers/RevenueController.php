@@ -25,8 +25,8 @@ class RevenueController extends Controller
             )->translatedFormat('l');
 
             $data['revenue_daily'][$key]['a'] = LogTransaction::whereDate('created_at', $day_period[$key])->where('payment_status', 'paid')->sum('jml_default');
-            $data['revenue_daily'][$key]['b'] = LogTransaction::whereDate('created_at', $day_period[$key])->where('payment_status', 'paid')->sum('jml_additional');
-            $data['revenue_daily'][$key]['c'] = LogTransaction::whereDate('created_at', $day_period[$key])->where('payment_status', 'paid')->sum('jml_other');
+            $data['revenue_daily'][$key]['b'] = LogTransaction::whereDate('created_at', $day_period[$key])->where('payment_status', 'paid')->sum('jml_additional') + LogTransaction::whereDate('created_at', $day_period[$key])->where('payment_status', 'paid')->sum('jml_rental');
+            $data['revenue_daily'][$key]['c'] = LogTransaction::whereDate('created_at', $day_period[$key])->where('payment_status', 'paid')->sum('jml_other') + LogTransaction::whereDate('created_at', $day_period[$key])->where('payment_status', 'paid')->sum('jml_service');
             $data['revenue_daily'][$key]['d'] = $data['revenue_daily'][$key]['a'] + $data['revenue_daily'][$key]['b'] + $data['revenue_daily'][$key]['c'];
         }
         $data = json_encode($data['revenue_daily']);
@@ -59,8 +59,8 @@ class RevenueController extends Controller
         foreach (array_values($month_new) as $key => $value) {
             $data['revenue'][$key]['e'] = $months[$value[0]];
             $data['revenue'][$key]['g'] = LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0'.$value[0] : $value[0])->whereYear('created_at', $value[1])->sum('jml_default');
-            $data['revenue'][$key]['h'] = LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0'.$value[0] : $value[0])->whereYear('created_at', $value[1])->sum('jml_additional');
-            $data['revenue'][$key]['i'] = LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0'.$value[0] : $value[0])->whereYear('created_at', $value[1])->sum('jml_other');
+            $data['revenue'][$key]['h'] = LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0'.$value[0] : $value[0])->whereYear('created_at', $value[1])->sum('jml_additional') + LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0'.$value[0] : $value[0])->whereYear('created_at', $value[1])->sum('jml_rental');
+            $data['revenue'][$key]['i'] = LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0'.$value[0] : $value[0])->whereYear('created_at', $value[1])->sum('jml_other') + LogTransaction::whereMonth('created_at', strlen($value[0]) == 1 ? '0'.$value[0] : $value[0])->whereYear('created_at', $value[1])->sum('jml_service');
             $data['revenue'][$key]['f'] = $data['revenue'][$key]['g'] + $data['revenue'][$key]['h'] + $data['revenue'][$key]['i'];
         }
 
@@ -73,8 +73,8 @@ class RevenueController extends Controller
     {
         $data['revenue_today'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('total_gross');
         $data['revenue_game'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('jml_default');
-        $data['revenue_proshop'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('jml_additional');
-        $data['revenue_store'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('jml_other');
+        $data['revenue_proshop'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('jml_additional') + LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('jml_rental');
+        $data['revenue_store'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('jml_other') + LogTransaction::whereDate('created_at', now()->format('Y-m-d'))->where('payment_status', 'paid')->sum('jml_service');
 
         return view('dashboard.revenue', $data);
     }
