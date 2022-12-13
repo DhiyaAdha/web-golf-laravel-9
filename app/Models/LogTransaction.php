@@ -23,6 +23,8 @@ class LogTransaction extends Model
         'jml_default',
         'jml_additional',
         'jml_other',
+        'jml_rental',
+        'jml_service',
         'cart',
         'created_at',
     ];
