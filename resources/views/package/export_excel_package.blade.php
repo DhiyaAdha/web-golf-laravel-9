@@ -4,18 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document Daftar Tamu</title>
+    <title>Dokumen Daftar Paket</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
 </head>
 <body>
     <table>
         <thead>
             <tr>
-                <th class="" style="text-align:center"><strong>Nama Paket</strong></th>
-                <th class="" style="text-align:center"><strong>Kategori</strong></th>
-                <th class="" style="text-align:center"><strong>Senin</strong></th>
-                <th class="" style="text-align:center"><strong>Selasa - Jumat</strong></th>
-                <th class="" style="text-align:center"><strong>Sabtu - Minggu</strong></th>
-                <th class="" style="text-align:center"><strong>Status</strong></th>
+                <th style="width:220px;"><strong>Nama Paket</strong></th>
+                <th style="width:170px;"><strong>Kategori</strong></th>
+                <th style="width:170px;"><strong>Senin</strong></th>
+                <th style="width:170px;"><strong>Selasa-Jumat</strong></th>
+                <th style="width:170px;"><strong>Sabtu-Minggu</strong></th>
+                <th style="width:50px;"><strong>Status</strong></th>
             </tr>
         </thead>
         <tbody>

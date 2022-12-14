@@ -677,6 +677,11 @@ element.style {
     height: 250px;
 }
 
+select {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
 .card-img-absolute {
     position: absolute;
     top: 0;
@@ -685,6 +690,16 @@ element.style {
 }
 
 .sm-data-box.today {
+    background: -webkit-gradient(
+        linear,
+        left top,
+        right top,
+        from(#8edbd7),
+        to(#38c5be)
+    ) !important;
+    background: linear-gradient(to right, #8edbd7, #38c5be) !important;
+}
+.sm-data-box.fee {
     background: -webkit-gradient(
         linear,
         left top,
@@ -717,6 +732,10 @@ element.style {
 .sm-data-box.reguler {
     background: -webkit-gradient(linear, left top, right top) !important;
     background: linear-gradient(to right, #5f9df7, #1746a2) !important;
+}
+.sm-data-box.rental {
+    background: -webkit-gradient(linear, left top, right top) !important;
+    background: linear-gradient(to right, #f67a93, #E32249) !important;
 }
 div[data-size="A4"] {
     background: #edf2f9;

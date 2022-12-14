@@ -1,13 +1,13 @@
 <table>
     <thead>
         <tr>
-            <th>BULAN</th>
-            <th>PERTAMINA</th>
-            <th>PENSIUNAN</th>
-            <th>FORKOPIMDA</th>
-            <th>PERPESI</th>
-            <th>UMUM</th>
-            <th>JUMLAH</th>
+            <th style="width:80px;">BULAN</th>
+            <th style="width:80px;">PERTAMINA</th>
+            <th style="width:80px;">PENSIUNAN</th>
+            <th style="width:100px;">FORKOPIMDA</th>
+            <th style="width:80px;">PERPESI</th>
+            <th style="width:80px;">UMUM</th>
+            <th style="width:80px;">JUMLAH</th>
         </tr>
     </thead>
     <tbody>

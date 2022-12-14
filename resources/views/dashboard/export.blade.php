@@ -1,32 +1,32 @@
 <table>
     <thead>
         <tr>
-            <th>No</th>
+            <th style="width:80px;">No</th>
             @if($category == 'default')
-                <th>Invoice</th>
-                <th>Tanggal</th>
-                <th>Nama Tamu</th>
-                <th>Paket Permainan</th>
-                <th>Total Paket</th>
-                <th>Total Nilai</th>
+                <th style="width:80px;">Invoice</th>
+                <th style="width:80px;">Tanggal</th>
+                <th style="width:80px;">Nama Tamu</th>
+                <th style="width:80px;">Paket Permainan</th>
+                <th style="width:80px;">Jumlah</th>
+                <th style="width:80px;">Total Nilai</th>
             @elseif($category == 'additional')
                 <th>Invoice</th>
                 <th>Tanggal</th>
-                <th>Nama Barang</th>
-                <th>Jumlah Barang</th>
-                <th>Harga Barang</th>
+                <th>Nama Paket</th>
+                <th>Jumlah</th>
+                <th>Harga Satuan</th>
                 <th>Total Nilai</th>
             @elseif($category == 'others')
                 <th>Tanggal</th>
                 <th>Nama Produk</th>
-                <th>Jumlah Produk</th>
-                <th>Harga Produk</th>
+                <th>Jumlah</th>
+                <th>Harga Satuan</th>
                 <th>Total Nilai</th>
             @elseif($category == 'service')
                 <th>Tanggal</th>
                 <th>Invoice</th>
                 <th>Nama Tamu</th>
-                <th>Total Nilai Fee</th>
+                <th>Total Nilai</th>
             @elseif($category == 'rental')
                 <th>Tanggal</th>
                 <th>Invoice</th>

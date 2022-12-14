@@ -239,7 +239,7 @@ class DashboardController extends Controller
         }
 
         $data['category'] = collect(Package::pluck('category'))->unique();
-        $data['years'] = range(2021, date('Y'));
+        $data['years'] = range(2000, date('Y'));
         return view('dashboard.analisis-tamu', $data);
     }
 

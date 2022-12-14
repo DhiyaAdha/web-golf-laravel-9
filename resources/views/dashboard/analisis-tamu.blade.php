@@ -220,7 +220,7 @@
                             <div class="col-lg-5">
                                 <div class="form-group">
                                     <label class="control-label mb-10" for="">Jenis kategori paket</label>
-                                    <select class="form-control" name="category">
+                                    <select class="form-control" name="category" onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1; this.blur();'>
                                         <option value="all">- Semua -</option>
                                         @foreach ($category as $value)
                                             <option value="{{$value}}">{{ $value == 'default' ? 'Permainan' : ($value == 'additional' ? 'Proshop & Fasilitas' : ($value == 'others' ? 'Kantin' : ($value == 'rental' ? 'Sewa' : 'Service Fee')))}}</option>
@@ -264,7 +264,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label class="control-label mb-10" for="">Pilih tahun</label>
-                                    <select class="form-control" name="year">
+                                    <select class="form-control" name="year" onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1; this.blur();'>
                                         @foreach ($years as $row)
                                             <option value="{{$row}}">{{$row}}</option>
                                         @endforeach

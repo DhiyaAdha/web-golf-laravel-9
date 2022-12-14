@@ -16,27 +16,43 @@ class PackageSeeder extends Seeder
     {
         // Paket Bermain
         Package::create([
-            'name' => 'Sewa Golf Cart pendek',
-            'price_discount' => 150000,
-            'price_weekdays' => 150000,
-            'price_weekend' => 150000,
-            'category' => 'rental',
+            'name' => 'Green Fee Umum',
+            'price_discount' => 250000,
+            'price_weekdays' => 300000,
+            'price_weekend' => 500000,
+            'category' => 'default',
             'status' => '0',
         ]);
         Package::create([
-            'name' => 'Sewa Stik Golf',
-            'price_discount' => 150000,
-            'price_weekdays' => 150000,
-            'price_weekend' => 150000,
-            'category' => 'rental',
+            'name' => 'Green Fee Pertamina',
+            'price_discount' => 200000,
+            'price_weekdays' => 200000,
+            'price_weekend' => 200000,
+            'category' => 'default',
             'status' => '0',
         ]);
         Package::create([
-            'name' => 'Glove Mizuno',
-            'price_discount' => 100000,
-            'price_weekdays' => 100000,
-            'price_weekend' => 100000,
-            'category' => 'additional',
+            'name' => 'Green Fee Forkopimda',
+            'price_discount' => 200000,
+            'price_weekdays' => 200000,
+            'price_weekend' => 200000,
+            'category' => 'default',
+            'status' => '0',
+        ]);
+        Package::create([
+            'name' => 'Green Fee Perpesi',
+            'price_discount' => 200000,
+            'price_weekdays' => 200000,
+            'price_weekend' => 200000,
+            'category' => 'default',
+            'status' => '0',
+        ]);
+        Package::create([
+            'name' => 'Green Fee Pensiunan',
+            'price_discount' => 150000,
+            'price_weekdays' => 150000,
+            'price_weekend' => 150000,
+            'category' => 'default',
             'status' => '0',
         ]);
         Package::create([
@@ -47,6 +63,104 @@ class PackageSeeder extends Seeder
             'category' => 'default',
             'status' => '0',
         ]);
+        
+        Package::create([
+            'name' => '100 Bola Driving (malam)',
+            'price_discount' => 75000,
+            'price_weekdays' => 75000,
+            'price_weekend' => 75000,
+            'category' => 'default',
+            'status' => '0',
+        ]);
+        Package::create([
+            'name' => '50 Bola Driving (siang)',
+            'price_discount' => 30000,
+            'price_weekdays' => 30000,
+            'price_weekend' => 30000,
+            'category' => 'default',
+            'status' => '0',
+        ]);
+        Package::create([
+            'name' => '50 Bola Driving (malam)',
+            'price_discount' => 50000,
+            'price_weekdays' => 50000,
+            'price_weekend' => 50000,
+            'category' => 'default',
+            'status' => '0',
+        ]);
+        //proshop & fasilitas
+        Package::create([
+            'name' => 'Glove Mizuno',
+            'price_discount' => 100000,
+            'price_weekdays' => 100000,
+            'price_weekend' => 100000,
+            'category' => 'additional',
+            'status' => '0',
+        ]);
+        Package::create([
+            'name' => 'Glove',
+            'price_discount' => 150000,
+            'price_weekdays' => 150000,
+            'price_weekend' => 150000,
+            'category' => 'additional',
+            'status' => '0',
+        ]);
+        
+        Package::create([
+            'name' => 'Foto Prewedding',
+            'price_discount' => 500000,
+            'price_weekdays' => 500000,
+            'price_weekend' => 500000,
+            'category' => 'additional',
+            'status' => '0',
+        ]);
+        
+        Package::create([
+            'name' => 'Foto Album Sekolah',
+            'price_discount' => 500000,
+            'price_weekdays' => 500000,
+            'price_weekend' => 500000,
+            'category' => 'additional',
+            'status' => '0',
+        ]);
+        
+        Package::create([
+            'name' => 'Tutup Lapangan',
+            'price_discount' => 25000000,
+            'price_weekdays' => 25000000,
+            'price_weekend' => 25000000,
+            'category' => 'additional',
+            'status' => '0',
+        ]);
+        
+        Package::create([
+            'name' => 'Bola Second Titleist Provi',
+            'price_discount' => 250000,
+            'price_weekdays' => 250000,
+            'price_weekend' => 250000,
+            'category' => 'additional',
+            'status' => '0',
+        ]);
+        
+        Package::create([
+            'name' => 'Bola Second Campur',
+            'price_discount' => 100000,
+            'price_weekdays' => 100000,
+            'price_weekend' => 100000,
+            'category' => 'additional',
+            'status' => '0',
+        ]);
+        
+        Package::create([
+            'name' => 'Tee',
+            'price_discount' => 45000,
+            'price_weekdays' => 45000,
+            'price_weekend' => 45000,
+            'category' => 'additional',
+            'status' => '0',
+        ]);
+        //Kantin
+        
         Package::create([
             'name' => 'Soft Drink',
             'price_discount' => 10000,
@@ -104,14 +218,6 @@ class PackageSeeder extends Seeder
             'status' => '0',
         ]);
         Package::create([
-            'name' => 'Green Fee',
-            'price_discount' => 250000,
-            'price_weekdays' => 300000,
-            'price_weekend' => 500000,
-            'category' => 'default',
-            'status' => '0',
-        ]);
-        Package::create([
             'name' => 'Pocari Sweat',
             'price_discount' => 10000,
             'price_weekdays' => 10000,
@@ -120,51 +226,28 @@ class PackageSeeder extends Seeder
             'status' => '0',
         ]);
         Package::create([
-            'name' => '50 Bola Driving (siang)',
-            'price_discount' => 30000,
-            'price_weekdays' => 30000,
-            'price_weekend' => 30000,
-            'category' => 'default',
+            'name' => 'Evolution',
+            'price_discount' => 35000,
+            'price_weekdays' => 35000,
+            'price_weekend' => 35000,
+            'category' => 'others',
             'status' => '0',
         ]);
+        //Sewa
         Package::create([
-            'name' => '100 Bola Driving (malam)',
-            'price_discount' => 75000,
-            'price_weekdays' => 75000,
-            'price_weekend' => 75000,
-            'category' => 'default',
-            'status' => '0',
-        ]);
-        Package::create([
-            'name' => 'Servis Fee 100 Bola Driving (malam)',
-            'price_discount' => 25000,
-            'price_weekdays' => 25000,
-            'price_weekend' => 25000,
-            'category' => 'service',
-            'status' => '0',
-        ]);
-        Package::create([
-            'name' => 'Servis Fee 50 Bola Driving (malam)',
-            'price_discount' => 10000,
-            'price_weekdays' => 10000,
-            'price_weekend' => 10000,
-            'category' => 'service',
-            'status' => '0',
-        ]);
-        Package::create([
-            'name' => '50 Bola Driving (malam)',
-            'price_discount' => 50000,
-            'price_weekdays' => 50000,
-            'price_weekend' => 50000,
-            'category' => 'default',
-            'status' => '0',
-        ]);
-        Package::create([
-            'name' => 'Glove',
+            'name' => 'Sewa Golf Cart pendek',
             'price_discount' => 150000,
             'price_weekdays' => 150000,
             'price_weekend' => 150000,
-            'category' => 'additional',
+            'category' => 'rental',
+            'status' => '0',
+        ]);
+        Package::create([
+            'name' => 'Sewa Stik Golf',
+            'price_discount' => 150000,
+            'price_weekdays' => 150000,
+            'price_weekend' => 150000,
+            'category' => 'rental',
             'status' => '0',
         ]);
         Package::create([
@@ -175,60 +258,22 @@ class PackageSeeder extends Seeder
             'category' => 'rental',
             'status' => '0',
         ]);
+        //Service Fee
         Package::create([
-            'name' => 'Foto Prewedding',
-            'price_discount' => 500000,
-            'price_weekdays' => 500000,
-            'price_weekend' => 500000,
-            'category' => 'additional',
+            'name' => 'Servis Fee 100 Bola Driving (malam)',
+            'price_discount' => 25000,
+            'price_weekdays' => 25000,
+            'price_weekend' => 25000,
+            'category' => 'service',
             'status' => '0',
         ]);
+        
         Package::create([
-            'name' => 'Foto Album Sekolah',
-            'price_discount' => 500000,
-            'price_weekdays' => 500000,
-            'price_weekend' => 500000,
-            'category' => 'additional',
-            'status' => '0',
-        ]);
-        Package::create([
-            'name' => 'Tutup Lapangan',
-            'price_discount' => 25000000,
-            'price_weekdays' => 25000000,
-            'price_weekend' => 25000000,
-            'category' => 'additional',
-            'status' => '0',
-        ]);
-        Package::create([
-            'name' => 'Bola Second Titleist Provi',
-            'price_discount' => 250000,
-            'price_weekdays' => 250000,
-            'price_weekend' => 250000,
-            'category' => 'additional',
-            'status' => '0',
-        ]);
-        Package::create([
-            'name' => 'Bola Second Campur',
-            'price_discount' => 100000,
-            'price_weekdays' => 100000,
-            'price_weekend' => 100000,
-            'category' => 'additional',
-            'status' => '0',
-        ]);
-        Package::create([
-            'name' => 'Tee',
-            'price_discount' => 45000,
-            'price_weekdays' => 45000,
-            'price_weekend' => 45000,
-            'category' => 'additional',
-            'status' => '0',
-        ]);
-        Package::create([
-            'name' => 'Evolution',
-            'price_discount' => 35000,
-            'price_weekdays' => 35000,
-            'price_weekend' => 35000,
-            'category' => 'others',
+            'name' => 'Servis Fee 50 Bola Driving (malam)',
+            'price_discount' => 10000,
+            'price_weekdays' => 10000,
+            'price_weekend' => 10000,
+            'category' => 'service',
             'status' => '0',
         ]);
     }
