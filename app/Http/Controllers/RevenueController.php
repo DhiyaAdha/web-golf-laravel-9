@@ -29,7 +29,7 @@ class RevenueController extends Controller
             $data['revenue_daily'][$key]['c'] = LogTransaction::whereDate('created_at', $day_period[$key])->where('payment_status', 'paid')->sum('jml_other');
             $data['revenue_daily'][$key]['d'] = LogTransaction::whereDate('created_at', $day_period[$key])->where('payment_status', 'paid')->sum('jml_rental');
             $data['revenue_daily'][$key]['e'] = LogTransaction::whereDate('created_at', $day_period[$key])->where('payment_status', 'paid')->sum('jml_service');
-            $data['revenue_daily'][$key]['f'] = $data['revenue_daily'][$key]['a'] + $data['revenue_daily'][$key]['b'] + $data['revenue_daily'][$key]['c'];
+            $data['revenue_daily'][$key]['f'] = $data['revenue_daily'][$key]['a'] + $data['revenue_daily'][$key]['b'] + $data['revenue_daily'][$key]['c'] + $data['revenue_daily'][$key]['d'] + $data['revenue_daily'][$key]['e'];
         }
         $data = json_encode($data['revenue_daily']);
 
