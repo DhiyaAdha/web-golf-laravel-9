@@ -13,6 +13,7 @@ use App\Models\Package;
 use Illuminate\Support\Arr;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\AnalisisTamu;
+use App\Exports\LaporanTahunan;
 
 class DashboardController extends Controller
 {
@@ -230,18 +231,15 @@ class DashboardController extends Controller
         if ($request->ajax()) {
             return datatables()->of($visitor)->editColumn('category', function ($data) {
                     return $data->category;
-            })
-            ->addColumn('times', function ($data) {
+            })->addColumn('times', function ($data) {
                 return empty($data->transaction($data->id)) ? '-' : $data->transaction($data->id)->created_at->translatedFormat('d F Y').', '.$data->transaction($data->id)->created_at->translatedFormat('H:i a');
-            })
-            ->editColumn('tipe_member', function ($data) {
+            })->editColumn('tipe_member', function ($data) {
                 return $data->tipe_member;
-            })
-            ->rawColumns(['name', 'action'])->make(true);
+            })->rawColumns(['name', 'action'])->make(true);
         }
 
         $data['category'] = collect(Package::pluck('category'))->unique();
-        // dd($data['category']);
+        $data['years'] = range(2000, date('Y'));
         return view('dashboard.analisis-tamu', $data);
     }
 
@@ -274,7 +272,50 @@ class DashboardController extends Controller
             }
         }
 
-        $sheets = collect(Arr::pluck($newItem, 'category'))->unique();
-        return Excel::download(new AnalisisTamu($newItem, $sheets), 'analisis-tamu-'.date('YmdHis').'.xlsx');
+        if (count($data) > 0) {
+            $sheets = collect(Arr::pluck($newItem, 'category'))->unique();
+            if($sheets->isEmpty()) {
+                return redirect()->route('analisis-tamu.index')->with('error', 'Transaksi tidak ditemukan');
+            } else {
+                return Excel::download(new AnalisisTamu($newItem, $sheets), 'analisis-tamu-'.date('YmdHis').'.xlsx');
+            }
+        } else {
+            return redirect()->route('analisis-tamu.index')->with('error', 'Transaksi tidak ditemukan');
+        }
+    }
+
+    public function download_laporan_tahunan(Request $request)
+    {
+        $year = $request->year;
+        $category = collect(Visitor::whereNotNull('category')->pluck('category'))->unique();
+        $amount = array();
+        $months = [
+            1 => 'JANUARI',
+            2 => 'FEBRUARI',
+            3 => 'MARET',
+            4 => 'APRIL',
+            5 => 'MEI',
+            6 => 'JUNI',
+            7 => 'JULI',
+            8 => 'AGUSTUS',
+            9 => 'SEPTEMBER',
+            10 => 'OKTOBER',
+            11 => 'NOVEMBER',
+            12 => 'DESEMBER',
+        ];
+        foreach ($category as $key => $value) {
+            for ($i=1; $i <= 12; $i++) { 
+                $amount[$i]['bulan'] = $months[$i]; 
+                $amount[$i][$value] = Visitor::whereHas('log_transaction', function ($query) use ($value) {
+                                        $query->where('category', $value);
+                                    })
+                                    ->whereYear('created_at', $request->year)
+                                    ->whereMonth('created_at', strlen($i) == 1 ? '0'.$i : $i)->count();
+            }
+        }
+
+        // return response()->json($category);
+        // return response()->json($amount);
+        return Excel::download(new LaporanTahunan($amount, $year, $category), 'laporan-tahunan-'.date('YmdHis').'.xlsx');
     }
 }

@@ -25,7 +25,8 @@ class AnalisisTamuSheet implements FromView, WithTitle
             return $value['category'] == $category;
         });
         return view('dashboard.export', [
-            'data' => $data
+            'data' => $data,
+            'category' => $category
         ]);
     }
 
@@ -34,6 +35,6 @@ class AnalisisTamuSheet implements FromView, WithTitle
      */
     public function title(): string
     {
-        return $this->category;
+        return $this->category == 'default' ? 'Permainan' : ($this->category == 'additional' ? 'Proshop & Fasilitas' : ($this->category == 'others' ? 'Kantin' : ($this->category == 'rental' ? 'Penyewaan' : 'Service Fee')));
     }
 }

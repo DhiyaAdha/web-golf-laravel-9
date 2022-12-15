@@ -7,7 +7,7 @@
         <div class="container-fluid pt-25"  
         data-title="Halaman Revenue" data-intro="Halaman ini memberikan informasi total revenue setiap kategori di tgcc. ">
             <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                     <div class="panel panel-default card-view pa-0">
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body pa-0">
@@ -31,7 +31,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                     <div class="panel panel-default card-view pa-0">
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body pa-0">
@@ -55,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                     <div class="panel panel-default card-view pa-0">
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body pa-0">
@@ -77,7 +77,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                     <div class="panel panel-default card-view pa-0">
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body pa-0">
@@ -92,6 +94,54 @@
                                             </div>
                                             <div class="col-xs-4 text-right data-wrap-right">
                                                 <i class="zmdi zmdi-coffee txt-light data-right-rep-icon"></i>
+                                            </div>
+                                            <img src="{{ asset('/img/circle.svg') }}" class="card-img-absolute" alt="circle-image">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                    <div class="panel panel-default card-view pa-0">
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body pa-0">
+                                <div class="sm-data-box rental" data-title="Jumlah Revenue <br> Kantin Hari Ini" data-intro="Panel ini memberikan informasi total keseluruhan revenue kategori kantin pada hari ini.">
+                                    <div class="container-fluid">
+                                        <div class="row p-2">
+                                            <div class="col-xs-8 text-left data-wrap-left">
+                                                <span class="txt-light block counter">Rp. 
+                                                    <span class="counter-anim">{{ number_format($revenue_rental) }}</span>
+                                                </span>
+                                                <span class="weight-500 txt-light block"> Revenue penyewaan hari ini </span>
+                                            </div>
+                                            <div class="col-xs-4 text-right data-wrap-right">
+                                                <i class="zmdi zmdi-assignment txt-light data-right-rep-icon"></i>
+                                            </div>
+                                            <img src="{{ asset('/img/circle.svg') }}" class="card-img-absolute" alt="circle-image">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                    <div class="panel panel-default card-view pa-0">
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body pa-0">
+                                <div class="sm-data-box fee" style="background-color:#01C853;" data-title="Jumlah Revenue <br> Hari Ini" data-intro="Panel ini memberikan informasi total keseluruhan Revenue pada hari ini.">
+                                    <div class="container-fluid">
+                                        <div class="row p-2">
+                                            <div class="col-xs-8 text-left data-wrap-left">
+                                                <span class="txt-light block counter">Rp.
+                                                    <span class="counter-anim">{{ number_format($revenue_service) }}</span>
+                                                </span>
+                                                <span class="weight-500 txt-light block">Service Fee</span>
+                                            </div>
+                                            <div class="col-xs-4 text-right data-wrap-right">
+                                                <i class="zmdi zmdi-minus-square txt-light data-right-rep-icon"></i>
                                             </div>
                                             <img src="{{ asset('/img/circle.svg') }}" class="card-img-absolute" alt="circle-image">
                                         </div>
@@ -124,6 +174,12 @@
                                         <li role="presentation" class="" id="d">
                                             <a data-toggle="tab" role="tab" href="#other" aria-expanded="true">Kantin</a>
                                         </li>
+                                        <li role="presentation" class="" id="i">
+                                            <a data-toggle="tab" role="tab" href="#rental" aria-expanded="true">Sewa</a>
+                                        </li>
+                                        <li role="presentation" class="" id="j">
+                                            <a data-toggle="tab" role="tab" href="#fee" aria-expanded="true">Service Fee</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -151,6 +207,16 @@
                                     <div id="other" class="tab-pane fade active in" role="tabpanel">
                                         <div class="panel-body">
                                             <div id="revenue_bar_other" class="morris-chart" style="display: none"></div>
+                                        </div>
+                                    </div>
+                                    <div id="rental" class="tab-pane fade active in" role="tabpanel">
+                                        <div class="panel-body">
+                                            <div id="revenue_bar_rental" class="morris-chart" style="display: none"></div>
+                                        </div>
+                                    </div>
+                                    <div id="fee" class="tab-pane fade active in" role="tabpanel">
+                                        <div class="panel-body">
+                                            <div id="revenue_bar_fee" class="morris-chart" style="display: none"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -181,6 +247,12 @@
                                         <li role="presentation" class="" id="h">
                                             <a data-toggle="tab" role="tab" href="#other_line" aria-expanded="true">Kantin</a>
                                         </li>
+                                        <li role="presentation" class="" id="k">
+                                            <a data-toggle="tab" role="tab" href="#rental_line" aria-expanded="true">Sewa</a>
+                                        </li>
+                                        <li role="presentation" class="" id="l">
+                                            <a data-toggle="tab" role="tab" href="#service_line" aria-expanded="true">Service Fee</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -208,6 +280,16 @@
                                     <div id="other_line" class="tab-pane fade active in" role="tabpanel">
                                         <div class="panel-body">
                                             <div id="revenue_line_other" class="morris-chart" style="display: none"></div>
+                                        </div>
+                                    </div>
+                                    <div id="rental_line" class="tab-pane fade active in" role="tabpanel">
+                                        <div class="panel-body">
+                                            <div id="revenue_line_rental" class="morris-chart" style="display: none"></div>
+                                        </div>
+                                    </div>
+                                    <div id="service_line" class="tab-pane fade active in" role="tabpanel">
+                                        <div class="panel-body">
+                                            <div id="revenue_line_fee" class="morris-chart" style="display: none"></div>
                                         </div>
                                     </div>
                                 </div>

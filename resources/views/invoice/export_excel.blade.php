@@ -5,16 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
 </head>
 <body>
     <table>
         <thead>
             <tr>
-                <th class="" style="text-align:center"><strong>Nama</strong></th>
-                <th class="" style="text-align:center"><strong>Jenis Member</strong></th>
-                <th class="" style="text-align:center"><strong>Metode Pembayaran</strong></th>
-                <th class="" style="text-align:center"><strong>Total Bayar</strong></th>
-                <th class="" style="text-align:center"><strong>Tanggal Bayar</strong></th>
+                <th style="width:220px;"><strong>Nama</strong></th>
+                <th style="width:100px;"><strong>Jenis Member</strong></th>
+                <th style="width:130px;"><strong>Metode Pembayaran</strong></th>
+                <th style="width:220px;"><strong>Total Bayar</strong></th>
+                <th style="width:220px;"><strong>Tanggal Bayar</strong></th>
             </tr>
         </thead>
         <tbody>
@@ -39,7 +45,7 @@
                         echo $method_payment;
                     @endphp
                 </td>
-                <td>{{ $item->total }}</td>
+                <td>Rp.{{ number_format($item->total, 0, ',', '.') }}</td>
                 <td>{{ $item->created_at->format('d F Y | H:i:s') }}</td>
             </tr>
         @endforeach

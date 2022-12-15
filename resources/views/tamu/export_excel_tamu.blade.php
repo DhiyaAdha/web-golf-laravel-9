@@ -4,20 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document Daftar Tamu</title>
+    <title>Dokumen Daftar Tamu</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
 </head>
 <body>
     <table>
         <thead>
             <tr>
-                <th class="" style="text-align:center"><strong>Nama</strong></th>
-                <th class="" style="text-align:center"><strong>Email</strong></th>
-                <th class="" style="text-align:center"><strong>No Hp</strong></th>
-                <th class="" style="text-align:center"><strong>Alamat</strong></th>
-                <th class="" style="text-align:center"><strong>Posisi</strong></th>
-                <th class="" style="text-align:center"><strong>Perusahaan</strong></th>
-                <th class="" style="text-align:center"><strong>Jenis</strong></th>
-                <th class="" style="text-align:center"><strong>Kategori</strong></th>
+                <th style="width:220px;"><strong>Nama</strong></th>
+                <th style="width:220px;"><strong>Email</strong></th>
+                <th style="width:150px;"><strong>No Hp</strong></th>
+                <th style="width:320px;"><strong>Alamat</strong></th>
+                <th style="width:150px;"><strong>Posisi</strong></th>
+                <th style="width:220px;"><strong>Perusahaan</strong></th>
+                <th style="width:120px;"><strong>Jenis</strong></th>
+                <th style="width:120px;"><strong>Kategori</strong></th>
             </tr>
         </thead>
         <tbody>
