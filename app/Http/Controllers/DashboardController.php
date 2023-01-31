@@ -127,6 +127,7 @@ class DashboardController extends Controller
                 Carbon::now()->subDays(6)->startOfDay(), Carbon::now()->endOfDay(),
             ]
         )->count();
+        // dd($data);
 
         $data['visitor_today'] = LogTransaction::whereDate('created_at', now()->format('Y-m-d'))
             ->where('payment_status', 'paid')

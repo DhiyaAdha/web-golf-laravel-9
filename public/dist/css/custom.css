@@ -114,6 +114,7 @@
     height: 100%;
     z-index: 9999;
     background: url("/img/rolling.svg") center no-repeat #fff;
+    
 }
 
 table#dt-analisis {
