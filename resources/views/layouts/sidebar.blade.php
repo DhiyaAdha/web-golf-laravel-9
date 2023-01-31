@@ -106,7 +106,7 @@
             <li>
                 <a class="{{ Request::is('riwayat-invoice') ? 'active' : '' }}" href="{{ route('riwayat-invoice.index') }}" data-title="Menu Invoice" data-intro="Menu ini berisi riwayat daftar invoice member">
                     <div class="pull-left">
-                        <i class="zmdi zmdi-money-box mr-20"></i>
+                        <i class="zmdi zmdi-receipt mr-20"></i>
                         <span class="right-nav-text">Invoice</span>
                     </div>
                     <div class="clearfix"></div>
@@ -116,14 +116,14 @@
                 <hr class="light-grey-hr mb-10" />
             </li>
             <li class="navigation-header">
-                <span>produk</span>
+                <span>Layanan</span>
                 <i class="zmdi zmdi-more"></i>
             </li>
             <li>
                 <a class="{{ Request::is('package') ? 'active' : '' }}" href="{{ route('package.index') }}" data-title="Menu Daftar Paket" data-intro="Menu ini berisi daftar paket bermain TGCC, fasilitas yang tersedia dan penyewaan, dan kantin (daftar barang yang dapat dibeli)">
                     <div class="pull-left">
                         <i class="zmdi zmdi-format-list-bulleted mr-20"></i>
-                        <span class="right-nav-text">paket bermain</span>
+                        <span class="right-nav-text">daftar paket</span>
                     </div>
                     <div class="clearfix"></div>
                 </a>
@@ -202,7 +202,7 @@
                 <a class="{{ Request::is('setting') ? 'active' : '' }}" href="{{ route('setting') }}">
                     <div class="pull-left">
                         <i class="zmdi zmdi-settings"></i>
-                        <span class="right-nav-text">pengaturan</span>
+                        <span class="right-nav-text">ubah limit</span>
                     </div>
                     <div class="clearfix"></div>
                 </a>

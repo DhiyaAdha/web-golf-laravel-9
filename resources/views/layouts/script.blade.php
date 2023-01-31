@@ -28,10 +28,10 @@
                     position: 'top-right',
                     loaderBg: '#fec107',
                     icon: 'success',
-                    hideAfter: 2000,
+                    hideAfter: 1000,
                     stack: 6
                 });
-            }, 1000);
+            }, 500);
         @endif
         @if (Session::has('error'))
             window.setTimeout(function() {
@@ -40,9 +40,9 @@
                     position: 'top-right',
                     loaderBg: '#fec107',
                     icon: 'error',
-                    hideAfter: 3000,
+                    hideAfter: 1500,
                     stack: 6
                 });
-            }, 1000);
+            }, 500);
         @endif
     </script>

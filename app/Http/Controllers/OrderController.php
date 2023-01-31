@@ -319,7 +319,7 @@ class OrderController extends Controller
     {
         $data['get_id'] = $id;
         $link_pos = URL::signedRoute('order.cart', ['id' => $id]);
-        // try {
+        try {
             $data['visitor'] = Visitor::find($data['get_id']);
             $items = \Cart::session($data['get_id'])->getContent();
             $data['totalPrice'] = \Cart::session($data['get_id'])->getTotal();
@@ -366,9 +366,9 @@ class OrderController extends Controller
             }
 
             return view('membership.checkout', $data)->render();
-        // } catch (\Throwable $th) {
-        //     return redirect()->to($link_pos);
-        // }
+        } catch (\Throwable $th) {
+            return redirect()->to($link_pos);
+        }
     }
 
     public function select(Request $request)

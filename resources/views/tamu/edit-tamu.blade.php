@@ -23,13 +23,30 @@
                                     @csrf
                                     @method('POST')
                                     <div class="col-lg-6">
-                                        <div class="form-group @error('NIK') has-error @enderror">
+                                        @if ($visitor->status_nik == 'no')
+                                            <div class="form-group @error('NIK') has-error @enderror">
+                                                <label class="control-label mb-10" for="name">NIK KTP</label>
+                                                <input type="text" name="nik" value="{{ $visitor->nik }}" class="form-control" id="NIK" size="50px" placeholder="Masukan NIK" autofocus required>
+                                                @error('nik')
+                                                    <div class="text-danger"> {{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        @else
+                                            <div class="form-group @error('NIK') has-error @enderror">
+                                                <label class="control-label mb-10" for="name">NIK KTP</label>
+                                                <input type="text" name="nik" value="{{ $visitor->nik }}" class="form-control" id="NIK" size="50px" placeholder="Masukan NIK" autofocus>
+                                                @error('nik')
+                                                    <div class="text-danger"> {{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        @endif
+                                        {{-- <div class="form-group @error('NIK') has-error @enderror">
                                             <label class="control-label mb-10" for="name">NIK KTP</label>
                                             <input type="text" name="nik" value="{{ $visitor->nik }}" class="form-control" id="NIK" size="50px" placeholder="Masukan NIK" autofocus required>
                                             @error('nik')
                                                 <div class="text-danger"> {{ $message }}</div>
                                             @enderror
-                                        </div>
+                                        </div> --}}
                                         <div class="checkbox checkbox-success">
                                             <input id="status_nik" name="status_nik" type="checkbox" {{ $visitor->status_nik == 'yes' ? 'checked' : '' }}>
                                             <label for="status_nik">apakah anda yakin mengisi deposit tanpa mengisi NIK KTP?</label>

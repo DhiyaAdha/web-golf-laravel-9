@@ -65,10 +65,10 @@ $(".modal-detail-invoice").on("show.bs.modal", function (e) {
 });
 
 function screenshot(first){
-    html2canvas(document.getElementById("front-content")).then(function(canvas){
+    html2canvas(document.getElementById("front-content"), {scale:2}).then(function(canvas){
         downloadImage(canvas.toDataURL(), first + '-front.jpg');
     });
-    html2canvas(document.getElementById("back-content")).then(function(canvas){
+    html2canvas(document.getElementById("back-content"), {scale:2}).then(function(canvas){
         downloadImage(canvas.toDataURL(), first + '-back.jpg');
     });
 }
@@ -100,42 +100,6 @@ $(".download-kartu-tamu").on("click", function () {
     const fullName = $(this).data('name');
     const [first, last] = fullName.split(' ');
     screenshot(first);
-    
-    // $(".resolution").modal('hide').printThis({
-    //     importCSS: true,
-    //     importStylse: true,
-    //     loadCSS: "dist/css/custom.css",
-    //     header: "<h6>Kartu Member</h6>",
-    // });
-
-
-    // html2canvas($('.front-content')[0], {
-    //     logging: true,
-    //     profile: true,
-    //     useCORS: true,
-    //     width: 1200,
-    //     height: 1200
-    // }).then(function(canvas) {
-    //     let a = document.createElement('a');
-    //     a.href = canvas.toDataURL("image/jpeg", 1);
-    //     a.download =  first + '-front.jpg';
-    //     a.target = '_blank';
-    //     a.click();
-    // });
-
-    // html2canvas($('.back-content')[0], {
-    //     logging: true,
-    //     profile: true,
-    //     useCORS: true,
-    //     width: 1200,
-    //     height: 1200
-    // }).then(function(canvas) {
-    //     let a = document.createElement('a');
-    //     a.href = canvas.toDataURL("image/png", 1);
-    //     a.download = first + '-back.png';
-    //     a.target = '_blank';
-    //     a.click();
-    // });
 });
 
 $("#dt-tamu-transaksi").DataTable({
