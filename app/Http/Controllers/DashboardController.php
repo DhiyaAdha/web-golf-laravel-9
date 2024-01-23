@@ -23,7 +23,7 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function analytic_week()
-    {
+        {
         $now = Carbon::now()->translatedFormat('Y-m-d');
         $last7Days = Carbon::now()->subDays(6)->translatedFormat('Y-m-d');
         $day_period = CarbonPeriod::create($last7Days, $now)->toArray();
@@ -317,6 +317,6 @@ class DashboardController extends Controller
 
         // return response()->json($category);
         // return response()->json($amount);
-        return Excel::download(new LaporanTahunan($amount, $year, $category), 'laporan-tahunan-'.date('YmdHis').'.xlsx');
+            return Excel::download(new LaporanTahunan($amount, $year, $category), 'laporan-tahunan-'.date('YmdHis').'.xlsx');
     }
 }
